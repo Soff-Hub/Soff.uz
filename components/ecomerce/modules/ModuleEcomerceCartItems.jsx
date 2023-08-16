@@ -33,7 +33,7 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                 <td data-label="price" className="price">
                     ${item.price}
                 </td>
-                <td data-label="quantity">
+                {/* <td data-label="quantity">
                     <div className="form-group--number">
                         <button
                             className="up"
@@ -52,7 +52,7 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                             disabled={true}
                         />
                     </div>
-                </td>
+                </td> */}
                 <td data-label="total">
                     <strong>${(item.price * item.quantity).toFixed(2)}</strong>
                 </td>
