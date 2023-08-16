@@ -1,22 +1,28 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { Component } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Badge, Table } from 'antd';
+import { useState } from 'react';
+import { useEffect } from 'react';
+import GetRepository from '~/reositoriy-admin/GetRepository';
+import DeleteRepository from '~/reositoriy-admin/DeleteRepository';
 import DeleteModal from './Modal';
 
-function Notifications() {
+function OrdersLists() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
-    async function GetItems(page) {
-        const ItemsData = await GetRepository.getShops(page);
+
+    async function GetItemsUsers(page) {
+        if (page === 1) {
+            setData([])
+        }
+        const ItemsData = await GetRepository.getUsersLists(page);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
-            GetItems(page + 1)
+            GetItemsUsers(page + 1)
         }
     }
-
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
@@ -24,46 +30,43 @@ function Notifications() {
         ))
         setData(filterSearch)
     }
-
+    async function handleClickDelete(id){
+        const ItemsDelete = await DeleteRepository.getUsersListsDelete(id)
+        GetItemsUsers(1)
+        }
     useEffect(() => {
-        GetItems(1)
+        GetItemsUsers(1)
     }, [])
 
     const columns = [
         {
-            title: 'Logotip',
+            title: 'Avatar',
             dataIndex: 'image',
             key: 'name',
-            render: (image) => (
-                <div>
-                    <img src={image} width={54} height={54} />
-                </div>
-            ),
+            render:(image)=>(
+                <img src={image}  width={54} height={54} />
+            )
         },
         {
             title: 'Ism',
             dataIndex: 'first_name',
             key: 'age',
+
         },
         {
-            title: 'Mahsulotlar',
-            dataIndex: 'total_product',
-            key: 'address',
-        },
-        {
-            title: 'Buyurtmalar',
-            dataIndex: 'total_approved',
+            title: 'Telefon raqam',
+            dataIndex: 'phone',
             key: 'address',
         },
         {
             title: 'Holat',
             dataIndex: 'auth_status',
             key: 'address',
-            render: (status) => (
+            render: (auth_status) => (
                 <Badge
-                    text={status}
+                    text={auth_status}
                     color={
-                        status === 'new'
+                        auth_status === 'new'
                             ? 'green'
                             : 'red'
                     }
@@ -75,22 +78,21 @@ function Notifications() {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
-            render: () => <div >
+            render: (id) => <div >
                 <a><i className="fa-solid fa-pen-to-square mx-4"></i></a>
-                <a><i className="fa-solid fa-trash"></i></a>
+                <a><i className="fa-solid fa-trash" onClick={()=>handleClickDelete(id)}></i></a>
             </div>
-
         },
     ];
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 <div className="ps-section__header p-5 mb-5 rounded" style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3>Sotuvchilar</h3>
+                    <h3>Xaridorlar</h3>
                     <input type='search' className='form-control rounded w-50' placeholder="Qidiruv" onInput={handleClick} />
                 </div>
-                <div className="row flex" style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4 pb-5" >
+                <div className="row " style={{ alignItems: "flex-start" }}>
+                    <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
                         </div>
@@ -99,17 +101,17 @@ function Notifications() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <Table dataSource={data} columns={columns}
-                                    />
+                                    <Table dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <DeleteModal/>
+                {/* <DeleteModal/> */}
             </div>
         </section>
     );
 
 }
-export default Notifications;
+
+export default OrdersLists;

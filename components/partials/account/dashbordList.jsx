@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import { Column } from '@ant-design/plots';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Table } from 'antd';
+import dynamic from 'next/dynamic';
 
 function DashbordList() {
     const [data, setData] = useState([]);
@@ -63,86 +63,10 @@ function DashbordList() {
             </div>
         },
     ];
-    const DemoColumn = () => {
-        const data = [
-            {
-                type: 'Yanvar',
-                sales: 20,
-            },
-            {
-                type: 'Fevral',
-                sales: 32,
-            },
-            {
-                type: 'Mart',
-                sales: 41,
-            },
-            {
-                type: 'Aprel',
-                sales: 51,
-            },
-            {
-                type: 'May',
-                sales: 61,
-            },
-            {
-                type: 'Iyun',
-                sales: 71,
-            },
-            {
-                type: 'Iyul',
-                sales: 80,
-            },
-            {
-                type: 'Avgust',
-                sales: 71,
-            },
-            {
-                type: 'Sentabr',
-                sales: 61,
-            },
-            {
-                type: 'Okatbr',
-                sales: 51,
-            },
-            {
-                type: 'Noyabr',
-                sales: 41,
-            },
-            {
-                type: 'Dekabr',
-                sales: 32,
-            },
-        ];
-        const config = {
-            data,
-            xField: 'type',
-            yField: 'sales',
-            label: {
-                position: 'middle',
-                // 'top', 'bottom', 'middle',
-                style: {
-                    fill: '#FFFFFF',
-                    opacity: 0.6,
-                },
-            },
-            xAxis: {
-                label: {
-                    autoHide: true,
-                    autoRotate: false,
-                },
-            },
-            meta: {
-                type: {
-                    alias: 'Foyda',
-                },
-                sales: {
-                    alias: 'Foyda',
-                },
-            },
-        };
-        return <Column {...config} />
-    };
+    const DynamicComponentWithNoSSR = dynamic(
+        () => import('./Chart'),
+        { ssr: false }
+      )
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
@@ -198,13 +122,13 @@ function DashbordList() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <DemoColumn />
+                                    <DynamicComponentWithNoSSR/>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <Table dataSource={dataProducts} columns={columns} />
+                <Table dataSource={dataProducts} columns={columns} className='pb-5' />
             </div>
         </section>
     );

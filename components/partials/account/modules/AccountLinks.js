@@ -30,6 +30,11 @@
         icon: 'fa-solid fa-truck',
     },
     {
+        text: 'Xaridorlar',
+        url: '/account/users',
+        icon: 'fa-solid fa-users',
+    },
+    {
         text: 'Bildirishnomalar',
         url: '/account/notifications',
         icon: 'fa-solid fa-bell',

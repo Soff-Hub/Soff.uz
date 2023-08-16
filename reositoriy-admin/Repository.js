@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseDomain = 'http://alldataa.pythonanywhere.com/api/v1/seller/'; // API for products
+const baseDomain = 'http://alldataaa.pythonanywhere.com/api/v1/seller/'; // API for products
 
 export const customHeaders = {
     Accept: 'application/json',
