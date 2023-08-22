@@ -5,25 +5,20 @@ import MegaMenu from '~/components/elements/menu/MegaMenu';
 
 const Menu = ({ source, className }) => {
     // Views
+    // console.log('source' ,source);
     let menuView;
     if (source) {
         menuView = source.map((item) => {
-            if (item.subMenu) {
-                return <MenuDropdown source={item} key={item.text} />;
-            } else if (item.megaContent) {
-                return <MegaMenu source={item} key={item.text} />;
-            } else {
                 return (
-                    <li key={item.text}>
-                        <Link href={item.url}>
+                    <li key={item.id}>
+                        <Link href={`category/${item.id}`} >
                             <a>
                                 {item.icon && <i className={item.icon}></i>}
-                                {item.text}
+                                {item.name}
                             </a>
                         </Link>
                     </li>
                 );
-            }
         });
     } else {
         menuView = (

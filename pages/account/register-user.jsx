@@ -17,14 +17,13 @@ const RegisterPage = () => {
         },
     ];
 
-    const sallerEndPoint = 'auth/seller-register/'
-
+    const userEndPoint = 'auth/register/'
     return (
         <>
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <Register url={sallerEndPoint} />
+                    <Register url={userEndPoint} />
                 </div>
                 {/* <Newletters layout="container" /> */}
             </PageContainer>

@@ -11,53 +11,44 @@ import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import Product from '~/components/elements/products/Product';
 import { carouselStandard } from '~/utilities/carousel-helpers';
 import useGetProducts from '~/hooks/useGetProducts';
+import CollectionRepository from '~/repositories/CollectionRepository';
 
 const ElectronicProductGroupWithCarousel = ({
     collectionSlug,
-    categorySlug,
-    links,
     title,
+    data,
+    id
 }) => {
-    const {
-        productItems,
-        loading,
-        getProductsByCategory,
-        getProductsByCollection,
-    } = useGetProducts();
-
+    // console.log(title, data);
+    const { productItems, loading, getProductsByCollection } = useGetProducts();
     useEffect(() => {
-        if (categorySlug) {
-            getProductsByCategory(categorySlug);
-        }
         if (collectionSlug) {
             getProductsByCollection(collectionSlug);
         }
-    }, [categorySlug, collectionSlug]);
+    }, [collectionSlug]);
 
     // Views
-    let productItemsView, linksView;
+    // const [categoryId, setCategoryId] = useState(null)
+    // console.log(categoryId);
+    let productItemsView;
     if (!loading) {
-        if (productItems && productItems.length > 0) {
-            const slideItems = productItems.map((item) => (
-                <Product product={item} key={item.id} />
-            ));
+        if (data && data.promotional_sliders.length > 0) {
+            //  let slideItems
             productItemsView = (
                 <Slider
                     {...carouselStandard}
                     arrows={false}
                     className="ps-carousel outside">
-                    {slideItems}
+                    {/* {slideItems} */}
+                    {
+                    data.promotional_sliders.map((item, index) => (
+                        <Product product={item} />
+                    ))
+                    }
                 </Slider>
             );
-            linksView = links.map((item) => (
-                <li key={item}>
-                    <Link href="/shop">
-                        <a>{item}</a>
-                    </Link>
-                </li>
-            ));
         } else {
-            productItemsView = <p>No product found.</p>;
+            productItemsView = <p>Hujjat topilmadi</p>;
         }
     } else {
         const skeletons = generateTempArray(6).map((item) => (
@@ -76,8 +67,8 @@ const ElectronicProductGroupWithCarousel = ({
                     <ul className="ps-section__links">
                         {/* {linksView} */}
                         <li>
-                            <Link href="/shop">
-                                <a>View All</a>
+                            <Link href={`/category/${id}`}>
+                                <a>Barchasini ko'rish</a>
                             </Link>
                         </li>
                     </ul>

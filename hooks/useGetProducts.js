@@ -21,25 +21,29 @@ export default function useGetProducts() {
             setLoading(payload);
         },
 
-        getProductsByCollection: async (payload) => {
+        getProductsByCollection: async () => {
             setLoading(true);
-            const responseData = await getProductsByCollectionHelper(payload);
+            const responseData = await getProductsByCollectionHelper();
             if (responseData) {
-                setProductItems(responseData.items);
+                console.log(responseData);
+                setProductItems(responseData);
                 setTimeout(
                     function () {
                         setLoading(false);
                     }.bind(this),
+
                     250
                 );
             }
         },
 
         getProductsByCategory: async (payload) => {
+            console.log('//', payload);
             setLoading(true);
             const responseData = await getProductsByCategoriesHelper(payload);
             if (responseData) {
                 setProductItems(responseData.items);
+                console.log('productbycategory', responseData.items);
                 setTimeout(
                     function () {
                         setLoading(false);

@@ -9,6 +9,7 @@ const ProductGroupGridItems = ({
     collectionSlug,
     columns = 3,
     pageSize = 12,
+    data
 }) => {
     const [loading, setLoading] = useState(true);
     const [productItems, setProductItems] = useState(null);
@@ -71,9 +72,9 @@ const ProductGroupGridItems = ({
     // Views
     let productItemsView;
 
-    if (!loading && productItems) {
-        if (productItems.length > 0) {
-            const items = productItems.map((item) => {
+    if (!loading && data) {
+        if (data.length > 0) {
+            const items = data.map((item) => {
                 return (
                     <div className={classes} key={item.id}>
                         <Product product={item} />

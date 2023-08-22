@@ -17,9 +17,9 @@ const AutopartRecommendForYou = ({ collectionSlug }) => {
     let productItemsView;
     if (!loading) {
         if (productItems && productItems.length > 0) {
-            const slideItems = productItems.map((item) => (
-                <Product product={item} key={item.id} />
-            ));
+            // const slideItems = productItems.map((item) => (
+            //     <Product product={item} key={item.id} />
+            // ));
             productItemsView = (
                 <Slider
                     {...carouselStandard}

@@ -133,7 +133,7 @@
 
 .ps-block--category-2 {
     display: flex;
-
+    justify-content: center;
     margin-bottom: 30px;
     border: 1px solid #bfbfbf;
     transition: all 0.4s ease;
@@ -2581,6 +2581,8 @@
 
     img {
         width: 100%;
+        max-height: 171px;
+        min-height: 171px;
     }
 
     @include media('<sm') {
@@ -3228,6 +3230,7 @@
     i {
         font-size: 30px;
         line-height: 1em;
+        color: white;
     }
 
     .ps-list--arrow {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import ProductGroupDealOfDay from '~/components/partials/product/ProductGroupDealOfDay';
 import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicProductGroupWithCarousel';
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
@@ -9,8 +9,34 @@ import PageContainer from '~/components/layouts/PageContainer';
 import HeaderElectronic from '~/components/shared/headers/HeaderElectronic';
 import HeaderMobileElectronic from '~/components/shared/headers/HeaderMobileElectronic';
 import FooterSecond from '~/components/shared/footers/FooterSecond';
+import CollectionRepository from '~/repositories/CollectionRepository';
+import { useDispatch } from 'react-redux';
+import { isLoginning } from '~/store/auth/action';
 
 const HomeElectronicsPage = () => {
+
+    const [categoryData, setCategoryData] = useState([]);
+
+    async function getCategoryFunc() {
+        const responseData = await CollectionRepository.getCategoryData(
+            `customer/category-list/`
+        );
+        if (responseData.length > 0) {
+            setCategoryData(responseData);
+        }
+    }
+
+    const dispatch = useDispatch()
+
+    const defaultRoutePage = () => {
+        dispatch(isLoginning());
+    }
+
+    useEffect(() => {
+        defaultRoutePage()
+        getCategoryFunc();
+    }, []);
+
     const smartPhoneLinks = ['Iphone, Ipad, Samsung'];
     const electronicLinks = [
         'Smart',
@@ -52,13 +78,19 @@ const HomeElectronicsPage = () => {
              categorySlug="computers-and-technologies"
              boxed={true}
          /> */}
-         <ElectronicProductGroupWithCarousel
-             collectionSlug="electronics-best-sellers"
-             title="Best Seller In The Last Month"
-             links={smartPhoneLinks}
-         />
+         {
+            categoryData && categoryData.map((item, index) => (
+
+                <ElectronicProductGroupWithCarousel
+                    collectionSlug="electronics-best-sellers"
+                    title={item.name}
+                    data={item}
+                    id={item.id}
+                />
+            ))
+         }
          {/* <ElectronicPromotions2 /> */}
-         <ElectronicProductGroupWithCarousel
+         {/* <ElectronicProductGroupWithCarousel
              collectionSlug="electronic_computer_technology"
              title="Computers & Technology"
              links={computerLinks}
@@ -72,7 +104,7 @@ const HomeElectronicsPage = () => {
              collectionSlug="electronics-cameras-and-videos"
              title="Cameras & Videos"
              links={cameraLinks}
-         />
+         /> */}
          <SiteFeatures />
      </main>
     );
