@@ -72,7 +72,7 @@ const AccountQuickLinks = (props) => {
                     <Link href="/account/login">
                         <a>Login</a>
                     </Link>
-                    <Link href="/account/register">
+                    <Link href="/account/foydalanuvchi">
                         <a>Register</a>
                     </Link>
                 </div>

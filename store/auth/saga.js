@@ -5,15 +5,15 @@ import { actionTypes, loginSuccess, logOutSuccess } from './action';
 
 const modalSuccess = type => {
     notification[type]({
-        message: 'Wellcome back',
-        description: 'You are login successful!',
+        message: 'Xush kelibsiz saytimizga!',
+        description: 'Siz muvaffaqqiyatli kirdingiz!',
     });
 };
 
 const modalWarning = type => {
     notification[type]({
-        message: 'Good bye!',
-        description: 'Your account has been logged out!',
+        message: 'Xayr!',
+        description: 'Siz profilingizdan chiqib kettingiz!',
     });
 };
 

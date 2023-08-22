@@ -6,30 +6,34 @@ import Product from '~/components/elements/products/Product';
 import { carouselStandard } from '~/utilities/carousel-helpers';
 import NextArrow from '~/components/elements/carousel/NextArrow';
 import PrevArrow from '~/components/elements/carousel/PrevArrow';
+import ProductRepository from '~/repositories/ProductRepository';
 
-const RelatedProduct = ({ collectionSlug, boxed, layout }) => {
+const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
+    // console.log('kk' , pid);
     const [productItems, setProductItems] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    async function getProducts() {
-        setLoading(true);
-        const responseData = await getProductsByCollectionHelper(
-            collectionSlug
-        );
-        if (responseData) {
-            setProductItems(responseData.items);
-            setTimeout(
-                function () {
-                    setLoading(false);
-                }.bind(this),
-                250
-            );
+    async function getProducts(id) {
+        if (id) {
+            setLoading(true);
+            const responseData = await ProductRepository.getRelatedProduct(id);
+            if (responseData) {
+                setProductItems(responseData);
+                setTimeout(
+                    function () {
+                        setLoading(false);
+                    }.bind(this),
+                    250
+                );
+            }
         }
     }
 
     useEffect(() => {
-        getProducts();
-    }, [collectionSlug]);
+        if (pid) {
+            getProducts(pid);
+        }
+    }, [collectionSlug, pid]);
 
     const carouselFullwidth = {
         dots: false,
@@ -99,7 +103,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout }) => {
             },
         ],
     };
-
+    console.log('related product', productItems);
     // Views
     let carouselView;
     if (!loading) {
@@ -109,11 +113,17 @@ const RelatedProduct = ({ collectionSlug, boxed, layout }) => {
                     <Slider
                         {...carouselFullwidth}
                         className="ps-carousel outside">
-                        {productItems.map((item, index) => {
-                            if (index < 8) {
-                                return <Product product={item} key={item.id} />;
-                            }
-                        })}
+                        {productItems ? (
+                            productItems.map((item, index) => {
+                                if (index < 8) {
+                                    return (
+                                        <Product product={item} key={item.id} />
+                                    );
+                                }
+                            })
+                        ) : (
+                            <></>
+                        )}
                     </Slider>
                 );
             } else {
@@ -122,7 +132,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout }) => {
                         {...carouselStandard}
                         className="ps-carousel outside">
                         {productItems.map((item, index) => {
-                            if (index < 8) {
+                            if (index < 5) {
                                 return <Product product={item} key={item.id} />;
                             }
                         })}
@@ -130,7 +140,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout }) => {
                 );
             }
         } else {
-            carouselView = <p>No product found.</p>;
+            carouselView = <p>Hujjat topilmadi</p>;
         }
     } else {
         carouselView = <p>Loading...</p>;
@@ -142,7 +152,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout }) => {
                 boxed === true ? 'boxed' : ''
             }`}>
             <div className="ps-section__header">
-                <h3>Related products</h3>
+                <h3>O'xshash hujjatlar</h3>
             </div>
             <div className="ps-section__content">{carouselView}</div>
         </div>

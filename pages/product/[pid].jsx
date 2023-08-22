@@ -12,13 +12,14 @@ import HeaderDefault from '~/components/shared/headers/HeaderDefault';
 import PageContainer from '~/components/layouts/PageContainer';
 import Newletters from '~/components/partials/commons/Newletters';
 import HeaderMobileProduct from '~/components/shared/header-mobile/HeaderMobileProduct';
+import HeaderElectronic from '~/components/shared/headers/HeaderElectronic';
 
 const ProductDefaultPage = () => {
     const router = useRouter();
     const { pid } = router.query;
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(false);
-
+// console.log('id', pid, product);
     async function getProduct(pid) {
         setLoading(true);
         const responseData = await ProductRepository.getProductsById(pid);
@@ -43,10 +44,6 @@ const ProductDefaultPage = () => {
             url: '/',
         },
         {
-            text: 'Shop',
-            url: '/shop',
-        },
-        {
             text: product ? product.title : 'Loading...',
         },
     ];
@@ -57,7 +54,7 @@ const ProductDefaultPage = () => {
             productView = <ProductDetailFullwidth product={product} />;
             headerView = (
                 <>
-                    <HeaderProduct product={product} />
+                    <HeaderElectronic product={product} />
                     <HeaderMobileProduct />
                 </>
             );
@@ -91,7 +88,7 @@ const ProductDefaultPage = () => {
                         layout="fullwidth"
                         collectionSlug="deal-of-the-day"
                     /> */}
-                    <RelatedProduct collectionSlug="shop-recommend-items" />
+                    <RelatedProduct pid={pid} collectionSlug="shop-recommend-items" />
                 </div>
             </div>
             {/* <Newletters /> */}

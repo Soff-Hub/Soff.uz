@@ -31,7 +31,7 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                     <ProductCart product={item} />
                 </td>
                 <td data-label="price" className="price">
-                    ${item.price}
+                    {item.price} so'm
                 </td>
                 {/* <td data-label="quantity">
                     <div className="form-group--number">
@@ -71,7 +71,7 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                         <tr>
                             <th>Product</th>
                             <th>Price</th>
-                            <th>Quantity</th>
+                            {/* <th>Quantity</th> */}
                             <th>Total</th>
                             <th>Action</th>
                         </tr>

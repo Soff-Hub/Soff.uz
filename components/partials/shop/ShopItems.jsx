@@ -9,7 +9,7 @@ import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import useGetProducts from '~/hooks/useGetProducts';
 
-const ShopItems = ({ columns = 4, pageSize = 12 }) => {
+const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
     const Router = useRouter();
     const { page } = Router.query;
     const { query } = Router;
@@ -27,15 +27,16 @@ const ShopItems = ({ columns = 4, pageSize = 12 }) => {
     }
 
     function handlePagination(page, pageSize) {
-        Router.push(`/shop?page=${page}`);
+        // Router.push(`/shop?page=${page}`);
     }
 
-    async function getTotalRecords(params) {
-        const responseData = await ProductRepository.getTotalRecords();
-        if (responseData) {
-            setTotal(responseData);
-        }
-    }
+    // async function getTotalRecords(params) {
+    //     const responseData = await ProductRepository.getTotalRecords();
+    //     if (responseData) {
+    //         setTotal(responseData);
+    //         console.log('shopitems', responseData);
+    //     }
+    // }
 
     function handleSetColumns() {
         switch (columns) {
@@ -74,17 +75,17 @@ const ShopItems = ({ columns = 4, pageSize = 12 }) => {
                 _limit: pageSize,
             };
         }
-        getTotalRecords();
+        // getTotalRecords();
         getProducts(params);
         handleSetColumns();
-    }, [query]);
+    }, [query, data]);
 
     // Views
     let productItemsView;
-    if (!loading) {
-        if (productItems && productItems.length > 0) {
+    if (loading) {
+        if (data && data.length > 0) {
             if (listView) {
-                const items = productItems.map((item) => (
+                const items = data.map((item) => (
                     <div className={classes} key={item.id}>
                         <Product product={item} />
                     </div>
@@ -95,12 +96,12 @@ const ShopItems = ({ columns = 4, pageSize = 12 }) => {
                     </div>
                 );
             } else {
-                productItemsView = productItems.map((item) => (
+                productItemsView = data.map((item) => (
                     <ProductWide product={item} />
                 ));
             }
         } else {
-            productItemsView = <p>No product found.</p>;
+            productItemsView = <p>Hujjat topilmadi</p>;
         }
     } else {
         const skeletonItems = generateTempArray(12).map((item) => (
@@ -115,7 +116,7 @@ const ShopItems = ({ columns = 4, pageSize = 12 }) => {
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
-                    <strong className="mr-2">{total}</strong>
+                    <strong className="mr-2">{data?.length}</strong>
                     Products found
                 </p>
                 <div className="ps-shopping__actions">
@@ -145,7 +146,7 @@ const ShopItems = ({ columns = 4, pageSize = 12 }) => {
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
                     <Pagination
-                        total={total - 1}
+                        total={data?.length - 1}
                         pageSize={pageSize}
                         responsive={true}
                         showSizeChanger={false}

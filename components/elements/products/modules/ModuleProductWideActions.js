@@ -35,7 +35,7 @@ const ModuleProductWideActions = ({ ecomerce, product }) => {
     }
 
     return (
-        <div className="ps-product__shopping">
+        <div className="ps-product__shopping" >
             {price(product)}
             <a
                 className="ps-btn"
@@ -49,11 +49,11 @@ const ModuleProductWideActions = ({ ecomerce, product }) => {
                         <i className="icon-heart"></i> Wishlist
                     </a>
                 </li>
-                <li>
+                {/* <li>
                     <a href="#" onClick={(e) => handleAddItemToCompare(e)}>
                         <i className="icon-chart-bars"></i> Compare
                     </a>
-                </li>
+                </li> */}
             </ul>
         </div>
     );

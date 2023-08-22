@@ -21,6 +21,7 @@ export function setWishlistTtemsSuccess(payload) {
 }
 
 export function setCartItems(payload) {
+    // console.log(payload);
     return { type: actionTypes.SET_CART_ITEMS, payload };
 }
 

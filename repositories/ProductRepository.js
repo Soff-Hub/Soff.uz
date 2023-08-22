@@ -3,10 +3,69 @@ import Repository, { baseUrl, serializeQuery } from './Repository';
 class ProductRepository {
     async getRecords(params) {
         const reponse = await Repository.get(
-            `${baseUrl}/products?${serializeQuery(params)}`
+            `${baseUrl}customer/category-list/`
         )
             .then((response) => {
                 return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getRecordsSearch() {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/`
+        )
+            .then((response) => {
+                return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getWishlistData() {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/wishlist/`
+        )
+            .then((response) => {
+                return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async WishlistDataDelete(id) {
+        const reponse = await Repository({
+            url:  `${baseUrl}customer/wishlist/${id}/`,
+            method: 'DELETE',
+            headers: {
+                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyNDI5MTM0LCJpYXQiOjE2OTI0Mjg4MzQsImp0aSI6ImI5ZTk4ODZkM2E3MDRjMmNhZDg2ZTFlMzc4ODJhMTQ2IiwidXNlcl9pZCI6MTl9.ZZ0YzBnZjEuSo-v06Qya9vbNv_I5sYCoO8lBxjR8BCQ"
+            }
+        })
+            .then((response) => {
+                return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+
+    async getRelatedProduct(pid) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/${pid}`
+        )
+            .then((response) => {
+                console.log('relateed' ,response.data.similar);
+                return response.data.similar;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getCardData() {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/data/`
+        )
+            .then((response) => {
+                console.log('relateed' ,response.data.results);
+                return response.data.results;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
@@ -50,16 +109,26 @@ class ProductRepository {
     }
 
     async getTotalRecords() {
-        const reponse = await Repository.get(`${baseUrl}/products/count`)
+        const reponse = await Repository.get(`${baseUrl}customer/category-list/`)
             .then((response) => {
-                return response.data;
+                // console.log(response.data.results);
+                return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getTopCategories() {
+        const reponse = await Repository.get(`${baseUrl}customer/top-categories/`)
+            .then((response) => {
+                // console.log(response.data.results);
+                return response.data.results;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
 
-    async getProductsById(payload) {
-        const reponse = await Repository.get(`${baseUrl}/products/${payload}`)
+    async getProductsById(pid) {
+        const reponse = await Repository.get(`${baseUrl}customer/documents/${pid}/`)
             .then((response) => {
                 return response.data;
             })
@@ -116,7 +185,7 @@ class ProductRepository {
                 }
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
+                // console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;

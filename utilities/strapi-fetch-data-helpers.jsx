@@ -10,11 +10,12 @@ import ProductRepository from '~/repositories/ProductRepository';
 
 export async function getProductsByCollectionHelper(
     collectionSlug,
+    pid,
     pageSize = 12
 ) {
     let products;
     if (collectionSlug) {
-        products = await CollectionRepository.getProductsByCollectionSlug(
+        products = await CollectionRepository.getCategoryData(
             collectionSlug
         );
     } else {
@@ -25,7 +26,7 @@ export async function getProductsByCollectionHelper(
     }
 
     if (products) {
-        return products;
+        return products.results;
     } else {
         return null;
     }

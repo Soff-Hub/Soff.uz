@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { login } from '../../../store/auth/action';
+import { isLoginning, login } from '../../../store/auth/action';
 
-import { Form, Input, notification } from 'antd';
+import { Form, Input, notification, Modal } from 'antd';
 import { connect } from 'react-redux';
+import useAuth from '~/hooks/useAuth';
+// import Modal from 'antd/lib/modal/Modal';
 
 class Login extends Component {
     constructor(props) {
@@ -14,7 +16,7 @@ class Login extends Component {
 
     static getDerivedStateFromProps(props) {
         if (props.isLoggedIn === true) {
-            Router.push('/');
+            // Router.push('/');
         }
         return false;
     }
@@ -28,12 +30,37 @@ class Login extends Component {
         });
     }
 
-    handleLoginSubmit = e => {
-        console.log('test');
-        this.props.dispatch(login());
-        Router.push('/');
+    defaultRoutePage = async () => {
+        await this.props.dispatch(isLoginning());
+    }
 
+    handleLoginSubmit = async (e) => {
+        console.log('test', e);
+        const { loginUser } = useAuth();
+
+        const user = await loginUser(e);
+        console.log('loginUser', user.data, user.statusCode);
+        // this.props.dispatch(login());
+        // Router.push('/');
+
+        if (user) {
+            if (user.status >= 400) {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Nimadir xato bor!',
+                    content: user.data.message,
+                });
+                modal.update;
+            } else {
+                this.props.dispatch(login({ user: user.data }));
+                Router.push('/');
+            }
+        }
     };
+
+    componentDidMount() {
+        this.defaultRoutePage()
+    }
 
     render() {
         return (
@@ -45,32 +72,31 @@ class Login extends Component {
                         <ul className="ps-tab-list">
                             <li className="active">
                                 <Link href="/account/login">
-                                    <a>Login</a>
+                                    <a>Kirish</a>
                                 </Link>
                             </li>
                             <li>
                                 <Link href="/account/register">
-                                    <a>Register</a>
+                                    <a>Ro'yxatdan o'tish</a>
                                 </Link>
                             </li>
                         </ul>
                         <div className="ps-tab active" id="sign-in">
                             <div className="ps-form__content">
-                                <h5>Log In Your Account</h5>
+                                <h5>Profilga kirish</h5>
                                 <div className="form-group">
                                     <Form.Item
-                                        name="username"
+                                        name="phone"
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    'Please input your email!',
+                                                message: 'Telefon raqam',
                                             },
                                         ]}>
                                         <Input
                                             className="form-control"
                                             type="text"
-                                            placeholder="Username or email address"
+                                            placeholder="Telefon raqam"
                                         />
                                     </Form.Item>
                                 </div>
@@ -80,14 +106,13 @@ class Login extends Component {
                                         rules={[
                                             {
                                                 required: true,
-                                                message:
-                                                    'Please input your password!',
+                                                message: 'Parolni kiriting',
                                             },
                                         ]}>
                                         <Input
                                             className="form-control"
                                             type="password"
-                                            placeholder="Password..."
+                                            placeholder="Parol..."
                                         />
                                     </Form.Item>
                                 </div>
@@ -111,52 +136,9 @@ class Login extends Component {
                                         Login
                                     </button>
                                 </div>
+                                <p style={{paddingBottom:'15px'}} className='mb-4'>Parolni <Link href='/account/qayta-nomer-kiritish'>unutdingizmi?</Link>  </p>
                             </div>
-                            {/* <div className="ps-form__footer">
-                                <p>Connect with:</p>
-                                <ul className="ps-list--social">
-                                    <li>
-                                        <a
-                                            className="facebook"
-                                            href="#"
-                                            onClick={e =>
-                                                this.handleFeatureWillUpdate(e)
-                                            }>
-                                            <i className="fa fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            className="google"
-                                            href="#"
-                                            onClick={e =>
-                                                this.handleFeatureWillUpdate(e)
-                                            }>
-                                            <i className="fa fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            className="twitter"
-                                            href="#"
-                                            onClick={e =>
-                                                this.handleFeatureWillUpdate(e)
-                                            }>
-                                            <i className="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a
-                                            className="instagram"
-                                            href="#"
-                                            onClick={e =>
-                                                this.handleFeatureWillUpdate(e)
-                                            }>
-                                            <i className="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div> */}
+                           
                         </div>
                     </Form>
                 </div>
@@ -164,7 +146,7 @@ class Login extends Component {
         );
     }
 }
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
     return state.auth;
 };
 export default connect(mapStateToProps)(Login);

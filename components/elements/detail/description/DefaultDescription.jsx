@@ -9,12 +9,12 @@ import PartialOffer from '~/components/elements/detail/description/PartialOffer'
 
 const { TabPane } = Tabs;
 
-const DefaultDescription = () => {
+const DefaultDescription = ({product}) => {
     return (
         <div className="ps-product__content ps-tab-root">
             <Tabs defaultActiveKey="1">
                 <TabPane tab="Description" key="1">
-                    <PartialDescription />
+                    <PartialDescription product={product} />
                 </TabPane>
                 {/* <TabPane tab="Specification" key="2">
                     <PartialSpecification />

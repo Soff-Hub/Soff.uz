@@ -1,23 +1,43 @@
-import React, { Component, useEffect } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
 import ProductCart from '~/components/elements/products/ProductCart';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const Wishlist = ({ ecomerce }) => {
     const { loading, products, getProducts } = useEcomerce();
     const { addItem, removeItem } = useEcomerce();
+    const [wishlist, setWishlist] = useState([]);
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
         addItem({ id: product.id, quantity: 1 }, ecomerce.cartItems, 'cart');
+        console.log(  '../',product, ecomerce.cartItems );
     }
 
-    function handleRemoveWishlistItem(e, product) {
+      async  function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
-        removeItem(product, ecomerce.wishlistItems, 'wishlist');
+        removeItem(item, ecomerce.wishlistItems, 'wishlist');
+    
+            const responseData = await ProductRepository.WishlistDataDelete(item.id);
+            if (responseData) {
+                setWishlist(responseData);
+                console.log('shopitems/ del', responseData);
+            }
     }
+
+    async function getCategoryData() {
+        const responseData = await ProductRepository.getWishlistData();
+        if (responseData) {
+            setWishlist(responseData);
+            // console.log('shopitems/', responseData[0].document);
+        }
+    }
+
+
 
     useEffect(() => {
+        getCategoryData();
         if (ecomerce.wishlistItems) {
             getProducts(ecomerce.wishlistItems);
         }
@@ -25,44 +45,53 @@ const Wishlist = ({ ecomerce }) => {
 
     // views
     let wishlistItemsView;
-    if (products && products.length > 0) {
+    if (wishlist && wishlist.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist">
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Product name</th>
-                            <th>Unit Price</th>
-                            <th>Vendor</th>
-                            <th></th>
+                            <th>Hujjat nomi</th>
+                            <th>Narxi</th>
+                            <th className='d-flex justify-content-center '>Qo'shish</th>
+                            {/* <th></th> */}
+                            {/* <th></th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        {products.map((product) => (
-                            <tr key={product.id}>
+                        {wishlist.map((product) => (
+                            <tr key={product?.document.id}>
                                 <td>
                                     <a
                                         href="#"
                                         onClick={(e) =>
-                                            handleRemoveWishlistItem(e, product)
+                                            handleRemoveWishlistItem(
+                                                e,
+                                                product.document
+                                            )
                                         }>
                                         <i className="icon-cross"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <ProductCart product={product} />
+                                    <ProductCart product={product.document} />
                                 </td>
-                                <td className="price">${product.price}</td>
-                                <td>{product.vendor}</td>
-                                <td>
+                                <td className="price d-flex justify-content-center">
+                                    {product?.document.price}so'm
+                                </td>
+                                {/* <td>{product.vendor}</td> */}
+                                <td style={{margin: "0 auto"}} >
                                     <a
-                                        className="ps-btn"
+                                        className="ps-btn d-inline-block"
                                         href=""
                                         onClick={(e) =>
-                                            handleAddItemToCart(e, product)
+                                            handleAddItemToCart(
+                                                e,
+                                                product.document
+                                            )
                                         }>
-                                        Add to cart
+                                       Savatga qo'shish
                                     </a>
                                 </td>
                             </tr>
@@ -75,7 +104,7 @@ const Wishlist = ({ ecomerce }) => {
         if (!loading) {
             wishlistItemsView = (
                 <div className="alert alert-danger" role="alert">
-                    Wishlist is empty!
+                     Tanlaganlar yo'q!
                 </div>
             );
         }
@@ -84,7 +113,7 @@ const Wishlist = ({ ecomerce }) => {
         <div className="ps-section--shopping ps-whishlist">
             <div className="container">
                 <div className="ps-section__header">
-                    <h1>Wishlist</h1>
+                    <h1>Tanlanganlar</h1>
                 </div>
                 <div className="ps-section__content">{wishlistItemsView}</div>
             </div>

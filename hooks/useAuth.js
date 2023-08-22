@@ -1,0 +1,188 @@
+import React from 'react';
+import Repository, { baseUrlAuth } from '~/repositories/Repository';
+
+export default function useAuth() {
+    const registerUser = (url,e) => {
+        console.log(e);
+        // let endPoint = 'auth/seller-register/';
+        let user = Repository.post(baseUrlAuth + url, e)
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                // Error
+                console.log(error.response);
+                if (error.response) {
+                    // The request was made and the server responded with a status code
+                    // that falls out of the range of 2xx
+                    // console.log(error.response.data);
+                    // console.log(error.response.status);
+                    // console.log(error.response.headers);
+                    return error.response;
+                } else if (error.request) {
+                    // The request was made but no response was received
+                    // `error.request` is an instance of XMLHttpRequest in the
+                    // browser and an instance of
+                    // http.ClientRequest in node.js
+                    console.log(error.request);
+                } else {
+                    // Something happened in setting up the request that triggered an Error
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
+
+    const loginUser = (e) => {
+        console.log(e);
+        let endPoint = 'auth/login/';
+        let user = Repository.post(baseUrlAuth + endPoint, e)
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response) {
+                    return error.response;
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
+
+    const verifyCode = (e) => {
+        const endPoint = 'auth/verify/';
+        let config = {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')} `
+            }
+        }
+        let user = Repository.post(baseUrlAuth + endPoint, e, config)
+        .then((ress) => {
+            return ress;
+        })
+        .catch((error) => {
+            console.log(error.response);
+            if (error.response) {
+                return error.response;
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+        });
+
+    return user;
+    };
+
+    const NewVerifyCode = (e) => {
+        const endPoint = 'auth/reset-password-verify/';
+        let config = {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('qayta_token')} `
+            }
+        }
+        let user = Repository.post(baseUrlAuth + endPoint, e, config)
+        .then((ress) => {
+            return ress;
+        })
+        .catch((error) => {
+            console.log(error.response);
+            if (error.response) {
+                return error.response;
+            } else if (error.request) {
+                console.log(error.request);
+            } else {
+                console.log('Error', error.message);
+            }
+            console.log(error.config);
+        });
+
+    return user;
+    };
+
+
+    const qaytaKodYuborish = () => {
+        let endPoint = 'auth/get-new-code/';
+        let config = {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')} `
+            }
+        }
+        let user = Repository.get(baseUrlAuth + endPoint, config)
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response) {
+                    return error.response;
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
+
+    const qaytaRaqamYuborishAuth = (e) => {
+        let endPoint = 'auth/reset-password/';
+       
+        let user = Repository.post(baseUrlAuth + endPoint,e)
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response) {
+                    return error.response;
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
+
+    const qaytaParolYuborishAuth = (e) => {
+        let endPoint = 'auth/reset-password-confirm/';
+       let config = {
+        headers: {
+            "Authorization": `Bearer ${localStorage.getItem('qayta_token')} `
+        }
+       }
+        let user = Repository.post(baseUrlAuth + endPoint,e, config)
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response) {
+                    return error.response;
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
+
+    return { registerUser, loginUser , verifyCode, qaytaKodYuborish, qaytaRaqamYuborishAuth, NewVerifyCode, qaytaParolYuborishAuth};
+}

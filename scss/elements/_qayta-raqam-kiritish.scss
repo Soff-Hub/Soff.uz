@@ -1,0 +1,79 @@
+
+.label-before{
+  margin-bottom: 10px;
+    width: 100%;
+    font-size: 18px;
+    &::before{
+        position: absolute;
+        content: '+998';
+        top: 99px;
+        left: 15px !important;
+    }
+}
+
+
+
+.raqam-input{
+    padding-left: 59px;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #dddddd;
+    width: 100%;
+    margin-bottom: 20px;
+    &:focus{
+        border-color: #fcb800;
+        outline: none;
+        box-shadow: 0 0 0 transparent;
+    }
+    &:valid{
+        font-size: 18px;
+    }
+}
+
+.raqam-input-parol{
+    padding-left: 8px;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #dddddd;
+    width: 100%;
+    margin-bottom: 20px;
+    &:focus{
+        border-color: #fcb800;
+        outline: none;
+        box-shadow: 0 0 0 transparent;
+    }
+    &:valid{
+        font-size: 18px;
+    }
+
+}
+
+// register ni tanlash uchun tugmalarga stil
+
+.register-choose-button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 45px;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+    color: #000;
+    border: none;
+    font-weight: 600;
+    border-radius: 4px;
+    background: #fcb800 !important;
+    transition: all 0.4s ease;
+    width: 200px;
+    &:hover{
+        background-color: #222 !important;
+        color: #fff;
+    }
+}
+
+// home => top category items
+
+.top-category-items{
+    display: flex;
+    flex-direction: column;
+}

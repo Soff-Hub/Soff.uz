@@ -14,7 +14,7 @@ import HomeElectronicsPage from './home/electronic'
 
 const HomepageDefaultPage = () => {
     return (
-        <PageContainer title="Multipurpose Marketplace React Ecommerce Template">
+        <PageContainer title="Alldata - online hujjatlar bazasi">
            <HomeElectronicsPage/>
         </PageContainer>
     );

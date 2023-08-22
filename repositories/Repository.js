@@ -1,7 +1,8 @@
 import axios from 'axios';
-const baseDomain = 'http://localhost:1337'; // API for products
+const baseDomain = 'https://alldataaa.pythonanywhere.com/api/v1/'; // API for products
 export const basePostUrl = 'http://localhost:1337'; // API for post
 export const baseStoreURL = 'http://localhost:1337'; // API for vendor(store)
+export const baseUrlAuth = 'https://alldataaa.pythonanywhere.com/'
 
 export const customHeaders = {
     Accept: 'application/json',

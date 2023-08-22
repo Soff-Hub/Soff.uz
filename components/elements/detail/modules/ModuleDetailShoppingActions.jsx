@@ -3,6 +3,7 @@ import { connect, useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Modal } from 'antd';
 import useEcomerce from '~/hooks/useEcomerce';
+import PostRepo from '~/repositories/PostRepo';
 
 const ModuleDetailShoppingActions = ({
     ecomerce,
@@ -31,6 +32,7 @@ const ModuleDetailShoppingActions = ({
         setTimeout(function () {
             Router.push('/account/checkout');
         }, 1000);
+       
     }
 
     const handleAddItemToCompare = (e) => {
@@ -45,9 +47,15 @@ const ModuleDetailShoppingActions = ({
         modal.update;
     };
 
-    const handleAddItemToWishlist = (e) => {
+    const handleAddItemToWishlist = async(e) => {
         e.preventDefault();
         addItem({ id: product.id }, ecomerce.wishlistItems, 'wishlist');
+        console.log('wishlistga qoyilgan hujjat', product);
+       let data={
+        "document" : product.id
+          }
+            const dataItems = await PostRepo.getWishlistPost(data)
+            console.log(dataItems);
         const modal = Modal.success({
             centered: true,
             title: 'Success!',
@@ -95,10 +103,10 @@ const ModuleDetailShoppingActions = ({
                     className="ps-btn ps-btn--black"
                     href="#"
                     onClick={(e) => handleAddItemToCart(e)}>
-                    Add to cart
+                   Savatga qo'shish
                 </a>
                 <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
-                    Buy Now
+                    Sotib olish
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
