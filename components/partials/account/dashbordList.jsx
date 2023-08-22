@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Table } from 'antd';
+import {  Table } from 'antd';
 import dynamic from 'next/dynamic';
+import CalculateTimeDifference from './DateFormatter';
 
 function DashbordList() {
     const [data, setData] = useState([]);
+    const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
     async function GetItemsProducts() {
         const ItemsData = await GetRepository.getSellerDashbord();
@@ -22,10 +24,23 @@ function DashbordList() {
             GetItemsProductsPopular(page + 1)
         }
     }
+
+    async function GetItemsProductsOrders(page) {
+        if (page === 1) {
+            setDataOrders([])
+        }
+        const ItemsData = await GetRepository.getOrdersLists(page);
+        setDataOrders((prev) => [...prev, ...ItemsData.results]);
+        if (ItemsData.next) {
+            GetItemsProducts(page + 1)
+        }
+    }
     useEffect(() => {
         GetItemsProducts()
+        GetItemsProductsOrders(1)
         GetItemsProductsPopular(1)
     }, [])
+
     const columns = [
         {
             title: 'Nomi',
@@ -33,11 +48,11 @@ function DashbordList() {
             key: 'age',
         },
         {
-            title: 'Sotuvchi ismi',
+            title: 'Sotuvchi',
             dataIndex: 'seller',
             key: 'address',
             render: (seller) => (
-                <span>{seller?.first_name}</span>
+                <span><i className="fa-solid fa-child-reaching text-primary-emphasis"></i> {seller?.first_name}</span>
             ),
         },
         {
@@ -45,22 +60,62 @@ function DashbordList() {
             dataIndex: 'seller',
             key: 'address',
             render: (seller) => (
-                <span>{seller?.total_approved}</span>
+                <span> <i className="fa-solid fa-box"></i> {seller?.total_approved}</span>
             ),
         },
         {
-            title: 'Narx/birlik',
+            title: 'Narx',
             dataIndex: 'price',
             key: 'age',
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {price}</span>
+            ),
+        },
+    ];
+    const columnsOrders = [
+        {
+            title: 'ID',
+            dataIndex: 'id',
+            key: 'name',
         },
         {
-            title: 'Harakatlar',
-            dataIndex: 'id',
+            title: 'Buyurtmachi',
+            dataIndex: 'user',
+            key: 'age',
+            render: (user) => (
+                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-user-tie"></i> {user?.first_name}</span>
+            ),
+        },
+        {
+            title: 'Telefon raqam',
+            dataIndex: 'user',
+            key: 'age',
+            render: (user) => (
+                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-user-tie"></i> {user?.phone}</span>
+            ),
+        },
+        {
+            title: 'Narx',
+            dataIndex: 'total_price',
             key: 'address',
-            render: () => <div >
-                <a><i className="fa-solid fa-pen-to-square mx-4"></i></a>
-                <a><i className="fa-solid fa-trash"></i></a>
-            </div>
+            render: (total_price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {total_price}</span>
+            ),
+        },
+        {
+            title: 'Buyurtma sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Holat',
+            dataIndex: 'status',
+            key: 'address',
+            render: (status) => (
+                <span>{status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>)  : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> tasdiqlanganmagan</span>)}</span>
+            ),
+
         },
     ];
     const DynamicComponentWithNoSSR = dynamic(
@@ -109,10 +164,10 @@ function DashbordList() {
                             </div>
                             <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
                         </div>
-                        <h4 className='mt-5 pt-3'>${data?.all_revenue}</h4>
+                        <h4 className='mt-5 pt-3'>{data?.all_revenue}</h4>
                     </div>
                 </div>
-                <div className="row " style={{ alignItems: "flex-start" }}>
+                <div className="row pb-5" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
@@ -128,7 +183,14 @@ function DashbordList() {
                         </div>
                     </div>
                 </div>
-                <Table dataSource={dataProducts} columns={columns} className='pb-5' />
+                <div>
+                    <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
+                <Table scroll={{ x:850 }}  dataSource={dataProducts} columns={columns} className='pb-5' />
+                </div>
+              <div>
+              <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
+              <Table scroll={{ x:850 }}  dataSource={dataOrders} columns={columnsOrders} />
+              </div>
             </div>
         </section>
     );

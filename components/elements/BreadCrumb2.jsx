@@ -5,12 +5,12 @@ const BreadCrumb = ({ breacrumb }) => {
     return (
         <div className="ps-breadcrumb 2">
             <ul className="breadcrumb">
-                {breacrumb.map(item => {
+                {breacrumb.map((item, index) => {
                     if (!item.url) {
-                        return <li key={item.text}>{item.text}</li>;
+                        return <li key={index}>{item.text}</li>;
                     } else {
                         return (
-                            <li key={item.text}>
+                            <li key={index}>
                                 <Link href={item.url}>
                                     <a>{item.text}</a>
                                 </Link>

@@ -1,14 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import { Badge, Table } from 'antd';
+import { Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import ModalDelete from './Modal';
+import DeleteRepository from '~/reositoriy-admin/DeleteRepository';
+import ModalDeletePostEdit from './ModalPostEdit';
+import PostsRepository from '~/reositoriy-admin/PostsRepository';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
 
-function CategoryLists(){
+function CategoryLists() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
+    const [deleteId, setDeleteId] = useState(null);
+    const [deleteIdEdit, setDeleteIdEdit] = useState(null);
+    ;
 
     async function GetItemsProducts(page) {
         if (page === 1) {
@@ -28,10 +36,28 @@ function CategoryLists(){
         ))
         setData(filterSearch)
     }
+    async function deleteItemsId() {
+        const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId)
+        GetItemsProducts(1)
+    }
+    async function handleItemsPost(values) {
+        const postsItems = await PostsRepository.PostsCategory(values);
+        GetItemsProducts(1)
+    }
+    async function handleItemsEdit(values) {
+        const patchItems = await PatchRepository.PatchCategory(values, deleteIdEdit?.id)
+        GetItemsProducts(1)
+
+    }
+    async function handleClickChecked(item) {
+        const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id)
+        GetItemsProducts(1)
+
+        console.log(item);
+    }
     useEffect(() => {
         GetItemsProducts(1)
-    }, [])
-
+    }, []);
     const columns = [
         {
             title: 'ID',
@@ -42,8 +68,8 @@ function CategoryLists(){
             title: 'Belgi',
             dataIndex: 'icon',
             key: 'address',
-            render:(icon)=>(
-               <i className={icon}></i>
+            render: (icon) => (
+                <i className={icon}></i>
             )
         },
         {
@@ -52,42 +78,102 @@ function CategoryLists(){
             key: 'address',
         },
         {
+            title: 'Rasm',
+            dataIndex: 'image',
+            key: 'address',
+            render: (poster_url) => (
+                <div>
+                    {
+                        poster_url ?
+                            <img src={poster_url} width={54} height={54} className='rounded-3' />
+                            :
+                            <i className="fa-solid fa-image fa-2x"></i>
+                    }
+                </div>
+            ),
+        },
+        {
+            title: 'Top',
+            dataIndex: 'top',
+            key: 'address',
+            render: (top, id) => (
+                <input type='checkbox' defaultChecked={top} onChange={() => handleClickChecked(id)} />
+            )
+        },
+        {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
-            render: () => <div >
-                <a><i className="fa-solid fa-pen-to-square mx-4"></i></a>
-                <a><i className="fa-solid fa-trash"></i></a>
+            render: (id) => <div >
+                <a data-bs-target="#exampleModalTogglePosts" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
             </div>
         },
     ];
-        return (
-            <section className="ps-my-account ps-page--account">
-                <div className="container">
-                <div className="ps-section__header p-5 mb-5 rounded" style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
+    return (
+        <section className="ps-my-account ps-page--account">
+            <div className="container">
+                <div className="ps-section__header p-5 mb-5 rounded" style={{ display: "flex", flexWrap: 'wrap', justifyContent: "space-between", backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3>Kategoriya</h3>
-                    <input type='search' className='form-control rounded w-50' placeholder="Qidiruv" onInput={handleClick} />
+                    <div className='d-flex gap-5 w-75 flex-wrap'>
+                        <input type='search' className='form-control rounded w-75' placeholder="Qidiruv" onInput={handleClick} />
+                        <button className="btn btn-success " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'>Kategoriya qo'shish </span></button>
+                    </div>
                 </div>
-                    <div className="row ">
-                        <div className="col-lg-4 pb-5">
-                            <div className="ps-page__left">
-                                <AccountMenuSidebar data={accountLinks} />
-                            </div>
+                <div className="row ">
+                    <div className="col-lg-4 pb-5">
+                        <div className="ps-page__left">
+                            <AccountMenuSidebar data={accountLinks} />
                         </div>
-                        <div className="col-lg-8 pb-5">
-                            <div className="ps-page__content">
-                                <div className="ps-section--account-setting">
-                                    <div className="ps-section__content">
-                                 <Table dataSource={data} columns={columns} />
-                                    </div>
+                    </div>
+                    <div className="col-lg-8 pb-5">
+                        <div className="ps-page__content">
+                            <div className="ps-section--account-setting">
+                                <div>
+                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
-        );
-    
+
+                <ModalDelete onSuccess={deleteItemsId} />
+                <ModalDeletePostEdit dataBsTarget="exampleModalTogglePosts" onSubmited={handleItemsEdit} formID={'edit-form'}>
+                    <input
+                        type='text'
+                        placeholder="Belgi"
+                        className="form-control rounded-3"
+                        name='icon'
+                        defaultValue={deleteIdEdit?.icon}
+                    />
+                    <input
+                        type='text'
+                        placeholder="Nomi"
+                        className="form-control rounded-3"
+                        name='name'
+                        defaultValue={deleteIdEdit?.name}
+                    />
+                </ModalDeletePostEdit >
+                <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-posts'}>
+                    <input
+                        type='text'
+                        placeholder="Belgi"
+                        className="form-control rounded-3"
+                        name='icon'
+                        required
+                    />
+                    <input
+                        type='text'
+                        placeholder="Nomi"
+                        className="form-control rounded-3"
+                        name='name'
+                        required
+                    />
+                </ModalDeletePostEdit>
+            </div>
+        </section>
+    );
+
 }
 
 export default CategoryLists;

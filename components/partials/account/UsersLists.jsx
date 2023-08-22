@@ -1,16 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import { Badge, Table } from 'antd';
+import {  Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import DeleteRepository from '~/reositoriy-admin/DeleteRepository';
-import DeleteModal from './Modal';
+import ModalDelete from './Modal';
+import ModalDeletePostEdit from './ModalPostEdit';
+import PostsRepository from '~/reositoriy-admin/PostsRepository';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
 
 function OrdersLists() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
+    const [deleteId, setDeleteId] = useState(null);
+    const [deleteIdEdit, setDeleteIdEdit] = useState(null);
+    const [file, setFIle] = useState({});
+    const [selectVal, setSelectVal] = useState({});
 
     async function GetItemsUsers(page) {
         if (page === 1) {
@@ -30,48 +37,77 @@ function OrdersLists() {
         ))
         setData(filterSearch)
     }
-    async function handleClickDelete(id){
-        const ItemsDelete = await DeleteRepository.getUsersListsDelete(id)
+    async function deleteItemsId() {
+        const userDelete = await DeleteRepository.getUsersListsDelete(deleteId);
         GetItemsUsers(1)
-        }
+    }
+    async function handleItemsPost(values) {
+        const formData = new FormData()
+        formData.append('image', file)
+        formData.append('first_name', values.first_name)
+        formData.append('phone', values.phone)
+        formData.append('auth_status', selectVal)
+        const postsItems = await PostsRepository.PostsUsers(formData);
+        GetItemsUsers(1)
+    }
+    async function handleItemsEdit(values) {
+        const formData = new FormData()
+        formData.append('image', file)
+        formData.append('first_name', values.first_name)
+        formData.append('phone', values.phone)
+        formData.append('auth_status', selectVal)
+        const patchItems = await PatchRepository.PatchUsers(formData, deleteIdEdit?.id)
+        GetItemsUsers(1)
+    }
+    const handleSelectFileFile = (e) => {
+        setFIle(e.target.files[0])
+    };
+
+
     useEffect(() => {
         GetItemsUsers(1)
     }, [])
-
     const columns = [
         {
             title: 'Avatar',
             dataIndex: 'image',
             key: 'name',
-            render:(image)=>(
-                <img src={image}  width={54} height={54} />
-            )
+            render: (image) => (
+                <div>
+                    {
+                        image ?
+                        <img src={image}  width={54} height={54}/>
+                        :
+                        <i className="fa-solid fa-image fa-2x"></i>
+                    }
+                </div>
+              ),
         },
         {
             title: 'Ism',
             dataIndex: 'first_name',
             key: 'age',
-
+            render: (title) => (
+                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-user-tie"></i> {title}</span>
+                
+            ),
         },
         {
             title: 'Telefon raqam',
             dataIndex: 'phone',
             key: 'address',
+            render: (title) => (
+                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-phone-volume"></i> {title}</span>
+                
+            ),
         },
         {
             title: 'Holat',
             dataIndex: 'auth_status',
             key: 'address',
             render: (auth_status) => (
-                <Badge
-                    text={auth_status}
-                    color={
-                        auth_status === 'new'
-                            ? 'green'
-                            : 'red'
-                    }
-                />
-            ),
+                <span>{auth_status==='code_verified'? (<span><i className="fa-solid text-success fa-circle-check"></i> Faol</span>)  : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Faol emas</span>)}</span>
+            )
 
         },
         {
@@ -79,8 +115,8 @@ function OrdersLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a><i className="fa-solid fa-pen-to-square mx-4"></i></a>
-                <a><i className="fa-solid fa-trash" onClick={()=>handleClickDelete(id)}></i></a>
+                <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
             </div>
         },
     ];
@@ -89,7 +125,10 @@ function OrdersLists() {
             <div className="container">
                 <div className="ps-section__header p-5 mb-5 rounded" style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3>Xaridorlar</h3>
-                    <input type='search' className='form-control rounded w-50' placeholder="Qidiruv" onInput={handleClick} />
+                    <div className='d-flex gap-5 w-75 flex-wrap'>
+                        <input type='search' className='form-control rounded w-75' placeholder="Qidiruv" onInput={handleClick} />
+                        <button className="btn btn-success " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor qo'shish </span></button>
+                    </div>
                 </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
@@ -107,7 +146,66 @@ function OrdersLists() {
                         </div>
                     </div>
                 </div>
-                {/* <DeleteModal/> */}
+                <ModalDelete onSuccess={deleteItemsId} />
+                <ModalDeletePostEdit dataBsTarget="exampleModalTogglEdit" onSubmited={handleItemsEdit} formID={'edit-form-users'}>
+                    <input
+                        type='file'
+                        placeholder="Belgi"
+                        className="form-control pt-4 rounded-3"
+                        onChange={handleSelectFileFile}
+                        defaultValue={deleteIdEdit?.image}
+                    />
+                    <input
+                        type='text'
+                        placeholder="Ism"
+                        className="form-control rounded-3"
+                        name='first_name'
+                        defaultValue={deleteIdEdit?.first_name}
+                    />
+                    <input
+                        type='tel'
+                        placeholder="Telefon raqam"
+                        className="form-control rounded-3"
+                        name='phone'
+                        defaultValue={deleteIdEdit?.phone}
+                    />
+                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
+                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
+                        <option className='fs-3' value="new">Faol emas</option>
+                        <option className='fs-3' value="code_verified">Faol</option>
+                    </select>
+                </ModalDeletePostEdit >
+                <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>
+                    <input
+                        type='file'
+                        placeholder="Belgi"
+                        className="form-control pt-4 rounded-3"
+                        onChange={handleSelectFileFile}
+                        required
+                    />
+                    <input
+                        type='text'
+                        placeholder="Ism"
+                        className="form-control rounded-3"
+                        name='first_name'
+                        required
+
+                    />
+                    <input
+                        type='tel'
+                        placeholder="Telefon raqam"
+                        className="form-control rounded-3"
+                        name='phone'
+                        defaultValue="+998"
+                        required
+
+                    />
+                    <select required className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
+                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
+                        <option className='fs-3' value="new">Faol emas</option>
+                        <option className='fs-3' value="code_verified">Faol</option>
+                    </select>
+                </ModalDeletePostEdit>
             </div>
         </section>
     );

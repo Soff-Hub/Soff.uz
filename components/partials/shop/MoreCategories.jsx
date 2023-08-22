@@ -30,8 +30,8 @@ const MoreCategories = ({ data }) => (
                             <div className="ps-block__content">
                                 <h4>{category.title}</h4>
                                 <ul>
-                                    {category.links.map(item => (
-                                        <li key={item}>
+                                    {category.links.map((item, index) => (
+                                        <li key={index}>
                                             <Link href="/shop">
                                                 <a>{item}</a>
                                             </Link>

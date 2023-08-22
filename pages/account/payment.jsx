@@ -9,33 +9,12 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Newletters from '~/components/partials/commons/Newletters';
 
 const PaymentPage = () => {
-    const breadCrumb = [
-        {
-            text: 'Home',
-            url: '/',
-        },
-        {
-            text: 'Shopping Cart',
-            url: '/account/shopping-cart',
-        },
-        {
-            text: 'Checkout Information',
-            url: '/account/checkout',
-        },
-        {
-            text: 'Payment',
-        },
-    ];
 
     return (
         <>
-            <PageContainer footer={<FooterDefault />} title="Payment">
-                <div className="ps-page--simple">
-                    <BreadCrumb breacrumb={breadCrumb} />
+            <div title="Payment">
                     <Payment />
-                </div>
-                <Newletters layout="container" />
-            </PageContainer>
+            </div>
         </>
     );
 };

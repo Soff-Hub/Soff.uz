@@ -44,44 +44,44 @@ function OrdersLists() {
             dataIndex: 'user',
             key: 'age',
             render: (user) => (
-                <span className="truncate whitespace-nowrap">{user?.first_name}</span>
+                <span className="truncate whitespace-nowrap"> {user?.first_name}</span>
             ),
         },
         {
-            title: 'Jami',
+            title: 'Telefon raqam',
+            dataIndex: 'user',
+            key: 'age',
+            render: (user) => (
+                <span className="truncate whitespace-nowrap"> {user?.phone}</span>
+            ),
+        },
+        {
+            title: 'Narx',
             dataIndex: 'total_price',
             key: 'address',
+            render: (total_price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {total_price}</span>
+            ),
         },
         {
             title: 'Buyurtma sanasi',
             dataIndex: 'created_at',
             key: 'address',
-            render: (created_at) => <CalculateTimeDifference targetDate={created_at} />
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Buyurtma kategoriya',
+            dataIndex: 'title',
+            key: 'address',
         },
         {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',
             render: (status) => (
-                <Badge
-                    text={status}
-                    color={
-                        status === 'approved'
-                            ? 'green'
-                            : 'red'
-                    }
-                />
+                <span>{status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>)  : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> tasdiqlanganmagan</span>)}</span>
             ),
 
-        },
-        {
-            title: 'Harakatlar',
-            dataIndex: 'id',
-            key: 'address',
-            render: () => <div >
-                <a><i className="fa-solid fa-pen-to-square mx-4"></i></a>
-                <a><i className="fa-solid fa-trash"></i></a>
-            </div>
         },
     ];
     return (
@@ -91,7 +91,7 @@ function OrdersLists() {
                     <h3>Buyurtmalar</h3>
                     <input type='search' className='form-control rounded w-50' placeholder="Qidiruv" onInput={handleClick} />
                 </div>
-                <div className="row " style={{ alignItems: "flex-start" }}>
+                <div className="row pb-5 " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
@@ -100,8 +100,8 @@ function OrdersLists() {
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div className="ps-section__content">
-                                    <Table dataSource={data} columns={columns} />
+                                <div >
+                                    <Table scroll={{ x:1000 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>

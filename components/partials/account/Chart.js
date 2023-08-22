@@ -1,60 +1,88 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Column } from '@ant-design/plots';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 const Chart = () => {
+    const [tableData, setTableData] = useState([]);
+
+    function getMonthName(monthNumber) {
+        let monthName;
+        const date = monthNumber.split('-');
+        switch (date?.[1]) {
+            case '01':
+                monthName = 'Jan';
+                break;
+            case '02':
+                monthName = 'Feb';
+                break;
+            case '03':
+                monthName = 'Mar';
+                break;
+            case '04':
+                monthName = 'Apr';
+                break;
+            case '05':
+                monthName = 'May';
+                break;
+            case '06':
+                monthName = 'Jun';
+                break;
+            case '07':
+                monthName = 'Jul';
+                break;
+            case '08':
+                monthName = 'Aug';
+                break;
+            case '09':
+                monthName = 'Sep';
+                break;
+            case '10':
+                monthName = 'Oct';
+                break;
+            case '11':
+                monthName = 'Nov';
+                break;
+            case '12':
+                monthName = 'Dec';
+                break;
+            default:
+                monthName = 'bunaqa oy yuq'; // If an invalid month name is provided
+                break;
+        }
+        return monthName;
+    }
+    function getDayName(monthNumber) {
+        const date = monthNumber.split('-');
+        const day = date[2].split('T')
+        return day[0];
+    }
+    async function getChartItems() {
+        const ItemsChartData = await GetRepository.getChartLists();
+        const objData = []
+        if (ItemsChartData ) {
+            if (ItemsChartData.length>1) {
+                ItemsChartData.map((el) => {
+                    return objData.push({
+                        type: getMonthName(el.month),
+                        sales: el.total,
+                    });
+                });
+            }
+            else{
+                ItemsChartData.map((el) => {
+                    return objData.push({
+                        type: getDayName(el.month),
+                        sales: el.total,
+                    });
+                });
+            }
+        }
+
+        setTableData(objData);
+    }
     const DemoColumn = () => {
-        const data = [
-            {
-                type: 'Yanvar',
-                sales: 20,
-            },
-            {
-                type: 'Fevral',
-                sales: 32,
-            },
-            {
-                type: 'Mart',
-                sales: 41,
-            },
-            {
-                type: 'Aprel',
-                sales: 51,
-            },
-            {
-                type: 'May',
-                sales: 61,
-            },
-            {
-                type: 'Iyun',
-                sales: 71,
-            },
-            {
-                type: 'Iyul',
-                sales: 80,
-            },
-            {
-                type: 'Avgust',
-                sales: 71,
-            },
-            {
-                type: 'Sentabr',
-                sales: 61,
-            },
-            {
-                type: 'Okatbr',
-                sales: 51,
-            },
-            {
-                type: 'Noyabr',
-                sales: 41,
-            },
-            {
-                type: 'Dekabr',
-                sales: 32,
-            },
-        ];
         const config = {
-            data,
+            data: tableData || [],
             xField: 'type',
             yField: 'sales',
             label: {
@@ -82,11 +110,14 @@ const Chart = () => {
         };
         return <Column {...config} />;
     };
-    return (
-        <div>
-            <DemoColumn />
-        </div>
-    );
+    useEffect(() => {
+        getChartItems();
+    }, []);
+    return <div>
+        {
+            tableData ? <DemoColumn /> : <></>
+        }
+    </div>;
 };
 
 export default Chart;

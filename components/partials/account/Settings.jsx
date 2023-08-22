@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
-import { Form, Input, Radio, DatePicker } from 'antd';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import TableNotifications from './modules/TableNotifications';
-import { actionChannel } from 'redux-saga/effects';
-import { actionTypes } from '~/store/ecomerce/action';
 import { accountLinks } from './modules/AccountLinks';
+import Payment from '~/pages/account/payment';
 
 class Notifications extends Component {
     constructor(props) {
@@ -16,7 +12,7 @@ class Notifications extends Component {
         return (
             <section className="ps-my-account ps-page--account">
                 <div className="container">
-                    <div className="row">
+                    <div className="row pb-5" style={{ alignItems: "flex-start" }}>
                         <div className="col-lg-4">
                             <div className="ps-page__left">
                                 <AccountMenuSidebar data={accountLinks} />
@@ -25,11 +21,8 @@ class Notifications extends Component {
                         <div className="col-lg-8">
                             <div className="ps-page__content">
                                 <div className="ps-section--account-setting">
-                                    <div className="ps-section__header">
-                                        <h3>Sozlamalar</h3>
-                                    </div>
                                     <div className="ps-section__content">
-                                        <TableNotifications />
+                                        <Payment />
                                     </div>
                                 </div>
                             </div>

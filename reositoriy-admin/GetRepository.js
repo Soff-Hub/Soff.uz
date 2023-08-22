@@ -1,4 +1,4 @@
-import Repository, { baseUrl } from "./Repository";
+import Repository, { baseUrl, baseUrlUsers } from "./Repository";
 
 class GetRepository {
     
@@ -41,8 +41,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShopsProducts(page) {
-        const endPoint = `admin/product-list/?page=${page}`;
+    async getShopsProducts(page, category, dataValStatus, date, id) {
+        const endPoint =  `admin/product-list/${id ? id + "/" : ""}?page=${page}&category=${category || ''}&created_at=${date || ""}&status=${dataValStatus || ''}`
         const reponse = await Repository.get(baseUrl+endPoint)
             .then((response) => {
                 if (response.status===200) {
@@ -55,7 +55,7 @@ class GetRepository {
         return reponse;
     }
     async getMyProducts(page) {
-        const endPoint = `product-list/1`;
+        const endPoint = `product-list/?page=${page}`;
         const reponse = await Repository.get(baseUrl+endPoint)
             .then((response) => {
                 if (response.status===200) {
@@ -95,6 +95,19 @@ class GetRepository {
     }
     async getUsersLists(page) {
         const endPoint = `admin/customer-list/?page=${page}`;
+        const reponse = await Repository.get(baseUrl+endPoint)
+            .then((response) => {
+                if (response.status===200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getChartLists() {
+        const endPoint = `SellerMonthlySales/`;
         const reponse = await Repository.get(baseUrl+endPoint)
             .then((response) => {
                 if (response.status===200) {

@@ -29,7 +29,6 @@ class Login extends Component {
     }
 
     handleLoginSubmit = e => {
-        console.log('test');
         this.props.dispatch(login());
         Router.push('/');
 

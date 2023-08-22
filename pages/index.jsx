@@ -40,5 +40,4 @@ const HomepageDefaultPage = () => {
         </PageContainer>
     );
 };
-
 export default HomepageDefaultPage;
