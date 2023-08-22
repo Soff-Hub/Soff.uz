@@ -6,6 +6,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import Newsletters from '~/components/partials/commons/Newletters';
 import useGetProducts from '~/hooks/useGetProducts';
 import { useRouter } from 'next/router';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const SearchPage = () => {
     const [pageSize] = useState(100);
@@ -14,15 +15,43 @@ const SearchPage = () => {
     const Router = useRouter();
     const { query } = Router;
 
+    const [data, setData] = useState([]);
+    const [resultdata, setresultData] = useState([]);
+
+    async function getSearchData() {
+        const responseData = await ProductRepository.getRecordsSearch();
+        if (responseData) {
+            console.log(responseData);
+            setData(responseData);
+        }
+    }
+
+
+    // document.addEventListener("keydown", function(event) {
+    //     if(event.key === "Enter" && query != ''){
+    //         getSearchData()
+    //     }
+    //   })
+      
+
+
     function handleSetKeyword() {
         if (query && query.keyword !== '') {
             setKeyword(query.keyword);
+
+            console.log(query.keyword);
         } else {
             setKeyword('');
         }
     }
 
     useEffect(() => {
+        getSearchData();
+        let result = data.filter((item) => {
+            return item.title.toLowerCase().includes(keyword.toLowerCase());
+        });
+        setresultData(result);
+        // console.log('//??', result);
         if (query && query.keyword) {
             handleSetKeyword(query.keyword);
             const queries = {
@@ -39,18 +68,23 @@ const SearchPage = () => {
             url: '/',
         },
         {
-            text: 'Search Result',
+
+            text: 'Qidiruv natijalari',
         },
     ];
-
+    // console.log(resultdata);
     let shopItemsView, statusView;
-    if (!loading) {
-        if (productItems) {
+    if (loading) {
+        if (resultdata) {
             shopItemsView = (
-                <ProductGroupGridItems columns={6} pageSize={pageSize} />
+                <ProductGroupGridItems
+                    data={resultdata}
+                    columns={6}
+                    pageSize={pageSize}
+                />
             );
-            if (productItems.length > 0) {
-                const items = productItems.map((item) => {
+            if (resultdata) {
+                const items = resultdata.map((item) => {
                     return (
                         <div className="col-md-3 col-sm-6 col-6" key={item.id}>
                             <Product product={item} />
@@ -63,19 +97,20 @@ const SearchPage = () => {
                 statusView = (
                     <p>
                         <strong style={{ color: '#000' }}>
-                            {productItems.length}
+
+                            {resultdata.length}
                         </strong>{' '}
-                        record(s) found.
+                        yozuv(lar) topildi.
                     </p>
                 );
             } else {
-                shopItemsView = <p>No product(s) found.</p>;
+                shopItemsView = <p>Hujjat(lar) topilmadi.</p>;
             }
         } else {
-            shopItemsView = <p>No product(s) found.</p>;
+            shopItemsView = <p>Hujjat(lar) topilmadi.</p>;
         }
     } else {
-        statusView = <p>Searching...</p>;
+        statusView = <p>Qidiruv...</p>;
     }
 
     return (
@@ -88,7 +123,8 @@ const SearchPage = () => {
                     <div className="container">
                         <div className="ps-shop__header">
                             <h1>
-                                Search result for: "<strong>{keyword}</strong>"
+
+                                Qidiruv uchun: "<strong>{keyword}</strong>"
                             </h1>
                         </div>
                         <div className="ps-shop__content">
@@ -98,7 +134,8 @@ const SearchPage = () => {
                     </div>
                 </div>
             </div>
-            <Newsletters layout="container" />
+
+            {/* <Newsletters layout="container" /> */}
         </PageContainer>
     );
 };

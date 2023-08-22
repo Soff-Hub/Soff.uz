@@ -98,7 +98,8 @@ export default function useEcomerce() {
                 const existItem = items.find((item) => item.id === newItem.id);
                 if (existItem) {
                     if (group === 'cart') {
-                        existItem.quantity += newItem.quantity;
+
+                        existItem.quantity += 1
                     }
                 } else {
                     newItems.push(newItem);

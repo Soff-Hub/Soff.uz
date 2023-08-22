@@ -10,34 +10,41 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Newletters from '~/components/partials/commons/Newletters';
 
+import ShopItems from '~/components/partials/shop/ShopItems';
+
 const ProductCategoryScreen = () => {
     const Router = useRouter();
     const { slug } = Router.query;
-    const [category, setCategory] = useState(null);
-    const [loading, setLoading] = useState(false);
 
+    // console.log('category id', slug);
+    const [category, setCategory] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [detail_arr, setDetail_arr] = useState([]);
+    const [obj, setObj] = useState({});
     async function getCategry() {
-        setLoading(true);
-        if (slug) {
-            const responseData = await ProductRepository.getProductsByCategory(
-                slug
-            );
-            if (responseData) {
-                setCategory(responseData);
-                setTimeout(
-                    function () {
-                        setLoading(false);
-                    }.bind(this),
-                    250
-                );
-            }
-        } else {
-            await Router.push('/shop');
+        const responseData = await ProductRepository.getRelatedProduct(slug);
+        if (responseData) {
+            // console.log(`${slug} id li malumotlar`, responseData);
+            setCategory(responseData);
+        }
+    }
+
+    async function getCategoryData(params) {
+        const responseData = await ProductRepository.getTotalRecords();
+        if (responseData) {
+            setCategory(responseData);
+            console.log('shopitems/', responseData);
+            let arr = responseData.find((item) => item.id == Number(slug));
+            setDetail_arr(arr?.promotional_sliders);
+            setObj(arr);
+            console.log('promotion', detail_arr);
         }
     }
 
     useEffect(() => {
         getCategry();
+
+        getCategoryData();
     }, [slug]);
 
     const breadCrumb = [
@@ -45,12 +52,10 @@ const ProductCategoryScreen = () => {
             text: 'Home',
             url: '/',
         },
+
+
         {
-            text: 'Shop',
-            url: '/',
-        },
-        {
-            text: category ? category.name : 'Product category',
+            text: obj ? obj.name : 'Product category',
         },
     ];
 
@@ -58,9 +63,10 @@ const ProductCategoryScreen = () => {
     let productItemsViews;
 
     if (!loading) {
-        if (category && category.products.length > 0) {
+
+        if (category && category.length > 0) {
             productItemsViews = (
-                <ProductItems columns={4} products={category.products} />
+                <ProductItems columns={4} products={category} />
             );
         } else {
             productItemsViews = <p>No Product found</p>;
@@ -79,20 +85,26 @@ const ProductCategoryScreen = () => {
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories />
-                            <WidgetShopBrands />
-                            <WidgetShopFilterByPriceRange />
+                            <WidgetShopCategories data={category} />
+                            <WidgetShopFilterByPriceRange
+                                data={detail_arr}
+                                setDetail_arr={setDetail_arr}
+                            />
                         </div>
                         <div className="ps-layout__right">
-                            <h3 className="ps-shop__heading">
+                            <ShopItems
+                                data={detail_arr}
+                                columns={6}
+                                pageSize={18}
+                            />
+                            {/* <h3 className="ps-shop__heading">
                                 {category && category.name}
                             </h3>
-                            {productItemsViews}
+                            {productItemsViews} */}
                         </div>
                     </div>
                 </div>
             </div>
-            <Newletters layout="container" />
         </PageContainer>
     );
 };

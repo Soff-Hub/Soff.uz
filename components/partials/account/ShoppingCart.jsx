@@ -5,6 +5,8 @@ import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerc
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 
 const ShoppingCart = ({ source }) => {
+
+    // console.log(source)
     const [cartItems, setCartItems] = useState(null);
 
     useEffect(() => {

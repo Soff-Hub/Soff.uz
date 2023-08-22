@@ -130,7 +130,8 @@ class OrganicClientSay extends Component {
                             </div>
                             <div className="ps-block--testimonial">
                                 <div className="ps-block__header">
-                                    <img src="/static/img/users/log.jpg" alt="martfury" />
+
+                                    <img src="/static/img/users/3.jpg" alt="martfury" />
                                 </div>
                                 <div className="ps-block__content">
                                     <i className="icon-quote-close"></i>

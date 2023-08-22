@@ -23,7 +23,8 @@ const LoginPage = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Login />
                 </div>
-                <Newletters layout="container" />
+
+                {/* <Newletters layout="container" /> */}
             </PageContainer>
         </>
     );

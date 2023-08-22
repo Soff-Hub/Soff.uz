@@ -18,31 +18,6 @@ class ElectronicBestSeller extends Component {
                         <ul className="ps-section__links">
                             <li>
                                 <Link href="/shop">
-                                    <a>Top 20</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/shop">
-                                    <a>TV Televisions</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/shop">
-                                    <a>Speakers</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/shop">
-                                    <a>Air Conditions</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/shop">
-                                    <a>Cameras & Videos</a>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="/shop">
                                     <a>View All</a>
                                 </Link>
                             </li>

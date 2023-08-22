@@ -4,15 +4,20 @@ import HeaderDefault from '~/components/shared/headers/HeaderDefault';
 import HeaderMobile from '~/components/shared/headers/HeaderMobile';
 import FooterFullwidth from '~/components/shared/footers/FooterFullwidth';
 
+import HeaderElectronic from '../shared/headers/HeaderElectronic';
+import HeaderMobileElectronic from '../shared/headers/HeaderMobileElectronic';
+import FooterSecond from '../shared/footers/FooterSecond';
+
 const initHeaders = (
     <>
-        <HeaderDefault />
-        <HeaderMobile />
+        <HeaderElectronic />
+        <HeaderMobileElectronic />
     </>
 );
 const initFooters = (
     <>
-        <FooterFullwidth />
+
+        <FooterSecond />
     </>
 );
 

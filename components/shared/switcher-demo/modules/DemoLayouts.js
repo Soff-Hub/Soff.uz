@@ -59,8 +59,9 @@ const DemoLayouts = () => {
     return (
         <div className="ps-section__items">
             <div className="row">
-                {pages.map((item, index) => (
-                    <div className="col-xl-2 col-lg-3" key={index}>
+
+                {pages.map(item => (
+                    <div className="col-xl-2 col-lg-3" key={item.text}>
                         <DemoItem data={item} />
                     </div>
                 ))}

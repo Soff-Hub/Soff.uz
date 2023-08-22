@@ -4,14 +4,17 @@ export const actionTypes = {
     LOGOUT: 'LOGOUT',
     LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
     CHECK_AUTHORIZATION: 'CHECK_AUTHORIZATION',
+
+    ISLOGINNING: 'ISLOGINNING'
 };
 
-export function login() {
-    return { type: actionTypes.LOGIN_REQUEST };
+export function login({ user }) {
+    console.log(user);
+    return { type: actionTypes.LOGIN_REQUEST, user };
 }
 
-export function loginSuccess() {
-    return { type: actionTypes.LOGIN_SUCCESS };
+export function loginSuccess({ user }) {
+    return { type: actionTypes.LOGIN_SUCCESS, user };
 }
 
 export function logOut() {
@@ -20,4 +23,9 @@ export function logOut() {
 
 export function logOutSuccess() {
     return { type: actionTypes.LOGOUT_SUCCESS };
+}
+
+
+export function isLoginning() {
+    return { type: actionTypes.ISLOGINNING };
 }

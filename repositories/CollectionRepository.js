@@ -2,6 +2,24 @@ import Repository, { baseUrl } from './Repository';
 
 class CollectionRepository {
 
+    async getCategoryData(slug) {
+        const reponse = await Repository.get(`${baseUrl}${slug}` )
+            .then((response) => {
+                if (response.data ) {
+                    return response.data.results
+                } else {
+                    return null;
+                }
+                return response.data;
+            })
+            .catch((error) => {
+                console.log(JSON.stringify(error));
+                return null;
+            });
+        return reponse;
+    }
+
+
     async getProductsByCollectionSlug(slug) {
         const reponse = await Repository.get(
             `${baseUrl}/collections?slug_in=${slug}`
@@ -39,6 +57,8 @@ class CollectionRepository {
             });
         return reponse;
     }
+
+  
 }
 
 export default new CollectionRepository();

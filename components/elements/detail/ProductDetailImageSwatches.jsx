@@ -79,7 +79,7 @@ class ProductDetailImageSwatches extends Component {
                                                                     src={
                                                                         item.image
                                                                     }
-                                                                    alt="martfury"
+                                                                    alt="alldata"
                                                                 />
                                                             </a>
                                                         </div>
@@ -109,7 +109,8 @@ class ProductDetailImageSwatches extends Component {
                                             <div className="item" key={item.id}>
                                                 <img
                                                     src={item.image}
-                                                    alt="martfury"
+
+                                                    alt="alldata"
                                                 />
                                             </div>
                                         ))}
@@ -175,7 +176,8 @@ class ProductDetailImageSwatches extends Component {
                                             </span>
                                             <img
                                                 src={variant.image}
-                                                alt="martfury"
+
+                                                alt="alldata"
                                             />
                                         </div>
                                     );
@@ -208,7 +210,8 @@ class ProductDetailImageSwatches extends Component {
                             </figure>
                         </div>
                         <div className="ps-product__shopping">
-                            <figure>
+
+                            {/* <figure>
                                 <figcaption>Quantity</figcaption>
                                 <div className="form-group--number">
                                     <button className="up">
@@ -223,7 +226,8 @@ class ProductDetailImageSwatches extends Component {
                                         placeholder="1"
                                     />
                                 </div>
-                            </figure>
+
+                            </figure> */}
                             <a className="ps-btn ps-btn--black" href="#">
                                 Add to cart
                             </a>
@@ -234,9 +238,10 @@ class ProductDetailImageSwatches extends Component {
                                 <a href="#">
                                     <i className="icon-heart"></i>
                                 </a>
-                                <a href="#">
+
+                                {/* <a href="#">
                                     <i className="icon-chart-bars"></i>
-                                </a>
+                                </a> */}
                             </div>
                         </div>
                         <div className="ps-product__specification">

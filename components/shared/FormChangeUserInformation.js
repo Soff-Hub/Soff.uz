@@ -1,10 +1,12 @@
 import React from 'react';
+import { DatePicker, Form, Input, Radio } from 'antd';
 
 const FormChangeUserInformation = () => {
     return (
         <form className="ps-form--account-setting">
             <div className="ps-form__header">
-                <h3>Boshqaruv paneli</h3>
+
+                <h3>Account Information</h3>
             </div>
             <div className="ps-form__content">
                 <div className="form-group">

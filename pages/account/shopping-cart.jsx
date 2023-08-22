@@ -10,6 +10,8 @@ import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 
 const ShoppingCartScreen = ({ ecomerce }) => {
+
+    console.log(ecomerce);
     const { products, getProducts } = useEcomerce();
 
     useEffect(() => {

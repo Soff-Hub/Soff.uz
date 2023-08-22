@@ -12,7 +12,7 @@ const AccountNotificationsPage = () => {
             url: '/',
         },
         {
-            text: 'Bildirishnomalar',
+            text: 'Notifications',
         },
     ];
     return (

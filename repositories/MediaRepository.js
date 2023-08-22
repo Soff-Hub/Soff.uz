@@ -3,29 +3,32 @@ import Repository, { baseUrl } from './Repository';
 class MediaRespository {
 
     async getBannersBySlug(payload) {
-        const endPoint = `banners?slug_in=${payload}`;
+        const endPoint = `customer/banner/`;
 
         const reponse = await Repository.get(`${baseUrl}/${endPoint}`)
             .then((response) => {
                 if (response.data) {
-                    return response.data[0].items;
+
+                    return response.data.results    
                 } else {
                     return null;
                 }
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
+
                 return null;
             });
         return reponse;
     }
 
-    async getPromotionsBySlug(payload) {
-        const endPoint = `promotions?slug_in=${payload}`;
-        const reponse = await Repository.get(`${baseUrl}/${endPoint}`)
+
+    async getTwoBannersData() {
+        const endPoint = `customer/reklama/`;
+        const reponse = await Repository.get(`${baseUrl}${endPoint}`)
             .then((response) => {
                 if (response.data) {
-                    return response.data[0].items;
+                    console.log(response);
+                    return response.data.results;
                 } else {
                     return null;
                 }

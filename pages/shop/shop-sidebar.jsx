@@ -29,24 +29,27 @@ const ShopSidebarPage = () => {
                         <div className="ps-layout--shop">
                             <div className="ps-layout__left">
                                 <WidgetShopCategories />
-                                <WidgetShopBrands />
+
+                                {/* <WidgetShopBrands /> */}
                                 <WidgetShopFilterByPriceRange />
                             </div>
                             <div className="ps-layout__right">
                                 <div className="ps-page__header">
                                     <h1>Shop Sidebar</h1>
-                                    <ShopSidebarBanner />
+
+                                    {/* <ShopSidebarBanner /> */}
                                 </div>
-                                <ProductGroupByCarousel
+                                {/* <ProductGroupByCarousel
                                     collectionSlug="shop-best-seller-items"
                                     title="Best Sale Items"
-                                />
+                                /> */}
                                 <ShopItems columns={4} pageSize={12} />
                             </div>
                         </div>
                     </div>
                 </div>
-                <Newletters layout="container" />
+
+                {/* <Newletters layout="container" /> */}
             </PageContainer>
         </>
     );

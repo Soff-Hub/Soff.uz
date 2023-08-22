@@ -15,14 +15,16 @@ const HeaderActionsSimple = (props) => {
     }
     return (
         <div className="header__actions">
-            <Link href="/account/compare">
+
+            {/* <Link href="/account/compare">
                 <a className="header__extra">
                     <i className="icon-chart-bars"></i>
                     <span>
                         <i>{compare ? compare.compareTotal : 0}</i>
                     </span>
                 </a>
-            </Link>
+
+            </Link> */}
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>

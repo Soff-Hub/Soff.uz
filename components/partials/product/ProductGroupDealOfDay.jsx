@@ -56,7 +56,8 @@ const ProductGroupDealOfDay = ({
 
     return (
         <div className="ps-deal-of-day">
-            <div className={boxed ? 'container' : 'ps-container'}>
+
+            {/* <div className={boxed ? 'container' : 'ps-container'}>
                 <div className="ps-section__header">
                     <div className="ps-block--countdown-deal">
                         <div className="ps-block__left">
@@ -77,7 +78,7 @@ const ProductGroupDealOfDay = ({
                     </Link>
                 </div>
                 <div className="ps-section__content">{productItemsView}</div>
-            </div>
+            </div> */}
         </div>
     );
 };

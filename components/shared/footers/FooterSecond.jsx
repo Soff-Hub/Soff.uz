@@ -6,9 +6,10 @@ const FooterSecond = ({ classes }) => (
         <div className="container">
             <div className="ps-footer__content">
                 <div className="row">
-                    <div className="col-xl-8">
+
+                    <div className="col-xl-12">
                         <div className="row">
-                            <div className="col-md-4 col-sm-6">
+                            <div className="col-md-3 col-sm-6 text-center">
                                 <aside className="widget widget_footer">
                                     <h4 className="widget-title">
                                         Quick links
@@ -42,7 +43,8 @@ const FooterSecond = ({ classes }) => (
                                     </ul>
                                 </aside>
                             </div>
-                            <div className="col-md-4 col-sm-6">
+
+                            <div className="col-md-3 col-sm-6 text-center">
                                 <aside className="widget widget_footer">
                                     <h4 className="widget-title">Company</h4>
                                     <ul className="ps-list--link">
@@ -69,7 +71,35 @@ const FooterSecond = ({ classes }) => (
                                     </ul>
                                 </aside>
                             </div>
-                            <div className="col-md-4 col-sm-6">
+
+                            <div className="col-md-3 col-sm-6 text-center">
+                                <aside className="widget widget_footer">
+                                    <h4 className="widget-title">Bussiness</h4>
+                                    <ul className="ps-list--link">
+                                        <li>
+                                            <Link href="/blog">
+                                                <a>Our Press</a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href="/account/checkout">
+                                                <a>Checkout</a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href="/account/login">
+                                                <a>My account</a>
+                                            </Link>
+                                        </li>
+                                        <li>
+                                            <Link href="/shop">
+                                                <a>Shop</a>
+                                            </Link>
+                                        </li>
+                                    </ul>
+                                </aside>
+                            </div>
+                            <div className="col-md-3 col-sm-6 text-center">
                                 <aside className="widget widget_footer">
                                     <h4 className="widget-title">Bussiness</h4>
                                     <ul className="ps-list--link">
@@ -99,7 +129,8 @@ const FooterSecond = ({ classes }) => (
                         </div>
                     </div>
 
-                    <div className="col-xl-4 col-md-6">
+
+                    {/* <div className="col-xl-4 col-md-6">
                         <aside className="widget widget_newletters">
                             <h4 className="widget-title">Newsletter</h4>
                             <form
@@ -140,30 +171,34 @@ const FooterSecond = ({ classes }) => (
                                 </ul>
                             </form>
                         </aside>
-                    </div>
+
+                    </div> */}
                 </div>
             </div>
             <div className="ps-footer__copyright">
-                <p>&copy;2021 Martfury. All Rights Reserved</p>
+                <p>&copy;  2021 alldata. Barcha huquqlar himoyalangan</p>
                 <p>
-                    <span>We Using Safe Payment For:</span>
+                    <span> Biz xavfsiz to'lovdan foydalanamiz:</span>
                     <Link href="/page/blank">
                         <a>
                             <img
-                                src="/static/img/payment-method/1.jpg"
+                                src="/static/img/payment-method/click_logo.png"
                                 alt="martfury"
+                                style={{height:'35px'}}
                             />
                         </a>
                     </Link>
                     <Link href="/page/blank">
                         <a>
                             <img
-                                src="/static/img/payment-method/2.jpg"
+
+                                src="/static/img/payment-method/payme_logo.png"
                                 alt="martfury"
+                                style={{height:'25px'}}
                             />
                         </a>
                     </Link>
-                    <Link href="/page/blank">
+                    {/* <Link href="/page/blank">
                         <a>
                             <img
                                 src="/static/img/payment-method/3.jpg"
@@ -186,7 +221,8 @@ const FooterSecond = ({ classes }) => (
                                 alt="martfury"
                             />
                         </a>
-                    </Link>
+
+                    </Link> */}
                 </p>
             </div>
         </div>

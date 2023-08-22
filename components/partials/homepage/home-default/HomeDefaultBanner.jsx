@@ -19,6 +19,7 @@ const HomeDefaultBanner = () => {
         );
         if (responseData) {
             setBannerItems(responseData);
+            console.log(responseData);
         }
     }
 
@@ -51,6 +52,8 @@ const HomeDefaultBanner = () => {
     // Views
     let mainCarouselView;
     if (bannerItems) {
+
+        console.log('banner', bannerItems);
         const carouseItems = bannerItems.map((item) => (
             <div className="slide-item" key={item.id}>
                 <Link href="/shop">

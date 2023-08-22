@@ -27,30 +27,33 @@ const ShopDefaultPage = () => {
             <div className="ps-page--shop">
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
                 <div className="ps-container">
-                    <ShopBanner />
-                    <ShopBrands />
-                    <ShopCategories />
-                    <div className="ps-layout--shop">
+
+                    {/* <ShopBanner /> */}
+                    {/* <ShopBrands /> */}
+                    {/* <ShopCategories /> */}
+                    <div className="ps-layout--shop mt-3">
                         <div className="ps-layout__left">
                             <WidgetShopCategories />
-                            <WidgetShopBrands />
+                            {/* <WidgetShopBrands /> */}
                             <WidgetShopFilterByPriceRange />
                         </div>
                         <div className="ps-layout__right">
-                            <ProductGroupByCarousel
+                            {/* <ProductGroupByCarousel
                                 collectionSlug="shop-best-seller-items"
                                 title="Best Sale Items"
                             />
                             <ProductGroupByCarousel
                                 collectionSlug="shop-recommend-items"
                                 title="Recommended Items"
-                            />
+
+                            /> */}
                             <ShopItems columns={6} pageSize={18} />
                         </div>
                     </div>
                 </div>
             </div>
-            <Newletters />
+
+            {/* <Newletters /> */}
         </PageContainer>
     );
 };

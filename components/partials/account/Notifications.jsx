@@ -3,16 +3,49 @@ import Link from 'next/link';
 import { Form, Input, Radio, DatePicker } from 'antd';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import TableNotifications from './modules/TableNotifications';
-import { actionChannel } from 'redux-saga/effects';
-import { actionTypes } from '~/store/ecomerce/action';
-import { accountLinks } from './modules/AccountLinks';
+
 
 class Notifications extends Component {
     constructor(props) {
         super(props);
         this.state = {};
     }
+
+
     render() {
+        const accountLinks = [
+            {
+                text: 'Account Information',
+                url: '/account/user-information',
+                icon: 'icon-user',
+            },
+            {
+                text: 'Notifications',
+                url: '/account/notifications',
+                icon: 'icon-alarm-ringing',
+                active: true,
+            },
+            {
+                text: 'Invoices',
+                url: '/account/invoices',
+                icon: 'icon-papers',
+            },
+            {
+                text: 'Address',
+                url: '/account/addresses',
+                icon: 'icon-papers',
+            },
+            {
+                text: 'Recent Viewed Product',
+                url: '/account/recent-viewed-product',
+                icon: 'icon-papers',
+            },
+            {
+                text: 'Wishlist',
+                url: '/account/wishlist',
+                icon: 'icon-papers',
+            },
+        ];
         return (
             <section className="ps-my-account ps-page--account">
                 <div className="container">
@@ -26,7 +59,7 @@ class Notifications extends Component {
                             <div className="ps-page__content">
                                 <div className="ps-section--account-setting">
                                     <div className="ps-section__header">
-                                        <h3>Bildirishnomalar</h3>
+                                        <h3>Notifications</h3>
                                     </div>
                                     <div className="ps-section__content">
                                         <TableNotifications />

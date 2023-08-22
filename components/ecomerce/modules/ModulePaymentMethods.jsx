@@ -17,7 +17,8 @@ const ModulePaymentMethods = () => {
 
     return (
         <>
-            <h4>To'lov usullari</h4>
+
+            <h4>Payment Methods</h4>
             <div className="ps-block--payment-method">
                 <div className="ps-block__header">
                     <Radio.Group
@@ -31,17 +32,18 @@ const ModulePaymentMethods = () => {
                     {method === 1 ? (
                         <div className="ps-block__tab">
                             <div className="form-group">
-                                <label>Karta raqami</label>
+
+                                <label>Card Number</label>
                                 <input type="text" className="form-control" />
                             </div>
                             <div className="form-group">
-                                <label>Karta egalari</label>
+                                <label>Card Holders</label>
                                 <input type="text" className="form-control" />
                             </div>
                             <div className="row">
                                 <div className="col-sm-4 col-4">
                                     <div className="form-group">
-                                        <label>Tugash muddati (MM/YY)</label>
+                                        <label>Expiration Date (MM/YY)</label>
                                         <input
                                             type="text"
                                             className="form-control"

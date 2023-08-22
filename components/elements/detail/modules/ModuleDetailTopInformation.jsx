@@ -9,17 +9,19 @@ const ModuleDetailTopInformation = ({ product }) => {
     if (product.is_sale) {
         priceView = (
             <h4 className="ps-product__price sale">
-                <del className="mr-2">&{product.sale_price}</del>$
-                {product.price}
+
+                <del className="mr-2">&{product.sale_price}</del> 
+                {product.price} so'm
             </h4>
         );
     } else {
-        priceView = <h4 className="ps-product__price">${product.price}</h4>;
+        priceView = <h4 className="ps-product__price">{product.price} so'm </h4>;
     }
     return (
         <header>
             <h1>{product.title}</h1>
-            <div className="ps-product__meta">
+
+            {/* <div className="ps-product__meta">
                 <p>
                     Brand:
                     <Link href="/shop">
@@ -30,7 +32,7 @@ const ModuleDetailTopInformation = ({ product }) => {
                     <Rating />
                     <span>(1 review)</span>
                 </div>
-            </div>
+            </div> */}
             {priceView}
         </header>
     );

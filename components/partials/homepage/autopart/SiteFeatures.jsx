@@ -1,19 +1,43 @@
-import React from 'react';
 
-const SiteFeatures = () => (
-    <section className="ps-site-features">
+import React, { useEffect, useState } from 'react';
+import ProductRepository from '~/repositories/ProductRepository';
+
+const SiteFeatures = () => {
+    const [card, setCard] = useState([])
+    async function getProducts() {
+        const responseData = await ProductRepository.getCardData();
+        if (responseData) {
+            // console.log( 'sdrfcvghbjnkml333' , responseData);
+            setCard(responseData);
+           
+        }
+    }
+
+    useEffect(() => {
+        getProducts();
+    }, []);
+    return (
+        <section className="ps-site-features">
         <div className="container">
             <div className="ps-block--site-features ps-block--site-features-2">
-                <div className="ps-block__item">
-                    <div className="ps-block__left">
-                        <i className="icon-rocket"></i>
+               {
+                card ? card?.map((item, i) => {
+                    return(
+                        <div key={i} className="ps-block__item">
+                        <div className="ps-block__left">
+                            <i className={item.icon}></i>
+                        </div>
+                        <div className="ps-block__right">
+                            <h4>{item?.title}</h4>
+                            <p>{item?.description}</p>
+                        </div>
                     </div>
-                    <div className="ps-block__right">
-                        <h4>Free Delivery</h4>
-                        <p>For all oders over $99</p>
-                    </div>
-                </div>
-                <div className="ps-block__item">
+                    )
+                }) : 
+                <>Loading...</>
+               }
+
+                {/* <div className="ps-block__item">
                     <div className="ps-block__left">
                         <i className="icon-sync"></i>
                     </div>
@@ -39,10 +63,13 @@ const SiteFeatures = () => (
                         <h4>24/7 Support</h4>
                         <p>Dedicated support</p>
                     </div>
-                </div>
+
+                </div> */}
+
             </div>
         </div>
     </section>
-);
+    )
+}
 
 export default SiteFeatures;

@@ -2,8 +2,9 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import { Spin } from 'antd';
-import ProductRepository from '~/repositories/ProductRepository';
+
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const exampleCategories = [
     'All',
@@ -66,6 +67,7 @@ const exampleCategories = [
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
+
     useEffect(() => {
         // Update debounced value after delay
         const handler = setTimeout(() => {
@@ -88,6 +90,13 @@ const SearchHeader = () => {
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 300);
 
+    async function getSearchData() {
+        const responseData = await ProductRepository.getRecordsSearch();
+        if (responseData) {
+            setResultItems(responseData);
+        }
+    }
+
     function handleClearKeyword() {
         setKeyword('');
         setIsSearch(false);
@@ -97,9 +106,12 @@ const SearchHeader = () => {
     function handleSubmit(e) {
         e.preventDefault();
         Router.push(`/search?keyword=${keyword}`);
+
+        
     }
 
     useEffect(() => {
+        getSearchData();
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword) {
@@ -107,11 +119,18 @@ const SearchHeader = () => {
                     _limit: 5,
                     title_contains: keyword,
                 };
-                const products = ProductRepository.getRecords(queries);
+
+                const products = ProductRepository.getRecordsSearch();
+
                 products.then((result) => {
                     setLoading(false);
-                    setResultItems(result);
                     setIsSearch(true);
+                    let Result = result.filter((item) => {
+                        return item.title
+                            .toLowerCase()
+                            .includes(keyword.toLocaleLowerCase());
+                    });
+                    setResultItems(Result);
                 });
             } else {
                 setIsSearch(false);
@@ -138,7 +157,8 @@ const SearchHeader = () => {
                 loadMoreView = (
                     <div className="ps-panel__footer text-center">
                         <Link href="/search">
-                            <a>See all results</a>
+
+                            <a>Hamma natijalarni ko'rish</a>
                         </Link>
                     </div>
                 );
@@ -147,7 +167,8 @@ const SearchHeader = () => {
                 <ProductSearchResult product={product} key={product.id} />
             ));
         } else {
-            productItemsView = <p>No product found.</p>;
+
+            productItemsView = <p>Hujjat topilmadi</p>;
         }
         if (keyword !== '') {
             clearTextView = (
@@ -176,22 +197,25 @@ const SearchHeader = () => {
             method="get"
             action="/"
             onSubmit={handleSubmit}>
-            <div className="ps-form__categories">
+
+            {/* <div className="ps-form__categories">
                 <select className="form-control">{selectOptionView}</select>
-            </div>
+            </div> */}
             <div className="ps-form__input">
                 <input
                     ref={inputEl}
                     className="form-control"
                     type="text"
                     value={keyword}
-                    placeholder="I'm shopping for..."
+
+                    placeholder="Men hujjat izlayapman..."
                     onChange={(e) => setKeyword(e.target.value)}
                 />
                 {clearTextView}
                 {loadingView}
             </div>
-            <button onClick={handleSubmit}>Search</button>
+
+            <button onClick={handleSubmit}>Qidiruv</button>
             <div
                 className={`ps-panel--search-result${
                     isSearch ? ' active ' : ''

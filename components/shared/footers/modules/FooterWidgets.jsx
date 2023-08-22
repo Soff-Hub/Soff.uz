@@ -4,10 +4,11 @@ import Link from 'next/link';
 const FooterWidgets = () => (
     <div className="ps-footer__widgets">
         <aside className="widget widget_footer widget_contact-us">
-            <h4 className="widget-title">Contact us</h4>
+
+            <h4 className="widget-title">Aloqa</h4>
             <div className="widget_content">
-                <p>Call us 24/7</p>
-                <h3>1800 97 97 69</h3>
+                <p>Aloqadan foydalanish 24/7</p>
+                <h3>90 000 00 00</h3>
                 <p>
                     502 New Design Str, Melbourne, Australia <br />
                     <a href="mailto:contact@martfury.co">contact@martfury.co</a>

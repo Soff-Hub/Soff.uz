@@ -12,12 +12,13 @@ class MyAccount extends Component {
             <section className="ps-my-account ps-page--account">
                 <div className="container">
                     <div className="row">
-                        
+
                         <div className="col-lg-3 col-md-12">
                             <div className="ps-section__left">
                                 <aside className="ps-widget--account-dashboard">
                                     <div className="ps-widget__header">
-                                        <img src="/static/img/users/log.jpg" />
+
+                                        <img src="/static/img/users/3.jpg" />
                                         <figure>
                                             <figcaption>Hello</figcaption>
                                             <p>username@gmail.com</p>

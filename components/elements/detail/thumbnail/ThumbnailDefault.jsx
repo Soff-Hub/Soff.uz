@@ -22,14 +22,16 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
 
     useEffect(() => {
         let images = [];
-        if (product && product.images.length > 0) {
-            product.images.map((item) => {
-                images.push(`${baseUrl}${item.url}`);
-            });
-            setProductImages(images);
-        }
-        setGallery(galleryCarousel.current);
-        setVariant(variantCarousel.current);
+
+        // console.log('product detail', product);
+        // if (product && product.images.length > 0) {
+        //     product.images.map((item) => {
+        //         images.push(`${baseUrl}${item.url}`);
+        //     });
+        //     setProductImages(images);
+        // }
+        // setGallery(galleryCarousel.current);
+        // setVariant(variantCarousel.current);
     }, [product]);
 
     const gallerySetting = {
@@ -92,39 +94,8 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
             </div>
         ));
     }
-    if (vertical) {
-        variantCarouselView = (
-            <Slider
-                asNavFor={gallery}
-                ref={(slider) => (variantCarousel.current = slider)}
-                swipeToSlide={true}
-                arrows={false}
-                slidesToShow={3}
-                vertical={true}
-                infinite={true}
-                focusOnSelect={true}
-                {...variantSetting}
-                className="ps-product__variants">
-                {imagesView}
-            </Slider>
-        );
-    } else {
-        variantCarouselView = (
-            <Slider
-                asNavFor={gallery}
-                ref={(slider) => (variantCarousel.current = slider)}
-                swipeToSlide={true}
-                arrows={false}
-                slidesToShow={6}
-                vertical={false}
-                centered={true}
-                infinite={false}
-                focusOnSelect={true}
-                className="ps-product__variants">
-                {imagesView}
-            </Slider>
-        );
-    }
+
+   
     if (isOpen) {
         lightboxView = (
             <Lightbox
@@ -156,15 +127,18 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
         <div
             className="ps-product__thumbnail"
             data-vertical={vertical ? 'true' : 'false'}>
-            <figure>
-                <div className="ps-wrapper">
-                    <Slider
+
+            <figure >
+                <div className="ps-wrapper" >
+                    {/* <Slider
                         {...gallerySetting}
                         ref={(slider) => (galleryCarousel.current = slider)}
                         asNavFor={variant}
                         className="ps-product__gallery ps-carousel inside">
                         {galleryImagesView}
-                    </Slider>
+<
+                    </Slider> */}
+                    <img src={product.poster_url} alt={product.poster_url} />
                 </div>
             </figure>
             {variantCarouselView}

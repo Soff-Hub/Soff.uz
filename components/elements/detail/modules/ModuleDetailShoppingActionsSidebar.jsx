@@ -53,7 +53,8 @@ const ModuleDetailShoppingActionsSidebar = ({ ecomerce, product }) => {
 
     return (
         <div className="ps-product__shopping">
-            <figure>
+
+            {/* <figure>
                 <figcaption>Quantity</figcaption>
                 <div className="form-group--number">
                     <button
@@ -73,7 +74,8 @@ const ModuleDetailShoppingActionsSidebar = ({ ecomerce, product }) => {
                         disabled
                     />
                 </div>
-            </figure>
+
+            </figure> */}
             <a
                 className="ps-btn ps-btn--black"
                 href="#"
@@ -91,10 +93,11 @@ const ModuleDetailShoppingActionsSidebar = ({ ecomerce, product }) => {
                     <i className="icon-heart mr-1"></i>
                     Add to wishlist
                 </a>
-                <a href="#" onClick={(e) => handleAddItemToCompare(e)}>
+
+                {/* <a href="#" onClick={(e) => handleAddItemToCompare(e)}>
                     <i className="icon-chart-bars mr-1"></i>
                     Compare
-                </a>
+                </a> */}
             </div>
         </div>
     );

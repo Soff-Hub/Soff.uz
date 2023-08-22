@@ -10,11 +10,33 @@ import Newletters from '~/components/partials/commons/Newletters';
 
 const PaymentPage = () => {
 
+    const breadCrumb = [
+        {
+            text: 'Home',
+            url: '/',
+        },
+        {
+            text: 'Shopping Cart',
+            url: '/account/shopping-cart',
+        },
+        {
+            text: 'Checkout Information',
+            url: '/account/checkout',
+        },
+        {
+            text: 'Payment',
+        },
+    ];
+
     return (
         <>
-            <div title="Payment">
+            <PageContainer footer={<FooterDefault />} title="Payment">
+                <div className="ps-page--simple">
+                    <BreadCrumb breacrumb={breadCrumb} />
                     <Payment />
-            </div>
+                </div>
+                <Newletters layout="container" />
+            </PageContainer>
         </>
     );
 };
