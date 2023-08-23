@@ -139,7 +139,7 @@ class Login extends Component {
                                     <button
                                         type="submit"
                                         className="ps-btn ps-btn--fullwidth">
-                                        Login
+                                       Kirish
                                     </button>
                                 </div>
 
