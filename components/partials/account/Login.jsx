@@ -76,7 +76,6 @@ class Login extends Component {
                             <li className="active">
                                 <Link href="/account/login">
                                     <a>Login</a>
-                                    <a>Kirish</a>
                                 </Link>
                             </li>
                             <li>

@@ -23,11 +23,6 @@ const AccountMenuSidebar = ({ data }) => (
                         </Link>
                     </li>
                 ))}
-                <li>
-                    <Link href="/account/my-account">
-                        <a>Logout</a>
-                    </Link>
-                </li>
             </ul>
         </div>
     </aside>

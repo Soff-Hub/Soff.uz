@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Column } from '@ant-design/plots';
+// import { Column } from '@ant-design/plots';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 
 const Chart = () => {
@@ -115,7 +115,7 @@ const Chart = () => {
     }, []);
     return <div>
         {
-            tableData ? <DemoColumn /> : <></>
+            <></>
         }
     </div>;
 };

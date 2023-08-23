@@ -7,11 +7,13 @@
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start -p 3003"
+        "start": "next start -p 3003",
+        "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
+        "compile": "npm run clean && antd-tools"
     },
     "dependencies": {
-
-        "antd": "^4.5.2",
+        "antd": "^5.8.4",
+        "antd-tools": "^7.7.1",
         "axios": "^0.19.2",
         "es6-promise": "^4.2.8",
         "history": "^4.10.1",
@@ -22,7 +24,6 @@
         "next-redux-saga": "^4.1.2",
         "next-redux-wrapper": "^6.0.2",
         "next-routes": "^1.4.2",
-
         "prettier": "^2.0.5",
         "react": "^17.0.2",
         "react-cookie": "^4.0.3",

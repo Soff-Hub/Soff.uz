@@ -44,4 +44,4 @@
         url: '/account/settings',
         icon: 'fa-solid fa-gear',
     }, 
-];
+ ];

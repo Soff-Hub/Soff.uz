@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect, useDispatch } from 'react-redux';
 import Link from 'next/link';
-
 import { logOut } from '~/store/auth/action';
+import { accountLinks } from '~/components/partials/account/modules/AccountLinks';
 
 const AccountQuickLinks = (props) => {
     const dispatch = useDispatch();
@@ -10,32 +10,6 @@ const AccountQuickLinks = (props) => {
         e.preventDefault();
         dispatch(logOut());
     };
-    const accountLinks = [
-        {
-            text: 'Account Information',
-            url: '/account/user-information',
-        },
-        {
-            text: 'Notifications',
-            url: '/account/notifications',
-        },
-        {
-            text: 'Invoices',
-            url: '/account/invoices',
-        },
-        {
-            text: 'Address',
-            url: '/account/addresses',
-        },
-        {
-            text: 'Recent Viewed Product',
-            url: '/account/recent-viewed-product',
-        },
-        {
-            text: 'Wishlist',
-            url: '/account/wishlist',
-        },
-    ];
     const { isLoggedIn } = props;
 
     // View
@@ -72,8 +46,8 @@ const AccountQuickLinks = (props) => {
                     <i className="icon-user"></i>
                 </div>
                 <div className="ps-block__right">
-                    <Link href="/account/login">
-                        <a>Login</a>
+                    <Link href="/account/login" >
+                        <a >Login</a>
                     </Link>
 
                     <Link href="/account/foydalanuvchi">
