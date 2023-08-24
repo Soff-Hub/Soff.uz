@@ -81,6 +81,7 @@ export default function useEcomerce() {
                 let newItems = cookies.wishlist;
             newItems.push(newItem)
                 setCookie('wishlist', newItems, { path: '/' });
+
                 dispatch(setWishlistTtems(newItems));
             }
 

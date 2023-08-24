@@ -47,6 +47,7 @@ const MiniCart = ({ ecomerce }) => {
     let cartItemsView;
     if (ecomerce.cartItems && ecomerce.cartItems?.length > 0) {
         const productItems = ecomerce.cartItems?.map((item) => {
+
             return (
                 <ProductOnCart product={item} key={item.id}>
                     <a
@@ -64,6 +65,7 @@ const MiniCart = ({ ecomerce }) => {
                     <h3>
                         Jami:
                         <strong>{hisob ? hisob : 0} so'm</strong>
+
                     </h3>
                     <figure>
                         <Link href="/account/shopping-cart">

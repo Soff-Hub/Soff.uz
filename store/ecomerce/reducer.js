@@ -22,7 +22,7 @@ function reducer(state = initalState, action) {
     switch (action.type) {
         // SET_WISHLIST_ITEMS_SUCCESS
         case actionTypes.SET_WISHLIST_ITEMS_SUCCESS:
-            console.log(action);
+
             // localStorage.setItem('wishlist', JSON.stringify(action.payload))
             if (
                 state.wishlistItems.every(
@@ -39,6 +39,7 @@ function reducer(state = initalState, action) {
                     },
                 };
             } else return state;
+
         case actionTypes.SET_CART_ITEMS_SUCCESS:
             return {
                 ...state,

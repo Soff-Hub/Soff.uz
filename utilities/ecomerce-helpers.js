@@ -96,6 +96,7 @@ export function calculateAmount(obj) {
         // .toFixed(2);
 }
 
+
 export function calculateCartQuantity(obj) {
     return Object.values(obj).reduce((acc, { quantity }) => acc + 0, 0);
 }

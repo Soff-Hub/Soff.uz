@@ -27,8 +27,11 @@ const ModuleDetailShoppingActions = ({
             content: `Siz hujjatni savatga qo'shdingiz`,
         });
         modal.update;
+
     }
     const state = useSelector(state => state.auth.user)
+
+
 
     function handleBuynow(e) {
         e.preventDefault();
@@ -55,9 +58,11 @@ const ModuleDetailShoppingActions = ({
             centered: true,
             title: 'Muvaffaqqiyatli!',
             content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
+
         });
         modal.update;
     };
+
 
     if (select) {
         return (

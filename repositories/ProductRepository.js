@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import Repository, { baseUrl, serializeQuery } from './Repository';
 
 class ProductRepository {
