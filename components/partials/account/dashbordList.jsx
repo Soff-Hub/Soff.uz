@@ -3,8 +3,9 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import {  Table } from 'antd';
-import dynamic from 'next/dynamic';
 import CalculateTimeDifference from './DateFormatter';
+// import Example from './Chart';
+
 
 function DashbordList() {
     const [data, setData] = useState([]);
@@ -118,10 +119,8 @@ function DashbordList() {
 
         },
     ];
-    const DynamicComponentWithNoSSR = dynamic(
-        () => import('./Chart'),
-        { ssr: false }
-      )
+
+    
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
@@ -134,7 +133,7 @@ function DashbordList() {
                             </div>
                             <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
                         </div>
-                        <h4 className='mt-5 pt-3'>${data?.total_revenue}</h4>
+                        <h4 className='mt-5 pt-3'>{data?.total_revenue}</h4>
                     </div>
                     <div className='card   py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
                         <div className='d-flex justify-content-between'>
@@ -144,7 +143,7 @@ function DashbordList() {
                             </div>
                             <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
                         </div>
-                        <h4 className='mt-5 pt-3'>${data?.total_order}</h4>
+                        <h4 className='mt-5 pt-3'>{data?.total_order}</h4>
                     </div>
                     <div className='card   py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
                         <div className='d-flex justify-content-between'>
@@ -154,7 +153,7 @@ function DashbordList() {
                             </div>
                             <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
                         </div>
-                        <h4 className='mt-5 pt-3'>${data?.today_revenue}</h4>
+                        <h4 className='mt-5 pt-3'>{data?.today_revenue}</h4>
                     </div>
                     <div className='card   py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
                         <div className='d-flex justify-content-between'>
@@ -177,7 +176,7 @@ function DashbordList() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <DynamicComponentWithNoSSR/>
+                                    {/* <Example/> */}
                                 </div>
                             </div>
                         </div>

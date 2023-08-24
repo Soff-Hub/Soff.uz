@@ -39,6 +39,23 @@ class MediaRespository {
             });
         return reponse;
     }
+    async getTagItmes() {
+        const endPoint = `customer/tag/`;
+        const reponse = await Repository.get(`${baseUrl}${endPoint}`)
+            .then((response) => {
+                if (response.data) {
+                    console.log(response);
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                console.log(JSON.stringify(error));
+                return null;
+            });
+        return reponse;
+    }
 
 }
 

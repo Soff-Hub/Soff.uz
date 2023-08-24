@@ -24,7 +24,8 @@ function ModalDeletePostEdit({ children, onSubmited, formID, dataBsTarget }) {
                 className="modal fade modalPost"
                 id={dataBsTarget}
                 aria-hidden="true"
-                aria-labelledby="exampleModalToggleLabel">
+                aria-labelledby="staticBackdropLabel"
+                data-bs-backdrop="static">
                 <div className="modal-dialog modal-dialog-centered ">
                     <div className="modal-content ">
                         <div
@@ -50,7 +51,6 @@ function ModalDeletePostEdit({ children, onSubmited, formID, dataBsTarget }) {
                                 </button>
                                 <button
                                     type="submit"
-                                    onClick={handleSuccess}
                                     data-bs-dismiss="modal"
                                     className="btn btn-success d-block w-25 py-2">
                                     <span className="fs-3">Saqlash</span>

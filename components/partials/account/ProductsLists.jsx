@@ -174,8 +174,8 @@ function ProductsLists() {
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
-                                        {/* <RangePicker className='w-100   rounded-3' onChange={(e)=>console.log(DateFormatterChange(e))}  /> */}
-                                        <input type="date" className='form-control rounded-3' onChange={(e) => setDate(e.target.value)} />
+                                        <RangePicker className='w-100   rounded-3' onChange={(e)=>console.log(DateFormatterChange(e))}  />
+                                        {/* <input type="date" className='form-control rounded-3' onChange={(e) => setDate(e.target.value)} /> */}
                                     </div>
                                     <Table scroll={{ x: 1100 }} dataSource={data} columns={columns} />
                                 </div>

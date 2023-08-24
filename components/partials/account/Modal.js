@@ -12,7 +12,9 @@ function ModalDelete({onSuccess}) {
                 className="modal fade "
                 id="exampleModalToggle"
                 aria-hidden="true"
-                aria-labelledby="exampleModalToggleLabel"
+                aria-labelledby="staticBackdropLabel"
+                data-bs-backdrop="static"
+              
                 >
                 <div className="modal-dialog modal-dialog-centered ">
                     <div className="modal-content rounded-3">

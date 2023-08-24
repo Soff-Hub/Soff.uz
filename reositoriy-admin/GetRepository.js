@@ -67,6 +67,19 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getMyProductsView( id) {
+        const endPoint = `product-list/${id}`;
+        const reponse = await Repository.get(baseUrl+endPoint)
+            .then((response) => {
+                if (response.status===200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
     async getCategory(page) {
         const endPoint = `admin/category-list/?page=${page}`;
         const reponse = await Repository.get(baseUrl+endPoint)

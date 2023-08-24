@@ -53,6 +53,19 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getMyProductsPatch(data, id) {
+        const endPoint = `product-update/${id}`;
+        const reponse = await Repository.patch(baseUrl + endPoint,data)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
     
 }
 

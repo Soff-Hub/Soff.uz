@@ -16,6 +16,7 @@ function CategoryLists() {
     const [search, setSerach] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
+    const [file, setFile] = useState({});
     ;
 
     async function GetItemsProducts(page) {
@@ -41,9 +42,14 @@ function CategoryLists() {
         GetItemsProducts(1)
     }
     async function handleItemsPost(values) {
-        const postsItems = await PostsRepository.PostsCategory(values);
+        const formData = new FormData()
+        formData.append('image', file)
+        formData.append('icon', values.icon)
+        formData.append('name', values.name)
+        const postsItems = await PostsRepository.PostsCategory(formData);
         GetItemsProducts(1)
     }
+    
     async function handleItemsEdit(values) {
         const patchItems = await PatchRepository.PatchCategory(values, deleteIdEdit?.id)
         GetItemsProducts(1)
@@ -52,8 +58,10 @@ function CategoryLists() {
     async function handleClickChecked(item) {
         const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id)
         GetItemsProducts(1)
+    }
 
-        console.log(item);
+    function handleClickPostsImg(e){
+        setFile(e.target.files[0])
     }
     useEffect(() => {
         GetItemsProducts(1)
@@ -156,6 +164,13 @@ function CategoryLists() {
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-posts'}>
                     <input
+                        type='file'
+                        placeholder="Belgi"
+                        className="form-control rounded-3 py-4"
+                        required
+                        onChange={handleClickPostsImg}
+                    />
+                     <input
                         type='text'
                         placeholder="Belgi"
                         className="form-control rounded-3"
