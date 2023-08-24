@@ -12,8 +12,10 @@ const Wishlist = ({ ecomerce }) => {
     const { loading, products, getProducts } = useEcomerce();
     const { addItem, removeItem } = useEcomerce();
 
-  const state = useSelector(state => state)
 
+
+  const state = useSelector(state => state)
+  console.log('redux', state.ecomerce.wishlistItems);
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
@@ -24,6 +26,7 @@ const Wishlist = ({ ecomerce }) => {
             content: `Siz hujjatni savatga o'chirdingiz`,
         });
         modal.update;
+
 
     }
 
@@ -39,6 +42,7 @@ const Wishlist = ({ ecomerce }) => {
     }
 
 
+
     useEffect(() => {
         // getCategoryData();
         if (ecomerce.wishlistItems) {
@@ -48,6 +52,7 @@ const Wishlist = ({ ecomerce }) => {
     // views
     let wishlistItemsView;
     if (cookies.wishlist && cookies.wishlist?.length > 0) {
+
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist">
@@ -61,6 +66,7 @@ const Wishlist = ({ ecomerce }) => {
                     </thead>
                     <tbody>
                         { cookies.wishlist?.length > 0 &&  cookies.wishlist.map((product) => (
+
 
                             <tr key={product?.id}>
                                 <td>
@@ -80,6 +86,7 @@ const Wishlist = ({ ecomerce }) => {
                                 </td>
                                 <td style={{padding:'40px 0 !important'}} className="  d-flex justify-content-center align-content-center">
                                    <span className='narx' > {product.price}so'm</span>
+
                                 </td>
                                 <td style={{margin: "0 auto"}} >
                                     <a

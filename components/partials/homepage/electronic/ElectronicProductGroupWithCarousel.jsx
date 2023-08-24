@@ -36,17 +36,8 @@ const ElectronicProductGroupWithCarousel = ({
                 ))
                }
               </div>
-                // <Slider
-                //     {...carouselStandard}
-                //     arrows={false}
-                //     className="ps-carousel outside">
-                //     {
-                //     data.promotional_sliders.map((item, index) => (
-                //         <Product key={item.id} product={item} />
-                //     ))
-                //     }
-                // </Slider>
             )
+
         } else {
             productItemsView = <p>Hujjat topilmadi</p>;
         }

@@ -39,6 +39,7 @@ function reducer(state = initalState, action) {
                 };
             } else return state;
 
+
         case actionTypes.SET_CART_ITEMS_SUCCESS:
             return {
                 ...state,

@@ -97,6 +97,7 @@ export function calculateAmount(obj) {
 }
 
 
+
 export function calculateCartQuantity(obj) {
     return Object.values(obj).reduce((acc, { quantity }) => acc + 0, 0);
 }
