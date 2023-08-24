@@ -82,6 +82,7 @@ export default function useEcomerce() {
                 setCookie('wishlist', newItems, { path: '/' });
 
 
+
                 dispatch(setWishlistTtems(newItems));
             }
 
