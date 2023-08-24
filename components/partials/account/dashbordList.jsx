@@ -172,6 +172,7 @@ function DashbordList() {
                             <AccountMenuSidebar data={accountLinks} />
                         </div>
                     </div>
+                    
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
