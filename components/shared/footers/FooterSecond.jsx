@@ -1,232 +1,142 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import CollectionRepository from '~/repositories/CollectionRepository';
 
-const FooterSecond = ({ classes }) => (
-    <footer className={`ps-footer ps-footer--2 ${classes}`}>
-        <div className="container">
-            <div className="ps-footer__content">
-                <div className="row">
+const FooterSecond = ({ classes }) => {
+    const [categoryList, setCategoryList] = useState([]);
 
-                    <div className="col-xl-12">
-                        <div className="row">
-                            <div className="col-md-3 col-sm-6 text-center">
-                                <aside className="widget widget_footer">
-                                    <h4 className="widget-title">
-                                        Quick links
-                                    </h4>
-                                    <ul className="ps-list--link">
-                                        <li>
-                                            <Link href="/page/blank">
-                                                <a>Policy</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/page/blank">
-                                                <a>Term & Condition</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/page/blank">
-                                                <a>Shipping</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/page/blank">
-                                                <a>Return</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/page/faqs">
-                                                <a>FAQs</a>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </aside>
-                            </div>
+    const getCatgeoryListData = async () => {
+        const response = await CollectionRepository.getCategoryData(
+            `customer/category-list/`
+        );
+        if (response) {
+            setCategoryList(response);
+        }
+    };
 
-                            <div className="col-md-3 col-sm-6 text-center">
-                                <aside className="widget widget_footer">
-                                    <h4 className="widget-title">Company</h4>
-                                    <ul className="ps-list--link">
-                                        <li>
-                                            <Link href="/page/about-us">
-                                                <a>About Us</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/product/affiliate">
-                                                <a>Affilate</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/page/blank">
-                                                <a>Career</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/page/contact-us">
-                                                <a>Contact</a>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </aside>
-                            </div>
+    useEffect(() => {
+        getCatgeoryListData();
+    }, []);
 
-                            <div className="col-md-3 col-sm-6 text-center">
-                                <aside className="widget widget_footer">
-                                    <h4 className="widget-title">Bussiness</h4>
-                                    <ul className="ps-list--link">
-                                        <li>
-                                            <Link href="/blog">
-                                                <a>Our Press</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/account/checkout">
-                                                <a>Checkout</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/account/login">
-                                                <a>My account</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/shop">
-                                                <a>Shop</a>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </aside>
-                            </div>
-                            <div className="col-md-3 col-sm-6 text-center">
-                                <aside className="widget widget_footer">
-                                    <h4 className="widget-title">Bussiness</h4>
-                                    <ul className="ps-list--link">
-                                        <li>
-                                            <Link href="/blog">
-                                                <a>Our Press</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/account/checkout">
-                                                <a>Checkout</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/account/login">
-                                                <a>My account</a>
-                                            </Link>
-                                        </li>
-                                        <li>
-                                            <Link href="/shop">
-                                                <a>Shop</a>
-                                            </Link>
-                                        </li>
-                                    </ul>
-                                </aside>
+    let vaqt = new Date();
+
+    return (
+        <footer className={`ps-footer ps-footer--2 ${classes}`}>
+            <div className="container">
+                <div className="ps-footer__content">
+                    <div className="row">
+                        <div className="col-xl-12">
+                            <div className="row">
+                                <div className="col-md-3 col-sm-6 text-center">
+                                    <aside className="widget widget_footer">
+                                        <ul className="ps-list--link">
+                                            {categoryList?.slice(0, 4).length >
+                                                0 &&
+                                                categoryList
+                                                    .slice(0, 4)
+                                                    .map((item, i) => (
+                                                        <li key={i}>
+                                                            <Link href="/page/blank">
+                                                                <a>
+                                                                    {item.name}
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                        </ul>
+                                    </aside>
+                                </div>
+                                <div className="col-md-3 col-sm-6 text-center">
+                                    <aside className="widget widget_footer">
+                                        <ul className="ps-list--link">
+                                            {categoryList?.slice(3, 7).length >
+                                                0 &&
+                                                categoryList
+                                                    .slice(4, 8)
+                                                    .map((item, i) => (
+                                                        <li key={i}>
+                                                            <Link href="/page/blank">
+                                                                <a>
+                                                                    {item.name}
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                        </ul>
+                                    </aside>
+                                </div>
+                                <div className="col-md-3 col-sm-6 text-center">
+                                    <aside className="widget widget_footer">
+                                        <ul className="ps-list--link">
+                                            {categoryList?.slice(8, 12).length >
+                                                0 &&
+                                                categoryList
+                                                    .slice(8, 12)
+                                                    .map((item, i) => (
+                                                        <li key={i}>
+                                                            <Link href="/page/blank">
+                                                                <a>
+                                                                    {item.name}
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                        </ul>
+                                    </aside>
+                                </div>
+                                <div className="col-md-3 col-sm-6 text-center">
+                                    <aside className="widget widget_footer">
+                                        <ul className="ps-list--link">
+                                            {categoryList?.slice(12, 16)
+                                                .length > 0 &&
+                                                categoryList
+                                                    .slice(12, 16)
+                                                    .map((item, i) => (
+                                                        <li key={i}>
+                                                            <Link href="/page/blank">
+                                                                <a>
+                                                                    {item.name}
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    ))}
+                                        </ul>
+                                    </aside>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-
-                    {/* <div className="col-xl-4 col-md-6">
-                        <aside className="widget widget_newletters">
-                            <h4 className="widget-title">Newsletter</h4>
-                            <form
-                                className="ps-form--newletter"
-                                action="#"
-                                method="get">
-                                <div className="form-group--nest">
-                                    <input
-                                        className="form-control"
-                                        type="text"
-                                        placeholder="Email Address"
-                                    />
-                                    <button className="ps-btn">
-                                        Subscribe
-                                    </button>
-                                </div>
-                                <ul className="ps-list--social">
-                                    <li>
-                                        <a className="facebook" href="#">
-                                            <i className="fa fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="twitter" href="#">
-                                            <i className="fa fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="google-plus" href="#">
-                                            <i className="fa fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a className="instagram" href="#">
-                                            <i className="fa fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </form>
-                        </aside>
-
-                    </div> */}
+                </div>
+                <div className="ps-footer__copyright">
+                    <p>
+                        &copy; {vaqt.getFullYear()} alldata. Barcha huquqlar
+                        himoyalangan
+                    </p>
+                    <p>
+                        <span> Biz xavfsiz to'lovdan foydalanamiz:</span>
+                        <Link href="/page/blank">
+                            <a>
+                                <img
+                                    src="/static/img/payment-method/click_logo.png"
+                                    alt="martfury"
+                                    style={{ height: '35px' }}
+                                />
+                            </a>
+                        </Link>
+                        <Link href="/page/blank">
+                            <a>
+                                <img
+                                    src="/static/img/payment-method/payme_logo.png"
+                                    alt="martfury"
+                                    style={{ height: '25px' }}
+                                />
+                            </a>
+                        </Link>
+                    </p>
                 </div>
             </div>
-            <div className="ps-footer__copyright">
-                <p>&copy;  2021 alldata. Barcha huquqlar himoyalangan</p>
-                <p>
-                    <span> Biz xavfsiz to'lovdan foydalanamiz:</span>
-                    <Link href="/page/blank">
-                        <a>
-                            <img
-                                src="/static/img/payment-method/click_logo.png"
-                                alt="martfury"
-                                style={{height:'35px'}}
-                            />
-                        </a>
-                    </Link>
-                    <Link href="/page/blank">
-                        <a>
-                            <img
-
-                                src="/static/img/payment-method/payme_logo.png"
-                                alt="martfury"
-                                style={{height:'25px'}}
-                            />
-                        </a>
-                    </Link>
-                    {/* <Link href="/page/blank">
-                        <a>
-                            <img
-                                src="/static/img/payment-method/3.jpg"
-                                alt="martfury"
-                            />
-                        </a>
-                    </Link>
-                    <Link href="/page/blank">
-                        <a>
-                            <img
-                                src="/static/img/payment-method/4.jpg"
-                                alt="martfury"
-                            />
-                        </a>
-                    </Link>
-                    <Link href="/page/blank">
-                        <a>
-                            <img
-                                src="/static/img/payment-method/5.jpg"
-                                alt="martfury"
-                            />
-                        </a>
-
-                    </Link> */}
-                </p>
-            </div>
-        </div>
-    </footer>
-);
+        </footer>
+    );
+};
 
 export default FooterSecond;

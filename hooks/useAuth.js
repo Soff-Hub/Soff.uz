@@ -3,7 +3,6 @@ import Repository, { baseUrlAuth } from '~/repositories/Repository';
 
 export default function useAuth() {
     const registerUser = (url,e) => {
-        console.log(e);
         // let endPoint = 'auth/seller-register/';
         let user = Repository.post(baseUrlAuth + url, e)
             .then((ress) => {
@@ -11,7 +10,6 @@ export default function useAuth() {
             })
             .catch((error) => {
                 // Error
-                console.log(error.response);
                 if (error.response) {
                     // The request was made and the server responded with a status code
                     // that falls out of the range of 2xx

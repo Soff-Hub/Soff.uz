@@ -104,7 +104,6 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
             },
         ],
     };
-    console.log('related product', productItems);
     // Views
     let carouselView;
     if (!loading) {
@@ -115,7 +114,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
                         {...carouselFullwidth}
                         className="ps-carousel outside">
 
-                        {productItems ? (
+                        {productItems?.length > 0 ? (
                             productItems.map((item, index) => {
                                 if (index < 8) {
                                     return (
@@ -151,16 +150,23 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
     }
 
     return (
+       <>
+       {
+        productItems?.length>0 ? 
         <div
-            className={`ps-section--default ps-related-products ${
-                boxed === true ? 'boxed' : ''
-            }`}>
-            <div className="ps-section__header">
+        className={`ps-section--default ps-related-products ${
+            boxed === true ? 'boxed' : ''
+        }`}>
+        <div className="ps-section__header">
 
-                <h3>O'xshash hujjatlar</h3>
-            </div>
-            <div className="ps-section__content">{carouselView}</div>
+            <h3>O'xshash hujjatlar</h3>
         </div>
+        <div className="ps-section__content">{carouselView}</div>
+    </div>
+    :
+    <></>
+       }
+       </>
     );
 };
 

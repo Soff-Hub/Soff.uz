@@ -1,9 +1,6 @@
-
 import React, { Component, useEffect, useState } from 'react';
-import Slider from 'react-slick';
 import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
-import { getItemBySlug } from '~/utilities/product-helper';
 
 function ElectronicBanner() {
     // constructor(props) {
@@ -11,7 +8,6 @@ function ElectronicBanner() {
     // }
 
     const [bannerItem, setBannerItems] = useState([]);
-    const [bannersItems, setBannersItems] = useState([]);
 
     async function getBannerItems() {
         const responseData = await MediaRepository.getBannersBySlug();
@@ -20,24 +16,10 @@ function ElectronicBanner() {
         }
     }
 
-    async function getBannersItems() {
-        const responseData = await MediaRepository.getTwoBannersData();
-        if (responseData) {
-            setBannersItems(responseData);
-            console.log(responseData, ' yyy');
-        }
-    }
-
-
     useEffect(() => {
         getBannerItems();
-    //    setTimeout(() => {
-        getBannersItems();
-    //    }, 2000);
     }, []);
 
-    // render() {
-    // console.log(this.props.first);
     const carouselSettings = {
         dots: false,
         arrows: false,
@@ -53,66 +35,128 @@ function ElectronicBanner() {
                 <div className="ps-section__left">
                     {/* <Slider {...carouselSettings}> */}
                     <div className="item">
-                        {bannerItem ? (
+                        {bannerItem[0]?.image ? (
                             <Link
                                 target="_blank"
-                                href={`${bannerItem[0]?.url}`}>
-                                <a target='_blank'>
+                                href={`${bannerItem[0].url}`}>
+                                <a target="_blank">
                                     <img
+                                        style={{
+                                            width: '100%',
+                                            height: '370px',
+                                        }}
                                         src={`${bannerItem[0]?.image}`}
                                         alt="alldata"
                                     />
                                 </a>
                             </Link>
-                        )
-                    :
-                    <>
-                     <img src="https://media.istockphoto.com/id/1409329028/vector/no-picture-available-placeholder-thumbnail-icon-illustration-design.jpg?s=612x612&w=0&k=20&c=_zOuJu755g2eEUioiOUdz_mHKJQJn-tDgIAhQzyeKUQ=" class="card-img-top" alt=""></img></>
-                    }
+                        ) : (
+                            <>
+                                <div>
+                                    <div
+                                        class="placeholder col-12"
+                                        style={{
+                                            width: '100%',
+                                            height: '370px',
+                                            display:'flex',
+                                            justifyContent:'center',
+                                            alignItems:'center'
+                                        }}>
+                                        <div
+                                            class="spinner-border"
+                                            role="status">
+                                            <span class="visually-hidden">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </>
+                        )}
                     </div>
-                    {/* <div className="item">
-                                <Link href="/shop">
-                                    <a>
-                                        <img src="/static/img/slider/home-7/2.jpg" alt="martfury" />
-                                    </a>
-                                </Link>
-                            </div>
-                            <div className="item">
-                                <Link href="/shop">
-                                    <a>
-                                        <img src="/static/img/slider/home-7/3.jpg" alt="martfury" />
-                                    </a>
-                                </Link>
-
-                            </div> */}
-                    {/* </Slider> */}
                 </div>
                 <div className="ps-section__right">
-                    {bannersItems ? (
-                        bannersItems.splice(1, 2).map((item, i) => {
-                            return (
-                                <Link href={`${item?.url}`} target='_blank'>
-                                    <a className="ps-collection" target='_blank'>
-                                        <img src={item?.image} alt="alldata" />
-                                    </a>
-                                </Link>
-                            );
-                        })
+                    {bannerItem[1] ? (
+                        // bannerItem
+                        //     .splice(1, bannerItem.length - 1)
+                        //     .map((item, i) => {
+                        //         return (
+                        //             <Link
+                        //                 href={`${item?.url}`}
+                        //                 key={item.id}
+                        //                 target="_blank">
+                        //                 <a
+                        //                     className="ps-collection"
+                        //                     target="_blank">
+                        //                     <img
+                        //                         src={item.image}
+                        //                         alt="alldata"
+                        //                     />
+                        //                 </a>
+                        //             </Link>
+                        //         );
+                        //     })
+
+                            <div style={{display:'flex', flexDirection:'column'}}>
+                              <Link
+                                        href={`${bannerItem[1].url}`}
+                                        target="_blank">
+                                        <a
+                                            className="ps-collection"
+                                            target="_blank">
+                                            <img
+                                             style={{  height: '170px',}}
+                                                src={bannerItem[1]?.image}
+                                                alt="alldata"
+                                            />
+                                        </a>
+                                    </Link>
+                              <Link
+                                        href={`${bannerItem[2].url}`}
+                                        target="_blank">
+                                        <a
+                                            className="ps-collection"
+                                            target="_blank">
+                                            <img
+                                            style={{  height: '170px',}}
+                                                src={bannerItem[2]?.image}
+                                                alt="alldata"
+                                            />
+                                        </a>
+                                    </Link>
+                            </div>
                     ) : (
-                        <div className='card'>
-                         <img src="..." class="card-img-top" alt="..."></img>
+                        <div style={{display:'flex', flexDirection:'column', gap:'30px'}} >
+                            {[1, 2].map((item, i) => {
+                                return (
+                                    <div key={i} >
+                                        <div
+                                            style={{
+                                                width: '100%',
+                                                height: '170px',
+                                                display:'flex',
+                                                justifyContent:'center',
+                                                alignItems:'center'
+                                            }}
+                                            class=" placeholder"
+                                            alt="banner">
+                                                  <div
+                                            class="spinner-border"
+                                            role="status">
+                                            <span class="visually-hidden">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                            </div>
+                                    </div>
+                                );
+                            })}
                         </div>
                     )}
-                    {/* <Link href="/shop">
-                            <a className="ps-collection">
-                                <img src="/static/img/slider/home-7/promotion-2.jpg" alt="martfury" />
-                            </a>
-                        </Link> */}
                 </div>
             </div>
         </section>
     );
-    // }
 }
 
 export default ElectronicBanner;

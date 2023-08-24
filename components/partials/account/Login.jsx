@@ -38,13 +38,9 @@ class Login extends Component {
     }
 
     handleLoginSubmit = async (e) => {
-        console.log('test', e);
         const { loginUser } = useAuth();
 
         const user = await loginUser(e);
-        console.log('loginUser', user.data, user.statusCode);
-        // this.props.dispatch(login());
-        // Router.push('/');
 
         if (user) {
             if (user.status >= 400) {
@@ -75,7 +71,7 @@ class Login extends Component {
                         <ul className="ps-tab-list">
                             <li className="active">
                                 <Link href="/account/login">
-                                    <a>Login</a>
+                                    <a>Kirish</a>
                                 </Link>
                             </li>
                             <li>

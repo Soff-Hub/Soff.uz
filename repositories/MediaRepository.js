@@ -8,7 +8,6 @@ class MediaRespository {
         const reponse = await Repository.get(`${baseUrl}/${endPoint}`)
             .then((response) => {
                 if (response.data) {
-
                     return response.data.results    
                 } else {
                     return null;

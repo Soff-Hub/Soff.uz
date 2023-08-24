@@ -46,7 +46,6 @@ class Register extends Component {
     // }
 
     render() {
-        console.log(this.props.url);
         return (
             <div className="ps-my-account">
                 <div className="container">

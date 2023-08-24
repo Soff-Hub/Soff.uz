@@ -11,6 +11,7 @@ import {
 function* getWishlistItems({ payload }) {
     try {
         yield put(setWishlistTtemsSuccess(payload));
+        console.log(payload, 'payload');
     } catch (err) {
         console.log(err);
     }

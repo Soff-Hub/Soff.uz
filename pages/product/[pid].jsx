@@ -18,10 +18,9 @@ import HeaderElectronic from '~/components/shared/headers/HeaderElectronic';
 const ProductDefaultPage = () => {
     const router = useRouter();
     const { pid } = router.query;
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState([]);
     const [loading, setLoading] = useState(false);
 
-// console.log('id', pid, product);
     async function getProduct(pid) {
         setLoading(true);
         const responseData = await ProductRepository.getProductsById(pid);

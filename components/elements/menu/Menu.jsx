@@ -9,10 +9,10 @@ const Menu = ({ source, className }) => {
     // console.log('source' ,source);
     let menuView;
     if (source) {
-        menuView = source.map((item) => {
+        menuView = source?.length > 0 ? source?.map((item) => {
                 return (
                     <li key={item.id}>
-                        <Link href={`category/${item.id}`} >
+                        <Link href={`/category/${item.id}`} >
                             <a>
                                 {item.icon && <i className={item.icon}></i>}
                                 {item.name}
@@ -21,7 +21,17 @@ const Menu = ({ source, className }) => {
                     </li>
                 );
 
-        });
+        }) 
+        :
+        <>
+        { menuView = (
+            <li>
+                <a href="#" onClick={(e) => e.preventDefault()}>
+                    No menu item.
+                </a>
+            </li>
+        )}
+        </>
     } else {
         menuView = (
             <li>

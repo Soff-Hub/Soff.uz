@@ -13,10 +13,12 @@ export const actionTypes = {
 
 // new
 export function setWishlistTtems(payload) {
+
     return { type: actionTypes.SET_WISHLIST_ITEMS, payload };
 }
 
 export function setWishlistTtemsSuccess(payload) {
+    // console.log(payload);
     return { type: actionTypes.SET_WISHLIST_ITEMS_SUCCESS, payload };
 }
 

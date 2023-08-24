@@ -11,12 +11,12 @@ import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 
 const ShoppingCartScreen = ({ ecomerce }) => {
 
-    console.log(ecomerce);
+    // console.log('card', ecomerce.cartItems);
     const { products, getProducts } = useEcomerce();
 
     useEffect(() => {
         if (ecomerce.cartItems) {
-            getProducts(ecomerce.cartItems, 'cart');
+            getProducts(ecomerce.cartItems, 'card');
         }
     }, [ecomerce]);
 
@@ -30,6 +30,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
         },
     ];
 
+    console.log(products);
     // View
     let contentView;
     if (products) {
@@ -40,35 +41,12 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                         <ModuleEcomerceCartItems cartItems={products} />
                         <div className="ps-section__cart-actions">
                             <Link href="/shop">
-                                <a className="ps-btn">Back to Shop</a>
+                                <a className="ps-btn">Ortga</a>
                             </Link>
                         </div>
                     </div>
                     <div className="ps-section__footer">
                         <div className="row justify-space-between">
-                            <div className="col-xl-8 col-lg-4 col-md-12 col-sm-12 col-12 ">
-                                <div className="row">
-                                    <div className="col-lg-6">
-                                        <figure>
-                                            <figcaption>
-                                                Coupon Discount
-                                            </figcaption>
-                                            <div className="form-group">
-                                                <input
-                                                    className="form-control"
-                                                    type="text"
-                                                    placeholder="Enter coupon here..."
-                                                />
-                                            </div>
-                                            <div className="form-group">
-                                                <button className="ps-btn ps-btn--outline">
-                                                    Apply
-                                                </button>
-                                            </div>
-                                        </figure>
-                                    </div>
-                                </div>
-                            </div>
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
                                 <ModuleCartSummary source={products} />
                                 <Link href="/account/checkout">
@@ -87,13 +65,13 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                     <div className="ps-section__content">
                         <div className="alert alert-info">
                             <p className="mb-0">
-                                Your cart is currently empty.
+                                Sizning savatingiz bo'sh...
                             </p>
                         </div>
 
                         <div className="ps-section__cart-actions">
                             <Link href="/shop">
-                                <a className="ps-btn">Back to Shop</a>
+                                <a className="ps-btn">Ortga</a>
                             </Link>
                         </div>
                     </div>
@@ -111,7 +89,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                     <div className="ps-section--shopping ps-shopping-cart">
                         <div className="container">
                             <div className="ps-section__header">
-                                <h1>Shopping Cart</h1>
+                                <h1>Xarid savati</h1>
                             </div>
                             {contentView}
                         </div>

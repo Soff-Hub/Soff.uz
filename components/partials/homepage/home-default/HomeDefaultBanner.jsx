@@ -53,7 +53,6 @@ const HomeDefaultBanner = () => {
     let mainCarouselView;
     if (bannerItems) {
 
-        console.log('banner', bannerItems);
         const carouseItems = bannerItems.map((item) => (
             <div className="slide-item" key={item.id}>
                 <Link href="/shop">

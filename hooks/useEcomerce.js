@@ -20,22 +20,23 @@ export default function useEcomerce() {
         products,
         getProducts: async (payload, group = '') => {
             setLoading(true);
-            if (payload && payload.length > 0) {
+            if (true) {
                 let queries = '';
                 payload.forEach((item) => {
-                    if (queries === '') {
-                        queries = `id_in=${item.id}`;
-                    } else {
-                        queries = queries + `&id_in=${item.id}`;
-                    }
+                    // if (queries === '') {
+                        queries = `${item.id}`;
+                    // } else {
+                    //     queries = queries + `&id_in=${item.id}`;
+                    // }
                 });
                 const responseData = await ProductRepository.getProductsByIds(
                     queries
                 );
-                if (responseData && responseData.length > 0) {
+                // console.log(responseData,'ll');
+                if (responseData ) {
                     if (group === 'cart') {
-                        let cartItems = responseData;
-                        payload.forEach((item) => {
+                        let cartItems = payload;
+                        cartItems.forEach((item) => {
                             let existItem = cartItems.find(
                                 (val) => val.id === item.id
                             );
@@ -44,9 +45,9 @@ export default function useEcomerce() {
                             }
                         });
 
-                        setProducts(cartItems);
-                    } else {
                         setProducts(responseData);
+                    } else {
+                        setProducts(payload);
                     }
                     setTimeout(
                         function () {
@@ -57,71 +58,54 @@ export default function useEcomerce() {
                 }
             } else {
                 setLoading(false);
-                setProducts([]);
+                setProducts(payload);
             }
+            // setProducts(payload)
         },
 
-        increaseQty: (payload, currentCart) => {
-            let cart = [];
-            if (currentCart) {
-                cart = currentCart;
-                const existItem = cart.find((item) => item.id === payload.id);
-                if (existItem) {
-                    existItem.quantity = existItem.quantity + 1;
-                }
-                setCookie('cart', cart, { path: '/' });
-                dispatch(setCartItems(cart));
-            }
-            return cart;
-        },
+        // increaseQty: (payload, currentCart) => {
+        //     let cart = [];
+        //     if (currentCart) {
+        //         cart = currentCart;
+        //         const existItem = cart.find((item) => item.id === payload.id);
+        //         if (existItem) {
+        //             existItem.quantity = existItem.quantity + 1;
+        //         }
+        //         setCookie('cart', cart, { path: '/' });
+        //         dispatch(setCartItems(cart));
+        //     }
+        //     return cart;
+        // },
 
-        decreaseQty: (payload, currentCart) => {
-            let cart = [];
-            if (currentCart) {
-                cart = currentCart;
-                const existItem = cart.find((item) => item.id === payload.id);
-                if (existItem) {
-                    if (existItem.quantity > 1) {
-                        existItem.quantity = existItem.quantity - 1;
-                    }
-                }
-                setCookie('cart', cart, { path: '/' });
-                dispatch(setCartItems(cart));
-            }
-            return cart;
-        },
+        // decreaseQty: (payload, currentCart) => {
+        //     let cart = [];
+        //     if (currentCart) {
+        //         cart = currentCart;
+        //         const existItem = cart.find((item) => item.id === payload.id);
+        //         if (existItem) {
+        //             if (existItem.quantity > 1) {
+        //                 existItem.quantity = existItem.quantity - 1;
+        //             }
+        //         }
+        //         setCookie('cart', cart, { path: '/' });
+        //         dispatch(setCartItems(cart));
+        //     }
+        //     return cart;
+        // },
 
         addItem: (newItem, items, group) => {
             let newItems = [];
-            if (items) {
-                newItems = items;
-                const existItem = items.find((item) => item.id === newItem.id);
-                if (existItem) {
-                    if (group === 'cart') {
-
-                        existItem.quantity += 1
-                    }
-                } else {
-                    newItems.push(newItem);
-                }
-            } else {
-                newItems.push(newItem);
-            }
+            newItems.push(items)
             if (group === 'cart') {
-                setCookie('cart', newItems, { path: '/' });
+                // setCookie('cart', newItems, { path: '/' });
                 dispatch(setCartItems(newItems));
             }
             if (group === 'wishlist') {
-                setCookie('wishlist', newItems, { path: '/' });
-
+                localStorage.setItem('wishlist', newItems);
                 dispatch(setWishlistTtems(newItems));
             }
 
-            if (group === 'compare') {
-                setCookie('compare', newItems, { path: '/' });
-                dispatch(setCompareItems(newItems));
-            }
-            return newItems;
+            return items;
         },
 
         removeItem: (selectedItem, items, group) => {

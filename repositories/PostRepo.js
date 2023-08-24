@@ -5,25 +5,26 @@ class PostRepo {
     //     this.callback = callback;
     // }
 
-  
-
     async getWishlistPost(payload) {
-        // const user = JSON.parse(localStorage.getItem('user'))
-        // const config = {
-        //     headers: {
-        //         Authorization: `Bearer ${user}`,
-        //         'Content-Type': 'application/json',
-        //     },
-        // }
+        const token = localStorage.getItem('token')
+        
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json',
+            },
+        }
         const reponse = await Repository.post(
-           `${baseUrl}customer/wishlist-create/`, payload, config)
+            `${baseUrl}customer/wishlist-create/`,
+            payload,
+            config
+        )
             .then((response) => {
-               return response
+                return response;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
-   }
+}
 
 export default new PostRepo();

@@ -31,7 +31,6 @@ const WidgetShopCategories = ({data}) => {
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
-            console.log(`id li malumotlar`, responseData);
             setCategory(responseData);
         }
     }

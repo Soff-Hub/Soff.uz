@@ -1,5 +1,5 @@
 import React, { Component, useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
 import ProductCart from '~/components/elements/products/ProductCart';
 import ProductRepository from '~/repositories/ProductRepository';
@@ -9,43 +9,46 @@ const Wishlist = ({ ecomerce }) => {
     const { addItem, removeItem } = useEcomerce();
     const [wishlist, setWishlist] = useState([]);
 
+  const state = useSelector(state => state)
+  console.log('redux', state.ecomerce.wishlistItems);
+
     function handleAddItemToCart(e, product) {
         e.preventDefault();
         addItem({ id: product.id, quantity: 1 }, ecomerce.cartItems, 'cart');
-        console.log(  '../',product, ecomerce.cartItems );
+
     }
 
       async  function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
         removeItem(item, ecomerce.wishlistItems, 'wishlist');
     
-            const responseData = await ProductRepository.WishlistDataDelete(item.id);
-            if (responseData) {
-                setWishlist(responseData);
-                console.log('shopitems/ del', responseData);
-            }
+            // const responseData = await ProductRepository.WishlistDataDelete(item.id);
+            // if (responseData) {
+            //     setWishlist(responseData);
+            //     console.log('wishlist del', responseData);
+            // }
     }
 
-    async function getCategoryData() {
-        const responseData = await ProductRepository.getWishlistData();
-        if (responseData) {
-            setWishlist(responseData);
-            // console.log('shopitems/', responseData[0].document);
-        }
-    }
+    // async function getCategoryData() {
+    //     const responseData = await ProductRepository.getWishlistData();
+    //     if (responseData) {
+    //         setWishlist(responseData);
+    //         // console.log('shopitems/', responseData[0].document);
+    //     }
+    // }
 
 
 
     useEffect(() => {
-        getCategoryData();
+        // getCategoryData();
         if (ecomerce.wishlistItems) {
             getProducts(ecomerce.wishlistItems);
         }
     }, [ecomerce]);
-
+// console.log('pp', products);
     // views
     let wishlistItemsView;
-    if (wishlist && wishlist.length > 0) {
+    if (products && products.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist">
@@ -55,13 +58,11 @@ const Wishlist = ({ ecomerce }) => {
                             <th>Hujjat nomi</th>
                             <th>Narxi</th>
                             <th className='d-flex justify-content-center '>Qo'shish</th>
-                            {/* <th></th> */}
-                            {/* <th></th> */}
                         </tr>
                     </thead>
                     <tbody>
-                        {wishlist.map((product) => (
-                            <tr key={product?.document.id}>
+                        { products?.length > 0 &&  products.map((product) => (
+                            <tr key={product?.id}>
                                 <td>
                                     <a
                                         href="#"
@@ -75,12 +76,11 @@ const Wishlist = ({ ecomerce }) => {
                                     </a>
                                 </td>
                                 <td>
-                                    <ProductCart product={product.document} />
+                                    <ProductCart product={product} />
                                 </td>
                                 <td className="price d-flex justify-content-center">
-                                    {product?.document.price}so'm
+                                    {/* {product?.document.price}so'm */}
                                 </td>
-                                {/* <td>{product.vendor}</td> */}
                                 <td style={{margin: "0 auto"}} >
                                     <a
                                         className="ps-btn d-inline-block"

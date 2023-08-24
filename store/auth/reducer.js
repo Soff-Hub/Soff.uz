@@ -27,7 +27,6 @@ function reducer(state = initState, actions) {
             };
         case actionTypes.ISLOGINNING:
             const user = JSON.parse(localStorage.getItem('user'));
-            console.log('user', user);
             
             return user?.access
                 ? { ...state, ...{ isLoggedIn: true }, ...{ user: user } }

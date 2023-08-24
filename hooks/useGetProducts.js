@@ -26,7 +26,6 @@ export default function useGetProducts() {
             setLoading(true);
             const responseData = await getProductsByCollectionHelper();
             if (responseData) {
-                console.log(responseData);
                 setProductItems(responseData);
                 setTimeout(
                     function () {

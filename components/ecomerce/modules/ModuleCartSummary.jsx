@@ -6,7 +6,7 @@ const ModuleCartSummary = ({ source }) => {
     // View
     let productItemsView, amount;
     if (source && source.length > 0) {
-        amount = calculateAmount(source);
+        // amount = calculateAmount(source);
         productItemsView = source.map((item) => (
             <li key={item.id}>
                 <span className="ps-block__estimate">

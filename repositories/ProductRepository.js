@@ -1,9 +1,9 @@
+import { useSelector } from 'react-redux';
 import Repository, { baseUrl, serializeQuery } from './Repository';
 
 class ProductRepository {
     async getRecords(params) {
         const reponse = await Repository.get(
-
             `${baseUrl}customer/category-list/`
         )
             .then((response) => {
@@ -14,9 +14,7 @@ class ProductRepository {
     }
 
     async getRecordsSearch() {
-        const reponse = await Repository.get(
-            `${baseUrl}customer/documents/`
-        )
+        const reponse = await Repository.get(`${baseUrl}customer/documents/`)
             .then((response) => {
                 return response.data.results;
             })
@@ -24,9 +22,7 @@ class ProductRepository {
         return reponse;
     }
     async getWishlistData() {
-        const reponse = await Repository.get(
-            `${baseUrl}customer/wishlist/`
-        )
+        const reponse = await Repository.get(`${baseUrl}customer/wishlist/`)
             .then((response) => {
                 return response.data.results;
             })
@@ -34,27 +30,30 @@ class ProductRepository {
         return reponse;
     }
     async WishlistDataDelete(id) {
+        // const select = useSelector(state => state.auth.user?.access)
+        const select = localStorage.getItem('token');
+        // console.log('select', select);
+        console.log('id', id);
+
         const reponse = await Repository({
-            url:  `${baseUrl}customer/wishlist/${id}/`,
+            url: `${baseUrl}customer/wishlist/${id}/`,
             method: 'DELETE',
             headers: {
-                "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkyNDI5MTM0LCJpYXQiOjE2OTI0Mjg4MzQsImp0aSI6ImI5ZTk4ODZkM2E3MDRjMmNhZDg2ZTFlMzc4ODJhMTQ2IiwidXNlcl9pZCI6MTl9.ZZ0YzBnZjEuSo-v06Qya9vbNv_I5sYCoO8lBxjR8BCQ"
-            }
+                Authorization: `Bearer ${select}`,
+            },
         })
             .then((response) => {
-                return response.data.results;
+                return response;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
 
     async getRelatedProduct(pid) {
         const reponse = await Repository.get(
             `${baseUrl}customer/documents/${pid}`
         )
             .then((response) => {
-                console.log('relateed' ,response.data.similar);
                 return response.data.similar;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
@@ -62,11 +61,8 @@ class ProductRepository {
     }
 
     async getCardData() {
-        const reponse = await Repository.get(
-            `${baseUrl}customer/data/`
-        )
+        const reponse = await Repository.get(`${baseUrl}customer/data/`)
             .then((response) => {
-                console.log('relateed' ,response.data.results);
                 return response.data.results;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
@@ -111,8 +107,9 @@ class ProductRepository {
     }
 
     async getTotalRecords() {
-
-        const reponse = await Repository.get(`${baseUrl}customer/category-list/`)
+        const reponse = await Repository.get(
+            `${baseUrl}customer/category-list/`
+        )
             .then((response) => {
                 // console.log(response.data.results);
                 return response.data.results;
@@ -121,7 +118,9 @@ class ProductRepository {
         return reponse;
     }
     async getTopCategories() {
-        const reponse = await Repository.get(`${baseUrl}customer/top-categories/`)
+        const reponse = await Repository.get(
+            `${baseUrl}customer/top-categories/`
+        )
             .then((response) => {
                 // console.log(response.data.results);
                 return response.data.results;
@@ -130,9 +129,10 @@ class ProductRepository {
         return reponse;
     }
 
-
     async getProductsById(pid) {
-        const reponse = await Repository.get(`${baseUrl}customer/documents/${pid}/`)
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/${pid}/`
+        )
             .then((response) => {
                 return response.data;
             })
@@ -179,17 +179,16 @@ class ProductRepository {
     }
 
     async getProductsByIds(payload) {
-        const endPoint = `${baseUrl}/products?${payload}`;
+        const endPoint = `${baseUrl}customer/documents/${payload}/`;
         const reponse = await Repository.get(endPoint)
             .then((response) => {
-                if (response.data && response.data.length > 0) {
+                if (response.data) {
                     return response.data;
                 } else {
                     return null;
                 }
             })
             .catch((error) => {
-
                 // console.log(JSON.stringify(error));
                 return null;
             });
