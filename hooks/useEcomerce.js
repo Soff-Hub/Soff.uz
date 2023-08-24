@@ -101,7 +101,8 @@ export default function useEcomerce() {
                 dispatch(setCartItems(newItems));
             }
             if (group === 'wishlist') {
-                localStorage.setItem('wishlist', JSON.stringify(newItems));
+
+                localStorage.setItem('wishlist', newItems);
                 dispatch(setWishlistTtems(newItems));
             }
 
