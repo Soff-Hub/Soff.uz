@@ -82,6 +82,7 @@ export default function useEcomerce() {
             newItems.push(newItem)
                 setCookie('wishlist', newItems, { path: '/' });
 
+
                 dispatch(setWishlistTtems(newItems));
             }
 
@@ -89,7 +90,6 @@ export default function useEcomerce() {
         },
 
         removeItem: (selectedItem, items, group) => {
-            // console.log('rw', selectedItem);
            
             if (group === 'cart') {
                 let currentItems = cookies.cart;
@@ -111,7 +111,6 @@ export default function useEcomerce() {
                     );
                     currentItems.splice(index, 1);
                 }
-                // console.log('wshshsh',currentItems);
                 setCookie('wishlist', currentItems, { path: '/' });
                 dispatch(setWishlistTtems(currentItems));
             }
