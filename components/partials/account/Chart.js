@@ -3,6 +3,8 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Chart } from "chart.js";
 function Example() {
     const [tableData, setTableData] = useState([]);
+
+
     
     function getMonthName(monthNumber) {
         let monthName;
