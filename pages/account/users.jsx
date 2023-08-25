@@ -17,7 +17,7 @@ const AccountUsersPage = () => {
     ];
     return (
         <>
-            <PageContainer footer={<FooterDefault />} title="Notifications">
+            <PageContainer footer={<FooterDefault />} title="   s">
                 <div className="ps-page--my-account">
                     <BreadCrumb breacrumb={breadCrumb} />
                     <UsersLists/>

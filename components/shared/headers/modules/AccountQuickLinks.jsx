@@ -16,7 +16,6 @@ const AccountQuickLinks = (props) => {
     const linksView = accountLinks.map((item) => (
         <li key={item.text}>
             <Link href={item.url}>
-
                 <a>{item.text}</a>
             </Link>
         </li>

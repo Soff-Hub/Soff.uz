@@ -20,7 +20,7 @@ const HomeElectronicsPage = () => {
         const responseData = await CollectionRepository.getCategoryData(
             `customer/category-list/`
         );
-        if (responseData.length > 0) {
+        if (responseData?.length > 0) {
             setCategoryData(responseData);
         }
     }

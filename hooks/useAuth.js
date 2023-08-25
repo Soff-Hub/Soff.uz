@@ -36,7 +36,12 @@ export default function useAuth() {
     const loginUser = (e) => {
         console.log(e);
         let endPoint = 'auth/login/';
-        let user = Repository.post(baseUrlAuth + endPoint, e)
+        let config = {
+            headers: {
+                "Authorization": `Bearer ${localStorage.getItem('token')} `
+            }
+        }
+        let user = Repository.post(baseUrlAuth + endPoint, e, config)
             .then((ress) => {
                 return ress;
             })

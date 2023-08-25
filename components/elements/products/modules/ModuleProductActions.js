@@ -10,27 +10,22 @@ const ModuleProductActions = ({ product, ecomerce }) => {
 
     function handleAddItemToCart(e) {
         e.preventDefault();
-        addItem({ id: product.id, quantity: 1 }, ecomerce.cartItems, 'cart');
-    }
-
-    function handleAddItemToWishlist(e) {
-        e.preventDefault();
-        addItem({ id: product.id }, ecomerce.wishlistItems, 'wishlist');
+        addItem( product, ecomerce.cartItems, 'cart');
+        
         const modal = Modal.success({
             centered: true,
-            title: 'Success!',
-            content: `This item has been added to your wishlist`,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni savatga qo'shdingiz`,
         });
         modal.update;
     }
-
-    function handleAddItemToCompare(e) {
+    function handleAddItemToWishlist(e) {
         e.preventDefault();
-        addItem({ id: product.id }, ecomerce.compareItems, 'compare');
+        addItem(product, ecomerce.wishlistItems, 'wishlist');
         const modal = Modal.success({
             centered: true,
-            title: 'Success!',
-            content: `This product has been added to your compare listing!`,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
         });
         modal.update;
     }
@@ -44,6 +39,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
         e.preventDefault();
         setIsQuickView(false);
     };
+    
     return (
         <ul className="ps-product__actions">
             <li>
@@ -76,17 +72,6 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                     <i className="icon-heart"></i>
                 </a>
             </li>
-            {/* <li>
-                <a
-                    href="#"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Compare"
-                    onClick={handleAddItemToCompare}>
-                    <i className="icon-chart-bars"></i>
-                </a>
-
-            </li> */}
             <Modal
                 centered
                 footer={null}
@@ -94,7 +79,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                 onCancel={(e) => handleHideQuickView(e)}
                 visible={isQuickView}
                 closeIcon={<i className="icon icon-cross2"></i>}>
-                <h3>Quickview</h3>
+                <h3>Tezkor ko'rish</h3>
                 <ProductDetailQuickView product={product} />
             </Modal>
         </ul>

@@ -9,10 +9,10 @@ const Foydalanuvchi = () => {
             <div className="container">
                 <div className="ps-form--account d-flex justify-content-around">
                     <Link className="ps-btn ps-btn--fullwidth " href='/account/register-user'>
-                       <a className='register-choose-button' > Foydalanuvchi</a>
+                       <a className='register-choose-button' > <i class="fa-solid fa-user me-3"></i>   <span> Foydalanuvchi</span></a>
                     </Link>
                     <Link className="ps-btn ps-btn--fullwidth register-choose-button" href="/account/register">
-                        <a className='register-choose-button' > Sotuvchi</a>
+                        <a className='register-choose-button' > <i class="fa-solid fa-user-plus me-3"></i> <span>Sotuvchi</span></a>
                     </Link>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
-import { Result } from 'antd';
+import { Modal, Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
 
 const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
@@ -10,16 +10,30 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
     function handleRemoveItem(e, productId) {
         e.preventDefault();
         removeItem({ id: productId }, ecomerce.cartItems, 'cart');
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni savatdan o'chirdingiz`,
+        });
+        modal.update;
     }
 
-    function handleIncreaseItemQty(e, productId) {
-        e.preventDefault();
-        increaseQty({ id: productId }, ecomerce.cartItems);
-    }
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
 
-    function handleDecreaseItemQty(e, productId) {
-        e.preventDefault();
-        decreaseQty({ id: productId }, ecomerce.cartItems);
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
     }
 
     // View
@@ -30,34 +44,11 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                 <td>
                     <ProductCart product={item} />
                 </td>
-                <td data-label="price" className="price">
-
-                    {item.price} so'm
+                <td data-label="price" className="price pe-5">
+                   <span> {addPeriodToThousands(item.price)} so'm</span>
                 </td>
-                {/* <td data-label="quantity">
->>>>>>> deployBranch
-                    <div className="form-group--number">
-                        <button
-                            className="up"
-                            onClick={(e) => handleIncreaseItemQty(e, item.id)}>
-                            +
-                        </button>
-                        <button
-                            className="down"
-                            onClick={(e) => handleDecreaseItemQty(e, item.id)}>
-                            -
-                        </button>
-                        <input
-                            className="form-control"
-                            type="text"
-                            placeholder={item.quantity}
-                            disabled={true}
-                        />
-                    </div>
-
-                </td> */}
                 <td data-label="total">
-                    <strong>${(item.price * item.quantity).toFixed(2)}</strong>
+                    {/* <strong>${(item.price * item.quantity).toFixed(2)}</strong> */}
                 </td>
                 <td>
                     <a href="#" onClick={(e) => handleRemoveItem(e, item.id)}>
@@ -72,12 +63,12 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                 <table className="table  ps-table--shopping-cart ps-table--responsive">
                     <thead>
                         <tr>
-                            <th>Product</th>
-                            <th>Price</th>
+                            <th>Hujjat</th>
+                            <th>Narx</th>
 
                             {/* <th>Quantity</th> */}
-                            <th>Total</th>
-                            <th>Action</th>
+                            <th></th>
+                            <th>O'chirish</th>
                         </tr>
                     </thead>
                     <tbody>{items}</tbody>

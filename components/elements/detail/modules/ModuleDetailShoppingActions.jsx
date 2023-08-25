@@ -12,55 +12,53 @@ const ModuleDetailShoppingActions = ({
     extended = false,
 }) => {
     const [quantity, setQuantity] = useState(1);
-    const [redux, setRedux] = useState(false)
+    const [redux, setRedux] = useState(false);
     const Router = useRouter();
-    const select = useSelector(state => state.auth.user?.access)
+    const select = useSelector((state) => state.auth.user?.access);
     // console.log('select', select);
     const { addItem } = useEcomerce();
-    
+
     function handleAddItemToCart(e) {
         e.preventDefault();
-        addItem(
-            { id: product.id, quantity: 1 },
-            ecomerce.cartItems,
-            'cart'
-        );
-        // console.log(ecomerce.cartItems);
+        addItem(product, ecomerce.cartItems, 'cart');
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni savatga qo'shdingiz`,
+        });
+        modal.update;
     }
-
-
+    const state = useSelector(state => state.auth.user)
 
     function handleBuynow(e) {
         e.preventDefault();
         addItem(
-            { id: product.id, quantity: quantity },
+            product,
             ecomerce.cartItems,
             'cart'
         );
+       if(state !== null){
         setTimeout(function () {
             Router.push('/account/checkout');
         }, 1000);
+       }else{
+        setTimeout(function () {
+            Router.push('/account/register');
+        }, 1000);
+       }
     }
 
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
-        addItem({ id: product.id }, product, 'wishlist');
-        // console.log('wishlistga qoyilgan hujjat', product);
-        // let data = {
-        //     document: product.id,
-        // };
-        // const dataItems = await PostRepo.getWishlistPost(data);
-        // console.log('wishlistga qoshilganda qaytadigan respons', dataItems);
+        addItem(product, ecomerce.wishlistItems, 'wishlist');
         const modal = Modal.success({
             centered: true,
-            title: 'Success!',
-            content: `This item has been added to your wishlist`,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
         });
         modal.update;
     };
 
-
- 
     if (select) {
         return (
             <div className="ps-product__shopping">

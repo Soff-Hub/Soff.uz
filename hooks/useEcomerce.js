@@ -7,13 +7,13 @@ import {
     setWishlistTtems,
     setCartItems,
 } from '~/store/ecomerce/action';
-
 export default function useEcomerce() {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [cartItemsOnCookie] = useState(null);
     const [cookies, setCookie] = useCookies(['cart']);
     const [products, setProducts] = useState(null);
+    console.log('cookie', cookies );
     return {
         loading,
         cartItemsOnCookie,
@@ -63,46 +63,24 @@ export default function useEcomerce() {
             // setProducts(payload)
         },
 
-        // increaseQty: (payload, currentCart) => {
-        //     let cart = [];
-        //     if (currentCart) {
-        //         cart = currentCart;
-        //         const existItem = cart.find((item) => item.id === payload.id);
-        //         if (existItem) {
-        //             existItem.quantity = existItem.quantity + 1;
-        //         }
-        //         setCookie('cart', cart, { path: '/' });
-        //         dispatch(setCartItems(cart));
-        //     }
-        //     return cart;
-        // },
-
-        // decreaseQty: (payload, currentCart) => {
-        //     let cart = [];
-        //     if (currentCart) {
-        //         cart = currentCart;
-        //         const existItem = cart.find((item) => item.id === payload.id);
-        //         if (existItem) {
-        //             if (existItem.quantity > 1) {
-        //                 existItem.quantity = existItem.quantity - 1;
-        //             }
-        //         }
-        //         setCookie('cart', cart, { path: '/' });
-        //         dispatch(setCartItems(cart));
-        //     }
-        //     return cart;
-        // },
-
         addItem: (newItem, items, group) => {
-            let newItems = [];
-            newItems.push(items)
-            if (group === 'cart') {
-                // setCookie('cart', newItems, { path: '/' });
+            
+            if (group === 'cart' &&  cookies.cart?.every(
+                (el) => el.id !== newItem.id
+            )) {
+                let newItems = cookies.cart;
+            newItems.push(newItem)
+           
+                setCookie('cart', newItems, { path: '/' });
                 dispatch(setCartItems(newItems));
             }
-            if (group === 'wishlist') {
 
-                localStorage.setItem('wishlist', JSON.stringify(newItems));
+            if (group === 'wishlist' &&  cookies.wishlist?.every(
+                (el) => el.id !== newItem.id
+            )) {
+                let newItems = cookies.wishlist;
+            newItems.push(newItem)
+                setCookie('wishlist', newItems, { path: '/' });
                 dispatch(setWishlistTtems(newItems));
             }
 
@@ -110,37 +88,39 @@ export default function useEcomerce() {
         },
 
         removeItem: (selectedItem, items, group) => {
-            let currentItems = items;
-            if (currentItems.length > 0) {
-                const index = currentItems.findIndex(
-                    (item) => item.id === selectedItem.id
-                );
-                currentItems.splice(index, 1);
-            }
+            // console.log('rw', selectedItem);
+           
             if (group === 'cart') {
+                let currentItems = cookies.cart;
+                if (currentItems?.length > 0) {
+                    const index = currentItems.findIndex(
+                        (item) => item.id === selectedItem.id
+                    );
+                    currentItems.splice(index, 1);
+                }
                 setCookie('cart', currentItems, { path: '/' });
-
                 dispatch(setCartItems(currentItems));
             }
-
+            
             if (group === 'wishlist') {
+                let currentItems = cookies.wishlist;
+                if (currentItems?.length > 0) {
+                    const index = currentItems.findIndex(
+                        (item) => item.id === selectedItem.id
+                    );
+                    currentItems.splice(index, 1);
+                }
+                // console.log('wshshsh',currentItems);
                 setCookie('wishlist', currentItems, { path: '/' });
                 dispatch(setWishlistTtems(currentItems));
             }
 
-            if (group === 'compare') {
-                setCookie('compare', currentItems, { path: '/' });
-            }
         },
 
         removeItems: (group) => {
             if (group === 'wishlist') {
                 setCookie('wishlist', [], { path: '/' });
                 dispatch(setWishlistTtems([]));
-            }
-            if (group === 'compare') {
-                setCookie('compare', [], { path: '/' });
-                dispatch(setCompareItems([]));
             }
             if (group === 'cart') {
                 setCookie('cart', [], { path: '/' });

@@ -14,11 +14,15 @@ class Login extends Component {
         super(props);
         this.state = {};
     }
+     modalSuccess = type => {
+        notification.open({
+            message: 'Xush kelibsiz saytimizga!',
+            description: 'Siz muvaffaqqiyatli kirdingiz!',
+        });
+    };
 
     static getDerivedStateFromProps(props) {
         if (props.isLoggedIn === true) {
-
-            // Router.push('/');
         }
         return false;
     }
@@ -44,13 +48,17 @@ class Login extends Component {
 
         if (user) {
             if (user.status >= 400) {
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Nimadir xato bor!',
-                    content: user.data.message,
+                notification.open({
+                    message: "Nimadir noto'g'ri bajarildi",
+                    description: "Parol yoki raqam xato kiritilgan bo'lshi mumkin!",
+                    duration: 500,
                 });
-                modal.update;
             } else {
+                notification.open({
+                    message: 'Xush kelibsiz saytimizga!',
+                    description: 'Siz muvaffaqqiyatli kirdingiz!',
+                    type:'success'
+                });
                 this.props.dispatch(login({ user: user.data }));
                 Router.push('/');
             }

@@ -3,17 +3,35 @@ import Link from 'next/link';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 
 const ModuleCartSummary = ({ source }) => {
+    const amount = calculateAmount(source);
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+    const hisob = addPeriodToThousands(amount);
+
     // View
-    let productItemsView, amount;
+    let productItemsView;
     if (source && source.length > 0) {
-        // amount = calculateAmount(source);
-        productItemsView = source.map((item) => (
+        productItemsView = source.map((item, i) => (
             <li key={item.id}>
                 <span className="ps-block__estimate">
                     <Link href="/product/[pid]" as={`/product/${item.id}`}>
                         <a className="ps-product__title">
-                            {item.title}
-                            <br /> x {item.quantity}
+                            {i + 1}. {item.title}
                         </a>
                     </Link>
                 </span>
@@ -26,13 +44,13 @@ const ModuleCartSummary = ({ source }) => {
             <div className="ps-block--shopping-total">
                 <div className="ps-block__header">
                     <p>
-                        Subtotal <span> ${amount}</span>
+                        Subtotal <span> {hisob} so'm </span>
                     </p>
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-block__product">{productItemsView}</ul>
                     <h3>
-                        Total <span>${amount}</span>
+                        Total <span>{hisob} so'm</span>
                     </h3>
                 </div>
             </div>

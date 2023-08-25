@@ -1,8 +1,7 @@
-import { useSelector } from 'react-redux';
 import Repository, { baseUrl, serializeQuery } from './Repository';
 
 class ProductRepository {
-    async getRecords(params) {
+    async getRecords() {
         const reponse = await Repository.get(
             `${baseUrl}customer/category-list/`
         )

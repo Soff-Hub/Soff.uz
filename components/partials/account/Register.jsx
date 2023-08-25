@@ -130,7 +130,7 @@ class Register extends Component {
                                 <div className="form-group submit">
                                     <button
                                         type="submit"
-                                        className="ps-btn ps-btn--fullwidth">
+                                        className="ps-btn ps-btn--fullwidth mb-5">
                                         Ro'yxatdan o'tish
                                     </button>
                                 </div>

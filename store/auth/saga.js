@@ -30,7 +30,7 @@ function* loginSaga() {
 function* logOutSaga() {
     try {
         yield put(logOutSuccess());
-        modalWarning('warning');
+        // modalWarning('warning');
     } catch (err) {
         console.log(err);
     }

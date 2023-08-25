@@ -1,18 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import Link from 'next/link';
 
 import MiniCart from './MiniCart';
 import AccountQuickLinks from './AccountQuickLinks';
+import { useCookies } from 'react-cookie';
+
+
 
 const ElectronicHeaderActions = ({ auth, ecomerce }) => {
+    const [cookies, setCookie] = useCookies(['cart']);
+
+    console.log(cookies);
+
+    useEffect(() => {
+
+    },[ecomerce.wishlistItems])
+
     return (
         <div className="header__actions">
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>
                     <span>
-                        <i>{ecomerce.wishlistItems.length}</i>
+                        <i>{cookies.wishlist?.length}</i>
                     </span>
                 </a>
             </Link>

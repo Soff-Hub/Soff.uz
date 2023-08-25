@@ -3,52 +3,47 @@ import { connect, useSelector } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
 import ProductCart from '~/components/elements/products/ProductCart';
 import ProductRepository from '~/repositories/ProductRepository';
+import { Modal } from 'antd';
+import { useCookies } from 'react-cookie';
+
 
 const Wishlist = ({ ecomerce }) => {
+    const [cookies, setCookie] = useCookies(['cart']);
     const { loading, products, getProducts } = useEcomerce();
     const { addItem, removeItem } = useEcomerce();
-    const [wishlist, setWishlist] = useState([]);
-
-  const state = useSelector(state => state)
-  console.log('redux', state.ecomerce.wishlistItems);
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
-        addItem({ id: product.id, quantity: 1 }, ecomerce.cartItems, 'cart');
+        addItem(product, cookies.cart, 'cart');
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni savatga o'chirdingiz`,
+        });
+        modal.update;
 
     }
 
       async  function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
         removeItem(item, ecomerce.wishlistItems, 'wishlist');
-    
-            // const responseData = await ProductRepository.WishlistDataDelete(item.id);
-            // if (responseData) {
-            //     setWishlist(responseData);
-            //     console.log('wishlist del', responseData);
-            // }
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni saqlanganlardan o'chirdingiz`,
+        });
+        modal.update;
     }
-
-    // async function getCategoryData() {
-    //     const responseData = await ProductRepository.getWishlistData();
-    //     if (responseData) {
-    //         setWishlist(responseData);
-    //         // console.log('shopitems/', responseData[0].document);
-    //     }
-    // }
-
-
 
     useEffect(() => {
         // getCategoryData();
         if (ecomerce.wishlistItems) {
             getProducts(ecomerce.wishlistItems);
         }
-    }, [ecomerce]);
-// console.log('pp', products);
+    }, [ecomerce.wishlistItems  ]);
     // views
     let wishlistItemsView;
-    if (products && products.length > 0) {
+    if (cookies.wishlist && cookies.wishlist?.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist">
@@ -61,7 +56,7 @@ const Wishlist = ({ ecomerce }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        { products?.length > 0 &&  products.map((product) => (
+                        { cookies.wishlist?.length > 0 &&  cookies.wishlist.map((product) => (
                             <tr key={product?.id}>
                                 <td>
                                     <a
@@ -69,7 +64,7 @@ const Wishlist = ({ ecomerce }) => {
                                         onClick={(e) =>
                                             handleRemoveWishlistItem(
                                                 e,
-                                                product.document
+                                                product
                                             )
                                         }>
                                         <i className="icon-cross"></i>
@@ -78,8 +73,8 @@ const Wishlist = ({ ecomerce }) => {
                                 <td>
                                     <ProductCart product={product} />
                                 </td>
-                                <td className="price d-flex justify-content-center">
-                                    {/* {product?.document.price}so'm */}
+                                <td style={{padding:'40px 0 !important'}} className="  d-flex justify-content-center align-content-center">
+                                   <span className='narx' > {product.price}so'm</span>
                                 </td>
                                 <td style={{margin: "0 auto"}} >
                                     <a
@@ -88,7 +83,7 @@ const Wishlist = ({ ecomerce }) => {
                                         onClick={(e) =>
                                             handleAddItemToCart(
                                                 e,
-                                                product.document
+                                                product
                                             )
                                         }>
                                        Savatga qo'shish

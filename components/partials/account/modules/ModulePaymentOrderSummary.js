@@ -23,7 +23,6 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
                 <a>
                     <strong>
                         {item.title}
-                        <span>x{item.quantity}</span>
                     </strong>
                     <small>${item.quantity * item.price}</small>
                 </a>
@@ -54,7 +53,7 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
             <figure className="ps-block__total">
                 <h3>
                     Total
-                    <strong>${parseInt(amount)}.00</strong>
+                    <strong>{parseInt(amount)}.00 so'm </strong>
                 </h3>
             </figure>
         );
@@ -72,7 +71,7 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
                 <figure>
                     <figcaption>
                         <strong>Subtotal</strong>
-                        <small>${amount}</small>
+                        <small>{amount} so'm </small>
                     </figcaption>
                 </figure>
                 {shippingView}

@@ -11,6 +11,7 @@ import { getProductsByIds } from '~/repositories/ProductRepository';
 export function getCartItemsFromCookies() {
     const cartItems = cookies.get('cart');
     if (cartItems) {
+        console.log('cooke', cartItems);
         return JSON.parse(cartItems);
     } else {
         return null;
@@ -27,14 +28,14 @@ export function addItemToCartHelper(product) {
     if (cookieCart) {
         cart = cookieCart;
         const existItem = cart.items.find((item) => item.id === product.id);
-        if (existItem) {
-            existItem.quantity += product.quantity;
-        } else {
+        // if (existItem) {
+        //     existItem.quantity += product.quantity;
+        // } else {
             /* if (!product.quantity) {
                 product.quantity = 1;
             }*/
             cart.items.push(product);
-        }
+        // }
     } else {
         cart = {
             items: [],
@@ -45,35 +46,35 @@ export function addItemToCartHelper(product) {
     return cart;
 }
 
-export function increaseQtyCartItemHelper(product) {
-    let cart;
-    let cookieCart = getCartItemsFromCookies();
-    if (cookieCart) {
-        cart = cookieCart;
-        const selectedItem = cart.items.find((item) => item.id === product.id);
+// export function increaseQtyCartItemHelper(product) {
+//     let cart;
+//     let cookieCart = getCartItemsFromCookies();
+//     if (cookieCart) {
+//         cart = cookieCart;
+//         const selectedItem = cart.items.find((item) => item.id === product.id);
 
-        if (selectedItem) {
-            selectedItem.quantity = selectedItem.quantity + 1;
-        }
-        updateCartToCookies(cart);
-        return cart;
-    }
-}
+//         if (selectedItem) {
+//             selectedItem.quantity = selectedItem.quantity + 1;
+//         }
+//         updateCartToCookies(cart);
+//         return cart;
+//     }
+// }
 
-export function decreaseQtyCartItemHelper(product) {
-    let cart;
-    let cookieCart = getCartItemsFromCookies();
-    if (cookieCart) {
-        cart = cookieCart;
-        const selectedItem = cart.items.find((item) => item.id === product.id);
+// export function decreaseQtyCartItemHelper(product) {
+//     let cart;
+//     let cookieCart = getCartItemsFromCookies();
+//     if (cookieCart) {
+//         cart = cookieCart;
+//         const selectedItem = cart.items.find((item) => item.id === product.id);
 
-        if (selectedItem) {
-            selectedItem.quantity = selectedItem.quantity - 1;
-        }
-        updateCartToCookies(cart);
-        return cart;
-    }
-}
+//         if (selectedItem) {
+//             selectedItem.quantity = selectedItem.quantity - 1;
+//         }
+//         updateCartToCookies(cart);
+//         return cart;
+//     }
+// }
 
 export function removeCartItemHelper(product) {
     let cart;
@@ -89,14 +90,14 @@ export function removeCartItemHelper(product) {
 
 // new
 
-// export function calculateAmount(obj) {
-//     return Object.values(obj)
-//         .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
-//         .toFixed(2);
-// }
+export function calculateAmount(obj) {
+    return Object.values(obj)
+        .reduce((acc, { price }) => acc + Number(price), 0)
+        // .toFixed(2);
+}
 
 export function calculateCartQuantity(obj) {
-    return Object.values(obj).reduce((acc, { quantity }) => acc + quantity, 0);
+    return Object.values(obj).reduce((acc, { quantity }) => acc + 0, 0);
 }
 
 export function caculateArrayQuantity(obj) {

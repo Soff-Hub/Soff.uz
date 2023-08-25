@@ -92,7 +92,11 @@ const ProductDefaultPage = () => {
                         layout="fullwidth"
                         collectionSlug="deal-of-the-day"
                     /> */}
+                    {
+                        product?.similar?.length > 0
+                        &&
                     <RelatedProduct pid={pid} collectionSlug="shop-recommend-items" />
+                    }
                 </div>
             </div>
             {/* <Newletters /> */}

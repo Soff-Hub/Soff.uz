@@ -3,16 +3,16 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Newletters from '~/components/partials/commons/Newletters';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 
 const ShoppingCartScreen = ({ ecomerce }) => {
-
     // console.log('card', ecomerce.cartItems);
     const { products, getProducts } = useEcomerce();
+    const state = useSelector((state) => state.auth.user);
 
     useEffect(() => {
         if (ecomerce.cartItems) {
@@ -30,15 +30,18 @@ const ShoppingCartScreen = ({ ecomerce }) => {
         },
     ];
 
-    console.log(products);
+  
+
     // View
     let contentView;
-    if (products) {
-        if (products.length > 0) {
+    if (ecomerce.cartItems) {
+        if (ecomerce.cartItems?.length > 0) {
             contentView = (
                 <>
                     <div className="ps-section__content">
-                        <ModuleEcomerceCartItems cartItems={products} />
+                        <ModuleEcomerceCartItems
+                            cartItems={ecomerce.cartItems}
+                        />
                         <div className="ps-section__cart-actions">
                             <Link href="/shop">
                                 <a className="ps-btn">Ortga</a>
@@ -48,12 +51,22 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                     <div className="ps-section__footer">
                         <div className="row justify-space-between">
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
-                                <ModuleCartSummary source={products} />
-                                <Link href="/account/checkout">
-                                    <a className="ps-btn ps-btn--fullwidth">
-                                        Proceed to checkout
-                                    </a>
-                                </Link>
+                                <ModuleCartSummary
+                                    source={ecomerce.cartItems}
+                                />
+                                {state !== null ? (
+                                    <Link href="/account/checkout">
+                                        <a className="ps-btn ps-btn--fullwidth">
+                                            Sotib olish
+                                        </a>
+                                    </Link>
+                                ) : (
+                                    <Link href="/account/register">
+                                        <a className="ps-btn ps-btn--fullwidth">
+                                            Sotib olish
+                                        </a>
+                                    </Link>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -64,9 +77,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                 <>
                     <div className="ps-section__content">
                         <div className="alert alert-info">
-                            <p className="mb-0">
-                                Sizning savatingiz bo'sh...
-                            </p>
+                            <p className="mb-0">Sizning savatingiz bo'sh...</p>
                         </div>
 
                         <div className="ps-section__cart-actions">

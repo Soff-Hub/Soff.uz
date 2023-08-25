@@ -31,9 +31,14 @@ const Xabar = (e) => {
             if (user.status === 200 || user.status === 201) {
                 Router.push('/account/login');
             }
-        
-
     };
+
+    
+  const handleInputChange = (event) => {
+    const newValue = event.target.value.slice(0, 4);
+    setKod(newValue);
+    console.log( event.target.value.slice(0, 4));
+  };
 
     const qaytaKodOlish = async () => {
         const { qaytaKodYuborish } = useAuth();
@@ -86,13 +91,14 @@ const Xabar = (e) => {
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
                                 <h5>Kodni kiriting</h5>
-                                <div className="form-group form-forgot">
+                                <div className='kod-input'>
                                     <Input
                                         required
-                                        className="form-control mb-4"
+                                        className="form-control mb-4 "
                                         type="number"
                                         placeholder="Kodni kiriting..."
-                                        onChange={(e) => setKod(e.target.value)}
+                                        onChange={handleInputChange}
+                                        maxLength={4}
                                     />
                                     {/* </Form.Item> */}
                                     <p> {nomer} nomerga sms boradi</p>

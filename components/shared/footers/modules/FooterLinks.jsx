@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
+import { useState } from 'react';
+import ProductRepository from '~/repositories/ProductRepository';
 const Links = {
     consumerElectric: [
         {
@@ -175,17 +177,45 @@ const Links = {
     ],
 };
 
-const FooterLinks = () => (
-    <div className="ps-footer__links">
-        <p>
-            <strong>Consumer Electric:</strong>
-            {Links.consumerElectric.map((item) => (
-                <Link href={item.url} key={item.text}>
-                    <a>{item.text}</a>
-                </Link>
-            ))}
-        </p>
-        <p>
+const FooterLinks = () => {
+    const [data, setData] = useState([]);
+
+    const getDataFunc = async () => {
+        const respons = await ProductRepository.getRecords();
+        if (respons?.results) {
+            setData(respons?.results);
+        }
+    };
+    // console.log('data', data);
+    useEffect(() => {
+        getDataFunc();
+    }, []);
+
+    return (
+        <div className="ps-footer__links">
+            {data?.length > 0 ??
+                data.map((item, i) => {
+                    return (
+                     <>
+                     {
+                        // item?.promotional_sliders?.length > 0 ?
+                        <p key={i}>
+                        <strong>{item.name}</strong>
+                        { item.promotional_sliders?.length > 0 && item.promotional_sliders?.map((item) => (
+                            <Link href={item.title} key={item.title}>
+                                <a>{item.title}</a>
+                            </Link>
+                        ))}
+                    </p>
+                    // :
+                    // <>Loading</>
+                     }
+                     </>
+                    )
+                })
+               
+                }
+            {/* <p>
             <strong>Clothing &amp; Apparel:</strong>
             {Links.clothingAndApparel.map((item) => (
                 <Link href={item.url} key={item.text}>
@@ -224,8 +254,9 @@ const FooterLinks = () => (
                     <a>{item.text}</a>
                 </Link>
             ))}
-        </p>
-    </div>
-);
+        </p> */}
+        </div>
+    );
+};
 
 export default FooterLinks;
