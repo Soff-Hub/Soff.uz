@@ -17,6 +17,7 @@ const Wishlist = ({ ecomerce }) => {
   const state = useSelector(state => state)
   console.log('redux', state.ecomerce.wishlistItems);
 
+
     function handleAddItemToCart(e, product) {
         e.preventDefault();
         addItem(product, cookies.cart, 'cart');
@@ -42,7 +43,6 @@ const Wishlist = ({ ecomerce }) => {
     }
 
 
-
     useEffect(() => {
         // getCategoryData();
         if (ecomerce.wishlistItems) {
@@ -66,7 +66,6 @@ const Wishlist = ({ ecomerce }) => {
                     </thead>
                     <tbody>
                         { cookies.wishlist?.length > 0 &&  cookies.wishlist.map((product) => (
-
 
                             <tr key={product?.id}>
                                 <td>

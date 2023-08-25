@@ -31,8 +31,6 @@ const ModuleDetailShoppingActions = ({
     }
     const state = useSelector(state => state.auth.user)
 
-
-
     function handleBuynow(e) {
         e.preventDefault();
         addItem(
@@ -60,14 +58,11 @@ const ModuleDetailShoppingActions = ({
             title: 'Muvaffaqqiyatli!',
             content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
 
-
         });
         modal.update;
     };
 
 
-
- 
     if (select) {
         return (
             <div className="ps-product__shopping">

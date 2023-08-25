@@ -10,8 +10,8 @@ function Notifications() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [deleteIdEditSellers, setDeleteIdEditSellers] = useState(null);
-    const [selectValSellers, setSelectValSellers] = useState({});
-    
+
+    const [selectValSellers, setSelectValSellers] = useState({});;
     async function GetItems(page) {
         if (page === 1) {
             setData([])

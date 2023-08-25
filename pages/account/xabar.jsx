@@ -98,7 +98,7 @@ const Xabar = (e) => {
                                         type="number"
                                         placeholder="Kodni kiriting..."
                                         onChange={handleInputChange}
-                                        maxLength={"4"}
+                                        maxLength={4}
                                     />
                                     {/* </Form.Item> */}
                                     <p> {nomer} nomerga sms boradi</p>

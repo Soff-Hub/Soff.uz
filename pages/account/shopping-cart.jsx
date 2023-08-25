@@ -10,8 +10,6 @@ import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 
 const ShoppingCartScreen = ({ ecomerce }) => {
-
-
     // console.log('card', ecomerce.cartItems);
     const { products, getProducts } = useEcomerce();
     const state = useSelector((state) => state.auth.user);
@@ -31,6 +29,9 @@ const ShoppingCartScreen = ({ ecomerce }) => {
             text: 'Shopping Cart',
         },
     ];
+
+
+  
 
     // View
     let contentView;
@@ -78,9 +79,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                     <div className="ps-section__content">
                         <div className="alert alert-info">
 
-                            <p className="mb-0">
-                                Sizning savatingiz bo'sh...
-                            </p>
+                            <p className="mb-0">Sizning savatingiz bo'sh...</p>
                         </div>
 
                         <div className="ps-section__cart-actions">
