@@ -7,6 +7,23 @@ import useProduct from '~/hooks/useProduct';
 const Product = ({ product }) => {
     const { thumbnailImage, price, title } = useProduct();
     // console.log('//', product);
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
     return (
         <div className="ps-product">
             <div className="ps-product__thumbnail">
@@ -19,11 +36,11 @@ const Product = ({ product }) => {
             <div className="ps-product__container">
                 <div className="ps-product__content">
                     {title(product)}
-                    {price(product)}
+                    {addPeriodToThousands(product.price)} so'm
                 </div>
                 <div className="ps-product__content hover">
                     {title(product)}
-                    {price(product)}
+                    {addPeriodToThousands(product.price)} so'm
                 </div>
             </div>
         </div>

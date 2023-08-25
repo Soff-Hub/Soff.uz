@@ -45,6 +45,7 @@ export default function useAuth() {
             .then((ress) => {
                 return ress;
             })
+            
             .catch((error) => {
                 console.log(error.response);
                 if (error.response) {
