@@ -4,7 +4,6 @@ import { Chart } from "chart.js";
 function Example() {
     const [tableData, setTableData] = useState([]);
 
-
     
     function getMonthName(monthNumber) {
         let monthName;
@@ -57,34 +56,34 @@ function Example() {
         const day = date[2].split('T')
         return day[0];
     }
-    console.log(tableData);
-    async function getChartItems() {
-        const ItemsChartData = await GetRepository.getChartLists();
-        const objData = []
-        if (ItemsChartData ) {
-            if (ItemsChartData.length>1) {
-                ItemsChartData.map((el) => {
-                    return objData.push({
-                        labels: getMonthName(el.month),
-                        data: el.document_count,
-                    });
-                });
-            }
-            else{
-                ItemsChartData.map((el) => {
-                    return objData.push({
-                        labels: getMonthName(el.month),
-                        data: el.document_count,
-                    });
-                });
-            }
-        }
+    // console.log(tableData);
+    // async function getChartItems() {
+    //     const ItemsChartData = await GetRepository.getChartLists();
+    //     const objData = []
+    //     if (ItemsChartData ) {
+    //         if (ItemsChartData.length>1) {
+    //             ItemsChartData?.map((el) => {
+    //                 return objData.push({
+    //                     labels: getMonthName(el.month),
+    //                     data: el.document_count,
+    //                 });
+    //             });
+    //         }
+    //         else{
+    //             ItemsChartData?.map((el) => {
+    //                 return objData.push({
+    //                     labels: getMonthName(el.month),
+    //                     data: el.document_count,
+    //                 });
+    //             });
+    //         }
+    //     }
 
-        setTableData(objData);
-    }
-    useEffect(() => {
-        getChartItems();
-    }, []);
+    //     setTableData(objData);
+    // }
+    // useEffect(() => {
+    //     getChartItems();
+    // }, []);
 
     useEffect(() => {
         var ctx = document.getElementById('myChart').getContext('2d');
