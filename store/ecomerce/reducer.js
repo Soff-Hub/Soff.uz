@@ -23,7 +23,6 @@ function reducer(state = initalState, action) {
         // SET_WISHLIST_ITEMS_SUCCESS
         case actionTypes.SET_WISHLIST_ITEMS_SUCCESS:
 
-            // localStorage.setItem('wishlist', JSON.stringify(action.payload))
             if (
                 state.wishlistItems.every(
                     (el) => el.id !== action.payload[0].id

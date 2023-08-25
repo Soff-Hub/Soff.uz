@@ -27,11 +27,8 @@ const ModuleDetailShoppingActions = ({
             content: `Siz hujjatni savatga qo'shdingiz`,
         });
         modal.update;
-
     }
     const state = useSelector(state => state.auth.user)
-
-
 
     function handleBuynow(e) {
         e.preventDefault();
