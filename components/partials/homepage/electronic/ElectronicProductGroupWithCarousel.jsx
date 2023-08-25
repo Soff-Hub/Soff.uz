@@ -27,20 +27,26 @@ const ElectronicProductGroupWithCarousel = ({
     if (!loading) {
         if (data && data.promotional_sliders.length > 0) {
             //  let slideItems
-            productItemsView = (
-                <Slider
-                    {...carouselStandard}
-                    arrows={false}
-                    className="ps-carousel outside">
-
-                    {/* {slideItems} */}
-                    {
-                    data.promotional_sliders.map((item, index) => (
-                        <Product key={item.id} product={item} />
-                    ))
-                    }
-                </Slider>
-            );
+            productItemsView = 
+            (
+              <div className='d-flex align-content-center'>
+               {
+                 data.promotional_sliders?.slice(0,5).map((item, index) => (
+                  <div className='home-card' >   <Product key={item.id} product={item} /> </div>
+                ))
+               }
+              </div>
+                // <Slider
+                //     {...carouselStandard}
+                //     arrows={false}
+                //     className="ps-carousel outside">
+                //     {
+                //     data.promotional_sliders.map((item, index) => (
+                //         <Product key={item.id} product={item} />
+                //     ))
+                //     }
+                // </Slider>
+            )
         } else {
             productItemsView = <p>Hujjat topilmadi</p>;
         }

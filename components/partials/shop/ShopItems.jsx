@@ -122,7 +122,7 @@ const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
                 <p>
 
                     <strong className="mr-2">{data?.length}</strong>
-                    Products found
+                    ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
                     <ModuleShopSortBy />

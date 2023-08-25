@@ -13,6 +13,7 @@ class AccountQuickLinks extends Component {
     handleLogout = e => {
         e.preventDefault();
         this.props.dispatch(logOut());
+        localStorage.removeItem('token')
     };
 
     render() {

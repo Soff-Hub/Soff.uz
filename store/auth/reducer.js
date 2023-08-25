@@ -20,6 +20,7 @@ function reducer(state = initState, actions) {
             };
         case actionTypes.LOGOUT_SUCCESS:
             localStorage.removeItem('user')
+            localStorage.removeItem('token')
             return {
                 ...state,
                 ...{ isLoggedIn: false },

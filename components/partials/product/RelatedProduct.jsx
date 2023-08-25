@@ -30,7 +30,6 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
     }
 
     useEffect(() => {
-
         if (pid) {
             getProducts(pid);
         }
@@ -110,39 +109,35 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
         if (productItems) {
             if ((layout = 'fullwidth')) {
                 carouselView = (
-                    <Slider
-                        {...carouselFullwidth}
-                        className="ps-carousel outside">
+                    // <Slider {...carouselFullwidth} className="ps-carousel">
+                    //        <Product product={item} key={item.id} />
+                    // </Slider>
 
-                        {productItems?.length > 0 ? (
-                            productItems.map((item, index) => {
-                                if (index < 8) {
-                                    return (
-                                        <Product product={item} key={item.id} />
-                                    );
-                                }
-                            })
-                        ) : (
-                            <></>
-                        )}
-                    </Slider>
+                    <div className='d-flex align-content-center flex-wrap'>
+                        {productItems?.length > 0 &&
+                            productItems?.map((item, i) => (
+                               
+                                  <div className='detail-card'>  <Product product={item} key={i} /></div>
+                            ))}
+                    </div>
                 );
             } else {
                 carouselView = (
-                    <Slider
-                        {...carouselStandard}
-                        className="ps-carousel outside">
-                        {productItems.map((item, index) => {
-
-                            if (index < 5) {
-                                return <Product product={item} key={item.id} />;
-                            }
-                        })}
-                    </Slider>
+                    <>
+                      {productItems?.length > 0 &&
+                            productItems?.map((item, i) => (
+                                <Slider
+                                    {...carouselFullwidth}
+                                    className="ps-carousel"
+                                    arrows={true}
+                                    >
+                                    <Product product={item} key={i} />
+                                </Slider>
+                            ))}
+                    </>
                 );
             }
         } else {
-
             carouselView = <p>Hujjat topilmadi</p>;
         }
     } else {
@@ -150,23 +145,21 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
     }
 
     return (
-       <>
-       {
-        productItems?.length>0 ? 
-        <div
-        className={`ps-section--default ps-related-products ${
-            boxed === true ? 'boxed' : ''
-        }`}>
-        <div className="ps-section__header">
-
-            <h3>O'xshash hujjatlar</h3>
-        </div>
-        <div className="ps-section__content">{carouselView}</div>
-    </div>
-    :
-    <></>
-       }
-       </>
+        <>
+            {productItems?.length > 0 ? (
+                <div
+                    className={`ps-section--default ps-related-products ${
+                        boxed === true ? 'boxed' : ''
+                    }`}>
+                    <div className="ps-section__header">
+                        <h3>O'xshash hujjatlar</h3>
+                    </div>
+                    <div className="ps-section__content">{carouselView}</div>
+                </div>
+            ) : (
+                <></>
+            )}
+        </>
     );
 };
 

@@ -80,7 +80,7 @@ const HomeElectronicsPage = () => {
          /> */}
          {
             categoryData && categoryData.map((item, index) => (
-
+                    item.promotional_sliders?.length > 0 &&
                 <ElectronicProductGroupWithCarousel
                     collectionSlug="electronics-best-sellers"
                     title={item.name}
