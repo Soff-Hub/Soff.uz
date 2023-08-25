@@ -120,22 +120,30 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
                     //               <div className='detail-card'>  <Product product={item} key={i} /></div>
                     //         ))}
                     // </div>
-                      <>
-                        {
-                            productItems?.length > 0 ? (
-                            productItems.map((item, index) => {
-                                if (index < 8) {
-                                    return (
-                                        <Product product={item} key={item.id} />
-                                    );
-                                }
-                            }
-                            )
-                        ) : (
-                            <></>
-                        )}
-                      </>
-                )
+                    //   <>
+                    //     {
+                    //         productItems?.length > 0 ? (
+                    //         productItems.map((item, index) => {
+                    //             if (index < 8) {
+                    //                 return (
+                    //                     <Product product={item} key={item.id} />
+                    //                 );
+                    //             }
+                    //         }
+                    //         )
+                    //     ) : (
+                    //         <></>
+                    //     )}
+                    //   </>
+                    <div className='d-flex align-content-center flex-wrap'>
+                        {productItems?.length > 0 &&
+                            productItems?.map((item, i) => (
+                               
+                                  <div className='detail-card'>  <Product product={item} key={i} /></div>
+                            ))}
+                    </div>
+                );
+
             } else {
                 carouselView = (
                     <>
