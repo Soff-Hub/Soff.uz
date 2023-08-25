@@ -3,8 +3,8 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import {  Table } from 'antd';
+import dynamic from 'next/dynamic';
 import CalculateTimeDifference from './DateFormatter';
-// import Example from './Chart';
 
 
 function DashbordList() {
@@ -119,7 +119,10 @@ function DashbordList() {
 
         },
     ];
-
+    const DynamicComponentWithNoSSR = dynamic(
+        () => import('./Chart'),
+        { ssr: false }
+      )
     
     return (
         <section className="ps-my-account ps-page--account">
@@ -177,7 +180,7 @@ function DashbordList() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    {/* <Example/> */}
+                                    <DynamicComponentWithNoSSR/>
                                 </div>
                             </div>
                         </div>

@@ -1985,6 +1985,11 @@ ansi-wrap@0.1.0, ansi-wrap@^0.1.0:
   resolved "https://registry.yarnpkg.com/ansi-wrap/-/ansi-wrap-0.1.0.tgz#a82250ddb0015e9a27ca82e82ea603bbfa45efaf"
   integrity sha512-ZyznvL8k/FZeQHr2T6LzcJ/+vBApDnMNZvfVFy3At0knswWd6rJ3/0Hhmpu8oqa6C92npmozs890sX9Dl6q+Qw==
 
+ant-design@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ant-design/-/ant-design-1.0.0.tgz#53ea0a397da976358e88bf06224fb3de756b87b4"
+  integrity sha512-EiN9oXroImi01yz1xwpDzExb1U5ddi4MYiCTaTLVl8SA3QHXYClJn0BikAYS2IMPzmpmAYhwOgGA2HE/sL/c9g==
+
 antd-tools@^7.7.1:
   version "7.7.1"
   resolved "https://registry.yarnpkg.com/antd-tools/-/antd-tools-7.7.1.tgz#17061d6511efd512c5057fa2b550c8bdc07df413"

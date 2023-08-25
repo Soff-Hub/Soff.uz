@@ -2,14 +2,15 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import FormChangeUserInformation from '~/components/shared/FormChangeUserInformation';
 import { accountLinks } from './modules/AccountLinks';
+import { useSelector } from 'react-redux';
+
 
 const UserInformation = () => {
-
-
+    const { user } = useSelector(state => state.auth);
     //Views
     const accountLinkView = accountLinks.map((item) => (
         <li key={item.text} className={item.active ? 'active' : ''}>
-            <Link href={item.url}>
+            <Link href={user.role==="admin" ? item.url : "/"}>
                 <a>
                     <i className={item.icon}></i>
                     {item.text}
@@ -40,7 +41,7 @@ const UserInformation = () => {
                                                 className={
                                                     link.active ? 'active' : ''
                                                 }>
-                                                <Link href={link.url}>
+                                                <Link href={user.role==="admin" ? link.url : "/"}>
                                                     <a>
                                                         <i
                                                             className={

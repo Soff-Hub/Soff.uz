@@ -1,18 +1,9 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
-import { Form, Input, Radio, DatePicker } from 'antd';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import TableNotifications from './modules/TableNotifications';
 import { accountLinks } from './modules/AccountLinks';
 
 
 class Notifications extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-
     render() {
      
         return (
@@ -31,7 +22,7 @@ class Notifications extends Component {
                                         <h3>Notifications</h3>
                                     </div>
                                     <div className="ps-section__content">
-                                        <TableNotifications />
+
                                     </div>
                                 </div>
                             </div>

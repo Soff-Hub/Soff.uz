@@ -8,7 +8,6 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import { DatePicker} from 'antd';
-import DateFormatterChange from './modules/DateFormatterDays';
 
 function ProductsLists() {
     const [data, setData] = useState([]);
@@ -21,18 +20,23 @@ function ProductsLists() {
     const [dataValStatus, setDataCatStatus] = useState(null);
     const [date, setDate] = useState(null);
     const { RangePicker } = DatePicker;
+   const dateFormat0 =date ? `${date[0]?.$y}-${`${date[0].$M+1}`.length===1 ? `0${date[0].$M+1}` : date[0].$M+1 }-${date[0].$D}` : ''
+   const dateFormat1 =date ? `${date[1]?.$y}-${`${date[1].$M+1}`.length===1 ? `0${date[1].$M+1}` : date[1].$M+1 }-${date[1].$D}` : ''
+     const dataFormat =(date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProducts(page, category, dataValStatus, date, id) {
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id) {
         if (page === 1) {
-            setData([])
+            await setData([])
+            setSerach([])
         }
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, date, id);
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
-            GetItemsProducts(page + 1, category, dataValStatus, date, id)
+            GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id)
         }
     }
+
     async function GetItemsCategory(page) {
         if (page === 1) {
             setDataVal([])
@@ -54,16 +58,15 @@ function ProductsLists() {
     async function handleItemsEditProducts() {
         const patchItemsSellers = await PatchRepository.getProductsPatch({ status: selectValSellers }, deleteIdEditProducts?.id)
         setData([])
-        GetItemsProducts(1, dataValCat, dataValStatus, date, null)
+        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null)
     }
     useEffect(() => {
-        GetItemsProducts(1, dataValCat, dataValStatus, date, null)
         GetItemsCategory(1)
     }, [])
 
     useEffect(() => {
-        GetItemsProducts(1, dataValCat, dataValStatus, date, null)
-    }, [dataValCat, dataValStatus, date])
+        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null)
+    }, [dataValCat, dataValStatus, dataFormat])
 
     const columns = [
         {
@@ -158,12 +161,12 @@ function ProductsLists() {
                             <div className="ps-section--account-setting">
                                 <div>
                                     <div className='d-flex gap-3 pb-3'>
-                                        <select defaultValue='' className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                        <select  className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Barcha kategoriyalar</option>
                                             {
                                                 dataVal.length > 0 && (
                                                     dataVal.map(item => (
-                                                        <option key={item.id} value={item.id}>{item?.name} <span>{item.name.length}</span> </option>
+                                                        <option key={item.id} value={item.id}>{item.name} <span>{item}</span> </option>
                                                     ))
                                                 )
                                             }
@@ -174,8 +177,7 @@ function ProductsLists() {
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
-                                        <RangePicker className='w-100   rounded-3' onChange={(e)=>console.log(DateFormatterChange(e))}  />
-                                        {/* <input type="date" className='form-control rounded-3' onChange={(e) => setDate(e.target.value)} /> */}
+                                        <RangePicker className='w-100   rounded-3' onChange={(e)=>setDate(e)}  />
                                     </div>
                                     <Table scroll={{ x: 1100 }} dataSource={data} columns={columns} />
                                 </div>
@@ -186,7 +188,7 @@ function ProductsLists() {
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditProducts" onSubmited={handleItemsEditProducts} formID="products-edit" >
                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectValProducts(e.target.value)}>
                         <option className='fs-3' selected disabled value="approved">Holatni tanlang</option>
-                        <option className='fs-3' value="approved">Tasdiqlangan</option>
+                        <option className='fs-3' value="approved">Tasdiqlangan </option>
                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                         <option className='fs-3' value="moderation">Moderatsiya</option>
                     </select>

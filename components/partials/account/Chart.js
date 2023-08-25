@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-// import { Column } from '@ant-design/plots';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-
-const Chart = () => {
+import { Chart } from "chart.js";
+function Example() {
     const [tableData, setTableData] = useState([]);
-
     
     function getMonthName(monthNumber) {
         let monthName;
@@ -57,6 +55,7 @@ const Chart = () => {
         const day = date[2].split('T')
         return day[0];
     }
+    console.log(tableData);
     async function getChartItems() {
         const ItemsChartData = await GetRepository.getChartLists();
         const objData = []
@@ -64,16 +63,16 @@ const Chart = () => {
             if (ItemsChartData.length>1) {
                 ItemsChartData.map((el) => {
                     return objData.push({
-                        type: getMonthName(el.month),
-                        sales: el.total,
+                        labels: getMonthName(el.month),
+                        data: el.document_count,
                     });
                 });
             }
             else{
                 ItemsChartData.map((el) => {
                     return objData.push({
-                        type: getDayName(el.month),
-                        sales: el.total,
+                        labels: getMonthName(el.month),
+                        data: el.document_count,
                     });
                 });
             }
@@ -81,44 +80,38 @@ const Chart = () => {
 
         setTableData(objData);
     }
-    const DemoColumn = () => {
-        const config = {
-            data: tableData || [],
-            xField: 'type',
-            yField: 'sales',
-            label: {
-                position: 'middle',
-                // 'top', 'bottom', 'middle',
-                style: {
-                    fill: '#FFFFFF',
-                    opacity: 0.6,
-                },
-            },
-            xAxis: {
-                label: {
-                    autoHide: true,
-                    autoRotate: false,
-                },
-            },
-            meta: {
-                type: {
-                    alias: 'Foyda',
-                },
-                sales: {
-                    alias: 'Foyda',
-                },
-            },
-        };
-        return <Column {...config} />;
-    };
     useEffect(() => {
         getChartItems();
     }, []);
-    return <div>
-        {
-            <></>
-        }
-    </div>;
-};
 
-export default Chart;
+    useEffect(() => {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+                datasets: [{
+                    data: [66, 144, 146, 116, 107, 131, 43],
+                    label: "Applied",
+                    borderColor: "rgb(109, 253, 181)",
+                    backgroundColor: "rgb(109, 253, 181,0.5)",
+                    borderWidth: 2
+                },
+                ]
+            },
+        });
+    }, [])
+
+
+    return (
+        <>
+            <div className="w-[1100px] h-screen flex mx-auto my-auto">
+                <div className='border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl'>
+                    <canvas id='myChart'></canvas>
+                </div>
+            </div>
+        </>
+    )
+}
+
+export default Example;

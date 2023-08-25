@@ -42,7 +42,7 @@ class GetRepository {
         return reponse;
     }
     async getShopsProducts(page, category, dataValStatus, date, id) {
-        const endPoint =  `admin/product-list/${id ? id + "/" : ""}?page=${page}&category=${category || ''}&created_at=${date || ""}&status=${dataValStatus || ''}`
+        const endPoint =  `admin/product-list/${id ? id + "/" : ""}?page=${page}&category=${category || ''}&start_date=${date || ""}&status=${dataValStatus || ''}`
         const reponse = await Repository.get(baseUrl+endPoint)
             .then((response) => {
                 if (response.status===200) {

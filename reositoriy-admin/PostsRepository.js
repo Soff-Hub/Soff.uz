@@ -40,6 +40,20 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async PostsBanner(data) {
+        const endPoint = `admin/banner-create/`;
+        const reponse = await Repository.post(baseUrl+endPoint, data)
+            .then((response) => {
+                if (response.status===200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    
    
 }
 

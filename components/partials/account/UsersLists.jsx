@@ -10,14 +10,18 @@ import ModalDelete from './Modal';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import { useSelector } from 'react-redux';
 
 function OrdersLists() {
+    
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFIle] = useState({});
     const [selectVal, setSelectVal] = useState({});
+
+    const { role } = useSelector(state => state.auth.user);
 
     async function GetItemsUsers(page) {
         if (page === 1) {
