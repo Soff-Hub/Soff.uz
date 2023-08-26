@@ -23,7 +23,7 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
                 <a className="header__extra">
                     <i className="icon-heart"></i>
                     <span>
-                        <i>{cookies.wishlist?.length}</i>
+                        <i>{cookies.wishlist?.length ? cookies.wishlist?.length : 0}</i>
                     </span>
                 </a>
             </Link>

@@ -20,6 +20,15 @@ class ProductRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getTagData() {
+        const reponse = await Repository.get(`${baseUrl}customer/tag/`)
+            .then((response) => {
+                return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getWishlistData() {
         const reponse = await Repository.get(`${baseUrl}customer/wishlist/`)
             .then((response) => {

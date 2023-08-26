@@ -68,7 +68,7 @@ export default function useEcomerce() {
             if (group === 'cart' &&  cookies.cart?.every(
                 (el) => el.id !== newItem.id
             )) {
-                let newItems = cookies.cart;
+                let newItems = cookies.cart ? cookies.cart : [];
             newItems.push(newItem)
            
                 setCookie('cart', newItems, { path: '/' });
@@ -77,7 +77,7 @@ export default function useEcomerce() {
             if (group === 'wishlist' &&  cookies.wishlist?.every(
                 (el) => el.id !== newItem.id
             )) {
-                let newItems = cookies.wishlist;
+                let newItems = cookies.wishlist ? cookies.wishlist : []
             newItems.push(newItem)
                 setCookie('wishlist', newItems, { path: '/' });
 

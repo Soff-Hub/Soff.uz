@@ -9,18 +9,19 @@ import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import useGetProducts from '~/hooks/useGetProducts';
 
-
-const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
+const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
     const Router = useRouter();
-    const { page } = Router.query;
+    // const { page } = Router.query;
     const { query } = Router;
     const [listView, setListView] = useState(true);
     const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
     const [classes, setClasses] = useState(
         'col-xl-4 col-lg-4 col-md-3 col-sm-6 col-6'
     );
-
+    const [pageSizee, setPageSizee] = useState(4);
     const { productItems, loading, getProducts } = useGetProducts();
+    const [pagenationData, setPagenationData] = useState([]);
 
     function handleChangeViewMode(e) {
         e.preventDefault();
@@ -28,17 +29,8 @@ const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
     }
 
     function handlePagination(page, pageSize) {
-
         // Router.push(`/shop?page=${page}`);
     }
-
-    // async function getTotalRecords(params) {
-    //     const responseData = await ProductRepository.getTotalRecords();
-    //     if (responseData) {
-    //         setTotal(responseData);
-    //         console.log('shopitems', responseData);
-    //     }
-    // }
 
     function handleSetColumns() {
         switch (columns) {
@@ -60,35 +52,65 @@ const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
         }
     }
 
-    useEffect(() => {
-        let params;
-        if (query) {
-            if (query.page) {
-                params = {
-                    _start: page * pageSize,
-                    _limit: pageSize,
-                };
-            } else {
-                params = query;
-                params._limit = pageSize;
-            }
-        } else {
-            params = {
-                _limit: pageSize,
-            };
-        }
 
-        // getTotalRecords();
-        getProducts(params);
+    // let arr = []
+    useEffect(() => {
+        // getProducts(params);
+        // setPagenationData(data?.slice(0, pageSizee));
         handleSetColumns();
+
+        
+        
     }, [query, data]);
+    
+    // const count = [Math.ceil(data?.length / 3)];
+    //     function createArray(length, value) {
+    //         return Array.from({ length }, () => value);
+    //     }
+        
+        
+        // const neW = createArray(count, 0)
+        // console.log(neW);
+    // const handleNext = () => {
+    //     setPageSizee((pageSizee) => pageSizee + 3);
+    //     setPagenationData(data.slice(0, pageSizee));
+    // };
+    // const handlePrevious = () => {
+    //     setPageSizee((pageSizee) => pageSizee - 3);
+    //     setPagenationData(data.slice(0, pageSizee));
+    //     console.log(pageSizee);
+    // };
+
+
+
+    function compareByCreatedAt(a, b) {
+        const dateA = new Date(a.created_at);
+        const dateB = new Date(b.created_at);
+        return dateA - dateB;
+    }
+    function compareByCreatedAtLast(a, b) {
+        const dateA = new Date(a.created_at);
+        const dateB = new Date(b.created_at);
+        return dateB - dateA;
+    }
+
+    function handleSelect(e) {
+        // console.log('salom');
+        if (e.target.value === 'boshi') {
+            data.sort(compareByCreatedAt);
+            console.log(data);
+        } else if (e.target.value === 'oxiri') {
+            data.sort(compareByCreatedAtLast);
+            console.log(data);
+        }
+    }
 
     // Views
     let productItemsView;
-    if (loading) {
+    if (data?.length > 0) {
         if (data && data.length > 0) {
             if (listView) {
-                const items = data.map((item) => (
+                const items = data?.map((item) => (
                     <div className={classes} key={item.id}>
                         <Product product={item} />
                     </div>
@@ -99,8 +121,7 @@ const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
                     </div>
                 );
             } else {
-
-                productItemsView = data.map((item) => (
+                productItemsView = data?.map((item) => (
                     <ProductWide product={item} />
                 ));
             }
@@ -108,7 +129,7 @@ const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
             productItemsView = <p>Hujjat topilmadi</p>;
         }
     } else {
-        const skeletonItems = generateTempArray(12).map((item) => (
+        const skeletonItems = generateTempArray(8).map((item) => (
             <div className={classes} key={item}>
                 <SkeletonProduct />
             </div>
@@ -120,14 +141,23 @@ const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
-
                     <strong className="mr-2">{data?.length}</strong>
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
-                    <ModuleShopSortBy />
+                    <select
+                        className="ps-select form-control"
+                        data-placeholder="Sort Items"
+                        onChange={(e) => handleSelect(e)}>
+                        <option value="boshi">
+                            Boshidagilar bo'yicha saralash
+                        </option>
+                        <option value="oxiri">
+                            Oxirgi qo'shilganlar bo'yicha saralash
+                        </option>
+                    </select>
                     <div className="ps-shopping__view">
-                        <p>View</p>
+                        {/* <p>View</p> */}
                         <ul className="ps-tab-list">
                             <li className={listView === true ? 'active' : ''}>
                                 <a
@@ -150,15 +180,45 @@ const ShopItems = ({ columns = 4, pageSize = 12, data }) => {
             <div className="ps-shopping__content">{productItemsView}</div>
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
-                    <Pagination
-
+                    {/* <Pagination
                         total={data?.length - 1}
-                        pageSize={pageSize}
+                        pageSize={pageSize1}
                         responsive={true}
                         showSizeChanger={false}
                         current={page !== undefined ? parseInt(page) : 1}
                         onChange={(e) => handlePagination(e)}
-                    />
+                    /> */}
+
+                    {/* <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            <li
+                                class="page-item"
+                                onClick={() => handlePrevious()}>
+                                <a
+                                    class="page-link"
+                                    href="#"
+                                    aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                           { 
+                            neW.map((t,i) => {
+                                return(
+                                    <li class="page-item" disabled={true} style={{cursor:'none'}} key={t} >
+                                    <a class="page-link" href="#">
+                                        {i+1}
+                                    </a>
+                                </li>
+                                )
+                            })
+                           }
+                            <li class="page-item" onClick={() => handleNext()}>
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav> */}
                 </div>
             </div>
         </div>

@@ -83,7 +83,7 @@ class Register extends Component {
                                         ]}>
                                         <Input
                                             className="form-control"
-
+                                            maxLength="13"
                                             type="text"
                                             placeholder="Telefon number"
                                         />

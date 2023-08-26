@@ -106,7 +106,7 @@ class Login extends Component {
                                             className="form-control"
                                             type="text"
                                             placeholder="Telefon raqam"
-                                            // maxLength={'4'}
+                                            maxLength='13'
                                         />
                                     </Form.Item>
                                 </div>

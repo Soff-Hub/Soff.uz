@@ -41,6 +41,7 @@ export default function QaytaNomerKiritish() {
                             type="number"
                             className="raqam-input"
                             onChange={(e) => setNumber(e.target.value)}
+                            maxLength="13"
                         />
 
                         <div className="form-group submit">

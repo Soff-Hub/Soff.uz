@@ -5,13 +5,14 @@ import { Modal } from 'antd';
 import useEcomerce from '~/hooks/useEcomerce';
 
 import PostRepo from '~/repositories/PostRepo';
+import { useCookies } from 'react-cookie';
 
 const ModuleDetailShoppingActions = ({
     ecomerce,
     product,
     extended = false,
 }) => {
-    const [quantity, setQuantity] = useState(1);
+    const [cookies, setCookie] = useCookies(['cart']);
     const [redux, setRedux] = useState(false);
     const Router = useRouter();
     const select = useSelector((state) => state.auth.user?.access);

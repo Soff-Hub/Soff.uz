@@ -17,12 +17,12 @@ export const initalState = {
 
 
 function reducer(state = initalState, action) {
-    console.log('state', state.wishlistItems);
+    // console.log('state', state.wishlistItems);
 
     switch (action.type) {
         // SET_WISHLIST_ITEMS_SUCCESS
         case actionTypes.SET_WISHLIST_ITEMS_SUCCESS:
-
+            // console.log(action);
             // localStorage.setItem('wishlist', JSON.stringify(action.payload))
             if (
                 state.wishlistItems.every(
