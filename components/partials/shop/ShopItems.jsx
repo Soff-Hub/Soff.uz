@@ -59,18 +59,23 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
         // setPagenationData(data?.slice(0, pageSizee));
         handleSetColumns();
 
-        
-        
+        if (data) {
+            setPagenationData(data);
+        }
     }, [query, data]);
-    
+
+    useEffect(() => {
+
+        console.log('data', pagenationData);
+    }, [pagenationData]);
+
     // const count = [Math.ceil(data?.length / 3)];
     //     function createArray(length, value) {
     //         return Array.from({ length }, () => value);
     //     }
-        
-        
-        // const neW = createArray(count, 0)
-        // console.log(neW);
+
+    // const neW = createArray(count, 0)
+    // console.log(neW);
     // const handleNext = () => {
     //     setPageSizee((pageSizee) => pageSizee + 3);
     //     setPagenationData(data.slice(0, pageSizee));
@@ -80,8 +85,6 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
     //     setPagenationData(data.slice(0, pageSizee));
     //     console.log(pageSizee);
     // };
-
-
 
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
@@ -93,15 +96,16 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
         const dateB = new Date(b.created_at);
         return dateB - dateA;
     }
-
+    
+    let arr = data ? [...data] : [];
     function handleSelect(e) {
-        // console.log('salom');
         if (e.target.value === 'boshi') {
-            data.sort(compareByCreatedAt);
-            console.log(data);
+            arr.sort(compareByCreatedAt);
+            setPagenationData(arr);
         } else if (e.target.value === 'oxiri') {
-            data.sort(compareByCreatedAtLast);
-            console.log(data);
+            arr.sort(compareByCreatedAtLast);
+            setPagenationData(arr);
+          
         }
     }
 
@@ -110,7 +114,7 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
     if (data?.length > 0) {
         if (data && data.length > 0) {
             if (listView) {
-                const items = data?.map((item) => (
+                const items = pagenationData?.map((item) => (
                     <div className={classes} key={item.id}>
                         <Product product={item} />
                     </div>
