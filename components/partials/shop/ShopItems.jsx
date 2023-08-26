@@ -66,7 +66,6 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     }, [pagenationData]);
 
 
-
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
         const dateB = new Date(b.created_at);
@@ -78,7 +77,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         return dateB - dateA;
     }
 
-
+    
     let arr = data ? [...data] : [];
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
@@ -88,6 +87,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             arr.sort(compareByCreatedAtLast);
             setPagenationData(arr);
 
+          
         }
     }
 
