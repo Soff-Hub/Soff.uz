@@ -5,7 +5,7 @@ import { actionTypes } from './action';
 export const initState = {
     isLoggedIn: false,
     user: null,
-    accountLinks:[],
+    accountLinks: [],
 };
 
 function reducer(state = initState, actions) {
@@ -33,7 +33,7 @@ function reducer(state = initState, actions) {
                 : { ...state, ...{ isLoggedIn: false }, ...{ user: null } };
 
         case actionTypes.ACCOUNT_LINKS:
-            return { ...state, ...{ accountLinks: actions.payload }};
+            return { ...state, ...{ accountLinks: actions.payload } };
         default:
             return state;
     }

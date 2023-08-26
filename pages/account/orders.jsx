@@ -4,6 +4,8 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Newletters from '~/components/partials/commons/Newletters';
 import Orders from '~/components/partials/account/Orders';
+import Page404 from '../page/page-404';
+import { useSelector } from 'react-redux';
 
 const AccountOrdersPage = () => {
     const breadCrumb = [
@@ -15,16 +17,17 @@ const AccountOrdersPage = () => {
             text: 'Buyurtmalar',
         },
     ];
+    const { user } = useSelector(state => state.auth)
     return (
-        <>
+        user?.role === 'admin' || user?.role === 'seller' ?
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <Orders/>
+                    <Orders />
                 </div>
                 <Newletters layout="container" />
-            </PageContainer>
-        </>
+            </PageContainer> : <Page404 />
+
     );
 };
 

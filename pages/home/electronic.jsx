@@ -9,8 +9,6 @@ import HeaderMobileElectronic from '~/components/shared/headers/HeaderMobileElec
 import FooterSecond from '~/components/shared/footers/FooterSecond';
 
 import CollectionRepository from '~/repositories/CollectionRepository';
-import { useDispatch } from 'react-redux';
-import { isLoginning } from '~/store/auth/action';
 
 const HomeElectronicsPage = () => {
 
@@ -25,14 +23,8 @@ const HomeElectronicsPage = () => {
         }
     }
 
-    const dispatch = useDispatch()
-
-    const defaultRoutePage = () => {
-        dispatch(isLoginning());
-    }
 
     useEffect(() => {
-        defaultRoutePage()
         getCategoryFunc();
     }, []);
 

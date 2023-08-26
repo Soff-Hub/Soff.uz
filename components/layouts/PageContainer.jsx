@@ -1,12 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Head from 'next/head';
-import HeaderDefault from '~/components/shared/headers/HeaderDefault';
-import HeaderMobile from '~/components/shared/headers/HeaderMobile';
-import FooterFullwidth from '~/components/shared/footers/FooterFullwidth';
 
 import HeaderElectronic from '../shared/headers/HeaderElectronic';
 import HeaderMobileElectronic from '../shared/headers/HeaderMobileElectronic';
 import FooterSecond from '../shared/footers/FooterSecond';
+import { useDispatch, useSelector } from 'react-redux';
+import { accountLinksReducers, isLoginning } from '~/store/auth/action';
 
 const initHeaders = (
     <>
@@ -21,6 +20,95 @@ const initFooters = (
     </>
 );
 
+
+export let accountAdminLinks = [
+    {
+        text: 'Boshqaruv paneli',
+        url: '/account/dashbord',
+        icon: 'fa-solid fa-house-user',
+    },
+    {
+        text: 'Sotuvchilar',
+        url: '/account/shops',
+        icon: 'fa-solid fa-shop',
+    },
+    {
+        text: 'Mahsulotlar',
+        url: '/account/products',
+        icon: 'fa-solid fa-cube',
+    },
+    {
+        text: 'Kategoriyalar',
+        url: '/account/category',
+        icon: 'fa-solid fa-layer-group',
+    },
+    {
+        text: 'Buyurtmalar',
+        url: '/account/orders',
+        icon: 'fa-solid fa-truck',
+    },
+    {
+        text: 'Xaridorlar',
+        url: '/account/users',
+        icon: 'fa-solid fa-users',
+    },
+    {
+        text: 'Bildirishnomalar',
+        url: '/account/notifications',
+        icon: 'fa-solid fa-bell',
+    },
+    {
+        text: 'Context',
+        url: '/account/context',
+        icon: 'fa-solid fa-sliders',
+    },
+    {
+        text: 'Sozlamalar',
+        url: '/account/settings',
+        icon: 'fa-solid fa-gear',
+    },
+];
+export let accountSellerLink = [
+    {
+        text: 'Boshqaruv paneli',
+        url: '/account/dashbord',
+        icon: 'fa-solid fa-house-user',
+    },
+    {
+        text: 'Mening mahsulotlarim',
+        url: '/account/MyProducts',
+        icon: 'fa-solid fa-shop-lock',
+    },
+    {
+        text: 'Buyurtmalar',
+        url: '/account/orders',
+        icon: 'fa-solid fa-truck',
+    },
+    {
+        text: 'Bildirishnomalar',
+        url: '/account/notifications',
+        icon: 'fa-solid fa-bell',
+    },
+    {
+        text: 'Profil',
+        url: '/account/settings',
+        icon: 'fa-solid fa-gear',
+    },
+];
+export let cutomerAccountLink = [
+    {
+        text: 'Mahsulotlar',
+        url: '/account/products',
+        icon: 'fa-solid fa-cube',
+    },
+    {
+        text: 'Profil',
+        url: '/account/settings',
+        icon: 'fa-solid fa-gear',
+    },
+];
+
+
 const PageContainer = ({
     header = initHeaders,
     footer = initFooters,
@@ -34,6 +122,29 @@ const PageContainer = ({
     } else {
         titleView = process.env.title + ' | ' + process.env.titleDescription;
     }
+
+    const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        if (user?.role === 'admin') {
+            dispatch(accountLinksReducers(accountAdminLinks))
+        }
+        if (user?.role === 'seller') {
+            dispatch(accountLinksReducers(accountSellerLink))
+        }
+        if (user?.role === 'customer') {
+            dispatch(accountLinksReducers(cutomerAccountLink))
+        }
+    }, [user?.role]);
+
+    const defaultRoutePage = () => {
+        dispatch(isLoginning());
+    }
+
+    useEffect(() => {
+        defaultRoutePage()
+    }, []);
 
     return (
         <>

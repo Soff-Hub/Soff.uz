@@ -96,11 +96,13 @@ function Notifications() {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
-            render: (id) => <div >
-                <a data-bs-target="#exampleModalToggleEditSellers" data-bs-toggle="modal" ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEditSellers(data.find(item => item.id === id))} ></i></a>
-            </div>
-
-        },
+            render: (id) => <>
+                {
+                    data.some(el => el.id == id && el.auth_status === 'new') ? <a data-bs-target="#exampleModalToggleEditSellers" data-bs-toggle="modal" ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEditSellers(data.find(item => item.id === id))} ></i></a>
+                        : <></>
+                }
+            </>
+        }
     ];
     return (
         <section className="ps-my-account ps-page--account">

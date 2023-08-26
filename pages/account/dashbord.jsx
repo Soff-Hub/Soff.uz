@@ -21,7 +21,7 @@ const MyAccountPage = () => {
     const { user } = useSelector(state => state.auth)
 
     return (
-       user?.role === 'admin' ? <PageContainer footer={<FooterDefault />} title="Address">
+       user?.role === 'admin' || user?.role === 'seller' ? <PageContainer footer={<FooterDefault />} title="Address">
         <div className="ps-page--my-account">
             <BreadCrumb breacrumb={breadCrumb} />
             <DashbordList />
