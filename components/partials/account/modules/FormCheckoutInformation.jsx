@@ -73,6 +73,7 @@ console.log('to\'lov uchun berib yuborilgan id lar ', ids);
                     qilish{' '}
                 </p>
 
+
             </div>
         </div>
     );
