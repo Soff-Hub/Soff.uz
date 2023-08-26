@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Pagination } from 'antd';
 import Product from '~/components/elements/products/Product';
 import ProductWide from '~/components/elements/products/ProductWide';
-import ProductRepository from '~/repositories/ProductRepository';
-import ModuleShopSortBy from '~/components/partials/shop/modules/ModuleShopSortBy';
 import { useRouter } from 'next/router';
-import { generateTempArray } from '~/utilities/common-helpers';
-import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import useGetProducts from '~/hooks/useGetProducts';
 
 const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
@@ -64,25 +60,8 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     }, [query, data]);
 
     useEffect(() => {
-        console.log('data', pagenationData);
     }, [pagenationData]);
 
-    // const count = [Math.ceil(data?.length / 3)];
-    //     function createArray(length, value) {
-    //         return Array.from({ length }, () => value);
-    //     }
-
-    // const neW = createArray(count, 0)
-    // console.log(neW);
-    // const handleNext = () => {
-    //     setPageSizee((pageSizee) => pageSizee + 3);
-    //     setPagenationData(data.slice(0, pageSizee));
-    // };
-    // const handlePrevious = () => {
-    //     setPageSizee((pageSizee) => pageSizee - 3);
-    //     setPagenationData(data.slice(0, pageSizee));
-    //     console.log(pageSizee);
-    // };
 
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
@@ -94,7 +73,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         const dateB = new Date(b.created_at);
         return dateB - dateA;
     }
-
+    
     let arr = data ? [...data] : [];
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
@@ -103,6 +82,8 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setPagenationData(arr);
+
+          
         }
     }
 
@@ -138,12 +119,6 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             </div>
             </div>
         );
-        // const skeletonItems = generateTempArray(8).map((item) => (
-        //     <div className={classes} key={item}>
-        //         <SkeletonProduct />
-        //     </div>
-        // ));
-        // productItemsView = <div className="row">{skeletonItems}</div>;
     }
 
     return (
@@ -200,36 +175,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
                         />
                     )}
 
-                    {/* <nav aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li
-                                class="page-item"
-                                onClick={() => handlePrevious()}>
-                                <a
-                                    class="page-link"
-                                    href="#"
-                                    aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                </a>
-                            </li>
-                           { 
-                            neW.map((t,i) => {
-                                return(
-                                    <li class="page-item" disabled={true} style={{cursor:'none'}} key={t} >
-                                    <a class="page-link" href="#">
-                                        {i+1}
-                                    </a>
-                                </li>
-                                )
-                            })
-                           }
-                            <li class="page-item" onClick={() => handleNext()}>
-                                <a class="page-link" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav> */}
+
                 </div>
             </div>
         </div>
