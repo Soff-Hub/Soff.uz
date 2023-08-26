@@ -26,7 +26,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
             url: '/',
         },
         {
-            text: 'Shopping Cart',
+            text: 'Xarid savati',
         },
     ];
 

@@ -1,0 +1,19 @@
+.tolov-usullari {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    flex-direction: column;
+    gap: 20px;
+    .payme-logo {
+        object-fit: cover;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        gap: 20px;
+        img{
+           max-width: 300px;
+           width: 100%; 
+        }
+    }
+}

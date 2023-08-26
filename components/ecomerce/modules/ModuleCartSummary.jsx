@@ -29,13 +29,19 @@ const ModuleCartSummary = ({ source }) => {
 
         productItemsView = source.map((item, i) => (
             <li key={item.id}>
-                <span className="ps-block__estimate">
+                <div className="ps-block__estimate " style={{display:'flex', aliginContent:'center', justifyContent:'space-between'}}>
                     <Link href="/product/[pid]" as={`/product/${item.id}`}>
                         <a className="ps-product__title">
                             {i + 1}. {item.title}
                         </a>
+                        
                     </Link>
-                </span>
+                    <Link href="/product/[pid]" as={`/product/${item.id}`}>
+                        <a className="ps-product__price">
+                           {addPeriodToThousands(item.price)} so'm
+                        </a>
+                    </Link>
+                </div>
             </li>
         ));
     }

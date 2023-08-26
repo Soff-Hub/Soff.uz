@@ -13,11 +13,11 @@ const CheckoutPage = () => {
             url: '/',
         },
         {
-            text: 'Shopping Cart',
+            text: 'Xarid savati',
             url: '/account/shopping-cart',
         },
         {
-            text: 'Checkout Information',
+            text: 'Hisob - kitob ma\'lumotlari',
         },
     ];
 

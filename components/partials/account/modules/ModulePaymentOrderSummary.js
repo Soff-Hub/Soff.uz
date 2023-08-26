@@ -3,28 +3,49 @@ import Link from 'next/link';
 import { connect } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import { useCookies } from 'react-cookie';
 
 const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
     const { products, getProducts } = useEcomerce();
+    const [cookies, setCookie] = useCookies(['cart']);
+console.log('..', cookies.cart);
 
     useEffect(() => {
         if (ecomerce.cartItems) {
             getProducts(ecomerce.cartItems, 'cart');
         }
     }, [ecomerce]);
+    let amount = cookies?.cart && calculateAmount(cookies?.cart)
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+    const hisob = addPeriodToThousands(amount);
 
     // view
     let listItemsView, shippingView, totalView;
-    let amount;
-    if (products && products.length > 0) {
-        amount = calculateAmount(products);
-        listItemsView = products.map((item) => (
+    if (cookies?.cart && cookies?.cart?.length > 0) {
+        
+        listItemsView = cookies?.cart?.map((item, i) => (
             <Link href="/" key={item.id}>
                 <a>
                     <strong>
-                        {item.title}
+                      {i+1}.  {item.title}
                     </strong>
-                    <small>${item.quantity * item.price}</small>
+                    <small>{addPeriodToThousands(item.price)} so'm </small>
                 </a>
             </Link>
         ));
@@ -43,8 +64,8 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
         totalView = (
             <figure className="ps-block__total">
                 <h3>
-                    Total
-                    <strong>${parseInt(amount) + 20}.00</strong>
+                Umumiy hisob: 
+                    <strong>{hisob}.00</strong>
                 </h3>
             </figure>
         );
@@ -52,8 +73,8 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
         totalView = (
             <figure className="ps-block__total">
                 <h3>
-                    Total
-                    <strong>{parseInt(amount)}.00 so'm </strong>
+                    Umumiy hisob: 
+                    <strong>{hisob}.00 so'm </strong>
                 </h3>
             </figure>
         );
@@ -63,15 +84,15 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
             <div className="ps-block__content">
                 <figure>
                     <figcaption>
-                        <strong>Product</strong>
-                        <strong>total</strong>
+                        <strong>Hujjat</strong>
+                        <strong>narx</strong>
                     </figcaption>
                 </figure>
                 <figure className="ps-block__items">{listItemsView}</figure>
                 <figure>
                     <figcaption>
-                        <strong>Subtotal</strong>
-                        <small>{amount} so'm </small>
+                        <strong>Jami narx:</strong>
+                        <small>{hisob}.00 so'm </small>
                     </figcaption>
                 </figure>
                 {shippingView}
