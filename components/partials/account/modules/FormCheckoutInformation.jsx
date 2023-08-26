@@ -83,6 +83,7 @@ console.log('to\'lov uchun berib yuborilgan id lar ', ids);
 
 
 
+
             </div>
         </div>
     );
