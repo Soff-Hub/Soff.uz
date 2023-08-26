@@ -19,7 +19,6 @@ class FormCheckoutInformation extends Component {
             <div className='payme-logo'>
                 <img src="/static/img/payme2.png" alt="payme"  width='100%' height='100%' />
                  <p style={{display: 'inline-block'}} className="ps-btn"> <i class="fa-solid fa-angles-left fa-fade me-2"></i> To'lov qilish </p> 
-
             </div>
             </div>
         );
