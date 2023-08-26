@@ -74,6 +74,7 @@ function FormCheckoutInformation() {
             ids.push(Number(item.id));
         }
         return ids;
+
     }
     const ids = extractIds(data);
     console.log(

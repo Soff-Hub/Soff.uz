@@ -96,6 +96,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
 
     useEffect(() => {
+
         console.log('data', pagenationData);
     }, [pagenationData]);
 
@@ -103,9 +104,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     //     function createArray(length, value) {
     //         return Array.from({ length }, () => value);
     //     }
-    // }, [pagenationData]);
-
-
 
 
     function compareByCreatedAt(a, b) {
@@ -132,6 +130,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setNewData(arr);
+
         }
     }
 
@@ -141,6 +140,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         if (data && data.length > 0) {
             if (listView) {
                 const items = newData?.map((item) => (
+
 
                     <div className={classes} key={item.id}>
                         <Product product={item} />
