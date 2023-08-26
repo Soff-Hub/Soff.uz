@@ -1,11 +1,9 @@
-import React, { Component, useEffect } from 'react';
-import Link from 'next/link';
-import Router from 'next/router';
-import { Form, Input, Modal } from 'antd';
-import Image from 'next/image';
+import React, { useEffect } from 'react';
+import { Modal } from 'antd';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
+
 
 function FormCheckoutInformation() {
     const [cookies, setCookie] = useCookies(['cart']);
@@ -74,6 +72,7 @@ console.log('to\'lov uchun berib yuborilgan id lar ', ids);
                     <i class="fa-solid fa-angles-left fa-fade me-2"></i> To'lov
                     qilish{' '}
                 </p>
+
             </div>
         </div>
     );
