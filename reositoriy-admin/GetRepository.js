@@ -54,8 +54,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getMyProducts(page) {
-        const endPoint = `product-list/?page=${page}`;
+    async getMyProducts(page, category, tagItems, date) {
+        const endPoint = `product-list/?page=${page}&category=${category || ''}${tagItems ? `&tag=${tagItems}` : ``}&start_date=${date || ""}`
         const reponse = await Repository.get(baseUrl+endPoint)
             .then((response) => {
                 if (response.status===200) {

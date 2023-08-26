@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import {  Table } from 'antd';
+import {  Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -10,7 +10,6 @@ import ModalDelete from './Modal';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector } from 'react-redux';
 
 function OrdersLists() {
     
@@ -21,7 +20,6 @@ function OrdersLists() {
     const [file, setFIle] = useState({});
     const [selectVal, setSelectVal] = useState({});
 
-    const { role } = useSelector(state => state.auth.user);
 
     async function GetItemsUsers(page) {
         if (page === 1) {
@@ -43,6 +41,11 @@ function OrdersLists() {
     }
     async function deleteItemsId() {
         const userDelete = await DeleteRepository.getUsersListsDelete(deleteId);
+        const modal = Modal.error({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz  malumotlarni o'chirdingiz`,
+        });
         GetItemsUsers(1)
     }
     async function handleItemsPost(values) {
@@ -52,6 +55,11 @@ function OrdersLists() {
         formData.append('phone', values.phone)
         formData.append('auth_status', selectVal)
         const postsItems = await PostsRepository.PostsUsers(formData);
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz  yangi malumot qo'shdingiz`,
+        });
         GetItemsUsers(1)
     }
     async function handleItemsEdit(values) {
@@ -61,6 +69,11 @@ function OrdersLists() {
         formData.append('phone', values.phone)
         formData.append('auth_status', selectVal)
         const patchItems = await PatchRepository.PatchUsers(formData, deleteIdEdit?.id)
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: "Siz  malumotlarni o'zgartirdingiz " ,
+        });
         GetItemsUsers(1)
     }
     const handleSelectFileFile = (e) => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import { Table } from 'antd';
+import { Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -39,6 +39,11 @@ function CategoryLists() {
     }
     async function deleteItemsId() {
         const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId)
+        const modal = Modal.error({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz  malumotlarni o'chirdingiz`,
+        });
         GetItemsProducts(1)
     }
     async function handleItemsPost(values) {
@@ -47,11 +52,25 @@ function CategoryLists() {
         formData.append('icon', values.icon)
         formData.append('name', values.name)
         const postsItems = await PostsRepository.PostsCategory(formData);
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz  yangi malumot qo'shdingiz`,
+        });
         GetItemsProducts(1)
     }
-    
+
     async function handleItemsEdit(values) {
-        const patchItems = await PatchRepository.PatchCategory(values, deleteIdEdit?.id)
+        const formData = new FormData()
+        formData.append('image', file)
+        formData.append('icon', values.icon)
+        formData.append('name', values.name)
+        const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id)
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: "Siz  malumotlarni o'zgartirdingiz ",
+        });
         GetItemsProducts(1)
 
     }
@@ -60,7 +79,7 @@ function CategoryLists() {
         GetItemsProducts(1)
     }
 
-    function handleClickPostsImg(e){
+    function handleClickPostsImg(e) {
         setFile(e.target.files[0])
     }
     useEffect(() => {
@@ -113,7 +132,7 @@ function CategoryLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#exampleModalTogglePosts" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
             </div>
         },
@@ -146,7 +165,14 @@ function CategoryLists() {
                 </div>
 
                 <ModalDelete onSuccess={deleteItemsId} />
-                <ModalDeletePostEdit dataBsTarget="exampleModalTogglePosts" onSubmited={handleItemsEdit} formID={'edit-form'}>
+                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
+                    <input
+                        type='file'
+                        className="form-control rounded-3 py-4"
+                        required
+                        onChange={handleClickPostsImg}
+                        defaultValue={deleteIdEdit?.image}
+                    />
                     <input
                         type='text'
                         placeholder="Belgi"
@@ -162,15 +188,14 @@ function CategoryLists() {
                         defaultValue={deleteIdEdit?.name}
                     />
                 </ModalDeletePostEdit >
-                <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-posts'}>
+                <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>
                     <input
                         type='file'
-                        placeholder="Belgi"
                         className="form-control rounded-3 py-4"
                         required
                         onChange={handleClickPostsImg}
                     />
-                     <input
+                    <input
                         type='text'
                         placeholder="Belgi"
                         className="form-control rounded-3"

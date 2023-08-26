@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import { Table } from 'antd';
+import { Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -58,6 +58,11 @@ function ProductsLists() {
     async function handleItemsEditProducts() {
         const patchItemsSellers = await PatchRepository.getProductsPatch({ status: selectValSellers }, deleteIdEditProducts?.id)
         setData([])
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz  malumotlarni o'zgartirdingiz`,
+        });
         GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null)
     }
     useEffect(() => {
@@ -67,6 +72,7 @@ function ProductsLists() {
     useEffect(() => {
         GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null)
     }, [dataValCat, dataValStatus, dataFormat])
+
 
     const columns = [
         {
@@ -166,7 +172,7 @@ function ProductsLists() {
                                             {
                                                 dataVal.length > 0 && (
                                                     dataVal.map(item => (
-                                                        <option key={item.id} value={item.id}>{item.name} <span>{item}</span> </option>
+                                                        <option key={item.id} value={item.id}>{item.name} </option>
                                                     ))
                                                 )
                                             }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
-import { Table } from 'antd';
+import { DatePicker, Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -10,6 +10,7 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 
+
 function MyProductsLists() {
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
@@ -17,20 +18,27 @@ function MyProductsLists() {
     const [fileImg, setFileImg] = useState({});
     const [fileImgFile, setFileImgFile] = useState({});
     const [categoryName, setCategoryName] = useState({});
-    const [tagName, setTagName] = useState({});
+    const [tagName, setTagName] = useState(null);
     const [tagItems, setTagItems] = useState([]);
     const [View, setView] = useState({});
     const [deleteIdEdit, setDeleteIdEdit] = useState({});
-    
-    async function GetItemsProducts(page) {
+    const [dataValCat, setDataCat] = useState(null);
+    const [date, setDate] = useState(null);
+    const { RangePicker } = DatePicker;
+    const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
+    const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
+    const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
+
+
+    async function GetItemsProducts(page, category, tagName, dataFormat) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getMyProducts(page);
+        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
-            GetItemsProducts(page + 1)
+            GetItemsProducts(page + 1, category, tagName, dataFormat)
         }
     }
     async function GetItemsCategory(page) {
@@ -63,7 +71,12 @@ function MyProductsLists() {
         formData.append('category', categoryName)
         formData.append('tag', tagName)
         const patchItems = await PostsRepository.PostsMyProducts(formData)
-        GetItemsProducts(1)
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz yangi malumot qo'shdingiz`,
+        });
+        GetItemsProducts(1, dataValCat, tagName, dataFormat)
     }
     async function handleClickEdit(values) {
         const formData = new FormData()
@@ -75,8 +88,15 @@ function MyProductsLists() {
         formData.append('description', values.description)
         formData.append('category', categoryName)
         formData.append('tag', tagName)
-        const patchItems = await PatchRepository.getMyProductsPatch(formData ,deleteIdEdit.id )
-        GetItemsProducts(1)
+        const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id)
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz malumotlarni o'zgartirdingiz`,
+        });
+        modal.update;
+        GetItemsProducts(1, dataValCat, tagName, dataFormat);
+
     }
 
     const handleSelectFile = (e) => {
@@ -91,10 +111,14 @@ function MyProductsLists() {
     }
 
     useEffect(() => {
-        GetItemsProducts(1)
+        // GetItemsProducts(1)
         GetItemsCategory(1)
         GetItemsTag()
     }, [])
+    useEffect(() => {
+        GetItemsProducts(1, dataValCat, tagName, dataFormat)
+    }, [dataValCat, tagName, dataFormat])
+
 
     const columns = [
         {
@@ -167,10 +191,10 @@ function MyProductsLists() {
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 <div className=" p-5 mb-5 rounded d-flex justify-content-between" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='w-75'>Mening mahsulotlarim</h3>
-                    <div className='d-flex gap-5 w-50 flex-wrap'>
-                        <input type='search' className='form-control rounded w-50' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success" data-bs-target="#exampleModalMyProductsPosts" data-bs-toggle="modal"><span className='fs-4'>+ Mahsulot qo'shish</span></button>
+                    <h3 className='w-50'>Mening mahsulotlarim</h3>
+                    <div className='d-flex gap-5 w-100 '>
+                        <input type='search' className='form-control rounded ' placeholder="Qidiruv" onInput={handleClick} />
+                        <button className="btn btn-success " data-bs-target="#exampleModalMyProductsPosts" data-bs-toggle="modal" style={{width:"250px"}}><span className='fs-4'>+ Mahsulot qo'shish</span></button>
                     </div>
                 </div>
                 <div className="row ">
@@ -183,6 +207,29 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
+                                    <div className='d-flex gap-3 pb-3'>
+                                        <select className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                            <option className='fs-3' value=''>Barcha kategoriyalar</option>
+                                            {
+                                                dataCategory.length > 0 && (
+                                                    dataCategory.map(item => (
+                                                        <option key={item.id} value={item.id}>{item.name} </option>
+                                                    ))
+                                                )
+                                            }
+                                        </select>
+                                        <select required className='form-select rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                                            <option value="">Barcha Teglar</option>
+                                            {
+                                                tagItems?.length > 0 && (
+                                                    tagItems.map(item => (
+                                                        <option value={item.id}>{item.name}</option>
+                                                    ))
+                                                )
+                                            }
+                                        </select>
+                                        <RangePicker className='w-100   rounded-3' onChange={(e) => setDate(e)} />
+                                    </div>
                                     <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} />
                                 </div>
                             </div>
@@ -245,8 +292,8 @@ function MyProductsLists() {
                             }
                         </select>
                         <input required type="number" className='form-control rounded-3' placeholder='Narxi' name='price' defaultValue={deleteIdEdit?.price} />
-                        <input required type="text" className='form-control rounded-3' placeholder='Qisqa tasvir' name='short_description' defaultValue={deleteIdEdit?.short_description}  />
-                        <input  required  type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' defaultValue={deleteIdEdit?.description}/>
+                        <input required type="text" className='form-control rounded-3' placeholder='Qisqa tasvir' name='short_description' defaultValue={deleteIdEdit?.short_description} />
+                        <input required type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' defaultValue={deleteIdEdit?.description} />
                     </div>
                 </ModalDeletePostEdit>
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >

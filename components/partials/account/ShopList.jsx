@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { accountLinks } from './modules/AccountLinks';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Table } from 'antd';
+import { Modal, Table } from 'antd';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 
@@ -10,7 +10,8 @@ function Notifications() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [deleteIdEditSellers, setDeleteIdEditSellers] = useState(null);
-    const [selectValSellers, setSelectValSellers] = useState({});;
+    const [selectValSellers, setSelectValSellers] = useState({});
+    
     async function GetItems(page) {
         if (page === 1) {
             setData([])
@@ -34,7 +35,13 @@ function Notifications() {
         const patchItemsSellers = await PatchRepository.getShopsPatch({auth_status:selectValSellers}, deleteIdEditSellers?.id)
         setData([])
         GetItems(1)
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz malumotlarni o'zgartirdingiz`,
+        });
     }
+    
     useEffect(() => {
         GetItems(1)
     }, [])
