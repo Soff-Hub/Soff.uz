@@ -141,6 +141,7 @@ function FormCheckoutInformation() {
 
 
 
+
             </div>
             <p
                 style={{ display: 'inline-block' }}
