@@ -82,6 +82,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     //     }
     // }, [pagenationData]);
 
+
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
         const dateB = new Date(b.created_at);
@@ -95,6 +96,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
 
     let arr = newData ? [...newData] : [];
+
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
             arr.sort(compareByCreatedAt);
@@ -102,6 +104,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setPagenationData(arr);
+
 
         }
     }
@@ -112,6 +115,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         if (data && data.length > 0) {
             if (listView) {
                 const items = newData?.map((item) => (
+
                     <div className={classes} key={item.id}>
                         <Product product={item} />
                     </div>
