@@ -75,6 +75,7 @@ function FormCheckoutInformation() {
         }
         return ids;
 
+
     }
     const ids = extractIds(data);
     console.log(
