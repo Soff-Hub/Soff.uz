@@ -7,6 +7,7 @@ import PostRepository from '~/repositories/PostRepository';
 
 
 
+
 function FormCheckoutInformation() {
     const [cookies, setCookie] = useCookies(['cart']);
     const select = useSelector((state) => state.auth.user?.access);
@@ -74,6 +75,7 @@ console.log('to\'lov uchun berib yuborilgan id lar ', ids);
                     <i class="fa-solid fa-angles-left fa-fade me-2"></i> To'lov
                     qilish{' '}
                 </p>
+
 
 
 
