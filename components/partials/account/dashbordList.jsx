@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import {  Table } from 'antd';
 // import dynamic from 'next/dynamic';
 import CalculateTimeDifference from './DateFormatter';
 import Example from './Chart';
+import { useSelector } from 'react-redux';
 
 
 function DashbordList() {
@@ -16,6 +16,7 @@ function DashbordList() {
         const ItemsData = await GetRepository.getSellerDashbord();
         setData(ItemsData);
     }
+    const { accountLinks } = useSelector(state => state.auth)
     async function GetItemsProductsPopular(page) {
         if (page === 1) {
             setDataProducts([])

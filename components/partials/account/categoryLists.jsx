@@ -1,6 +1,5 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
 import { Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -10,6 +9,7 @@ import DeleteRepository from '~/reositoriy-admin/DeleteRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import { useSelector } from 'react-redux';
 
 function CategoryLists() {
     const [data, setData] = useState([]);
@@ -18,6 +18,7 @@ function CategoryLists() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState({});
     ;
+    const { accountLinks } = useSelector(state => state.auth)
 
     async function GetItemsProducts(page) {
         if (page === 1) {

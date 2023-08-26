@@ -1,47 +1,38 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '../../../../store/auth/action';
 import { Dropdown, Menu } from 'antd';
-import { accountLinks } from '~/components/partials/account/modules/AccountLinks';
+import { useSelector } from 'react-redux';
 
-class AccountQuickLinks extends Component {
-    constructor(props) {
-        super(props);
-    }
+function AccountQuickLinks() {
+    const { accountLinks } = useSelector(state => state.auth)
 
-    handleLogout = e => {
-        e.preventDefault();
-        this.props.dispatch(logOut());
-        localStorage.removeItem('token')
-    };
+//    const handleLogout = e => {
+//         e.preventDefault();
+//         dispatch(logOut());
+//         localStorage.removeItem('token')
+//     };
+    
+    const menu = (
+        <Menu>
+            {accountLinks.map(link => (
+                <Menu.Item key={link.url}>
+                    <Link href={link.url}>
+                        <a>{link.text}</a>
+                    </Link>
+                </Menu.Item>
+            ))}
 
-    render() {
+        </Menu>
+    );
 
-     
-        const menu = (
-            <Menu>
-                {accountLinks.map(link => (
-                    <Menu.Item key={link.url}>
-                        <Link href={link.url}>
-                            <a>{link.text}</a>
-                        </Link>
-                    </Menu.Item>
-                ))}
-
-            </Menu>
-        );
-
-        return (
-            <Dropdown overlay={menu} placement="bottomLeft">
-                <a href="#" className="header__extra ps-user--mobile">
-                    <i className="icon-user"></i>
-                </a>
-            </Dropdown>
-        );
-    }
-}
-const mapStateToProps = state => {
-    return state;
+    return (
+        <Dropdown overlay={menu} placement="bottomLeft">
+            <a href="#" className="header__extra ps-user--mobile">
+                <i className="icon-user"></i>
+            </a>
+        </Dropdown>
+    );
+    
 };
-export default connect(mapStateToProps)(AccountQuickLinks);
+export default AccountQuickLinks;

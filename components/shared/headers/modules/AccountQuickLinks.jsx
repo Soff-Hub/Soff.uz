@@ -1,10 +1,11 @@
 import React from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
-import { accountLinks } from '~/components/partials/account/modules/AccountLinks';
 
 const AccountQuickLinks = (props) => {
+    const { accountLinks } = useSelector(state => state.auth)
+
     const dispatch = useDispatch();
     const handleLogout = (e) => {
         e.preventDefault();

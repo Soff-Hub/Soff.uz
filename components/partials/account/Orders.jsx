@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
 import { Badge, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CalculateTimeDifference from './DateFormatter';
+import { useSelector } from 'react-redux';
 
 function OrdersLists() {
+    const { accountLinks } = useSelector(state => state.auth)
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
 

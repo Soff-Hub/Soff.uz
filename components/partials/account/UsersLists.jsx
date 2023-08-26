@@ -1,7 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
-import {  Modal, Table } from 'antd';
+import { Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -10,9 +9,11 @@ import ModalDelete from './Modal';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import { useSelector } from 'react-redux';
 
 function OrdersLists() {
-    
+    const { accountLinks } = useSelector(state => state.auth)
+
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
@@ -72,7 +73,7 @@ function OrdersLists() {
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
-            content: "Siz  malumotlarni o'zgartirdingiz " ,
+            content: "Siz  malumotlarni o'zgartirdingiz ",
         });
         GetItemsUsers(1)
     }
@@ -93,12 +94,12 @@ function OrdersLists() {
                 <div>
                     {
                         image ?
-                        <img src={image}  width={54} height={54}/>
-                        :
-                        <i className="fa-solid fa-image fa-2x"></i>
+                            <img src={image} width={54} height={54} />
+                            :
+                            <i className="fa-solid fa-image fa-2x"></i>
                     }
                 </div>
-              ),
+            ),
         },
         {
             title: 'Ism',
@@ -106,7 +107,7 @@ function OrdersLists() {
             key: 'age',
             render: (title) => (
                 <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-user-tie"></i> {title}</span>
-                
+
             ),
         },
         {
@@ -115,7 +116,7 @@ function OrdersLists() {
             key: 'address',
             render: (title) => (
                 <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-phone-volume"></i> {title}</span>
-                
+
             ),
         },
         {
@@ -123,7 +124,7 @@ function OrdersLists() {
             dataIndex: 'auth_status',
             key: 'address',
             render: (auth_status) => (
-                <span>{auth_status==='code_verified'? (<span><i className="fa-solid text-success fa-circle-check"></i> Faol</span>)  : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Faol emas</span>)}</span>
+                <span>{auth_status === 'code_verified' ? (<span><i className="fa-solid text-success fa-circle-check"></i> Faol</span>) : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Faol emas</span>)}</span>
             )
 
         },
@@ -186,7 +187,7 @@ function OrdersLists() {
                         name='phone'
                         defaultValue={deleteIdEdit?.phone}
                     />
-                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
+                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
                         <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
                         <option className='fs-3' value="new">Faol emas</option>
                         <option className='fs-3' value="code_verified">Faol</option>

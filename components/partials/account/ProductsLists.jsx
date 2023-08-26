@@ -1,6 +1,5 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
 import { Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -8,8 +7,10 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import { DatePicker} from 'antd';
+import { useSelector } from 'react-redux';
 
 function ProductsLists() {
+    const { accountLinks } = useSelector(state => state.auth)
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [selectValSellers, setSelectValProducts] = useState({});

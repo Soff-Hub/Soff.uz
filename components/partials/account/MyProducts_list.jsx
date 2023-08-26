@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
 import { DatePicker, Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -9,6 +8,7 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import { useSelector } from 'react-redux';
 
 
 function MyProductsLists() {
@@ -28,6 +28,7 @@ function MyProductsLists() {
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
+    const { accountLinks } = useSelector(state => state.auth)
 
 
     async function GetItemsProducts(page, category, tagName, dataFormat) {

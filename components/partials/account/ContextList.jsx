@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
+import { useSelector } from 'react-redux';
 
 
 function ContextLists() {
 
     const [data, setData] = useState({});
+    const { accountLinks } = useSelector(state => state.auth)
 
     async function GetItemsBanners() {
         const ItemsData = await PostsRepository.PostsBanner(data)

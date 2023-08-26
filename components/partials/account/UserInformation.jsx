@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import FormChangeUserInformation from '~/components/shared/FormChangeUserInformation';
-import { accountLinks } from './modules/AccountLinks';
 import { useSelector } from 'react-redux';
 
 
 const UserInformation = () => {
-    const { user } = useSelector(state => state.auth);
+    const { user, accountLinks } = useSelector(state => state.auth);
+    
     //Views
     const accountLinkView = accountLinks.map((item) => (
         <li key={item.text} className={item.active ? 'active' : ''}>

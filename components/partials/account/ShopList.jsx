@@ -1,12 +1,14 @@
 import React, { Component, useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { accountLinks } from './modules/AccountLinks';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Modal, Table } from 'antd';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import { useSelector } from 'react-redux';
 
 function Notifications() {
+    const { accountLinks } = useSelector(state => state.auth)
+
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [deleteIdEditSellers, setDeleteIdEditSellers] = useState(null);
@@ -32,7 +34,7 @@ function Notifications() {
         setData(filterSearch)
     }
     async function handleItemsEditSellers() {
-        const patchItemsSellers = await PatchRepository.getShopsPatch({auth_status:selectValSellers}, deleteIdEditSellers?.id)
+        const patchItemsSellers = await PatchRepository.getShopsPatch({ auth_status: selectValSellers }, deleteIdEditSellers?.id)
         setData([])
         GetItems(1)
         const modal = Modal.success({
@@ -41,7 +43,7 @@ function Notifications() {
             content: `Siz malumotlarni o'zgartirdingiz`,
         });
     }
-    
+
     useEffect(() => {
         GetItems(1)
     }, [])

@@ -4,8 +4,8 @@ export const actionTypes = {
     LOGOUT: 'LOGOUT',
     LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
     CHECK_AUTHORIZATION: 'CHECK_AUTHORIZATION',
-
-    ISLOGINNING: 'ISLOGINNING'
+    ISLOGINNING: 'ISLOGINNING',
+    ACCOUNT_LINKS: 'ACCOUNT_LINKS'
 };
 
 export function login({ user }) {
@@ -28,4 +28,7 @@ export function logOutSuccess() {
 
 export function isLoginning() {
     return { type: actionTypes.ISLOGINNING };
+}
+export function accountLinksReducers(payload) {
+    return { type: actionTypes.ACCOUNT_LINKS, payload };
 }
