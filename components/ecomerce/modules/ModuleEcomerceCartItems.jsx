@@ -52,6 +52,7 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                 </td>
                 <td >
 
+
                     <a href="#" onClick={(e) => handleRemoveItem(e, item.id)}>
                         <i className="icon-cross"></i>
                     </a>

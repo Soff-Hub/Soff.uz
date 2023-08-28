@@ -101,6 +101,7 @@ const ProductCategoryScreen = () => {
 
                                 pageSize={8}
 
+
                             />
                             {/* <h3 className="ps-shop__heading">
                                 {category && category.name}
