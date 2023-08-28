@@ -7,6 +7,7 @@ import { Modal, Table } from 'antd';
 
 
 
+
 function ContextLists() {
 
     const [data, setData] = useState([]);
@@ -16,6 +17,7 @@ function ContextLists() {
 
     async function GetItemsBanners() {
         const ItemsData = await GetRepository.getBannerLists(user?.access)
+
         setData(ItemsData?.results)
     }
     async function handleClickID(ID) {
@@ -35,6 +37,7 @@ function ContextLists() {
                 content: `Siz malumotlarni o'zgartirdingiz`,
             });
         }
+
 
 
     }

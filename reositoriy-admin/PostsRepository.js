@@ -64,6 +64,8 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+   
 }
 
 export default new PostRepository();

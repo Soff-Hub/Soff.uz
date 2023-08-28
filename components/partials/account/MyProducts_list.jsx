@@ -18,6 +18,8 @@ function MyProductsLists() {
     const [search, setSerach] = useState([]);
     const [fileImg, setFileImg] = useState({});
     const [fileImgFile, setFileImgFile] = useState({});
+
+
     const [categoryNameEdit, setCategoryNameEdit] = useState({});
     const [tagName, setTagName] = useState(null);
     const [tagNameEdit, setTagNameEdit] = useState(null);
@@ -76,6 +78,7 @@ function MyProductsLists() {
         formData.append('category', categoryNameEdit)
         formData.append('tag', tagNameEdit)
         const patchItems = await PostsRepository.PostsMyProducts(formData, user?.access)
+
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -95,6 +98,7 @@ function MyProductsLists() {
         formData.append('category', categoryNameEdit)
         formData.append('tag', tagNameEdit)
         const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id, user?.access)
+
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',

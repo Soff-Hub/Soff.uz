@@ -135,10 +135,11 @@ function CategoryLists() {
             render: (id) => <div >
                 <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
                 {
-                    data.some(el => el.id == id && el.is_delete === true) ?
-                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
-                        :
-                        <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
+
+                    data.some(el =>el.id==id && el.is_delete === true) ? 
+                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
+               :
+               <span><i className="fa-solid fa-ban text-danger"></i></span>
                 }
             </div>
         },
