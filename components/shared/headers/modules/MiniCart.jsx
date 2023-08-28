@@ -56,7 +56,6 @@ const MiniCart = ({ ecomerce }) => {
         };
         const respons = await PostRepository.getCartData(config)
 
-
         if (respons) {
             setCart(respons)
         }
