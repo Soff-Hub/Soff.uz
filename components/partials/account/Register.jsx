@@ -41,8 +41,6 @@ class Register extends Component {
             }
     };
 
-
-    
     render() {
         return (
             <div className="ps-my-account">
