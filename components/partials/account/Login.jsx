@@ -68,6 +68,7 @@ class Login extends Component {
 
 
 
+
                 Router.push('/');
             }
         }
