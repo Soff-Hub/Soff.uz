@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import useGetProducts from '~/hooks/useGetProducts';
 
 const ShopItems = ({ columns = 4, pageSize, data }) => {
+
     const Router = useRouter();
     // const { page } = Router.query;
     const { query } = Router;
@@ -76,9 +77,13 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     }, [query, data]);
 
 
-    // useEffect(() => {
-    //     if (data) {
-    //         setNewData(data);
+    useEffect(() => {
+        console.log('data', pagenationData);
+    }, [pagenationData]);
+
+    // const count = [Math.ceil(data?.length / 3)];
+    //     function createArray(length, value) {
+    //         return Array.from({ length }, () => value);
     //     }
     // }, [pagenationData]);
 
@@ -97,6 +102,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
     let arr = newData ? [...newData] : [];
 
+
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
             arr.sort(compareByCreatedAt);
@@ -104,6 +110,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setPagenationData(arr);
+
 
 
         }
@@ -147,6 +154,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                 </div>
             </div>
         );
+
 
 
 
@@ -196,6 +204,17 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
             <div className="ps-shopping__content">{productItemsView}</div>
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
+
+                    {data.length > 0 && (
+                        <Pagination
+                            total={data?.length - 1}
+                            pageSize={pageSize}
+                            responsive={true}
+                            showSizeChanger={false}
+                            current={page !== undefined ? parseInt(page) : 1}
+                            onChange={(e) => handlePagination(e)}
+                        />
+                    )}
 
                     {data?.length > 0 && (
                         <Pagination
