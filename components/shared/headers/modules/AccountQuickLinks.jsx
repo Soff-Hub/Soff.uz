@@ -3,6 +3,7 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
 import Router from 'next/router';
+import { Modal } from 'antd';
 
 const AccountQuickLinks = (props) => {
     const { accountLinks } = useSelector(state => state.auth)
@@ -11,6 +12,11 @@ const AccountQuickLinks = (props) => {
     const handleLogout = (e) => {
         e.preventDefault();
         dispatch(logOut());
+        const modal = Modal.info({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz muvaffaqqiyatli chiqdingiz`,
+        });
         Router.push("/")
     };
     const { isLoggedIn } = props;
@@ -34,7 +40,7 @@ const AccountQuickLinks = (props) => {
                         {linksView}
                         <li className="ps-block__footer">
                             <a href="#" onClick={(e) => handleLogout(e)}>
-                                Logout
+                                Chiqish
                             </a>
                         </li>
                     </ul>
