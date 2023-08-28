@@ -7,6 +7,7 @@ import { Modal, Table } from 'antd';
 
 
 
+
 function ContextLists() {
 
     const [data, setData] = useState([]);
@@ -20,6 +21,7 @@ function ContextLists() {
 
             setData(ItemsData?.results)
         }
+
     }
     async function handleClickID(ID) {
         const formData = new FormData();
@@ -39,6 +41,7 @@ function ContextLists() {
                 content: `Siz malumotlarni o'zgartirdingiz`,
             });
         }
+
 
 
     }
