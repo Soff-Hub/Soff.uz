@@ -7,6 +7,7 @@ import { Modal, Table } from 'antd';
 
 
 
+
 function ContextLists() {
 
     const [data, setData] = useState([]);
@@ -20,6 +21,7 @@ function ContextLists() {
 
             setData(ItemsData?.results)
         }
+
 
     }
     async function handleClickID(ID) {
@@ -43,6 +45,7 @@ function ContextLists() {
         }
 
         
+
     }
 
     useEffect(() => {
@@ -110,6 +113,7 @@ function ContextLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__header mx-3 mt-4 mb-4">
+
                                     <h3>Bannerlarni o'zgartirish</h3>
                                 </div>
                                 <div>

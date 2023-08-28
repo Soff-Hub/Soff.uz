@@ -83,6 +83,7 @@ function MyProductsLists() {
         const patchItems = await PostsRepository.PostsMyProducts(formData, user?.access)
 
 
+
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -102,6 +103,7 @@ function MyProductsLists() {
         formData.append('category', categoryNameEdit)
         formData.append('tag', tagNameEdit)
         const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id, user?.access)
+
 
 
         const modal = Modal.success({

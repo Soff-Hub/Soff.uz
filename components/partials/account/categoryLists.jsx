@@ -144,6 +144,7 @@ function CategoryLists() {
                         <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
 
 
+
                 }
             </div>
         },
