@@ -47,6 +47,8 @@ const MiniCart = ({ ecomerce }) => {
     const stat = useSelector(state => state)
     console.log('satte', stat);
 
+ 
+
     const getCardListData = async () => {
         let config = {
             headers: {
@@ -54,7 +56,6 @@ const MiniCart = ({ ecomerce }) => {
             },
         };
         const respons = await PostRepository.getCartData(config)
-
 
         if (respons) {
             setCart(respons)
