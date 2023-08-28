@@ -94,6 +94,7 @@ class PostRepository {
         const response = await Repository.get(baseUrl + endPoint, token)
 
 
+
             .then((response) => {
                 return response.data;
             })
