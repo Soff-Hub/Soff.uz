@@ -3,7 +3,7 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { Table } from 'antd';
+import { Modal, Table } from 'antd';
 
 
 function ContextLists() {
@@ -21,11 +21,19 @@ function ContextLists() {
         const formData = new FormData();
         if (dataUrlFile) {
             formData.append("image", dataUrlFile);
-        }
+        }   
         if (dataUrl) {
             formData.append("url", dataUrl);
         }
         const ItemsData = await PatchRepository.getBannersPatch(formData, ID)
+        if (dataUrlFile || dataUrl) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz malumotlarni o'zgartirdingiz`,
+            });
+        }
+        
     }
 
     useEffect(() => {
@@ -82,7 +90,7 @@ function ContextLists() {
 
     return (
         <section className="ps-my-account ps-page--account">
-            <div className="container">
+            <div className="container pb-5">
                 <div className="row">
                     <div className="col-lg-4">
                         <div className="ps-page__left">
