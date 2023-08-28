@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
 import Router from 'next/router';
 import { Modal } from 'antd';
-x
+
 
 const AccountQuickLinks = (props) => {
     const { accountLinks } = useSelector(state => state.auth)
