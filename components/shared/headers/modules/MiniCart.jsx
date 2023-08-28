@@ -44,8 +44,16 @@ const MiniCart = ({ ecomerce }) => {
     const hisob = addPeriodToThousands(amount);
 
 
+    const stat = useSelector(state => state)
+    console.log('satte', stat);
+
     const getCardListData = async () => {
-        const respons = await PostRepository.getCartData()
+        let config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')} `,
+            },
+        };
+        const respons = await PostRepository.getCartData(config)
         if (respons) {
             setCart(respons)
         }
