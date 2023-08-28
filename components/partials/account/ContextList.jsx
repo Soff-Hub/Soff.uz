@@ -7,7 +7,6 @@ import { Modal, Table } from 'antd';
 
 
 
-
 function ContextLists() {
 
     const [data, setData] = useState([]);
@@ -36,6 +35,7 @@ function ContextLists() {
         const ItemsData = await PatchRepository.getBannersPatch(formData, ID, user?.access)
 
 
+
         if (dataUrlFile || dataUrl) {
             const modal = Modal.success({
                 centered: true,
@@ -43,8 +43,6 @@ function ContextLists() {
                 content: `Siz malumotlarni o'zgartirdingiz`,
             });
         }
-
-        
 
     }
 
