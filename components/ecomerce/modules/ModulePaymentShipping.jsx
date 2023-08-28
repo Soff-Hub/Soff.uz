@@ -8,7 +8,7 @@ const ModulePaymentShipping = () => {
                 <figure>
                     <small>Contact</small>
                     <p>test@gmail.com</p>
-                    <Link href="/account/checkout">
+                    <Link href="/account/checkout" >
                         <a>Change</a>
                     </Link>
                 </figure>

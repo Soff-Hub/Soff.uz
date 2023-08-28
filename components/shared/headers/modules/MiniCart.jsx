@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
@@ -6,10 +6,12 @@ import useEcomerce from '~/hooks/useEcomerce';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import { useCookies } from 'react-cookie';
 import { Modal } from 'antd';
+import PostRepository from '~/repositories/PostRepository';
 
 const MiniCart = ({ ecomerce }) => {
     const { products, removeItem, removeItems, getProducts } = useEcomerce();
     const [cookies, setCookie] = useCookies(['cart']);
+    const [cart, setCart] = useState([])
     const state = useSelector((state) => state.auth.user);
     function handleRemoveItem(e, item) {
         e.preventDefault();
@@ -41,13 +43,23 @@ const MiniCart = ({ ecomerce }) => {
     }
     const hisob = addPeriodToThousands(amount);
 
+    const getCardListData = async () => {
+        const respons = await PostRepository.getCartData()
+        if (respons) {
+            setCart(respons)
+        }
+    }
+
     useEffect(() => {
+        getCardListData()
         getProducts(ecomerce.cartItems, 'cart');
     }, [ecomerce]);
+
+    console.log(cart);
+
     let cartItemsView;
     if (ecomerce.cartItems && ecomerce.cartItems?.length > 0) {
         const productItems = ecomerce.cartItems?.map((item) => {
-
             return (
                 <ProductOnCart product={item} key={item.id}>
                     <a
@@ -65,7 +77,6 @@ const MiniCart = ({ ecomerce }) => {
                     <h3>
                         Jami:
                         <strong>{hisob ? hisob : 0} so'm</strong>
-
                     </h3>
                     <figure>
                         <Link href="/account/shopping-cart">

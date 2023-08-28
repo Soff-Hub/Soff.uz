@@ -28,7 +28,16 @@ const Product = ({ product }) => {
         <div className="ps-product">
             <div className="ps-product__thumbnail">
                 <Link href="/product/[pid]" as={`/product/${product.id}`}>
-                    <a>{thumbnailImage(product)}</a>
+                    <a>
+                        { 
+                        product.poster_url ?
+                    
+                        thumbnailImage(product)
+                    :
+                    <img src="/static/img/not-found.png" alt="" />
+                    }
+                    
+                    </a>
                 </Link>
 
                 <ModuleProductActions product={product} />

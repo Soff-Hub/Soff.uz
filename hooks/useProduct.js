@@ -33,7 +33,7 @@ function getImageURL(source, size) {
                 image = source.url;
             }
         } else {
-            image = source.url;
+            image = source.poster_url   ;
         }
         imageURL = `${baseUrl}${image}`;
     } else {
@@ -51,11 +51,16 @@ export default function useProduct() {
                     return (
                         <>
                             <LazyLoad>
-                                <img
+                                {
+                                    payload?.poster_url ? 
+                                    <img
+    
+                                        src={payload.poster_url}
+                                        alt={payload.title}
+                                    /> :
+                                    <img src="/static/img/not-found.png" alt="not found image" />
 
-                                    src={payload.poster_url}
-                                    alt={payload.title}
-                                />
+                                }
                             </LazyLoad>
                         </>
                     );

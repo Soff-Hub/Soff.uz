@@ -7,14 +7,17 @@ import { isLoginning, login } from '../../../store/auth/action';
 import { Form, Input, notification, Modal } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
+import { BeatLoader } from 'react-spinners';
 // import Modal from 'antd/lib/modal/Modal';
 
 class Login extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            report: true,
+        };
     }
-     modalSuccess = type => {
+    modalSuccess = (type) => {
         notification.open({
             message: 'Xush kelibsiz saytimizga!',
             description: 'Siz muvaffaqqiyatli kirdingiz!',
@@ -36,10 +39,9 @@ class Login extends Component {
         });
     }
 
-
     defaultRoutePage = async () => {
         await this.props.dispatch(isLoginning());
-    }
+    };
 
     handleLoginSubmit = async (e) => {
         const { loginUser } = useAuth();
@@ -50,15 +52,19 @@ class Login extends Component {
             if (user.status >= 400) {
                 notification.open({
                     message: "Nimadir noto'g'ri bajarildi",
-                    description: "Parol yoki raqam xato kiritilgan bo'lshi mumkin!",
+                    description:
+                        "Parol yoki raqam xato kiritilgan bo'lshi mumkin!",
                     duration: 500,
                 });
             } else {
+                this.setState({ report: !this.state.report });
                 notification.open({
                     message: 'Xush kelibsiz saytimizga!',
                     description: 'Siz muvaffaqqiyatli kirdingiz!',
-                    type:'success'
+                    type: 'success',
                 });
+               localStorage.setItem('login_token', user.data.access)
+                localStorage.setItem('login_data', JSON.stringify(e));
                 this.props.dispatch(login({ user: user.data }));
                 Router.push('/');
             }
@@ -66,7 +72,7 @@ class Login extends Component {
     };
 
     componentDidMount() {
-        this.defaultRoutePage()
+        this.defaultRoutePage();
     }
 
     render() {
@@ -84,14 +90,12 @@ class Login extends Component {
                             </li>
                             <li>
                                 <Link href="/account/register">
-
                                     <a>Ro'yxatdan o'tish</a>
                                 </Link>
                             </li>
                         </ul>
                         <div className="ps-tab active" id="sign-in">
                             <div className="ps-form__content">
-
                                 <h5>Profilga kirish</h5>
                                 <div className="form-group">
                                     <Form.Item
@@ -106,7 +110,7 @@ class Login extends Component {
                                             className="form-control"
                                             type="text"
                                             placeholder="Telefon raqam"
-                                            maxLength='13'
+                                            maxLength="13"
                                         />
                                     </Form.Item>
                                 </div>
@@ -135,22 +139,33 @@ class Login extends Component {
                                             id="remember-me"
                                             name="remember-me"
                                         />
-                                        {/* <label htmlFor="remember-me">
-                                            Rememeber me
-                                        </label> */}
                                     </div>
                                 </div>
                                 <div className="form-group submit">
-                                    <button
-                                        type="submit"
-                                        className="ps-btn ps-btn--fullwidth">
-                                       Kirish
-                                    </button>
+                                    {this.state.report ? (
+                                        <button
+                                            type="submit"
+                                            className="ps-btn ps-btn--fullwidth">
+                                            Kirish
+                                        </button>
+                                    ) : (
+                                        <button
+                                            type="submit"
+                                            className="ps-btn ps-btn--fullwidth mb-5">
+                                            <BeatLoader color="#fff" />
+                                        </button>
+                                    )}
                                 </div>
 
-                                <p style={{paddingBottom:'15px'}} className='mb-4'>Parolni <Link href='/account/qayta-nomer-kiritish'>unutdingizmi?</Link>  </p>
+                                <p
+                                    style={{ paddingBottom: '15px' }}
+                                    className="mb-4">
+                                    Parolni{' '}
+                                    <Link href="/account/qayta-nomer-kiritish">
+                                        unutdingizmi?
+                                    </Link>{' '}
+                                </p>
                             </div>
-                           
                         </div>
                     </Form>
                 </div>

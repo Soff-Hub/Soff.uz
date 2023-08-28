@@ -3,7 +3,6 @@ import Repository, { baseUrlAuth } from '~/repositories/Repository';
 
 export default function useAuth() {
     const registerUser = (url, e) => {
-        // let endPoint = 'auth/seller-register/';
         let user = Repository.post(baseUrlAuth + url, e)
             .then((ress) => {
                 return ress;
@@ -48,6 +47,8 @@ export default function useAuth() {
 
     const verifyCode = (e) => {
         const endPoint = 'auth/verify/';
+       
+        
         let config = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')} `,

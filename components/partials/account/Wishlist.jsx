@@ -15,7 +15,6 @@ const Wishlist = ({ ecomerce }) => {
 
 
   const state = useSelector(state => state)
-  console.log('redux', state.ecomerce.wishlistItems);
 
 
     function handleAddItemToCart(e, product) {
@@ -24,7 +23,7 @@ const Wishlist = ({ ecomerce }) => {
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga o'chirdingiz`,
+            content: `Siz hujjatni savatga qo'shdingiz`,
         });
         modal.update;
 
@@ -83,8 +82,8 @@ const Wishlist = ({ ecomerce }) => {
                                 <td>
                                     <ProductCart product={product} />
                                 </td>
-                                <td style={{padding:'40px 0 !important'}} className="  d-flex justify-content-center align-content-center">
-                                   <span className='narx' > {product.price}so'm</span>
+                                <td >
+                                   <span> {product.price} so'm</span>
 
                                 </td>
                                 <td style={{margin: "0 auto"}} >
@@ -107,13 +106,13 @@ const Wishlist = ({ ecomerce }) => {
             </div>
         );
     } else {
-        if (!loading) {
+        // if (loading) {
             wishlistItemsView = (
                 <div className="alert alert-danger" role="alert">
                      Tanlaganlar yo'q!
                 </div>
             );
-        }
+        // }
     }
     return (
         <div className="ps-section--shopping ps-whishlist">

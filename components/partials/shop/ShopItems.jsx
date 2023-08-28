@@ -9,7 +9,7 @@ import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import useGetProducts from '~/hooks/useGetProducts';
 
-const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
+const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     const Router = useRouter();
     // const { page } = Router.query;
     const { query } = Router;
@@ -17,7 +17,7 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [classes, setClasses] = useState(
-        'col-xl-4 col-lg-4 col-md-3 col-sm-6 col-6'
+        'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 '
     );
     const [pageSizee, setPageSizee] = useState(4);
     const { productItems, loading, getProducts } = useGetProducts();
@@ -52,7 +52,6 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
         }
     }
 
-
     // let arr = []
     useEffect(() => {
         // getProducts(params);
@@ -65,7 +64,6 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
     }, [query, data]);
 
     useEffect(() => {
-
         console.log('data', pagenationData);
     }, [pagenationData]);
 
@@ -96,7 +94,7 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
         const dateB = new Date(b.created_at);
         return dateB - dateA;
     }
-    
+
     let arr = data ? [...data] : [];
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
@@ -105,7 +103,6 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setPagenationData(arr);
-          
         }
     }
 
@@ -133,12 +130,20 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
             productItemsView = <p>Hujjat topilmadi</p>;
         }
     } else {
-        const skeletonItems = generateTempArray(8).map((item) => (
-            <div className={classes} key={item}>
-                <SkeletonProduct />
+        productItemsView = (
+            <div style={{display: 'flex', justifyContent:'center', alignContent:'center'}}>
+            <div className={classes} style={{ marginTop:'30px'}}>
+                <img src="/static/img/no-document.jpg" alt="no documnt" />
+                <p className="text-center">No document</p>
             </div>
-        ));
-        productItemsView = <div className="row">{skeletonItems}</div>;
+            </div>
+        );
+        // const skeletonItems = generateTempArray(8).map((item) => (
+        //     <div className={classes} key={item}>
+        //         <SkeletonProduct />
+        //     </div>
+        // ));
+        // productItemsView = <div className="row">{skeletonItems}</div>;
     }
 
     return (
@@ -184,14 +189,16 @@ const ShopItems = ({ columns = 4, pageSize = 2, data }) => {
             <div className="ps-shopping__content">{productItemsView}</div>
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
-                    {/* <Pagination
-                        total={data?.length - 1}
-                        pageSize={pageSize1}
-                        responsive={true}
-                        showSizeChanger={false}
-                        current={page !== undefined ? parseInt(page) : 1}
-                        onChange={(e) => handlePagination(e)}
-                    /> */}
+                    {data.length > 0 && (
+                        <Pagination
+                            total={data?.length - 1}
+                            pageSize={pageSize}
+                            responsive={true}
+                            showSizeChanger={false}
+                            current={page !== undefined ? parseInt(page) : 1}
+                            onChange={(e) => handlePagination(e)}
+                        />
+                    )}
 
                     {/* <nav aria-label="Page navigation example">
                         <ul class="pagination">

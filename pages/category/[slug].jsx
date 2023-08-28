@@ -33,11 +33,9 @@ const ProductCategoryScreen = () => {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
             setCategory(responseData);
-            console.log('shopitems/', responseData);
             let arr = responseData.find((item) => item.id == Number(slug));
             setDetail_arr(arr?.promotional_sliders);
             setObj(arr);
-            console.log('promotion', detail_arr);
         }
     }
 
@@ -94,8 +92,8 @@ const ProductCategoryScreen = () => {
                         <div className="ps-layout__right">
                             <ShopItems
                                 data={detail_arr}
-                                columns={6}
-                                pageSize={18}
+                                columns={4}
+                                pageSize={4}
                             />
                             {/* <h3 className="ps-shop__heading">
                                 {category && category.name}

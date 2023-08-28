@@ -51,13 +51,13 @@ const ModuleCartSummary = ({ source }) => {
             <div className="ps-block--shopping-total">
                 <div className="ps-block__header">
                     <p>
-                        Subtotal <span> {hisob} so'm </span>
+                        Umumiy hisob <span> {hisob} so'm </span>
                     </p>
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-block__product">{productItemsView}</ul>
                     <h3>
-                        Total <span>{hisob} so'm</span>
+                        Jami:  <span>{hisob} so'm</span>
                     </h3>
                 </div>
             </div>

@@ -50,7 +50,7 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                 <td data-label="total">
                     {/* <strong>${(item.price * item.quantity).toFixed(2)}</strong> */}
                 </td>
-                <td>
+                <td style={{}}>
                     <a href="#" onClick={(e) => handleRemoveItem(e, item.id)}>
                         <i className="icon-cross"></i>
                     </a>

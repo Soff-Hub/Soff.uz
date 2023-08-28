@@ -13,7 +13,7 @@ export default function useEcomerce() {
     const [cartItemsOnCookie] = useState(null);
     const [cookies, setCookie] = useCookies(['cart']);
     const [products, setProducts] = useState(null);
-    console.log('cookie', cookies );
+    console.log('cookie', cookies);
     return {
         loading,
         cartItemsOnCookie,
@@ -24,7 +24,7 @@ export default function useEcomerce() {
                 let queries = '';
                 payload.forEach((item) => {
                     // if (queries === '') {
-                        queries = `${item.id}`;
+                    queries = `${item.id}`;
                     // } else {
                     //     queries = queries + `&id_in=${item.id}`;
                     // }
@@ -33,7 +33,7 @@ export default function useEcomerce() {
                     queries
                 );
                 // console.log(responseData,'ll');
-                if (responseData ) {
+                if (responseData) {
                     if (group === 'cart') {
                         let cartItems = payload;
                         cartItems.forEach((item) => {
@@ -64,21 +64,23 @@ export default function useEcomerce() {
         },
 
         addItem: (newItem, items, group) => {
-            
-            if (group === 'cart' &&  cookies.cart?.every(
-                (el) => el.id !== newItem.id
-            )) {
+            if (
+                group === 'cart' && ( cookies.cart ?  cookies?.cart?.every((el) => el.id !== newItem.id) : true)
+               
+            ) {
+                console.log('add');
+                
                 let newItems = cookies?.cart ? cookies.cart : [];
-            newItems.push(newItem)
-           
+                newItems.push(newItem);
                 setCookie('cart', newItems, { path: '/' });
                 dispatch(setCartItems(newItems));
             }
-            if (group === 'wishlist' &&  cookies.wishlist?.every(
-                (el) => el.id !== newItem.id
-            )) {
-                let newItems = cookies?.wishlist ? cookies.wishlist : []
-            newItems.push(newItem)
+            if (
+                group === 'wishlist' &&
+               (cookies.wishlist ?  cookies?.wishlist?.every((el) => el.id !== newItem.id) : true)
+            ) {
+                let newItems = cookies?.wishlist ? cookies.wishlist : [];
+                newItems.push(newItem);
                 setCookie('wishlist', newItems, { path: '/' });
 
                 dispatch(setWishlistTtems(newItems));
@@ -89,7 +91,7 @@ export default function useEcomerce() {
 
         removeItem: (selectedItem, items, group) => {
             // console.log('rw', selectedItem);
-           
+
             if (group === 'cart') {
                 let currentItems = cookies.cart;
                 if (currentItems?.length > 0) {
@@ -101,7 +103,7 @@ export default function useEcomerce() {
                 setCookie('cart', currentItems, { path: '/' });
                 dispatch(setCartItems(currentItems));
             }
-            
+
             if (group === 'wishlist') {
                 let currentItems = cookies.wishlist;
                 if (currentItems?.length > 0) {
@@ -115,7 +117,6 @@ export default function useEcomerce() {
                 setCookie('wishlist', currentItems, { path: '/' });
                 dispatch(setWishlistTtems(currentItems));
             }
-
         },
 
         removeItems: (group) => {

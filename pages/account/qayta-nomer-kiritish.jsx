@@ -3,8 +3,10 @@ import Router from 'next/router';
 import React, { useState } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import useAuth from '~/hooks/useAuth';
+import {BeatLoader} from 'react-spinners'
 
 export default function QaytaNomerKiritish() {
+    const [report, setReport] = useState(true)
     const [number, setNumber] = useState('');
 
     const QaytaRaqamJonatish = async (e) => {
@@ -18,6 +20,7 @@ export default function QaytaNomerKiritish() {
             Router.push('/account/parolni-almashtirish');
             const { access } = response.data;
             console.log('qayta access', access);
+            setReport(false)
             localStorage.setItem('qayta_token', access);
         } else {
             let message = '';
@@ -45,11 +48,17 @@ export default function QaytaNomerKiritish() {
                         />
 
                         <div className="form-group submit">
-                            <button
-                                type="submit"
-                                className="ps-btn ps-btn--fullwidth">
-                                Yuborish
-                            </button>
+                            {report ? (
+                                <button
+                                    type="submit"
+                                    className="ps-btn ps-btn--fullwidth">
+                                    Yuborish
+                                </button>
+                            ) : (
+                                <button className="ps-btn ps-btn--fullwidth mb-5">
+                                    <BeatLoader color="#fff" />
+                                </button>
+                            )}
                         </div>
                     </form>
                 </div>

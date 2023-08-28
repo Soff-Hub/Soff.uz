@@ -6,13 +6,13 @@ import MegaMenu from '~/components/elements/menu/MegaMenu';
 const Menu = ({ source, className }) => {
     // Views
 
-    // console.log('source' ,source);
+    console.log('source' ,source);
     let menuView;
     if (source) {
         menuView = source?.length > 0 ? source?.map((item) => {
                 return (
                     <li key={item.id}>
-                        <Link href={`/category/${item.id}`} >
+                        <Link href={`/category/${item.id}`} as={`/category/${item.id}`} >
                             <a>
                                 {item.icon && <i className={item.icon}></i>}
                                 {item.name}
@@ -27,7 +27,7 @@ const Menu = ({ source, className }) => {
         { menuView = (
             <li>
                 <a href="#" onClick={(e) => e.preventDefault()}>
-                    No menu item.
+                    Categoriyalar yo'q.
                 </a>
             </li>
         )}
@@ -36,7 +36,7 @@ const Menu = ({ source, className }) => {
         menuView = (
             <li>
                 <a href="#" onClick={(e) => e.preventDefault()}>
-                    No menu item.
+                Categoriyalar yo'q.
                 </a>
             </li>
         );

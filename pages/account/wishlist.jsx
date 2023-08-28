@@ -12,7 +12,7 @@ const WishlistPage = () => {
             url: '/',
         },
         {
-            text: 'Wishlist',
+            text: 'Tanlanganlar',
         },
     ];
 

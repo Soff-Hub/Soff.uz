@@ -1,4 +1,4 @@
-import Repository, { basePostUrl, serializeQuery } from './Repository';
+import Repository, { basePostUrl, baseUrl, serializeQuery } from './Repository';
 
 class PostRepository {
     constructor(callback) {
@@ -71,6 +71,30 @@ class PostRepository {
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
+    }
+
+    async postCartData(payload, token) {
+        const endPoint = 'customer/cart/';
+        const reponse = await Repository.post(
+            baseUrl + endPoint,
+            payload,
+            token
+        )
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getCartData() {
+        const endPoint = 'customer/cart-list/';
+        const response = await Repository.get(baseUrl + endPoint)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
     }
 }
 
