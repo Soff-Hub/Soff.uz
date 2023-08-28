@@ -60,6 +60,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     }, [query, data]);
 
     useEffect(() => {
+
     }, [pagenationData]);
 
 
@@ -73,7 +74,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         const dateB = new Date(b.created_at);
         return dateB - dateA;
     }
-    
+
     let arr = data ? [...data] : [];
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
@@ -82,8 +83,6 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setPagenationData(arr);
-
-          
         }
     }
 
@@ -119,6 +118,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             </div>
             </div>
         );
+
     }
 
     return (
