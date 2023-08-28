@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 
-import { isLoginning, login } from '../../../store/auth/action';
+import { isLoginning, login, loginGetData } from '../../../store/auth/action';
 
 import { Form, Input, notification, Modal } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 // import Modal from 'antd/lib/modal/Modal';
+
 
 class Login extends Component {
     constructor(props) {
@@ -63,9 +64,7 @@ class Login extends Component {
                     description: 'Siz muvaffaqqiyatli kirdingiz!',
                     type: 'success',
                 });
-               localStorage.setItem('login_token', user.data.access)
-                localStorage.setItem('login_data', JSON.stringify(e));
-                this.props.dispatch(login({ user: user.data }));
+                this.props.dispatch(login({ user: user.data, data: e }));
                 Router.push('/');
             }
         }

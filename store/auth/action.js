@@ -5,12 +5,12 @@ export const actionTypes = {
     LOGOUT_SUCCESS: 'LOGOUT_SUCCESS',
     CHECK_AUTHORIZATION: 'CHECK_AUTHORIZATION',
     ISLOGINNING: 'ISLOGINNING',
-    ACCOUNT_LINKS: 'ACCOUNT_LINKS'
+    ACCOUNT_LINKS: 'ACCOUNT_LINKS',
 };
 
-export function login({ user }) {
-    console.log(user);
-    return { type: actionTypes.LOGIN_REQUEST, user };
+export function login({ user, data }) {
+    console.log(user, data);
+    return { type: actionTypes.LOGIN_REQUEST, user, data };
 }
 
 export function loginSuccess({ user }) {
@@ -29,6 +29,9 @@ export function logOutSuccess() {
 export function isLoginning() {
     return { type: actionTypes.ISLOGINNING };
 }
+
 export function accountLinksReducers(payload) {
     return { type: actionTypes.ACCOUNT_LINKS, payload };
 }
+
+

@@ -6,20 +6,27 @@ export const initState = {
     isLoggedIn: false,
     user: null,
     accountLinks: [],
+    data: {}
 };
 
 function reducer(state = initState, actions) {
+  
     switch (actions.type) {
         case actionTypes.LOGIN_REQUEST:
+           console.log('==', actions);
             localStorage.setItem('user', JSON.stringify(actions.user));
+            localStorage.setItem('data', JSON.stringify(actions.data));
             return {
                 ...state,
                 ...{ isLoggedIn: true },
                 ...{ user: actions.user },
+                ...{data : actions.data}
             };
         case actionTypes.LOGOUT_SUCCESS:
             localStorage.removeItem('user');
             localStorage.removeItem('token');
+            localStorage.removeItem('data')
+            localStorage.removeItem('qayta_token')
             return {
                 ...state,
                 ...{ isLoggedIn: false },
@@ -34,7 +41,17 @@ function reducer(state = initState, actions) {
 
         case actionTypes.ACCOUNT_LINKS:
             return { ...state, ...{ accountLinks: actions.payload } };
-        default:
+
+        case actionTypes.DATA:
+            console.log('actions', actions);
+            localStorage.setItem('data', JSON.stringify(actions.data));
+            return {
+                ...state,
+                ...{ isLoggedIn: true },
+                ...{ data: actions.data },
+            };
+       
+            default:
             return state;
     }
 }
