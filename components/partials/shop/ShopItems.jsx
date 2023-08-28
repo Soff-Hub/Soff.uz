@@ -78,7 +78,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         return dateB - dateA;
     }
 
-    
+
     let arr = data ? [...data] : [];
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
@@ -88,7 +88,6 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             arr.sort(compareByCreatedAtLast);
             setPagenationData(arr);
 
-          
         }
     }
 
@@ -124,6 +123,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             </div>
             </div>
         );
+
 
     }
 
@@ -174,6 +174,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
                         <Pagination
                             total={data?.length - 1}
                             // pageSize={pageSize}
+
                             responsive={true}
                             showSizeChanger={false}
                             current={page !== undefined ? parseInt(page) : 1}
