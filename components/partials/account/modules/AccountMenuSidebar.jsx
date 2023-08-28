@@ -8,6 +8,7 @@ const AccountMenuSidebar = ({ data }) => {
     const { user } = useSelector(state => state.auth);
     const dataUser= useSelector(state => state.auth.data);
 
+
     const {asPath} = useRouter();
 
 return(
@@ -17,6 +18,7 @@ return(
         <figure>
             <h4 className='m-0 '>{user?.role==="admin" ? "Admin" : user?.role==="seller" ? "Sotuvchi" : user?.role==="customer" ? "Foydalanuvchi" : "" }</h4>
             <p>{dataUser?.phone}</p>
+
         </figure>
     </div>
     <div className="ps-widget__content">

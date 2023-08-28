@@ -92,6 +92,7 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
 }
 
 export default new PatchRepository();

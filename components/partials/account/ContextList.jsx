@@ -6,6 +6,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { Modal, Table } from 'antd';
 
 
+
 function ContextLists() {
 
     const [data, setData] = useState([]);
@@ -22,6 +23,7 @@ function ContextLists() {
         if (dataUrlFile) {
             formData.append("image", dataUrlFile);
         }   
+
         if (dataUrl) {
             formData.append("url", dataUrl);
         }
@@ -34,6 +36,7 @@ function ContextLists() {
             });
         }
         
+
     }
 
     useEffect(() => {
