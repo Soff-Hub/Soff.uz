@@ -65,6 +65,7 @@ class Login extends Component {
                     type: 'success',
                 });
                 this.props.dispatch(login({ user: user.data, data: e }));
+
                 Router.push('/');
             }
         }
