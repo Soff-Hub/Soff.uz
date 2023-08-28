@@ -52,6 +52,7 @@ const MiniCart = ({ ecomerce }) => {
     const getCardListData = async () => {
         const respons = await PostRepository.getCartData()
 
+
         if (respons) {
             setCart(respons)
         }
@@ -63,7 +64,6 @@ const MiniCart = ({ ecomerce }) => {
         // getCardListData()
         getProducts(ecomerce.cartItems, 'cart');
     }, [ecomerce]);
-
 
 
     let cartItemsView;

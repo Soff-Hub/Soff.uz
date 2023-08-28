@@ -9,6 +9,7 @@ import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 
 const ShopItems = ({ columns = 4, pageSize, data }) => {
 
+
     const Router = useRouter();
     // const { page } = Router.query;
     const { query } = Router;
@@ -76,6 +77,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         }
     }
 
+
     useEffect(() => {
         setTimeout(() => {
             setLoad(true);
@@ -96,7 +98,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
 
     useEffect(() => {
-
         console.log('data', pagenationData);
     }, [pagenationData]);
 
@@ -123,6 +124,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
 
 
+
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
             arr.sort(compareByCreatedAt);
@@ -130,6 +132,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setNewData(arr);
+
 
         }
     }
@@ -183,6 +186,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
+
     }
 
     return (
@@ -229,6 +233,17 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
             </div>
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
+
+                    {data.length > 0 && (
+                        <Pagination
+                            total={data?.length - 1}
+                            pageSize={pageSize}
+                            responsive={true}
+                            showSizeChanger={false}
+                            current={page !== undefined ? parseInt(page) : 1}
+                            onChange={(e) => handlePagination(e)}
+                        />
+                    )}
 
                     {data.length > 0 && (
                         <Pagination

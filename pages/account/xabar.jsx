@@ -18,6 +18,7 @@ const Xabar = (e) => {
     const [countSekond, setCountSekond] = useState(true);
     const [firstSendCode, setFirstSendCode] = useState(true);
 
+
     const [kod, setKod] = useState(null);
 
     // if (tokenn.user) {
@@ -26,6 +27,7 @@ const Xabar = (e) => {
 
     const handleSubmitKod = async () => {
         setLoader(true);
+
         let data = {
             code: `${kod}`,
         };
@@ -37,6 +39,7 @@ const Xabar = (e) => {
             setLoader(false);
             Router.push('/account/login');
         } else {
+
             let message = '';
             setLoader(false);
             const modal = Modal.error({
@@ -53,6 +56,7 @@ const Xabar = (e) => {
     const qaytaKodOlish = async () => {
         setLoader(true);
         setCoutdown(60);
+
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
         setCountSekond(false);
@@ -67,6 +71,7 @@ const Xabar = (e) => {
             modal.update;
             setReport(true);
             setLoader(false);
+
         } else {
             let message = '';
             const modal = Modal.error({
@@ -78,6 +83,7 @@ const Xabar = (e) => {
             setLoader(false);
         }
         setKod('');
+
         console.log(kod);
     };
 
@@ -88,6 +94,7 @@ const Xabar = (e) => {
             setReport(false);
             setFirstSendCode(false);
         }
+
 
         if (localStorage.getItem('data')) {
             setNomer(JSON.parse(localStorage.getItem('data')).phone);
@@ -103,7 +110,6 @@ const Xabar = (e) => {
             clearInterval(interval);
         };
     }, [tokenn, countdown]);
-
     return (
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
@@ -122,6 +128,7 @@ const Xabar = (e) => {
                                         type="number"
                                         placeholder="Kodni kiriting..."
                                         onChange={(e) => setKod(e.target.value)}
+
                                         maxLength={'4'}
                                     />
                                     <p> {nomer} nomerga sms boradi</p>
@@ -165,6 +172,7 @@ const Xabar = (e) => {
                                             </button>
                                         )
                                     ) : loader ? (
+
                                         <button
                                             type="submit"
                                             className="ps-btn ps-btn--fullwidth mb-5">
