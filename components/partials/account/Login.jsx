@@ -67,6 +67,7 @@ class Login extends Component {
                 this.props.dispatch(login({ user: user.data, data: e }));
 
 
+
                 Router.push('/');
             }
         }
