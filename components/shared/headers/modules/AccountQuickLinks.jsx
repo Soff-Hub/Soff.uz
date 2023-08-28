@@ -6,7 +6,6 @@ import Router from 'next/router';
 import { Modal } from 'antd';
 
 
-
 const AccountQuickLinks = (props) => {
     const { accountLinks } = useSelector(state => state.auth)
 
