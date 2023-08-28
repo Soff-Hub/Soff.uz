@@ -7,7 +7,7 @@ export const baseUrl = `${baseDomain}`;
 export default axios.create({
     baseUrl,
     headers: {
-        "Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzODI5MjE5LCJpYXQiOjE2OTI5NjUyMTksImp0aSI6IjgxZWViNWRiOGJjNTQxZGNhZTQxNjNmNGRjNDk5NzcyIiwidXNlcl9pZCI6NTV9.gSRpAub09OEd6-AO0698n426Uf3hRAA_C4vSrZ1ui8g`
+        "Authorization":`Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjkzOTMzOTU5LCJpYXQiOjE2OTMwNjk5NTksImp0aSI6ImNmMTYyMmU5MmJhYjRlNGZiMDVkMjE5YjM1ZWVhMGIwIiwidXNlcl9pZCI6NTV9.piLPKDeeLG7KdW3ovQ-WokTD8cA-mDK8LVCWTJZhozE`
     }
     
 });

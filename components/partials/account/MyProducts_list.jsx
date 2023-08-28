@@ -18,7 +18,9 @@ function MyProductsLists() {
     const [fileImg, setFileImg] = useState({});
     const [fileImgFile, setFileImgFile] = useState({});
     const [categoryName, setCategoryName] = useState({});
+    const [categoryNameEdit, setCategoryNameEdit] = useState({});
     const [tagName, setTagName] = useState(null);
+    const [tagNameEdit, setTagNameEdit] = useState(null);
     const [tagItems, setTagItems] = useState([]);
     const [View, setView] = useState({});
     const [deleteIdEdit, setDeleteIdEdit] = useState({});
@@ -69,8 +71,8 @@ function MyProductsLists() {
         formData.append('price', values.price)
         formData.append('short_description', values.short_description)
         formData.append('description', values.description)
-        formData.append('category', categoryName)
-        formData.append('tag', tagName)
+        formData.append('category', categoryNameEdit)
+        formData.append('tag', tagNameEdit)
         const patchItems = await PostsRepository.PostsMyProducts(formData)
         const modal = Modal.success({
             centered: true,
@@ -87,8 +89,8 @@ function MyProductsLists() {
         formData.append('price', values.price)
         formData.append('short_description', values.short_description)
         formData.append('description', values.description)
-        formData.append('category', categoryName)
-        formData.append('tag', tagName)
+        formData.append('category', categoryNameEdit)
+        formData.append('tag', tagNameEdit)
         const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id)
         const modal = Modal.success({
             centered: true,
@@ -212,8 +214,8 @@ function MyProductsLists() {
                                         <select className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Barcha kategoriyalar</option>
                                             {
-                                                dataCategory.length > 0 && (
-                                                    dataCategory.map(item => (
+                                                dataCategory?.length > 0 && (
+                                                    dataCategory?.map(item => (
                                                         <option key={item.id} value={item.id}>{item.name} </option>
                                                     ))
                                                 )
@@ -242,7 +244,7 @@ function MyProductsLists() {
                         <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' />
                         <input type="file" onChange={handleSelectImg} className='form-control pt-4 rounded-3' />
                         <input type="text" className='form-control rounded-3' placeholder='Nomi' name='title' />
-                        <select className='form-select rounded-3 py-4 fs-4' onChange={(e) => setTagName(e.target.value)} >
+                        <select className='form-select rounded-3 py-4 fs-4' onChange={(e) => setTagNameEdit(e.target.value)} >
                             <option value="">Barcha Teglar</option>
                             {
                                 tagItems?.length > 0 && (
@@ -252,7 +254,7 @@ function MyProductsLists() {
                                 )
                             }
                         </select>
-                        <select className='form-select rounded-3 py-4 fs-4' onChange={(e) => setCategoryName(e.target.value)} >
+                        <select className='form-select rounded-3 py-4 fs-4' onChange={(e) => setCategoryNameEdit(e.target.value)} >
                             <option value="">Barcha Kategoriyalar</option>
                             {
                                 dataCategory?.length > 0 && (
@@ -272,7 +274,7 @@ function MyProductsLists() {
                         <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' defaultValue={deleteIdEdit?.file} />
                         <input type="file" onChange={handleSelectImg} className='form-control pt-4 rounded-3' defaultValue={deleteIdEdit.poster} />
                         <input type="text" className='form-control rounded-3' placeholder='Nomi' name='title' defaultValue={deleteIdEdit?.title} />
-                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setTagName(e.target.value)} >
+                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setTagNameEdit(e.target.value)} >
                             <option value="">Barcha Teglar</option>
                             {
                                 tagItems?.length > 0 && (
@@ -282,7 +284,7 @@ function MyProductsLists() {
                                 )
                             }
                         </select>
-                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setCategoryName(e.target.value)} >
+                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setCategoryNameEdit(e.target.value)} >
                             <option value="">Barcha Kategoriyalar</option>
                             {
                                 dataCategory?.length > 0 && (

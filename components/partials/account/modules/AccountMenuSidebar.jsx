@@ -1,17 +1,20 @@
 import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router'; 
+import { useSelector } from 'react-redux';
 
 
 const AccountMenuSidebar = ({ data }) => {
+    const { user } = useSelector(state => state.auth);
     const {asPath} = useRouter();
+
 return(
     <aside className="ps-widget--account-dashboard">
     <div className="ps-widget__header">
-        <img src="/static/img/users/3.jpg" />
+    <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
         <figure>
-            <figcaption>Hello</figcaption>
-            <p>username@gmail.com</p>
+            <figcaption>Salom</figcaption>
+            <p>{user?.role.toUpperCase()}</p>
         </figure>
     </div>
     <div className="ps-widget__content">
