@@ -44,7 +44,6 @@ const MiniCart = ({ ecomerce }) => {
     }
     const hisob = addPeriodToThousands(amount);
 
-
     const stat = useSelector(state => state)
     console.log('satte', stat);
 
@@ -55,6 +54,7 @@ const MiniCart = ({ ecomerce }) => {
             },
         };
         const respons = await PostRepository.getCartData(config)
+
 
         if (respons) {
             setCart(respons)
