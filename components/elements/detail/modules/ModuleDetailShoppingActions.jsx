@@ -61,6 +61,7 @@ const ModuleDetailShoppingActions = ({
         modal.update;
 
 
+
     };
 
     const postCart = async () => {
@@ -197,6 +198,7 @@ const ModuleDetailShoppingActions = ({
                     href="#"
                     onClick={() => postCart()}>
                     Savatga qo'shish R
+
                 </a>
                 <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
                     Sotib olish

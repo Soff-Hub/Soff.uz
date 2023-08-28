@@ -5,7 +5,6 @@ export default function useAuth() {
     const registerUser = (url, e) => {
 
         // let endPoint = 'auth/seller-register/';
-
         let user = Repository.post(baseUrlAuth + url, e)
             .then((ress) => {
                 return ress;
