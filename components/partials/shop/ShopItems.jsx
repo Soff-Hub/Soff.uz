@@ -183,17 +183,6 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
                         />
                     )}
 
-                    {data.length > 0 && (
-                        <Pagination
-                            total={data?.length - 1}
-                            pageSize={pageSize}
-                            responsive={true}
-                            showSizeChanger={false}
-                            current={page !== undefined ? parseInt(page) : 1}
-                            onChange={(e) => handlePagination(e)}
-                        />
-                    )}
-
 
                 </div>
             </div>
