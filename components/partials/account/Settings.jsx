@@ -9,6 +9,7 @@ function Notifications() {
   const [nameUpdate, setNameUpdate] = useState(null);
   const [lastUpdate, setLastUpdate] = useState(null);
 
+
   const data = {
     first_name: nameUpdate,
     last_name: lastUpdate
@@ -44,6 +45,7 @@ function Notifications() {
                             <div className='py-5'>
                             <CreditCard/>
                             </div>
+
                                 </div>
                             </div>
                         </div>

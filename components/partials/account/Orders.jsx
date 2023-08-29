@@ -13,6 +13,7 @@ function OrdersLists() {
     const { accountLinks, user } = useSelector(state => state.auth);
 
 
+
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [date, setDate] = useState(null);
@@ -36,11 +37,13 @@ function OrdersLists() {
         }
        }
 
+
     }
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
             item?.user?.first_name.toLowerCase().includes(text.toLowerCase()) 
+
         ))
         setData(filterSearch)
     }
@@ -48,6 +51,7 @@ function OrdersLists() {
 
         GetItemsProducts(1, selector , dataFormat)
     }, [1, selector, dataFormat])
+
     
     const columns = [
         {
@@ -142,6 +146,7 @@ function OrdersLists() {
                 }
                 </select>
             )
+
         },
         {
             title: 'Buyurtma sanasi',
@@ -206,6 +211,7 @@ function OrdersLists() {
                                     <Table scroll={{ x:850 }}  dataSource={data} columns={columnSellers} />
 
                                    }
+
                                 </div>
                             </div>
                         </div>
