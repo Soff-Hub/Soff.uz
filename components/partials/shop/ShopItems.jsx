@@ -172,10 +172,10 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
 
-                    {data.length > 0 && (
+                    {data?.length > 0 && (
                         <Pagination
                             total={data?.length - 1}
-                            pageSize={pageSize}
+                            // pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
                             current={page !== undefined ? parseInt(page) : 1}

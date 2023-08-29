@@ -95,7 +95,6 @@ const ProductCategoryScreen = () => {
                             <ShopItems
                                 data={filteredData}
 
-
                                 columns={4}
                                 pageSize={4}
                             />

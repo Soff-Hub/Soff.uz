@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
 
 
+
 function FormCheckoutInformation() {
     const [cookies, setCookie] = useCookies(['cart']);
     const select = useSelector((state) => state.auth.user?.access);
@@ -82,6 +83,7 @@ console.log('to\'lov uchun berib yuborilgan id lar ', ids);
             </div>
         </div>
     );
+
 
 
 
