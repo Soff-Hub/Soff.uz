@@ -43,6 +43,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         console.log(pageVal);
         console.log('arr', arr);
         setNewData(arr);
+
     }
 
     function handleSetColumns() {
@@ -155,6 +156,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                     <img src="/static/img/no-document.jpg" alt="no documnt" />
                     <p className="text-center">Hujjat yo'q</p>
                 </div>
+
             </div>
         );
 
@@ -210,9 +212,10 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                 <div className="ps-pagination">
 
                     {data.length > 0 && (
+
                         <Pagination
                             total={data?.length - 1}
-                            pageSize={pageSize}
+                            // pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
                             current={page !== undefined ? parseInt(page) : 1}
