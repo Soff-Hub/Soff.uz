@@ -94,7 +94,6 @@ const ProductCategoryScreen = () => {
                         <div className="ps-layout__right">
                             <ShopItems
                                 data={filteredData}
-
                                 columns={4}
                                 pageSize={4}
                             />

@@ -63,34 +63,34 @@ const ModuleDetailShoppingActions = ({
 
     };
 
-    const postCart = async () => {
-        const data = {
-            documents: [`${product.id}`],
-        };
-        const token = {
-            headers: {
-                Authorization: `Bearer ${select} `,
-            },
-        };
-        const respons = await PostRepository.postCartData(data, token);
-        console.log('ruyxatdan otgandagi card post', respons);
-        if(respons?.documents){
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: `Siz hujjatni savatga qo'shdingiz`,
-            });
-            modal.update;
-        }else{
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: `Siz hujjatni savatga qo'shib bo'lgansiz`,
-            });
-            modal.update;
-        }
+    // const postCart = async () => {
+    //     const data = {
+    //         documents: [`${product.id}`],
+    //     };
+    //     const token = {
+    //         headers: {
+    //             Authorization: `Bearer ${select} `,
+    //         },
+    //     };
+    //     const respons = await PostRepository.postCartData(data, token);
+    //     console.log('ruyxatdan otgandagi card post', respons);
+    //     if(respons?.documents){
+    //         const modal = Modal.success({
+    //             centered: true,
+    //             title: 'Muvaffaqqiyatli!',
+    //             content: `Siz hujjatni savatga qo'shdingiz`,
+    //         });
+    //         modal.update;
+    //     }else{
+    //         const modal = Modal.success({
+    //             centered: true,
+    //             title: 'Muvaffaqqiyatli!',
+    //             content: `Siz hujjatni savatga qo'shib bo'lgansiz`,
+    //         });
+    //         modal.update;
+    //     }
      
-    };
+    // };
 
     // const postCart = async () => {
     //     const data = {
@@ -126,6 +126,7 @@ const ModuleDetailShoppingActions = ({
         return (
             <div className="ps-product__shopping">
                 {/* <a
+
                     className="ps-btn ps-btn--black"
                     href="#"
                     onClick={() => postCart()}>
@@ -134,8 +135,8 @@ const ModuleDetailShoppingActions = ({
                  <a
                     className="ps-btn ps-btn--black"
                     href="#"
-                    onClick={() => postCart()}>
-                    Savatga qo'shish R
+                    onClick={(e) => handleAddItemToCart(e)}>
+                    Savatga qo'shish
                 </a>
                 <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
                     Sotib olish

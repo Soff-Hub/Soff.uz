@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { Modal } from 'antd';
+
+import React, {  useEffect } from 'react';
+import {  Modal } from 'antd';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
@@ -78,6 +79,7 @@ console.log('to\'lov uchun berib yuborilgan id lar ', ids);
             </div>
         </div>
     );
+
 
 }
 
