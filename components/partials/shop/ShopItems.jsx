@@ -9,7 +9,6 @@ import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 
 const ShopItems = ({ columns = 4, pageSize, data }) => {
     const Router = useRouter();
-    // const { page } = Router.query;
     const { query } = Router;
     const [listView, setListView] = useState(true);
     const [total, setTotal] = useState(0);
@@ -18,6 +17,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     );
     const [load, setLoad] = useState(false);
     const [success, setSuccess] = useState(true);
+
     const { productItems, loading, getProducts } = useGetProducts();
     const [pagenationData, setPagenationData] = useState([]);
     const [newData, setNewData] = useState([]);
@@ -53,6 +53,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         console.log(pageVal);
         console.log('arr', arr);
         setNewData(arr);
+
     }
 
     function handleSetColumns() {
@@ -182,6 +183,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         const skeletonItems = generateTempArray(4).map((item) => (
             <div className={classes} key={item}>
                 <SkeletonProduct />
+
             </div>
 
         ));
@@ -237,9 +239,10 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
 
                     {data.length > 0 && (
+
                         <Pagination
                             total={data?.length - 1}
-                            pageSize={pageSize}
+                            // pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
                             current={page !== undefined ? parseInt(page) : 1}

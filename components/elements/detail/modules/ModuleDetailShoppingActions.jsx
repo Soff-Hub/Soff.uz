@@ -64,7 +64,6 @@ const ModuleDetailShoppingActions = ({
 
     };
 
-  
 
     // const postCart = async () => {
     //     const data = {
@@ -181,6 +180,7 @@ const ModuleDetailShoppingActions = ({
     //     }
      
     // };
+
 
 
 
@@ -189,7 +189,6 @@ const ModuleDetailShoppingActions = ({
         return (
             <div className="ps-product__shopping">
                 {/* <a
-
 
                     className="ps-btn ps-btn--black"
                     href="#"
@@ -203,6 +202,7 @@ const ModuleDetailShoppingActions = ({
 
                     onClick={(e) => handleAddItemToCart(e)}>
                     Savatga qo'shish
+
 
                 </a>
                 <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>

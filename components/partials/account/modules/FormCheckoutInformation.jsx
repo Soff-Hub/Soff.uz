@@ -1,6 +1,8 @@
-
-import React, { useEffect, useState } from 'react';
-import { Modal } from 'antd';
+import React, { Component, useEffect } from 'react';
+import Link from 'next/link';
+import Router from 'next/router';
+import { Form, Input, Modal } from 'antd';
+import Image from 'next/image';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
@@ -8,25 +10,15 @@ import PostRepository from '~/repositories/PostRepository';
 function FormCheckoutInformation() {
     const [cookies, setCookie] = useCookies(['cart']);
     const select = useSelector((state) => state.auth.user?.access);
-    const [card, setCard] = useState([]);
-    const [data, setData] = useState([]);
-    const [selectedValue, setSelectedValue] = useState('click');
 
-    const handleRadioChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
-    const GetCard = async () => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${select} `,
-            },
-        };
-        const respons = await PostRepository.getCartData(config);
-        setTimeout(() => {
-            setCard(respons?.results?.[0]?.documents);
-        }, 1000);
-    };
 
+    function extractIds(data) {
+        const ids = [];
+        for (const item of data) {
+            ids.push(Number(item.id));
+        }
+        return ids;
+    }
     console.log('cardd', card);
 
     useEffect(() => {
@@ -115,6 +107,7 @@ function FormCheckoutInformation() {
         }
     };
 
+
     return (
         <div className="tolov-usullari">
             <div className="payme-logo">
@@ -152,6 +145,7 @@ function FormCheckoutInformation() {
             </p>
         </div>
     );
+
 
 
 

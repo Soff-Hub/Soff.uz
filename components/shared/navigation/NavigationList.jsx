@@ -164,6 +164,7 @@ class NavigationList extends Component {
                         onClick={this.handleShowSearchDrawer}>
                         <i className="icon-magnifier"></i>
                         <span> Qidiruv</span>
+
                     </a>
                     {/* <a
                         className={`navigation__item
