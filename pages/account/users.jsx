@@ -6,6 +6,7 @@ import Newletters from '~/components/partials/commons/Newletters';
 import UsersLists from '~/components/partials/account/UsersLists';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
+import LoginPage from './login';
 
 const AccountUsersPage = () => {
     const breadCrumb = [
@@ -27,7 +28,7 @@ const AccountUsersPage = () => {
                     <UsersLists/>
                 </div>
                 <Newletters layout="container" />
-            </PageContainer> : <Page404/>
+            </PageContainer> :  user?.access ? <Page404/> : <LoginPage /> 
       
     );
 };

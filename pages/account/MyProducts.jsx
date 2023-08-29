@@ -7,6 +7,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Newletters from '~/components/partials/commons/Newletters';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
+import LoginPage from './login';
 
 const RecentViewedProductsPage = () => {
     const breadCrumb = [
@@ -20,7 +21,7 @@ const RecentViewedProductsPage = () => {
     ];
     const { user } = useSelector(state => state.auth)
     return (
-         user?.role === 'seller' ?
+         user?.role === 'seller' || user?.role === 'customer'  ?
             <PageContainer
                 footer={<FooterDefault />}
                 title="Recent Viewed Products">
@@ -29,7 +30,7 @@ const RecentViewedProductsPage = () => {
                     <MyProducts_list />
                 </div>
                 <Newletters layout="container" />
-            </PageContainer> : <Page404/>
+            </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
     
     );
 };

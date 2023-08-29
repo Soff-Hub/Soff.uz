@@ -49,12 +49,17 @@ function Notifications() {
     }, [])
     const columns = [
         {
-            title: 'Rasm',
+            title: 'Avatar',
             dataIndex: 'image',
             key: 'name',
             render: (image) => (
                 <div>
-                    <img src={image} width={54} height={54} />
+                    {
+                        image ?
+                            <img src={image} width={54} height={54} />
+                            :
+                            <span className='fs-4'><i className="  fa-2x fa-solid fa-circle-user"></i></span>
+                    }
                 </div>
             ),
         },
@@ -99,7 +104,7 @@ function Notifications() {
             render: (id) => <>
                 {
                     data.some(el => el.id == id && el.auth_status === 'new') ? <a data-bs-target="#exampleModalToggleEditSellers" data-bs-toggle="modal" ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEditSellers(data.find(item => item.id === id))} ></i></a>
-                        : <></>
+                        : <a style={{opacity:0.6 , cursor:"not-allowed"}} ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" ></i></a>
                 }
             </>
         }

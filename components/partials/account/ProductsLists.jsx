@@ -145,7 +145,7 @@ function ProductsLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
                 <a data-bs-target="#exampleModalToggleEditProducts" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => setDeleteIdEditProducts(data.find(item => item.id === id))}></i></a>
             </div>
         },

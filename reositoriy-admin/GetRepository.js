@@ -1,4 +1,4 @@
-import Repository, { baseUrl, baseUrlUsers } from "./Repository";
+import Repository, { baseUrl } from "./Repository";
 
 class GetRepository {
     
@@ -93,8 +93,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getOrdersLists(page) {
-        const endPoint = `admin/order-list/?page=${page}`;
+    async getOrdersLists(page, status, date) {
+        const endPoint = `admin/order-list/?page=${page}&status=${status || ""}&start_date=${date || ""}`;
         const reponse = await Repository.get(baseUrl+endPoint)
             .then((response) => {
                 if (response.status===200) {

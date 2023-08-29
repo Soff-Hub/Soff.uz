@@ -79,6 +79,19 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getMyProductsDelete( id) {
+        const endPoint = `product-delete/${id}`;
+        const reponse = await Repository.patch(baseUrl + endPoint)
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
 }
 
 export default new PatchRepository();

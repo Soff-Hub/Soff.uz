@@ -6,6 +6,7 @@ import Newletters from '~/components/partials/commons/Newletters';
 import Orders from '~/components/partials/account/Orders';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
+import LoginPage from './login';
 
 const AccountOrdersPage = () => {
     const breadCrumb = [
@@ -26,7 +27,7 @@ const AccountOrdersPage = () => {
                     <Orders />
                 </div>
                 <Newletters layout="container" />
-            </PageContainer> : <Page404 />
+            </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
 
     );
 };

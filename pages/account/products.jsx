@@ -7,6 +7,7 @@ import Newletters from '~/components/partials/commons/Newletters';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
+import LoginPage from './login';
 
 const InvoicePage = () => {
     const breadCrumb = [
@@ -22,15 +23,14 @@ const InvoicePage = () => {
 
 
     return (
-        user?.role === 'admin'  || user?.role === "customer" ?
+        user?.role === 'admin' ?
         <PageContainer footer={<FooterDefault />} title="Invoices">
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Invoices />
             </div>
             <Newletters layout="container" />
-        </PageContainer> : <Page404/>
-
+        </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
     );
 };
 

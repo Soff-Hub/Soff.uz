@@ -6,6 +6,7 @@ import Newletters from '~/components/partials/commons/Newletters';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
+import LoginPage from './login';
 
 const MyAccountPage = () => {
     const breadCrumb = [
@@ -27,7 +28,7 @@ const MyAccountPage = () => {
             <DashbordList />
         </div>
         <Newletters layout="container" />
-    </PageContainer> : <Page404/>
+    </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
     );
 };
 

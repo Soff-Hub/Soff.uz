@@ -97,9 +97,9 @@ export let accountSellerLink = [
 ];
 export let cutomerAccountLink = [
     {
-        text: 'Mahsulotlar',
-        url: '/account/products',
-        icon: 'fa-solid fa-cube',
+        text: 'Mening mahsulotlarim',
+        url: '/account/MyProducts',
+        icon: 'fa-solid fa-shop-lock',
     },
     {
         text: 'Profil',

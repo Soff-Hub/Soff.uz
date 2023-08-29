@@ -9,6 +9,7 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
+import ModalDelete from './Modal';
 
 
 function MyProductsLists() {
@@ -17,7 +18,6 @@ function MyProductsLists() {
     const [search, setSerach] = useState([]);
     const [fileImg, setFileImg] = useState({});
     const [fileImgFile, setFileImgFile] = useState({});
-    const [categoryName, setCategoryName] = useState({});
     const [categoryNameEdit, setCategoryNameEdit] = useState({});
     const [tagName, setTagName] = useState(null);
     const [tagNameEdit, setTagNameEdit] = useState(null);
@@ -25,6 +25,7 @@ function MyProductsLists() {
     const [View, setView] = useState({});
     const [deleteIdEdit, setDeleteIdEdit] = useState({});
     const [dataValCat, setDataCat] = useState(null);
+    const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
@@ -69,6 +70,7 @@ function MyProductsLists() {
         formData.append('poster', fileImgFile)
         formData.append('title', values.title)
         formData.append('price', values.price)
+        formData.append('discount', values.discount)
         formData.append('short_description', values.short_description)
         formData.append('description', values.description)
         formData.append('category', categoryNameEdit)
@@ -87,6 +89,7 @@ function MyProductsLists() {
         formData.append('poster', fileImgFile)
         formData.append('title', values.title)
         formData.append('price', values.price)
+        formData.append('discount', values.discount)
         formData.append('short_description', values.short_description)
         formData.append('description', values.description)
         formData.append('category', categoryNameEdit)
@@ -112,9 +115,18 @@ function MyProductsLists() {
         const ItemsData = await GetRepository.getMyProductsView(item.id);
         setView(ItemsData);
     }
+    async function DeleteItemsProducts() {
+        const ItemsData = await PatchRepository.getMyProductsDelete(deleteId);
+        const modal = Modal.error({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz malumotlarni o'chirdingiz`,
+        });
+        GetItemsProducts(1, dataValCat, tagName, dataFormat)
+
+    }
 
     useEffect(() => {
-        // GetItemsProducts(1)
         GetItemsCategory(1)
         GetItemsTag()
     }, [])
@@ -185,8 +197,15 @@ function MyProductsLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
-                <a data-bs-target="#exampleModalMyProductEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
+                {
+                    data.some(el => el.id == id && el.status === 'moderation') ?
+                    <a data-bs-target="#exampleModalMyProductEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                    : 
+                    <i style={{opacity:0.7 ,cursor:"not-allowed"}} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
+                }
+                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
+
             </div>
         },
     ];
@@ -197,10 +216,10 @@ function MyProductsLists() {
                     <h3 className='w-50'>Mening mahsulotlarim</h3>
                     <div className='d-flex gap-5 w-100 '>
                         <input type='search' className='form-control rounded ' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success " data-bs-target="#exampleModalMyProductsPosts" data-bs-toggle="modal" style={{width:"250px"}}><span className='fs-4'>+ Mahsulot qo'shish</span></button>
+                        <button className="btn btn-success " data-bs-target="#exampleModalMyProductsPosts" data-bs-toggle="modal" style={{ width: "250px" }}><span className='fs-4'>+ Mahsulot qo'shish</span></button>
                     </div>
                 </div>
-                <div className="row ">
+                <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
@@ -210,7 +229,12 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <div className='d-flex gap-3 pb-3'>
+                                   <div className='d-flex flex-column gap-2'>
+                                   <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                                <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                                <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                                   </div>
+                                    <div className='d-flex gap-3 pb-3 pt-5'>
                                         <select className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Barcha kategoriyalar</option>
                                             {
@@ -265,6 +289,7 @@ function MyProductsLists() {
                             }
                         </select>
                         <input type="number" className='form-control rounded-3' placeholder='Narxi' name='price' />
+                        <input required type="number" className='form-control rounded-3' placeholder='Chegirma' name='discount'  />
                         <input type="text" className='form-control rounded-3' placeholder='Qisqa tasvir' name='short_description' />
                         <input type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' />
                     </div>
@@ -295,10 +320,12 @@ function MyProductsLists() {
                             }
                         </select>
                         <input required type="number" className='form-control rounded-3' placeholder='Narxi' name='price' defaultValue={deleteIdEdit?.price} />
+                        <input required type="number" className='form-control rounded-3' placeholder='Chegirma' name='discount' defaultValue={deleteIdEdit?.discount} />
                         <input required type="text" className='form-control rounded-3' placeholder='Qisqa tasvir' name='short_description' defaultValue={deleteIdEdit?.short_description} />
                         <input required type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' defaultValue={deleteIdEdit?.description} />
                     </div>
                 </ModalDeletePostEdit>
+                <ModalDelete onSuccess={DeleteItemsProducts}  />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
@@ -312,11 +339,11 @@ function MyProductsLists() {
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body pt-5">
-                                            <p className="card-text"> <strong>Nomi:</strong> {View?.title}</p>
+                                            <p className="card-text"> <strong>Nomi:</strong> {View?.category?.name}</p>
                                             <p className="card-text"><strong>Narxi:</strong>  ${View?.price} </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
-                                            <p className="card-text"><strong>Sotuvchi:</strong> {View?.seller?.phone}</p>
-                                            <p><strong>Teg:</strong> {View?.tag?.name}</p>
+                                            <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
+                                            <p><strong>Teg:</strong> {View?.tag?.map(item=>(item?.name))}</p>
 
                                         </div>
                                     </div>
