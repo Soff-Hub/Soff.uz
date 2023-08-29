@@ -19,6 +19,27 @@ const PanelCartMobile = ({ ecomerce }) => {
             getProducts(ecomerce.cartItems);
         }
     }, [ecomerce]);
+    // const amount = calculateAmount(products);
+    // function addPeriodToThousands(number) {
+    //     const numStr = String(number);
+
+    //     const [integerPart, decimalPart] = numStr.split('.');
+
+    //     const formattedIntegerPart = integerPart.replace(
+    //         /\B(?=(\d{3})+(?!\d))/g,
+    //         ' '
+    //     );
+
+    //     const formattedNumber =
+    //         decimalPart !== undefined
+    //             ? `${formattedIntegerPart}.${decimalPart}`
+    //             : formattedIntegerPart;
+
+    //     return formattedNumber;
+    // }
+    // const hisob = addPeriodToThousands(amount);
+
+
     //view
     let cartItemsView, footerView;
 
@@ -28,7 +49,12 @@ const PanelCartMobile = ({ ecomerce }) => {
             <div className="ps-product--cart-mobile" key={item.id}>
                 <div className="ps-product__thumbnail">
                     <Link href="/product/[pid]" as={`/product/${item.id}`}>
+                       {
+                        item ?
                         <a>{thumbnailImage(item)}</a>
+                        :
+                        <>Loading...</>
+                       }
                     </Link>
                 </div>
                 <div className="ps-product__content">
@@ -37,15 +63,14 @@ const PanelCartMobile = ({ ecomerce }) => {
                         onClick={(e) => handleRemoveCartItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
-                    {title(item)}
                     <Link href="/product/[pid]" as={`/product/${item.id}`}>
                         <a className="ps-product__title">{item.title}</a>
                     </Link>
                     <p>
-                        <strong>Sold by:</strong> {item.vendor}
+                        {item.vendor}
                     </p>
                     <small>
-                        {item.quantity} x ${item.price}
+                        {item.price} so'm
                     </small>
                 </div>
             </div>
@@ -54,27 +79,27 @@ const PanelCartMobile = ({ ecomerce }) => {
         footerView = (
             <div className="ps-cart__footer">
                 <h3>
-                    Sub Total:<strong>${amount}</strong>
+                  Umumiy narx :<strong>{amount} so'm </strong>
                 </h3>
                 <figure>
                     <Link href="/account/shopping-cart">
-                        <a className="ps-btn">View Cart</a>
+                        <a className="ps-btn">Savat</a>
                     </Link>
                     <Link href="/account/checkout">
-                        <a className="ps-btn">Checkout</a>
+                        <a className="ps-btn">Sotib olish</a>
                     </Link>
                 </figure>
             </div>
         );
     } else {
-        cartItemsView = <p>Cart empty!</p>;
-        footerView = (
-            <div className="ps-cart__footer">
-                <Link href="/shop">
-                    <a className="ps-btn ps-btn--fullwidth">Shop now</a>
-                </Link>
-            </div>
-        );
+        cartItemsView = <p>Savat bo'sh!</p>;
+        // footerView = (
+        //     <div className="ps-cart__footer">
+        //         <Link href="/shop">
+        //             <a className="ps-btn ps-btn--fullwidth">Qaytish</a>
+        //         </Link>
+        //     </div>
+        // );
     }
     return (
         <div className="ps-cart--mobile">

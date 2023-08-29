@@ -8,9 +8,12 @@ import useEcomerce from '~/hooks/useEcomerce';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
+import { Modal } from 'antd';
+import { useCookies } from 'react-cookie';
+import Router from 'next/router';
+import PostRepository from '~/repositories/PostRepository';
 
 const ShoppingCartScreen = ({ ecomerce }) => {
-    // console.log('card', ecomerce.cartItems);
     const { products, getProducts } = useEcomerce();
     const state = useSelector((state) => state.auth.user);
 
@@ -31,6 +34,9 @@ const ShoppingCartScreen = ({ ecomerce }) => {
     ];
 
 
+
+ 
+
   
 
     // View
@@ -44,7 +50,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                             cartItems={ecomerce.cartItems}
                         />
                         <div className="ps-section__cart-actions">
-                            <Link href="/shop">
+                            <Link href="/">
                                 <a className="ps-btn">Ortga</a>
                             </Link>
                         </div>
@@ -56,11 +62,15 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                                     source={ecomerce.cartItems}
                                 />
                                 {state !== null ? (
-                                    <Link href="/account/checkout">
-                                        <a className="ps-btn ps-btn--fullwidth">
+                                  <Link href='/account/checkout' as='/account/checkout'>
+                                        <a className="ps-btn ps-btn--fullwidth"
+                                        
+                                        >
                                             Sotib olish
                                         </a>
-                                    </Link>
+
+                                  </Link>
+                                  
                                 ) : (
                                     <Link href="/account/register">
                                         <a className="ps-btn ps-btn--fullwidth">
@@ -108,7 +118,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                         </div>
                     </div>
                 </div>
-                <Newletters layout="container" />
+                {/* <Newletters layout="container" /> */}
             </PageContainer>
         </>
     );

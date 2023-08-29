@@ -31,14 +31,16 @@ const HeaderMobileProduct = () => {
             id="header-mobile"
             data-sticky="true">
             <div className="navigation--mobile">
-                <div className="navigation__left">
-                    <Link href="/shop">
-                        <a href="/" className="header__back">
-                            <i className="icon-chevron-left"></i>
-                            <strong>Back to previous</strong>
-                        </a>
-                    </Link>
-                </div>
+            <div className="navigation__left">
+                        <Link href="/">
+                            <a className="ps-logo">
+                                <img
+                                    src="/static/img/alldata_logo.png"
+                                    alt="alldata"
+                                />
+                            </a>
+                        </Link>
+                    </div>
                 <div className="navigation__right">
                     <MobileHeaderActions />
                 </div>

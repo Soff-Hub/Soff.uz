@@ -4,9 +4,17 @@ import Link from 'next/link';
 import AccountQuickLinksMobile from './AccountQuickLinksMobile';
 
 const MobileHeaderActions = ({ auth, ecomerce }) => {
-    const { cartItems } = ecomerce;
+    const { cartItems, wishlist } = ecomerce;
     return (
         <div className="navigation__right">
+            <Link href="/account/wishlist">
+                <a className="header__extra" href="#">
+                    <i className="icon-heart"></i>
+                    <span>
+                        <i>{wishlist ? wishlist.length : 0}</i>
+                    </span>
+                </a>
+            </Link>
             <Link href="/account/shopping-cart">
                 <a className="header__extra" href="#">
                     <i className="icon-bag2"></i>
@@ -19,7 +27,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinksMobile />
             ) : (
-                <div className="header__extra">
+                <div className="header__extra color-light">
                     <Link href="/account/login">
                         <i className="icon-user"></i>
                     </Link>

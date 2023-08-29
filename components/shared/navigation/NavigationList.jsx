@@ -5,15 +5,18 @@ import PanelMenu from '../panel/PanelMenu';
 import PanelCartMobile from '../panel/PanelCartMobile';
 import PanelSearch from '../panel/PanelSearch';
 import PanelCategories from '../panel/PanelCategories';
+// import { withCookies } from 'react-cookie';
 
 class NavigationList extends Component {
     constructor(props) {
         super(props);
+        // const { cookies } = this.props;
         this.state = {
             menuDrawer: false,
             cartDrawer: false,
             searchDrawer: false,
             categoriesDrawer: false,
+            // cart: cookies.get('cart') || [],
         };
     }
 
@@ -61,13 +64,8 @@ class NavigationList extends Component {
     };
 
     render() {
-        const {
-            menuDrawer,
-            searchDrawer,
-            cartDrawer,
-            categoriesDrawer,
-        } = this.state;
-
+        const { menuDrawer, searchDrawer, cartDrawer, categoriesDrawer } =
+            this.state;
         return (
             <div className="navigation--list">
                 <Drawer
@@ -98,7 +96,7 @@ class NavigationList extends Component {
                     visible={this.state.cartDrawer}>
                     <div className="ps-panel--wrapper">
                         <div className="ps-panel__header">
-                            <h3>Shopping Cart</h3>
+                            <h3>Xarid savati</h3>
                             <span
                                 className="ps-panel__close"
                                 onClick={this.handleDrawerClose}>
@@ -118,7 +116,7 @@ class NavigationList extends Component {
                     visible={this.state.searchDrawer}>
                     <div className="ps-panel--wrapper">
                         <div className="ps-panel__header">
-                            <h3>Search</h3>
+                            <h3>Qidiruv</h3>
                             <span
                                 className="ps-panel__close"
                                 onClick={this.handleDrawerClose}>
@@ -138,7 +136,7 @@ class NavigationList extends Component {
                     visible={this.state.categoriesDrawer}>
                     <div className="ps-panel--wrapper">
                         <div className="ps-panel__header">
-                            <h3>Categories</h3>
+                            <h3>Kategoriya</h3>
                             <span
                                 className="ps-panel__close"
                                 onClick={this.handleDrawerClose}>
@@ -153,19 +151,11 @@ class NavigationList extends Component {
                 <div className="navigation__content">
                     <a
                         className={`navigation__item ${
-                            menuDrawer === true ? 'active' : ''
-                        }`}
-                        onClick={this.handleShowMenuDrawer}>
-                        <i className="icon-menu"></i>
-                        <span> Menu</span>
-                    </a>
-                    <a
-                        className={`navigation__item ${
                             categoriesDrawer === true ? 'active' : ''
                         }`}
                         onClick={this.handleShowCategoriesDrawer}>
                         <i className="icon-list4"></i>
-                        <span> Categories</span>
+                        <span> Kategoriya</span>
                     </a>
                     <a
                         className={`navigation__item ${
@@ -173,7 +163,14 @@ class NavigationList extends Component {
                         }`}
                         onClick={this.handleShowSearchDrawer}>
                         <i className="icon-magnifier"></i>
-                        <span> Search</span>
+                        <span> Qidiruv</span>
+                    </a>
+                    <a
+                        className={`navigation__item
+                         ${menuDrawer === true ? 'active' : ''}`}
+                        href="/account/wishlist">
+                        <i className="icon-heart"></i>
+                        <span> Saqlanganlar</span>
                     </a>
                     <a
                         className={`navigation__item ${
@@ -181,7 +178,7 @@ class NavigationList extends Component {
                         }`}
                         onClick={this.handleShowCartDrawer}>
                         <i className="icon-bag2"></i>
-                        <span> Cart</span>
+                        <span> Savat</span>
                     </a>
                 </div>
             </div>

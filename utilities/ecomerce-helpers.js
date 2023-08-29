@@ -97,10 +97,10 @@ export function calculateAmount(obj) {
 }
 
 
-export function calculateCartQuantity(obj) {
-    return Object.values(obj).reduce((acc, { quantity }) => acc + 0, 0);
-}
+// export function calculateCartQuantity(obj) {
+//     return Object.values(obj).reduce((acc, { quantity }) => acc + 0, 0);
+// }
 
-export function caculateArrayQuantity(obj) {
-    return Object.values(obj).reduce((acc) => acc + 1, 0);
-}
+// export function caculateArrayQuantity(obj) {
+//     return Object.values(obj).reduce((acc) => acc + 1, 0);
+// }

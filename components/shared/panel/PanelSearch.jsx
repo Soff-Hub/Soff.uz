@@ -1,14 +1,159 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
+import ProductRepository from '~/repositories/ProductRepository';
+import Link from 'next/link';
+import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
+import { Spin } from 'antd';
+
+function useDebounce(value, delay) {
+    const [debouncedValue, setDebouncedValue] = useState(value);
+
+    useEffect(() => {
+        // Update debounced value after delay
+        const handler = setTimeout(() => {
+            setDebouncedValue(value);
+        }, delay);
+
+        return () => {
+            clearTimeout(handler);
+        };
+    }, [value, delay]);
+
+    return debouncedValue;
+}
 
 const PanelSearch = () => {
     const [keyword, setKeyword] = useState('');
+    const [isSearch, setIsSearch] = useState(false);
+    // const [SearchResultData, setSetSearchResultData] = useState([]);
+    const [SearchResult, setSetSearchResult] = useState([]);
+    const [SearchResult2, setSetSearchResult2] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const debouncedSearchTerm = useDebounce(keyword, 300);
+
+    // const MobileSearch = async () => {
+    //     const respons = await ProductRepository.getRecordsSearch();
+    //     if (respons) {
+    //         setSetSearchResult(respons);
+    //     }
+    // };
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (keyword !== '') {
-            Router.push(`/search?keyword=${keyword}`);
+    }
+
+    function handleClearKeyword() {
+        setKeyword('');
+        setIsSearch(false);
+        setLoading(false);
+    }
+
+    useEffect(() => {
+        // MobileSearch();
+        // if (keyword) {
+        //     setIsSearch(true);
+        //     let Result = SearchResultData.filter((item) => {
+        //         return item.title.toLowerCase().includes(keyword.toLowerCase());
+        //     });
+        //     setSetSearchResult(Result);
+        //     console.log(Result);
+        // } else {
+        //     setIsSearch(false);
+        //     setKeyword('');
+        // }
+        if (debouncedSearchTerm) {
+            setLoading(true);
+            if (keyword) {
+                const queries = {
+                    _limit: 5,
+                    title_contains: keyword,
+                };
+
+                const products = ProductRepository.getRecordsSearch();
+
+                products.then((result) => {
+                    setLoading(false);
+                    setIsSearch(true);
+                    let Result = result.filter((item) => {
+                        return item.title
+                            .toLowerCase()
+                            .includes(keyword.toLocaleLowerCase());
+                    });
+                    setSetSearchResult(Result);
+                });
+            } else  {
+                setIsSearch(false);
+                setLoading(true)
+                setKeyword('');
+            }
+            if (loading) {
+                setIsSearch(false);
+            }
+        } else {
+            setLoading(false);
+            setIsSearch(false);
         }
+    }, [debouncedSearchTerm]);
+    // let productItemsView, loadMoreView, clearTextView;
+    // if (SearchResult && SearchResult?.length > 0) {
+    //     if (SearchResult?.length > 5) {
+    //         loadMoreView = (
+    //             <div className="ps-panel__footer text-center">
+    //                 <Link href="/search">
+    //                     <a>Hamma natijalarni ko'rish</a>
+    //                 </Link>
+    //             </div>
+    //         );
+    //     }
+    //     productItemsView = SearchResult?.map((product) => (
+    //         <ProductSearchResult product={product} key={product.id} />
+    //     ));
+    // } else {
+    //     productItemsView = <p>Hujjat topilmadi</p>;
+    // }
+    // if (keyword !== '') {
+    //     clearTextView = (
+    //         <span className="ps-form__action" onClick={handleClearKeyword}>
+    //             <i className="icon icon-cross2"></i>
+    //         </span>
+    //     );
+    // }
+
+    let productItemsView,
+        clearTextView,
+        selectOptionView,
+        loadingView,
+        loadMoreView;
+    if (!loading) {
+        if (SearchResult && SearchResult.length > 0) {
+            if (SearchResult.length > 5) {
+                loadMoreView = (
+                    <div className="ps-panel__footer text-center">
+                        <Link href="/search">
+                            <a>Hamma natijalarni ko'rish</a>
+                        </Link>
+                    </div>
+                );
+            }
+            productItemsView = SearchResult.map((product) => (
+                <ProductSearchResult product={product} key={product.id} />
+            ));
+        } else {
+            productItemsView = <p>Hujjat topilmadi</p>;
+        }
+        // if (keyword !== '') {
+        //     clearTextView = (
+        //         <span className="ps-form__action" onClick={handleClearKeyword}>
+        //             <i className="icon icon-cross2"></i>
+        //         </span>
+        //     );
+        // }
+    } else {
+        loadingView = (
+            <span className="ps-form__action">
+                <Spin size="small" />
+            </span>
+        );
     }
 
     return (
@@ -22,12 +167,22 @@ const PanelSearch = () => {
                     <input
                         className="form-control"
                         type="text"
+                        value={keyword}
                         placeholder="Search something..."
                         onChange={(e) => setKeyword(e.target.value)}
                     />
+                    {clearTextView}
+                    {loadingView}
                     <button>
                         <i className="icon-magnifier"></i>
                     </button>
+                </div>
+                <div
+                    className={`ps-panel--search-result${
+                        isSearch ? ' active ' : ''
+                    }`}>
+                    <div className="ps-panel__content">{productItemsView}</div>
+                    {loadMoreView}
                 </div>
             </form>
         </div>

@@ -9,30 +9,26 @@ const ModuleProductWideActions = ({ ecomerce, product }) => {
     const { addItem } = useEcomerce();
     function handleAddItemToCart(e) {
         e.preventDefault();
-        addItem({ id: product.id, quantity: 1 }, ecomerce.cartItems, 'cart');
+        addItem(product, ecomerce.cartItems, 'cart');
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni savatga qo'shdingiz!`,
+        });
+        modal.update;
     }
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
-        addItem({ id: product.id }, ecomerce.wishlistItems, 'wishlist');
+        addItem(product, ecomerce.wishlistItems, 'wishlist');
         const modal = Modal.success({
             centered: true,
-            title: 'Success!',
-            content: `This item has been added to your wishlist`,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
         });
         modal.update;
     }
 
-    function handleAddItemToCompare(e) {
-        e.preventDefault();
-        addItem({ id: product.id }, ecomerce.compareItems, 'compare');
-        const modal = Modal.success({
-            centered: true,
-            title: 'Success!',
-            content: `This product has been added to your compare listing!`,
-        });
-        modal.update;
-    }
 
     return (
 
@@ -42,12 +38,12 @@ const ModuleProductWideActions = ({ ecomerce, product }) => {
                 className="ps-btn"
                 href="#"
                 onClick={(e) => handleAddItemToCart(e)}>
-                Add to cart
+                Savatga qo'shish
             </a>
             <ul className="ps-product__actions">
                 <li>
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                        <i className="icon-heart"></i> Wishlist
+                        <i className="icon-heart"></i> Saqlash
                     </a>
                 </li>
 

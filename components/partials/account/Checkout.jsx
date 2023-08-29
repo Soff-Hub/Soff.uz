@@ -2,6 +2,9 @@ import React from 'react';
 import FormCheckoutInformation from './modules/FormCheckoutInformation';
 import ModulePaymentOrderSummary from '~/components/partials/account/modules/ModulePaymentOrderSummary';
 const Checkout = () => {
+
+    
+
     return (
         <div className="ps-checkout ps-section--shopping">
             <div className="container">

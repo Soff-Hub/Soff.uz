@@ -13,6 +13,7 @@ const MiniCart = ({ ecomerce }) => {
     const [cookies, setCookie] = useCookies(['cart']);
     const [cart, setCart] = useState([])
     const state = useSelector((state) => state.auth.user);
+    const token = useSelector((state) => state.auth.user?.access);
     function handleRemoveItem(e, item) {
         e.preventDefault();
         removeItem(item, ecomerce.cartItems, 'cart');
@@ -59,12 +60,12 @@ const MiniCart = ({ ecomerce }) => {
         }
     }
 
+
     useEffect(() => {
-        getCardListData()
+        // getCardListData()
         getProducts(ecomerce.cartItems, 'cart');
     }, [ecomerce]);
 
-    console.log(cart);
 
     let cartItemsView;
     if (ecomerce.cartItems && ecomerce.cartItems?.length > 0) {
@@ -113,13 +114,15 @@ const MiniCart = ({ ecomerce }) => {
             </div>
         );
     }
-
+// console.log(cart.results);
     return (
         <div className="ps-cart--mini">
             <a className="header__extra" href="#">
                 <i className="icon-bag2"></i>
                 <span>
-                    <i>{ecomerce ? ecomerce.cartItems.length : 0}</i>
+                    {
+                        <i>{ecomerce ? ecomerce.cartItems.length : 0}</i>
+                    }
                 </span>
             </a>
             {cartItemsView}

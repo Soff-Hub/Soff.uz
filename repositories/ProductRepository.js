@@ -59,7 +59,7 @@ class ProductRepository {
 
     async getRelatedProduct(pid) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/${pid}`
+            `${baseUrl}customer/documents/${pid}/`
         )
             .then((response) => {
                 return response.data.similar;

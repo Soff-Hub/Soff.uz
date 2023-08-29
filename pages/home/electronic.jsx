@@ -53,9 +53,9 @@ const HomeElectronicsPage = () => {
     // ];
 
     const headers = (
-        <>z
-            <HeaderElectronic />
-            <HeaderMobileElectronic />
+        <>
+            {/* <HeaderElectronic /> */}
+            {/* <HeaderMobileElectronic /> */}
         </>
     );
 

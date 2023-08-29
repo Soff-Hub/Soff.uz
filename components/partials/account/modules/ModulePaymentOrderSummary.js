@@ -8,7 +8,6 @@ import { useCookies } from 'react-cookie';
 const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
     const { products, getProducts } = useEcomerce();
     const [cookies, setCookie] = useCookies(['cart']);
-console.log('..', cookies.cart);
 
     useEffect(() => {
         if (ecomerce.cartItems) {
@@ -50,7 +49,7 @@ console.log('..', cookies.cart);
             </Link>
         ));
     } else {
-        listItemsView = <p>No Product.</p>;
+        listItemsView = <p>Hujjat yo'q.</p>;
     }
     if (shipping === true) {
         shippingView = (

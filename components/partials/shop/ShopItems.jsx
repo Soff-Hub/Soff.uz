@@ -7,15 +7,14 @@ import useGetProducts from '~/hooks/useGetProducts';
 
 const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     const Router = useRouter();
-    // const { page } = Router.query;
+    const { page } = Router.query;
     const { query } = Router;
     const [listView, setListView] = useState(true);
     const [total, setTotal] = useState(0);
-    const [page, setPage] = useState(1);
     const [classes, setClasses] = useState(
         'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 '
     );
-    const [pageSizee, setPageSizee] = useState(4);
+    // const [pageSizee, setPageSizee] = useState(4);
     const { productItems, loading, getProducts } = useGetProducts();
     const [pagenationData, setPagenationData] = useState([]);
 
@@ -24,8 +23,11 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         setListView(!listView);
     }
 
-    function handlePagination(page, pageSize) {
-        // Router.push(`/shop?page=${page}`);
+    // let array = [...data]
+    function handlePagination(page) {
+        console.log('??', page);
+        // Router.push(`/customer/documents/19/?page=${page}`);
+
     }
 
     function handleSetColumns() {
@@ -114,7 +116,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             <div style={{display: 'flex', justifyContent:'center', alignContent:'center'}}>
             <div className={classes} style={{ marginTop:'30px'}}>
                 <img src="/static/img/no-document.jpg" alt="no documnt" />
-                <p className="text-center">No document</p>
+                <p className="text-center">Hujjat yo'q</p>
             </div>
             </div>
         );
@@ -164,10 +166,10 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
             <div className="ps-shopping__content">{productItemsView}</div>
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
-                    {data.length > 0 && (
+                    {data?.length > 0 && (
                         <Pagination
                             total={data?.length - 1}
-                            pageSize={pageSize}
+                            // pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
                             current={page !== undefined ? parseInt(page) : 1}

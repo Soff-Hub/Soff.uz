@@ -34,11 +34,9 @@ function ElectronicBanner() {
             <div className="container">
                 <div className="ps-section__left">
                     {/* <Slider {...carouselSettings}> */}
-                    <div className="item">
+                    <div className="item banner-left-one">
                         {bannerItem[0]?.image ? (
-                            <Link
-                                target="_blank"
-                                href={`${bannerItem[0].url}`}>
+                            <Link target="_blank" href={`${bannerItem[0].url}`}>
                                 <a target="_blank">
                                     <img
                                         style={{
@@ -58,9 +56,9 @@ function ElectronicBanner() {
                                         style={{
                                             width: '100%',
                                             height: '370px',
-                                            display:'flex',
-                                            justifyContent:'center',
-                                            alignItems:'center'
+                                            display: 'flex',
+                                            justifyContent: 'center',
+                                            alignItems: 'center',
                                         }}>
                                         <div
                                             class="spinner-border"
@@ -77,77 +75,58 @@ function ElectronicBanner() {
                 </div>
                 <div className="ps-section__right">
                     {bannerItem[1] ? (
-                        // bannerItem
-                        //     .splice(1, bannerItem.length - 1)
-                        //     .map((item, i) => {
-                        //         return (
-                        //             <Link
-                        //                 href={`${item?.url}`}
-                        //                 key={item.id}
-                        //                 target="_blank">
-                        //                 <a
-                        //                     className="ps-collection"
-                        //                     target="_blank">
-                        //                     <img
-                        //                         src={item.image}
-                        //                         alt="alldata"
-                        //                     />
-                        //                 </a>
-                        //             </Link>
-                        //         );
-                        //     })
-
-                            <div style={{display:'flex', flexDirection:'column'}}>
-                              <Link
-                                        href={`${bannerItem[1].url}`}
-                                        target="_blank">
-                                        <a
-                                            className="ps-collection"
-                                            target="_blank">
-                                            <img
-                                             style={{  height: '170px',}}
-                                                src={bannerItem[1]?.image}
-                                                alt="alldata"
-                                            />
-                                        </a>
-                                    </Link>
-                              <Link
-                                        href={`${bannerItem[2].url}`}
-                                        target="_blank">
-                                        <a
-                                            className="ps-collection"
-                                            target="_blank">
-                                            <img
-                                            style={{  height: '170px',}}
-                                                src={bannerItem[2]?.image}
-                                                alt="alldata"
-                                            />
-                                        </a>
-                                    </Link>
-                            </div>
+                        <div
+                           
+                            className='banner-right'
+                            >
+                                
+                            <Link href={`${bannerItem[1].url}`} target="_blank">
+                                <a className="ps-collection" target="_blank">
+                                    <img
+                                        style={{ height: '170px' }}
+                                        src={bannerItem[1]?.image}
+                                        alt="alldata"
+                                    />
+                                </a>
+                            </Link>
+                            <Link href={`${bannerItem[2].url}`} target="_blank">
+                                <a className="ps-collection" target="_blank">
+                                    <img
+                                        style={{ height: '170px' }}
+                                        src={bannerItem[2]?.image}
+                                        alt="alldata"
+                                    />
+                                </a>
+                            </Link>
+                        </div>
                     ) : (
-                        <div style={{display:'flex', flexDirection:'column', gap:'30px'}} >
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '30px',
+                            }}>
                             {[1, 2].map((item, i) => {
                                 return (
-                                    <div key={i} >
+                                    <div key={i}>
                                         <div
                                             style={{
                                                 width: '100%',
                                                 height: '170px',
-                                                display:'flex',
-                                                justifyContent:'center',
-                                                alignItems:'center'
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
                                             }}
                                             class=" placeholder"
                                             alt="banner">
-                                                  <div
-                                            class="spinner-border"
-                                            role="status">
-                                            <span class="visually-hidden">
-                                                Loading...
-                                            </span>
-                                        </div>
+                                            <div
+                                                class="spinner-border"
+                                                role="status">
+                                                <span class="visually-hidden">
+                                                    Loading...
+                                                </span>
                                             </div>
+                                        </div>
                                     </div>
                                 );
                             })}

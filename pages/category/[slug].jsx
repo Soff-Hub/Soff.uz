@@ -20,6 +20,7 @@ const ProductCategoryScreen = () => {
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(false);
     const [detail_arr, setDetail_arr] = useState([]);
+    const [filteredData, setFilteredData] = useState([])
     const [obj, setObj] = useState({});
     async function getCategry() {
         const responseData = await ProductRepository.getRelatedProduct(slug);
@@ -35,6 +36,7 @@ const ProductCategoryScreen = () => {
             setCategory(responseData);
             let arr = responseData.find((item) => item.id == Number(slug));
             setDetail_arr(arr?.promotional_sliders);
+            setFilteredData(arr?.promotional_sliders)
             setObj(arr);
         }
     }
@@ -86,12 +88,12 @@ const ProductCategoryScreen = () => {
                             <WidgetShopCategories data={category} />
                             <WidgetShopFilterByPriceRange
                                 data={detail_arr}
-                                setDetail_arr={setDetail_arr}
+                                setFilteredData={setFilteredData}
                             />
                         </div>
                         <div className="ps-layout__right">
                             <ShopItems
-                                data={detail_arr}
+                                data={filteredData}
                                 columns={4}
                                 pageSize={4}
                             />

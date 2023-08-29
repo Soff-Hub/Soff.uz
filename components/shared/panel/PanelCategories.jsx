@@ -2,12 +2,21 @@ import React, { Component } from 'react';
 import { Menu } from 'antd';
 import Link from 'next/link';
 import categories from '../../../public/static/data/static-categories.json';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const { SubMenu } = Menu;
 
 class PanelCategories extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            data: []
+        }
+    }
+
+    getCategiries = async () => {
+        const respons = await ProductRepository.getRecords()
+        this.setState({data : respons?.results})
     }
 
     rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
@@ -27,6 +36,9 @@ class PanelCategories extends Component {
             });
         }
     };
+    componentDidMount(){
+        this.getCategiries()
+    }
 
     render() {
         return (
@@ -34,9 +46,9 @@ class PanelCategories extends Component {
                 mode="inline"
                 openKeys={this.state.openKeys}
                 onOpenChange={this.onOpenChange}>
-                {categories.map(category => (
+                {this.state.data.map(category => (
                     <Menu.Item key={category.id}>
-                        <a href={`/shop?category=${category.slug}`}>
+                        <a href={`/category/${category.id}`}>
                             {category.name}
                         </a>
                     </Menu.Item>

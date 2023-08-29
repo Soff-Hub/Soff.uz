@@ -106,8 +106,6 @@ const SearchHeader = () => {
     function handleSubmit(e) {
         e.preventDefault();
         Router.push(`/search?keyword=${keyword}`);
-
-        
     }
 
     useEffect(() => {
@@ -157,7 +155,6 @@ const SearchHeader = () => {
                 loadMoreView = (
                     <div className="ps-panel__footer text-center">
                         <Link href="/search">
-
                             <a>Hamma natijalarni ko'rish</a>
                         </Link>
                     </div>
@@ -167,7 +164,6 @@ const SearchHeader = () => {
                 <ProductSearchResult product={product} key={product.id} />
             ));
         } else {
-
             productItemsView = <p>Hujjat topilmadi</p>;
         }
         if (keyword !== '') {
@@ -185,11 +181,11 @@ const SearchHeader = () => {
         );
     }
 
-    selectOptionView = exampleCategories.map((option) => (
-        <option value={option} key={option}>
-            {option}
-        </option>
-    ));
+    // selectOptionView = exampleCategories.map((option) => (
+    //     <option value={option} key={option}>
+    //         {option}
+    //     </option>
+    // ));
 
     return (
         <form
@@ -197,7 +193,6 @@ const SearchHeader = () => {
             method="get"
             action="/"
             onSubmit={handleSubmit}>
-
             {/* <div className="ps-form__categories">
                 <select className="form-control">{selectOptionView}</select>
             </div> */}
@@ -207,7 +202,6 @@ const SearchHeader = () => {
                     className="form-control"
                     type="text"
                     value={keyword}
-
                     placeholder="Men hujjat izlayapman..."
                     onChange={(e) => setKeyword(e.target.value)}
                 />
