@@ -130,6 +130,7 @@ function MyProductsLists() {
         const ItemsData = await PatchRepository.getMyProductsDelete(deleteId, user?.access);
 
 
+
         const modal = Modal.error({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -230,6 +231,7 @@ function MyProductsLists() {
                     <h3 className='col-md-4'>Mening mahsulotlarim</h3>
                         <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
                         <button className="btn btn-success col-md-2 py-3 " data-bs-target="#exampleModalMyProductsPosts" data-bs-toggle="modal" ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
+
                 </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
@@ -250,6 +252,7 @@ function MyProductsLists() {
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
                                         <select className='form-select rounded-3 col-md-4 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Kategoriyalar</option>
+
                                             {
                                                 dataCategory?.length > 0 && (
                                                     dataCategory?.map(item => (

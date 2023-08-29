@@ -14,6 +14,7 @@ function OrdersLists() {
 
 
 
+
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [date, setDate] = useState(null);
@@ -38,11 +39,13 @@ function OrdersLists() {
        }
 
 
+
     }
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
             item?.user?.first_name.toLowerCase().includes(text.toLowerCase()) 
+
 
         ))
         setData(filterSearch)
@@ -51,6 +54,7 @@ function OrdersLists() {
 
         GetItemsProducts(1, selector , dataFormat)
     }, [1, selector, dataFormat])
+
 
     
     const columns = [
@@ -147,6 +151,7 @@ function OrdersLists() {
                 </select>
             )
 
+
         },
         {
             title: 'Buyurtma sanasi',
@@ -196,6 +201,7 @@ function OrdersLists() {
                                    </div>
                                    <div className='py-4 row gap-5 mx-auto row-gap-3 pb-5' >
                                    <select className='form-select fs-3 py-3 rounded-3 col-md-6' onChange={(e)=>setSelector(e.target.value)}  >
+
                                             <option className='fs-3' selected value="">Barcha holatlar</option>
                                             <option className='fs-3' value="pending">Moderatsiya</option>
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
@@ -211,6 +217,7 @@ function OrdersLists() {
                                     <Table scroll={{ x:850 }}  dataSource={data} columns={columnSellers} />
 
                                    }
+
 
                                 </div>
                             </div>

@@ -25,6 +25,7 @@ const AccountMenuSidebar = ({ data }) => {
 
 
 
+
     const {asPath} = useRouter();
 
 return(
@@ -34,6 +35,7 @@ return(
         <figure>
             <h4 className='m-0 '> {profile?.first_name && profile?.last_name ? (<><span>{profile?.first_name }</span> <span> {profile?.last_name}</span></>) : (user?.role === "seller" ? <span>{profile?.role ? "Sotuvchi" : "malumt yo'q"}</span> : user.role==="admin" ? <span>{profile?.role ? "Admin" : "malumt yo'q"}</span> : user.role==="customer" ? <span>{profile?.role ? "Foydalanuvchi" : "malumt yo'q"}</span>  : <></>  ) }  </h4>
             <p>{profile?.phone}</p>
+
 
         </figure>
     </div>

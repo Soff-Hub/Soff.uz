@@ -136,6 +136,7 @@ class PatchRepository {
         })
 
 
+
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
@@ -188,9 +189,8 @@ class PatchRepository {
         return reponse;
     }
 
-
-
-
 }
+
+
 
 export default new PatchRepository();
