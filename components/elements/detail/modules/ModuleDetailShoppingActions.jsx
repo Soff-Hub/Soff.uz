@@ -182,10 +182,12 @@ const ModuleDetailShoppingActions = ({
 
 
 
+
     if (select) {
         return (
             <div className="ps-product__shopping">
                 {/* <a
+
 
                     className="ps-btn ps-btn--black"
                     href="#"
@@ -195,6 +197,7 @@ const ModuleDetailShoppingActions = ({
                  <a
                     className="ps-btn ps-btn--black"
                     href="#"
+
 
                     onClick={(e) => handleAddItemToCart(e)}>
                     Savatga qo'shish

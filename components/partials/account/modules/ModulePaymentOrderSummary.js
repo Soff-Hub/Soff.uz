@@ -10,7 +10,6 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
     const [cookies, setCookie] = useCookies(['cart']);
 
 
-
     useEffect(() => {
         if (ecomerce.cartItems) {
             getProducts(ecomerce.cartItems, 'cart');
