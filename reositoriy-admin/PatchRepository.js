@@ -132,6 +132,7 @@ class PatchRepository {
             },
             data:data
         })
+
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
@@ -142,6 +143,7 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
 
 
 }

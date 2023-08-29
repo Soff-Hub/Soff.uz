@@ -104,7 +104,8 @@ function Notifications() {
             render: (id) => <>
                 {
                     data.some(el => el.id == id && el.auth_status === 'new') ? <a data-bs-target="#exampleModalToggleEditSellers" data-bs-toggle="modal" ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEditSellers(data.find(item => item.id === id))} ></i></a>
-                        : <a style={{ opacity: 0.6, cursor: "not-allowed" }} ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" ></i></a>
+
+                        : <a style={{opacity:0.6 , cursor:"not-allowed"}} ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" ></i></a>
                 }
             </>
         }

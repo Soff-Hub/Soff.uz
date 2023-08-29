@@ -1,4 +1,5 @@
-import Repository, { baseUrl } from './Repository';
+
+import Repository, { baseUrl } from "./Repository";
 
 class GetRepository {
     async getSellerDashbord(token) {
@@ -170,6 +171,7 @@ class GetRepository {
                 Authorization: `Bearer ${token}`,
             },
         })
+
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;

@@ -137,9 +137,9 @@ function CategoryLists() {
                 {
 
                     data.some(el =>el.id==id && el.is_delete === true) ? 
-                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
+                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
                :
-               <span><i className="fa-solid fa-ban text-danger"></i></span>
+               <a style={{opacity:0.6 ,cursor :"not-allowed"}}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
                 }
             </div>
         },
