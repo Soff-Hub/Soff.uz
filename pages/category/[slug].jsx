@@ -39,6 +39,7 @@ const ProductCategoryScreen = () => {
                 setDetail_arr(arr?.promotional_sliders);
             }, 5000)
 
+
             setFilteredData(arr?.promotional_sliders)
             setObj(arr);
         }

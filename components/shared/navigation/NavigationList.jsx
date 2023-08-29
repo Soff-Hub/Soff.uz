@@ -166,6 +166,13 @@ class NavigationList extends Component {
                         <span> Qidiruv</span>
 
                     </a>
+                    <a
+                        className={`navigation__item
+                         ${menuDrawer === true ? 'active' : ''}`}
+                        href="/account/wishlist">
+                        <i className="icon-heart"></i>
+                        <span> Saqlanganlar</span>
+                    </a>
                     {/* <a
                         className={`navigation__item
                          ${menuDrawer === true ? 'active' : ''}`}

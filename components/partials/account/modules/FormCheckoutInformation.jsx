@@ -78,6 +78,7 @@ function FormCheckoutInformation() {
         data
     );
     const ProductToApi = async () => {
+
         const data = {
             documents: ids,
         };
@@ -91,6 +92,7 @@ function FormCheckoutInformation() {
         console.log('ruyxatdan otgandagi card post', respons);
         if (respons?.documents) {
             setCookie('cart', [], { path: '/' });
+
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -105,8 +107,13 @@ function FormCheckoutInformation() {
             });
             modal.update;
         }
+
+
     };
 
+    useEffect(() => {
+
+    },[cookies])
 
     return (
         <div className="tolov-usullari">
@@ -145,6 +152,7 @@ function FormCheckoutInformation() {
             </p>
         </div>
     );
+
 
 
 

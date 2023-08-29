@@ -185,6 +185,7 @@ const ModuleDetailShoppingActions = ({
 
 
 
+
     if (select) {
         return (
             <div className="ps-product__shopping">
@@ -202,6 +203,7 @@ const ModuleDetailShoppingActions = ({
 
                     onClick={(e) => handleAddItemToCart(e)}>
                     Savatga qo'shish
+
 
 
                 </a>
