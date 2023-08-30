@@ -12,22 +12,22 @@ function ContextLists() {
     const [data, setData] = useState([]);
     const [dataUrl, setDataUrl] = useState(null);
     const [dataUrlFile, setDataUrlFile] = useState(null);
-    const { accountLinks } = useSelector(state => state.auth)
+    const { accountLinks, user } = useSelector(state => state.auth)
 
     async function GetItemsBanners() {
-        const ItemsData = await GetRepository.getBannerLists()
+        const ItemsData = await GetRepository.getBannerLists(user?.access)
         setData(ItemsData?.results)
     }
     async function handleClickID(ID) {
         const formData = new FormData();
         if (dataUrlFile) {
             formData.append("image", dataUrlFile);
-        }   
 
+        }
         if (dataUrl) {
             formData.append("url", dataUrl);
         }
-        const ItemsData = await PatchRepository.getBannersPatch(formData, ID)
+        const ItemsData = await PatchRepository.getBannersPatch(formData, ID, user?.access)
         if (dataUrlFile || dataUrl) {
             const modal = Modal.success({
                 centered: true,
@@ -35,7 +35,7 @@ function ContextLists() {
                 content: `Siz malumotlarni o'zgartirdingiz`,
             });
         }
-        
+
 
     }
 

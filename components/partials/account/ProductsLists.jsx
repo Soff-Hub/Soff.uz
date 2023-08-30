@@ -10,7 +10,7 @@ import { DatePicker} from 'antd';
 import { useSelector } from 'react-redux';
 
 function ProductsLists() {
-    const { accountLinks } = useSelector(state => state.auth)
+    const { accountLinks  ,user} = useSelector(state => state.auth)
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [selectValSellers, setSelectValProducts] = useState({});
@@ -25,12 +25,12 @@ function ProductsLists() {
    const dateFormat1 =date ? `${date[1]?.$y}-${`${date[1].$M+1}`.length===1 ? `0${date[1].$M+1}` : date[1].$M+1 }-${date[1].$D}` : ''
      const dataFormat =(date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id) {
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id , ) {
         if (page === 1) {
             await setData([])
             setSerach([])
         }
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id);
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id ,user?.access);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
@@ -42,11 +42,11 @@ function ProductsLists() {
         if (page === 1) {
             setDataVal([])
         }
-        const ItemsData = await GetRepository.getCategory(page);
+        const ItemsData = await GetRepository.getCategory(page, user?.access);
         setDataVal((prev) => [...prev, ...ItemsData.results]);
     }
     async function handleClickView(item) {
-        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id);
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id , user?.access);
         setDeleteIdView(ItemsData);
     }
     function handleClick(e) {
@@ -57,7 +57,7 @@ function ProductsLists() {
         setData(filterSearch)
     }
     async function handleItemsEditProducts() {
-        const patchItemsSellers = await PatchRepository.getProductsPatch({ status: selectValSellers }, deleteIdEditProducts?.id)
+        const patchItemsSellers = await PatchRepository.getProductsPatch({ status: selectValSellers }, deleteIdEditProducts?.id , user?.access)
         setData([])
         const modal = Modal.success({
             centered: true,
@@ -214,6 +214,7 @@ function ProductsLists() {
                             <div className="col-md-8">
                                 <div className="card-body pt-5">
                                     <p className="card-text"> <strong>Nomi:</strong> {deleteIdView?.title}</p>
+                                    <p className="card-text"> <strong>Kategoriya:</strong> {deleteIdView?.category?.name}</p>
                                     <p className="card-text"><strong>Narxi:</strong>  ${deleteIdView?.price} </p>
                                     <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
                                     <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone }</p>

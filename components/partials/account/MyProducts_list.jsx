@@ -31,14 +31,14 @@ function MyProductsLists() {
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
-    const { accountLinks } = useSelector(state => state.auth)
+    const { accountLinks, user } = useSelector(state => state.auth)
 
 
     async function GetItemsProducts(page, category, tagName, dataFormat) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat);
+        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, user?.access);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
@@ -49,11 +49,11 @@ function MyProductsLists() {
         if (page === 1) {
             setDataCategory([])
         }
-        const ItemsData = await GetRepository.getCategory(page);
+        const ItemsData = await GetRepository.getCategory(page, user?.access);
         setDataCategory(ItemsData.results);
     }
     async function GetItemsTag() {
-        const ItemsData = await MediaRepository.getTagItmes();
+        const ItemsData = await MediaRepository.getTagItmes(user?.access);
         setTagItems(ItemsData.results);
     }
     function handleClick(e) {
@@ -75,7 +75,7 @@ function MyProductsLists() {
         formData.append('description', values.description)
         formData.append('category', categoryNameEdit)
         formData.append('tag', tagNameEdit)
-        const patchItems = await PostsRepository.PostsMyProducts(formData)
+        const patchItems = await PostsRepository.PostsMyProducts(formData, user?.access)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -94,7 +94,7 @@ function MyProductsLists() {
         formData.append('description', values.description)
         formData.append('category', categoryNameEdit)
         formData.append('tag', tagNameEdit)
-        const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id)
+        const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id, user?.access)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -112,11 +112,11 @@ function MyProductsLists() {
         setFileImgFile(e.target.files[0])
     };
     async function handleClickView(item) {
-        const ItemsData = await GetRepository.getMyProductsView(item.id);
+        const ItemsData = await GetRepository.getMyProductsView(item.id, user?.access);
         setView(ItemsData);
     }
     async function DeleteItemsProducts() {
-        const ItemsData = await PatchRepository.getMyProductsDelete(deleteId);
+        const ItemsData = await PatchRepository.getMyProductsDelete(deleteId, user?.access);
         const modal = Modal.error({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -200,9 +200,9 @@ function MyProductsLists() {
                 <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
                 {
                     data.some(el => el.id == id && el.status === 'moderation') ?
-                    <a data-bs-target="#exampleModalMyProductEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-                    : 
-                    <i style={{opacity:0.7 ,cursor:"not-allowed"}} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
+                        <a data-bs-target="#exampleModalMyProductEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                        :
+                        <i style={{ opacity: 0.7, cursor: "not-allowed" }} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                 }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
 
@@ -229,11 +229,11 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                   <div className='d-flex flex-column gap-2'>
-                                   <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
-                                <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
-                                <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
-                                   </div>
+                                    <div className='d-flex flex-column gap-2'>
+                                        <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                                        <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                                        <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                                    </div>
                                     <div className='d-flex gap-3 pb-3 pt-5'>
                                         <select className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Barcha kategoriyalar</option>
@@ -289,7 +289,7 @@ function MyProductsLists() {
                             }
                         </select>
                         <input type="number" className='form-control rounded-3' placeholder='Narxi' name='price' />
-                        <input required type="number" className='form-control rounded-3' placeholder='Chegirma' name='discount'  />
+                        <input required type="number" className='form-control rounded-3' placeholder='Chegirma' name='discount' />
                         <input type="text" className='form-control rounded-3' placeholder='Qisqa tasvir' name='short_description' />
                         <input type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' />
                     </div>
@@ -325,7 +325,7 @@ function MyProductsLists() {
                         <input required type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' defaultValue={deleteIdEdit?.description} />
                     </div>
                 </ModalDeletePostEdit>
-                <ModalDelete onSuccess={DeleteItemsProducts}  />
+                <ModalDelete onSuccess={DeleteItemsProducts} />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
@@ -343,7 +343,7 @@ function MyProductsLists() {
                                             <p className="card-text"><strong>Narxi:</strong>  ${View?.price} </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
-                                            <p><strong>Teg:</strong> {View?.tag?.map(item=>(item?.name))}</p>
+                                            <p><strong>Teg:</strong> {View?.tag?.map(item => (item?.name))}</p>
 
                                         </div>
                                     </div>

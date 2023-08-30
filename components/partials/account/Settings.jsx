@@ -3,8 +3,7 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 
 function Notifications() {
-    const { accountLinks } = useSelector(state => state.auth);
-    const { user } = useSelector(state => state.auth);
+    const { accountLinks , user} = useSelector(state => state.auth);
 
 
     return (

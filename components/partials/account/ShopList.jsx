@@ -7,7 +7,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 
 function Notifications() {
-    const { accountLinks } = useSelector(state => state.auth)
+    const { accountLinks, user } = useSelector(state => state.auth)
 
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
@@ -18,7 +18,7 @@ function Notifications() {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getShops(page);
+        const ItemsData = await GetRepository.getShops(page, user?.access);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
@@ -34,7 +34,7 @@ function Notifications() {
         setData(filterSearch)
     }
     async function handleItemsEditSellers() {
-        const patchItemsSellers = await PatchRepository.getShopsPatch({ auth_status: selectValSellers }, deleteIdEditSellers?.id)
+        const patchItemsSellers = await PatchRepository.getShopsPatch({ auth_status: selectValSellers }, deleteIdEditSellers?.id, user?.access)
         setData([])
         GetItems(1)
         const modal = Modal.success({
@@ -104,7 +104,7 @@ function Notifications() {
             render: (id) => <>
                 {
                     data.some(el => el.id == id && el.auth_status === 'new') ? <a data-bs-target="#exampleModalToggleEditSellers" data-bs-toggle="modal" ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEditSellers(data.find(item => item.id === id))} ></i></a>
-                        : <a style={{opacity:0.6 , cursor:"not-allowed"}} ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" ></i></a>
+                        : <a style={{ opacity: 0.6, cursor: "not-allowed" }} ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" ></i></a>
                 }
             </>
         }

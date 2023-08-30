@@ -12,7 +12,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 
 function OrdersLists() {
-    const { accountLinks } = useSelector(state => state.auth)
+    const { accountLinks, user } = useSelector(state => state.auth)
 
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
@@ -26,7 +26,7 @@ function OrdersLists() {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getUsersLists(page);
+        const ItemsData = await GetRepository.getUsersLists(page, user?.access);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
@@ -41,7 +41,7 @@ function OrdersLists() {
         setData(filterSearch)
     }
     async function deleteItemsId() {
-        const userDelete = await DeleteRepository.getUsersListsDelete(deleteId);
+        const userDelete = await DeleteRepository.getUsersListsDelete(deleteId, user?.access);
         const modal = Modal.error({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -55,7 +55,7 @@ function OrdersLists() {
         formData.append('first_name', values.first_name)
         formData.append('phone', values.phone)
         formData.append('auth_status', selectVal)
-        const postsItems = await PostsRepository.PostsUsers(formData);
+        const postsItems = await PostsRepository.PostsUsers(formData, user?.access);
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -69,7 +69,7 @@ function OrdersLists() {
         formData.append('first_name', values.first_name)
         formData.append('phone', values.phone)
         formData.append('auth_status', selectVal)
-        const patchItems = await PatchRepository.PatchUsers(formData, deleteIdEdit?.id)
+        const patchItems = await PatchRepository.PatchUsers(formData, deleteIdEdit?.id, user?.access)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',

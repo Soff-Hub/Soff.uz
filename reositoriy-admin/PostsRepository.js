@@ -1,11 +1,19 @@
-import Repository, { baseUrl } from "./Repository";
+import Repository, { baseUrl } from './Repository';
 
 class PostRepository {
-    async PostsCategory(data) {
+    async PostsCategory(data, token) {
         const endPoint = `admin/category-list/`;
-        const reponse = await Repository.post(baseUrl+endPoint, data)
+        const reponse = await Repository.post(
+            baseUrl + endPoint,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+            data
+        )
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -14,11 +22,19 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async PostsUsers(data) {
+    async PostsUsers(data, token) {
         const endPoint = `admin/customer-list/`;
-        const reponse = await Repository.post(baseUrl+endPoint, data)
+        const reponse = await Repository.post(
+            baseUrl + endPoint,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+            data
+        )
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -27,11 +43,19 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async PostsMyProducts(data) {
+    async PostsMyProducts(data, token) {
         const endPoint = `product-create/`;
-        const reponse = await Repository.post(baseUrl+endPoint, data)
+        const reponse = await Repository.post(
+            baseUrl + endPoint,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },
+            data
+        )
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -40,8 +64,6 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-   
 }
-
 
 export default new PostRepository();

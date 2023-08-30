@@ -12,16 +12,17 @@ function DashbordList() {
     const [data, setData] = useState([]);
     const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
+    const { accountLinks ,  user} = useSelector(state => state.auth)
+
     async function GetItemsProducts() {
-        const ItemsData = await GetRepository.getSellerDashbord();
+        const ItemsData = await GetRepository.getSellerDashbord(user?.access);
         setData(ItemsData);
     }
-    const { accountLinks } = useSelector(state => state.auth)
     async function GetItemsProductsPopular(page) {
         if (page === 1) {
             setDataProducts([])
         }
-        const ItemsData = await GetRepository.getPopularProducts(page);
+        const ItemsData = await GetRepository.getPopularProducts(page ,user?.access);
         setDataProducts((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
             GetItemsProductsPopular(page + 1)
@@ -32,7 +33,7 @@ function DashbordList() {
         if (page === 1) {
             setDataOrders([])
         }
-        const ItemsData = await GetRepository.getOrdersLists(page);
+        const ItemsData = await GetRepository.getOrdersListsDashbord(page, user?.access);
         setDataOrders((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
             GetItemsProducts(page + 1)

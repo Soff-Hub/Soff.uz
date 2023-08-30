@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import {  DatePicker, Table } from 'antd';
+import { DatePicker, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -9,9 +9,8 @@ import { useSelector } from 'react-redux';
 
 
 function OrdersLists() {
-    const { accountLinks } = useSelector(state => state.auth);
-    const { user } = useSelector(state => state.auth);
-    
+    const { accountLinks, user } = useSelector(state => state.auth);
+
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [date, setDate] = useState(null);
@@ -21,15 +20,15 @@ function OrdersLists() {
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProducts(page , status , date) {
+    async function GetItemsProducts(page, status, date) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getOrdersLists(page , status , date);
+        const ItemsData = await GetRepository.getOrdersLists(page, status, date, user?.access);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
-            GetItemsProducts(page + 1 ,status , date)
+            GetItemsProducts(page + 1, status, date)
         }
 
     }
@@ -42,10 +41,10 @@ function OrdersLists() {
         setData(filterSearch)
     }
     useEffect(() => {
-        GetItemsProducts(1, selector , dataFormat)
+        GetItemsProducts(1, selector, dataFormat)
     }, [1, selector, dataFormat])
-console.log(data);
-    
+    console.log(data);
+
     const columns = [
         {
             title: 'ID',
@@ -92,12 +91,12 @@ console.log(data);
             dataIndex: 'status',
             key: 'address',
             render: (status) => (
-                status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
-                status === "cancelled" ?
-                 (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
-                 status === "pending" ?
-                 (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
-                   <></>
+                status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
+                    status === "cancelled" ?
+                        (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                        status === "pending" ?
+                            (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
+                            <></>
             ),
 
         },
@@ -125,12 +124,12 @@ console.log(data);
             dataIndex: 'status',
             key: 'status',
             render: (status) => (
-                status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
-                status === "cancelled" ?
-                 (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
-                 status === "pending" ?
-                 (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
-                   <></>
+                status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
+                    status === "cancelled" ?
+                        (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                        status === "pending" ?
+                            (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
+                            <></>
             ),
 
         },
@@ -152,21 +151,21 @@ console.log(data);
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className='ps-section__content'>
-                                <div className='d-flex flex-column gap-2'>
-                                   <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
-                                <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
-                                <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
-                                   </div>
-                                   <div className='py-4 d-flex gap-4 pb-5 flex-start' >
-                                   <select className='form-select fs-3 py-3 rounded-3 w-50' onChange={(e)=>setSelector(e.target.value)}  >
+                                    <div className='d-flex flex-column gap-2'>
+                                        <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                                        <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                                        <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                                    </div>
+                                    <div className='py-4 d-flex gap-4 pb-5 flex-start' >
+                                        <select className='form-select fs-3 py-3 rounded-3 w-50' onChange={(e) => setSelector(e.target.value)}  >
                                             <option className='fs-3' selected value="">Barcha holatlar</option>
                                             <option className='fs-3' value="pending">Moderatsiya</option>
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
-                                   <RangePicker className='w-50   rounded-3' onChange={(e)=>setDate(e)} />
-                                   </div>
-                                    <Table scroll={{ x:1100 }}  dataSource={ data} columns={ user?.role === "admin" ? columns : columnSellers} />
+                                        <RangePicker className='w-50   rounded-3' onChange={(e) => setDate(e)} />
+                                    </div>
+                                    <Table scroll={{ x: 1100 }} dataSource={data} columns={user?.role === "admin" ? columns : columnSellers} />
                                 </div>
                             </div>
                         </div>
