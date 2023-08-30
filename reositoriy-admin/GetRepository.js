@@ -1,12 +1,17 @@
-import Repository, { baseUrl } from "./Repository";
+import Repository, { baseUrl } from './Repository';
 
 class GetRepository {
-    
-    async getSellerDashbord() {
+    async getSellerDashbord(token) {
         const endPoint = `dashboard/`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -15,11 +20,17 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getPopularProducts(page) {
+    async getPopularProducts(page, token) {
         const endPoint = `admin/popular-product/?page=${page}`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -28,11 +39,17 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShops(page) {
+    async getShops(page, token) {
         const endPoint = `admin/seller-list/?page=${page}`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -41,11 +58,21 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShopsProducts(page, category, dataValStatus, date, id) {
-        const endPoint =  `admin/product-list/${id ? id + "/" : ""}?page=${page}&category=${category || ''}&start_date=${date || ""}&status=${dataValStatus || ''}`
-        const reponse = await Repository.get(baseUrl+endPoint)
+    async getShopsProducts(page, category, dataValStatus, date, id, token) {
+        const endPoint = `admin/product-list/${
+            id ? id + '/' : ''
+        }?page=${page}&category=${category || ''}&start_date=${
+            date || ''
+        }&status=${dataValStatus || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -54,11 +81,19 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getMyProducts(page, category, tagItems, date) {
-        const endPoint = `product-list/?page=${page}&category=${category || ''}${tagItems ? `&tag=${tagItems}` : ``}&start_date=${date || ""}`
-        const reponse = await Repository.get(baseUrl+endPoint)
+    async getMyProducts(page, category, tagItems, date, token) {
+        const endPoint = `product-list/?page=${page}&category=${
+            category || ''
+        }${tagItems ? `&tag=${tagItems}` : ``}&start_date=${date || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -67,11 +102,17 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getMyProductsView( id) {
+    async getMyProductsView(id, token) {
         const endPoint = `product-list/${id}`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -80,11 +121,17 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getCategory(page) {
+    async getCategory(page, token) {
         const endPoint = `admin/category-list/?page=${page}`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -93,11 +140,19 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getOrdersLists(page, status, date) {
-        const endPoint = `admin/order-list/?page=${page}&status=${status || ""}&start_date=${date || ""}`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+    async getOrdersLists(page, status, date, token) {
+        const endPoint = `admin/order-list/?page=${page}&status=${
+            status || ''
+        }&start_date=${date || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -106,11 +161,36 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getUsersLists(page) {
+    async getOrdersListsDashbord(page, token) {
+        const endPoint = `admin/order-list/?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getUsersLists(page, token) {
         const endPoint = `admin/customer-list/?page=${page}`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -119,11 +199,17 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getChartLists() {
+    async getChartLists(token) {
         const endPoint = `SellerMonthlySales/`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -132,11 +218,17 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getBannerLists() {
+    async getBannerLists(token) {
         const endPoint = `admin/banner/`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;
@@ -145,8 +237,6 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-   
 }
-
 
 export default new GetRepository();
