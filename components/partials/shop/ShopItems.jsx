@@ -7,7 +7,6 @@ import useGetProducts from '~/hooks/useGetProducts';
 
 const ShopItems = ({ columns = 4, pageSize, data }) => {
 
-
     const Router = useRouter();
     // const { page } = Router.query;
     const { query } = Router;
@@ -89,6 +88,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     // }, [pagenationData]);
 
 
+
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
         const dateB = new Date(b.created_at);
@@ -102,6 +102,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
 
     let arr = newData ? [...newData] : [];
+
 
 
 
@@ -209,10 +210,11 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                     {data.length > 0 && (
                         <Pagination
                             total={data?.length - 1}
+
                             pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
-                            current={page !== undefined ? parseInt(page) : 1}
+                            current={page || 1}
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
@@ -238,6 +240,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
+
 
                 </div>
             </div>
