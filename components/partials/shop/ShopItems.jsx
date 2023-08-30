@@ -57,6 +57,15 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         setNewData(arr);
 
 
+
+        for (let i = (pageVal - 1) * pageSize ; i < (pageVal - 1) * pageSize + 2; i++) {
+            data?.[i] ? arr.push(data[i]) : ''
+            console.log(data[i]);
+        }
+
+        console.log(pageVal);
+        console.log('arr', arr);
+        setNewData(arr);
     }
 
     function handleSetColumns() {
@@ -109,6 +118,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     //     }
 
 
+
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
         const dateB = new Date(b.created_at);
@@ -122,6 +132,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
 
     let arr = newData ? [...newData] : [];
+
 
 
 
@@ -147,7 +158,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         if (data && data.length > 0) {
             if (listView) {
                 const items = newData?.map((item) => (
-
 
                     <div className={classes} key={item.id}>
                         <Product product={item} />
@@ -192,6 +202,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
+
 
 
     }
@@ -245,11 +256,11 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                     {data.length > 0 && (
 
                         <Pagination
-                            total={data?.length - 1}
-                            // pageSize={pageSize}
+                            total={data?.length}
+                            pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
-                            current={page !== undefined ? parseInt(page) : 1}
+                            current={page || 1}
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
@@ -289,6 +300,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
+
 
 
                 </div>
