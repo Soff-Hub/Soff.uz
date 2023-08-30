@@ -18,13 +18,13 @@ function CategoryLists() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState({});
     ;
-    const { accountLinks } = useSelector(state => state.auth)
+    const { accountLinks, user } = useSelector(state => state.auth)
 
     async function GetItemsProducts(page) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getCategory(page);
+        const ItemsData = await GetRepository.getCategory(page, user?.access);
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
@@ -39,7 +39,7 @@ function CategoryLists() {
         setData(filterSearch)
     }
     async function deleteItemsId() {
-        const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId)
+        const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId, user?.access)
         const modal = Modal.error({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -52,7 +52,7 @@ function CategoryLists() {
         formData.append('image', file)
         formData.append('icon', values.icon)
         formData.append('name', values.name)
-        const postsItems = await PostsRepository.PostsCategory(formData);
+        const postsItems = await PostsRepository.PostsCategory(formData, user?.access);
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -66,7 +66,7 @@ function CategoryLists() {
         formData.append('image', file)
         formData.append('icon', values.icon)
         formData.append('name', values.name)
-        const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id)
+        const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -76,7 +76,7 @@ function CategoryLists() {
 
     }
     async function handleClickChecked(item) {
-        const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id)
+        const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id, user?.access)
         GetItemsProducts(1)
     }
 
@@ -135,10 +135,10 @@ function CategoryLists() {
             render: (id) => <div >
                 <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
                 {
-                    data.some(el =>el.id==id && el.is_delete === true) ? 
-                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
-               :
-               <a style={{opacity:0.6 ,cursor :"not-allowed"}}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
+                    data.some(el => el.id == id && el.is_delete === true) ?
+                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
+                        :
+                        <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
                 }
             </div>
         },
