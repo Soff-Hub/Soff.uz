@@ -5,9 +5,9 @@ import ProductWide from '~/components/elements/products/ProductWide';
 import { useRouter } from 'next/router';
 import useGetProducts from '~/hooks/useGetProducts';
 
-const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
+const ShopItems = ({ columns = 4, pageSize, data }) => {
     const Router = useRouter();
-    const { page } = Router.query;
+    // const { page } = Router.query;
     const { query } = Router;
     const [listView, setListView] = useState(true);
     const [total, setTotal] = useState(0);
@@ -17,17 +17,30 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     // const [pageSizee, setPageSizee] = useState(4);
     const { productItems, loading, getProducts } = useGetProducts();
     const [pagenationData, setPagenationData] = useState([]);
+    const [newData, setNewData] = useState([]);
+    const [page, setPage] = useState(1);
 
     function handleChangeViewMode(e) {
         e.preventDefault();
         setListView(!listView);
     }
+    console.log(data);
 
     // let array = [...data]
-    function handlePagination(page) {
-        console.log('??', page);
-        // Router.push(`/customer/documents/19/?page=${page}`);
+    async function handlePagination(pageVal) {
+        setPage(pageVal);
+        setNewData(data);
+        console.log('??', (pageVal - 1) * pageSize, pageSize);
+        const arr = [];
 
+        for (let i = (pageVal - 1) * pageSize ; i < (pageVal - 1) * pageSize + 2; i++) {
+            data?.[i] ? arr.push(data[i]) : ''
+            console.log(data[i]);
+        }
+
+        console.log(pageVal);
+        console.log('arr', arr);
+        setNewData(arr);
     }
 
     function handleSetColumns() {
@@ -58,13 +71,16 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
 
         if (data) {
             setPagenationData(data);
+            handlePagination(1)
         }
     }, [query, data]);
 
-    useEffect(() => {
-        console.log('data', pagenationData);
-    }, [pagenationData]);
 
+    // useEffect(() => {
+    //     if (data) {
+    //         setNewData(data);
+    //     }
+    // }, [pagenationData]);
 
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
@@ -78,7 +94,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     }
 
 
-    let arr = data ? [...data] : [];
+    let arr = newData ? [...newData] : [];
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
             arr.sort(compareByCreatedAt);
@@ -95,7 +111,7 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
     if (data?.length > 0) {
         if (data && data.length > 0) {
             if (listView) {
-                const items = pagenationData?.map((item) => (
+                const items = newData?.map((item) => (
                     <div className={classes} key={item.id}>
                         <Product product={item} />
                     </div>
@@ -115,11 +131,16 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
         }
     } else {
         productItemsView = (
-            <div style={{display: 'flex', justifyContent:'center', alignContent:'center'}}>
-            <div className={classes} style={{ marginTop:'30px'}}>
-                <img src="/static/img/no-document.jpg" alt="no documnt" />
-                <p className="text-center">Hujjat yo'q</p>
-            </div>
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                }}>
+                <div className={classes} style={{ marginTop: '30px' }}>
+                    <img src="/static/img/no-document.jpg" alt="no documnt" />
+                    <p className="text-center">Hujjat yo'q</p>
+                </div>
             </div>
         );
 
@@ -174,15 +195,14 @@ const ShopItems = ({ columns = 4, pageSize = 4, data }) => {
 
                     {data?.length > 0 && (
                         <Pagination
-                            total={data?.length - 1}
-                            // pageSize={pageSize}
+                            total={data?.length}
+                            pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
-                            current={page !== undefined ? parseInt(page) : 1}
+                            current={page || 1}
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
-
 
                 </div>
             </div>

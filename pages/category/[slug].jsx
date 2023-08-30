@@ -96,7 +96,7 @@ const ProductCategoryScreen = () => {
                                 data={filteredData}
 
                                 columns={4}
-                                pageSize={4}
+                                pageSize={2}
                             />
                             {/* <h3 className="ps-shop__heading">
                                 {category && category.name}
