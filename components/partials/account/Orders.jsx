@@ -27,19 +27,20 @@ function OrdersLists() {
             setData([])
         }
         const ItemsData = await GetRepository.getOrdersLists(page, status, date, user?.access);
+       if (ItemsData?.results) {
         setData((prev) => [...prev, ...ItemsData.results]);
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
             GetItemsProducts(page + 1, status, date)
 
         }
+       }
 
     }
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
-            item.user?.first_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.title.toLowerCase().includes(text.toLowerCase())
+            item?.user?.first_name.toLowerCase().includes(text.toLowerCase()) 
         ))
         setData(filterSearch)
     }
@@ -88,6 +89,15 @@ function OrdersLists() {
             title: 'Buyurtma kategoriya',
             dataIndex: 'title',
             key: 'address',
+            render:(title)=>(
+                <select className='form-select border-0 fs-4'>
+                {
+                    title.map(item=>(
+                        <option>{item} </option>
+                    ))
+                }
+                </select>
+            )
         },
         {
             title: 'Holat',
@@ -112,9 +122,26 @@ function OrdersLists() {
             key: 'id',
         },
         {
+            title: 'Buyurtmachi',
+            dataIndex: 'user',
+            key: 'user',
+            render:(user)=>(
+                <span>{user.first_name}</span>
+            )
+        },
+        {
             title: 'Buyurtma kategoriya',
             dataIndex: 'title',
             key: 'title',
+            render:(title)=>(
+                <select className='form-select border-0 fs-4'>
+                {
+                    title.map(item=>(
+                        <option>{item} </option>
+                    ))
+                }
+                </select>
+            )
         },
         {
             title: 'Buyurtma sanasi',
@@ -172,7 +199,13 @@ function OrdersLists() {
 
                                    <RangePicker className='w-50   rounded-3' onChange={(e)=>setDate(e)} />
                                    </div>
-                                    <Table scroll={{ x:1100 }}  dataSource={ data} columns={ user?.role === "admin" ? columns : columnSellers} />
+                                   {
+                                    user?.role==="admin" ?
+                                    <Table scroll={{ x:1100 }}  dataSource={ data} columns={columns} />
+                                    :
+                                    <Table scroll={{ x:850 }}  dataSource={data} columns={columnSellers} />
+
+                                   }
                                 </div>
                             </div>
                         </div>

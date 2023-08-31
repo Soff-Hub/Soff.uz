@@ -16,8 +16,10 @@ function ContextLists() {
 
     async function GetItemsBanners() {
         const ItemsData = await GetRepository.getBannerLists(user?.access)
+        if (ItemsData?.results) {
 
-        setData(ItemsData?.results)
+            setData(ItemsData?.results)
+        }
     }
     async function handleClickID(ID) {
         const formData = new FormData();
@@ -38,7 +40,7 @@ function ContextLists() {
             });
         }
 
-        
+
     }
 
     useEffect(() => {

@@ -6,11 +6,11 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
-import { DatePicker} from 'antd';
+import { DatePicker } from 'antd';
 import { useSelector } from 'react-redux';
 
 function ProductsLists() {
-    const { accountLinks  ,user} = useSelector(state => state.auth)
+    const { accountLinks, user } = useSelector(state => state.auth)
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [selectValSellers, setSelectValProducts] = useState({});
@@ -21,20 +21,22 @@ function ProductsLists() {
     const [dataValStatus, setDataCatStatus] = useState(null);
     const [date, setDate] = useState(null);
     const { RangePicker } = DatePicker;
-   const dateFormat0 =date ? `${date[0]?.$y}-${`${date[0].$M+1}`.length===1 ? `0${date[0].$M+1}` : date[0].$M+1 }-${date[0].$D}` : ''
-   const dateFormat1 =date ? `${date[1]?.$y}-${`${date[1].$M+1}`.length===1 ? `0${date[1].$M+1}` : date[1].$M+1 }-${date[1].$D}` : ''
-     const dataFormat =(date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
+    const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
+    const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
+    const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id , ) {
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id,) {
         if (page === 1) {
             await setData([])
             setSerach([])
         }
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id ,user?.access);
-        setData((prev) => [...prev, ...ItemsData.results]);
-        setSerach((prev) => [...prev, ...ItemsData.results]);
-        if (ItemsData.next) {
-            GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id)
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, user?.access);
+        if (ItemsData?.results) {
+            setData((prev) => [...prev, ...ItemsData.results]);
+            setSerach((prev) => [...prev, ...ItemsData.results]);
+            if (ItemsData.next) {
+                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id)
+            }
         }
     }
 
@@ -46,7 +48,7 @@ function ProductsLists() {
         setDataVal((prev) => [...prev, ...ItemsData.results]);
     }
     async function handleClickView(item) {
-        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id , user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, user?.access);
         setDeleteIdView(ItemsData);
     }
     function handleClick(e) {
@@ -57,7 +59,7 @@ function ProductsLists() {
         setData(filterSearch)
     }
     async function handleItemsEditProducts() {
-        const patchItemsSellers = await PatchRepository.getProductsPatch({ status: selectValSellers }, deleteIdEditProducts?.id , user?.access)
+        const patchItemsSellers = await PatchRepository.getProductsPatch({ status: selectValSellers }, deleteIdEditProducts?.id, user?.access)
         setData([])
         const modal = Modal.success({
             centered: true,
@@ -168,7 +170,7 @@ function ProductsLists() {
                             <div className="ps-section--account-setting">
                                 <div>
                                     <div className='d-flex gap-3 pb-3'>
-                                        <select  className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                        <select className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Barcha kategoriyalar</option>
                                             {
                                                 dataVal.length > 0 && (
@@ -184,7 +186,7 @@ function ProductsLists() {
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
-                                        <RangePicker className='w-100   rounded-3' onChange={(e)=>setDate(e)}  />
+                                        <RangePicker className='w-100   rounded-3' onChange={(e) => setDate(e)} />
                                     </div>
                                     <Table scroll={{ x: 1100 }} dataSource={data} columns={columns} />
                                 </div>
@@ -201,39 +203,39 @@ function ProductsLists() {
                     </select>
                 </ModalDeletePostEdit >
                 <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                <div className='modal-dialog modal-dialog-centered modal-lg'>
-                <div className='modal-content'>
-                    <div className='d-flex justify-content-end p-3'>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                <div className="card  " style={{ maxWidth: "840px" }}>
-                        <div className="row g-0 px-3 modal-body m-0">
-                            <div className="col-md-4 mt-4 ">
-                                <img src={deleteIdView?.poster_url} className="img-fluid rounded-start" alt="..." />
+                    <div className='modal-dialog modal-dialog-centered modal-lg'>
+                        <div className='modal-content'>
+                            <div className='d-flex justify-content-end p-3'>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="col-md-8">
-                                <div className="card-body pt-5">
-                                    <p className="card-text"> <strong>Nomi:</strong> {deleteIdView?.title}</p>
-                                    <p className="card-text"> <strong>Kategoriya:</strong> {deleteIdView?.category?.name}</p>
-                                    <p className="card-text"><strong>Narxi:</strong>  ${deleteIdView?.price} </p>
-                                    <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
-                                    <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone }</p>
-                                     <p><strong>Teg:</strong> {deleteIdView?.tag?.name}</p>
-                           
-                                </div>
-                            </div>
-                            <div className='col-md-12 pt-3'>
-                            <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
-                            <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description}</p>
-                             <div className='d-flex justify-content-end py-3'>
-                            <a href={deleteIdView?.file}  className='btn btn-outline-warning w-25 py-2  fs-5' target='_blank' download> <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
+                            <div className="card  " style={{ maxWidth: "840px" }}>
+                                <div className="row g-0 px-3 modal-body m-0">
+                                    <div className="col-md-4 mt-4 ">
+                                        <img src={deleteIdView?.poster_url} className="img-fluid rounded-start" alt="..." />
+                                    </div>
+                                    <div className="col-md-8">
+                                        <div className="card-body pt-5">
+                                            <p className="card-text"> <strong>Nomi:</strong> {deleteIdView?.title}</p>
+                                            <p className="card-text"> <strong>Kategoriya:</strong> {deleteIdView?.category?.name}</p>
+                                            <p className="card-text"><strong>Narxi:</strong>  ${deleteIdView?.price} </p>
+                                            <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
+                                            <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
+                                            <p><strong>Teg:</strong> {deleteIdView?.tag?.name}</p>
 
-                             </div>
+                                        </div>
+                                    </div>
+                                    <div className='col-md-12 pt-3'>
+                                        <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
+                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description}</p>
+                                        <div className='d-flex justify-content-end py-3'>
+                                            <a href={deleteIdView?.file} className='btn btn-outline-warning w-25 py-2  fs-5' target='_blank' download> <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                </div>
                 </div >
             </div>
         </section>

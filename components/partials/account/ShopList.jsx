@@ -19,11 +19,13 @@ function Notifications() {
             setData([])
         }
         const ItemsData = await GetRepository.getShops(page, user?.access);
-        setData((prev) => [...prev, ...ItemsData.results]);
-        setSerach((prev) => [...prev, ...ItemsData.results]);
-        if (ItemsData.next) {
-            GetItems(page + 1)
-        }
+         if (ItemsData?.results) {
+            setData((prev) => [...prev, ...ItemsData.results]);
+            setSerach((prev) => [...prev, ...ItemsData.results]);
+            if (ItemsData.next) {
+                GetItems(page + 1)
+            }
+         }
     }
 
     function handleClick(e) {

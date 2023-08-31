@@ -3,7 +3,7 @@ import Repository, { baseUrl } from "./Repository";
 
 class GetRepository {
     async getSellerDashbord(token) {
-        const endPoint = `dashboard/`;
+        const endPoint = `/admin/dashboard/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -23,6 +23,25 @@ class GetRepository {
     }
     async getPopularProducts(page, token) {
         const endPoint = `admin/popular-product/?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getPopularProductsView(id, token) {
+        const endPoint = `admin/popular-product/${id}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -202,7 +221,7 @@ class GetRepository {
         return reponse;
     }
     async getChartLists(token) {
-        const endPoint = `SellerMonthlySales/`;
+        const endPoint = `AdminMonthlySales/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -224,6 +243,24 @@ class GetRepository {
         const endPoint = `admin/banner/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getProfile(token) {
+        const reponse = await Repository({
+            url: "https://alldataaa.pythonanywhere.com/auth/profile/",
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,

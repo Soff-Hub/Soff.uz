@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import CreditCard from './CreditCard';
 
 function Notifications() {
   const { accountLinks , user} = useSelector(state => state.auth);
+  const [nameUpdate, setNameUpdate] = useState(null);
+  const [lastUpdate, setLastUpdate] = useState(null);
 
-
-
+  const data = {
+    first_name: nameUpdate,
+    last_name: lastUpdate
+  }
+  
+  async function handleClickEdit(e){
+    e.preventDefault();
+    const ItemsData = await PatchRepository.getPatchProfile(data ,user?.access);
+    
+  }  
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
@@ -20,16 +32,22 @@ function Notifications() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <div>
-                                        <form className='d-flex flex-start gap-3  '>
-                                            <input type="text" placeholder='Ism ' className='form-control rounded-3' />
-                                            <input type="text" placeholder='Familiya ' className='form-control rounded-3' />
-                                            <button className='btn btn-success'><span className='fs-5'>Saqlash</span></button>
+                                        <form className='row g-3'>
+                                            <div className='col-md-5'>
+                                            <input  type="text" placeholder='Ism ' className='form-control rounded-3' onChange={(e)=> setNameUpdate(e.target.value)}  />
+                                            </div>
+                                              <div className='col-md-5'>
+                                            <input type="text" placeholder='Familiya ' className='form-control rounded-3' onChange={(e)=> setLastUpdate(e.target.value)} />
+                                              </div>
+                                            <button  onClick={handleClickEdit} className='btn btn-success   col-md-2 py-3'><span className='fs-4'>Saqlash</span></button>
                                         </form>
-                                    </div>
+                            <div className='py-5'>
+                            <CreditCard/>
+                            </div>
                                 </div>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>

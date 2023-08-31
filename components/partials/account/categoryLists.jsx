@@ -25,10 +25,12 @@ function CategoryLists() {
             setData([])
         }
         const ItemsData = await GetRepository.getCategory(page, user?.access);
-        setData((prev) => [...prev, ...ItemsData.results]);
-        setSerach((prev) => [...prev, ...ItemsData.results]);
-        if (ItemsData.next) {
-            GetItemsProducts(page + 1)
+        if (ItemsData?.results) {
+            setData((prev) => [...prev, ...ItemsData.results]);
+            setSerach((prev) => [...prev, ...ItemsData.results]);
+            if (ItemsData.next) {
+                GetItemsProducts(page + 1)
+            }
         }
     }
     function handleClick(e) {
@@ -136,10 +138,10 @@ function CategoryLists() {
                 <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
                 {
 
-                    data.some(el =>el.id==id && el.is_delete === true) ? 
-                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
-               :
-               <a style={{opacity:0.6 ,cursor :"not-allowed"}}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
+                    data.some(el => el.id == id && el.is_delete === true) ?
+                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
+                        :
+                        <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
                 }
             </div>
         },

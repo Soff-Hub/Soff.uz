@@ -143,7 +143,26 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getPatchProfile(data ,token) {
+        const reponse = await Repository({
+            url:"https://alldataaa.pythonanywhere.com/auth/profile/",
+            method: 'PATCH',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
 
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
 
 
 }

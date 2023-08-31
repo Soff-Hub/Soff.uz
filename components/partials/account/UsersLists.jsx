@@ -27,10 +27,12 @@ function OrdersLists() {
             setData([])
         }
         const ItemsData = await GetRepository.getUsersLists(page, user?.access);
-        setData((prev) => [...prev, ...ItemsData.results]);
-        setSerach((prev) => [...prev, ...ItemsData.results]);
-        if (ItemsData.next) {
-            GetItemsUsers(page + 1)
+        if (ItemsData?.results) {
+            setData((prev) => [...prev, ...ItemsData.results]);
+            setSerach((prev) => [...prev, ...ItemsData.results]);
+            if (ItemsData.next) {
+                GetItemsUsers(page + 1)
+            }
         }
     }
     function handleClick(e) {
