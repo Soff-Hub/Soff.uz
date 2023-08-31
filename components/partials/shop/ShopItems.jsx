@@ -19,7 +19,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     const [load, setLoad] = useState(false);
     const [success, setSuccess] = useState(true);
 
-
     const { productItems, loading, getProducts } = useGetProducts();
     const [pagenationData, setPagenationData] = useState([]);
     const [newData, setNewData] = useState([]);
@@ -60,6 +59,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
         for (let i = (pageVal - 1) * pageSize ; i < (pageVal - 1) * pageSize + 2; i++) {
             data?.[i] ? arr.push(data[i]) : ''
+
             console.log(data[i]);
         }
 
@@ -100,6 +100,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         
        
 
+
         handleSetColumns();
         if (data) {
             setPagenationData(data);
@@ -116,6 +117,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     //     function createArray(length, value) {
     //         return Array.from({ length }, () => value);
     //     }
+
 
 
 
@@ -147,33 +149,26 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
             arr.sort(compareByCreatedAtLast);
             setNewData(arr);
 
-
-
         }
     }
 
     // Views
     let productItemsView;
-    if (data?.length > 0) {
-        if (data && data.length > 0) {
-            if (listView) {
-                const items = newData?.map((item) => (
 
-                    <div className={classes} key={item.id}>
-                        <Product product={item} />
-                    </div>
-                ));
-                productItemsView = (
-                    <div className="ps-shop-items">
-                        <div className="row">{items}</div>
-                    </div>
-                );
-            } else {
-                productItemsView = data?.map((item) => (
-                    <ProductWide product={item} />
-                ));
-            }
-
+    if (load) {
+        if (success) {
+            const items = newData?.map((item) => (
+                <div
+                    className="col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6"
+                    key={item.id}>
+                    <Product product={item} />
+                </div>
+            ));
+            productItemsView = (
+                <div className="ps-shop-items">
+                    <div className="row">{items}</div>
+                </div>
+            );
         } else {
             productItemsView = (
                 <div
@@ -202,6 +197,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
+
 
 
 
@@ -252,7 +248,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
 
-
                     {data.length > 0 && (
 
                         <Pagination
@@ -288,6 +283,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
+
 
 
                     {data?.length > 0 && (

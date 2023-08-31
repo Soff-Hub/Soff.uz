@@ -15,7 +15,6 @@ const Wishlist = ({ ecomerce }) => {
 
 
 
-
     function handleAddItemToCart(e, product) {
         e.preventDefault();
         addItem(product, cookies.cart, 'cart');
@@ -108,7 +107,6 @@ const Wishlist = ({ ecomerce }) => {
                 Tanlaganlar yo'q!
             </div>
         );
-
 
         // }
     }

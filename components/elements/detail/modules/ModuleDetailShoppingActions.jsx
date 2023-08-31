@@ -35,19 +35,15 @@ const ModuleDetailShoppingActions = ({
         modal.update;
     }
 
-    const state = useSelector((state) => state.auth.user);
+    const state = useSelector((state) => state.auth.user?.access);
 
     function handleBuynow(e) {
         e.preventDefault();
-        addItem(product, ecomerce.cartItems, 'cart');
-        if (state !== null) {
-            setTimeout(function () {
+        if (state ) {
+            addItem(product, ecomerce.cartItems, 'cart');
                 Router.push('/account/checkout');
-            }, 1000);
         } else {
-            setTimeout(function () {
                 Router.push('/account/register');
-            }, 1000);
         }
     }
     

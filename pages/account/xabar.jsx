@@ -19,7 +19,6 @@ const Xabar = (e) => {
     const [firstSendCode, setFirstSendCode] = useState(true);
 
 
-
     const [kod, setKod] = useState(null);
 
     // if (tokenn.user) {
@@ -28,7 +27,6 @@ const Xabar = (e) => {
 
     const handleSubmitKod = async () => {
         setLoader(true);
-
 
         let data = {
             code: `${kod}`,
@@ -41,7 +39,6 @@ const Xabar = (e) => {
             setLoader(false);
             Router.push('/account/login');
         } else {
-
 
             let message = '';
             setLoader(false);
@@ -60,7 +57,6 @@ const Xabar = (e) => {
         setLoader(true);
         setCoutdown(60);
 
-
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
         setCountSekond(false);
@@ -76,7 +72,6 @@ const Xabar = (e) => {
             setReport(true);
             setLoader(false);
 
-
         } else {
             let message = '';
             const modal = Modal.error({
@@ -89,7 +84,6 @@ const Xabar = (e) => {
         }
         setKod('');
 
-
         console.log(kod);
     };
 
@@ -100,7 +94,6 @@ const Xabar = (e) => {
             setReport(false);
             setFirstSendCode(false);
         }
-
 
 
         if (localStorage.getItem('data')) {
@@ -117,6 +110,7 @@ const Xabar = (e) => {
             clearInterval(interval);
         };
     }, [tokenn, countdown]);
+
     return (
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
@@ -135,7 +129,6 @@ const Xabar = (e) => {
                                         type="number"
                                         placeholder="Kodni kiriting..."
                                         onChange={(e) => setKod(e.target.value)}
-
 
                                         maxLength={'4'}
                                     />
@@ -180,7 +173,6 @@ const Xabar = (e) => {
                                             </button>
                                         )
                                     ) : loader ? (
-
 
                                         <button
                                             type="submit"

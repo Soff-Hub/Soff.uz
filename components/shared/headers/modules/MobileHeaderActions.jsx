@@ -6,10 +6,11 @@ import { useCookies } from 'react-cookie';
 
 const MobileHeaderActions = ({ auth, ecomerce }) => {
 
+    const [cookies, setCookie] = useCookies(['cart']);
     const { cartItems, wishlist } = ecomerce;
     return (
         <div className="navigation__right">
-            <Link href="/account/wishlist">
+            {/* <Link href="/account/wishlist">
                 <a className="header__extra" href="#">
                     <i className="icon-heart"></i>
                     <span>
@@ -17,7 +18,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
                     </span>
                 </a>
 
-            </Link>
+            </Link> */}
             <Link href="/account/shopping-cart">
                 <a className="header__extra" href="#">
                     <i className="icon-bag2"></i>

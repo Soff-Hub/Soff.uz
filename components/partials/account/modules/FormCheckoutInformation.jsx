@@ -1,8 +1,6 @@
-import React, { Component, useEffect } from 'react';
-import Link from 'next/link';
-import Router from 'next/router';
-import { Form, Input, Modal } from 'antd';
-import Image from 'next/image';
+
+import React, { useEffect, useState } from 'react';
+import { Modal } from 'antd';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
@@ -10,7 +8,65 @@ import PostRepository from '~/repositories/PostRepository';
 function FormCheckoutInformation() {
     const [cookies, setCookie] = useCookies(['cart']);
     const select = useSelector((state) => state.auth.user?.access);
+    const [card, setCard] = useState([]);
+    const [data, setData] = useState([]);
+    const [selectedValue, setSelectedValue] = useState('click');
 
+    const handleRadioChange = (event) => {
+        setSelectedValue(event.target.value);
+    };
+    const GetCard = async () => {
+        const config = {
+            headers: {
+                Authorization: `Bearer ${select} `,
+            },
+        };
+        const respons = await PostRepository.getCartData(config);
+        setTimeout(() => {
+            setCard(respons?.results?.[0]?.documents);
+        }, 1000);
+    };
+
+    console.log('cardd', card);
+
+    useEffect(() => {
+        let cookeCard = cookies?.cart;
+        select && GetCard();
+
+        if (card?.length > 0) {
+            // function Tekshirish(array1, array2) {
+            //     const yangiData = [];
+
+            //     for (let i = 0; i < array1.length; i++) {
+            //       let isIdFound = false;
+
+            //       for (let j = 0; j < array2.length; j++) {
+            //         if (array1[i].id !== array2[j].id) {
+            //             yangiData.push(array1[i]);
+            //           break;
+            //         }
+            //       }
+
+            //       if (!isIdFound) {
+            //         yangiData.push(array1[i]);
+            //       }
+            //     }
+
+            //     return yangiData;
+            //   }
+
+            function Tekshirish(array1, array2) {
+                return array2.filter(
+                    (obj1) => !array1.some((obj2) => obj2.id !== obj1.id)
+                );
+            }
+
+            setData(Tekshirish(cookeCard, card));
+            console.log('tek', Tekshirish(cookeCard, card));
+        }else{
+            setData(cookies?.cart)
+        }
+    }, [cookies]);
 
     function extractIds(data) {
         const ids = [];
@@ -70,6 +126,7 @@ function FormCheckoutInformation() {
 
 
     }
+
     const ids = extractIds(data);
     console.log(
         "to'lov uchun berib yuborilgan id lar ",
@@ -78,7 +135,6 @@ function FormCheckoutInformation() {
         data
     );
     const ProductToApi = async () => {
-
         const data = {
             documents: ids,
         };
@@ -108,12 +164,7 @@ function FormCheckoutInformation() {
             modal.update;
         }
 
-
     };
-
-    useEffect(() => {
-
-    },[cookies])
 
     return (
         <div className="tolov-usullari">
@@ -142,6 +193,7 @@ function FormCheckoutInformation() {
 
 
 
+
             </div>
             <p
                 style={{ display: 'inline-block' }}
@@ -152,16 +204,6 @@ function FormCheckoutInformation() {
             </p>
         </div>
     );
-
-
-
-
-
-
-
-
-
-
 
 }
 

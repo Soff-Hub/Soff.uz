@@ -39,7 +39,6 @@ const ProductCategoryScreen = () => {
                 setDetail_arr(arr?.promotional_sliders);
             }, 5000)
 
-
             setFilteredData(arr?.promotional_sliders)
             setObj(arr);
         }
@@ -102,6 +101,7 @@ const ProductCategoryScreen = () => {
                                 columns={4}
 
                                 pageSize={8}
+
 
 
 
