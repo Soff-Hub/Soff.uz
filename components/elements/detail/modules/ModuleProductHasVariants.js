@@ -54,7 +54,7 @@ const ModuleProductHasVariants = ({ ecomerce, currency, product }) => {
 
     const handleAddItemToWishlist = (e) => {
         e.preventDefault();
-        addItem({ id: product.id }, ecomerce.wishlistItems, 'wishlist');
+        // addItem({ id: product.id }, ecomerce.wishlistItems, 'wishlist');
         const modal = Modal.success({
             centered: true,
             title: 'Success!',

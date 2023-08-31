@@ -4,6 +4,8 @@ import Product from '~/components/elements/products/Product';
 import ProductWide from '~/components/elements/products/ProductWide';
 import { useRouter } from 'next/router';
 import useGetProducts from '~/hooks/useGetProducts';
+import { generateTempArray } from '~/utilities/common-helpers';
+import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 
 const ShopItems = ({ columns = 4, pageSize, data }) => {
 
@@ -15,7 +17,8 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     const [classes, setClasses] = useState(
         'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 '
     );
-    // const [pageSizee, setPageSizee] = useState(4);
+    const [load, setLoad] = useState(false);
+    const [success, setSuccess] = useState(true);
     const { productItems, loading, getProducts } = useGetProducts();
     const [pagenationData, setPagenationData] = useState([]);
     const [newData, setNewData] = useState([]);
@@ -31,11 +34,20 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     async function handlePagination(pageVal) {
         setPage(pageVal);
         setNewData(data);
-        console.log('??', (pageVal - 1) * pageSize, pageSize);
+        console.log('page', pageVal, pageSize);
+        console.log(
+            '??',
+            (pageVal - 1) * pageSize,
+            (pageVal - 1) * pageSize + 2
+        );
         const arr = [];
 
-        for (let i = (pageVal - 1) * pageSize ; i < (pageVal - 1) * pageSize + 2; i++) {
-            data?.[i] ? arr.push(data[i]) : ''
+        for (
+            let i = (pageVal - 1) * pageSize;
+            i < (pageVal - 1) * pageSize + 8;
+            i++
+        ) {
+            data?.[i] ? arr.push(data[i]) : '';
             console.log(data[i]);
         }
 
@@ -47,32 +59,38 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     function handleSetColumns() {
         switch (columns) {
             case 2:
-                setClasses('col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6');
+                setClasses('col-xl-6 col-lg-6 col-md-4 col-sm-6 col-6');
                 return 3;
                 break;
             case 4:
-                setClasses('col-xl-3 col-lg-4 col-md-6 col-sm-6 col-6');
+                setClasses('col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6');
                 return 4;
                 break;
             case 6:
-                setClasses('col-xl-2 col-lg-4 col-md-6 col-sm-6 col-6');
+                setClasses('col-xl-2 col-lg-4 col-md-4 col-sm-6 col-6');
                 return 6;
                 break;
 
             default:
-                setClasses('col-xl-4 col-lg-4 col-md-3 col-sm-6 col-6');
+                setClasses('col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6');
         }
     }
 
-    // let arr = []
     useEffect(() => {
-        // getProducts(params);
-        // setPagenationData(data?.slice(0, pageSizee));
-        handleSetColumns();
+        setTimeout(() => {
+            setLoad(true);
+        }, 2000);
+        
+     
+        data?.length > 0 ? setSuccess(true) : 
+            setSuccess(false)
+        
+       
 
+        handleSetColumns();
         if (data) {
             setPagenationData(data);
-            handlePagination(1)
+            handlePagination(1);
         }
     }, [query, data]);
 
@@ -86,6 +104,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     //         return Array.from({ length }, () => value);
     //     }
     // }, [pagenationData]);
+
 
 
 
@@ -109,11 +128,10 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
             arr.sort(compareByCreatedAt);
-            setPagenationData(arr);
+            setNewData(arr);
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
-            setPagenationData(arr);
-
+            setNewData(arr);
         }
     }
 
@@ -138,29 +156,33 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                     <ProductWide product={item} />
                 ));
             }
+
         } else {
-            productItemsView = <p>Hujjat topilmadi</p>;
+            productItemsView = (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}>
+                    <div className={classes} style={{ marginTop: '30px' }}>
+                        <img
+                            src="/static/img/no-document.jpg"
+                            alt="no documnt"
+                        />
+                        <p className="text-center">Hujjat yo'q</p>
+                    </div>
+                </div>
+            );
         }
     } else {
-        productItemsView = (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                }}>
-                <div className={classes} style={{ marginTop: '30px' }}>
-                    <img src="/static/img/no-document.jpg" alt="no documnt" />
-                    <p className="text-center">Hujjat yo'q</p>
-                </div>
+        const skeletonItems = generateTempArray(4).map((item) => (
+            <div className={classes} key={item}>
+                <SkeletonProduct />
             </div>
-        );
 
-
-
-
-
-
+        ));
+        productItemsView = <div className="row">{skeletonItems}</div>;
     }
 
     return (
@@ -183,7 +205,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                         </option>
                     </select>
                     <div className="ps-shopping__view">
-                        {/* <p>View</p> */}
                         <ul className="ps-tab-list">
                             <li className={listView === true ? 'active' : ''}>
                                 <a
@@ -203,7 +224,9 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                     </div>
                 </div>
             </div>
-            <div className="ps-shopping__content">{productItemsView}</div>
+            <div className="ps-shopping__content pagination-product-box">
+                {productItemsView}
+            </div>
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
 
@@ -229,6 +252,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
+
 
                     {data?.length > 0 && (
                         <Pagination

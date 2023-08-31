@@ -15,43 +15,47 @@ const SearchPage = () => {
     const Router = useRouter();
     const { query } = Router;
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(null);
     const [resultdata, setresultData] = useState([]);
 
     async function getSearchData() {
         const responseData = await ProductRepository.getRecordsSearch();
         if (responseData) {
-            console.log(responseData);
+            console.log(responseData, 'kk');
             setData(responseData);
         }
     }
-
 
     // document.addEventListener("keydown", function(event) {
     //     if(event.key === "Enter" && query != ''){
     //         getSearchData()
     //     }
     //   })
-      
-
 
     function handleSetKeyword() {
         if (query && query.keyword !== '') {
             setKeyword(query.keyword);
-
-            console.log(query.keyword);
         } else {
             setKeyword('');
         }
     }
 
+    const filterFunc = () => {
+        const filteredData = [...data || []]
+        console.log(data);
+        if (data?.length > 0) {
+            setresultData(filteredData.filter((item) => item.title == 'Ozodbek'));
+            console.log('fi',filteredData);
+        }
+    };
+
+    useEffect(() => {
+        filterFunc()
+    }, [data])
+    
     useEffect(() => {
         getSearchData();
-        let result = data.filter((item) => {
-            return item.title.toLowerCase().includes(keyword.toLowerCase());
-        });
-        setresultData(result);
-        // console.log('//??', result);
+
         if (query && query.keyword) {
             handleSetKeyword(query.keyword);
             const queries = {
@@ -60,7 +64,11 @@ const SearchPage = () => {
             };
             getProducts(queries);
         }
-    }, [query]);
+
+        filterFunc();
+    }, [ keyword ]);
+
+  
 
     const breadcrumb = [
         {
@@ -68,11 +76,10 @@ const SearchPage = () => {
             url: '/',
         },
         {
-
             text: 'Qidiruv natijalari',
         },
     ];
-    // console.log(resultdata);
+    console.log('qidiruv', resultdata);
     let shopItemsView, statusView;
     if (loading) {
         if (resultdata) {
@@ -84,7 +91,7 @@ const SearchPage = () => {
                 />
             );
             if (resultdata) {
-                const items = resultdata.map((item) => {
+                const items = resultdata?.map((item) => {
                     return (
                         <div className="col-md-3 col-sm-6 col-6" key={item.id}>
                             <Product product={item} />
@@ -97,8 +104,7 @@ const SearchPage = () => {
                 statusView = (
                     <p>
                         <strong style={{ color: '#000' }}>
-
-                            {resultdata.length}
+                            {resultdata?.length}
                         </strong>{' '}
                         yozuv(lar) topildi.
                     </p>
@@ -123,7 +129,6 @@ const SearchPage = () => {
                     <div className="container">
                         <div className="ps-shop__header">
                             <h1>
-
                                 Qidiruv uchun: "<strong>{keyword}</strong>"
                             </h1>
                         </div>
@@ -134,8 +139,6 @@ const SearchPage = () => {
                     </div>
                 </div>
             </div>
-
-            {/* <Newsletters layout="container" /> */}
         </PageContainer>
     );
 };

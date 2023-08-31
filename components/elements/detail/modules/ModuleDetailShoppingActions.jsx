@@ -34,22 +34,18 @@ const ModuleDetailShoppingActions = ({
         });
         modal.update;
     }
-    const state = useSelector((state) => state.auth.user);
+    const state = useSelector((state) => state.auth.user?.access);
 
     function handleBuynow(e) {
         e.preventDefault();
-        addItem(product, ecomerce.cartItems, 'cart');
-        if (state !== null) {
-            setTimeout(function () {
+        if (state ) {
+            addItem(product, ecomerce.cartItems, 'cart');
                 Router.push('/account/checkout');
-            }, 1000);
         } else {
-            setTimeout(function () {
                 Router.push('/account/register');
-            }, 1000);
         }
     }
-
+    
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
         addItem(product, ecomerce.wishlistItems, 'wishlist');
@@ -222,7 +218,7 @@ const ModuleDetailShoppingActions = ({
                     Savatga qo'shish
                 </a>
                 <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
-                    By now
+                    Sotib olish
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>

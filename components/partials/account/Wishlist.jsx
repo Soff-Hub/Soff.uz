@@ -3,18 +3,15 @@ import { connect, useSelector } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
 import ProductCart from '~/components/elements/products/ProductCart';
 import ProductRepository from '~/repositories/ProductRepository';
-import { Modal } from 'antd';
+import { Modal, Table } from 'antd';
 import { useCookies } from 'react-cookie';
-
 
 const Wishlist = ({ ecomerce }) => {
     const [cookies, setCookie] = useCookies(['cart']);
     const { loading, products, getProducts } = useEcomerce();
     const { addItem, removeItem } = useEcomerce();
 
-
-
-  const state = useSelector(state => state)
+    const state = useSelector((state) => state);
 
 
     function handleAddItemToCart(e, product) {
@@ -26,11 +23,9 @@ const Wishlist = ({ ecomerce }) => {
             content: `Siz hujjatni savatga qo'shdingiz`,
         });
         modal.update;
-
-
     }
 
-      async  function handleRemoveWishlistItem(e, item) {
+    async function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
         removeItem(item, ecomerce.wishlistItems, 'wishlist');
         const modal = Modal.success({
@@ -41,20 +36,18 @@ const Wishlist = ({ ecomerce }) => {
         modal.update;
     }
 
-
     useEffect(() => {
         // getCategoryData();
         if (ecomerce.wishlistItems) {
             getProducts(ecomerce.wishlistItems);
         }
-    }, [ecomerce.wishlistItems  ]);
+    }, [ecomerce.wishlistItems]);
     // views
     let wishlistItemsView;
     if (cookies.wishlist && cookies.wishlist?.length > 0) {
-
         wishlistItemsView = (
             <div className="table-responsive">
-                <table className="table ps-table--whishlist">
+                <table className="table ps-table--whishlist table-sm table-md table-xs">
                     <thead>
                         <tr>
                             <th></th>
@@ -104,14 +97,15 @@ const Wishlist = ({ ecomerce }) => {
                     </tbody>
                 </table>
             </div>
+
         );
     } else {
         // if (loading) {
-            wishlistItemsView = (
-                <div className="alert alert-danger" role="alert">
-                     Tanlaganlar yo'q!
-                </div>
-            );
+        wishlistItemsView = (
+            <div className="alert alert-danger" role="alert">
+                Tanlaganlar yo'q!
+            </div>
+        );
         // }
     }
     return (

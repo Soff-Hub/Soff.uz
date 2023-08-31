@@ -41,16 +41,16 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
     if (cartItems && cartItems.length > 0) {
         const items = cartItems.map((item) => (
             <tr key={item.id}>
-                <td>
+                <td className='cart-product'>
                     <ProductCart product={item} />
                 </td>
-                <td data-label="price" className="price pe-5">
+                <td data-label="narxi" className="price pe-5">
                    <span> {addPeriodToThousands(item.price)} so'm</span>
                 </td>
-                <td data-label="total">
+                <td >
                     {/* <strong>${(item.price * item.quantity).toFixed(2)}</strong> */}
                 </td>
-                <td style={{}}>
+                <td >
                     <a href="#" onClick={(e) => handleRemoveItem(e, item.id)}>
                         <i className="icon-cross"></i>
                     </a>

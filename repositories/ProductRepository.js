@@ -90,7 +90,7 @@ class ProductRepository {
             })
 
             .catch((error) => {
-                console.log(JSON.stringify(error));
+                // console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -119,10 +119,10 @@ class ProductRepository {
             `${baseUrl}customer/category-list/`
         )
             .then((response) => {
-                // console.log(response.data.results);
                 return response.data.results;
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => ({ error: JSON.stringify(error) }))
+            .finally(false)
         return reponse;
     }
     async getTopCategories() {

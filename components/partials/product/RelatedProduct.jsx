@@ -109,33 +109,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
         if (productItems) {
             if ((layout = 'fullwidth')) {
                 carouselView = (
-                    // <Slider {...carouselFullwidth} className="ps-carousel">
-                    //        <Product product={item} key={item.id} />
-                    // </Slider>
-
-                    // <div className='d-flex align-content-center flex-wrap'>
-                    //     {productItems?.length > 0 &&
-                    //         productItems?.map((item, i) => (
-                               
-                    //               <div className='detail-card'>  <Product product={item} key={i} /></div>
-                    //         ))}
-                    // </div>
-                    //   <>
-                    //     {
-                    //         productItems?.length > 0 ? (
-                    //         productItems.map((item, index) => {
-                    //             if (index < 8) {
-                    //                 return (
-                    //                     <Product product={item} key={item.id} />
-                    //                 );
-                    //             }
-                    //         }
-                    //         )
-                    //     ) : (
-                    //         <></>
-                    //     )}
-                    //   </>
-                    <div className='d-flex align-content-center flex-wrap'>
+                    <div className='d-flex align-content-center  flex-wrap carosusel-cards'>
                         {productItems?.length > 0 &&
                             productItems?.map((item, i) => (
                                

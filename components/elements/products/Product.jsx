@@ -43,7 +43,7 @@ const Product = ({ product }) => {
                 <ModuleProductActions product={product} />
             </div>
             <div className="ps-product__container">
-                <div className="ps-product__content">
+                <div className="ps-product__content card-narx-box">
                     {title(product)}
                     {addPeriodToThousands(product.price)} so'm
                 </div>

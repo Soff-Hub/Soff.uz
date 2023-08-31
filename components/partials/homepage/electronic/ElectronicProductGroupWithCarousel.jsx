@@ -29,7 +29,7 @@ const ElectronicProductGroupWithCarousel = ({
             //  let slideItems
             productItemsView = 
             (
-              <div className='d-flex align-content-center'>
+              <div className='d-flex align-content-center carosusel-cards'>
                {
                  data.promotional_sliders?.slice(0,5).map((item, index) => (
                   <div className='home-card' >   <Product key={item.id} product={item} /> </div>

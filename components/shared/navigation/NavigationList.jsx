@@ -165,13 +165,13 @@ class NavigationList extends Component {
                         <i className="icon-magnifier"></i>
                         <span> Qidiruv</span>
                     </a>
-                    <a
+                    {/* <a
                         className={`navigation__item
                          ${menuDrawer === true ? 'active' : ''}`}
                         href="/account/wishlist">
                         <i className="icon-heart"></i>
                         <span> Saqlanganlar</span>
-                    </a>
+                    </a> */}
                     <a
                         className={`navigation__item ${
                             cartDrawer === true ? 'active' : ''

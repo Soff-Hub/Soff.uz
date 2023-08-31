@@ -35,7 +35,9 @@ const ProductCategoryScreen = () => {
         if (responseData) {
             setCategory(responseData);
             let arr = responseData.find((item) => item.id == Number(slug));
-            setDetail_arr(arr?.promotional_sliders);
+            setTimeout(() => {
+                setDetail_arr(arr?.promotional_sliders);
+            }, 5000)
             setFilteredData(arr?.promotional_sliders)
             setObj(arr);
         }
@@ -96,8 +98,8 @@ const ProductCategoryScreen = () => {
                                 data={filteredData}
 
                                 columns={4}
-                                pageSize={2}
 
+                                pageSize={8}
                             />
                             {/* <h3 className="ps-shop__heading">
                                 {category && category.name}

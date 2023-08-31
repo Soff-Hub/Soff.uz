@@ -87,10 +87,11 @@ class PostRepository {
         return reponse;
     }
 
-    async getCartData(header) {
-        const endPoint = 'customer/cart-list/';
-        const response = await Repository.get(baseUrl + endPoint, header)
 
+    async getCartData(token) {
+        const endPoint = 'customer/cart-list/';
+
+        const response = await Repository.get(baseUrl + endPoint, token)
             .then((response) => {
                 return response.data;
             })

@@ -26,7 +26,7 @@ class HeaderMobileElectronic extends Component {
                     </div>
                     <MobileHeaderActions />
                 </div>
-                <div className="ps-search--mobile">
+                {/* <div className="ps-search--mobile">
                     <form
                         className="ps-form--search-mobile"
                         action="/"
@@ -42,7 +42,7 @@ class HeaderMobileElectronic extends Component {
                             </button>
                         </div>
                     </form>
-                </div>
+                </div> */}
             </header>
         );
     }
