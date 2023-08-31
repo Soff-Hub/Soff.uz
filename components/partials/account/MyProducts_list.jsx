@@ -182,7 +182,7 @@ function MyProductsLists() {
                 <span><i className="fa-solid fa-coins text-warning"></i> {price}</span>
             ),
         },
-        {
+       user?.role === "seller" ? {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',
@@ -196,9 +196,9 @@ function MyProductsLists() {
                             <></>
             ),
 
-        },
+        } : <></> ,
 
-        {
+       user?.role ==="seller" ?   {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
@@ -214,7 +214,7 @@ function MyProductsLists() {
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
 
             </div>
-        },
+        } : <></> ,
     ];
     return (
         <section className="ps-my-account ps-page--account">
@@ -236,12 +236,16 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-
-                                    <div className='d-flex flex-column gap-2'>
-                                        <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
-                                        <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
-                                        <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
-                                    </div>
+                  {
+                    user?.role === "seller" ? 
+                    <div className='d-flex flex-column gap-2'>
+                    <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                    <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                    <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                </div> : 
+                <></>
+                  }
+                                   
                                     <div className='d-flex gap-3 pb-3 pt-5'>
                                         <select className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Barcha kategoriyalar</option>
@@ -265,7 +269,13 @@ function MyProductsLists() {
                                         </select>
                                         <RangePicker className='w-100   rounded-3' onChange={(e) => setDate(e)} />
                                     </div>
-                                    <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} />
+                                    {
+                                        user?.role === "seller" ?
+                                        <Table dataSource={data} scroll={{  x: 1100 }} columns={columns} />
+                                        :
+                                        <Table dataSource={data} scroll={{  x: 700 }} columns={columns} />
+
+                                    }
                                 </div>
                             </div>
                         </div>
