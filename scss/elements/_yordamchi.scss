@@ -336,47 +336,7 @@
    
 }
 
-@media screen and (max-width: 524px) {
-    .banner-right {
-        display: flex;
-        flex-direction: row !important;
-        
-        .ps-collection {
-            display: block;
 
-            img {
-                width: 100%;
-                max-width: 213px;
-                min-width: 213px;
-                max-height: 191px;
-                min-height: 191px;
-                object-fit: cover;
-            }
-        }
-    }
-    .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 8px;
-    }
-    .ps-product__thumbnail{
-        min-height: 90px;
-        height: 100%;
-        max-width: 80px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        a{
-            margin:  0 auto;
-        }
-    }
-    .card-narx-box{
-        text-align: center;
-        font-size: 12px;
-        a{
-            margin: 0 auto;
-        }
-    }
-}
 
 @media screen and (max-width: 494px) {
     .banner-right {
@@ -441,26 +401,7 @@
            justify-content: center !important;
         }
     }
-
-* {
-    scrollbar-width: thin;
-    scrollbar-color: #41418f #bcb4b4;
 }
-
-*::-webkit-scrollbar {
-    display: flex;
-    width: 5px;
-    height: 5px;
-}
-
-*::-webkit-scrollbar-thumb {
-    background: #ffc107;
-}
-
-*::-webkit-scrollbar-track {
-    background: #dadbe1;
-}
-
 
 .App {
     font-family: sans-serif;
@@ -562,33 +503,22 @@
     background-color: #06c;
 }
 
-@media screen and (max-width: 425px) {
-    .ps-product__container{
-        min-width: 185px;
-    }
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #41418f #bcb4b4;
 }
 
-@media screen and (max-width: 404px) {
-    .ps-product__container{
-        min-width: 175px;
-    }
+*::-webkit-scrollbar {
+    display: flex;
+    width: 5px;
+    height: 5px;
 }
 
-@media screen and (max-width: 384px) {
-    .ps-product__container{
-        min-width: 160px;
-    }
+*::-webkit-scrollbar-thumb {
+    background: #ffc107;
 }
 
-@media screen and (max-width: 353px) {
-    .ps-product__thumbnail{
-        margin: 0 auto;
-    }
-    .ps-product__container{
-        min-width: 140px;
-        width: 100%;
-    }
-    .ps-product{
-        min-width: 150px;
-    }
-}}
+*::-webkit-scrollbar-track {
+    background: #dadbe1;
+}
