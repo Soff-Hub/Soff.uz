@@ -45,15 +45,14 @@ class PostRepository {
     }
     async PostsMyProducts(data, token) {
         const endPoint = `product-create/`;
-        const reponse = await Repository.post(
-            baseUrl + endPoint,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
             },
-            data
-        )
+            data:data
+        })
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
