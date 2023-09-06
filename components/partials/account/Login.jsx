@@ -112,7 +112,7 @@ class Login extends Component {
                                         ]}>
                                         <Input
                                         // defaultValue={this.state.value}
-                                        defaultValue ={JSON.parse(localStorage.getItem('data'))?.phone ? JSON.parse(localStorage.getItem('data')).phone : ''}
+                                        // defaultValue ={JSON.parse(localStorage.getItem('data'))?.phone && ''}
                                             className="form-control"
                                             type="text"
                                             placeholder="Telefon raqam"
