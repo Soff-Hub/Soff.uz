@@ -60,7 +60,7 @@ const AccountQuickLinks = (props) => {
                     </Link>
 
                     <Link href="/account/foydalanuvchi">
-                        <a>Ruyxatdan o'tish</a>
+                        <a>Ro'yxatdan o'tish</a>
                     </Link>
                 </div>
             </div>

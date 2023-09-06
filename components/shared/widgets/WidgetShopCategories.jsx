@@ -38,7 +38,7 @@ const WidgetShopCategories = ({data}) => {
     useEffect(() => {
         getCategry()
     }, []);
-
+console.log('categoriy', category);
     // Views
     let categoriesView;
     if (!loading) {

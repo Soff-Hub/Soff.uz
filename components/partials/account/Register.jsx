@@ -14,36 +14,38 @@ class Register extends Component {
         super(props);
         this.state = {
             report: true,
+            chekked: false,
         };
     }
 
- 
     handleSubmit = async (e) => {
         const url = this.props.url;
         const { registerUser } = useAuth();
         const user = await registerUser(url, e);
-            if (user.data) {
-                if (user.status >= 400) {
-                    let message = '';
-                    const modal = Modal.error({
-                        centered: true,
-                        title: 'Nimadir xato bor!',
-                        content: message,
-                    });
-                    modal.update;
-                } else if (user.status == 200 || user.status == 201) {
-                    this.setState({ report: !this.state.report });
-                    localStorage.setItem('token', user.data.access);
-                    localStorage.setItem('data', JSON.stringify(e));
+        if (user.data) {
+            if (user.status >= 400) {
+                let message = '';
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Nimadir xato bor!',
+                    content: message,
+                });
+                modal.update;
+            } else if (user.status == 200 || user.status == 201) {
+                this.setState({ report: !this.state.report });
+                localStorage.setItem('token', user.data.access);
+                localStorage.setItem('data', JSON.stringify(e));
 
-                    Router.push('/account/xabar');
-                }
+                Router.push('/account/xabar');
             }
+        }
     };
 
-    
-    render() {
+    handleChekked = () => {
+        this.setState({ chekked: !this.state.chekked });
+    };
 
+    render() {
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -85,26 +87,25 @@ class Register extends Component {
                                     </Form.Item>
                                 </div>
                                 <div className="form-group form-forgot">
-                                    <p>Password</p>
+                                    <p>Parol</p>
                                     <Form.Item
                                         name="password"
                                         rules={[
                                             {
                                                 required: true,
-
                                                 message: 'Parolni kiriting!',
                                             },
                                         ]}>
                                         <Input
                                             className="form-control"
                                             type="password"
-                                            placeholder="Password..."
+                                            placeholder="Parol..."
                                         />
                                     </Form.Item>
                                 </div>
 
                                 <div className="form-group form-forgot">
-                                    <p>Password 2</p>
+                                    <p>Parol 2</p>
                                     <Form.Item
                                         name="password2"
                                         rules={[
@@ -117,26 +118,46 @@ class Register extends Component {
                                         <Input
                                             className="form-control"
                                             type="password"
-                                            placeholder="Password 2..."
+                                            placeholder="Parol 2..."
                                         />
                                     </Form.Item>
-                                   <div className='tanishuv-chekbox'>
-                               <label className='chekboxx'>
-                               <input type="checkbox"   /> 
-                               </label>
-                                 <Link href='/account/tanishish' >
-                                 <a className=' p-0 ms-lg-2 m-0 tanishuv-sharti-title' > Tanishib chiqdim , shartlariga roziman! </a>
-                                 </Link>
-                                   </div>
+
+                                    
+                                    <div className="tanishuv-chekbox">
+                                        <label className="chekboxx">
+                                            <input
+                                                required
+                                                type="checkbox"
+                                                onChange={this.handleChekked}
+                                            />
+                                        </label>
+                                        <Link href="/account/tanishish">
+                                            <a className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
+                                                Tanishib chiqdim , shartlariga
+                                                roziman!
+                                            </a>
+                                        </Link>
+                                    </div>
                                 </div>
                                 <div className="form-group submit">
                                     {this.state.report ? (
-                                        <button
-                                           
-                                            type="submit"
-                                            className="ps-btn ps-btn--fullwidth mb-5">
-                                            Ro'yxatdan o'tish
-                                        </button>
+                                        this.state.chekked ? (
+                                            <button
+                                                type="submit"
+                                                className="ps-btn ps-btn--fullwidth mb-5">
+                                                Ro'yxatdan o'tish
+                                            </button>
+                                        ) : (
+                                            <button
+                                                disabled={true}
+                                                style={{
+                                                    cursor: 'not-allowed',
+                                                }}
+                                                type="submit"
+                                                className="ps-btn ps-btn--fullwidth mb-5">
+                                                Ro'yxatdan o'tish
+                                            </button>
+                                        )
                                     ) : (
                                         <button
                                             type="submit"

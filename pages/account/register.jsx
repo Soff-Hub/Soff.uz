@@ -9,11 +9,11 @@ import Newletters from '~/components/partials/commons/Newletters';
 const RegisterPage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {
-            text: 'Register an account',
+            text: 'Ro\'yxatdan o\'tish',
         },
     ];
 
@@ -27,7 +27,6 @@ const RegisterPage = () => {
 
                     <Register url={sallerEndPoint} />
                 </div>
-                {/* <Newletters layout="container" /> */}
             </PageContainer>
         </>
     );

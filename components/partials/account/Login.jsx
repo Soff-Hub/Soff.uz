@@ -49,20 +49,18 @@ class Login extends Component {
         const { loginUser } = useAuth();
 
         const user = await loginUser(e);
-
         if (user) {
             if (user.status >= 400) {
                 notification.open({
-                    message: "Nimadir noto'g'ri bajarildi",
-                    description:
-                        "Parol yoki raqam xato kiritilgan bo'lshi mumkin!",
+                    message: `${user?.data?.msg}`,
                     duration: 500,
+                    type:'error'
                 });
             } else {
                 this.setState({ report: !this.state.report });
                 notification.open({
-                    message: 'Xush kelibsiz saytimizga!',
-                    description: 'Siz muvaffaqqiyatli kirdingiz!',
+                    message: `${user?.data?.message}`,
+                    description: 'Siz saytga muvaffaqqiyatli kirdingiz!',
                     type: 'success',
                 });
                 this.props.dispatch(login({ user: user.data, data: e }));
@@ -79,7 +77,6 @@ class Login extends Component {
     }
 
     render() {
-        console.log('vvvvv', this.state.value);
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -137,16 +134,7 @@ class Login extends Component {
                                         />
                                     </Form.Item>
                                 </div>
-                                {/* <div className="form-group">
-                                    <div className="ps-checkbox">
-                                        <input
-                                            className="form-control"
-                                            type="checkbox"
-                                            id="remember-me"
-                                            name="remember-me"
-                                        />
-                                    </div>
-                                </div> */}
+                               
                                 <div className="form-group submit">
                                     {this.state.report ? (
                                         <button
