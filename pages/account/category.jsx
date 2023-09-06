@@ -11,7 +11,7 @@ import LoginPage from './login';
 const MyAccountPage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {

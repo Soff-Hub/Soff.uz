@@ -8,7 +8,7 @@ import Newletters from '~/components/partials/commons/Newletters';
 const MyAccountPage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {

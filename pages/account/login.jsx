@@ -9,11 +9,11 @@ import Newletters from '~/components/partials/commons/Newletters';
 const LoginPage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {
-            text: 'Login',
+            text: 'Kirish',
         },
     ];
     return (

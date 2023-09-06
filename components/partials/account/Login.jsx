@@ -16,6 +16,7 @@ class Login extends Component {
         super(props);
         this.state = {
             report: true,
+            value: ''
         };
     }
     modalSuccess = (type) => {
@@ -73,9 +74,12 @@ class Login extends Component {
 
     componentDidMount() {
         this.defaultRoutePage();
+        this.setState({value: JSON.parse(localStorage.getItem('data'))?.phone})
+
     }
 
     render() {
+        console.log('vvvvv', this.state.value);
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -107,6 +111,8 @@ class Login extends Component {
                                             },
                                         ]}>
                                         <Input
+                                        // defaultValue={this.state.value}
+                                        defaultValue ={JSON.parse(localStorage.getItem('data'))?.phone ? JSON.parse(localStorage.getItem('data')).phone : ''}
                                             className="form-control"
                                             type="text"
                                             placeholder="Telefon raqam"
@@ -131,7 +137,7 @@ class Login extends Component {
                                         />
                                     </Form.Item>
                                 </div>
-                                <div className="form-group">
+                                {/* <div className="form-group">
                                     <div className="ps-checkbox">
                                         <input
                                             className="form-control"
@@ -140,7 +146,7 @@ class Login extends Component {
                                             name="remember-me"
                                         />
                                     </div>
-                                </div>
+                                </div> */}
                                 <div className="form-group submit">
                                     {this.state.report ? (
                                         <button

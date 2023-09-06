@@ -47,17 +47,18 @@ export default function useProduct() {
         thumbnailImage: (payload) => {
             if (payload) {
 
-                if (payload.poster_url) {
+                if (payload?.poster_url !== '') {
                     return (
                         <>
                             <LazyLoad>
                                 {
-                                    payload?.poster_url ? 
-                                    <img
-    
-                                        src={payload.poster_url}
-                                        alt={payload.title}
-                                    /> :
+                                    payload?.poster_url 
+                                     ? 
+                                   <div style={{backgroundImage: `url(${payload.poster_url})`}} className='products-image1'>
+
+                                   </div>
+                                   
+                                     :
                                     <img src="/static/img/not-found.png" alt="not found image" />
 
                                 }
@@ -93,99 +94,7 @@ export default function useProduct() {
             return view;
         },
 
-        // badges: (payload) => {
-        //     let view = null;
-        //     if (payload.badges && payload.badges.length > 0) {
-        //         const items = payload.badges.map((item) => {
-        //             if (item.value === 'hot') {
-        //                 return (
-        //                     <span
-        //                         className="ps-product__badge hot"
-        //                         key={item.id}>
-        //                         Hot
-        //                     </span>
-        //                 );
-        //             }
-        //             if (item.value === 'new') {
-        //                 return (
-        //                     <span
-        //                         className="ps-product__badge new"
-        //                         key={item.id}>
-        //                         New
-        //                     </span>
-        //                 );
-        //             }
-        //             if (item.value === 'sale') {
-        //                 return (
-        //                     <span
-        //                         className="ps-product__badge sale"
-        //                         key={item.id}>
-        //                         Sale
-        //                     </span>
-        //                 );
-        //             }
-        //         });
-        //         view = <div className="ps-product__badges">{items}</div>;
-        //     }
-        //     return view;
-        // },
-        // badge: (payload) => {
-        //     let view;
-        //     if (payload.badge && payload.badge !== null) {
-        //         view = payload.badge.map((badge) => {
-        //             if (badge.type === 'sale') {
-        //                 return (
-        //                     <div className="ps-product__badge">
-        //                         {badge.value}
-        //                     </div>
-        //                 );
-        //             } else if (badge.type === 'outStock') {
-        //                 return (
-        //                     <div className="ps-product__badge out-stock">
-        //                         {badge.value}
-        //                     </div>
-        //                 );
-        //             } else {
-        //                 return (
-        //                     <div className="ps-product__badge hot">
-        //                         {badge.value}
-        //                     </div>
-        //                 );
-        //             }
-        //         });
-        //     }
-        //     if (payload.sale_price) {
-        //         const discountPercent = (
-        //             ((payload.price - payload.sale_price) /
-        //                 payload.sale_price) *
-        //             100
-        //         ).toFixed(0);
-        //         return (
-        //             <div className="ps-product__badge">-{discountPercent}%</div>
-        //         );
-        //     }
-        //     return view;
-        // },
-        // brand: (payload) => {
-        //     let view;
-        //     if (payload.brands && payload.brands.length > 0) {
-        //         view = (
-        //             <Link href="/shop">
-        //                 <a className="text-capitalize">
-        //                     {payload.brands[0].name}
-        //                 </a>
-        //             </Link>
-        //         );
-        //     } else {
-        //         view = (
-        //             <Link href="/shop">
-        //                 <a className="text-capitalize">No Brand</a>
-        //             </Link>
-        //         );
-        //     }
-        //     return view;
-        // },
-        title: (payload) => {
+               title: (payload) => {
             let view = (
                 <Link href="/product/[pid]" as={`/product/${payload.id}`}>
                     <a className="ps-product__title">{payload.title}</a>

@@ -25,7 +25,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
 
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {
@@ -72,7 +72,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                                   </Link>
                                   
                                 ) : (
-                                    <Link href="/account/register">
+                                    <Link href="/account/foydalanuvchi">
                                         <a className="ps-btn ps-btn--fullwidth">
                                             Sotib olish
                                         </a>

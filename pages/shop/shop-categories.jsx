@@ -17,7 +17,7 @@ const ShopCategoriesPage = () => {
             url: '/',
         },
         {
-            text: 'Shop Default',
+            text: 'Xarid do\'koni',
         },
     ];
     return (

@@ -13,7 +13,7 @@ const WidgetShopFilterByPriceRange = ({ data, setFilteredData }) => {
     }
 
     const filterByPrice = () => {
-        let price = data.filter((item) => {
+        let price = data?.filter((item) => {
             return item.price > min && item.price < max;
         });
         return price
@@ -21,6 +21,7 @@ const WidgetShopFilterByPriceRange = ({ data, setFilteredData }) => {
 
 
     useEffect(() => {
+        setFilteredData &&
         setFilteredData(filterByPrice());
     }, [min, max]);
 

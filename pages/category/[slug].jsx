@@ -34,7 +34,7 @@ const ProductCategoryScreen = () => {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
             setCategory(responseData);
-            let arr = responseData.find((item) => item.id == Number(slug));
+            let arr = responseData?.find((item) => item.id == Number(slug));
             setTimeout(() => {
                 setDetail_arr(arr?.promotional_sliders);
             }, 5000)
@@ -52,13 +52,13 @@ const ProductCategoryScreen = () => {
 
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
 
 
         {
-            text: obj ? obj.name : 'Product category',
+            text: obj ? obj?.name : 'Product category',
         },
     ];
 

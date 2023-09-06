@@ -101,24 +101,15 @@ function ElectronicBanner() {
                         </div>
                     ) : (
                         <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '30px',
-                            }}>
+                        className='banner-placholder'>
                             {[1, 2].map((item, i) => {
                                 return (
                                     <div key={i}>
                                         <div
-                                            style={{
-                                                width: '100%',
-                                                height: '170px',
-                                                display: 'flex',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                            }}
-                                            class=" placeholder"
-                                            alt="banner">
+                                            class="placeholder "
+                                            alt="banner"
+                                            id='banner-placholder-item'
+                                            >
                                             <div
                                                 class="spinner-border"
                                                 role="status">

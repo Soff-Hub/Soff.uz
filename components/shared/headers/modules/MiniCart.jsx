@@ -17,12 +17,6 @@ const MiniCart = ({ ecomerce }) => {
     function handleRemoveItem(e, item) {
         e.preventDefault();
         removeItem(item, ecomerce.cartItems, 'cart');
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatdan o'chirdingiz`,
-        });
-        modal.update;
     }
     const amount = calculateAmount(ecomerce.cartItems);
     function addPeriodToThousands(number) {
@@ -47,7 +41,6 @@ const MiniCart = ({ ecomerce }) => {
 
 
     const stat = useSelector(state => state)
-    console.log('satte', stat);
 
     const getCardListData = async () => {
         let config = {
@@ -101,7 +94,7 @@ const MiniCart = ({ ecomerce }) => {
                                 <a className="ps-btn">Sotib olish</a>
                             </Link>
                         ) : (
-                            <Link href="/account/register">
+                            <Link href="/account/foydalanuvchi">
                                 <a className="ps-btn">Sotib olish</a>
                             </Link>
                         )}

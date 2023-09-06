@@ -12,7 +12,7 @@ import LoginPage from './login';
 const InvoicePage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {

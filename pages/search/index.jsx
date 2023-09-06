@@ -7,6 +7,7 @@ import Newsletters from '~/components/partials/commons/Newletters';
 import useGetProducts from '~/hooks/useGetProducts';
 import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
+import PostRepository from '~/repositories/PostRepository';
 
 const SearchPage = () => {
     const [pageSize] = useState(100);
@@ -19,18 +20,17 @@ const SearchPage = () => {
     const [resultdata, setresultData] = useState([]);
 
     async function getSearchData() {
-        const responseData = await ProductRepository.getRecordsSearch();
+        const responseData = await PostRepository.postSearchFilter(query.keyword);
         if (responseData) {
-            console.log(responseData, 'kk');
-            setData(responseData);
+            setresultData(responseData?.results);
         }
     }
 
-    // document.addEventListener("keydown", function(event) {
-    //     if(event.key === "Enter" && query != ''){
-    //         getSearchData()
-    //     }
-    //   })
+    document.addEventListener("keydown", function(event) {
+        if(event.key === "Enter" && query != ''){
+            getSearchData()
+        }
+      })
 
     function handleSetKeyword() {
         if (query && query.keyword !== '') {
@@ -40,17 +40,10 @@ const SearchPage = () => {
         }
     }
 
-    const filterFunc = () => {
-        const filteredData = [...data || []]
-        console.log(data);
-        if (data?.length > 0) {
-            setresultData(filteredData.filter((item) => item.title == 'Ozodbek'));
-            console.log('fi',filteredData);
-        }
-    };
+   
 
     useEffect(() => {
-        filterFunc()
+        // filterFunc()
     }, [data])
     
     useEffect(() => {
@@ -65,14 +58,15 @@ const SearchPage = () => {
             getProducts(queries);
         }
 
-        filterFunc();
+
+        // filterFunc();
     }, [ keyword ]);
 
   
 
     const breadcrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {

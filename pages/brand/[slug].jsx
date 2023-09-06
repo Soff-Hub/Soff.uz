@@ -42,13 +42,13 @@ const ProductByBrandScreen = () => {
 
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
-        {
-            text: 'Shop',
-            url: '/',
-        },
+        // {
+        //     text: 'Shop',
+        //     url: '/',
+        // },
         {
             text: brand ? brand.name : 'Product brand',
         },

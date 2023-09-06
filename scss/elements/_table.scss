@@ -444,13 +444,25 @@
     }
 
     @include media('<md') {
+        thead{
+            tr{
+                th{
+                    &:nth-child(3){
+                        display: none;
+                    }
+                }
+            }
+        }
         tbody {
             tr {
                 td {
                     min-width: 157px;
 
                     &:first-child {
-                        min-width: 400px;
+                        min-width: 250px;
+                    }
+                    &:nth-child(3){
+                        display: none;
                     }
                 }
             }

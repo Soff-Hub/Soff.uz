@@ -14,7 +14,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     const [listView, setListView] = useState(true);
     const [total, setTotal] = useState(0);
     const [classes, setClasses] = useState(
-        'col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 '
+        'col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6 '
     );
     const [load, setLoad] = useState(false);
     const [success, setSuccess] = useState(true);
@@ -28,18 +28,10 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         e.preventDefault();
         setListView(!listView);
     }
-    console.log(data);
 
-    // let array = [...data]
     async function handlePagination(pageVal) {
         setPage(pageVal);
         setNewData(data);
-        console.log('page', pageVal, pageSize);
-        console.log(
-            '??',
-            (pageVal - 1) * pageSize,
-            (pageVal - 1) * pageSize + 2
-        );
         const arr = [];
 
         for (
@@ -48,11 +40,8 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
             i++
         ) {
             data?.[i] ? arr.push(data[i]) : '';
-            console.log(data[i]);
         }
 
-        console.log(pageVal);
-        console.log('arr', arr);
         setNewData(arr);
 
 
@@ -71,7 +60,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     function handleSetColumns() {
         switch (columns) {
             case 2:
-                setClasses('col-xl-6 col-lg-6 col-md-4 col-sm-6 col-6');
+                setClasses('col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6');
                 return 3;
                 break;
             case 4:
@@ -159,7 +148,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         if (success) {
             const items = newData?.map((item) => (
                 <div
-                    className="col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6"
+                    className={classes}
                     key={item.id}>
                     <Product product={item} />
                 </div>
@@ -224,20 +213,20 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                     </select>
                     <div className="ps-shopping__view">
                         <ul className="ps-tab-list">
-                            <li className={listView === true ? 'active' : ''}>
+                            <li className={!listView === true ? 'active' : ''}>
                                 <a
                                     href="#"
                                     onClick={(e) => handleChangeViewMode(e)}>
                                     <i className="icon-grid"></i>
                                 </a>
                             </li>
-                            <li className={listView !== true ? 'active' : ''}>
+                            {/* <li className={listView !== true ? 'active' : ''}>
                                 <a
                                     href="#"
                                     onClick={(e) => handleChangeViewMode(e)}>
                                     <i className="icon-list4"></i>
                                 </a>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </div>

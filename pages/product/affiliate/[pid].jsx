@@ -36,7 +36,7 @@ const ProductDefaultPage = () => {
 
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {

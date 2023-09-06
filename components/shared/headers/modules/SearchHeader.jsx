@@ -5,6 +5,7 @@ import { Spin } from 'antd';
 
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import ProductRepository from '~/repositories/ProductRepository';
+import PostRepository from '~/repositories/PostRepository';
 
 const exampleCategories = [
     'All',
@@ -90,12 +91,12 @@ const SearchHeader = () => {
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 300);
 
-    async function getSearchData() {
-        const responseData = await ProductRepository.getRecordsSearch();
-        if (responseData) {
-            setResultItems(responseData);
-        }
-    }
+    // async function getSearchData() {
+    //     const responseData = await ProductRepository.getRecordsSearch();
+    //     if (responseData) {
+    //         setResultItems(responseData);
+    //     }
+    // }
 
     function handleClearKeyword() {
         setKeyword('');
@@ -107,9 +108,9 @@ const SearchHeader = () => {
         e.preventDefault();
         Router.push(`/search?keyword=${keyword}`);
     }
-
+console.log('llllll', keyword);
     useEffect(() => {
-        getSearchData();
+        // getSearchData();
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword) {
@@ -118,17 +119,12 @@ const SearchHeader = () => {
                     title_contains: keyword,
                 };
 
-                const products = ProductRepository.getRecordsSearch();
+                const products = PostRepository.postSearchFilter(keyword);
 
                 products.then((result) => {
                     setLoading(false);
                     setIsSearch(true);
-                    let Result = result.filter((item) => {
-                        return item.title
-                            .toLowerCase()
-                            .includes(keyword.toLocaleLowerCase());
-                    });
-                    setResultItems(Result);
+                    setResultItems(result?.results);
                 });
             } else {
                 setIsSearch(false);
@@ -141,7 +137,7 @@ const SearchHeader = () => {
             setLoading(false);
             setIsSearch(false);
         }
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, keyword]);
 
     // Views
     let productItemsView,
@@ -181,11 +177,11 @@ const SearchHeader = () => {
         );
     }
 
-    // selectOptionView = exampleCategories.map((option) => (
-    //     <option value={option} key={option}>
-    //         {option}
-    //     </option>
-    // ));
+    selectOptionView = exampleCategories.map((option) => (
+        <option value={option} key={option}>
+            {option}
+        </option>
+    ));
 
     return (
         <form

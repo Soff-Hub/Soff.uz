@@ -43,6 +43,7 @@ class Register extends Component {
 
     
     render() {
+
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -119,6 +120,14 @@ class Register extends Component {
                                             placeholder="Password 2..."
                                         />
                                     </Form.Item>
+                                   <div className='tanishuv-chekbox'>
+                               <label className='chekboxx'>
+                               <input type="checkbox"   /> 
+                               </label>
+                                 <Link href='/account/tanishish' >
+                                 <a className=' p-0 ms-lg-2 m-0 tanishuv-sharti-title' > Tanishib chiqdim , shartlariga roziman! </a>
+                                 </Link>
+                                   </div>
                                 </div>
                                 <div className="form-group submit">
                                     {this.state.report ? (

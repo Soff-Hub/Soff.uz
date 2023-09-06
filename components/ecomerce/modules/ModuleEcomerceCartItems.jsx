@@ -10,12 +10,6 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
     function handleRemoveItem(e, productId) {
         e.preventDefault();
         removeItem({ id: productId }, ecomerce.cartItems, 'cart');
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatdan o'chirdingiz`,
-        });
-        modal.update;
     }
 
     function addPeriodToThousands(number) {

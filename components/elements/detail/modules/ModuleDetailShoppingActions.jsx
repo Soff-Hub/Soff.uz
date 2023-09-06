@@ -17,11 +17,6 @@ const ModuleDetailShoppingActions = ({
     const [redux, setRedux] = useState(false);
     const Router = useRouter();
     const select = useSelector((state) => state.auth.user?.access);
-    // console.log('select', select);
-
-    // const login_token = localStorage.getItem('login_token')
-    // const register_token = localStorage.getItem('token')
-
     const { addItem } = useEcomerce();
 
     function handleAddItemToCart(e) {
@@ -43,7 +38,7 @@ const ModuleDetailShoppingActions = ({
             addItem(product, ecomerce.cartItems, 'cart');
                 Router.push('/account/checkout');
         } else {
-                Router.push('/account/register');
+                Router.push('/account/foydalanuvchi');
         }
     }
     
@@ -182,6 +177,7 @@ const ModuleDetailShoppingActions = ({
 
 
 
+
     if (select) {
         return (
             <div className="ps-product__shopping">
@@ -192,6 +188,7 @@ const ModuleDetailShoppingActions = ({
                     onClick={() => postCart()}>
                     Savatga qo'shish R
                 </a> */}
+
                  <a
                     className="ps-btn ps-btn--black"
                     href="#"

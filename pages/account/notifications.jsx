@@ -11,11 +11,12 @@ import LoginPage from './login';
 const AccountNotificationsPage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {
             text: "Ariza bo'limi",
+
         },
     ];
     const { user } = useSelector(state => state.auth)

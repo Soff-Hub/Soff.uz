@@ -29,12 +29,6 @@ const Wishlist = ({ ecomerce }) => {
     async function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
         removeItem(item, ecomerce.wishlistItems, 'wishlist');
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni saqlanganlardan o'chirdingiz`,
-        });
-        modal.update;
     }
 
     useEffect(() => {
@@ -45,7 +39,7 @@ const Wishlist = ({ ecomerce }) => {
     }, [ecomerce.wishlistItems]);
     // views
     let wishlistItemsView;
-    if (cookies.wishlist && cookies.wishlist?.length > 0) {
+    if ( cookies?.wishlist?.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist table-sm table-md table-xs">
@@ -100,7 +94,7 @@ const Wishlist = ({ ecomerce }) => {
             </div>
 
         );
-    } else {
+    } else if(cookies?.wishlist?.length <= 0) {
         // if (loading) {
         wishlistItemsView = (
             <div className="alert alert-danger" role="alert">

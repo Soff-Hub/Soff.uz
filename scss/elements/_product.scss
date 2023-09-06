@@ -170,7 +170,8 @@
     .ps-product__thumbnail {
 
         min-height: 120px;
-        // max-height: 150px;
+        max-width: 170px;
+        width: 100%;
         position: relative;
         overflow: hidden;
 
@@ -2101,7 +2102,7 @@
     }
 
     .ps-product__thumbnail {
-        max-width: 56px;
+        max-width: 96px;
     }
 
     .ps-product__content {
@@ -2337,10 +2338,10 @@
     }
 
     .ps-product__thumbnail {
-        max-width: 60px;
-        min-width: 60px;
+        max-width: 100px;
+        min-width: 100px;
 
-        min-height: 30px;
+        height: 30px;
     }
 
     .ps-product__content {
