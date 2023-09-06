@@ -151,12 +151,10 @@ function CategoryLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="ps-section__header p-5 mb-5 rounded" style={{ display: "flex", flexWrap: 'wrap', justifyContent: "space-between", backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3>Kategoriya</h3>
-                    <div className='d-flex gap-5 w-75 flex-wrap'>
-                        <input type='search' className='form-control rounded w-75' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'>Kategoriya qo'shish </span></button>
-                    </div>
+                <div className="row  mx-auto gap-5 row-gap-3 p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
+                    <h3 className='col-md-4'>Kategoriya</h3>
+                        <input type='search' className='form-control rounded col-md-5 ' placeholder="Qidiruv" onInput={handleClick} />
+                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'>Kategoriya qo'shish </span></button>
                 </div>
                 <div className="row ">
                     <div className="col-lg-4 pb-5">

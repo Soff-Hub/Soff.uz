@@ -57,7 +57,9 @@ function MyProductsLists() {
     }
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes(user?.access);
-        setTagItems(ItemsData.results);
+        if (ItemsData?.results) {
+            setTagItems(ItemsData.results);
+        }
     }
     function handleClick(e) {
         const text = e.target.value;
@@ -222,12 +224,10 @@ function MyProductsLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className=" p-5 mb-5 rounded d-flex justify-content-between" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='w-50'>Mening mahsulotlarim</h3>
-                    <div className='d-flex gap-5 w-100 '>
-                        <input type='search' className='form-control rounded ' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success " data-bs-target="#exampleModalMyProductsPosts" data-bs-toggle="modal" style={{ width: "250px" }}><span className='fs-4'>+ Mahsulot qo'shish</span></button>
-                    </div>
+                <div className=" p-5 mb-5 rounded row gap-5 row-gap-3 mx-auto" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
+                    <h3 className='col-md-4'>Mening mahsulotlarim</h3>
+                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
+                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#exampleModalMyProductsPosts" data-bs-toggle="modal" ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
                 </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
@@ -245,9 +245,9 @@ function MyProductsLists() {
                                 <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                 <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                    </div>
-                                    <div className='d-flex gap-3 pb-3 pt-5'>
-                                        <select className='form-select rounded-3  fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                            <option className='fs-3' value=''>Barcha kategoriyalar</option>
+                                    <div className='row mx-auto gap-4  pb-4 pt-5'>
+                                        <select className='form-select rounded-3 col-md-4 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                            <option className='fs-3' value=''>Kategoriyalar</option>
                                             {
                                                 dataCategory?.length > 0 && (
                                                     dataCategory?.map(item => (
@@ -256,8 +256,8 @@ function MyProductsLists() {
                                                 )
                                             }
                                         </select>
-                                        <select required className='form-select rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
-                                            <option value="">Barcha Teglar</option>
+                                        <select required className='form-select col-md-3 rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                                            <option value="">Teglar</option>
                                             {
                                                 tagItems?.length > 0 && (
                                                     tagItems.map(item => (
@@ -266,7 +266,7 @@ function MyProductsLists() {
                                                 )
                                             }
                                         </select>
-                                        <RangePicker className='w-100   rounded-3' onChange={(e) => setDate(e)} />
+                                        <RangePicker className='col-md-4 py-3   rounded-3' onChange={(e) => setDate(e)} />
                                     </div>
                                     {
                                         user?.role === "seller" ?

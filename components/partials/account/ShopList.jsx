@@ -115,9 +115,13 @@ function Notifications() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="ps-section__header p-5 mb-5 rounded" style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3>Sotuvchilar</h3>
-                    <input type='search' className='form-control rounded w-50' placeholder="Qidiruv" onInput={handleClick} />
+                <div className=" w-100 mx-auto p-5 mb-5 rounded row  g-3" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
+                    <div className='col-md-5'>
+                    <h3 className='m-0'>Sotuvchilar</h3>
+                    </div>
+                  <div className='col-md-7'>
+                    <input type='search' className='form-control rounded' placeholder="Qidiruv" onInput={handleClick} />
+                  </div>
                 </div>
                 <div className="row flex pb-5" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5" >

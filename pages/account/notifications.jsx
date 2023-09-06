@@ -15,7 +15,7 @@ const AccountNotificationsPage = () => {
             url: '/',
         },
         {
-            text: 'Notifications',
+            text: "Ariza bo'limi",
         },
     ];
     const { user } = useSelector(state => state.auth)

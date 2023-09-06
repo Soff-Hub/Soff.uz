@@ -18,9 +18,6 @@ const CreditCard = () => {
         <Cards
           number={number}
           name={name}
-          expiry={date}
-          cvc={cvc}
-          focused={focus}
         />
       </div>
 

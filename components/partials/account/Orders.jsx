@@ -174,9 +174,9 @@ function OrdersLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="ps-section__header p-5 mb-5 rounded" style={{ display: "flex", justifyContent: "space-between", backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3>Buyurtmalar</h3>
-                    <input type='search' className='form-control rounded w-50' placeholder="Qidiruv" onInput={handleClick} />
+                <div className="row g-3 p-5 mb-5 mx-auto rounded" style={{  backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
+                    <h3 className='col-md-5'>Buyurtmalar</h3>
+                    <input type='search' className='form-control rounded col-md-7' placeholder="Qidiruv" onInput={handleClick} />
                 </div>
                 <div className="row pb-5 " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
@@ -194,15 +194,15 @@ function OrdersLists() {
                                 <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                 <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                    </div>
-                                   <div className='py-4 d-flex gap-4 pb-5 flex-start' >
-                                   <select className='form-select fs-3 py-3 rounded-3 w-50' onChange={(e)=>setSelector(e.target.value)}  >
+                                   <div className='py-4 row gap-5 mx-auto row-gap-3 pb-5' >
+                                   <select className='form-select fs-3 py-3 rounded-3 col-md-6' onChange={(e)=>setSelector(e.target.value)}  >
                                             <option className='fs-3' selected value="">Barcha holatlar</option>
                                             <option className='fs-3' value="pending">Moderatsiya</option>
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
 
-                                   <RangePicker className='w-50   rounded-3' onChange={(e)=>setDate(e)} />
+                                   <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e)=>setDate(e)} />
                                    </div>
                                    {
                                     user?.role==="admin" ?

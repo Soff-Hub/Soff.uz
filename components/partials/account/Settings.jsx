@@ -31,7 +31,10 @@ function Notifications() {
                     </div>
                     <div className="col-lg-8">
                         <div className="ps-page__content">
-                            <div className="ps-section--account-setting">
+                            <div className="ps-section--account-setting ">
+                            <div className="ps-section__header mx-3 mt-4 mb-4">
+                                    <h3>Sozlamalar</h3>
+                                </div>
                                 <div className="ps-section__content">
                                         <form className='row g-3'>
                                             <div className='col-md-5'>
@@ -40,7 +43,7 @@ function Notifications() {
                                               <div className='col-md-5'>
                                             <input type="text" placeholder='Familiya ' className='form-control rounded-3' onChange={(e)=> setLastUpdate(e.target.value)} />
                                               </div>
-                                            <button  onClick={handleClickEdit} className='btn btn-success   col-md-2 py-3'><span className='fs-4'>Saqlash</span></button>
+                                            <button  onClick={handleClickEdit} className='btn btn-success py-3 px-4 col-md-2 mx-auto' style={{width:"325px"}}><span className='fs-4'>Saqlash</span></button>
                                         </form>
                             <div className='py-5'>
                             <CreditCard/>

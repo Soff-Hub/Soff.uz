@@ -277,11 +277,36 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getBannerLists() {
-        const endPoint = `admin/banner/`;
-        const reponse = await Repository.get(baseUrl+endPoint)
+    async getProfileAriza(token) {
+        const endPoint = "application-list/"
+        const reponse = await Repository({
+            url:baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
             .then((response) => {
-                if (response.status===200) {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getProfileArizaAdmin(token) {
+        const endPoint = "admin/application/"
+        const reponse = await Repository({
+            url:baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
                     return response.data;
                 } else {
                     return null;

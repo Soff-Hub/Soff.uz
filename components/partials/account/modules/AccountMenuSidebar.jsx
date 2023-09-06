@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router'; 
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import { Button, Tooltip } from 'antd';
 
 
 
@@ -26,15 +27,24 @@ const AccountMenuSidebar = ({ data }) => {
 
 return(
     <aside className="ps-widget--account-dashboard">
-    <div className="ps-widget__header">
+    <div className="ps-widget__header  p-2 pb-4">
     <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
         <figure>
             <h4 className='m-0 '> {profile?.first_name && profile?.last_name ? (<><span>{profile?.first_name }</span> <span> {profile?.last_name}</span></>) : (user?.role === "seller" ? <span>{profile?.role ? "Sotuvchi" : "malumt yo'q"}</span> : user.role==="admin" ? <span>{profile?.role ? "Admin" : "malumt yo'q"}</span> : user.role==="customer" ? <span>{profile?.role ? "Foydalanuvchi" : "malumt yo'q"}</span>  : <></>  ) }  </h4>
             <p>{profile?.phone}</p>
-
-
         </figure>
     </div>
+    {
+        user?.role === "seller"
+        ?
+    <div className='pb-3'>
+        <Tooltip title={`${profile?.is_payment === false ? `Pul yechib olish uchun ` + profile?.min_sum +  " So'mdan o'tish kerak "  : " Pulni yechib olishingiz mumkin"  }`} defaultOpen color={`${profile?.is_payment === false ? "red" : "green" }`}>
+          <Button className='w-100 pb-5 ' ><strong className={`fs-3 text-${profile?.is_payment === false ? "danger" : "success"}`} > Hisobingizda: {profile?.wallet} so'm</strong></Button>
+        </Tooltip>
+    </div>
+    :
+    <></>
+    }
     <div className="ps-widget__content">
         <ul>
             {data.map(link => (
