@@ -12,6 +12,8 @@
         "compile": "npm run clean && antd-tools"
     },
     "dependencies": {
+        "@ckeditor/ckeditor5-build-classic": "^39.0.2",
+        "@ckeditor/ckeditor5-react": "^6.1.0",
         "ant-design": "^1.0.0",
         "antd": "^5.8.4",
         "antd-tools": "^7.7.1",
@@ -21,6 +23,7 @@
         "fusioncharts": "^3.20.0",
         "history": "^4.10.1",
         "js-cookie": "^2.2.1",
+        "mammoth": "^1.6.0",
         "moment": "^2.29.1",
         "next": "^12.1.0",
         "next-offline": "^4.0.6",

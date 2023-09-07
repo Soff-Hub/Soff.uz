@@ -9,11 +9,10 @@ import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import ModalDelete from './Modal';
-import { useNavigate } from 'react-router-dom'
+import Link from 'next/link';
 
 
 function MyProductsLists() {
-    const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [search, setSerach] = useState([]);
@@ -71,9 +70,7 @@ function MyProductsLists() {
         setData(filterSearch)
     }
 
-   function handleCLickUrl(){
-    navigate("/account/MyProducts/Posts")
-   }
+ 
     async function handleClickEdit(values) {
         const formData = new FormData()
         formData.append('file', fileImg)
@@ -213,7 +210,9 @@ function MyProductsLists() {
                 <div className=" p-5 mb-5 rounded row gap-5 row-gap-3 mx-auto" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3 className='col-md-4'>Mening mahsulotlarim</h3>
                         <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success col-md-2 py-3 " onClick={handleCLickUrl} ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
+                      <Link href={"/account/MyProducts/posts"}>
+                      <button className="btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
+                      </Link>
 
                 </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
