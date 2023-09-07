@@ -22,12 +22,13 @@ class Register extends Component {
         const url = this.props.url;
         const { registerUser } = useAuth();
         const user = await registerUser(url, e);
-        if (user.data) {
+        console.log(user);
+        if (user) {
             if (user.status >= 400) {
                 let message = '';
                 const modal = Modal.error({
                     centered: true,
-                    title: 'Nimadir xato bor!',
+                    title: `${user?.data?.password[0]}`,
                     content: message,
                 });
                 modal.update;
