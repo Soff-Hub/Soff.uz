@@ -11,7 +11,6 @@ import Menu from '~/components/elements/menu/Menu';
 import { stickyHeader } from '~/utilities/common-helpers';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
-// import CategoryRepository from '~/repositories/CategoryRepository';
 
 const HeaderElectronic = () => {
     useEffect(() => {
@@ -21,35 +20,6 @@ const HeaderElectronic = () => {
 
 
     }, []);
-
-    const menuElectronic = [
-        {
-            text: 'Hot Deal',
-            url: '/shop',
-            icon: 'icon-star',
-        },
-        {
-            text: 'Home Electronics',
-            url: '/shop',
-            icon: 'icon-laundry',
-        },
-        {
-            text: 'Computer & Technology',
-            url: '/shop',
-            icon: 'icon-laptop',
-        },
-        {
-            text: 'Camera & Videos',
-            url: '/shop',
-            icon: 'icon-camera2',
-        },
-        {
-            text: 'Office Electronics',
-            url: '/shop',
-            icon: 'icon-surveillance',
-        },
-    ];
-
     
     const [categoryData, setCategoryData] = useState([])
     const [topCategoryData, setTopCategoryData] = useState([])

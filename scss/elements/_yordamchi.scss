@@ -115,6 +115,11 @@
         align-items: center;
     }
 }
+.dropdown-toggle{
+    &::after{
+        margin-top: 10px;
+    }
+}
 
 @include media('<lg') {
     .carosusel-cards {
@@ -625,6 +630,25 @@
     }
 }
 
+@media screen and (max-width: 477px) {
+
+    .ps-section__righ{
+        justify-content: center;
+    }
+    .banner-placholder {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        #banner-placholder-item {
+            width: 200px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
 @media screen and (max-width: 494px) {
     .banner-right {
         display: flex;
@@ -694,6 +718,46 @@
         }
     }
 }
+
+@media screen and (max-width: 441px) {
+
+    .ps-section__righ{
+        justify-content: center;
+    }
+    .banner-placholder {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        #banner-placholder-item {
+            width: 150px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+@media screen and (max-width: 441px) {
+
+    .ps-section__righ{
+        justify-content: center;
+    }
+    .banner-placholder {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        #banner-placholder-item {
+            width: 130px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+
 
 @media screen and (max-width: 425px) {
     .ps-product__container {

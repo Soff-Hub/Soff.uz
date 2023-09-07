@@ -11,7 +11,6 @@ import { useCookies } from 'react-cookie';
 const ElectronicHeaderActions = ({ auth, ecomerce }) => {
     const [cookies, setCookie] = useCookies(['cart']);
 
-    console.log(cookies);
 
     useEffect(() => {
 

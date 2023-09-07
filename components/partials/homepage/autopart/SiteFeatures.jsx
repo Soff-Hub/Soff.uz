@@ -1,5 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
+import { PropagateLoader } from 'react-spinners';
 import ProductRepository from '~/repositories/ProductRepository';
 
 const SiteFeatures = () => {
@@ -34,7 +35,9 @@ const SiteFeatures = () => {
                     </div>
                     )
                 }) : 
-                <>Loading...</>
+                <div style={{display:'flex', justifyContent:'center', marginLeft:'50%', marginTop:'5%'}}>
+                <PropagateLoader color="#FFC107" />
+                </div>
                }
 
               

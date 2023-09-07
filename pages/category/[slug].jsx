@@ -15,39 +15,55 @@ import ShopItems from '~/components/partials/shop/ShopItems';
 const ProductCategoryScreen = () => {
     const Router = useRouter();
     const { slug } = Router.query;
-
-    // console.log('category id', slug);
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(false);
     const [detail_arr, setDetail_arr] = useState([]);
-    const [filteredData, setFilteredData] = useState([])
-    const [obj, setObj] = useState({});
+    const [filteredData, setFilteredData] = useState([]);
+    const [chaildId, setchaildId] = useState(null);
+    const [parentId, setParentId] = useState('');
     async function getCategry() {
         const responseData = await ProductRepository.getRelatedProduct(slug);
         if (responseData) {
-            // console.log(`${slug} id li malumotlar`, responseData);
             setCategory(responseData);
+            setFilteredData(responseData);
+            console.log('default data', responseData);
         }
     }
+    // async function getParentDefaultData() {
+    //     const responseData = await ProductRepository.getRelatedProduct(slug);
+    //     if (responseData) {
+    //         console.log('ota categoriya ichidagilar', responseData);
+    //         setCategory(responseData);
+    //         setFilteredData(responseData);
+    //     }
+    // }
 
-    async function getCategoryData(params) {
-        const responseData = await ProductRepository.getTotalRecords();
+    async function getChaildData(id) {
+        setFilteredData(null);
+        const responseData = await ProductRepository.getCategoriesChaild(id);
         if (responseData) {
-            setCategory(responseData);
-            let arr = responseData?.find((item) => item.id == Number(slug));
-            setTimeout(() => {
-                setDetail_arr(arr?.promotional_sliders);
-            }, 5000)
-
-            setFilteredData(arr?.promotional_sliders)
-            setObj(arr);
+            console.log('respons chaild data', responseData);
+            setFilteredData(responseData);
         }
+
+        setchaildId(null);
     }
 
-    useEffect(() => {
-        getCategry();
+    async function getParentData(id) {
+        setFilteredData(null);
+        const responseData = await ProductRepository.getDocumnetsParentData(id);
+        if (responseData) {
+            setFilteredData(responseData);
+        }
+        setParentId(null);
+    }
 
-        getCategoryData();
+    
+    useEffect(() => {
+        getParentData(slug);
+        if (chaildId) {
+            getChaildData(slug);
+        }
     }, [slug]);
 
     const breadCrumb = [
@@ -56,17 +72,14 @@ const ProductCategoryScreen = () => {
             url: '/',
         },
 
-
         {
-            text: obj ? obj?.name : 'Product category',
+            text: 'Product category',
         },
     ];
-
     //Views
     let productItemsViews;
 
     if (!loading) {
-
         if (category && category.length > 0) {
             productItemsViews = (
                 <ProductItems columns={4} products={category} />
@@ -88,28 +101,22 @@ const ProductCategoryScreen = () => {
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories data={category} />
+                            <WidgetShopCategories
+                                data={category}
+                                setchaildId={setchaildId}
+                                setParentId={(id) => getParentData(id)}
+                            />
                             <WidgetShopFilterByPriceRange
-                                data={detail_arr}
+                                data={filteredData}
                                 setFilteredData={setFilteredData}
                             />
                         </div>
                         <div className="ps-layout__right">
                             <ShopItems
                                 data={filteredData}
-
                                 columns={4}
-
                                 pageSize={8}
-
-
-
-
                             />
-                            {/* <h3 className="ps-shop__heading">
-                                {category && category.name}
-                            </h3>
-                            {productItemsViews} */}
                         </div>
                     </div>
                 </div>

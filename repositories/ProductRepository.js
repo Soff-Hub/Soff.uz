@@ -59,10 +59,10 @@ class ProductRepository {
 
     async getRelatedProduct(pid) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/${pid}/`
+            `${baseUrl}customer/documents/?category=&created_at=&category__parent=${pid ? pid : ''}&min_price=&max_price=`
         )
             .then((response) => {
-                return response.data.similar;
+                return response.data.results;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
@@ -125,6 +125,30 @@ class ProductRepository {
             .finally(false)
         return reponse;
     }
+    async getCategoriesChaild(id) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/?category=${id ? id : ''}&created_at=&category__parent=&min_price=&max_price=`
+        )
+            .then((response) => {
+                return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }))
+            .finally(false)
+        return reponse;
+    }
+    async getDocumnetsParentData(id) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/?category=&created_at=&category__parent=${id}&min_price=&max_price=`
+        )
+            .then((response) => {
+                return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }))
+            .finally(false)
+        return reponse;
+    }
+
+
     async getTopCategories() {
         const reponse = await Repository.get(
             `${baseUrl}customer/top-categories/`

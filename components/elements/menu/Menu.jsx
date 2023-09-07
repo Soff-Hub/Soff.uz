@@ -6,7 +6,6 @@ import MegaMenu from '~/components/elements/menu/MegaMenu';
 const Menu = ({ source, className }) => {
     // Views
 
-    console.log('source' ,source);
     let menuView;
     if (source) {
         menuView = source?.length > 0 ? source?.map((item) => {

@@ -108,7 +108,6 @@ const SearchHeader = () => {
         e.preventDefault();
         Router.push(`/search?keyword=${keyword}`);
     }
-console.log('llllll', keyword);
     useEffect(() => {
         // getSearchData();
         if (debouncedSearchTerm) {

@@ -12,7 +12,7 @@ const FooterLinks = () => {
             setData(respons?.results);
         }
     };
-    console.log('data', data);
+    // console.log('data', data);
     useEffect(() => {
         getDataFunc();
     }, []);

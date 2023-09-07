@@ -13,7 +13,6 @@ export default function useEcomerce() {
     const [cartItemsOnCookie] = useState(null);
     const [cookies, setCookie] = useCookies(['cart']);
     const [products, setProducts] = useState(null);
-    console.log('cookie', cookies);
     return {
         loading,
         cartItemsOnCookie,
@@ -60,7 +59,6 @@ export default function useEcomerce() {
                 setLoading(false);
                 setProducts(payload);
             }
-            // setProducts(payload)
         },
 
         addItem: (newItem, items, group) => {
@@ -68,7 +66,6 @@ export default function useEcomerce() {
                 group === 'cart' && ( cookies.cart ?  cookies?.cart?.every((el) => el.id !== newItem.id) : true)
                
             ) {
-                console.log('add');
                 
                 let newItems = cookies?.cart ? cookies.cart : [];
                 newItems.push(newItem);

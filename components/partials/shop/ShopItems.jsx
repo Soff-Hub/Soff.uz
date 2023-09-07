@@ -9,7 +9,6 @@ import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 
 const ShopItems = ({ columns = 4, pageSize, data }) => {
     const Router = useRouter();
-
     const { query } = Router;
     const [listView, setListView] = useState(true);
     const [total, setTotal] = useState(0);
@@ -44,16 +43,18 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
         setNewData(arr);
 
+        for (
+            let i = (pageVal - 1) * pageSize;
+            i < (pageVal - 1) * pageSize + 2;
+            i++
+        ) {
+            data?.[i] ? arr.push(data[i]) : '';
 
-
-        for (let i = (pageVal - 1) * pageSize ; i < (pageVal - 1) * pageSize + 2; i++) {
-            data?.[i] ? arr.push(data[i]) : ''
-
-            console.log(data[i]);
+            // console.log(data[i]);
         }
 
-        console.log(pageVal);
-        console.log('arr', arr);
+        // console.log(pageVal);
+        // console.log('arr', arr);
         setNewData(arr);
     }
 
@@ -77,18 +78,12 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         }
     }
 
-
     useEffect(() => {
         setTimeout(() => {
             setLoad(true);
         }, 2000);
-        
-     
-        data?.length > 0 ? setSuccess(true) : 
-            setSuccess(false)
-        
-       
 
+        data?.length > 0 ? setSuccess(true) : setSuccess(false);
 
         handleSetColumns();
         if (data) {
@@ -97,18 +92,14 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         }
     }, [query, data]);
 
-
     useEffect(() => {
-        console.log('data', pagenationData);
+        // console.log('data', pagenationData);
     }, [pagenationData]);
 
     // const count = [Math.ceil(data?.length / 3)];
     //     function createArray(length, value) {
     //         return Array.from({ length }, () => value);
     //     }
-
-
-
 
     function compareByCreatedAt(a, b) {
         const dateA = new Date(a.created_at);
@@ -121,14 +112,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         return dateB - dateA;
     }
 
-
     let arr = newData ? [...newData] : [];
-
-
-
-
-
-
 
     function handleSelect(e) {
         if (e.target.value === 'boshi') {
@@ -137,19 +121,15 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         } else if (e.target.value === 'oxiri') {
             arr.sort(compareByCreatedAtLast);
             setNewData(arr);
-
         }
     }
 
     // Views
     let productItemsView;
-
     if (load) {
         if (success) {
-            const items = newData?.map((item) => (
-                <div
-                    className={classes}
-                    key={item.id}>
+            const items = data?.length > 0 && data?.map((item) => (
+                <div className={classes} key={item.id}>
                     <Product product={item} />
                 </div>
             ));
@@ -180,16 +160,9 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         const skeletonItems = generateTempArray(4).map((item) => (
             <div className={classes} key={item}>
                 <SkeletonProduct />
-
-
             </div>
-
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
-
-
-
-
     }
 
     return (
@@ -236,45 +209,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
             </div>
             <div className="ps-shopping__footer text-center">
                 <div className="ps-pagination">
-
-                    {data.length > 0 && (
-
-                        <Pagination
-                            total={data?.length}
-                            pageSize={pageSize}
-                            responsive={true}
-                            showSizeChanger={false}
-                            current={page || 1}
-                            onChange={(e) => handlePagination(e)}
-                        />
-                    )}
-
-                    {data.length > 0 && (
-                        <Pagination
-                            total={data?.length - 1}
-
-                            pageSize={pageSize}
-                            responsive={true}
-                            showSizeChanger={false}
-                            current={page || 1}
-                            onChange={(e) => handlePagination(e)}
-                        />
-                    )}
-
-                    {data.length > 0 && (
-
-                        <Pagination
-                            total={data?.length - 1}
-                            // pageSize={pageSize}
-                            responsive={true}
-                            showSizeChanger={false}
-                            current={page !== undefined ? parseInt(page) : 1}
-                            onChange={(e) => handlePagination(e)}
-                        />
-                    )}
-
-
-
                     {data?.length > 0 && (
                         <Pagination
                             total={data?.length}
@@ -285,9 +219,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                             onChange={(e) => handlePagination(e)}
                         />
                     )}
-
-
-
                 </div>
             </div>
         </div>
