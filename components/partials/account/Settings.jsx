@@ -44,10 +44,15 @@ function Notifications() {
                                               <div className='col-md-5'>
                                             <input type="text" placeholder='Familiya ' className='form-control rounded-3' onChange={(e)=> setLastUpdate(e.target.value)} />
                                               </div>
-                                            <button  onClick={handleClickEdit} className='btn btn-success py-3 px-4 col-md-2 mx-auto' style={{width:"325px"}}><span className='fs-4'>Saqlash</span></button>
+                                            <button  onClick={handleClickEdit} className='btn btn-success py-3 px-4 col-md-2 mx-auto ' style={{maxWidth:"470px"}}><span className='fs-4'>Saqlash</span></button>
                                         </form>
                             <div className='py-5'>
-                            <CreditCard/>
+                                {
+                                    user?.role==="seller" ?
+                                    <CreditCard/>
+                                     :
+                                     <></>
+                                }
                             </div>
 
 

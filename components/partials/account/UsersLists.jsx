@@ -108,7 +108,7 @@ function OrdersLists() {
             dataIndex: 'first_name',
             key: 'age',
             render: (title) => (
-                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-user-tie"></i> {title}</span>
+                <span className="truncate whitespace-nowrap"> {title}</span>
 
             ),
         },

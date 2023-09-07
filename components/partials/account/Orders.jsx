@@ -94,18 +94,9 @@ function OrdersLists() {
             render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
-            title: 'Buyurtma kategoriya',
+            title: 'Buyurtma nomi',
             dataIndex: 'title',
             key: 'address',
-            render:(title)=>(
-                <select className='form-select border-0 fs-4'>
-                {
-                    title.map(item=>(
-                        <option>{item} </option>
-                    ))
-                }
-                </select>
-            )
         },
         {
             title: 'Holat',
@@ -125,33 +116,14 @@ function OrdersLists() {
     ];
     const columnSellers = [
         {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'id',
-        },
-        {
             title: 'Buyurtmachi',
-            dataIndex: 'user',
+            dataIndex: 'user_name',
             key: 'user',
-            render:(user)=>(
-                <span>{user.first_name}</span>
-            )
         },
         {
             title: 'Buyurtma kategoriya',
             dataIndex: 'title',
             key: 'title',
-            render:(title)=>(
-                <select className='form-select border-0 fs-4'>
-                {
-                    title.map(item=>(
-                        <option>{item} </option>
-                    ))
-                }
-                </select>
-            )
-
-
         },
         {
             title: 'Buyurtma sanasi',

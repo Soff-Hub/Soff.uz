@@ -11,6 +11,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
     const [data , setData] =useState([]);
+    const [dataCat , setDataCat] =useState(null);
     const [dataAdmin , setDataAdmin] =useState([]);
     const [dataPrice , setDataPrice] =useState(null);
     const [dataCard , setDataCard] =useState(null);
@@ -19,19 +20,31 @@ function Notifications() {
     const [dataCardModalImg , setDataCardModalImg] =useState(null);
     const [dataCardModalDes , setDataCardModalDes] =useState(null);
 
-    async function getItemsSeller(){
+    async function getItemsSeller(page){
+        if (page===1) {
+            if (page === 1) {
+                setData([])
+            }
+        }
         const Items = await GetRepository.getProfileAriza(user?.access);
-        setData(Items?.results)
+        if (Items?.results) {
+            setData((prev) => [...prev, ...Items.results]);
+        }
     }
-    async function getItemsSellerAdmin(){
-        const Items = await GetRepository.getProfileArizaAdmin(user?.access);
-        setDataAdmin(Items?.results)
+    async function getItemsSellerAdmin(page){
+        if (page === 1) {
+            setDataAdmin([])
+        }
+        const Items = await GetRepository.getProfileArizaAdmin(page ,dataCat , user?.access);
+        if (Items?.results) {    
+            setDataAdmin((prev) => [...prev, ...Items.results]);
+        }
     }
 
     async function getItemsSellerPost(){
         const data ={"credit_card" : dataCard , "amount" : dataPrice}
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
-        getItemsSeller()
+        getItemsSeller(1 , dataCat)
     }
     async function handleClickAriza(){
         const formData = new FormData();
@@ -44,8 +57,9 @@ function Notifications() {
     }
     useEffect(()=>{
         getItemsSeller();
-        getItemsSellerAdmin();
-    },[])
+        getItemsSellerAdmin(1 ,dataCat);
+    },[1 ,dataCat])
+
     const columns = [
         {
             title: 'Summa',
@@ -208,9 +222,16 @@ function Notifications() {
                                 {
                                     user?.role==="admin" ?
                                   (<>
-                                    <h4 className='py-3'>Arizalar</h4>
-                                    
-                                <Table scroll={{ x: 1050 }} pagination={{ disabled: true }} dataSource={dataAdmin} columns={columnsAdmin} />
+                                    <div className='row g-3 mx-auto'>
+                                    <h4 className='py-3 col-md-4'>Arizalar</h4>
+                                    <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
+                                            <option className='fs-3' selected value="">Holatlar</option>
+                                            <option className='fs-3' value="moderation">Moderatsiya</option>
+                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                        </select>
+                                    </div>
+                                <Table scroll={{ x: 1050 }}  dataSource={dataAdmin} columns={columnsAdmin} />
                                   </>) :
                                   <></>
                                
