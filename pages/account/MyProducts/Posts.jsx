@@ -60,7 +60,7 @@ async function GetItemsTag() {
 
   return data;
 };
- const dataForm = getFormValues("FormPostsMyProducts") 
+//  const dataForm = getFormValues("FormPostsMyProducts") 
 
   async function handleClickPosts(values) {
     const formData = new FormData()
