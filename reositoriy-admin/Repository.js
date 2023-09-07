@@ -1,5 +1,5 @@
 import axios from 'axios';
-const baseDomain = 'http://alldataaa.pythonanywhere.com/api/v1/seller/'; 
+const baseDomain = 'https://allldaataaa.pythonanywhere.com/api/v1/seller/'; 
 
 
 export const baseUrl = `${baseDomain}`;

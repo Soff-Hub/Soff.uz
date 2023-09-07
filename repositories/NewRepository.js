@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseDomain = "https://alldataaa.pythonanywhere.com/api/v1/";
+export const baseDomain = "https://allldaataaa.pythonanywhere.com/api/v1/";
 
 const clinet = axios.create({
   baseURL: baseDomain,

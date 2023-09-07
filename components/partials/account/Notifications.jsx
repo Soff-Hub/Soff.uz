@@ -10,55 +10,67 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
-    const [data , setData] =useState([]);
-    const [dataCat , setDataCat] =useState(null);
-    const [dataAdmin , setDataAdmin] =useState([]);
-    const [dataPrice , setDataPrice] =useState(null);
-    const [dataCard , setDataCard] =useState(null);
-    const [dataCardModal , setDataCardModal] =useState(null);
-    const [dataCardModalStatus , setDataCardModalStatus] =useState(null);
-    const [dataCardModalImg , setDataCardModalImg] =useState(null);
-    const [dataCardModalDes , setDataCardModalDes] =useState(null);
+    const [data, setData] = useState([]);
+    const [dataCat, setDataCat] = useState(null);
+    const [dataAdmin, setDataAdmin] = useState([]);
+    const [dataPrice, setDataPrice] = useState(null);
+    const [dataCard, setDataCard] = useState(null);
+    const [dataCardModal, setDataCardModal] = useState(null);
+    const [dataCardModalStatus, setDataCardModalStatus] = useState(null);
+    const [dataCardModalImg, setDataCardModalImg] = useState(null);
+    const [dataCardModalDes, setDataCardModalDes] = useState(null);
+    const [profile, setProfile] = useState(null);
 
-    async function getItemsSeller(page){
-        if (page===1) {
-            if (page === 1) {
-                setData([])
-            }
+    async function ProfileUsers() {
+        const ItemsData = await GetRepository.getProfile(user?.access);
+        setProfile(ItemsData)
+    }
+
+    async function getItemsSeller(page) {
+        if (page === 1) {
+            setData([])
         }
-        const Items = await GetRepository.getProfileAriza(user?.access);
+        const Items = await GetRepository.getProfileAriza(page, user?.access);
         if (Items?.results) {
             setData((prev) => [...prev, ...Items.results]);
+            if (Items?.next) {
+                getItemsSeller(page + 1)
+            }
         }
     }
-    async function getItemsSellerAdmin(page){
+    async function getItemsSellerAdmin(page) {
         if (page === 1) {
             setDataAdmin([])
         }
-        const Items = await GetRepository.getProfileArizaAdmin(page ,dataCat , user?.access);
-        if (Items?.results) {    
+        const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access);
+        if (Items?.results) {
             setDataAdmin((prev) => [...prev, ...Items.results]);
+            if (Items?.next) {
+                getItemsSellerAdmin(page + 1, dataCat)
+            }
         }
     }
 
-    async function getItemsSellerPost(){
-        const data ={"credit_card" : dataCard , "amount" : dataPrice}
+    async function getItemsSellerPost() {
+        const data = { "credit_card": dataCard, "amount": dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
-        getItemsSeller(1 , dataCat)
+        getItemsSeller(1, dataCat);
+        setProfile(null)
     }
-    async function handleClickAriza(){
+    async function handleClickAriza() {
         const formData = new FormData();
-        formData.append("receipt",  dataCardModalImg )
-        formData.append("status",dataCardModalStatus )
-        formData.append("description",dataCardModalDes )
-        const data ={"credit_card" : dataCard , "amount" : dataPrice}
-        const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id , user?.access);
-        getItemsSellerAdmin()
+        formData.append("receipt", dataCardModalImg)
+        formData.append("status", dataCardModalStatus)
+        formData.append("description", dataCardModalDes)
+        const data = { "credit_card": dataCard, "amount": dataPrice }
+        const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
+        getItemsSellerAdmin(1, dataCat)
     }
-    useEffect(()=>{
-        getItemsSeller();
-        getItemsSellerAdmin(1 ,dataCat);
-    },[1 ,dataCat])
+    useEffect(() => {
+        getItemsSeller(1);
+        getItemsSellerAdmin(1, dataCat);
+        ProfileUsers();
+    }, [1, dataCat])
 
     const columns = [
         {
@@ -84,9 +96,9 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                        <a href={image} download> 
-                            <img src={image} width={74} height={46} className='rounded-3 mb-2' />
-                          </a>
+                            <a href={image} download>
+                                <img src={image} width={74} height={46} className='rounded-3 mb-2' />
+                            </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
                     }
@@ -113,7 +125,7 @@ function Notifications() {
             title: 'Summa',
             dataIndex: 'amount',
             key: 'address',
-            render:(price)=>(
+            render: (price) => (
                 <span><i className="fa-solid fa-coins text-warning"></i>  {price}</span>
             )
         },
@@ -126,7 +138,7 @@ function Notifications() {
             title: 'Telefon raqam',
             dataIndex: 'user',
             key: 'address',
-            render:(user)=>(
+            render: (user) => (
                 <span>{user?.phone}</span>
             )
         },
@@ -143,9 +155,9 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                        <a href={image} download> 
-                            <img src={image} width={74} height={46} className='rounded-3 mb-2' />
-                          </a>
+                            <a href={image} download>
+                                <img src={image} width={74} height={46} className='rounded-3 mb-2' />
+                            </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
                     }
@@ -170,9 +182,9 @@ function Notifications() {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'id',
-            render:(id)=>(
+            render: (id) => (
                 <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
-        
+
             )
         },
     ];
@@ -192,67 +204,75 @@ function Notifications() {
                                     <h3>Ariza bo'limi</h3>
                                 </div>
                                 <div className="ps-section__content">
-                                {
-                                    user?.role==="seller" ?
-                                    (<>
-                                    <form className='row g-2'>
-                                    <div className='col-md-4'>
-                                    <label for="count">Summani kiriting</label>
-                                    <input id='count' type="number" placeholder='Narx' className='form-control rounded-3' onChange={(e)=>(setDataPrice(e.target.value))} />
-                                    </div>
-                                    <div className='col-md-5'>
-                                    <label for="ccn">Karta raqam kiriting</label>
-                                <input  onChange={(e)=>(setDataCard(e.target.value))} id="ccn" type="tel" className='form-control rounded-3' inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx"/>
+                                    {
+                                        user?.role === "seller" ?
+                                            (<>
+                                                <form className='row g-2'>
+                                                    <div className='col-md-4'>
+                                                        <label for="count">Summani kiriting</label>
+                                                        <input id='count' type="number" placeholder='Narx' className='form-control rounded-3' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                    </div>
+                                                    <div className='col-md-5'>
+                                                        <label for="ccn">Karta raqam kiriting</label>
+                                                        <input  onChange={(e) => (setDataCard(e.target.value))} id="ccn" type="tel" className='form-control rounded-3' inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" />
 
-                                    </div>
-                                    <div className='col-md-2'>  
-                                    <Button onClick={getItemsSellerPost} className='bg-success text-light' style={{
-                                        height:"50px",
-                                        marginTop:"25px"
-                                    }}><span className='fs-4'>Ariza Yuborish</span></Button>
+                                                    </div>
+                                                    <div className='col-md-2'>
+                                                        {
+                                                            profile?.is_application === true && profile?.is_payment === true ?
+                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light' style={{
+                                                                    height: "50px",
+                                                                    marginTop: "25px"
+                                                                }}><span className='fs-4'>Ariza Yuborish</span></Button>
+                                                                :
+                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light' style={{
+                                                                    height: "50px",
+                                                                    marginTop: "25px"
+                                                                }}><span className='fs-4'>Ariza Yuborish</span></Button>
+                                                        }
 
-                                    </div>
-                                </form>
-                                <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                <Table scroll={{ x: 740 }} pagination={{ disabled: true }} dataSource={data} columns={columns} />
-                                    </>
-                                ):
-                                <></>
-                                }
-                                {
-                                    user?.role==="admin" ?
-                                  (<>
-                                    <div className='row g-3 mx-auto'>
-                                    <h4 className='py-3 col-md-4'>Arizalar</h4>
-                                    <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
-                                            <option className='fs-3' selected value="">Holatlar</option>
-                                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                        </select>
-                                    </div>
-                                <Table scroll={{ x: 1050 }}  dataSource={dataAdmin} columns={columnsAdmin} />
-                                  </>) :
-                                  <></>
-                               
-                                } 
+                                                    </div>
+                                                </form>
+                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>
+                                                <Table scroll={{ x: 740 }} dataSource={data} columns={columns} />
+                                            </>
+                                            ) :
+                                            <></>
+                                    }
+                                    {
+                                        user?.role === "admin" ?
+                                            (<>
+                                                <div className='row g-3 mx-auto'>
+                                                    <h4 className='py-3 col-md-4'>Arizalar</h4>
+                                                    <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
+                                                        <option className='fs-3' selected value="">Holatlar</option>
+                                                        <option className='fs-3' value="moderation">Moderatsiya</option>
+                                                        <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                                        <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                                    </select>
+                                                </div>
+                                                <Table scroll={{ x: 1050 }} dataSource={dataAdmin} columns={columnsAdmin} />
+                                            </>) :
+                                            <></>
+
+                                    }
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller"  formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
-                <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
-                    Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
-                    <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
-                </label>
-                <select className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
+                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
+                    <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                        Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
+                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
+                    </label>
+                    <select className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
                         <option className='fs-3' selected disabled value="approved">Holatni tanlang</option>
                         <option className='fs-3' value="approved">Tasdiqlangan </option>
                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                         <option className='fs-3' value="moderation">Moderatsiya</option>
                     </select>
-                <input type="text" className='form-control rounded-3' placeholder='Tavsif' onChange={(e)=>(setDataCardModalDes(e.target.value))}/>
+                    <input type="text" className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
                 </ModalDeletePostEdit>
             </div>
         </section>

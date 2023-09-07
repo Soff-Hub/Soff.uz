@@ -262,7 +262,7 @@ class GetRepository {
     }
     async getProfile(token) {
         const reponse = await Repository({
-            url: "https://alldataaa.pythonanywhere.com/auth/profile/",
+            url: "https://allldaataaa.pythonanywhere.com/auth/profile/",
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
