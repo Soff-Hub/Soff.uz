@@ -62,7 +62,9 @@ const ProductCategoryScreen = () => {
     useEffect(() => {
         getParentData(slug);
         if (chaildId) {
+           setTimeout(() => {
             getChaildData(slug);
+           }, 1000)
         }
     }, [slug]);
 

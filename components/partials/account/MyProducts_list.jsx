@@ -210,7 +210,7 @@ function MyProductsLists() {
                 <div className=" p-5 mb-5 rounded row gap-5 row-gap-3 mx-auto" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3 className='col-md-4'>Mening mahsulotlarim</h3>
                         <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
-                      <Link href={"/account/MyProducts/posts"}>
+                      <Link href={"/account/MyProducts/Posts"}>
                       <button className="btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
                       </Link>
 
