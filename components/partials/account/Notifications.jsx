@@ -67,8 +67,8 @@ function Notifications() {
         getItemsSellerAdmin(1, dataCat)
     }
     useEffect(() => {
-        getItemsSeller(1);
-        getItemsSellerAdmin(1, dataCat);
+        // getItemsSeller(1);
+        // getItemsSellerAdmin(1, dataCat);
         ProfileUsers();
     }, [1, dataCat])
 
@@ -210,7 +210,7 @@ function Notifications() {
                                                 <form className='row g-2'>
                                                     <div className='col-md-4'>
                                                         <label for="count">Summani kiriting</label>
-                                                        <input id='count' type="number" placeholder='Narx' className='form-control rounded-3' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                        <input id='count' type="number" value={profile?.wallet} placeholder='Narx' className='form-control rounded-3' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     </div>
                                                     <div className='col-md-5'>
                                                         <label for="ccn">Karta raqam kiriting</label>
