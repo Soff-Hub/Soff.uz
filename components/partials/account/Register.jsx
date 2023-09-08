@@ -132,8 +132,8 @@ class Register extends Component {
                                                 onChange={this.handleChekked}
                                             />
                                         </label>
-                                        <Link href="/account/tanishish">
-                                            <a className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
+                                        <Link href="/account/tanishish" >
+                                            <a target='_blank' className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
                                                 Tanishib chiqdim , shartlariga
                                                 roziman!
                                             </a>

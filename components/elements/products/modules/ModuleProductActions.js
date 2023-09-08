@@ -48,7 +48,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                     href="#"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="Add To Cart"
+                    title="Savatga qo'shish"
                     onClick={handleAddItemToCart}>
                     <i className="icon-bag2"></i>
                 </a>
@@ -58,7 +58,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                     href="#"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="Quick View"
+                    title="Ko'proq ko'rish"
                     onClick={handleShowQuickView}>
                     <i className="icon-eye"></i>
                 </a>
@@ -68,7 +68,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                     href="#"
                     data-toggle="tooltip"
                     data-placement="top"
-                    title="Add to wishlist"
+                    title="Tanlanganlarga qo'shish"
                     onClick={handleAddItemToWishlist}>
                     <i className="icon-heart"></i>
                 </a>

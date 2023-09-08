@@ -36,7 +36,7 @@ const FooterSecond = ({ classes }) => {
                                                     .slice(0, 4)
                                                     .map((item, i) => (
                                                         <li key={i}>
-                                                            <Link href="/page/blank">
+                                                            <Link href="#">
                                                                 <a>
                                                                     {item.name}
                                                                 </a>
@@ -55,7 +55,7 @@ const FooterSecond = ({ classes }) => {
                                                     .slice(4, 8)
                                                     .map((item, i) => (
                                                         <li key={i}>
-                                                            <Link href="/page/blank">
+                                                            <Link href="#">
                                                                 <a>
                                                                     {item.name}
                                                                 </a>
@@ -74,7 +74,7 @@ const FooterSecond = ({ classes }) => {
                                                     .slice(8, 12)
                                                     .map((item, i) => (
                                                         <li key={i}>
-                                                            <Link href="/page/blank">
+                                                            <Link href="#">
                                                                 <a>
                                                                     {item.name}
                                                                 </a>
@@ -93,7 +93,7 @@ const FooterSecond = ({ classes }) => {
                                                     .slice(12, 16)
                                                     .map((item, i) => (
                                                         <li key={i}>
-                                                            <Link href="/page/blank">
+                                                            <Link href="#">
                                                                 <a>
                                                                     {item.name}
                                                                 </a>
@@ -114,7 +114,7 @@ const FooterSecond = ({ classes }) => {
                     </p>
                     <p>
                         <span> Biz xavfsiz to'lovdan foydalanamiz:</span>
-                        <Link href="/page/blank">
+                        <Link href="#">
                             <a>
                                 <img
                                     src="/static/img/payment-method/click_logo.png"
@@ -123,7 +123,7 @@ const FooterSecond = ({ classes }) => {
                                 />
                             </a>
                         </Link>
-                        <Link href="/page/blank">
+                        <Link href="#">
                             <a>
                                 <img
                                     src="/static/img/payment-method/payme_logo.png"
