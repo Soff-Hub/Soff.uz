@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Table } from 'antd';
+import { Button, Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -20,26 +20,25 @@ function ProductsLists() {
     const [dataValCat, setDataCat] = useState(null);
     const [dataValStatus, setDataCatStatus] = useState(null);
     const [date, setDate] = useState(null);
+    const [dateArxiv, setDateArxiv] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
-
-    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id,) {
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id,arxiv) {
         if (page === 1) {
             await setData([])
             setSerach([])
         }
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id,arxiv, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id)
+                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id, arxiv)
             }
         }
     }
-
     async function GetItemsCategory(page) {
         if (page === 1) {
             setDataVal([])
@@ -48,7 +47,7 @@ function ProductsLists() {
         setDataVal((prev) => [...prev, ...ItemsData.results]);
     }
     async function handleClickView(item) {
-        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id,null, user?.access);
         setDeleteIdView(ItemsData);
     }
     function handleClick(e) {
@@ -66,15 +65,35 @@ function ProductsLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'zgartirdingiz`,
         });
-        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null)
+        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv)
+    }
+    function handleCLickArxiv() {
+        setDateArxiv(!dateArxiv);
+    }
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
     }
     useEffect(() => {
         GetItemsCategory(1)
     }, [])
 
     useEffect(() => {
-        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null)
-    }, [dataValCat, dataValStatus, dataFormat])
+        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv)
+    }, [dataValCat, dataValStatus, dataFormat, dateArxiv])
 
 
     const columns = [
@@ -97,8 +116,9 @@ function ProductsLists() {
             title: 'Nomi',
             dataIndex: 'title',
             key: 'age',
+            width: 350,
             render: (title) => (
-                <span className="truncate whitespace-nowrap"> {title}</span>
+                <span className="truncate whitespace-nowrap "> {title}</span>
 
             ),
         },
@@ -123,7 +143,7 @@ function ProductsLists() {
             dataIndex: 'price',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {price}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
         {
@@ -137,6 +157,8 @@ function ProductsLists() {
                         (<span><i className="fa-solid text-success fa-circle-check"></i> Tasdiqlangan</span>) :
                         status === 'cancelled' ?
                             (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                            status === 'Arxivlangan' ?
+                            (<span><i className="fa-solid fa-inbox text-danger"></i> Arxivlangan</span>) :
                             <></>
             ),
 
@@ -174,8 +196,8 @@ function ProductsLists() {
                             <div className="ps-section--account-setting">
                                 <div>
                                     <div className='row  pb-3 gap-4 mx-auto w-100'>
-                                        <select className='form-select rounded-3 col-md-4 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                            <option className='fs-3' value=''>Kategoriyalar</option>
+                                        <select className='form-select rounded-3 col-md-6 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                            <option className='fs-3' value=''> Barcha Kategoriyalar</option>
                                             {
                                                 dataVal.length > 0 && (
                                                     dataVal.map(item => (
@@ -184,15 +206,16 @@ function ProductsLists() {
                                                 )
                                             }
                                         </select>
-                                        <select className='form-select col-md-3 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
-                                            <option className='fs-3' selected value="">Holatlar</option>
+                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
+                                            <option className='fs-3' selected value="">Barcha holatlar</option>
                                             <option className='fs-3' value="moderation">Moderatsiya</option>
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
-                                        <RangePicker className='w-100 py-3 col-md-4 rounded-3' onChange={(e) => setDate(e)} />
+                                        <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
+                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{height:"48px"}}><span className='fs-3'>Arxivlangan holatlar</span></Button>
                                     </div>
-                                    <Table scroll={{ x: 1100 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 1300 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>

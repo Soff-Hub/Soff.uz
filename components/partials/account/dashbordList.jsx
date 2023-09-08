@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import {  Table } from 'antd';
+import { Table } from 'antd';
 // import dynamic from 'next/dynamic';
 import CalculateTimeDifference from './DateFormatter';
 import Example from './Chart';
@@ -14,20 +14,38 @@ function DashbordList() {
     const [dataProducts, setDataProducts] = useState([]);
     const [View, setView] = useState({});
 
-    const { accountLinks ,  user} = useSelector(state => state.auth)
+    const { accountLinks, user } = useSelector(state => state.auth)
+
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
 
     async function GetItemsProducts() {
         const ItemsData = await GetRepository.getSellerDashbord(user?.access);
-       if (ItemsData) {
-        
-           setData(ItemsData);
-       }
+        if (ItemsData) {
+
+            setData(ItemsData);
+        }
     }
     async function GetItemsProductsPopular(page) {
         if (page === 1) {
             setDataProducts([])
         }
-        const ItemsData = await GetRepository.getPopularProducts(page ,user?.access);
+        const ItemsData = await GetRepository.getPopularProducts(page, user?.access);
         if (ItemsData?.results) {
             setDataProducts((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
@@ -41,12 +59,12 @@ function DashbordList() {
             setDataOrders([])
         }
         const ItemsData = await GetRepository.getOrdersListsDashbord(page, user?.access);
-         if (ItemsData?.results) {
+        if (ItemsData?.results) {
             setDataOrders((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
                 GetItemsProducts(page + 1)
             }
-         }
+        }
     }
     async function handleClickView(item) {
         const ItemsData = await GetRepository.getPopularProductsView(item.id, user?.access);
@@ -63,6 +81,7 @@ function DashbordList() {
             title: 'Nomi',
             dataIndex: 'title',
             key: 'age',
+            width: 350,
         },
         {
             title: 'Sotuvchi',
@@ -85,14 +104,14 @@ function DashbordList() {
             dataIndex: 'price',
             key: 'age',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {price}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
         {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
-            render:(id)=>(
+            render: (id) => (
                 <a data-bs-target="#staticBackdropViewPopular" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-5" onClick={() => handleClickView(dataProducts.find(item => item.id === id))}></i></a>
             )
 
@@ -100,32 +119,21 @@ function DashbordList() {
     ];
     const columnsOrders = [
         {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'name',
-        },
-        {
             title: 'Buyurtmachi',
-            dataIndex: 'user',
+            dataIndex: 'user_name',
             key: 'age',
-            render: (user) => (
-                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-user-tie"></i> {user?.first_name}</span>
-            ),
         },
         {
             title: 'Telefon raqam',
-            dataIndex: 'user',
+            dataIndex: 'phone',
             key: 'age',
-            render: (user) => (
-                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-user-tie"></i> {user?.phone}</span>
-            ),
         },
         {
             title: 'Narx',
-            dataIndex: 'total_price',
+            dataIndex: 'price',
             key: 'address',
             render: (total_price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {total_price}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
             ),
         },
         {
@@ -139,7 +147,7 @@ function DashbordList() {
             dataIndex: 'status',
             key: 'address',
             render: (status) => (
-                <span>{status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>)  : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> tasdiqlanganmagan</span>)}</span>
+                <span>{status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> tasdiqlanganmagan</span>)}</span>
             ),
 
         },
@@ -148,190 +156,159 @@ function DashbordList() {
     //     () => import('./Chart'),
     //     { ssr: false }
     //   )
-    
+
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 {
-                    user?.role==="admin" ?
-                    <div className='pb-4  d-flex gap-3 overflow-x-scroll' >
-                    <div>
-                    <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
+                    user?.role === "admin" ?
+                        <div className='pb-4  d-flex gap-3 overflow-x-scroll' >
                             <div>
-                                <h4>Jami daromad</h4>
-                                <span>(Butun davr mobaynida)</span>
-                            </div>
-                            <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
-                        </div>
-                        {
-                            data?.all_revenue ?
-                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {data?.all_revenue}</h4>
-                           :
-                           <span className='mt-5'>Sizda hozircha daromad yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                    <div>
-                    <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Jami daromad</h4>
-                                <span>(Oxirgi 30 kun)</span>
-                            </div>
-                            <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
-                        </div>
-                        {
-                            data?.total_revenue ?
-                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {data?.total_revenue}</h4>
-                           :
-                           <span className='pt-5'>Sizda hozircha daromad yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                    <div>
-                   <div className=' bg-white py-5 px-4  ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Bugungi daromad</h4>
-                                <span>(Bugungi daromad)</span>
-                            </div>
-                            <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
-                        </div>
-                        {
-                            data?.today_revenue ?
-                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {data?.today_revenue}</h4>
-                           :
-                        <span className='pt-5'>Sizda hozircha daromad yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
+                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami daromad</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
+                                    </div>
 
-                        }
-                    </div>
-                   </div>
-                    <div>
-                    <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Jami buyurtma</h4>
-                                <span>(Butun davr mobaynida)</span>
-                            </div>
-                            <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
-                        </div>
-                        {
-                         data?.total_order ?
-                        <h4 className='mt-5'>{data?.total_order}</h4>
-                        :
-                        <span className='pt-5'>Sizda hozircha buyurtmalar yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                  
-                    <div>
-                    <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Jami do'konlar</h4>
-                                <span>(Butun davr mobaynida)</span>
-                            </div>
-                            <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
-                        </div>
-                        {   data?.total_shops ?
-                            <h4 className='mt-5 '>{data?.total_shops}</h4>
-                         :
-                        <span className='pt-5'>Sizda hozircha do'konlar  yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                </div> 
-                :
-                <div className='pb-4  d-flex gap-3 overflow-x-scroll' >
-                    <div>
-                    <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Jami daromad</h4>
-                                <span>(Butun davr mobaynida)</span>
-                            </div>
-                            <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
-                        </div>
-                        {
-                            data?.all_revenue ?
-                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {data?.all_revenue}</h4>
-                           :
-                           <span className='mt-5'>Sizda hozircha daromad yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                    <div>
-                    <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Jami daromad</h4>
-                                <span>(Oxirgi 30 kun)</span>
-                            </div>
-                            <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
-                        </div>
-                        {
-                            data?.last_month_revenue ?
-                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {data?.last_month_revenue}</h4>
-                           :
-                           <span className='pt-5'>Sizda hozircha daromad yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                    <div>
-                   <div className=' bg-white py-5 px-4  ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Bugungi daromad</h4>
-                                <span>(Bugungi daromad)</span>
-                            </div>
-                            <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
-                        </div>
-                        {
-                            data?.today_revenue ?
-                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {data?.today_revenue}</h4>
-                           :
-                        <span className='pt-5'>Sizda hozircha daromad yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
+                                    <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)}</h4>
 
-                        }
-                    </div>
-                   </div>
-                    <div>
-                    <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
-                            <div>
-                                <h4>Jami buyurtma</h4>
-                                <span>(Butun davr mobaynida)</span>
+                                </div>
                             </div>
-                            <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
+                            <div>
+                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami daromad</h4>
+                                            <span>(Oxirgi 30 kun)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
+                                    </div>
+
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.total_revenue)}</h4>
+                                </div>
+                            </div>
+                            <div>
+                                <div className=' bg-white py-5 px-4  ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Bugungi daromad</h4>
+                                            <span>(Bugungi daromad)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
+                                    </div>
+
+                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)}</h4>
+
+                                </div>
+                            </div>
+                            <div>
+                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami buyurtma</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
+                                    </div>
+    
+                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)}</h4>
+                   
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami Sotuvchilar</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
+                                    </div>
+
+                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.total_shops)}</h4>
+        
+                                </div>
+                            </div>
                         </div>
-                        {
-                         data?.total_order ?
-                        <h4 className='mt-5'>{data?.total_order}</h4>
                         :
-                        <span className='pt-5'>Sizda hozircha buyurtmalar yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                  
-                    <div>
-                    <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                        <div className='d-flex justify-content-between pb-4'>
+                        <div className='pb-4  d-flex gap-3 overflow-x-scroll' >
                             <div>
-                                <h4>Shaxsiy hisob</h4>
-                                <span>(Butun davr mobaynida)</span>
+                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami daromad</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
+                                    </div>
+     
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)}</h4>
+               
+                                </div>
                             </div>
-                            <div><i className="fa-solid fa-file-invoice-dollar fa-2x text-warning"></i></div>
+                            <div>
+                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami daromad</h4>
+                                            <span>(Oxirgi 30 kun)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
+                                    </div>
+
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.last_month_revenue)}</h4>
+                      
+                                </div>
+                            </div>
+                            <div>
+                                <div className=' bg-white py-5 px-4  ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Bugungi daromad</h4>
+                                            <span>(Bugungi daromad)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
+                                    </div>
+   
+                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)}</h4>
+
+                                </div>
+                            </div>
+                            <div>
+                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami buyurtma</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
+                                    </div>
+        
+                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)}</h4>
+
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Shaxsiy hisob</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-file-invoice-dollar fa-2x text-warning"></i></div>
+                                    </div>
+
+                          
+                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.wallet)}</h4>
+                
+                                </div>
+                            </div>
                         </div>
-                        
-                        {   data?.wallet ?
-                            <h4 className='mt-5 '>{data?.wallet}</h4>
-                         :
-                        <span className='pt-5'>Hisobingizda hozircha mablag' yo'q <i className="fa-solid fa-xmark text-danger mt-5"></i></span>
-                        }
-                    </div>
-                    </div>
-                </div>
                 }
                 <div className="row pb-5 mt-5" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
@@ -339,12 +316,12 @@ function DashbordList() {
                             <AccountMenuSidebar data={accountLinks} />
                         </div>
                     </div>
-                    
+
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <Example/>
+                                    <Example />
                                 </div>
                             </div>
                         </div>
@@ -352,13 +329,13 @@ function DashbordList() {
                 </div>
                 <div>
                     <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
-                <Table scroll={{ x:850 }}  dataSource={dataProducts} columns={columns} className='pb-5' />
+                    <Table scroll={{ x: 850 }} dataSource={dataProducts} columns={columns} className='pb-5' />
                 </div>
-              <div>
-              <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
-              <Table scroll={{ x:850 }}  dataSource={dataOrders} columns={columnsOrders} />
-              </div>
-              <div className="modal fade " id="staticBackdropViewPopular" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+                <div>
+                    <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
+                    <Table scroll={{ x: 850 }} dataSource={dataOrders} columns={columnsOrders} />
+                </div>
+                <div className="modal fade " id="staticBackdropViewPopular" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>

@@ -13,7 +13,8 @@ function ContextLists() {
     const [dataUrl, setDataUrl] = useState(null);
     const [dataUrlFile, setDataUrlFile] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
-
+ 
+    
     async function GetItemsBanners() {
         const ItemsData = await GetRepository.getBannerLists(user?.access)
         if (ItemsData?.results) {
@@ -35,7 +36,6 @@ function ContextLists() {
         const ItemsData = await PatchRepository.getBannersPatch(formData, ID, user?.access)
 
 
-
         if (dataUrlFile || dataUrl) {
             const modal = Modal.success({
                 centered: true,
@@ -43,7 +43,7 @@ function ContextLists() {
                 content: `Siz malumotlarni o'zgartirdingiz`,
             });
         }
-
+        GetItemsBanners()
     }
 
     useEffect(() => {
@@ -90,7 +90,7 @@ function ContextLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => (
-                <button className='btn btn-success ' style={{ padding: "12px 12px" }}><span className='fs-4 d-flex gap-2 ' onClick={() => handleClickID(id)}>
+                <button className='btn btn-success ' style={{ padding: "12px 12px" }} onClick={() => handleClickID(id)}><span className='fs-5 d-flex gap-2 ' >
                     Tahrirlash
                     <i className="fa-solid fa-pen-to-square pt-1"></i>
                 </span></button>

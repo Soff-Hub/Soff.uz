@@ -6,6 +6,7 @@ import { Button, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import { BeatLoader } from 'react-spinners';
 
 
 function Notifications() {
@@ -20,6 +21,7 @@ function Notifications() {
     const [dataCardModalImg, setDataCardModalImg] = useState(null);
     const [dataCardModalDes, setDataCardModalDes] = useState(null);
     const [profile, setProfile] = useState(null);
+
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -57,6 +59,7 @@ function Notifications() {
         getItemsSeller(1, dataCat);
         setProfile(null)
     }
+
     async function handleClickAriza() {
         const formData = new FormData();
         formData.append("receipt", dataCardModalImg)
@@ -64,11 +67,29 @@ function Notifications() {
         formData.append("description", dataCardModalDes)
         const data = { "credit_card": dataCard, "amount": dataPrice }
         const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
-        getItemsSellerAdmin(1, dataCat)
+        getItemsSellerAdmin(1, dataCat);
+
+    }
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
     }
     useEffect(() => {
-        // getItemsSeller(1);
-        // getItemsSellerAdmin(1, dataCat);
+        getItemsSeller(1);
+        getItemsSellerAdmin(1, dataCat);
         ProfileUsers();
     }, [1, dataCat])
 
@@ -77,6 +98,9 @@ function Notifications() {
             title: 'Summa',
             dataIndex: 'amount',
             key: 'address',
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)}</span>
+            )
         },
         {
             title: 'Karta raqam',
@@ -87,6 +111,7 @@ function Notifications() {
             title: 'Tavsif',
             dataIndex: 'description',
             key: 'address',
+            width: 350,
         },
         {
             title: 'Chek',
@@ -126,7 +151,7 @@ function Notifications() {
             dataIndex: 'amount',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i>  {price}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)}</span>
             )
         },
         {
@@ -146,6 +171,8 @@ function Notifications() {
             title: 'Tavsif',
             dataIndex: 'description',
             key: 'address',
+            width: 350,
+
         },
         {
             title: 'Chek',
@@ -191,7 +218,7 @@ function Notifications() {
     return (
         <section className="ps-my-account ps-page--account pb-5">
             <div className="container">
-                <div className="row">
+                <div className="row" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
@@ -210,11 +237,11 @@ function Notifications() {
                                                 <form className='row g-2'>
                                                     <div className='col-md-4'>
                                                         <label for="count">Summani kiriting</label>
-                                                        <input id='count' type="number" value={profile?.wallet} placeholder='Narx' className='form-control rounded-3' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     </div>
                                                     <div className='col-md-5'>
                                                         <label for="ccn">Karta raqam kiriting</label>
-                                                        <input  onChange={(e) => (setDataCard(e.target.value))} id="ccn" type="tel" className='form-control rounded-3' inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" />
+                                                        <input  required onChange={(e) => (setDataCard(e.target.value))} id="ccn" type="tel" className='form-control rounded-3' inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" />
 
                                                     </div>
                                                     <div className='col-md-2'>
@@ -228,13 +255,16 @@ function Notifications() {
                                                                 <Button onClick={getItemsSellerPost} disabled className='bg-success text-light' style={{
                                                                     height: "50px",
                                                                     marginTop: "25px"
-                                                                }}><span className='fs-4'>Ariza Yuborish</span></Button>
+                                                                }}>
+                    
+                                                                    <span className='fs-4'>Ariza Yuborish</span>
+                                                                    </Button>
                                                         }
 
                                                     </div>
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                                <Table scroll={{ x: 740 }} dataSource={data} columns={columns} />
+                                                <Table scroll={{ x: 850 }} dataSource={data} columns={columns} />
                                             </>
                                             ) :
                                             <></>
@@ -251,7 +281,7 @@ function Notifications() {
                                                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                                     </select>
                                                 </div>
-                                                <Table scroll={{ x: 1050 }} dataSource={dataAdmin} columns={columnsAdmin} />
+                                                <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin} />
                                             </>) :
                                             <></>
 
@@ -264,15 +294,15 @@ function Notifications() {
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
-                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
+                        <input  required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
                     </label>
-                    <select className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
+                    <select required className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
                         <option className='fs-3' selected disabled value="approved">Holatni tanlang</option>
                         <option className='fs-3' value="approved">Tasdiqlangan </option>
                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                         <option className='fs-3' value="moderation">Moderatsiya</option>
                     </select>
-                    <input type="text" className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
+                    <input type="text" required className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
                 </ModalDeletePostEdit>
             </div>
         </section>

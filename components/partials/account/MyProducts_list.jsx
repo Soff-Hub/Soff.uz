@@ -85,7 +85,6 @@ function MyProductsLists() {
         const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id, user?.access)
 
 
-
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -128,6 +127,23 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat)
     }, [dataValCat, tagName, dataFormat])
 
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
 
     const columns = [
         {
@@ -167,7 +183,7 @@ function MyProductsLists() {
             dataIndex: 'price',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {price}</span>
+                <span> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
        user?.role === "seller" ? {

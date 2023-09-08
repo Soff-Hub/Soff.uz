@@ -13,18 +13,17 @@ function OrdersLists() {
     const { accountLinks, user } = useSelector(state => state.auth);
 
 
-
-
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [date, setDate] = useState(null);
     const [selector, setSelector] = useState(null);
+
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProducts(page, status, date) {
+    async function GetItemsProducts(page,  status, date) {
         if (page === 1) {
             setData([])
         }
@@ -34,9 +33,8 @@ function OrdersLists() {
         setSerach((prev) => [...prev, ...ItemsData.results]);
         if (ItemsData.next) {
             GetItemsProducts(page + 1, status, date)
-
         }
-       }
+    }
 
 
 
@@ -44,11 +42,29 @@ function OrdersLists() {
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
-            item?.user?.first_name.toLowerCase().includes(text.toLowerCase()) 
+            item?.user_name.toLowerCase().includes(text.toLowerCase()) ||
+            item?.title.toLowerCase().includes(text.toLowerCase()) 
 
 
         ))
         setData(filterSearch)
+    }
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
     }
     useEffect(() => {
 
@@ -59,32 +75,27 @@ function OrdersLists() {
     
     const columns = [
         {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'name',
-        },
-        {
             title: 'Buyurtmachi',
-            dataIndex: 'user',
+            dataIndex: 'user_name',
             key: 'age',
-            render: (user) => (
-                <span className="truncate whitespace-nowrap"> {user?.first_name}</span>
+            render: (user_name) => (
+                <span className="truncate whitespace-nowrap"> {user_name}</span>
             ),
         },
         {
             title: 'Telefon raqam',
-            dataIndex: 'user',
+            dataIndex: 'phone',
             key: 'age',
-            render: (user) => (
-                <span className="truncate whitespace-nowrap"> {user?.phone}</span>
+            render: (phone) => (
+                <span className="truncate whitespace-nowrap"> {phone}</span>
             ),
         },
         {
             title: 'Narx',
-            dataIndex: 'total_price',
+            dataIndex: 'price',
             key: 'address',
-            render: (total_price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {total_price}</span>
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
         {

@@ -53,9 +53,9 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-users',
     },
     {
-        text: 'Bildirishnomalar',
-        url: '/account/notifications',
-        icon: 'fa-solid fa-bell',
+        text: "Ariza bo'limi",
+        url: '/account/Application',
+        icon: 'fa-solid fa-file-signature',
     },
     {
         text: 'Context',
@@ -85,9 +85,9 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-truck',
     },
     {
-        text: 'Bildirishnomalar',
-        url: '/account/notifications',
-        icon: 'fa-solid fa-bell',
+        text: "Ariza bo'limi",
+        url: '/account/Application',
+        icon: 'fa-solid fa-file-signature',
     },
     {
         text: 'Profil',
