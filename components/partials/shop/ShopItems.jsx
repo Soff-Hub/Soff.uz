@@ -18,6 +18,7 @@ const ShopItems = ({
     parentId
 }) => {
 
+
     const Router = useRouter();
     const { query } = Router;
     const [listView, setListView] = useState(true);
@@ -72,6 +73,7 @@ const ShopItems = ({
             setNewData(data);
         }else{
             setLoad(true);
+
 
         }
     }, [query, data]);
@@ -177,6 +179,7 @@ console.log(chaildId, parentId, 'id');
             );
             setNewData(respons?.results);
 
+
         }
     }
 
@@ -222,36 +225,20 @@ console.log(chaildId, parentId, 'id');
             productItemsView = <div className="row">{skeletonItems}</div>;
         }
     } else {
-        // const skeletonItems = generateTempArray(4).map((item) => (
-        //     <div className={classes} key={item}>
-        //         <SkeletonProduct />
-        //     </div>
-        // ));
-        // productItemsView = <div className="row">{skeletonItems}</div>;
 
-        productItemsView = (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                }}>
-                <div className={classes} style={{ marginTop: '30px' }}>
-                    <img
-                        src="/static/img/no-document.jpg"
-                        alt="no documnt"
-                    />
-                    <p className="text-center">Hujjat yo'q</p>
-                </div>
+        const skeletonItems = generateTempArray(4).map((item) => (
+            <div className={classes} key={item}>
+                <SkeletonProduct />
             </div>
-        );
-
+        ));
+        productItemsView = <div className="row">{skeletonItems}</div>;
     }
     return (
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
                     <strong className="mr-2">{dataCount}</strong>
+
 
                     ta hujjat bor
                 </p>
@@ -260,14 +247,13 @@ console.log(chaildId, parentId, 'id');
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
-                        <option value="all">Yangilari</option>
-                        {/* <option value="mashhur">
+
+                        <option value="mashhur">
                             Mashhurligi bo'yicha saralash
-                        </option> */}
+                        </option>
                         <option value="arzondan">
                             Narx bo'yicha: arzondan qimmatga
                         </option>
-
                         <option value="qimmatdan">
                             Narx bo'yicha: qimmatdan arzonga
                         </option>

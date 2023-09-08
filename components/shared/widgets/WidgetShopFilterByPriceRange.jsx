@@ -16,6 +16,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             nimPrice,
             maxPrice, null, null, null
 
+
         );
         if (respons && setFilteredData) {
             setFilteredData(respons?.results);

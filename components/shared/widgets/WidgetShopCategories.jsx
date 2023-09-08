@@ -36,6 +36,7 @@ if (category?.length > 0) {
     }
     useEffect(() => {
         getCategry();
+
     }, [data]);
     // Views
     let categoriesView;
@@ -59,6 +60,7 @@ if (category?.length > 0) {
                                     id="flush-headingOne">
                                     <button
                                         className="accordion-button collapsed"
+
                                         type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target={`#flush-collapseOne-${i}`}
@@ -71,7 +73,6 @@ if (category?.length > 0) {
                                     id={`flush-collapseOne-${i}`}
 
                                     class="accordion-collapse collapse"
-
                                     aria-labelledby="flush-headingOne"
                                     data-bs-parent="#accordionFlushExample">
                                     {item?.children?.map((item, i) => {
@@ -81,6 +82,7 @@ if (category?.length > 0) {
                                                      className={item.id === Number(slug) ? 'active' : ''}
                                                     onClick={() =>
                                                         IdYuborish(item.id)
+
                                                     }>
                                                     {item.name}
                                                 </a>
@@ -95,6 +97,7 @@ if (category?.length > 0) {
                             <a
                                 className="category-list-item"
                                 onClick={() => ParentDocumentId(item.id)}>
+
 
                                 {item.name}
                             </a>
