@@ -23,18 +23,20 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
     const ParentDocumentId = (id) => {
         setParentId(id);
     };
-    let arr = [];
-    if (category?.length > 0) {
-        for (let i = 0; i < category.length; i++) {
-            if (category[i]?.children) {
-                arr.unshift(category[i]);
-            } else {
-                arr.push(category[i]);
-            }
+
+let arr = []
+if (category?.length > 0) {
+    for (let i = 0; i < category.length; i++) {
+        if (category[i]?.children) {
+            arr.unshift(category[i])
+        }else{
+            arr.push(category[i])
         }
     }
+}
     useEffect(() => {
         getCategry();
+        
     }, [data]);
     // Views
     let categoriesView;
@@ -46,16 +48,15 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                     className={item.id === Number(slug) ? 'active' : ''}>
                     {item.children !== null ? (
                         <div
-                            className="accordion accordion-flush"
+
+                            class="accordion accordion-flush"
                             id="accordionFlushExample">
-                            <div
-                                className="accordion-item"
-                                style={{ backgroundColor: '#fffcfced' }}>
+                            <div class="accordion-item" style={{backgroundColor:'#fffcfced'}}>
                                 <h2
-                                    className="accordion-header"
+                                    class="accordion-header"
                                     id="flush-headingOne">
                                     <button
-                                        className="accordion-button collapsed"
+                                        class="accordion-button collapsed"
                                         type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target={`#flush-collapseOne-${i}`}
@@ -66,16 +67,18 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                                 </h2>
                                 <div
                                     id={`flush-collapseOne-${i}`}
-                                    className="accordion-collapse collapse"
+
+                                    class="accordion-collapse collapse"
                                     aria-labelledby="flush-headingOne"
                                     data-bs-parent="#accordionFlushExample">
                                     {item?.children?.map((item, i) => {
                                         return (
                                             <Link href={`/category/${item.id}`}>
-                                                <a
-                                                     className={item.id === Number(slug) ? 'active' : ''}
+                                                <a  className={item.id === Number(slug) ? 'active' : ''}
                                                     onClick={() =>
-                                                        IdYuborish(item.id)
+                                                       IdYuborish (
+                                                            item.id
+                                                        )
                                                     }>
                                                     {item.name}
                                                 </a>
@@ -90,6 +93,7 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                             <a
                                 className="category-list-item"
                                 onClick={() => ParentDocumentId(item.id)}>
+
                                 {item.name}
                             </a>
                         </Link>

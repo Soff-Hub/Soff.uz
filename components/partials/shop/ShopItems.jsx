@@ -17,6 +17,7 @@ const ShopItems = ({
     chaildId,
     parentId
 }) => {
+
     const Router = useRouter();
     const { query } = Router;
     const [listView, setListView] = useState(true);
@@ -37,6 +38,7 @@ const ShopItems = ({
         e.preventDefault();
         setListView(!listView);
     }
+
 
     function handleSetColumns() {
         switch (columns) {
@@ -70,6 +72,7 @@ const ShopItems = ({
             setNewData(data);
         }else{
             setLoad(true);
+
         }
     }, [query, data]);
 console.log(chaildId, parentId, 'id');
@@ -112,7 +115,20 @@ console.log(chaildId, parentId, 'id');
             }
         }
 
-       
+
+    const handlePagination = async (e) => {
+        setPage(e);
+        const respons = await ProductRepository.getFilderProduct(
+            e,
+            null,
+            null,
+            null,
+            null
+        );
+        if (respons) {
+            setDataCount(respons.count);
+            setNewData(respons.results);
+        }
     };
 
     async function handleSelect(e) {
@@ -160,6 +176,7 @@ console.log(chaildId, parentId, 'id');
                 DePRICE
             );
             setNewData(respons?.results);
+
         }
     }
 
@@ -234,6 +251,7 @@ console.log(chaildId, parentId, 'id');
             <div className="ps-shopping__header">
                 <p>
                     <strong className="mr-2">{dataCount}</strong>
+
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
@@ -248,6 +266,7 @@ console.log(chaildId, parentId, 'id');
                         <option value="arzondan">
                             Narx bo'yicha: arzondan qimmatga
                         </option>
+
                         <option value="qimmatdan">
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
