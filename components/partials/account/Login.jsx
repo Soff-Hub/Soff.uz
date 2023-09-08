@@ -59,7 +59,7 @@ class Login extends Component {
             } else {
                 this.setState({ report: !this.state.report });
                 notification.open({
-                    message: `${user?.data?.message}`,
+                    message: `${user?.data?.msg}`,
                     description: 'Siz saytga muvaffaqqiyatli kirdingiz!',
                     type: 'success',
                 });

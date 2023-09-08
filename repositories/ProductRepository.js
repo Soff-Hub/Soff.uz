@@ -57,12 +57,23 @@ class ProductRepository {
         return reponse;
     }
 
-    async getRelatedProduct(pid) {
+   
+    async getFilderProduct(page, chaildID, parentID, min, max) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?category=&created_at=&category__parent=${pid ? pid : ''}&min_price=&max_price=`
+            `${baseUrl}customer/documents/?page=${page || ''}&category=${chaildID || ''}&created_at=&category__parent=${parentID || ''}&min_price=${min || ''}&max_price=${max || ''}`
         )
             .then((response) => {
-                return response.data.results;
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getFilterPagination(payload) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/?page=${payload}`
+        )
+            .then((response) => {
+                return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
@@ -117,28 +128,6 @@ class ProductRepository {
     async getTotalRecords() {
         const reponse = await Repository.get(
             `${baseUrl}customer/category-list/`
-        )
-            .then((response) => {
-                return response.data.results;
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }))
-            .finally(false)
-        return reponse;
-    }
-    async getCategoriesChaild(id) {
-        const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?category=${id ? id : ''}&created_at=&category__parent=&min_price=&max_price=`
-        )
-            .then((response) => {
-                return response.data.results;
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }))
-            .finally(false)
-        return reponse;
-    }
-    async getDocumnetsParentData(id) {
-        const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?category=&created_at=&category__parent=${id}&min_price=&max_price=`
         )
             .then((response) => {
                 return response.data.results;

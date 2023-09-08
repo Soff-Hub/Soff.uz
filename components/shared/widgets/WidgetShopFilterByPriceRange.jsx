@@ -1,29 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { Slider, Checkbox } from 'antd';
 import { useRouter } from 'next/router';
+import ProductRepository from '~/repositories/ProductRepository';
 
-const WidgetShopFilterByPriceRange = ({ data, setFilteredData }) => {
+const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     const Router = useRouter();
     const [min, setMin] = useState(0);
-    const [max, setMax] = useState(500000);
+    const [max, setMax] = useState(500000); // price_lt: value[1], setMax(value[1]);
+
+    const filterByPrice = async (nimPrice, maxPrice) => {
+        const respons = await ProductRepository.getFilderProduct(
+            1,
+            null,
+            null,
+            nimPrice,
+            maxPrice
+        );
+        if (respons && setFilteredData) {
+            setFilteredData(respons?.results);
+        }
+    };
 
     function handleChangeRange(value) {
         setMin(value[0]);
-        price_lt: value[1], setMax(value[1]);
+        setMax(value[1]);
+
+        filterByPrice(value[0], value[1]);
     }
-
-    const filterByPrice = () => {
-        let price = data?.filter((item) => {
-            return item.price > min && item.price < max;
-        });
-        return price
-    };
-
-
-    useEffect(() => {
-        setFilteredData &&
-        setFilteredData(filterByPrice());
-    }, [min, max]);
 
     return (
         <aside className="widget widget_shop">

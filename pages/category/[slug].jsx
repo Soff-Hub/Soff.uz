@@ -19,54 +19,51 @@ const ProductCategoryScreen = () => {
     const [loading, setLoading] = useState(false);
     const [detail_arr, setDetail_arr] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-    const [chaildId, setchaildId] = useState(null);
-    const [parentId, setParentId] = useState('');
+    const [chaildId, setchaildId] = useState(!true);
+    const [parentId, setParentId] = useState(true);
+    const [count, setCount] = useState(null);
     async function getCategry() {
-        const responseData = await ProductRepository.getRelatedProduct(slug);
+        const responseData = await ProductRepository.getFilderProduct(1, null, slug, null, null);
         if (responseData) {
-            setCategory(responseData);
-            setFilteredData(responseData);
-            console.log('default data', responseData);
+            setCategory(responseData?.results);
+            setFilteredData(responseData?.results);
+            console.log('default data', responseData?.results);
         }
     }
-    // async function getParentDefaultData() {
-    //     const responseData = await ProductRepository.getRelatedProduct(slug);
-    //     if (responseData) {
-    //         console.log('ota categoriya ichidagilar', responseData);
-    //         setCategory(responseData);
-    //         setFilteredData(responseData);
-    //     }
-    // }
 
-    async function getChaildData(id) {
-        setFilteredData(null);
-        const responseData = await ProductRepository.getCategoriesChaild(id);
-        if (responseData) {
-            console.log('respons chaild data', responseData);
-            setFilteredData(responseData);
-        }
-
-        setchaildId(null);
-    }
-
-    async function getParentData(id) {
-        setFilteredData(null);
-        const responseData = await ProductRepository.getDocumnetsParentData(id);
-        if (responseData) {
-            setFilteredData(responseData);
-        }
+    async function getChaildData(chaildID) {
         setParentId(null);
+        setFilteredData(null);
+        const responseData = await ProductRepository.getFilderProduct(1, chaildID, null, null, null);
+        if (responseData) {
+            console.log('respons chaild data', responseData?.results);
+            setFilteredData(responseData?.results);
+            setCount(responseData.count)
+        }
+
+    }
+
+    async function getParentData(parentID) {
+        setchaildId(null);
+        setFilteredData(null);
+        const responseData = await ProductRepository.getFilderProduct(1, null, parentID, null, null);
+        if (responseData) {
+            setFilteredData(responseData?.results);
+            setCount(responseData.count)
+        }
     }
 
     
     useEffect(() => {
-        getParentData(slug);
         if (chaildId) {
-           setTimeout(() => {
             getChaildData(slug);
-           }, 1000)
+        }
+
+        if (parentId) {
+            getParentData(slug);
         }
     }, [slug]);
+
 
     const breadCrumb = [
         {
@@ -93,6 +90,7 @@ const ProductCategoryScreen = () => {
         productItemsViews = <p>Loading...</p>;
     }
 
+
     return (
         <PageContainer
             footer={<FooterDefault />}
@@ -109,7 +107,7 @@ const ProductCategoryScreen = () => {
                                 setParentId={(id) => getParentData(id)}
                             />
                             <WidgetShopFilterByPriceRange
-                                data={filteredData}
+                            // data={filteredData}
                                 setFilteredData={setFilteredData}
                             />
                         </div>
@@ -117,7 +115,9 @@ const ProductCategoryScreen = () => {
                             <ShopItems
                                 data={filteredData}
                                 columns={4}
-                                pageSize={8}
+                                pageSize={16}
+                                dataCount={count}
+                                setDataCount={setCount}
                             />
                         </div>
                     </div>

@@ -6,8 +6,9 @@ import { useRouter } from 'next/router';
 import useGetProducts from '~/hooks/useGetProducts';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
+import ProductRepository from '~/repositories/ProductRepository';
 
-const ShopItems = ({ columns = 4, pageSize, data }) => {
+const ShopItems = ({ columns = 4, pageSize, data, dataCount, setDataCount }) => {
     const Router = useRouter();
     const { query } = Router;
     const [listView, setListView] = useState(true);
@@ -21,6 +22,7 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     const { productItems, loading, getProducts } = useGetProducts();
     const [pagenationData, setPagenationData] = useState([]);
     const [newData, setNewData] = useState([]);
+    const [selectData, setSelectData] = useState([]);
     const [page, setPage] = useState(1);
 
     function handleChangeViewMode(e) {
@@ -28,35 +30,6 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         setListView(!listView);
     }
 
-    async function handlePagination(pageVal) {
-        setPage(pageVal);
-        setNewData(data);
-        const arr = [];
-
-        for (
-            let i = (pageVal - 1) * pageSize;
-            i < (pageVal - 1) * pageSize + 8;
-            i++
-        ) {
-            data?.[i] ? arr.push(data[i]) : '';
-        }
-
-        setNewData(arr);
-
-        for (
-            let i = (pageVal - 1) * pageSize;
-            i < (pageVal - 1) * pageSize + 2;
-            i++
-        ) {
-            data?.[i] ? arr.push(data[i]) : '';
-
-            // console.log(data[i]);
-        }
-
-        // console.log(pageVal);
-        // console.log('arr', arr);
-        setNewData(arr);
-    }
 
     function handleSetColumns() {
         switch (columns) {
@@ -87,34 +60,27 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
 
         handleSetColumns();
         if (data) {
-            setPagenationData(data);
-            handlePagination(1);
+            setNewData(data);
         }
     }, [query, data]);
 
-    useEffect(() => {
-        // console.log('data', pagenationData);
-    }, [pagenationData]);
+    const handlePagination = async (e) => {
+        setPage(e);
+        const respons = await ProductRepository.getFilderProduct(
+            e,
+            null,
+            null,
+            null,
+            null
+        );
+        if (respons) {
+            setDataCount(respons.count);
+            setNewData(respons.results);
+        }
+    };
 
-    // const count = [Math.ceil(data?.length / 3)];
-    //     function createArray(length, value) {
-    //         return Array.from({ length }, () => value);
-    //     }
-
-    function compareByCreatedAt(a, b) {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        return dateA - dateB;
-    }
-    function compareByCreatedAtLast(a, b) {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        return dateB - dateA;
-    }
-
-    let arr = newData ? [...newData] : [];
-
-    function handleSelect(e) {
+    async function handleSelect(e) {
+        // const respons = await ProductRepository.getFilterSelect(payload)
         if (e.target.value === 'boshi') {
             arr.sort(compareByCreatedAt);
             setNewData(arr);
@@ -128,11 +94,13 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
     let productItemsView;
     if (load) {
         if (success) {
-            const items = data?.length > 0 && data?.map((item) => (
-                <div className={classes} key={item.id}>
-                    <Product product={item} />
-                </div>
-            ));
+            const items =
+                newData?.length > 0 &&
+                newData?.map((item) => (
+                    <div className={classes} key={item.id}>
+                        <Product product={item} />
+                    </div>
+                ));
             productItemsView = (
                 <div className="ps-shop-items">
                     <div className="row">{items}</div>
@@ -164,12 +132,13 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
     }
-
     return (
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
-                    <strong className="mr-2">{data?.length}</strong>
+                    <strong className="mr-2">
+                        {dataCount}
+                    </strong>
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
@@ -177,11 +146,14 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
-                        <option value="boshi">
-                            Boshidagilar bo'yicha saralash
+                        <option value="mashhur">
+                            Mashhurligi bo'yicha saralash
                         </option>
-                        <option value="oxiri">
-                            Oxirgi qo'shilganlar bo'yicha saralash
+                        <option value="arzondan">
+                            Narx bo'yicha: arzondan qimmatga
+                        </option>
+                        <option value="qimmatdan">
+                            Narx bo'yicha: qimmatdan arzonga
                         </option>
                     </select>
                     <div className="ps-shopping__view">
@@ -211,8 +183,8 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                 <div className="ps-pagination">
                     {data?.length > 0 && (
                         <Pagination
-                            total={data?.length}
-                            pageSize={pageSize}
+                            total={dataCount}
+                            pageSize={10}
                             responsive={true}
                             showSizeChanger={false}
                             current={page || 1}

@@ -16,53 +16,79 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
         }
     }
 
-    const  IdYuborish = (id) => {
-        setchaildId(id)
-    }
+    const IdYuborish = (id) => {
+        setchaildId(id);
+    };
 
     const ParentDocumentId = (id) => {
-        setParentId(id)
+        setParentId(id);
+    };
+let arr = []
+if (category?.length > 0) {
+    for (let i = 0; i < category.length; i++) {
+        if (category[i]?.children) {
+            arr.unshift(category[i])
+        }else{
+            arr.push(category[i])
+        }
     }
-
+}
     useEffect(() => {
         getCategry();
-    
+        
     }, [data]);
-    
     // Views
     let categoriesView;
     if (!loading) {
-        if (category && category.length > 0) {
-            const items = category.map((item) => (
+        if (arr && arr.length > 0) {
+            const items = arr.map((item, i) => (
                 <li
                     key={item.id}
                     className={item.id === Number(slug) ? 'active' : ''}>
                     {item.children !== null ? (
-                        <div className="dropdown">
-                            <button
-                                className="btn btn-light fs-4  dropdown-toggle d-flex justify-content-between align-content-center"
-                                style={{ minWidth: '120px' }}
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                {item.name}
-                            </button>
-                            <ul className="dropdown-menu">
-                                {item?.children.map((item, i) => (
-                                    <li key={i}>
-                                        <Link href={`/category/${item.id}`}>
-                                            <a className="dropdown-item fs-4" onClick={() => IdYuborish(item.id)} >
-                                                {item.name}
-                                            </a>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
+                        <div
+                            class="accordion accordion-flush"
+                            id="accordionFlushExample">
+                            <div class="accordion-item" style={{backgroundColor:'#fffcfced'}}>
+                                <h2
+                                    class="accordion-header"
+                                    id="flush-headingOne">
+                                    <button
+                                        class="accordion-button collapsed"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target={`#flush-collapseOne-${i}`}
+                                        aria-expanded="false"
+                                        aria-controls={`flush-collapseOne-${i}`}>
+                                        {item.name}
+                                    </button>
+                                </h2>
+                                <div
+                                    id={`flush-collapseOne-${i}`}
+                                    class="accordion-collapse collapse"
+                                    aria-labelledby="flush-headingOne"
+                                    data-bs-parent="#accordionFlushExample">
+                                    {item?.children?.map((item, i) => {
+                                        return (
+                                            <Link href={`/category/${item.id}`}>
+                                                <a  className={item.id === Number(slug) ? 'active' : ''}
+                                                    onClick={() =>
+                                                       IdYuborish (
+                                                            item.id
+                                                        )
+                                                    }>
+                                                    {item.name}
+                                                </a>
+                                            </Link>
+                                        );
+                                    })}
+                                </div>
+                            </div>
                         </div>
                     ) : (
                         <Link href={`/category/${item.id}`}>
                             <a onClick={() => ParentDocumentId(item.id)}>
-                            {item.name}
+                                {item.name}
                             </a>
                         </Link>
                     )}

@@ -124,6 +124,10 @@
     color: #EEAE00;
 }
 
+.accordion{
+    --bs-accordion-bs: #fffcfced
+}
+
 
 @include media('<lg') {
     .carosusel-cards {

@@ -9,17 +9,20 @@ import ModuleProductDetailSharing from '~/components/elements/detail/modules/Mod
 import ModuleDetailActionsMobile from '~/components/elements/detail/modules/ModuleDetailActionsMobile';
 
 const ProductDetailFullContent = ({ product }) => {
+
+   
+
     let priceView;
     if (product) {
         if (product.is_sale === true) {
             priceView = (
                 <h4 className="ps-product__price sale">
-                    <del className="mr-2">${product.sale_price}</del>$
+                    <del className="mr-2">{product.sale_price}</del>$
                     {product.price}
                 </h4>
             );
         } else {
-            priceView = <h4 className="ps-product__price">${product.price}</h4>;
+            priceView = <h4 className="ps-product__price">{product.price}</h4>;
         }
         return (
             <div className="ps-product--detail ps-product--full-content">

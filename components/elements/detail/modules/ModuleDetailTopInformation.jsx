@@ -3,6 +3,26 @@ import Link from 'next/link';
 import Rating from '~/components/elements/Rating';
 
 const ModuleDetailTopInformation = ({ product }) => {
+
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+
+
     // Views
     let priceView;
 
@@ -11,11 +31,11 @@ const ModuleDetailTopInformation = ({ product }) => {
             <h4 className="ps-product__price sale">
 
                 <del className="mr-2">&{product.sale_price}</del> 
-                {product.price} so'm
+                {addPeriodToThousands(product.price) } so'm
             </h4>
         );
     } else {
-        priceView = <h4 className="ps-product__price">{product.price} so'm </h4>;
+        priceView = <h4 className="ps-product__price"> {addPeriodToThousands(product.price)} so'm </h4>;
     }
     return (
         <header>

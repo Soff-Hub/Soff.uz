@@ -13,10 +13,10 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
     const [productItems, setProductItems] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    async function getProducts(id) {
-        if (id) {
+    async function getProducts(parentID) {
+        if (parentID) {
             setLoading(true);
-            const responseData = await ProductRepository.getRelatedProduct(id);
+            const responseData = await ProductRepository.getFilderProduct(null , null , parentID, null, null);
             if (responseData) {
                 setProductItems(responseData);
                 setTimeout(
