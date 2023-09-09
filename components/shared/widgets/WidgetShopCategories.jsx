@@ -32,6 +32,7 @@ if (category?.length > 0) {
         }else{
             arr.push(category[i])
 
+
         }
     }
     useEffect(() => {
@@ -50,6 +51,7 @@ if (category?.length > 0) {
                         <div
 
                             class="accordion accordion-flush"
+
 
                             id="accordionFlushExample">
                             <div
@@ -73,6 +75,7 @@ if (category?.length > 0) {
                                     id={`flush-collapseOne-${i}`}
 
                                     class="accordion-collapse collapse"
+
                                     aria-labelledby="flush-headingOne"
                                     data-bs-parent="#accordionFlushExample">
                                     {item?.children?.map((item, i) => {
@@ -97,7 +100,6 @@ if (category?.length > 0) {
                             <a
                                 className="category-list-item"
                                 onClick={() => ParentDocumentId(item.id)}>
-
 
                                 {item.name}
                             </a>

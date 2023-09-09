@@ -63,7 +63,6 @@ class ProductRepository {
             // `${baseUrl}customer/documents/?page=${page || ''}&category=${chaildID || ''}&created_at=&category__parent=${parentID || ''}&min_price=${min || ''}&max_price=${max || ''}`
             `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${chaildID || ''}&created_at=&category__parent=${parentID || ''}&min_price=${min || ''}&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${approved_count || ''}&order_by_id=${tartib || ''}&order_by_price=${price || ''}`
 
-
         )
             .then((response) => {
                 return response.data;

@@ -18,7 +18,6 @@ const ShopItems = ({
     parentId
 }) => {
 
-
     const Router = useRouter();
     const { query } = Router;
     const [listView, setListView] = useState(true);
@@ -39,7 +38,6 @@ const ShopItems = ({
         e.preventDefault();
         setListView(!listView);
     }
-
 
     function handleSetColumns() {
         switch (columns) {
@@ -118,19 +116,47 @@ console.log(chaildId, parentId, 'id');
         }
 
 
+
     const handlePagination = async (e) => {
-        setPage(e);
-        const respons = await ProductRepository.getFilderProduct(
-            e,
-            null,
-            null,
-            null,
-            null
-        );
-        if (respons) {
-            setDataCount(respons.count);
-            setNewData(respons.results);
+        // setPage(e);
+        if (chaildId !== null) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                chaildId,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            }else{
+                setLoad(true);
+            }
         }
+        else if (parentId) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                null,
+                parentId,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            }else{
+                setLoad(true);
+            }
+        }
+
+       
     };
 
     async function handleSelect(e) {
@@ -178,7 +204,6 @@ console.log(chaildId, parentId, 'id');
                 DePRICE
             );
             setNewData(respons?.results);
-
 
         }
     }
@@ -229,17 +254,15 @@ console.log(chaildId, parentId, 'id');
         const skeletonItems = generateTempArray(4).map((item) => (
             <div className={classes} key={item}>
                 <SkeletonProduct />
+
             </div>
-        ));
-        productItemsView = <div className="row">{skeletonItems}</div>;
+        ))
     }
     return (
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
                     <strong className="mr-2">{dataCount}</strong>
-
-
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
@@ -248,9 +271,7 @@ console.log(chaildId, parentId, 'id');
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
 
-                        <option value="mashhur">
-                            Mashhurligi bo'yicha saralash
-                        </option>
+                        <option value="all">Yangilari</option>
                         <option value="arzondan">
                             Narx bo'yicha: arzondan qimmatga
                         </option>

@@ -21,14 +21,17 @@ const ProductCategoryScreen = () => {
     const [filteredData, setFilteredData] = useState([]);
 
     const [chaildId, setchaildId] = useState(!true);
+
     const [parentId, setParentId] = useState(true);
+    const [Parent, setParent] = useState(null);
+    const [Chaild, setChaild] = useState(null);
     const [count, setCount] = useState(null);
+    const [nom, setNom] = useState(' Barcha categoriyalar');
     async function getCategry() {
-        const responseData = await ProductRepository.getFilderProduct(1, null, slug, null, null);
+        const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
-            setCategory(responseData?.results);
-            setFilteredData(responseData?.results);
-            console.log('default data', responseData?.results);
+            setCategory(responseData);
+            console.log('default data', responseData);
         }
     }
 
@@ -50,7 +53,6 @@ const ProductCategoryScreen = () => {
             setFilteredData(responseData?.results);
             setCount(responseData.count);
         }
-
     }
 
     async function getParentData(parentID) {
@@ -139,6 +141,7 @@ const ProductCategoryScreen = () => {
 
 
 
+
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -164,7 +167,6 @@ const ProductCategoryScreen = () => {
         productItemsViews = <p>Loading...</p>;
     }
 
-
     return (
         <PageContainer
             footer={<FooterDefault />}
@@ -182,6 +184,7 @@ const ProductCategoryScreen = () => {
                             />
                             <WidgetShopFilterByPriceRange
 
+                                // data={filteredData}
                                 setFilteredData={setFilteredData}
                             />
                         </div>
