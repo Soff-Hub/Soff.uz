@@ -16,7 +16,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
     async function getProducts(parentID) {
         if (parentID) {
             setLoading(true);
-            const responseData = await ProductRepository.getFilderProduct(null , null , parentID, null, null);
+            const responseData = await ProductRepository.getFilderProduct(null , null , parentID, null, null, null, null, null);
             if (responseData) {
                 setProductItems(responseData);
                 setTimeout(

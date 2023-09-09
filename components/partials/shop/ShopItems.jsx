@@ -8,7 +8,15 @@ import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
 
-const ShopItems = ({ columns = 4, pageSize, data, dataCount, setDataCount }) => {
+const ShopItems = ({
+    columns = 4,
+    pageSize,
+    data,
+    dataCount,
+    setDataCount,
+    chaildId,
+    parentId
+}) => {
     const Router = useRouter();
     const { query } = Router;
     const [listView, setListView] = useState(true);
@@ -29,7 +37,6 @@ const ShopItems = ({ columns = 4, pageSize, data, dataCount, setDataCount }) => 
         e.preventDefault();
         setListView(!listView);
     }
-
 
     function handleSetColumns() {
         switch (columns) {
@@ -61,32 +68,98 @@ const ShopItems = ({ columns = 4, pageSize, data, dataCount, setDataCount }) => 
         handleSetColumns();
         if (data) {
             setNewData(data);
+        }else{
+            setLoad(true);
         }
     }, [query, data]);
-
+console.log(chaildId, parentId, 'id');
     const handlePagination = async (e) => {
-        setPage(e);
-        const respons = await ProductRepository.getFilderProduct(
-            e,
-            null,
-            null,
-            null,
-            null
-        );
-        if (respons) {
-            setDataCount(respons.count);
-            setNewData(respons.results);
+        // setPage(e);
+        if (chaildId !== null) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                chaildId,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            }else{
+                setLoad(true);
+            }
         }
+        else if (parentId) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                null,
+                parentId,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            }else{
+                setLoad(true);
+            }
+        }
+
+       
     };
 
     async function handleSelect(e) {
         // const respons = await ProductRepository.getFilterSelect(payload)
-        if (e.target.value === 'boshi') {
-            arr.sort(compareByCreatedAt);
-            setNewData(arr);
-        } else if (e.target.value === 'oxiri') {
-            arr.sort(compareByCreatedAtLast);
-            setNewData(arr);
+        const ID = 'id';
+        const PRICE = 'price';
+        const DePRICE = '-price';
+        if (e.target.value === 'all') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                null,
+                null,
+                null,
+                null,
+                ID,
+                null
+            );
+            if (respons) {
+                setNewData(respons?.results);
+            }else{
+                setNewData(respons?.results);
+            }
+        } else if (e.target.value === 'arzondan') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                PRICE
+            );
+            setNewData(respons?.results);
+        } else if (e.target.value === 'qimmatdan') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                DePRICE
+            );
+            setNewData(respons?.results);
         }
     }
 
@@ -107,38 +180,60 @@ const ShopItems = ({ columns = 4, pageSize, data, dataCount, setDataCount }) => 
                 </div>
             );
         } else {
-            productItemsView = (
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignContent: 'center',
-                    }}>
-                    <div className={classes} style={{ marginTop: '30px' }}>
-                        <img
-                            src="/static/img/no-document.jpg"
-                            alt="no documnt"
-                        />
-                        <p className="text-center">Hujjat yo'q</p>
-                    </div>
+            // productItemsView = (
+            //     <div
+            //         style={{
+            //             display: 'flex',
+            //             justifyContent: 'center',
+            //             alignContent: 'center',
+            //         }}>
+            //         <div className={classes} style={{ marginTop: '30px' }}>
+            //             <img
+            //                 src="/static/img/no-document.jpg"
+            //                 alt="no documnt"
+            //             />
+            //             <p className="text-center">Hujjat yo'q</p>
+            //         </div>
+            //     </div>
+            // );
+
+            const skeletonItems = generateTempArray(4).map((item) => (
+                <div className={classes} key={item}>
+                    <SkeletonProduct />
                 </div>
-            );
+            ));
+            productItemsView = <div className="row">{skeletonItems}</div>;
         }
     } else {
-        const skeletonItems = generateTempArray(4).map((item) => (
-            <div className={classes} key={item}>
-                <SkeletonProduct />
+        // const skeletonItems = generateTempArray(4).map((item) => (
+        //     <div className={classes} key={item}>
+        //         <SkeletonProduct />
+        //     </div>
+        // ));
+        // productItemsView = <div className="row">{skeletonItems}</div>;
+
+        productItemsView = (
+            <div
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignContent: 'center',
+                }}>
+                <div className={classes} style={{ marginTop: '30px' }}>
+                    <img
+                        src="/static/img/no-document.jpg"
+                        alt="no documnt"
+                    />
+                    <p className="text-center">Hujjat yo'q</p>
+                </div>
             </div>
-        ));
-        productItemsView = <div className="row">{skeletonItems}</div>;
+        );
     }
     return (
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
-                    <strong className="mr-2">
-                        {dataCount}
-                    </strong>
+                    <strong className="mr-2">{dataCount}</strong>
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
@@ -146,15 +241,17 @@ const ShopItems = ({ columns = 4, pageSize, data, dataCount, setDataCount }) => 
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
-                        <option value="mashhur">
+                        <option value="all">Yangilari</option>
+                        {/* <option value="mashhur">
                             Mashhurligi bo'yicha saralash
-                        </option>
+                        </option> */}
                         <option value="arzondan">
                             Narx bo'yicha: arzondan qimmatga
                         </option>
                         <option value="qimmatdan">
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
+                        {/* <option value="arzondan">Oldingilari</option> */}
                     </select>
                     <div className="ps-shopping__view">
                         <ul className="ps-tab-list">

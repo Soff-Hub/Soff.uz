@@ -19,42 +19,96 @@ const ProductCategoryScreen = () => {
     const [loading, setLoading] = useState(false);
     const [detail_arr, setDetail_arr] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-    const [chaildId, setchaildId] = useState(!true);
+    const [chaildId, setchaildId] = useState(true);
     const [parentId, setParentId] = useState(true);
+    const [Parent, setParent] = useState(null);
+    const [Chaild, setChaild] = useState(null);
     const [count, setCount] = useState(null);
+    const [nom, setNom] = useState(' Barcha categoriyalar');
     async function getCategry() {
-        const responseData = await ProductRepository.getFilderProduct(1, null, slug, null, null);
+        const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
-            setCategory(responseData?.results);
-            setFilteredData(responseData?.results);
-            console.log('default data', responseData?.results);
+            setCategory(responseData);
+            console.log('default data', responseData);
         }
     }
 
     async function getChaildData(chaildID) {
         setParentId(null);
         setFilteredData(null);
-        const responseData = await ProductRepository.getFilderProduct(1, chaildID, null, null, null);
+        const responseData = await ProductRepository.getFilderProduct(
+            1,
+            chaildID,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
         if (responseData) {
             console.log('respons chaild data', responseData?.results);
             setFilteredData(responseData?.results);
-            setCount(responseData.count)
+            setCount(responseData.count);
         }
-
     }
 
     async function getParentData(parentID) {
         setchaildId(null);
         setFilteredData(null);
-        const responseData = await ProductRepository.getFilderProduct(1, null, parentID, null, null);
+        const responseData = await ProductRepository.getFilderProduct(
+            1,
+            null,
+            parentID,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
         if (responseData) {
             setFilteredData(responseData?.results);
-            setCount(responseData.count)
+            setCount(responseData.count);
+        }
+    }
+    async function tekChaild(chaildID) {
+        // setParentId(null);
+        const responseData = await ProductRepository.getFilderProduct(
+            1,
+            chaildID,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        if (responseData) {
+            console.log('parent', responseData.results);
         }
     }
 
-    
+    async function tekParent(parentID) {
+        // setchaildId(null);
+        const responseData = await ProductRepository.getFilderProduct(
+            1,
+            null,
+            parentID,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        if (responseData) {
+            console.log('chaild', responseData.results);
+        }
+    }
+
     useEffect(() => {
+        tekChaild();
+        tekParent();
+
         if (chaildId) {
             getChaildData(slug);
         }
@@ -62,8 +116,23 @@ const ProductCategoryScreen = () => {
         if (parentId) {
             getParentData(slug);
         }
-    }, [slug]);
 
+        getCategry();
+
+        if (category?.length) {
+            for (let i = 0; i < category.length; i++) {
+                if (category[i].id === Number(slug)) {
+                    setNom(category[i].name);
+                } else if (category[i]?.children?.length > 0) {
+                    for (let j = 0; j < category[i]?.children?.length; j++) {
+                        if (category[i]?.children[j].id === Number(slug)) {
+                            setNom(category[i]?.children[j].name);
+                        }
+                    }
+                }
+            }
+        }
+    }, [slug]);
 
     const breadCrumb = [
         {
@@ -72,7 +141,7 @@ const ProductCategoryScreen = () => {
         },
 
         {
-            text: 'Product category',
+            text: `${nom}`,
         },
     ];
     //Views
@@ -90,7 +159,6 @@ const ProductCategoryScreen = () => {
         productItemsViews = <p>Loading...</p>;
     }
 
-
     return (
         <PageContainer
             footer={<FooterDefault />}
@@ -107,7 +175,7 @@ const ProductCategoryScreen = () => {
                                 setParentId={(id) => getParentData(id)}
                             />
                             <WidgetShopFilterByPriceRange
-                            // data={filteredData}
+                                // data={filteredData}
                                 setFilteredData={setFilteredData}
                             />
                         </div>
@@ -118,6 +186,8 @@ const ProductCategoryScreen = () => {
                                 pageSize={16}
                                 dataCount={count}
                                 setDataCount={setCount}
+                                chaildId={chaildId}
+                                parentId={parentId}
                             />
                         </div>
                     </div>

@@ -128,6 +128,15 @@
     --bs-accordion-bs: #fffcfced
 }
 
+.category-list-item{
+    background-color: #fffcfced;
+    padding: 6px;
+}
+
+.accordion-button{
+    font-weight: 400;
+    font-size: 13px;
+}
 
 
 @include media('<lg') {
