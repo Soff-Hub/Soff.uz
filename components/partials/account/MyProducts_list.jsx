@@ -218,7 +218,11 @@ function MyProductsLists() {
                 {
                     data.some(el => el.id == id && el.status === 'moderation') ?
 
-                    <a data-bs-target="#exampleModalMyProductEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                    <Link href={"/account/MyProducts/Edit"}>
+                     <a>
+                     <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i>
+                     </a>
+                        </Link>
                     : 
                     <i style={{opacity:0.7 ,cursor:"not-allowed"}} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                 }
@@ -299,38 +303,6 @@ function MyProductsLists() {
                         </div>
                     </div>
                 </div>
-                <ModalDeletePostEdit dataBsTarget="exampleModalMyProductEdit" onSubmited={handleClickEdit} formID={'form-edit-myproducts'}>
-                    <div className='d-flex flex-column gap-3'>
-                        <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' defaultValue={deleteIdEdit?.file} />
-                        <input type="file" onChange={handleSelectImg} className='form-control pt-4 rounded-3' defaultValue={deleteIdEdit.poster} />
-                        <input type="text" className='form-control rounded-3' placeholder='Nomi' name='title' defaultValue={deleteIdEdit?.title} />
-                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setTagNameEdit(e.target.value)} >
-                            <option value="">Barcha Teglar</option>
-                            {
-                                tagItems?.length > 0 && (
-                                    tagItems.map(item => (
-                                        <option value={item.id}>{item.name}</option>
-                                    ))
-                                )
-                            }
-                        </select>
-                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setCategoryNameEdit(e.target.value)} >
-                            <option value="">Barcha Kategoriyalar</option>
-                            {
-                                dataCategory?.length > 0 && (
-                                    dataCategory.map(item => (
-                                        <option value={item.id}>{item.name}</option>
-                                    ))
-                                )
-                            }
-                        </select>
-                        <input required type="number" className='form-control rounded-3' placeholder='Narxi' name='price' defaultValue={deleteIdEdit?.price} />
-                        <input required type="number" className='form-control rounded-3' placeholder='Chegirma' name='discount' defaultValue={deleteIdEdit?.discount} />
-                        <input required type="text" className='form-control rounded-3' placeholder='Qisqa tasvir' name='short_description' defaultValue={deleteIdEdit?.short_description} />
-                        <input required type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' defaultValue={deleteIdEdit?.description} />
-                    </div>
-                </ModalDeletePostEdit>
-
                 <ModalDelete onSuccess={DeleteItemsProducts}  />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>

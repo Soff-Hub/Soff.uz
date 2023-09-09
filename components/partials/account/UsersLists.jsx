@@ -89,21 +89,6 @@ function OrdersLists() {
     }, [])
     const columns = [
         {
-            title: 'Avatar',
-            dataIndex: 'image',
-            key: 'name',
-            render: (image) => (
-                <div>
-                    {
-                        image ?
-                            <img src={image} width={54} height={54} />
-                            :
-                            <i className="fa-solid fa-image fa-2x"></i>
-                    }
-                </div>
-            ),
-        },
-        {
             title: 'Ism',
             dataIndex: 'first_name',
             key: 'age',
