@@ -245,6 +245,7 @@ console.log(chaildId, parentId, 'id');
                 </div>
             </div>
         );
+
     }
     return (
         <div className="ps-shopping">
@@ -311,6 +312,6 @@ console.log(chaildId, parentId, 'id');
             </div>
         </div>
     );
-};
+}}
 
 export default ShopItems;

@@ -51,7 +51,6 @@ const ProductCategoryScreen = () => {
             setFilteredData(responseData?.results);
             setCount(responseData.count);
         }
-
     }
 
     async function getParentData(parentID) {
@@ -136,6 +135,8 @@ const ProductCategoryScreen = () => {
     }, [slug]);
 
 
+
+
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -160,7 +161,6 @@ const ProductCategoryScreen = () => {
     } else {
         productItemsViews = <p>Loading...</p>;
     }
-
 
     return (
         <PageContainer

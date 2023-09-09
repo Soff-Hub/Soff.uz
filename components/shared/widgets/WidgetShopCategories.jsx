@@ -31,12 +31,11 @@ if (category?.length > 0) {
             arr.unshift(category[i])
         }else{
             arr.push(category[i])
+
         }
     }
-}
     useEffect(() => {
         getCategry();
-        
     }, [data]);
     // Views
     let categoriesView;
@@ -50,13 +49,16 @@ if (category?.length > 0) {
                         <div
 
                             class="accordion accordion-flush"
+
                             id="accordionFlushExample">
-                            <div class="accordion-item" style={{backgroundColor:'#fffcfced'}}>
+                            <div
+                                className="accordion-item"
+                                style={{ backgroundColor: '#fffcfced' }}>
                                 <h2
-                                    class="accordion-header"
+                                    className="accordion-header"
                                     id="flush-headingOne">
                                     <button
-                                        class="accordion-button collapsed"
+                                        className="accordion-button collapsed"
                                         type="button"
                                         data-bs-toggle="collapse"
                                         data-bs-target={`#flush-collapseOne-${i}`}
@@ -69,16 +71,16 @@ if (category?.length > 0) {
                                     id={`flush-collapseOne-${i}`}
 
                                     class="accordion-collapse collapse"
+
                                     aria-labelledby="flush-headingOne"
                                     data-bs-parent="#accordionFlushExample">
                                     {item?.children?.map((item, i) => {
                                         return (
                                             <Link href={`/category/${item.id}`}>
-                                                <a  className={item.id === Number(slug) ? 'active' : ''}
+                                                <a
+                                                     className={item.id === Number(slug) ? 'active' : ''}
                                                     onClick={() =>
-                                                       IdYuborish (
-                                                            item.id
-                                                        )
+                                                        IdYuborish(item.id)
                                                     }>
                                                     {item.name}
                                                 </a>
@@ -113,6 +115,6 @@ if (category?.length > 0) {
             {categoriesView}
         </aside>
     );
-};
+}}
 
 export default WidgetShopCategories;
