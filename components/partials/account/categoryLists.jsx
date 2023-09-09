@@ -14,9 +14,11 @@ import { useSelector } from 'react-redux';
 function CategoryLists() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
+    const [tagItems, setTagItems] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState({});
+    const [tagName, setTagName] = useState(null);
     ;
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -33,6 +35,13 @@ function CategoryLists() {
             }
         }
     }
+    async function getParentLists(){
+        const Items = await GetRepository.getCategoryParentLists(user?.access);
+       if (Items?.results) {
+        setTagItems(Items?.results)
+       }
+    }
+
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
@@ -54,6 +63,9 @@ function CategoryLists() {
         formData.append('image', file)
         formData.append('icon', values.icon)
         formData.append('name', values.name)
+        if (tagName) {
+            formData.append('parent', tagName )
+        }
         const postsItems = await PostsRepository.PostsCategory(formData, user?.access);
         const modal = Modal.success({
             centered: true,
@@ -81,19 +93,17 @@ function CategoryLists() {
         const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id, user?.access)
         GetItemsProducts(1)
     }
+  
+
 
     function handleClickPostsImg(e) {
         setFile(e.target.files[0])
     }
     useEffect(() => {
         GetItemsProducts(1)
+        getParentLists()
     }, []);
     const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'age',
-        },
         {
             title: 'Belgi',
             dataIndex: 'icon',
@@ -105,6 +115,11 @@ function CategoryLists() {
         {
             title: 'Nomi',
             dataIndex: 'name',
+            key: 'address',
+        },
+        {
+            title: 'Parent',
+            dataIndex: 'parent',
             key: 'address',
         },
         {
@@ -155,8 +170,8 @@ function CategoryLists() {
             <div className="container">
                 <div className="row  mx-auto gap-5 row-gap-3 p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3 className='col-md-4'>Kategoriya</h3>
-                        <input type='search' className='form-control rounded col-md-5 ' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'>Kategoriya qo'shish </span></button>
+                    <input type='search' className='form-control rounded col-md-5 ' placeholder="Qidiruv" onInput={handleClick} />
+                    <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'>Kategoriya qo'shish </span></button>
                 </div>
                 <div className="row ">
                     <div className="col-lg-4 pb-5">
@@ -200,12 +215,20 @@ function CategoryLists() {
                     />
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>
-                    <input
-                        type='file'
-                        className="form-control rounded-3 py-4"
-                        required
-                        onChange={handleClickPostsImg}
-                    />
+                    <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                        Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
+                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                    </label>
+                    <select  className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                        <option value="">Parent</option>
+                        {
+                            tagItems?.length > 0 && (
+                                tagItems?.map(item => (
+                                    <option value={item.id}>{item.name}</option>
+                                ))
+                            )
+                        }
+                    </select>
                     <input
                         type='text'
                         placeholder="Belgi"

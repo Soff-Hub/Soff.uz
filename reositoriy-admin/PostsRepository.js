@@ -5,15 +5,15 @@ class PostRepository {
         const endPoint = `admin/category-list/`;
         const reponse = await Repository.post(
             baseUrl + endPoint,
+            data,
             {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             },
-            data
         )
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 201) {
                     return response.data;
                 } else {
                     return null;
@@ -34,7 +34,7 @@ class PostRepository {
             data
         )
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 201) {
                     return response.data;
                 } else {
                     return null;
@@ -54,7 +54,7 @@ class PostRepository {
             data:data
         })
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 201) {
                     return response.data;
                 } else {
                     return null;
@@ -74,7 +74,7 @@ class PostRepository {
             data:data
         })
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 201) {
                     return response.data;
                 } else {
                     return null;

@@ -61,8 +61,8 @@ function DashbordList() {
         const ItemsData = await GetRepository.getOrdersListsDashbord(page, user?.access);
         if (ItemsData?.results) {
             setDataOrders((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProducts(page + 1)
+            if (ItemsData?.next) {
+                GetItemsProductsOrders(page + 1)
             }
         }
     }
