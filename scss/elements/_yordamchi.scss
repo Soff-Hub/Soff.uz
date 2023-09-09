@@ -139,6 +139,13 @@
 }
 
 
+.add-product-user-image{
+    
+    input{
+        opacity: 0;
+    }
+}
+
 @include media('<lg') {
     .carosusel-cards {
         justify-content: center;
