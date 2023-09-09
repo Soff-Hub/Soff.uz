@@ -63,6 +63,7 @@ function Notifications() {
                                         </div>
                                         <div className='col-md-5'>
                                             <input type="text" required defaultValue={profile?.last_name} placeholder='Familiyangiz' className='form-control rounded-3' onChange={(e) => setProfileData((prev) => ({ ...prev, last_name: e.target.value }))} />
+
                                         </div>
                                         <button type='submit' className='btn btn-success py-3 px-4 col-md-2 mx-auto ' style={{ maxWidth: "470px" }}>
                                             {

@@ -11,12 +11,14 @@ import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import WordGenerator from '~/components/partials/account/descriptionInput';
+import { Select } from 'antd';
 
 const Posts = () => {
     const [data, setData] = useState({});
-    const [fileImg, setDataFileImg] = useState({});
+    const [fileImgFile, setFileImgFile] = useState('');
+    const [fileImgPoster, setFileImgPoster] = useState('');
     const [categoryNameEdit, setCategoryNameEdit] = useState({});
-    const [tagNameEdit, setTagNameEdit] = useState({});
+    const [tagSearchResult, setTagSearchResult] = useState({});
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
@@ -32,6 +34,8 @@ const Posts = () => {
         },
     ];
 
+    const Option = Select.Option;
+
     async function GetItemsCategory(page) {
         if (page === 1) {
             setDataCategory([]);
@@ -44,6 +48,17 @@ const Posts = () => {
         if (ItemsData?.results) {
             setTagItems(ItemsData.results);
         }
+    }
+
+    const children = [];
+    for (let i = 0; i < tagItems?.length; i++) {
+        children.push(
+            <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
+        );
+    }
+
+    function handleChange(value) {
+        setTagSearchResult(value);
     }
 
     const getFormValues = (formId) => {
@@ -62,20 +77,21 @@ const Posts = () => {
 
     async function handleClickPosts(values) {
         const formData = new FormData();
-        formData.append('file', fileImg);
-        // formData.append('poster', fileImgFile)
+        formData.append('file', fileImgFile);
+        formData.append('poster', fileImgPoster);
+        formData.append('poster', fileImgFile);
         formData.append('title', values.title);
         formData.append('price', values.price);
         formData.append('discount', values.discount);
         formData.append('short_description', values.short_description);
         formData.append('description', values.description);
         formData.append('category', categoryNameEdit);
-        formData.append('tag', tagNameEdit);
+        formData.append('tag', tagSearchResult);
         const patchItems = await PostsRepository.PostsMyProducts(
             formData,
             user?.access
         );
-
+        console.log('jonatish', patchItems);
         // const modal = Modal.success({
         //     centered: true,
         //     title: 'Muvaffaqqiyatli!',
@@ -84,18 +100,17 @@ const Posts = () => {
         // GetItemsProducts(1, dataValCat, tagName, dataFormat)
     }
 
-    async function TagSearchFunc() {
-        const respons = await GetRepository.getTagSearch(tagValue , user?.access);
-        if (respons) {
-          setTagItems(respons?.results)
-        }
-        console.log(tagValue);
-    }
     useEffect(() => {
-      TagSearchFunc()
         GetItemsCategory(1);
         GetItemsTag();
     }, [tagValue]);
+
+    const handleChangeCategory = () => {
+
+    }
+
+
+    console.log('nkjnkjnkj', tagSearchResult);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -107,41 +122,44 @@ const Posts = () => {
                     id="FormPostsMyProducts"
                     className="row mx-auto container gap-3 py-5">
                     <h4>Mahsulot Qo'shish</h4>
-                    <div className="d-flex">
-                        <input
-                            type="text"
-                            placeholder="Teglarni izlang yoki yangi teg qo'shing"
-                            className="form-control col-md-8  rounded-3"
-                            onChange={(e) => setTagValue(e.target.value)}
-                        />
-                        <button className="col-md-2 rounded-2 ms-3 btn btn-success w-25 ">
-                            <span className="fs-4 col-md-2">Qo'shish</span>
-                        </button>
-                    </div>
                     {/* <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' /> */}
-                    <input
-                        type="file"
-                        onChange={(e) => setDataFileImg(e.target.files[0])}
-                        className="form-control col-md-5 pt-4 rounded-3"
-                    />
+                    <label className="add-product-user-image form-control col-md-4 pt-4 rounded-3">
+                        Hujjatingizning ko'rinishi (Rasm)
+                        <input
+                            type="file"
+                            onChange={(e) => setFileImgFile(e.target.files[0])}
+                        />
+                    </label>
+                    <label className="add-product-user-image form-control col-md-4 pt-4 rounded-3">
+                        Hujjatingizni joylang (File)
+                        <input
+                            type="file"
+                            onChange={(e) =>
+                                setFileImgPoster(e.target.files[0])
+                            }
+                        />
+                    </label>
                     <input
                         type="text"
-                        className="form-control  rounded-3 col-md-5"
-                        placeholder="Nomi"
+                        className="form-control  rounded-3 col-md-4"
+                        placeholder="Hujjatingizning nomi"
                         name="title"
                     />
+
+                    <div className="rounded-3 col-md-4 p-0 m-0">
+                        <Select
+                            className="py-2"
+                            mode="tags"
+                            style={{ width: '100%' }}
+                            placeholder="Hujjatlaringizga tag qo'shing"
+                            onChange={handleChange}>
+                            {children}
+                        </Select>
+                    </div>
+
                     <select
-                        className="form-select rounded-3 col-md-5 py-4 fs-4"
-                        onChange={(e) => setTagNameEdit(e.target.value)}>
-                        <option value="">Barcha Teglar</option>
-                        {tagItems?.length > 0 &&
-                            tagItems.map((item) => (
-                                <option value={item.id}>{item.name}</option>
-                            ))}
-                    </select>
-                    <select
-                        className="form-select rounded-3 col-md-5 py-4 fs-4"
-                        onChange={(e) => setCategoryNameEdit(e.target.value)}>
+                        className="form-select rounded-3 col-md-4 py-4 fs-4"
+                        onChange={(e) => handleChangeCategory(e.target.value)}>
                         <option value="">Barcha Kategoriyalar</option>
                         {dataCategory?.length > 0 &&
                             dataCategory.map((item) => (
@@ -150,40 +168,41 @@ const Posts = () => {
                     </select>
                     <input
                         type="number"
-                        className="form-control col-md-5 rounded-3"
-                        placeholder="Narxi"
+                        className="form-control col-md-4 rounded-3"
+                        placeholder="Hujjatingizning narxi"
                         name="price"
                     />
 
                     <input
                         required
                         type="number"
-                        className="form-control col-md-5 rounded-3"
-                        placeholder="Chegirma"
+                        className="form-control col-md-4 rounded-3"
+                        placeholder="Hujjatingizga qo'ygan chegirmangiz (%)"
                         name="discount"
                     />
-                    {/* <input
-                        type="text"
-                        className="form-control rounded-3 col-md-5"
-                        placeholder="Qisqa tasvir"
-                        name="short_description"
-                    /> */}
                     <input
                         type="text"
-                        className="form-control rounded-3 col-md-5"
-                        placeholder="Tavsifi"
+                        className="form-control rounded-3 col-md-4"
+                        placeholder="Sizning hujjatingiz uchun yozgan tavsifingiz"
                         name="description"
                     />
-                    <WordGenerator />
-                    <Link href={'/account/MyProducts'}>
-                        <button
-                            onClick={handleClickPosts}
-                            className="btn btn-success py-3 w-25">
-                            <span className="fs-4 col-md-5">
-                                Mahsulot qo'shish
-                            </span>
-                        </button>
-                    </Link>
+                    <span className=" p-0 rounded-3 col-md-8">
+                        <WordGenerator />
+                    </span>
+                    <span className=" p-0 rounded-3 col-md-8">
+                        <WordGenerator />
+                    </span>
+                    <div className="d-flex justify-content-center col-8">
+                        <Link href={'/account/MyProducts'}>
+                            <button
+                                onClick={handleClickPosts}
+                                className="btn btn-success py-3 w-25">
+                                <span className="fs-4 col-md-5">
+                                    Mahsulot qo'shish
+                                </span>
+                            </button>
+                        </Link>
+                    </div>
                 </form>
             </div>
             <Newsletters layout="container" />

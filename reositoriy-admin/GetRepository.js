@@ -180,26 +180,6 @@ class GetRepository {
         return reponse;
     }
 
-    async getTagSearch(val, token) {
-        const endPoint = `customer/tag/?search=${val ? val : '' }`;
-        const reponse = await Repository({
-            url: baseUrlCustomer + endPoint,
-            method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    return response.data;
-                } else {
-                    return null;
-                }
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }));
-        return reponse;
-    }
-
 
     async getOrdersLists(page, status, date, token) {
         const endPoint = `admin/order-list/?page=${page}&status=${
