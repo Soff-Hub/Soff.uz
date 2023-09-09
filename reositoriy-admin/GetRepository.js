@@ -21,8 +21,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getPopularProducts(page, token) {
-        const endPoint = `admin/popular-product/?page=${page}`;
+    async getPopularProducts(token) {
+        const endPoint = `admin/popular-product/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

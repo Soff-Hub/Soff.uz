@@ -241,7 +241,7 @@ function Notifications() {
                                                     </div>
                                                     <div className='col-md-5'>
                                                         <label for="ccn">Karta raqam kiriting</label>
-                                                        <input  required onChange={(e) => (setDataCard(e.target.value))} id="ccn" type="tel" className='form-control rounded-3' inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" />
+                                                        <input   defaultValue={profile?.credit_card} required onChange={(e) => (setDataCard(e.target.value))} id="ccn" type="tel" className='form-control rounded-3' inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" />
 
                                                     </div>
                                                     <div className='col-md-2'>
@@ -264,7 +264,7 @@ function Notifications() {
                                                     </div>
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                                <Table scroll={{ x: 850 }} dataSource={data} columns={columns} />
+                                                <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
                                             </>
                                             ) :
                                             <></>

@@ -5,25 +5,30 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CreditCard from './CreditCard';
 import { BeatLoader } from 'react-spinners';
 import { Modal } from 'antd';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth);
-    const [nameUpdate, setNameUpdate] = useState(null);
-    const [lastUpdate, setLastUpdate] = useState(null);
+    const [profileData, setProfileData] = useState({});
     const [renderProfile, setRenderProfile] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [profile, setProfile] = useState(null);
 
-
-
-    const data = {
-        first_name: nameUpdate,
-        last_name: lastUpdate
+    async function ProfileUsers() {
+        const ItemsData = await GetRepository.getProfile(user?.access);
+        setProfile(ItemsData)
     }
+
+    useEffect(() => (
+        ProfileUsers()
+    ), [renderProfile])
+
+
 
     async function handleClickEdit(e) {
         e.preventDefault();
         setLoading(true)
-        const ItemsData = await PatchRepository.getPatchProfile(data, user?.access);
+        const ItemsData = await PatchRepository.getPatchProfile(profileData, user?.access);
         setRenderProfile(!renderProfile)
         e.target.reset()
         setLoading(false)
@@ -31,10 +36,11 @@ function Notifications() {
             centered: true,
             title: 'Muvaffaqqiyatli!',
             content: `Sizning ismingiz va familiyangiz o'zgartirildi`,
-            
+
         });
         modal.update;
     }
+
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
@@ -53,24 +59,24 @@ function Notifications() {
                                 <div className="ps-section__content">
                                     <form className='row g-3' onSubmit={handleClickEdit}>
                                         <div className='col-md-5'>
-                                            <input type="text" required placeholder='Zufarbek' className='form-control rounded-3' onChange={(e) => setNameUpdate(e.target.value)} />
+                                            <input type="text" defaultValue={profile?.first_name} required placeholder='Ismingiz' className='form-control rounded-3' onChange={(e) => setProfileData((prev) => ({ ...prev, first_name: e.target.value }))} />
                                         </div>
                                         <div className='col-md-5'>
-                                            <input type="text" required placeholder='Abdurahmonov' className='form-control rounded-3' onChange={(e) => setLastUpdate(e.target.value)} />
+                                            <input type="text" required defaultValue={profile?.last_name} placeholder='Familiyangiz' className='form-control rounded-3' onChange={(e) => setProfileData((prev) => ({ ...prev, last_name: e.target.value }))} />
                                         </div>
                                         <button type='submit' className='btn btn-success py-3 px-4 col-md-2 mx-auto ' style={{ maxWidth: "470px" }}>
-                                           {
-                                            loading ?
-                                            <BeatLoader size={10} color="#fff" /> :
-                                                <span className='fs-3'>Saqlash</span>
+                                            {
+                                                loading ?
+                                                    <BeatLoader size={10} color="#fff" /> :
+                                                    <span className='fs-3'>Saqlash</span>
 
-                                           }
+                                            }
                                         </button>
                                     </form>
                                     <div className='py-5'>
                                         {
                                             user?.role === "seller" ?
-                                                <CreditCard />
+                                                <CreditCard profile={profile} />
                                                 :
                                                 <></>
                                         }

@@ -19,7 +19,7 @@ function CategoryLists() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState({});
     const [tagName, setTagName] = useState(null);
-    ;
+    console.log(tagName);
     const { accountLinks, user } = useSelector(state => state.auth)
 
     async function GetItemsProducts(page) {
@@ -35,11 +35,11 @@ function CategoryLists() {
             }
         }
     }
-    async function getParentLists(){
+    async function getParentLists() {
         const Items = await GetRepository.getCategoryParentLists(user?.access);
-       if (Items?.results) {
-        setTagItems(Items?.results)
-       }
+        if (Items?.results) {
+            setTagItems(Items?.results)
+        }
     }
 
     function handleClick(e) {
@@ -64,7 +64,7 @@ function CategoryLists() {
         formData.append('icon', values.icon)
         formData.append('name', values.name)
         if (tagName) {
-            formData.append('parent', tagName )
+            formData.append('parent', tagName)
         }
         const postsItems = await PostsRepository.PostsCategory(formData, user?.access);
         const modal = Modal.success({
@@ -80,6 +80,9 @@ function CategoryLists() {
         formData.append('image', file)
         formData.append('icon', values.icon)
         formData.append('name', values.name)
+        if (tagName) {
+            formData.append('parent', tagName)
+        }
         const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
         const modal = Modal.success({
             centered: true,
@@ -93,7 +96,7 @@ function CategoryLists() {
         const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id, user?.access)
         GetItemsProducts(1)
     }
-  
+
 
 
     function handleClickPostsImg(e) {
@@ -121,6 +124,9 @@ function CategoryLists() {
             title: 'Parent',
             dataIndex: 'parent',
             key: 'address',
+            render:(parent)=>(
+                <span>{parent?.name}</span>
+            )
         },
         {
             title: 'Rasm',
@@ -158,9 +164,6 @@ function CategoryLists() {
                         :
                         <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
 
-
-
-
                 }
             </div>
         },
@@ -192,13 +195,25 @@ function CategoryLists() {
 
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
-                    <input
-                        type='file'
-                        className="form-control rounded-3 py-4"
-                        required
-                        onChange={handleClickPostsImg}
-                        defaultValue={deleteIdEdit?.image}
-                    />
+                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                        Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
+                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                    </label>
+                    {
+                        data.some(el =>( el?.id==deleteIdEdit?.id && el.is_update === true)) ?
+                    <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                        <option value="">Parent</option>
+                        {
+                            tagItems?.length > 0 && (
+                                tagItems?.map(item => (
+                                    <option value={item.name}>{item.name}</option>
+                                ))
+                            )
+                        }
+                    </select>
+                    :
+                    <></>
+                    }
                     <input
                         type='text'
                         placeholder="Belgi"
@@ -217,14 +232,14 @@ function CategoryLists() {
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>
                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
-                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                        <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
-                    <select  className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                    <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
                         <option value="">Parent</option>
                         {
                             tagItems?.length > 0 && (
                                 tagItems?.map(item => (
-                                    <option value={item.id}>{item.name}</option>
+                                    <option value={item.name}>{item.name}</option>
                                 ))
                             )
                         }

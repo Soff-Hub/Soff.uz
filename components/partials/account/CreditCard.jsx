@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import CreditCardInput from "./CardNumber";
 
 
-const CreditCard = () => {
+const CreditCard = ({profile}) => {
   const [number, SetNumber] = useState("●●●● ●●●● ●●●● ●●●●");
   const [numberCard, SetNumberCard] = useState(null);
   

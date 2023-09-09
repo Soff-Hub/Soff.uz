@@ -41,16 +41,10 @@ function DashbordList() {
             setData(ItemsData);
         }
     }
-    async function GetItemsProductsPopular(page) {
-        if (page === 1) {
-            setDataProducts([])
-        }
-        const ItemsData = await GetRepository.getPopularProducts(page, user?.access);
-        if (ItemsData?.results) {
-            setDataProducts((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProductsPopular(page + 1)
-            }
+    async function GetItemsProductsPopular() {
+        const ItemsData = await GetRepository.getPopularProducts(user?.access);
+        if (ItemsData?.info) {
+            setDataProducts(ItemsData?.info);
         }
     }
 
@@ -73,7 +67,7 @@ function DashbordList() {
     useEffect(() => {
         GetItemsProducts()
         GetItemsProductsOrders(1)
-        GetItemsProductsPopular(1)
+        GetItemsProductsPopular()
     }, [])
 
     const columns = [
@@ -93,10 +87,10 @@ function DashbordList() {
         },
         {
             title: 'Buyurtmalar ',
-            dataIndex: 'seller',
+            dataIndex: 'total_approved',
             key: 'address',
-            render: (seller) => (
-                <span> <i className="fa-solid fa-box"></i> {seller?.total_approved}</span>
+            render: (total_approved) => (
+                <span> <i className="fa-solid fa-box"></i> {total_approved}</span>
             ),
         },
         {
@@ -123,11 +117,19 @@ function DashbordList() {
             dataIndex: 'user_name',
             key: 'age',
         },
-        {
+       user?.role==="admin" ?  {
             title: 'Telefon raqam',
             dataIndex: 'phone',
             key: 'age',
+        } 
+        : <></>,
+        {
+            title: 'Buyurtma nomi',
+            dataIndex: 'title',
+            key: 'age',
+            width:300,
         },
+        user.role==="admin" ?
         {
             title: 'Narx',
             dataIndex: 'price',
@@ -135,7 +137,8 @@ function DashbordList() {
             render: (total_price) => (
                 <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
             ),
-        },
+        }
+        : <></> ,   
         {
             title: 'Buyurtma sanasi',
             dataIndex: 'created_at',
@@ -327,10 +330,15 @@ function DashbordList() {
                         </div>
                     </div>
                 </div>
+              {
+                user?.role==="admin" ?
                 <div>
-                    <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
-                    <Table scroll={{ x: 850 }} dataSource={dataProducts} columns={columns} className='pb-5' />
-                </div>
+                <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
+                <Table scroll={{ x: 850 }} dataSource={dataProducts} columns={columns} className='pb-5' />
+            </div>
+            :
+            <></>
+              }
                 <div>
                     <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                     <Table scroll={{ x: 850 }} dataSource={dataOrders} columns={columnsOrders} />

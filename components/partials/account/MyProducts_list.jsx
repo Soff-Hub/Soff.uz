@@ -10,6 +10,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import ModalDelete from './Modal';
 import Link from 'next/link';
+import CalculateTimeDifference from './DateFormatter';
 
 
 function MyProductsLists() {
@@ -186,6 +187,12 @@ function MyProductsLists() {
                 <span> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
+        {
+            title: 'Sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
        user?.role === "seller" ? {
             title: 'Holat',
             dataIndex: 'status',
@@ -225,10 +232,15 @@ function MyProductsLists() {
             <div className="container">
                 <div className=" p-5 mb-5 rounded row gap-5 row-gap-3 mx-auto" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3 className='col-md-4'>Mening mahsulotlarim</h3>
-                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
+                        <input type='search' className={user?.role==="seller" ? 'form-control rounded col-md-5' :  "form-control rounded col-md-7"} placeholder="Qidiruv" onInput={handleClick} />
+                       {
+                        user?.role==="seller"?
                       <Link href={"/account/MyProducts/Posts"}>
-                      <button className="btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
-                      </Link>
+                      <button className="  btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
+                      </Link> 
+                      :
+                      <></>
+                       }
 
                 </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
@@ -241,12 +253,16 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-
-                                   <div className='d-flex flex-column gap-2'>
-                                   <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
-                                <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
-                                <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
-                                   </div>
+                                {
+                                    user?.role==="seller" ?
+                                    <div className='d-flex flex-column gap-2'>
+                                    <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                                 <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                                 <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                                    </div>
+                                    :
+                                    <></>
+                                }
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
                                         <select className='form-select rounded-3 col-md-4 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Kategoriyalar</option>
@@ -275,7 +291,7 @@ function MyProductsLists() {
                                         user?.role === "seller" ?
                                         <Table dataSource={data} scroll={{  x: 1100 }} columns={columns} />
                                         :
-                                        <Table dataSource={data} scroll={{  x: 700 }} columns={columns} />
+                                        <Table dataSource={data} scroll={{  x:900 }} columns={columns} />
 
                                     }
                                 </div>
