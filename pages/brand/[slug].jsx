@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import WidgetShopCategories from '~/components/shared/widgets/WidgetShopCategories';
+// import WidgetShopCategories from '~/components/shared/widgets/WidgetShopCategories';
 import WidgetShopBrands from '~/components/shared/widgets/WidgetShopBrands';
 import WidgetShopFilterByPriceRange from '~/components/shared/widgets/WidgetShopFilterByPriceRange';
 import ProductRepository from '~/repositories/ProductRepository';
@@ -77,7 +77,7 @@ const ProductByBrandScreen = () => {
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories />
+                            {/* <WidgetShopCategories /> */}
                             <WidgetShopBrands />
                             <WidgetShopFilterByPriceRange />
                         </div>

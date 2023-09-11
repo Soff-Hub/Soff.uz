@@ -63,6 +63,7 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
     async PostsMyProductsAriza(data, token) {
         const endPoint = `application/`;
         const reponse = await Repository({
@@ -76,6 +77,26 @@ class PostRepository {
             .then((response) => {
                 if (response.status === 201) {
                     return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async TaxminiyNarxOlish(data, token) {
+        const endPoint = `recommend-price/`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response?.data) {
+                    return response?.data;
                 } else {
                     return null;
                 }

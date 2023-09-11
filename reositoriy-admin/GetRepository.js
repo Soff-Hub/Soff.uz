@@ -160,6 +160,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
     async getCategoryParentLists(token) {
         const endPoint = `admin/category-parent/`;
         const reponse = await Repository({

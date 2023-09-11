@@ -10,19 +10,28 @@ import Newsletters from '~/components/partials/commons/Newletters';
 import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import WordGenerator from '~/components/partials/account/descriptionInput';
+import CKeditor from '../../../components/partials/account/CKeditor';
 import { Select } from 'antd';
 
 const Posts = () => {
-    const [data, setData] = useState({});
+    // const [data, setData] = useState({});
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [categoryNameEdit, setCategoryNameEdit] = useState({});
-    const [tagSearchResult, setTagSearchResult] = useState({});
+    const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [tagValue, setTagValue] = useState('');
+    const [taxminiyNarx, setTaxminiyNarx] = useState('');
+    const [category_id, setCategory_id] = useState(null);
+    const [narxNomi, setNarxNomi] = useState(true);
+    const [title, setTitle] = useState('');
+    const [discount, setDiscount] = useState('');
+    const [editorLoaded, setEditorLoaded] = useState(false);
+    const [Shortdata, setShortData] = useState('');
+    const [Fulldata, setFullData] = useState('');
+    const [livePoster, setLivePoster] = useState('');
 
     const breadCrumb = [
         {
@@ -43,8 +52,9 @@ const Posts = () => {
         const ItemsData = await GetRepository.getCategory(page, user?.access);
         setDataCategory(ItemsData.results);
     }
+
     async function GetItemsTag() {
-        const ItemsData = await MediaRepository.getTagItmes(user?.access);
+        const ItemsData = await MediaRepository.getTagItmes();
         if (ItemsData?.results) {
             setTagItems(ItemsData.results);
         }
@@ -55,10 +65,6 @@ const Posts = () => {
         children.push(
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
-    }
-
-    function handleChange(value) {
-        setTagSearchResult(value);
     }
 
     const getFormValues = (formId) => {
@@ -73,139 +79,284 @@ const Posts = () => {
 
         return data;
     };
-    //  const dataForm = getFormValues("FormPostsMyProducts")
 
-    async function handleClickPosts(values) {
-        const formData = new FormData();
-        formData.append('file', fileImgFile);
-        formData.append('poster', fileImgPoster);
-        formData.append('poster', fileImgFile);
-        formData.append('title', values.title);
-        formData.append('price', values.price);
-        formData.append('discount', values.discount);
-        formData.append('short_description', values.short_description);
-        formData.append('description', values.description);
-        formData.append('category', categoryNameEdit);
-        formData.append('tag', tagSearchResult);
-        const patchItems = await PostsRepository.PostsMyProducts(
-            formData,
-            user?.access
-        );
-        console.log('jonatish', patchItems);
-        // const modal = Modal.success({
-        //     centered: true,
-        //     title: 'Muvaffaqqiyatli!',
-        //     content: `Siz yangi malumot qo'shdingiz`,
-        // });
-        // GetItemsProducts(1, dataValCat, tagName, dataFormat)
+    function removePrefix(text) {
+        const prefix = 'Tavsiya etilgan narx: ';
+        if (text.startsWith(prefix)) {
+            return text.slice(prefix.length);
+        }
+        return text;
     }
+
+    //  const dataForm = getFormValues("FormPostsMyProducts")
 
     useEffect(() => {
         GetItemsCategory(1);
         GetItemsTag();
     }, [tagValue]);
 
-    const handleChangeCategory = () => {
+    useEffect(() => {
+        setEditorLoaded(true);
+    }, []);
 
+    async function handleChange(value) {
+        setTagSearchResult(value);
+        let arr = [];
+        if (value?.length > 0) {
+            for (let i = 0; i < tagItems.length; i++) {
+                for (let j = 0; j < value.length; j++) {
+                    if (tagItems[i].name === value[j]) {
+                        arr.push(tagItems[i].id);
+                    }
+                }
+            }
+        }
+
+        const data = {
+            category_id: category_id,
+            tag_id: arr,
+        };
+
+        if (value?.length > 0 && category_id !== null) {
+            const respons = await PostsRepository.TaxminiyNarxOlish(
+                data,
+                user?.access
+            );
+            if (respons) {
+                setTaxminiyNarx(
+                    'Tavsiya etilgan narx: ' + respons?.recommended_price
+                );
+            }
+        }
     }
 
+    const handleChangeCategory = async (e) => {
+        setCategory_id(e);
 
-    console.log('nkjnkjnkj', tagSearchResult);
+        let arr = [];
+        if (tagSearchResult?.length > 0) {
+            for (let i = 0; i < tagItems.length; i++) {
+                for (let j = 0; j < tagSearchResult.length; j++) {
+                    if (tagItems[i].name === tagSearchResult[j]) {
+                        arr.push(tagItems[i].id);
+                    }
+                }
+            }
+        }
 
+        const data = {
+            category_id: e,
+            tag_id: arr,
+        };
+
+        if (tagSearchResult?.length > 0 && e !== null) {
+            const respons = await PostsRepository.TaxminiyNarxOlish(
+                data,
+                user?.access
+            );
+            if (respons) {
+                setTaxminiyNarx(
+                    'Tavsiya etilgan narx: ' + respons?.recommended_price
+                );
+            }
+        }
+    };
+
+    console.log(tagSearchResult);
+    async function handleClickPosts(values) {
+        const tags = JSON.stringify(tagSearchResult);
+
+        const formData = new FormData();
+        formData.append('file', fileImgFile);
+        formData.append('poster', fileImgPoster);
+        formData.append('title', title);
+        formData.append(
+            'price',
+            taxminiyNarx ? removePrefix(taxminiyNarx) : taxminiyNarx
+        );
+        formData.append('short_description', Shortdata);
+        formData.append('description', Fulldata);
+        formData.append('category', category_id);
+        formData.append('tags', tags);
+        const patchItems = await PostsRepository.PostsMyProducts(
+            formData,
+            user?.access
+        );
+
+        console.log('jonatish', patchItems);
+    }
+
+    function LiveImage(e) {
+        setFileImgPoster(e.target.files[0]);
+        const img = window.URL.createObjectURL(e.target.files[0]);
+        setLivePoster(img);
+    }
+
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+
+    console.log('narx', narxNomi ? removePrefix(taxminiyNarx) : taxminiyNarx);
+    console.log(Shortdata);
+    console.log(Fulldata);
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
-                <form
-                    id="FormPostsMyProducts"
-                    className="row mx-auto container gap-3 py-5">
-                    <h4>Mahsulot Qo'shish</h4>
-                    {/* <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' /> */}
-                    <label className="add-product-user-image form-control col-md-4 pt-4 rounded-3">
-                        Hujjatingizning ko'rinishi (Rasm)
+                <div className="d-flex container justify-content-center">
+                    <form
+                        style={{ width: '70%' }}
+                        id="FormPostsMyProducts"
+                        className="row mx-auto  gap-3 py-5">
+                        <h4 className="col-md-12">Mahsulot Qo'shish</h4>
+                        {/* <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' /> */}
+                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3">
+                            Hujjatingizni saytda ko'rinishi (Rasm)
+                            <input type="file" onChange={(e) => LiveImage(e)} />
+                        </label>
+                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3">
+                            Hujjatingizni joylang (File)
+                            <input
+                                type="file"
+                                onChange={(e) =>
+                                    setFileImgFile(e.target.files[0])
+                                }
+                                accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                            />
+                        </label>
+
                         <input
-                            type="file"
-                            onChange={(e) => setFileImgFile(e.target.files[0])}
+                            type="text"
+                            className="form-control  rounded-3 col-md-5"
+                            placeholder="Hujjatingizning nomi"
+                            name="title"
+                            onChange={(e) => setTitle(e.target.value)}
                         />
-                    </label>
-                    <label className="add-product-user-image form-control col-md-4 pt-4 rounded-3">
-                        Hujjatingizni joylang (File)
-                        <input
-                            type="file"
+
+                        <div className="rounded-3 col-md-5 p-0 m-0 d-flex flex-column">
+                            <Select
+                                className="py-2"
+                                mode="tags"
+                                style={{ width: '100%' }}
+                                placeholder="Hujjatlaringizga tag qo'shing"
+                                onChange={handleChange}>
+                                {children}
+                            </Select>
+                        </div>
+
+                        <select
+                            className="form-select rounded-3 col-md-5 py-4 fs-4"
                             onChange={(e) =>
-                                setFileImgPoster(e.target.files[0])
+                                handleChangeCategory(e.target.value)
+                            }>
+                            <option value="">Barcha Kategoriyalar</option>
+                            {dataCategory?.length > 0 &&
+                                dataCategory.map((item) => (
+                                    <option value={item.id}>{item.name}</option>
+                                ))}
+                        </select>
+                        <input
+                            type={narxNomi ? 'text' : 'number'}
+                            className="form-control col-md-5 rounded-3"
+                            placeholder="Hujjatingizning narxi"
+                            name="price"
+                            value={
+                                taxminiyNarx !== null &&
+                                taxminiyNarx !== undefined &&
+                                removePrefix(taxminiyNarx) !== null
+                                    ? taxminiyNarx
+                                    : ''
                             }
+                            onChange={(e) => (
+                                setNarxNomi(false),
+                                setTaxminiyNarx(e.target.value)
+                            )}
                         />
-                    </label>
-                    <input
-                        type="text"
-                        className="form-control  rounded-3 col-md-4"
-                        placeholder="Hujjatingizning nomi"
-                        name="title"
-                    />
 
-                    <div className="rounded-3 col-md-4 p-0 m-0">
-                        <Select
-                            className="py-2"
-                            mode="tags"
-                            style={{ width: '100%' }}
-                            placeholder="Hujjatlaringizga tag qo'shing"
-                            onChange={handleChange}>
-                            {children}
-                        </Select>
+                        <div className=" p-0 rounded-3 col-md-10">
+                            <span>SHort description</span>
+                            <CKeditor
+                                name="description"
+                                onChange={(data) => {
+                                    setShortData(data);
+                                }}
+                                editorLoaded={editorLoaded}
+                            />
+                        </div>
+                        <div className=" p-0 rounded-3 col-md-10">
+                            <span>Full description</span>
+                            <CKeditor
+                                name="description"
+                                onChange={(data) => {
+                                    setFullData(data);
+                                }}
+                                editorLoaded={editorLoaded}
+                            />
+                        </div>
+
+                        <div className="d-flex justify-content-center col-10">
+                            <Link href={'/account/MyProducts'}>
+                                <button
+                                    onClick={handleClickPosts}
+                                    className="btn btn-success py-3 w-25">
+                                    <span className="fs-4">
+                                        Mahsulot qo'shish
+                                    </span>
+                                </button>
+                            </Link>
+                        </div>
+                    </form>
+                    <div className=" col-md-3 pt-4 ms-5 ">
+                        <h4 className='live-card_title'>Sizning qo'shayotgan mahsulotingiz :</h4>
+                        <div className="card rounded-3 ">
+                            <div className="image">
+                                <img
+                                    className="live-card-image"
+                                    src={
+                                        livePoster
+                                            ? livePoster
+                                            : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+                                    }
+                                    alt=""
+                                />
+                            </div>
+                            <div className="text-start">
+                                <p className="live-card-p">
+                                    {' '}
+                                    <span>Nomi: </span> <span style={{maxWidth:'150px'}} > {title}</span>
+                                </p>
+                                <p className="live-card-p">
+                                    {' '}
+                                    <span>Narxi: </span>{' '}
+                                    <span style={{maxWidth:'150px'}} >
+                                        {' '}
+                                        {taxminiyNarx
+                                            ?   addPeriodToThousands(removePrefix(taxminiyNarx))
+                                            : ''}
+                                        so'm
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
-
-                    <select
-                        className="form-select rounded-3 col-md-4 py-4 fs-4"
-                        onChange={(e) => handleChangeCategory(e.target.value)}>
-                        <option value="">Barcha Kategoriyalar</option>
-                        {dataCategory?.length > 0 &&
-                            dataCategory.map((item) => (
-                                <option value={item.id}>{item.name}</option>
-                            ))}
-                    </select>
-                    <input
-                        type="number"
-                        className="form-control col-md-4 rounded-3"
-                        placeholder="Hujjatingizning narxi"
-                        name="price"
-                    />
-
-                    <input
-                        required
-                        type="number"
-                        className="form-control col-md-4 rounded-3"
-                        placeholder="Hujjatingizga qo'ygan chegirmangiz (%)"
-                        name="discount"
-                    />
-                    <input
-                        type="text"
-                        className="form-control rounded-3 col-md-4"
-                        placeholder="Sizning hujjatingiz uchun yozgan tavsifingiz"
-                        name="description"
-                    />
-                    <span className=" p-0 rounded-3 col-md-8">
-                        <WordGenerator />
-                    </span>
-                    <span className=" p-0 rounded-3 col-md-8">
-                        <WordGenerator />
-                    </span>
-                    <div className="d-flex justify-content-center col-8">
-                        <Link href={'/account/MyProducts'}>
-                            <button
-                                onClick={handleClickPosts}
-                                className="btn btn-success py-3 w-25">
-                                <span className="fs-4 col-md-5">
-                                    Mahsulot qo'shish
-                                </span>
-                            </button>
-                        </Link>
-                    </div>
-                </form>
+                </div>
             </div>
-            <Newsletters layout="container" />
         </PageContainer>
     ) : user?.access ? (
         <Page404 />
