@@ -33,7 +33,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             ) : (
                 <div className="header__extra color-light">
                     <Link href="/account/login">
-                        <i className="icon-user"></i>
+                      <a> <i className="icon-user"></i></a>
                     </Link>
                 </div>
             )}

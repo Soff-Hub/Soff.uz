@@ -10,18 +10,22 @@ class ShopSidebarBanner extends Component {
                 <Slider {...carouselSingle} className="ps-carousel blur">
                     <div className="item">
                         <Link href="/shop">
-                            <img
+                           <a>
+                           <img
                                 src="/static/img/slider/shop-sidebar/1.jpg"
                                 alt="martfury"
                             />
+                           </a>
                         </Link>
                     </div>
                     <div className="item">
                         <Link href="/shop">
+                            <a>
                             <img
                                 src="/static/img/slider/shop-sidebar/2.jpg"
                                 alt="martfury"
                             />
+                            </a>
                         </Link>
                     </div>
                 </Slider>

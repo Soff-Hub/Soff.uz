@@ -19,7 +19,6 @@ function CategoryLists() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState({});
     const [tagName, setTagName] = useState(null);
-    console.log(tagName);
     const { accountLinks, user } = useSelector(state => state.auth)
 
     async function GetItemsProducts(page) {
@@ -35,6 +34,7 @@ function CategoryLists() {
             }
         }
     }
+
     async function getParentLists() {
         const Items = await GetRepository.getCategoryParentLists(user?.access);
         if (Items?.results) {
@@ -49,6 +49,7 @@ function CategoryLists() {
         ))
         setData(filterSearch)
     }
+
     async function deleteItemsId() {
         const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId, user?.access)
         const modal = Modal.error({
@@ -206,7 +207,7 @@ function CategoryLists() {
                         {
                             tagItems?.length > 0 && (
                                 tagItems?.map(item => (
-                                    <option value={item.name}>{item.name}</option>
+                                    <option value={item.id}>{item.name}</option>
                                 ))
                             )
                         }
@@ -239,7 +240,7 @@ function CategoryLists() {
                         {
                             tagItems?.length > 0 && (
                                 tagItems?.map(item => (
-                                    <option value={item.name}>{item.name}</option>
+                                    <option value={item.id}>{item.name}</option>
                                 ))
                             )
                         }

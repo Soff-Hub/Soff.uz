@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import CreditCardInput from "./CardNumber";
+import PostsRepository from "~/reositoriy-admin/PostsRepository";
+import { useSelector } from 'react-redux';
 
 
-const CreditCard = ({profile}) => {
+
+const CreditCard = () => {
+  const { user } = useSelector(state => state.auth);
   const [number, SetNumber] = useState("●●●● ●●●● ●●●● ●●●●");
   const [numberCard, SetNumberCard] = useState(null);
-  
-  
+  const [numberCardVal, SetNumberCardVal] = useState(null);
+
   const numberTyper = (value) => {
+    SetNumberCardVal(value)
     const firstFourNumbers = value.slice(0, 4);
     SetNumberCard(Number(firstFourNumbers))
     if (!value == 0) {
@@ -22,6 +27,10 @@ const CreditCard = ({profile}) => {
     }
 
     SetNumber('●●●● ●●●● ●●●● ●●●●')
+  }
+
+  async function handleClickCardPosts(){
+    const ItemsData= await PostsRepository.CardPostsCredit({"credit_card_number":numberCardVal},user?.access );
 
   }
 
@@ -34,6 +43,9 @@ const CreditCard = ({profile}) => {
       </div>
         </div>
             <CreditCardInput onChange={value => numberTyper(value)} />
+            <div className="d-flex justify-content-end">
+            <button onClick={handleClickCardPosts} className="btn btn-success w-25"><span className="fs-4">Saqlash</span></button>
+            </div>
     </div>
   );
 };

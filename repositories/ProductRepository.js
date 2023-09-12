@@ -127,6 +127,7 @@ class ProductRepository {
         return reponse;
     }
 
+    
     async getTotalRecords() {
         const reponse = await Repository.get(
             `${baseUrl}customer/category-list/`

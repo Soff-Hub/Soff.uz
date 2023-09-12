@@ -19,7 +19,9 @@ const ProductCategoryScreen = () => {
     const [loading, setLoading] = useState(false);
     const [detail_arr, setDetail_arr] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
-    const [chaildId, setchaildId] = useState(true);
+
+    const [chaildId, setchaildId] = useState(!true);
+
     const [parentId, setParentId] = useState(true);
     const [Parent, setParent] = useState(null);
     const [Chaild, setChaild] = useState(null);
@@ -102,12 +104,14 @@ const ProductCategoryScreen = () => {
         );
         if (responseData) {
             console.log('chaild', responseData.results);
+
         }
     }
 
     useEffect(() => {
         tekChaild();
         tekParent();
+
 
         if (chaildId) {
             getChaildData(slug);
@@ -131,6 +135,7 @@ const ProductCategoryScreen = () => {
                     }
                 }
             }
+
         }
     }, [slug]);
 
@@ -178,8 +183,8 @@ const ProductCategoryScreen = () => {
                                 setParentId={(id) => getParentData(id)}
                             />
                             <WidgetShopFilterByPriceRange
-                                // data={filteredData}
 
+                                // data={filteredData}
                                 setFilteredData={setFilteredData}
                             />
                         </div>
@@ -192,6 +197,7 @@ const ProductCategoryScreen = () => {
                                 setDataCount={setCount}
                                 chaildId={chaildId}
                                 parentId={parentId}
+
                             />
                         </div>
                     </div>

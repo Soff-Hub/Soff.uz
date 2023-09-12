@@ -176,7 +176,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
                                     </div>
 
-                                    <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)}</h4>
+                                    <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
 
                                 </div>
                             </div>
@@ -190,7 +190,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
                                     </div>
 
-                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.total_revenue)}</h4>
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.total_revenue)} so'm</h4>
                                 </div>
                             </div>
                             <div>
@@ -203,7 +203,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
                                     </div>
 
-                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)}</h4>
+                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
 
                                 </div>
                             </div>
@@ -217,7 +217,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
                                     </div>
     
-                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)}</h4>
+                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
                    
                                 </div>
                             </div>
@@ -232,7 +232,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
                                     </div>
 
-                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.total_shops)}</h4>
+                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.total_shops)} ta</h4>
         
                                 </div>
                             </div>
@@ -249,7 +249,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
                                     </div>
      
-                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)}</h4>
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
                
                                 </div>
                             </div>
@@ -263,7 +263,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
                                     </div>
 
-                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.last_month_revenue)}</h4>
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.last_month_revenue)} so'm</h4>
                       
                                 </div>
                             </div>
@@ -277,7 +277,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
                                     </div>
    
-                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)}</h4>
+                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
 
                                 </div>
                             </div>
@@ -291,7 +291,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
                                     </div>
         
-                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)}</h4>
+                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
 
                                 </div>
                             </div>
@@ -307,7 +307,7 @@ function DashbordList() {
                                     </div>
 
                           
-                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.wallet)}</h4>
+                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.wallet)} so'm</h4>
                 
                                 </div>
                             </div>

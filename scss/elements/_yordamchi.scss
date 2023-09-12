@@ -34,8 +34,6 @@
 // banner mobile uchun
 
 .banner-right {
-
-
     display: flex;
     flex-direction: column;
 }
@@ -115,27 +113,46 @@
         align-items: center;
     }
 }
-.dropdown-toggle{
-    &::after{
+.dropdown-toggle {
+    &::after {
         margin-top: 10px;
     }
 }
-.tanishuv-sharti-title{
-    color: #EEAE00;
+.tanishuv-sharti-title {
+    color: #eeae00;
 }
 
-.accordion{
-    --bs-accordion-bs: #fffcfced
+.accordion {
+    --bs-accordion-bs: #fffcfced;
 }
 
-.category-list-item{
+.category-list-item {
     background-color: #fffcfced;
     padding: 6px;
 }
 
-.accordion-button{
+.accordion-button {
     font-weight: 400;
     font-size: 13px;
+}
+
+
+.add-product-user-image {
+    input {
+        opacity: 0;
+    }
+}
+
+
+.ck-editor__editable_inline {
+    min-height: 150px;
+}
+
+.ant-select-selection-overflow {
+    min-height: 40px;
+}
+.live-card_title{
+    padding: 40px 0;
 }
 
 
@@ -236,7 +253,7 @@
         display: flex;
         flex-flow: row nowrap;
 
-        >* {
+        > * {
             width: 100%;
         }
 
@@ -548,8 +565,8 @@
     }
 }
 
-@media screen and (max-width:768px){
-    .colCard{
+@media screen and (max-width: 768px) {
+    .colCard {
         margin-top: 5rem;
     }
 }
@@ -650,8 +667,7 @@
 }
 
 @media screen and (max-width: 477px) {
-
-    .ps-section__righ{
+    .ps-section__righ {
         justify-content: center;
     }
     .banner-placholder {
@@ -739,8 +755,7 @@
 }
 
 @media screen and (max-width: 441px) {
-
-    .ps-section__righ{
+    .ps-section__righ {
         justify-content: center;
     }
     .banner-placholder {
@@ -758,8 +773,7 @@
 }
 
 @media screen and (max-width: 441px) {
-
-    .ps-section__righ{
+    .ps-section__righ {
         justify-content: center;
     }
     .banner-placholder {
@@ -776,14 +790,11 @@
     }
 }
 
-
-
 @media screen and (max-width: 425px) {
     .ps-product__container {
         min-width: 185px;
     }
 }
-
 
 @media screen and (max-width: 404px) {
     .ps-product__container {
@@ -850,21 +861,18 @@
     background: #dadbe1;
 }
 
-
-
 .formCard {
     border-radius: 10px;
     box-shadow: -1px 8px 15px 0px rgba(0, 0, 0, 0.44);
 }
-#Card{
+#Card {
     margin: 0 auto;
     height: 183px;
 }
-.colCard{
+.colCard {
     position: absolute;
     top: 52%;
 }
-
 
 /* rccs-signature-background: repeating-linear-gradient(
     0.1deg,
@@ -911,3 +919,10 @@
 .cardColorHumo{
     color:#ffc107;
 }
+.add-product-user-image{
+    
+    input{
+        opacity: 0;
+    }
+}
+

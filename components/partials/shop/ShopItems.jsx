@@ -15,9 +15,8 @@ const ShopItems = ({
     dataCount,
     setDataCount,
     chaildId,
-    parentId
+    parentId,
 }) => {
-
     const Router = useRouter();
     const { query } = Router;
     const [listView, setListView] = useState(true);
@@ -38,7 +37,6 @@ const ShopItems = ({
         e.preventDefault();
         setListView(!listView);
     }
-
 
     function handleSetColumns() {
         switch (columns) {
@@ -70,12 +68,52 @@ const ShopItems = ({
         handleSetColumns();
         if (data) {
             setNewData(data);
-        }else{
+        } else {
             setLoad(true);
 
         }
     }, [query, data]);
-console.log(chaildId, parentId, 'id');
+    console.log(chaildId, parentId, 'id');
+    const handlePagination = async (e) => {
+        // setPage(e);
+        if (chaildId !== null) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                chaildId,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
+        } else if (parentId) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                null,
+                parentId,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
+        }
+
+
+
     const handlePagination = async (e) => {
         // setPage(e);
         if (chaildId !== null) {
@@ -115,20 +153,7 @@ console.log(chaildId, parentId, 'id');
             }
         }
 
-
-    const handlePagination = async (e) => {
-        setPage(e);
-        const respons = await ProductRepository.getFilderProduct(
-            e,
-            null,
-            null,
-            null,
-            null
-        );
-        if (respons) {
-            setDataCount(respons.count);
-            setNewData(respons.results);
-        }
+       
     };
 
     async function handleSelect(e) {
@@ -137,122 +162,140 @@ console.log(chaildId, parentId, 'id');
         const PRICE = 'price';
         const DePRICE = '-price';
         if (e.target.value === 'all') {
+
             const respons = await ProductRepository.getFilderProduct(
-                1,
+                e,
                 null,
                 null,
                 null,
-                null,
-                null,
-                ID,
                 null
             );
             if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            }
+        };
+
+        async function handleSelect(e) {
+            // const respons = await ProductRepository.getFilterSelect(payload)
+            const ID = 'id';
+            const PRICE = 'price';
+            const DePRICE = '-price';
+            if (e.target.value === 'all') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    ID,
+                    null
+                );
+                if (respons) {
+                    setNewData(respons?.results);
+                } else {
+                    setNewData(respons?.results);
+                }
+            } else if (e.target.value === 'arzondan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE
+                );
                 setNewData(respons?.results);
-            }else{
+            } else if (e.target.value === 'qimmatdan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DePRICE
+                );
                 setNewData(respons?.results);
             }
-        } else if (e.target.value === 'arzondan') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                PRICE
-            );
-            setNewData(respons?.results);
-        } else if (e.target.value === 'qimmatdan') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                DePRICE
-            );
-            setNewData(respons?.results);
-
         }
-    }
 
-    // Views
-    let productItemsView;
-    if (load) {
-        if (success) {
-            const items =
-                newData?.length > 0 &&
-                newData?.map((item) => (
-                    <div className={classes} key={item.id}>
-                        <Product product={item} />
+        // Views
+        let productItemsView;
+        if (load) {
+            if (success) {
+                const items =
+                    newData?.length > 0 &&
+                    newData?.map((item) => (
+                        <div className={classes} key={item.id}>
+                            <Product product={item} />
+                        </div>
+                    ));
+                productItemsView = (
+                    <div className="ps-shop-items">
+                        <div className="row">{items}</div>
+                    </div>
+                );
+            } else {
+                // productItemsView = (
+                //     <div
+                //         style={{
+                //             display: 'flex',
+                //             justifyContent: 'center',
+                //             alignContent: 'center',
+                //         }}>
+                //         <div className={classes} style={{ marginTop: '30px' }}>
+                //             <img
+                //                 src="/static/img/no-document.jpg"
+                //                 alt="no documnt"
+                //             />
+                //             <p className="text-center">Hujjat yo'q</p>
+                //         </div>
+                //     </div>
+                // );
+
+                const skeletonItems = generateTempArray(4).map((item) => (
+                    <div className={classes} key={item}>
+                        <SkeletonProduct />
                     </div>
                 ));
+                productItemsView = <div className="row">{skeletonItems}</div>;
+            }
+        } else {
+            // const skeletonItems = generateTempArray(4).map((item) => (
+            //     <div className={classes} key={item}>
+            //         <SkeletonProduct />
+            //     </div>
+            // ));
+            // productItemsView = <div className="row">{skeletonItems}</div>;
+
             productItemsView = (
-                <div className="ps-shop-items">
-                    <div className="row">{items}</div>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}>
+                    <div className={classes} style={{ marginTop: '30px' }}>
+                        <img
+                            src="/static/img/no-document.jpg"
+                            alt="no documnt"
+                        />
+                        <p className="text-center">Hujjat yo'q</p>
+                    </div>
                 </div>
             );
-        } else {
-            // productItemsView = (
-            //     <div
-            //         style={{
-            //             display: 'flex',
-            //             justifyContent: 'center',
-            //             alignContent: 'center',
-            //         }}>
-            //         <div className={classes} style={{ marginTop: '30px' }}>
-            //             <img
-            //                 src="/static/img/no-document.jpg"
-            //                 alt="no documnt"
-            //             />
-            //             <p className="text-center">Hujjat yo'q</p>
-            //         </div>
-            //     </div>
-            // );
-
-            const skeletonItems = generateTempArray(4).map((item) => (
-                <div className={classes} key={item}>
-                    <SkeletonProduct />
-                </div>
-            ));
-            productItemsView = <div className="row">{skeletonItems}</div>;
         }
-    } else {
-        // const skeletonItems = generateTempArray(4).map((item) => (
-        //     <div className={classes} key={item}>
-        //         <SkeletonProduct />
-        //     </div>
-        // ));
-        // productItemsView = <div className="row">{skeletonItems}</div>;
-
-        productItemsView = (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                }}>
-                <div className={classes} style={{ marginTop: '30px' }}>
-                    <img
-                        src="/static/img/no-document.jpg"
-                        alt="no documnt"
-                    />
-                    <p className="text-center">Hujjat yo'q</p>
-                </div>
-            </div>
-        );
-
-    }
+    } 
     return (
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
                     <strong className="mr-2">{dataCount}</strong>
-
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
@@ -260,14 +303,11 @@ console.log(chaildId, parentId, 'id');
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
+
                         <option value="all">Yangilari</option>
-                        {/* <option value="mashhur">
-                            Mashhurligi bo'yicha saralash
-                        </option> */}
                         <option value="arzondan">
                             Narx bo'yicha: arzondan qimmatga
                         </option>
-
                         <option value="qimmatdan">
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
@@ -283,35 +323,38 @@ console.log(chaildId, parentId, 'id');
                                 </a>
                             </li>
                             {/* <li className={listView !== true ? 'active' : ''}>
+
                                 <a
                                     href="#"
                                     onClick={(e) => handleChangeViewMode(e)}>
                                     <i className="icon-list4"></i>
                                 </a>
                             </li> */}
-                        </ul>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div className="ps-shopping__content pagination-product-box">
+                    {productItemsView}
+                </div>
+                <div className="ps-shopping__footer text-center">
+                    <div className="ps-pagination">
+                        {data?.length > 0 && (
+                            <Pagination
+                                total={dataCount}
+                                pageSize={10}
+                                responsive={true}
+                                showSizeChanger={false}
+                                current={page || 1}
+                                onChange={(e) => handlePagination(e)}
+                            />
+                        )}
                     </div>
                 </div>
             </div>
-            <div className="ps-shopping__content pagination-product-box">
-                {productItemsView}
-            </div>
-            <div className="ps-shopping__footer text-center">
-                <div className="ps-pagination">
-                    {data?.length > 0 && (
-                        <Pagination
-                            total={dataCount}
-                            pageSize={10}
-                            responsive={true}
-                            showSizeChanger={false}
-                            current={page || 1}
-                            onChange={(e) => handlePagination(e)}
-                        />
-                    )}
-                </div>
-            </div>
-        </div>
-    );
-}}
+        );
+    };
+    return <p>Loading...</p>;
+};
 
 export default ShopItems;

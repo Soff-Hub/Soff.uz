@@ -50,7 +50,7 @@ const WidgetShopBrands = () => {
         if (brands && brands.length > 0) {
             const items = brands.map((item) => (
                 <li key={item.id}>
-                    <Link href={`shop/${item.slug}`}>{item.name}</Link>
+                    <Link href={`shop/${item.slug}`}><a>{item.name}</a></Link>
                 </li>
             ));
             brandsView = <ul className="ps-list--brands">{items}</ul>;

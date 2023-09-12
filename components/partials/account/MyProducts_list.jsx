@@ -4,32 +4,26 @@ import { DatePicker, Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import ModalDeletePostEdit from './ModalPostEdit';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector } from 'react-redux';
+import { useSelector ,useDispatch} from 'react-redux';
 import ModalDelete from './Modal';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
+import { MyProductsEdit } from '~/store/auth/action';
 
 
 function MyProductsLists() {
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [search, setSerach] = useState([]);
-    const [fileImg, setFileImg] = useState({});
-    const [fileImgFile, setFileImgFile] = useState({});
-    
-
-    const [categoryNameEdit, setCategoryNameEdit] = useState({});
     const [tagName, setTagName] = useState(null);
-    const [tagNameEdit, setTagNameEdit] = useState(null);
     const [tagItems, setTagItems] = useState([]);
     const [View, setView] = useState({});
-    const [deleteIdEdit, setDeleteIdEdit] = useState({});
     const [dataValCat, setDataCat] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
+    const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
@@ -70,38 +64,6 @@ function MyProductsLists() {
         ))
         setData(filterSearch)
     }
-
- 
-    async function handleClickEdit(values) {
-        const formData = new FormData()
-        formData.append('file', fileImg)
-        formData.append('poster', fileImgFile)
-        formData.append('title', values.title)
-        formData.append('price', values.price)
-        formData.append('discount', values.discount)
-        formData.append('short_description', values.short_description)
-        formData.append('description', values.description)
-        formData.append('category', categoryNameEdit)
-        formData.append('tag', tagNameEdit)
-        const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id, user?.access)
-
-
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni o'zgartirdingiz`,
-        });
-        modal.update;
-        GetItemsProducts(1, dataValCat, tagName, dataFormat);
-
-    }
-
-    const handleSelectFile = (e) => {
-        setFileImg(e.target.files[0])
-    };
-    const handleSelectImg = (e) => {
-        setFileImgFile(e.target.files[0])
-    };
     async function handleClickView(item) {
         const ItemsData = await GetRepository.getMyProductsView(item.id, user?.access);
         setView(ItemsData);
@@ -119,7 +81,9 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat)
 
     }
-
+   function handleClickIdEdit(productsItems){
+    dispatch(MyProductsEdit(productsItems))
+   }
     useEffect(() => {
         GetItemsCategory(1)
         GetItemsTag()
@@ -145,7 +109,27 @@ function MyProductsLists() {
 
         return formattedNumber;
     }
-
+    const handleButtonClick = () => {
+        // Faylni yaratish  
+        const fileContent = data?.map(item=>(item.file)) // Faylni matni yoki ma'lumoti
+        const fileName = "fayl.jpeg"; // Fayl nomi
+      
+        const blob = new Blob([fileContent], { type: "text/plain" });
+      
+        // Faylni yuklab olish uchun link yaratish
+        const aTag = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+      
+        aTag.setAttribute("href", url);
+        aTag.setAttribute("download", fileName);
+        document.body.appendChild(aTag);
+      
+        // Faylni yuklab olish va linkni o'chirish
+        aTag.click();
+        URL.revokeObjectURL(url);
+      };
+      
+      
     const columns = [
         {
             title: 'Rasm',
@@ -218,14 +202,26 @@ function MyProductsLists() {
                 {
                     data.some(el => el.id == id && el.status === 'moderation') ?
 
-                    <a data-bs-target="#exampleModalMyProductEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                    <Link href={"/account/MyProducts/Edit"}>
+                     <a>
+                     <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() =>handleClickIdEdit(data.find(item => item.id === id))}></i>
+                     </a>
+                        </Link>
                     : 
                     <i style={{opacity:0.7 ,cursor:"not-allowed"}} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                 }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
 
             </div>
-        } : <></> ,
+        } :  {
+            title: 'Harakatlar',
+            dataIndex: 'id',
+            key: 'address',
+            render: (id) => <div >
+                <button><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={handleButtonClick}></i></button>
+            </div>
+        }  ,
+        
     ];
     return (
         <section className="ps-my-account ps-page--account">
@@ -299,38 +295,6 @@ function MyProductsLists() {
                         </div>
                     </div>
                 </div>
-                <ModalDeletePostEdit dataBsTarget="exampleModalMyProductEdit" onSubmited={handleClickEdit} formID={'form-edit-myproducts'}>
-                    <div className='d-flex flex-column gap-3'>
-                        <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' defaultValue={deleteIdEdit?.file} />
-                        <input type="file" onChange={handleSelectImg} className='form-control pt-4 rounded-3' defaultValue={deleteIdEdit.poster} />
-                        <input type="text" className='form-control rounded-3' placeholder='Nomi' name='title' defaultValue={deleteIdEdit?.title} />
-                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setTagNameEdit(e.target.value)} >
-                            <option value="">Barcha Teglar</option>
-                            {
-                                tagItems?.length > 0 && (
-                                    tagItems.map(item => (
-                                        <option value={item.id}>{item.name}</option>
-                                    ))
-                                )
-                            }
-                        </select>
-                        <select required className='form-select rounded-3 py-4 fs-4' onChange={(e) => setCategoryNameEdit(e.target.value)} >
-                            <option value="">Barcha Kategoriyalar</option>
-                            {
-                                dataCategory?.length > 0 && (
-                                    dataCategory.map(item => (
-                                        <option value={item.id}>{item.name}</option>
-                                    ))
-                                )
-                            }
-                        </select>
-                        <input required type="number" className='form-control rounded-3' placeholder='Narxi' name='price' defaultValue={deleteIdEdit?.price} />
-                        <input required type="number" className='form-control rounded-3' placeholder='Chegirma' name='discount' defaultValue={deleteIdEdit?.discount} />
-                        <input required type="text" className='form-control rounded-3' placeholder='Qisqa tasvir' name='short_description' defaultValue={deleteIdEdit?.short_description} />
-                        <input required type="text" className='form-control rounded-3' placeholder='Tavsifi' name='description' defaultValue={deleteIdEdit?.description} />
-                    </div>
-                </ModalDeletePostEdit>
-
                 <ModalDelete onSuccess={DeleteItemsProducts}  />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
@@ -338,7 +302,7 @@ function MyProductsLists() {
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="card  " style={{ maxWidth: "840px" }}>
+                            <div className="card" style={{ maxWidth: "840px" }}>
                                 <div className="row g-0 px-3 modal-body m-0">
                                     <div className="col-md-4 mt-4 ">
                                         <img src={View?.poster_url} className="img-fluid rounded-start" alt="..." />
@@ -350,7 +314,9 @@ function MyProductsLists() {
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
 
-                                            <p><strong>Teg:</strong> {View?.tag?.map(item=>(item?.name))}</p>
+                                            <p><strong>Teg:</strong> {View?.tag?.map(item=>(
+                                                <span> #{item?.name} </span>
+                                            ))}</p>
 
                                         </div>
                                     </div>

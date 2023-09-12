@@ -1,5 +1,5 @@
 import React from 'react';
-import WidgetShopCategories from '~/components/shared/widgets/WidgetShopCategories';
+// import WidgetShopCategories from '~/components/shared/widgets/WidgetShopCategories';
 import WidgetShopBrands from '~/components/shared/widgets/WidgetShopBrands';
 import WidgetShopFilterByPriceRange from '~/components/shared/widgets/WidgetShopFilterByPriceRange';
 import ShopItems from '~/components/partials/shop/ShopItems';
@@ -25,7 +25,7 @@ const ShopSidebarWithoutBannerPage = () => {
                 <div className="container">
                     <div className="ps-layout--shop">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories />
+                            {/* <WidgetShopCategories /> */}
                             <WidgetShopBrands />
                             <WidgetShopFilterByPriceRange />
                         </div>

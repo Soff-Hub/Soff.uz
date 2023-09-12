@@ -156,7 +156,9 @@ class Login extends Component {
                                     className="mb-4">
                                     Parolni{' '}
                                     <Link href="/account/qayta-nomer-kiritish">
+                                        <a>
                                         unutdingizmi?
+                                        </a>
                                     </Link>{' '}
                                 </p>
                             </div>

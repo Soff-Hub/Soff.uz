@@ -6,10 +6,12 @@ import Page404 from '~/pages/page/page-404';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
+import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Select } from 'antd';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 
 
@@ -19,7 +21,8 @@ const Posts = () => {
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { user } = useSelector((state) => state.auth);
+    const {products,  user } = useSelector((state) => state.auth);
+    const [tagValue, setTagValue] = useState('');
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [category_id, setCategory_id] = useState(null);
     const [narxNomi, setNarxNomi] = useState(true);
@@ -38,16 +41,16 @@ const Posts = () => {
             text: "Mening mahsulotlarim Qo'shish",
         },
     ];
-    
-    async function GetItemsCategoryLists() {
-        const token = user?.access; 
-        const ItemsData = await GetRepository.getCategoryLists(token);
-        if (ItemsData?.results) {
-            setDataCategory(ItemsData.results);
-        }
-    }
+
     const Option = Select.Option;
 
+    async function GetItemsCategory(page) {
+        if (page === 1) {
+            setDataCategory([]);
+        }
+        const ItemsData = await GetRepository.getCategory(page, user?.access);
+        setDataCategory(ItemsData.results);
+    }
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -71,6 +74,16 @@ const Posts = () => {
         }
         return text;
     }
+
+
+    useEffect(() => {
+        GetItemsCategory(1);
+        GetItemsTag();
+    }, [tagValue]);
+
+    useEffect(() => {
+        setEditorLoaded(true);
+    }, []);
 
     async function handleChange(value) {
         setTagSearchResult(value);
@@ -135,7 +148,10 @@ const Posts = () => {
         }
     };
 
-    async function handleClickPosts() {
+ 
+    async function handleClickPosts(values) {
+        const tags = JSON.stringify(tagSearchResult);
+
         const formData = new FormData();
         formData.append('file', fileImgFile);
         formData.append('poster', fileImgPoster);
@@ -147,13 +163,14 @@ const Posts = () => {
         formData.append('short_description', Shortdata);
         formData.append('description', Fulldata?.props?.children);
         formData.append('category', category_id);
-        for (let i = 0; i < tagSearchResult.length; i++) {
-            formData.append('tag', tagSearchResult[i]);
-        }
-        const patchItems = await PostsRepository.PostsMyProducts(
+        formData.append('tags', tags);
+        const patchItems = await PatchRepository.getMyProductsPatch(
             formData,
+            products?.id,
             user?.access
         );
+
+        console.log('jonatish', patchItems);
     }
 
     function LiveImage(e) {
@@ -179,16 +196,6 @@ const Posts = () => {
 
         return formattedNumber;
     }
-
-    useEffect(() => {
-        GetItemsTag()
-        setEditorLoaded(true);
-    }, []);
-
-    useEffect(() => {
-        GetItemsCategoryLists(); 
-    }, [user?.access]); 
-    
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -252,8 +259,8 @@ const Posts = () => {
                             placeholder="Hujjatingizning narxi"
                             name="price"
                             value={
-                                taxminiyNarx !== null ||
-                                taxminiyNarx !== undefined ||
+                                taxminiyNarx !== null &&
+                                taxminiyNarx !== undefined &&
                                 removePrefix(taxminiyNarx) !== null
                                     ? taxminiyNarx
                                     : ''
@@ -280,15 +287,15 @@ const Posts = () => {
                         </div>
 
                         <div className="d-flex justify-content-center col-10">
-                           
-                                <button
+                            <Link href={'/account/MyProducts'}>   
+                               <button
                                     onClick={handleClickPosts}
                                     className="btn btn-success py-3 w-25">
                                     <span className="fs-4">
                                         Mahsulot qo'shish
                                     </span>
                                 </button>
-                         
+                            </Link>
                         </div>
                     </form>
                     <div className=" col-md-3 pt-4 ms-5 ">
