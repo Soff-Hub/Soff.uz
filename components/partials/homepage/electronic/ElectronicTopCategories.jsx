@@ -29,6 +29,7 @@ function ElectronicTopCategories() {
                                 key={category.id}
                                 href="/category/[pid]"
                                 as={`/category/${category.id}`}>
+                                <a>
                                 <div className="col-md-2 col-sm-3 col-xs-4 col-6 ">
                                     <div
                                         className="ps-block--category-2 top-category-items "
@@ -50,6 +51,7 @@ function ElectronicTopCategories() {
                                         </div>
                                     </div>
                                 </div>
+                                </a>
                             </Link>
                         ))
                     ) : (

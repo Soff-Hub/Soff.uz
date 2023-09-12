@@ -156,8 +156,11 @@ function Notifications() {
         },
         {
             title: 'Karta raqam',
-            dataIndex: 'credit_card',
+            dataIndex: 'user',
             key: 'address',
+            render: (user) => (
+                <span>{user?.credit_card}</span>
+            )
         },
         {
             title: 'Telefon raqam',

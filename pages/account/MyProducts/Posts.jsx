@@ -6,28 +6,26 @@ import Page404 from '~/pages/page/page-404';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newsletters from '~/components/partials/commons/Newletters';
-import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Select } from 'antd';
+import { useRouter } from 'next/navigation';
+var parse = require("html-react-parser");
+
 
 const Posts = () => {
-    // const [data, setData] = useState({});
+    const router = useRouter()
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
-    const [categoryNameEdit, setCategoryNameEdit] = useState({});
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
-    const [tagValue, setTagValue] = useState('');
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [category_id, setCategory_id] = useState(null);
     const [narxNomi, setNarxNomi] = useState(true);
     const [title, setTitle] = useState('');
-    const [discount, setDiscount] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Shortdata, setShortData] = useState('');
     const [Fulldata, setFullData] = useState('');
@@ -42,16 +40,16 @@ const Posts = () => {
             text: "Mening mahsulotlarim Qo'shish",
         },
     ];
-
+    
+    async function GetItemsCategoryLists() {
+        const token = user?.access; 
+        const ItemsData = await GetRepository.getCategoryLists(token);
+        if (ItemsData?.results) {
+            setDataCategory(ItemsData.results);
+        }
+    }
     const Option = Select.Option;
 
-    async function GetItemsCategory(page) {
-        if (page === 1) {
-            setDataCategory([]);
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
-        setDataCategory(ItemsData.results);
-    }
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -67,18 +65,6 @@ const Posts = () => {
         );
     }
 
-    const getFormValues = (formId) => {
-        const data = {};
-        const form = document.getElementById(formId);
-
-        const formData = new FormData(form);
-
-        for (let [key, value] of formData) {
-            Object.assign(data, { [key]: value });
-        }
-
-        return data;
-    };
 
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
@@ -87,17 +73,6 @@ const Posts = () => {
         }
         return text;
     }
-
-    //  const dataForm = getFormValues("FormPostsMyProducts")
-
-    useEffect(() => {
-        GetItemsCategory(1);
-        GetItemsTag();
-    }, [tagValue]);
-
-    useEffect(() => {
-        setEditorLoaded(true);
-    }, []);
 
     async function handleChange(value) {
         setTagSearchResult(value);
@@ -162,10 +137,7 @@ const Posts = () => {
         }
     };
 
-    console.log(tagSearchResult);
-    async function handleClickPosts(values) {
-        const tags = JSON.stringify(tagSearchResult);
-
+    async function handleClickPosts() {
         const formData = new FormData();
         formData.append('file', fileImgFile);
         formData.append('poster', fileImgPoster);
@@ -175,15 +147,16 @@ const Posts = () => {
             taxminiyNarx ? removePrefix(taxminiyNarx) : taxminiyNarx
         );
         formData.append('short_description', Shortdata);
-        formData.append('description', Fulldata);
+        formData.append('description', Fulldata?.props?.children);
         formData.append('category', category_id);
-        formData.append('tags', tags);
+        for (let i = 0; i < tagSearchResult.length; i++) {
+            formData.append('tag', tagSearchResult[i]);
+        }
         const patchItems = await PostsRepository.PostsMyProducts(
             formData,
             user?.access
         );
-
-        console.log('jonatish', patchItems);
+        router.push('/account/MyProducts')
     }
 
     function LiveImage(e) {
@@ -210,9 +183,16 @@ const Posts = () => {
         return formattedNumber;
     }
 
-    console.log('narx', narxNomi ? removePrefix(taxminiyNarx) : taxminiyNarx);
-    console.log(Shortdata);
-    console.log(Fulldata);
+    useEffect(() => {
+        GetItemsTag()
+        setEditorLoaded(true);
+    }, []);
+
+    useEffect(() => {
+        GetItemsCategoryLists(); 
+    }, [user?.access]); 
+    
+
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -225,7 +205,6 @@ const Posts = () => {
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
-                        {/* <input type="file" onChange={handleSelectFile} className='form-control pt-4 rounded-3' /> */}
                         <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3">
                             Hujjatingizni saytda ko'rinishi (Rasm)
                             <input type="file" onChange={(e) => LiveImage(e)} />
@@ -240,15 +219,6 @@ const Posts = () => {
                                 accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                             />
                         </label>
-
-                        <input
-                            type="text"
-                            className="form-control  rounded-3 col-md-5"
-                            placeholder="Hujjatingizning nomi"
-                            name="title"
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-
                         <div className="rounded-3 col-md-5 p-0 m-0 d-flex flex-column">
                             <Select
                                 className="py-2"
@@ -261,7 +231,8 @@ const Posts = () => {
                         </div>
 
                         <select
-                            className="form-select rounded-3 col-md-5 py-4 fs-4"
+                        style={{ alignItems: "flex-start" }}
+                            className="form-select rounded-3 col-md-5 fs-4"
                             onChange={(e) =>
                                 handleChangeCategory(e.target.value)
                             }>
@@ -272,13 +243,20 @@ const Posts = () => {
                                 ))}
                         </select>
                         <input
+                            type="text"
+                            className="form-control  rounded-3 col-md-5"
+                            placeholder="Hujjatingizning nomi"
+                            name="title"
+                            onChange={(e) => setTitle(e.target.value)}
+                        />
+                        <input
                             type={narxNomi ? 'text' : 'number'}
                             className="form-control col-md-5 rounded-3"
                             placeholder="Hujjatingizning narxi"
                             name="price"
                             value={
-                                taxminiyNarx !== null &&
-                                taxminiyNarx !== undefined &&
+                                taxminiyNarx !== null ||
+                                taxminiyNarx !== undefined ||
                                 removePrefix(taxminiyNarx) !== null
                                     ? taxminiyNarx
                                     : ''
@@ -291,27 +269,21 @@ const Posts = () => {
 
                         <div className=" p-0 rounded-3 col-md-10">
                             <span>SHort description</span>
-                            <CKeditor
-                                name="description"
-                                onChange={(data) => {
-                                    setShortData(data);
-                                }}
-                                editorLoaded={editorLoaded}
-                            />
+                           <textarea onChange={(e)=>setShortData(e.target.value)} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
                         </div>
                         <div className=" p-0 rounded-3 col-md-10">
                             <span>Full description</span>
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
-                                    setFullData(data);
+                                    setFullData(parse(data));
                                 }}
                                 editorLoaded={editorLoaded}
                             />
                         </div>
 
                         <div className="d-flex justify-content-center col-10">
-                            <Link href={'/account/MyProducts'}>
+                           
                                 <button
                                     onClick={handleClickPosts}
                                     className="btn btn-success py-3 w-25">
@@ -319,7 +291,7 @@ const Posts = () => {
                                         Mahsulot qo'shish
                                     </span>
                                 </button>
-                            </Link>
+                         
                         </div>
                     </form>
                     <div className=" col-md-3 pt-4 ms-5 ">

@@ -105,6 +105,25 @@ class PostRepository {
         return reponse;
     }
     
+    async CardPostsCredit(data, token) {
+        const reponse = await Repository({
+            url: `https://alldataaa.pythonanywhere.com/auth/seller-card-create/`,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response?.data) {
+                    return response?.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
 
 
 

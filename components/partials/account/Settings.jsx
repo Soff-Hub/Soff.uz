@@ -24,7 +24,6 @@ function Notifications() {
     ), [renderProfile])
 
 
-
     async function handleClickEdit(e) {
         e.preventDefault();
         setLoading(true)
@@ -78,7 +77,7 @@ function Notifications() {
                                     <div className='py-5'>
                                         {
                                             user?.role === "seller" ?
-                                                <CreditCard profile={profile} />
+                                                <CreditCard />
                                                 :
                                                 <></>
                                         }

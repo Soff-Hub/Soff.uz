@@ -302,7 +302,7 @@ function MyProductsLists() {
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="card  " style={{ maxWidth: "840px" }}>
+                            <div className="card" style={{ maxWidth: "840px" }}>
                                 <div className="row g-0 px-3 modal-body m-0">
                                     <div className="col-md-4 mt-4 ">
                                         <img src={View?.poster_url} className="img-fluid rounded-start" alt="..." />
@@ -314,7 +314,9 @@ function MyProductsLists() {
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
 
-                                            <p><strong>Teg:</strong> {View?.tag?.map(item=>(item?.name))}</p>
+                                            <p><strong>Teg:</strong> {View?.tag?.map(item=>(
+                                                <span> #{item?.name} </span>
+                                            ))}</p>
 
                                         </div>
                                     </div>
