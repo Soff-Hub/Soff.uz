@@ -6,6 +6,7 @@ export const actionTypes = {
     CHECK_AUTHORIZATION: 'CHECK_AUTHORIZATION',
     ISLOGINNING: 'ISLOGINNING',
     ACCOUNT_LINKS: 'ACCOUNT_LINKS',
+    MYPODUCTS_LISTS: 'MYPODUCTS_LISTS',
 };
 
 export function login({ user, data }) {
@@ -32,6 +33,9 @@ export function isLoginning() {
 
 export function accountLinksReducers(payload) {
     return { type: actionTypes.ACCOUNT_LINKS, payload };
+}
+export function MyProductsEdit(payload) {
+    return { type: actionTypes.MYPODUCTS_LISTS, payload };
 }
 
 

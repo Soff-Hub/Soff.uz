@@ -210,7 +210,10 @@ function Notifications() {
             dataIndex: 'id',
             key: 'id',
             render: (id) => (
+                dataAdmin.some(el => el.id == id && el.is_answer === true) ?
                 <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
+               :
+               <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
 
             )
         },

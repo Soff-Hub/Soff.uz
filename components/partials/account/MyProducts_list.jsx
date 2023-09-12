@@ -4,32 +4,26 @@ import { DatePicker, Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import ModalDeletePostEdit from './ModalPostEdit';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector } from 'react-redux';
+import { useSelector ,useDispatch} from 'react-redux';
 import ModalDelete from './Modal';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
+import { MyProductsEdit } from '~/store/auth/action';
 
 
 function MyProductsLists() {
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [search, setSerach] = useState([]);
-    const [fileImg, setFileImg] = useState({});
-    const [fileImgFile, setFileImgFile] = useState({});
-    
-
-    const [categoryNameEdit, setCategoryNameEdit] = useState({});
     const [tagName, setTagName] = useState(null);
-    const [tagNameEdit, setTagNameEdit] = useState(null);
     const [tagItems, setTagItems] = useState([]);
     const [View, setView] = useState({});
-    const [deleteIdEdit, setDeleteIdEdit] = useState({});
     const [dataValCat, setDataCat] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
+    const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
@@ -70,38 +64,6 @@ function MyProductsLists() {
         ))
         setData(filterSearch)
     }
-
- 
-    async function handleClickEdit(values) {
-        const formData = new FormData()
-        formData.append('file', fileImg)
-        formData.append('poster', fileImgFile)
-        formData.append('title', values.title)
-        formData.append('price', values.price)
-        formData.append('discount', values.discount)
-        formData.append('short_description', values.short_description)
-        formData.append('description', values.description)
-        formData.append('category', categoryNameEdit)
-        formData.append('tag', tagNameEdit)
-        const patchItems = await PatchRepository.getMyProductsPatch(formData, deleteIdEdit.id, user?.access)
-
-
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni o'zgartirdingiz`,
-        });
-        modal.update;
-        GetItemsProducts(1, dataValCat, tagName, dataFormat);
-
-    }
-
-    const handleSelectFile = (e) => {
-        setFileImg(e.target.files[0])
-    };
-    const handleSelectImg = (e) => {
-        setFileImgFile(e.target.files[0])
-    };
     async function handleClickView(item) {
         const ItemsData = await GetRepository.getMyProductsView(item.id, user?.access);
         setView(ItemsData);
@@ -119,7 +81,9 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat)
 
     }
-
+   function handleClickIdEdit(productsItems){
+    dispatch(MyProductsEdit(productsItems))
+   }
     useEffect(() => {
         GetItemsCategory(1)
         GetItemsTag()
@@ -145,7 +109,27 @@ function MyProductsLists() {
 
         return formattedNumber;
     }
-
+    const handleButtonClick = () => {
+        // Faylni yaratish  
+        const fileContent = data?.map(item=>(item.file)) // Faylni matni yoki ma'lumoti
+        const fileName = "fayl.jpeg"; // Fayl nomi
+      
+        const blob = new Blob([fileContent], { type: "text/plain" });
+      
+        // Faylni yuklab olish uchun link yaratish
+        const aTag = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+      
+        aTag.setAttribute("href", url);
+        aTag.setAttribute("download", fileName);
+        document.body.appendChild(aTag);
+      
+        // Faylni yuklab olish va linkni o'chirish
+        aTag.click();
+        URL.revokeObjectURL(url);
+      };
+      
+      
     const columns = [
         {
             title: 'Rasm',
@@ -220,7 +204,7 @@ function MyProductsLists() {
 
                     <Link href={"/account/MyProducts/Edit"}>
                      <a>
-                     <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i>
+                     <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() =>handleClickIdEdit(data.find(item => item.id === id))}></i>
                      </a>
                         </Link>
                     : 
@@ -229,7 +213,15 @@ function MyProductsLists() {
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
 
             </div>
-        } : <></> ,
+        } :  {
+            title: 'Harakatlar',
+            dataIndex: 'id',
+            key: 'address',
+            render: (id) => <div >
+                <button><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={handleButtonClick}></i></button>
+            </div>
+        }  ,
+        
     ];
     return (
         <section className="ps-my-account ps-page--account">

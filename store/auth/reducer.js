@@ -6,7 +6,8 @@ export const initState = {
     isLoggedIn: false,
     user: null,
     accountLinks: [],
-    data: {}
+    data: {},
+    products:{},
 };
 
 function reducer(state = initState, actions) {
@@ -41,6 +42,9 @@ function reducer(state = initState, actions) {
 
         case actionTypes.ACCOUNT_LINKS:
             return { ...state, ...{ accountLinks: actions.payload } };
+
+            case actionTypes.MYPODUCTS_LISTS:
+                return { ...state, ...{ products: actions.payload } };
 
         case actionTypes.DATA:
             console.log('actions', actions);
