@@ -287,8 +287,7 @@ const Posts = () => {
                         </div>
 
                         <div className="d-flex justify-content-center col-10">
-                            <Link href={'/account/MyProducts'}>
-                               <a>
+                            <Link href={'/account/MyProducts'}>   
                                <button
                                     onClick={handleClickPosts}
                                     className="btn btn-success py-3 w-25">
@@ -296,7 +295,6 @@ const Posts = () => {
                                         Mahsulot qo'shish
                                     </span>
                                 </button>
-                               </a>
                             </Link>
                         </div>
                     </form>

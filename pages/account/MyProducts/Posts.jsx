@@ -10,12 +10,10 @@ import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Select } from 'antd';
-import { useRouter } from 'next/navigation';
 var parse = require("html-react-parser");
 
 
 const Posts = () => {
-    const router = useRouter()
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
@@ -156,7 +154,6 @@ const Posts = () => {
             formData,
             user?.access
         );
-        router.push('/account/MyProducts')
     }
 
     function LiveImage(e) {
