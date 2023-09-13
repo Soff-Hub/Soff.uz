@@ -10,9 +10,13 @@ import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Select } from 'antd';
-var parse = require('html-react-parser');
+var parse = require("html-react-parser");
+import { useRouter } from 'next/router';
+
+
 
 const Posts = () => {
+    const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
@@ -28,6 +32,8 @@ const Posts = () => {
     const [Fulldata, setFullData] = useState('');
     const [livePoster, setLivePoster] = useState('');
     const [categoryName, setCategoryName] = useState('')
+    const [discount, setDiscount] = useState(null);
+
 
     const breadCrumb = [
         {
@@ -101,6 +107,9 @@ const Posts = () => {
         }
     }
 
+
+
+    
     const handleChangeCategory = async (e) => {
         setCategory_id(e);
 
@@ -144,11 +153,13 @@ const Posts = () => {
     };
 
     async function handleClickPosts(e) {
-        e.preventDefault();
+        e.preventDefault()
+
         const formData = new FormData();
         formData.append('file', fileImgFile);
         formData.append('poster', fileImgPoster);
         formData.append('title', title);
+        formData.append('discount', discount);
         formData.append(
             'price',
             taxminiyNarx ? removePrefix(taxminiyNarx) : taxminiyNarx
@@ -163,6 +174,8 @@ const Posts = () => {
             formData,
             user?.access
         );
+        Router.push('/account/MyProducts');
+        
     }
 
     function LiveImage(e) {
@@ -210,7 +223,9 @@ const Posts = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
                     <form
-                    style={{position: 'relative'}}
+                    onSubmit={handleClickPosts}
+                        style={{ width: '70%' }}
+
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
@@ -275,6 +290,15 @@ const Posts = () => {
                                 setTaxminiyNarx(e.target.value)
                             )}
                         />
+                           <input
+                            type='number'
+                            className="form-control col-md-5 rounded-3"
+                            placeholder="Hujjatingizning narxi"
+                            name="price"
+                            onChange={(e) => (
+                                setDiscount(e.target.value)
+                            )}
+                        />
 
                         <div className=" p-0 rounded-3 col-md-10">
                             <span>Qisqa tavsif</span>
@@ -296,11 +320,15 @@ const Posts = () => {
                         </div>
 
                         <div className="d-flex justify-content-center col-10">
-                            <button
-                                onClick={(e) => handleClickPosts(e)}
-                                className="btn btn-success py-3 w-25">
-                                <span className="fs-4">Mahsulot qo'shish</span>
-                            </button>
+                           
+                                <button
+                                   type='submit'
+                                    className="btn btn-success py-3 w-25">
+                                    <span className="fs-4">
+                                        Mahsulot qo'shish
+                                    </span>
+                                </button>
+                         
 
                         </div>
                             <span
