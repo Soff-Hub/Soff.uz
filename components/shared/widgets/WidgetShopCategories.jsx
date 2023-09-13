@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { PropagateLoader } from 'react-spinners';
 
 const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
     const Router = useRouter();
@@ -122,7 +123,14 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
     return (
         <aside className="widget widget_shop">
             <h4 className="widget-title">Kategoriyalar</h4>
-            {categoriesView?.length ?  <ul className="ps-list--categories">{categoriesView}</ul> :  <ul className="ps-list--categories">Loading...</ul>}
+            {categoriesView?.length ?  <ul className="ps-list--categories">{categoriesView}</ul> : <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}>
+                    <PropagateLoader color="#C9C9C9" />
+                </div> }
         </aside>
     );
 };
