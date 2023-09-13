@@ -262,14 +262,17 @@ const Posts = () => {
                                 </span>
                             </button>
                         </div>
-                        <span
-                            className="mahsulotingiz"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight"
-                            aria-controls="offcanvasRight">
-                            <i class="fa-solid fa-id-card fa-beat fs-1"></i>
-                        </span>
+                        <div className="mahsulotingiz" >
+                            <p>Hujjatingiz</p>
+                           <span
+                                className='fixed-btn'
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight"
+                                aria-controls="offcanvasRight">
+                                 <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                            </span>
+                           </div>
                     </form>
                     <div
                         class="offcanvas offcanvas-end"
