@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import Page404 from '~/pages/page/page-404';
-import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
@@ -16,7 +14,7 @@ var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
 
 
-const Posts = () => {
+const productsPatch = () => {
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
@@ -88,7 +86,7 @@ const Posts = () => {
         GetItemsCategoryLists();
     }, [user?.access]);
     const tags = JSON.stringify(tagSearchResult.join(" "));
-
+    
     async function handleClickPostsEdit(e) {
         e.preventDefault()
         const formData = new FormData();
@@ -146,7 +144,6 @@ const Posts = () => {
 
         return formattedNumber;
     }
-    
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -157,23 +154,23 @@ const Posts = () => {
                 <div className="d-flex container justify-content-center">
                     <form
                         onSubmit={handleClickPostsEdit}
-                        style={{ position: "relative" }}
+                        style={{ position:"relative" }}
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5 w-100">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
                         <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3 text-truncate">
                             {
                                 livePoster ? livePoster :
-                                    " Hujjatingizni saytda ko'rinishi (Rasm)"
+                                " Hujjatingizni saytda ko'rinishi (Rasm)"
                             }
                             <input type="file" onChange={(e) => LiveImage(e)} />
                         </label>
                         <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3 text-truncate">
-
-                            {
-                                fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
-                                    "Hujjatingizni joylang (File)"
-                            }
+                         
+                         {
+                            fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c"  : 
+                            "Hujjatingizni joylang (File)"
+                         }   
                             <input
                                 type="file"
                                 onChange={(e) =>
@@ -190,7 +187,6 @@ const Posts = () => {
                                 style={{ width: '100%' }}
                                 placeholder="Hujjatlaringizga tag qo'shing"
                                 onChange={handleChange}
-                                defaultValue={ products?.tag && products?.tag?.map(item=>(item.name))}
                             >
                                 {children}
                             </Select>
@@ -202,7 +198,7 @@ const Posts = () => {
                             onChange={(e) =>
                                 setCategory_id(e.target.value)
                             }>
-                            <option value=""  >Barcha Kategoriyalar</option>
+                            <option value="">Barcha Kategoriyalar</option>
                             {dataCategory?.length > 0 &&
                                 dataCategory.map((item) => (
                                     <option value={item.id}>{item.name}</option>
@@ -228,8 +224,8 @@ const Posts = () => {
                         />
                         <input
                             type='number'
-                            className="form-control col-md-10 rounded-3"
-                            placeholder="Hujjatingizga qo'ygan chegirmangiz"
+                            className="form-control col-md-5 rounded-3"
+                            placeholder="Hujjatingizning narxi"
                             name="price"
                             defaultValue={products?.discount}
                             onChange={(e) => (
@@ -249,7 +245,7 @@ const Posts = () => {
                                     setFullData(parse(data));
                                 }}
                                 editorLoaded={editorLoaded}
-
+                                defaultValue={products?.description}
                             />
                         </div>
 
@@ -263,13 +259,13 @@ const Posts = () => {
                             </button>
                         </div>
                         <span
-                            className="mahsulotingiz"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight"
-                            aria-controls="offcanvasRight">
-                            <i class="fa-solid fa-id-card fa-beat fs-1"></i>
-                        </span>
+                                className="mahsulotingiz"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight"
+                                aria-controls="offcanvasRight">
+                         <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                            </span>
                     </form>
                     <div
                         class="offcanvas offcanvas-end"
@@ -285,71 +281,76 @@ const Posts = () => {
                                 aria-label="Close"></button>
                         </div>
                         <div class="offcanvas-body">
-                            <div className="card rounded-3 ">
-                                <div className="image" style={{
-                                    backgroundImage: `url(${livePoster
-                                        ? livePoster
-                                        : products?.poster_url})`
-                                }}>
-                                </div>
-                                <div className="text-start">
-                                    <p className="live-card-p">
-                                        <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Narxi</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {taxminiyNarx
-                                                ? addPeriodToThousands(taxminiyNarx)
-                                                : addPeriodToThousands(products?.price)}
-                                            so'm
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Teglari</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                tags ? tags : "Teg qo'shing"
-                                            }
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Kategoriya</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                category_id ? category_id : "Kategoriya qo'shing"
-                                            }
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Chegirma</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                discount ? discount : products?.discount
-                                            }
-                                            %
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Qisqa tavsif</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Shortdata ? Shortdata : products?.short_description
-                                            }
-                                            
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Fulldata?.props?.children ? Fulldata?.props?.children : products?.description
-                                            }
-                                            
-                                        </span>
-                                    </p>
-                                </div>
+                        <div className="card rounded-3 ">
+                            <div className="image">
+                                <img
+                                    className="live-card-image"
+                                    src={
+                                        livePoster
+                                            ? livePoster
+                                            : products?.poster_url
+                                    }
+                                    alt=""
+                                />
                             </div>
+                            <div className="text-start">
+                                <p className="live-card-p">
+                                    <span><strong>Nomi</strong>: </span> <span style={{maxWidth:'150px'}} >{title ? title : products?.title}</span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Narxi</strong>: </span>
+                                    <span style={{maxWidth:'150px'}} >
+                                        {taxminiyNarx
+                                            ?   addPeriodToThousands(taxminiyNarx)
+                                            : addPeriodToThousands(products?.price)}
+                                        so'm
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Teglari</strong>: </span>
+                                    <span style={{maxWidth:'150px'}} >
+                                       {
+                                        tags ? tags : "Teg qo'shing"
+                                       }
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Kategoriya</strong>: </span>
+                                    <span style={{maxWidth:'150px'}} >
+                                       {
+                                       category_id ? category_id : "Kategoriya qo'shing"
+                                       }
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Chegirma</strong>: </span>
+                                    <span style={{maxWidth:'150px'}} >
+                                       {
+                                       discount ? discount : products?.discount 
+                                       }
+                                       %
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Qisqa tavsif</strong>: </span>
+                                    <span style={{maxWidth:'150px'}} >
+                                       {
+                                       Shortdata ? Shortdata : products?.short_description 
+                                       }
+                                       %
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
+                                    <span style={{maxWidth:'150px'}} >
+                                       {
+                                       Fulldata?.props?.children ? Fulldata?.props?.children : products?.description 
+                                       }
+                                       %
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -362,4 +363,4 @@ const Posts = () => {
     );
 };
 
-export default Posts;
+export default productsPatch;
