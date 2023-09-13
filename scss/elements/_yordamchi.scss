@@ -161,23 +161,45 @@
 
 .mahsulotingiz{
     position: fixed;
-    bottom: 28%;
-    right: 12%;
+
+   top: 50%;
+   left: 50%;
+   transform: translate(36%, 0%);
+}
+
+.fixed-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #ffc107;
     color: #fff;
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
+
 .text-start{
     padding: 0 10px !important;
 }
 
 .ant-select{
     max-height: 70px !important;
+}
+
+.live-card-image{
+    max-height: 200px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.image{
+    width: 100%;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-clip: border-box;
 }
 
 

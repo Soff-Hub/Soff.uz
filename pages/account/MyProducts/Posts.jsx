@@ -33,6 +33,7 @@ const Posts = () => {
     const [livePoster, setLivePoster] = useState('');
     const [categoryName, setCategoryName] = useState('')
     const [discount, setDiscount] = useState(null);
+    const [liveFile, setLiveFile] = useState('');
 
 
     const breadCrumb = [
@@ -116,6 +117,15 @@ console.log(tagSearchResult);
     const handleChangeCategory = async (e) => {
         setCategory_id(e);
 
+
+        if (e) {
+            for (let i = 0; i < dataCategory.length; i++) {
+                if (dataCategory[i].id == e) {
+                    setCategoryName(dataCategory[i].name)
+                }
+            }
+        }
+
         let arr = [];
         if (tagSearchResult?.length > 0) {
             for (let i = 0; i < tagItems.length; i++) {
@@ -145,13 +155,7 @@ console.log(tagSearchResult);
         }
 
 
-        if (dataCategory) {
-            for (let i = 0; i < dataCategory.length; i++) {
-                if (dataCategory[i].id == e) {
-                    setCategoryName(dataCategory[i].name)
-                }
-            }
-        }
+       
        
     };
 
@@ -187,6 +191,12 @@ console.log(tagSearchResult);
         setLivePoster(img);
     }
 
+    function LiveFileValue(e){
+        setFileImgFile(e.target.files[0])
+        const img = window.URL.createObjectURL(e.target.files[0]);
+        setLiveFile(img);
+    }
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -216,7 +226,7 @@ console.log(tagSearchResult);
 
   
 
-    
+    console.log(tagSearchResult);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -228,20 +238,25 @@ console.log(tagSearchResult);
                     <form
                     onSubmit={handleClickPosts}
 
-                        style={{position:'relative'}}
+                        style={{position:'relative', width:'100%'}}
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
-                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3">
-                            Hujjatingizni saytda ko'rinishi (Rasm)
+                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3 text-truncate">
+                            {
+                                livePoster ? livePoster : "Hujjatingizni saytda ko'rinishi (Rasm)"
+                            }
+
                             <input type="file" onChange={(e) => LiveImage(e)} />
                         </label>
-                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3">
-                            Hujjatingizni joylang (File)
+                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3 text-truncate">
+                           {
+                            liveFile ? liveFile : "Hujjatingizni joylang (File)"
+                           }
                             <input
                                 type="file"
                                 onChange={(e) =>
-                                    setFileImgFile(e.target.files[0])
+                                    LiveFileValue(e)
                                 }
                                 accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                             />
@@ -295,7 +310,7 @@ console.log(tagSearchResult);
                         />
                            <input
                             type='number'
-                            className="form-control col-md-5 rounded-3"
+                            className="form-control col-md-10 rounded-3"
                             placeholder="Chegirma qo'ying (%)"
                             name="price"
                             onChange={(e) => (
@@ -322,11 +337,11 @@ console.log(tagSearchResult);
                             />
                         </div>
 
-                        <div className="d-flex justify-content-center col-10">
+                        <div className="d-flex justify-content-center col-md-10">
                            
                                 <button
                                    type='submit'
-                                    className="btn btn-success py-3 w-25">
+                                    className="btn btn-success py-3 col-md-3">
                                     <span className="fs-4">
                                         Mahsulot qo'shish
                                     </span>
@@ -334,14 +349,17 @@ console.log(tagSearchResult);
                          
 
                         </div>
-                            <span
-                                className="mahsulotingiz"
+                           <div className="mahsulotingiz" >
+                            <p>Hujjatingiz</p>
+                           <span
+                                className='fixed-btn'
                                 type="button"
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasRight"
                                 aria-controls="offcanvasRight">
-                                <i class="fa-solid fa-image fs-1"></i>
+                                 <i class="fa-solid fa-id-card fa-beat fs-1"></i>
                             </span>
+                           </div>
                     </form>
                     <div
                         class="offcanvas offcanvas-end"
@@ -358,33 +376,51 @@ console.log(tagSearchResult);
                         </div>
                         <div class="offcanvas-body">
                         <div className="card rounded-3 ">
-                            <div className="image">
-                                <img
-                                    className="live-card-image"
-                                    src={
-                                        livePoster
-                                            ? livePoster
-                                            : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-                                    }
-                                    alt=""
-                                />
+                            <div className="image"
+                            
+                            style={{backgroundImage:`url(${livePoster ? livePoster : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'})`}}
+                            >
+                                
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
-                                    <span>Nomi: </span> <span style={{maxWidth:'150px'}} > {title}</span>
+                                    <strong>Nomi : </strong> <span style={{maxWidth:'150px'}} > {title ? title : "To'ldirilmadi"}</span>
                                 </p>
                                 <p className="live-card-p">
-                                    <span>Narxi: </span>{' '}
-                                    <span style={{maxWidth:'150px'}} >
-                                        {taxminiyNarx
-                                            ?   addPeriodToThousands(removePrefix(taxminiyNarx))
-                                            : ''}
-                                        so'm
-                                    </span>
+                                    <strong>Narxi : </strong>{' '}
+                                    <strong style={{maxWidth:'150px'}} >
+                                       <span> {taxminiyNarx
+                                            ?   addPeriodToThousands(removePrefix(taxminiyNarx)) + "so'm"
+                                            : 'To\'ldirilmadi'}
+                                        </span>
+                                    </strong>
                                 </p>
-                                {/* <p className="live-card-p">
-                                    <span>Kategoriyasi: </span> <span style={{maxWidth:'150px'}} >{categoryName} </span>
-                                </p> */}
+                                <p className="live-card-p">
+                                    <strong>Kategoriyasi : </strong> <span style={{maxWidth:'150px'}} >{categoryName ? categoryName : "To'ldirilmadi"} </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Chegirmasi : </strong> <span style={{maxWidth:'150px'}} >  {
+                                        discount ? discount + '%' : "To'ldirilmadi"
+                                    } </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Taglari : </strong>
+                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
+                                     {
+                                        tagSearchResult.length > 0 ?
+                                        tagSearchResult?.map((item, i) => {
+                                            return (
+                                                <span key={i}>#{item} </span>
+                                            )
+                                        }) : "To'ldirilmadi"
+                                     }
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Qisqa tavsif : </strong> <span style={{maxWidth:'150px'}} >{Shortdata ? Shortdata : "To'ldirilmadi"}</span>
+                                </p>
+                                <p className="live-card-p">
+                                    <strong> To'liq ma'lumot : </strong> <span style={{maxWidth:'150px'}} >{Fulldata?.props?.children ? Fulldata?.props?.children : "To'ldirilmadi" }</span>
+                                </p>
                             </div>
                         </div>
                         </div>
