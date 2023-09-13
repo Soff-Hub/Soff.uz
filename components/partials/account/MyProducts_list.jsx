@@ -323,7 +323,7 @@ function MyProductsLists() {
                                     <div className="col-md-8">
                                         <div className="card-body pt-5">
                                             <p className="card-text"> <strong>Nomi:</strong> {View?.category?.name}</p>
-                                            <p className="card-text"><strong>Narxi:</strong>  ${View?.price} </p>
+                                            <p className="card-text"><strong>Narxi:</strong> {View?.price} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
 

@@ -9,7 +9,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Select } from 'antd';
+import { Modal, Select } from 'antd';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
 
@@ -182,6 +182,11 @@ console.log(tagSearchResult);
             user?.access
         );
         Router.push('/account/MyProducts');
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz yangi mahsulot qo'shdingiz`,
+        });
         
     }
 
