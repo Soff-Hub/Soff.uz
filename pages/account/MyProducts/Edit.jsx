@@ -13,42 +13,40 @@ import CKeditor from '../../../components/partials/account/CKeditor';
 import { Select } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
+import { useRouter } from 'next/router';
 
 
 const Posts = () => {
+    const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const {products,  user } = useSelector((state) => state.auth);
-    const [tagValue, setTagValue] = useState('');
+    const { products, user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [category_id, setCategory_id] = useState(null);
-    const [narxNomi, setNarxNomi] = useState(true);
+    const [discount, setDiscount] = useState(null);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Shortdata, setShortData] = useState('');
     const [Fulldata, setFullData] = useState('');
     const [livePoster, setLivePoster] = useState('');
-
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
             url: '/',
         },
         {
-            text: "Mening mahsulotlarim Qo'shish",
+            text: "Mening mahsulotlarim Tahrirlash",
         },
     ];
 
     const Option = Select.Option;
 
-    async function GetItemsCategory(page) {
-        if (page === 1) {
-            setDataCategory([]);
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsCategoryLists() {
+        const token = user?.access;
+        const ItemsData = await GetRepository.getCategoryLists(token);
         setDataCategory(ItemsData.results);
     }
 
@@ -58,32 +56,6 @@ const Posts = () => {
             setTagItems(ItemsData.results);
         }
     }
-
-    const children = [];
-    for (let i = 0; i < tagItems?.length; i++) {
-        children.push(
-            <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
-        );
-    }
-
-
-    function removePrefix(text) {
-        const prefix = 'Tavsiya etilgan narx: ';
-        if (text.startsWith(prefix)) {
-            return text.slice(prefix.length);
-        }
-        return text;
-    }
-
-
-    useEffect(() => {
-        GetItemsCategory(1);
-        GetItemsTag();
-    }, [tagValue]);
-
-    useEffect(() => {
-        setEditorLoaded(true);
-    }, []);
 
     async function handleChange(value) {
         setTagSearchResult(value);
@@ -97,80 +69,58 @@ const Posts = () => {
                 }
             }
         }
-
-        const data = {
-            category_id: category_id,
-            tag_id: arr,
-        };
-
-        if (value?.length > 0 && category_id !== null) {
-            const respons = await PostsRepository.TaxminiyNarxOlish(
-                data,
-                user?.access
-            );
-            if (respons) {
-                setTaxminiyNarx(
-                    'Tavsiya etilgan narx: ' + respons?.recommended_price
-                );
-            }
-        }
     }
 
-    const handleChangeCategory = async (e) => {
-        setCategory_id(e);
+    const children = [];
+    for (let i = 0; i < tagItems?.length; i++) {
+        children.push(
+            <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
+        );
+    }
 
-        let arr = [];
-        if (tagSearchResult?.length > 0) {
-            for (let i = 0; i < tagItems.length; i++) {
-                for (let j = 0; j < tagSearchResult.length; j++) {
-                    if (tagItems[i].name === tagSearchResult[j]) {
-                        arr.push(tagItems[i].id);
-                    }
-                }
-            }
-        }
 
-        const data = {
-            category_id: e,
-            tag_id: arr,
-        };
+    useEffect(() => {
+        GetItemsTag();
+        setEditorLoaded(true);
+    }, []);
 
-        if (tagSearchResult?.length > 0 && e !== null) {
-            const respons = await PostsRepository.TaxminiyNarxOlish(
-                data,
-                user?.access
-            );
-            if (respons) {
-                setTaxminiyNarx(
-                    'Tavsiya etilgan narx: ' + respons?.recommended_price
-                );
-            }
-        }
-    };
+    useEffect(() => {
+        GetItemsCategoryLists();
+    }, [user?.access]);
 
- 
-    async function handleClickPosts(values) {
-        const tags = JSON.stringify(tagSearchResult);
-
+    async function handleClickPostsEdit(e) {
+        e.preventDefault()
+        const tags = JSON.stringify(tagSearchResult.join(" "));
         const formData = new FormData();
-        formData.append('file', fileImgFile);
-        formData.append('poster', fileImgPoster);
-        formData.append('title', title);
-        formData.append(
-            'price',
-            taxminiyNarx ? removePrefix(taxminiyNarx) : taxminiyNarx
-        );
-        formData.append('short_description', Shortdata);
-        formData.append('description', Fulldata?.props?.children);
-        formData.append('category', category_id);
-        formData.append('tags', tags);
-        const patchItems = await PatchRepository.getMyProductsPatch(
-            formData,
-            products?.id,
-            user?.access
-        );
-
-        console.log('jonatish', patchItems);
+        if (fileImgFile) {
+            formData.append('file', fileImgFile);
+        }
+        if (fileImgPoster) {
+            formData.append('poster', fileImgPoster);
+        }
+        if (title) {
+            formData.append('title', title);
+        }
+        if (taxminiyNarx) {
+            formData.append('price', taxminiyNarx);
+        }
+        if (Shortdata) {
+            formData.append('short_description', Shortdata);
+        }
+        if (Fulldata?.props?.children) {
+            formData.append('description', Fulldata?.props?.children);
+        }
+        if (category_id) {
+            formData.append('category', category_id);
+        }
+        if (tags) {
+            formData.append('tags', tags);
+        }
+        if (discount) {
+            formData.append("discount", discount);
+        }
+        const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
+        Router.push('/account/MyProducts');
     }
 
     function LiveImage(e) {
@@ -205,6 +155,7 @@ const Posts = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
                     <form
+                        onSubmit={handleClickPostsEdit}
                         style={{ width: '70%' }}
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
@@ -217,8 +168,10 @@ const Posts = () => {
                             Hujjatingizni joylang (File)
                             <input
                                 type="file"
+
                                 onChange={(e) =>
                                     setFileImgFile(e.target.files[0])
+
                                 }
                                 accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                             />
@@ -229,16 +182,17 @@ const Posts = () => {
                                 mode="tags"
                                 style={{ width: '100%' }}
                                 placeholder="Hujjatlaringizga tag qo'shing"
-                                onChange={handleChange}>
+                                onChange={handleChange}
+                            >
                                 {children}
                             </Select>
                         </div>
 
                         <select
-                        style={{ alignItems: "flex-start" }}
+                            style={{ alignItems: "flex-start" }}
                             className="form-select rounded-3 col-md-5 fs-4"
                             onChange={(e) =>
-                                handleChangeCategory(e.target.value)
+                                setCategory_id(e.target.value)
                             }>
                             <option value="">Barcha Kategoriyalar</option>
                             {dataCategory?.length > 0 &&
@@ -252,28 +206,32 @@ const Posts = () => {
                             placeholder="Hujjatingizning nomi"
                             name="title"
                             onChange={(e) => setTitle(e.target.value)}
+                            defaultValue={products?.title}
                         />
                         <input
-                            type={narxNomi ? 'text' : 'number'}
+                            type='number'
                             className="form-control col-md-5 rounded-3"
                             placeholder="Hujjatingizning narxi"
                             name="price"
-                            value={
-                                taxminiyNarx !== null &&
-                                taxminiyNarx !== undefined &&
-                                removePrefix(taxminiyNarx) !== null
-                                    ? taxminiyNarx
-                                    : ''
-                            }
+                            defaultValue={products?.price}
                             onChange={(e) => (
-                                setNarxNomi(false),
                                 setTaxminiyNarx(e.target.value)
+                            )}
+                        />
+                        <input
+                            type='number'
+                            className="form-control col-md-5 rounded-3"
+                            placeholder="Hujjatingizning narxi"
+                            name="price"
+                            defaultValue={products?.discount}
+                            onChange={(e) => (
+                                setDiscount(e.target.value)
                             )}
                         />
 
                         <div className=" p-0 rounded-3 col-md-10">
                             <span>SHort description</span>
-                           <textarea onChange={(e)=>setShortData(e.target.value)} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
+                            <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
                         </div>
                         <div className=" p-0 rounded-3 col-md-10">
                             <span>Full description</span>
@@ -283,19 +241,18 @@ const Posts = () => {
                                     setFullData(parse(data));
                                 }}
                                 editorLoaded={editorLoaded}
+
                             />
                         </div>
 
                         <div className="d-flex justify-content-center col-10">
-                            <Link href={'/account/MyProducts'}>   
-                               <button
-                                    onClick={handleClickPosts}
-                                    className="btn btn-success py-3 w-25">
-                                    <span className="fs-4">
-                                        Mahsulot qo'shish
-                                    </span>
-                                </button>
-                            </Link>
+                            <button
+                                type='submit'
+                                className="btn btn-success py-3 w-25">
+                                <span className="fs-4">
+                                    Mahsulot qo'shish
+                                </span>
+                            </button>
                         </div>
                     </form>
                     <div className=" col-md-3 pt-4 ms-5 ">
@@ -315,15 +272,15 @@ const Posts = () => {
                             <div className="text-start">
                                 <p className="live-card-p">
                                     {' '}
-                                    <span>Nomi: </span> <span style={{maxWidth:'150px'}} > {title}</span>
+                                    <span>Nomi: </span> <span style={{ maxWidth: '150px' }} > {title}</span>
                                 </p>
                                 <p className="live-card-p">
                                     {' '}
                                     <span>Narxi: </span>{' '}
-                                    <span style={{maxWidth:'150px'}} >
+                                    <span style={{ maxWidth: '150px' }} >
                                         {' '}
                                         {taxminiyNarx
-                                            ?   addPeriodToThousands(removePrefix(taxminiyNarx))
+                                            ? addPeriodToThousands(taxminiyNarx)
                                             : ''}
                                         so'm
                                     </span>
