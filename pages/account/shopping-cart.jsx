@@ -72,7 +72,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                                   </Link>
                                   
                                 ) : (
-                                    <Link href="/account/foydalanuvchi">
+                                    <Link href="/account/register-user">
                                         <a className="ps-btn ps-btn--fullwidth">
                                             Sotib olish
                                         </a>

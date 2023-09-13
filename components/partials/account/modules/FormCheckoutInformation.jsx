@@ -36,7 +36,7 @@ function FormCheckoutInformation() {
 
     useEffect(() => {
         // let cookeCard = cookies?.cart;
-        select && GetCard();
+        select && GetCard()
 
         setData(cookies?.cart);
 

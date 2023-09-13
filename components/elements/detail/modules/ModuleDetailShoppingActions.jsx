@@ -38,7 +38,7 @@ const ModuleDetailShoppingActions = ({
             addItem(product, ecomerce.cartItems, 'cart');
                 Router.push('/account/checkout');
         } else {
-                Router.push('/account/foydalanuvchi');
+                Router.push('/account/register-user');
         }
     }
     

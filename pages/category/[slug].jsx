@@ -26,7 +26,7 @@ const ProductCategoryScreen = () => {
     const [Parent, setParent] = useState(null);
     const [Chaild, setChaild] = useState(null);
     const [count, setCount] = useState(null);
-    const [nom, setNom] = useState(' Barcha categoriyalar');
+    const [nom, setNom] = useState('Kategoriyalar');
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
@@ -46,7 +46,7 @@ const ProductCategoryScreen = () => {
             null,
             null,
             null,
-            null
+            null, null
         );
         if (responseData) {
             console.log('respons chaild data', responseData?.results);
@@ -66,7 +66,7 @@ const ProductCategoryScreen = () => {
             null,
             null,
             null,
-            null
+            null, null
         );
         if (responseData) {
             setFilteredData(responseData?.results);
@@ -83,7 +83,7 @@ const ProductCategoryScreen = () => {
             null,
             null,
             null,
-            null
+            null, null
         );
         if (responseData) {
             console.log('parent', responseData.results);
@@ -100,7 +100,7 @@ const ProductCategoryScreen = () => {
             null,
             null,
             null,
-            null
+            null, null
         );
         if (responseData) {
             console.log('chaild', responseData.results);
