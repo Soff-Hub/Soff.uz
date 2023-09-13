@@ -224,7 +224,7 @@ const Posts = () => {
                 <div className="d-flex container justify-content-center">
                     <form
                     onSubmit={handleClickPosts}
-                        style={{ width: '70%' }}
+                        style={{ position:"relative" }}
 
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
@@ -340,37 +340,6 @@ const Posts = () => {
                                 <i class="fa-solid fa-image fs-1"></i>
                             </span>
                     </form>
-                    {/* <div className=" col-md-3 pt-4 ms-5 ">
-                        <h4 className='live-card_title'>Sizning qo'shayotgan mahsulotingiz :</h4>
-                        <div className="card rounded-3 ">
-                            <div className="image">
-                                <img
-                                    className="live-card-image"
-                                    src={
-                                        livePoster
-                                            ? livePoster
-                                            : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-                                    }
-                                    alt=""
-                                />
-                            </div>
-                            <div className="text-start">
-                                <p className="live-card-p">
-                                    <span>Nomi: </span> <span style={{maxWidth:'150px'}} > {title}</span>
-                                </p>
-                                <p className="live-card-p">
-                                    <span>Narxi: </span>{' '}
-                                    <span style={{maxWidth:'150px'}} >
-                                        {taxminiyNarx
-                                            ?   addPeriodToThousands(removePrefix(taxminiyNarx))
-                                            : ''}
-                                        so'm
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div> */}
-
                     <div
                         class="offcanvas offcanvas-end"
                         tabindex="-1"

@@ -38,7 +38,7 @@ const Posts = () => {
             url: '/',
         },
         {
-            text: "Mening mahsulotlarim Tahrirlash",
+            text: "Mening mahsulotlarim tahrirlash",
         },
     ];
 
@@ -156,7 +156,7 @@ const Posts = () => {
                 <div className="d-flex container justify-content-center">
                     <form
                         onSubmit={handleClickPostsEdit}
-                        style={{ width: '70%' }}
+                        style={{ position:"relative" }}
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
@@ -230,11 +230,11 @@ const Posts = () => {
                         />
 
                         <div className=" p-0 rounded-3 col-md-10">
-                            <span>SHort description</span>
+                            <span>Qisqa tavsif</span>
                             <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
                         </div>
                         <div className=" p-0 rounded-3 col-md-10">
-                            <span>Full description</span>
+                            <span>Hujjatingiz haqida to'liq ma'umot</span>
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
@@ -254,9 +254,29 @@ const Posts = () => {
                                 </span>
                             </button>
                         </div>
+                        <span
+                                className="mahsulotingiz"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight"
+                                aria-controls="offcanvasRight">
+                         <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                            </span>
                     </form>
-                    <div className=" col-md-3 pt-4 ms-5 ">
-                        <h4 className='live-card_title'>Sizning qo'shayotgan mahsulotingiz :</h4>
+                    <div
+                        class="offcanvas offcanvas-end"
+                        tabindex="-1"
+                        id="offcanvasRight"
+                        aria-labelledby="offcanvasRightLabel">
+                        <div class="offcanvas-header pt-5">
+                            <h5 id="offcanvasRightLabel">Tahrirlanayotgan mahsulotingizni ko'rinishi</h5>
+                            <button
+                                type="button"
+                                class="btn-close text-reset"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
                         <div className="card rounded-3 ">
                             <div className="image">
                                 <img
@@ -264,28 +284,29 @@ const Posts = () => {
                                     src={
                                         livePoster
                                             ? livePoster
-                                            : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+                                            : products?.poster_url
                                     }
                                     alt=""
                                 />
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
-                                    {' '}
-                                    <span>Nomi: </span> <span style={{ maxWidth: '150px' }} > {title}</span>
+                                    <span>Nomi: </span> <span style={{maxWidth:'150px'}} >{title ? title : products?.title}</span>
                                 </p>
                                 <p className="live-card-p">
-                                    {' '}
                                     <span>Narxi: </span>{' '}
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {' '}
+                                    <span style={{maxWidth:'150px'}} >
                                         {taxminiyNarx
-                                            ? addPeriodToThousands(taxminiyNarx)
-                                            : ''}
+                                            ?   addPeriodToThousands(taxminiyNarx)
+                                            : addPeriodToThousands(products?.price)}
                                         so'm
                                     </span>
                                 </p>
+                                {/* <p className="live-card-p">
+                                    <span>Kategoriyasi: </span> <span style={{maxWidth:'150px'}} >{categoryName} </span>
+                                </p> */}
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
