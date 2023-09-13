@@ -121,7 +121,7 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
 
     return (
         <aside className="widget widget_shop">
-            <h4 className="widget-title">Categories</h4>
+            <h4 className="widget-title">Kategoriyalar</h4>
             {categoriesView?.length ?  <ul className="ps-list--categories">{categoriesView}</ul> :  <ul className="ps-list--categories">Loading...</ul>}
         </aside>
     );

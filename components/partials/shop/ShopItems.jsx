@@ -63,7 +63,7 @@ const ShopItems = ({
             setLoad(true);
         }, 2000);
 
-        data?.length > 0 ? setSuccess(true) : setSuccess(false);
+        data ? setSuccess(false) : setSuccess(true);
 
         handleSetColumns();
         if (data) {
@@ -201,8 +201,19 @@ const ShopItems = ({
 
     // Views
     let productItemsView;
-    if (data?.length > 0) {
-        if (success) {
+    if (success) {
+
+        const skeletonItems = generateTempArray(4).map((item) => (
+            <div className={classes} key={item}>
+                <SkeletonProduct />
+            </div>
+        ));
+        productItemsView = <div className="row">{skeletonItems}</div>;
+        
+       
+    } else {
+
+        if (data?.length > 0) {
             const items =
                 newData?.length > 0 &&
                 newData?.map((item) => (
@@ -216,51 +227,24 @@ const ShopItems = ({
                 </div>
             );
         } else {
-            // productItemsView = (
-            //     <div
-            //         style={{
-            //             display: 'flex',
-            //             justifyContent: 'center',
-            //             alignContent: 'center',
-            //         }}>
-            //         <div className={classes} style={{ marginTop: '30px' }}>
-            //             <img
-            //                 src="/static/img/no-document.jpg"
-            //                 alt="no documnt"
-            //             />
-            //             <p className="text-center">Hujjat yo'q</p>
-            //         </div>
-            //     </div>
-            // );
-
-            const skeletonItems = generateTempArray(4).map((item) => (
-                <div className={classes} key={item}>
-                    <SkeletonProduct />
+            productItemsView = (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}>
+                    <div className={classes} style={{ marginTop: '30px' }}>
+                        <img
+                            src="/static/img/no-document.jpg"
+                            alt="no documnt"
+                        />
+                        <p className="text-center">Hujjat yo'q</p>
+                    </div>
                 </div>
-            ));
-            productItemsView = <div className="row">{skeletonItems}</div>;
+            );
+
         }
-    } else {
-        // const skeletonItems = generateTempArray(4).map((item) => (
-        //     <div className={classes} key={item}>
-        //         <SkeletonProduct />
-        //     </div>
-        // ));
-        // productItemsView = <div className="row">{skeletonItems}</div>;
-
-        productItemsView = (
-            <div
-                style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignContent: 'center',
-                }}>
-                <div className={classes} style={{ marginTop: '30px' }}>
-                    <img src="/static/img/no-document.jpg" alt="no documnt" />
-                    <p className="text-center">Hujjat yo'q</p>
-                </div>
-            </div>
-        );
     }
 
     return (
