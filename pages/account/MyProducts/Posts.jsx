@@ -77,7 +77,10 @@ const Posts = () => {
     }
 
     async function handleChange(value) {
-        setTagSearchResult(value);
+        console.log('value', value);
+        if (value.length <= 3) {
+            setTagSearchResult(value);
+        }
         let arr = [];
         if (value?.length > 0) {
             for (let i = 0; i < tagItems.length; i++) {
@@ -99,7 +102,7 @@ const Posts = () => {
                 data,
                 user?.access
             );
-            if (respons) {
+            if (respons?.recommended_price !== undefined) {
                 setTaxminiyNarx(
                     'Tavsiya etilgan narx: ' + respons?.recommended_price
                 );
@@ -108,7 +111,7 @@ const Posts = () => {
     }
 
 
-
+console.log(tagSearchResult);
     
     const handleChangeCategory = async (e) => {
         setCategory_id(e);
@@ -134,7 +137,7 @@ const Posts = () => {
                 data,
                 user?.access
             );
-            if (respons) {
+            if (respons?.recommended_price !== undefined) {
                 setTaxminiyNarx(
                     'Tavsiya etilgan narx: ' + respons?.recommended_price
                 );
@@ -159,7 +162,7 @@ const Posts = () => {
         formData.append('file', fileImgFile);
         formData.append('poster', fileImgPoster);
         formData.append('title', title);
-        formData.append('discount', discount);
+        formData.append('discount', discount || 0);
         formData.append(
             'price',
             taxminiyNarx ? removePrefix(taxminiyNarx) : taxminiyNarx
@@ -224,8 +227,8 @@ const Posts = () => {
                 <div className="d-flex container justify-content-center">
                     <form
                     onSubmit={handleClickPosts}
-                        style={{ position:"relative" }}
 
+                        style={{position:'relative'}}
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
@@ -255,12 +258,12 @@ const Posts = () => {
                         </div>
 
                         <select
-                            style={{ alignItems: 'flex-start' }}
-                            className="form-select rounded-3 col-md-5 fs-4"
+                            style={{ alignItems: 'center' }}
+                            className="form-select form-control rounded-3 col-md-5 fs-4"
                             onChange={(e) =>
                                 handleChangeCategory(e.target.value)
                             }>
-                            <option value="">Barcha Kategoriyalar</option>
+                            <option className='mt-2 pt-3' value="">Barcha Kategoriyalar</option>
                             {dataCategory?.length > 0 &&
                                 dataCategory.map((item) => (
                                     <option value={item.id}>{item.name}</option>
@@ -293,7 +296,7 @@ const Posts = () => {
                            <input
                             type='number'
                             className="form-control col-md-5 rounded-3"
-                            placeholder="Hujjatingizning narxi"
+                            placeholder="Chegirma qo'ying (%)"
                             name="price"
                             onChange={(e) => (
                                 setDiscount(e.target.value)
