@@ -32,6 +32,8 @@ const Posts = () => {
     const [Fulldata, setFullData] = useState('');
     const [livePoster, setLivePoster] = useState('');
     const [categoryName, setCategoryName] = useState('')
+    const [discount, setDiscount] = useState(null);
+
 
     const breadCrumb = [
         {
@@ -157,6 +159,7 @@ const Posts = () => {
         formData.append('file', fileImgFile);
         formData.append('poster', fileImgPoster);
         formData.append('title', title);
+        formData.append('discount', discount);
         formData.append(
             'price',
             taxminiyNarx ? removePrefix(taxminiyNarx) : taxminiyNarx
@@ -285,6 +288,15 @@ const Posts = () => {
                             onChange={(e) => (
                                 setNarxNomi(false),
                                 setTaxminiyNarx(e.target.value)
+                            )}
+                        />
+                           <input
+                            type='number'
+                            className="form-control col-md-5 rounded-3"
+                            placeholder="Hujjatingizning narxi"
+                            name="price"
+                            onChange={(e) => (
+                                setDiscount(e.target.value)
                             )}
                         />
 
