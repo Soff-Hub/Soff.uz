@@ -6,16 +6,17 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector ,useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import ModalDelete from './Modal';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
 import { MyProductsEdit } from '~/store/auth/action';
 import ModalDeletePostEdit from './ModalPostEdit';
+import axios from 'axios';
 
 
 function MyProductsLists() {
-    
+
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [search, setSerach] = useState([]);
@@ -31,7 +32,7 @@ function MyProductsLists() {
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
-    const { accountLinks, user , products } = useSelector(state => state.auth)
+    const { accountLinks, user, products } = useSelector(state => state.auth)
 
 
     async function GetItemsProducts(page, category, tagName, dataFormat) {
@@ -84,9 +85,9 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat)
 
     }
-   function handleClickIdEdit(productsItems){
-    dispatch(MyProductsEdit(productsItems))
-   }
+    function handleClickIdEdit(productsItems) {
+        dispatch(MyProductsEdit(productsItems))
+    }
     useEffect(() => {
         GetItemsCategory(1)
         GetItemsTag()
@@ -95,10 +96,10 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat)
     }, [dataValCat, tagName, dataFormat])
 
-   async function handleItemsEditProductsPosts(){
-    const patchItems = await PatchRepository.getMyProductsPatch( ViewPriceDiscount, products?.id, user?.access);
-    GetItemsProducts(1, dataValCat, tagName, dataFormat)
-}
+    async function handleItemsEditProductsPosts() {
+        const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
+        GetItemsProducts(1, dataValCat, tagName, dataFormat)
+    }
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -116,27 +117,28 @@ function MyProductsLists() {
 
         return formattedNumber;
     }
-    const handleButtonClick = () => {
-        // Faylni yaratish  
-        const fileContent = data?.map(item=>(item.file)) // Faylni matni yoki ma'lumoti
-        const fileName = "fayl.jpeg"; // Fayl nomi
-      
-        const blob = new Blob([fileContent], { type: "text/plain" });
-      
-        // Faylni yuklab olish uchun link yaratish
-        const aTag = document.createElement("a");
-        const url = URL.createObjectURL(blob);
-      
-        aTag.setAttribute("href", url);
-        aTag.setAttribute("download", fileName);
-        document.body.appendChild(aTag);
-      
-        // Faylni yuklab olish va linkni o'chirish
-        aTag.click();
-        URL.revokeObjectURL(url);
-      };
-      
-      
+    const handleButtonClick = async (ID) => {
+
+        try {
+            const fileContent = data?.find(item=>(item.id==ID))
+            const response = await axios.get(
+                fileContent.file,
+                { responseType: 'blob' }
+            );
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileContent.title+"." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading file: ', error);
+        }
+    };
+
+
     const columns = [
         {
             title: 'Rasm',
@@ -184,7 +186,7 @@ function MyProductsLists() {
             key: 'created_at',
             render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
-       user?.role === "seller" ? {
+        user?.role === "seller" ? {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',
@@ -198,9 +200,9 @@ function MyProductsLists() {
                             <></>
             ),
 
-        } : <></> ,
+        } : <></>,
 
-       user?.role ==="seller" ?   {
+        user?.role === "seller" ? {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
@@ -208,46 +210,46 @@ function MyProductsLists() {
                 <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
                 {
                     data.some(el => el.id == id && el.status === 'moderation') ?
-                    <Link href={"/account/MyProducts/Edit"}>
-                     <a>
-                     <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() =>handleClickIdEdit(data.find(item => item.id === id))}></i>
-                     </a>
+                        <Link href={"/account/MyProducts/Edit"}>
+                            <a>
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(data.find(item => item.id === id))}></i>
+                            </a>
                         </Link> :
                         data.some(el => el.id == id && el.status === 'approved') ?
-                         <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal">
-                         <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() =>handleClickIdEdit(data.find(item => item.id === id))}></i>
-                         </a>
-                    : 
-                    <i style={{opacity:0.7 ,cursor:"not-allowed"}} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
-                
+                            <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal">
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(data.find(item => item.id === id))}></i>
+                            </a>
+                            :
+                            <i style={{ opacity: 0.7, cursor: "not-allowed" }} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
+
                 }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
 
             </div>
-        } :  {
+        } : {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <button><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={handleButtonClick}></i></button>
+                <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={()=>handleButtonClick(id)}></i></a>
             </div>
-        }  ,
-        
+        },
+
     ];
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 <div className=" p-5 mb-5 rounded row gap-5 row-gap-3 mx-auto" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3 className='col-md-4'>Mening mahsulotlarim</h3>
-                        <input type='search' className={user?.role==="seller" ? 'form-control rounded col-md-5' :  "form-control rounded col-md-7"} placeholder="Qidiruv" onInput={handleClick} />
-                       {
-                        user?.role==="seller"?
-                      <Link href={"/account/MyProducts/Posts"}>
-                      <button className="  btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
-                      </Link> 
-                      :
-                      <></>
-                       }
+                    <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-5' : "form-control rounded col-md-7"} placeholder="Qidiruv" onInput={handleClick} />
+                    {
+                        user?.role === "seller" ?
+                            <Link href={"/account/MyProducts/Posts"}>
+                                <button className="  btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Mahsulot qo'shish</span></button>
+                            </Link>
+                            :
+                            <></>
+                    }
 
                 </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
@@ -260,16 +262,16 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                {
-                                    user?.role==="seller" ?
-                                    <div className='d-flex flex-column gap-2'>
-                                    <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
-                                 <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
-                                 <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
-                                    </div>
-                                    :
-                                    <></>
-                                }
+                                    {
+                                        user?.role === "seller" ?
+                                            <div className='d-flex flex-column gap-2'>
+                                                <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                                                <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                                                <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                                            </div>
+                                            :
+                                            <></>
+                                    }
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
                                         <select className='form-select rounded-3 col-md-4 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Kategoriyalar</option>
@@ -296,9 +298,9 @@ function MyProductsLists() {
                                     </div>
                                     {
                                         user?.role === "seller" ?
-                                        <Table dataSource={data} scroll={{  x: 1100 }} columns={columns} />
-                                        :
-                                        <Table dataSource={data} scroll={{  x:900 }} columns={columns} />
+                                            <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} />
+                                            :
+                                            <Table dataSource={data} scroll={{ x: 900 }} columns={columns} />
 
                                     }
                                 </div>
@@ -306,7 +308,7 @@ function MyProductsLists() {
                         </div>
                     </div>
                 </div>
-                <ModalDelete onSuccess={DeleteItemsProducts}  />
+                <ModalDelete onSuccess={DeleteItemsProducts} />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
@@ -325,7 +327,7 @@ function MyProductsLists() {
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
 
-                                            <p><strong>Teg:</strong> {View?.tag?.map(item=>(
+                                            <p><strong>Teg:</strong> {View?.tag?.map(item => (
                                                 <span> #{item?.name} </span>
                                             ))}</p>
 
@@ -345,12 +347,12 @@ function MyProductsLists() {
                     </div>
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalMyProductsPrice" onSubmited={handleItemsEditProductsPosts} formID="products-edit_price" >
-                <label  htmlFor="priceCount" className='form-label'>Hujjatingizni chegirmasi
-                <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products?.discount}  type="number" className='form-control rounded-3' placeholder='Hujjatingizni chegirmasi' />
-                </label>
-                <label  htmlFor="discount" className='form-label'>Hujjatingizni narxi
-                <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, price: e.target.value }))}  defaultValue={products?.price}   type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
-                </label>
+                    <label htmlFor="priceCount" className='form-label'>Hujjatingizni chegirmasi
+                        <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products?.discount} type="number" className='form-control rounded-3' placeholder='Hujjatingizni chegirmasi' />
+                    </label>
+                    <label htmlFor="discount" className='form-label'>Hujjatingizni narxi
+                        <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, price: e.target.value }))} defaultValue={products?.price} type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
+                    </label>
                 </ModalDeletePostEdit >
             </div>
         </section>
