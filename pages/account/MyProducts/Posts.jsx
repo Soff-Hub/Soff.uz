@@ -14,6 +14,7 @@ var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
 
 
+
 const Posts = () => {
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState('');
@@ -30,6 +31,7 @@ const Posts = () => {
     const [Shortdata, setShortData] = useState('');
     const [Fulldata, setFullData] = useState('');
     const [livePoster, setLivePoster] = useState('');
+    const [categoryName, setCategoryName] = useState('')
 
     const breadCrumb = [
         {
@@ -40,16 +42,15 @@ const Posts = () => {
             text: "Mening mahsulotlarim Qo'shish",
         },
     ];
-    
+
     async function GetItemsCategoryLists() {
-        const token = user?.access; 
+        const token = user?.access;
         const ItemsData = await GetRepository.getCategoryLists(token);
         if (ItemsData?.results) {
             setDataCategory(ItemsData.results);
         }
     }
     const Option = Select.Option;
-
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -64,7 +65,6 @@ const Posts = () => {
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
-
 
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
@@ -138,10 +138,21 @@ const Posts = () => {
                 );
             }
         }
+
+
+        if (dataCategory) {
+            for (let i = 0; i < dataCategory.length; i++) {
+                if (dataCategory[i].id == e) {
+                    setCategoryName(dataCategory[i].name)
+                }
+            }
+        }
+       
     };
 
     async function handleClickPosts(e) {
         e.preventDefault()
+
         const formData = new FormData();
         formData.append('file', fileImgFile);
         formData.append('poster', fileImgPoster);
@@ -189,13 +200,16 @@ const Posts = () => {
     }
 
     useEffect(() => {
-        GetItemsTag()
+        GetItemsTag();
         setEditorLoaded(true);
     }, []);
 
     useEffect(() => {
-        GetItemsCategoryLists(); 
-    }, [user?.access]); 
+        GetItemsCategoryLists();
+    }, [user?.access]);
+
+  
+
     
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -208,6 +222,7 @@ const Posts = () => {
                     <form
                     onSubmit={handleClickPosts}
                         style={{ width: '70%' }}
+
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
@@ -237,7 +252,7 @@ const Posts = () => {
                         </div>
 
                         <select
-                        style={{ alignItems: "flex-start" }}
+                            style={{ alignItems: 'flex-start' }}
                             className="form-select rounded-3 col-md-5 fs-4"
                             onChange={(e) =>
                                 handleChangeCategory(e.target.value)
@@ -274,11 +289,15 @@ const Posts = () => {
                         />
 
                         <div className=" p-0 rounded-3 col-md-10">
-                            <span>SHort description</span>
-                           <textarea onChange={(e)=>setShortData(e.target.value)} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
+                            <span>Qisqa tavsif</span>
+                            <textarea
+                                onChange={(e) => setShortData(e.target.value)}
+                                className=" rounded p-3 col-md-12"
+                                name="textarea"
+                                rows={'4'}></textarea>
                         </div>
                         <div className=" p-0 rounded-3 col-md-10">
-                            <span>Full description</span>
+                            <span>Hujjatingiz haqida to'liq ma'umot</span>
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
@@ -298,9 +317,18 @@ const Posts = () => {
                                     </span>
                                 </button>
                          
+
                         </div>
+                            <span
+                                className="mahsulotingiz"
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight"
+                                aria-controls="offcanvasRight">
+                                <i class="fa-solid fa-image fs-1"></i>
+                            </span>
                     </form>
-                    <div className=" col-md-3 pt-4 ms-5 ">
+                    {/* <div className=" col-md-3 pt-4 ms-5 ">
                         <h4 className='live-card_title'>Sizning qo'shayotgan mahsulotingiz :</h4>
                         <div className="card rounded-3 ">
                             <div className="image">
@@ -316,14 +344,11 @@ const Posts = () => {
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
-                                    {' '}
                                     <span>Nomi: </span> <span style={{maxWidth:'150px'}} > {title}</span>
                                 </p>
                                 <p className="live-card-p">
-                                    {' '}
                                     <span>Narxi: </span>{' '}
                                     <span style={{maxWidth:'150px'}} >
-                                        {' '}
                                         {taxminiyNarx
                                             ?   addPeriodToThousands(removePrefix(taxminiyNarx))
                                             : ''}
@@ -331,6 +356,53 @@ const Posts = () => {
                                     </span>
                                 </p>
                             </div>
+                        </div>
+                    </div> */}
+
+                    <div
+                        class="offcanvas offcanvas-end"
+                        tabindex="-1"
+                        id="offcanvasRight"
+                        aria-labelledby="offcanvasRightLabel">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasRightLabel">Qo'shayotgan mahsulotingizni ko'rinishi</h5>
+                            <button
+                                type="button"
+                                class="btn-close text-reset"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                        <div className="card rounded-3 ">
+                            <div className="image">
+                                <img
+                                    className="live-card-image"
+                                    src={
+                                        livePoster
+                                            ? livePoster
+                                            : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+                                    }
+                                    alt=""
+                                />
+                            </div>
+                            <div className="text-start">
+                                <p className="live-card-p">
+                                    <span>Nomi: </span> <span style={{maxWidth:'150px'}} > {title}</span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span>Narxi: </span>{' '}
+                                    <span style={{maxWidth:'150px'}} >
+                                        {taxminiyNarx
+                                            ?   addPeriodToThousands(removePrefix(taxminiyNarx))
+                                            : ''}
+                                        so'm
+                                    </span>
+                                </p>
+                                {/* <p className="live-card-p">
+                                    <span>Kategoriyasi: </span> <span style={{maxWidth:'150px'}} >{categoryName} </span>
+                                </p> */}
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>
