@@ -94,7 +94,7 @@ const MiniCart = ({ ecomerce }) => {
                                 <a className="ps-btn">Sotib olish</a>
                             </Link>
                         ) : (
-                            <Link href="/account/foydalanuvchi">
+                            <Link href="/account/register-user">
                                 <a className="ps-btn">Sotib olish</a>
                             </Link>
                         )}

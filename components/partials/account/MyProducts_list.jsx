@@ -11,15 +11,18 @@ import ModalDelete from './Modal';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
 import { MyProductsEdit } from '~/store/auth/action';
+import ModalDeletePostEdit from './ModalPostEdit';
 
 
 function MyProductsLists() {
+    
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [search, setSerach] = useState([]);
     const [tagName, setTagName] = useState(null);
     const [tagItems, setTagItems] = useState([]);
     const [View, setView] = useState({});
+    const [ViewPriceDiscount, setViewPriceDiscount] = useState(null);
     const [dataValCat, setDataCat] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
@@ -28,7 +31,7 @@ function MyProductsLists() {
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
-    const { accountLinks, user } = useSelector(state => state.auth)
+    const { accountLinks, user , products } = useSelector(state => state.auth)
 
 
     async function GetItemsProducts(page, category, tagName, dataFormat) {
@@ -92,6 +95,10 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat)
     }, [dataValCat, tagName, dataFormat])
 
+   async function handleItemsEditProductsPosts(){
+    const patchItems = await PatchRepository.getMyProductsPatch( ViewPriceDiscount, products?.id, user?.access);
+    GetItemsProducts(1, dataValCat, tagName, dataFormat)
+}
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -201,14 +208,18 @@ function MyProductsLists() {
                 <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
                 {
                     data.some(el => el.id == id && el.status === 'moderation') ?
-
                     <Link href={"/account/MyProducts/Edit"}>
                      <a>
                      <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() =>handleClickIdEdit(data.find(item => item.id === id))}></i>
                      </a>
-                        </Link>
+                        </Link> :
+                        data.some(el => el.id == id && el.status === 'approved') ?
+                         <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal">
+                         <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() =>handleClickIdEdit(data.find(item => item.id === id))}></i>
+                         </a>
                     : 
                     <i style={{opacity:0.7 ,cursor:"not-allowed"}} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
+                
                 }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
 
@@ -333,6 +344,14 @@ function MyProductsLists() {
                         </div>
                     </div>
                 </div>
+                <ModalDeletePostEdit dataBsTarget="exampleModalMyProductsPrice" onSubmited={handleItemsEditProductsPosts} formID="products-edit_price" >
+                <label  htmlFor="priceCount" className='form-label'>Hujjatingizni chegirmasi
+                <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products?.discount}  type="number" className='form-control rounded-3' placeholder='Hujjatingizni chegirmasi' />
+                </label>
+                <label  htmlFor="discount" className='form-label'>Hujjatingizni narxi
+                <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, price: e.target.value }))}  defaultValue={products?.price}   type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
+                </label>
+                </ModalDeletePostEdit >
             </div>
         </section>
     );
