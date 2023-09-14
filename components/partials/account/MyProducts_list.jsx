@@ -138,6 +138,27 @@ function MyProductsLists() {
         }
     };
 
+    const handleButtonClickView = async () => {
+
+        try {
+            const fileContent = View
+            const response = await axios.get(
+                fileContent.file,
+                { responseType: 'blob' }
+            );
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileContent.title+"." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading file: ', error);
+        }
+    };
+
 
     const columns = [
         {
@@ -337,7 +358,7 @@ function MyProductsLists() {
                                         <p className="card-text"><strong>Qisqa tasvir:</strong> {View?.short_description}</p>
                                         <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description}</p>
                                         <div className='d-flex justify-content-end py-3'>
-                                            <a href={View?.file} className='btn btn-outline-warning w-25 py-2  fs-5' target='_blank' download> <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
+                                            <a  className='btn btn-outline-warning w-25 py-2  fs-5' onClick={()=>handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
 
                                         </div>
                                     </div>
