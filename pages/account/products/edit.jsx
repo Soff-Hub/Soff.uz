@@ -8,7 +8,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Select } from 'antd';
+import { Modal, Select } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
@@ -107,6 +107,11 @@ const PostsProductsEdit = () => {
         }
         const patchItems = await PatchRepository.getProductsPatch(data, products?.id, user?.access);
         Router.push('/account/products');
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz malumotlarni yangiladingiz`,
+        });
     }
 
     return user?.role === 'admin' ? (
@@ -188,14 +193,17 @@ const PostsProductsEdit = () => {
                                 </span>
                             </button>
                         </div>
-                        <span
-                            className="mahsulotingiz"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight"
-                            aria-controls="offcanvasRight">
-                            <i class="fa-solid fa-id-card fa-beat fs-1"></i>
-                        </span>
+                        <div className="mahsulotingiz" >
+                            <p>Hujjatingiz</p>
+                           <span
+                                className='fixed-btn'
+                                type="button"
+                                data-bs-toggle="offcanvas"
+                                data-bs-target="#offcanvasRight"
+                                aria-controls="offcanvasRight">
+                                 <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                            </span>
+                           </div>
                     </form>
                     <div
                         class="offcanvas offcanvas-end"
@@ -224,7 +232,7 @@ const PostsProductsEdit = () => {
                                         <span><strong>Teglari</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                tags ? tags : "Teg qo'shing"
+                                                products?.tag ? products?.tag?.map(item => (item.name)) : "Teg qo'shing"
                                             }
                                         </span>
                                     </p>

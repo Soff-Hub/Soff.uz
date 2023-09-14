@@ -10,7 +10,7 @@ import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Select } from 'antd';
+import { Modal, Select } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
@@ -121,6 +121,11 @@ const PostsMyProducts = () => {
         }
         const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
         Router.push('/account/MyProducts');
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz malumotlarni yangiladingiz`,
+        });
     }
 
     function LiveImage(e) {
@@ -312,7 +317,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Teglari</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                tags ? tags : "Teg qo'shing"
+                                                products?.tag ? products?.tag?.map(item=>(item.name)) : "Teg qo'shing"
                                             }
                                         </span>
                                     </p>
