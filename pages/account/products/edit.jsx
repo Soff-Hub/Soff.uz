@@ -232,7 +232,7 @@ const PostsProductsEdit = () => {
                                         <span><strong>Teglari</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                products?.tag ? products?.tag?.map(item => (item.name)) : "Teg qo'shing"
+                                             products?.tag?.map(item => (<span>#{item.name} </span>)) 
                                             }
                                         </span>
                                     </p>

@@ -36,7 +36,7 @@ const HomeMarketPlace3Page = () => {
     const footer = <FooterMarketPlace2 />;
     return (
         <PageContainer
-            header={headers}
+            // header={headers}
             footer={footer}
             title="Home Marketplace 3">
             <main id="homepage-5">

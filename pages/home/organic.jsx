@@ -22,7 +22,7 @@ const HomeOrganicPage = () => {
     const footer = <FooterSecond classes="ps-footer--organic" />;
     return (
         <PageContainer
-            header={headers}
+            // header={headers}
             footer={footer}
             title="Homepage Organic">
             <OrganicBanner />

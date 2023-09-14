@@ -23,7 +23,7 @@ const HomeAutopartPage = () => {
 
     return (
         <PageContainer
-            header={headers}
+            // header={headers}
             footer={<FooterSecond classes="autopart" />}>
             <main id="homepage-2">
                 <AutopartBanner />

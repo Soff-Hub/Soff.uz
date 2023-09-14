@@ -338,6 +338,25 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getProfileArizaCardLists(token) {
+        const endPoint = `seller-card-list`
+        const reponse = await Repository({
+            url:baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
     async getProfileArizaAdmin(page ,status , token) {
         const endPoint = `admin/application/?page=${page}&status=${status ? status : ""}`
         const reponse = await Repository({

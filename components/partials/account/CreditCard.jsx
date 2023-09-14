@@ -30,7 +30,7 @@ const CreditCard = () => {
   }
 
   async function handleClickCardPosts(){
-    const ItemsData= await PostsRepository.CardPostsCredit({"credit_card_number":numberCardVal},user?.access );
+    const ItemsData= await PostsRepository.CardPostsCredit({"credit_card":JSON.parse(numberCardVal)},user?.access );
 
   }
 
