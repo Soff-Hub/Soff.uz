@@ -7,14 +7,15 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import { DatePicker } from 'antd';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { MyProductsEdit } from '~/store/auth/action';
+import Link from 'next/link';
 
 function ProductsLists() {
+    const dispatch = useDispatch();
     const { accountLinks, user } = useSelector(state => state.auth)
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
-    const [selectValSellers, setSelectValProducts] = useState({});
-    const [deleteIdEditProducts, setDeleteIdEditProducts] = useState(null);
     const [deleteIdView, setDeleteIdView] = useState({});
     const [dataVal, setDataVal] = useState([]);
     const [dataValCat, setDataCat] = useState(null);
@@ -25,12 +26,13 @@ function ProductsLists() {
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
-    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id,arxiv) {
+
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv) {
         if (page === 1) {
             await setData([])
             setSerach([])
         }
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id,arxiv, user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
@@ -47,7 +49,7 @@ function ProductsLists() {
         setDataVal((prev) => [...prev, ...ItemsData.results]);
     }
     async function handleClickView(item) {
-        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id,null, user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, user?.access);
         setDeleteIdView(ItemsData);
     }
     function handleClick(e) {
@@ -57,16 +59,10 @@ function ProductsLists() {
         ))
         setData(filterSearch)
     }
-    async function handleItemsEditProducts() {
-        const patchItemsSellers = await PatchRepository.getProductsPatch({ status: selectValSellers }, deleteIdEditProducts?.id, user?.access)
-        setData([])
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  malumotlarni o'zgartirdingiz`,
-        });
-        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv)
+    function handleClickIdEditProducts(productsItems) {
+        dispatch(MyProductsEdit(productsItems))
     }
+
     function handleCLickArxiv() {
         setDateArxiv(!dateArxiv);
     }
@@ -158,8 +154,8 @@ function ProductsLists() {
                         status === 'cancelled' ?
                             (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
                             status === 'Arxivlangan' ?
-                            (<span><i className="fa-solid fa-inbox text-danger"></i> Arxivlangan</span>) :
-                            <></>
+                                (<span><i className="fa-solid fa-inbox text-danger"></i> Arxivlangan</span>) :
+                                <></>
             ),
 
         },
@@ -170,19 +166,21 @@ function ProductsLists() {
             key: 'address',
             render: (id) => <div >
                 <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
-                <a data-bs-target="#exampleModalToggleEditProducts" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => setDeleteIdEditProducts(data.find(item => item.id === id))}></i></a>
+                <Link href={"/account/products/edit"}>
+                    <a><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => handleClickIdEditProducts(data.find(item => item.id === id))}></i></a>
+                </Link>
             </div>
         },
     ];
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="row g-3 mx-auto p-5 mb-5 rounded" style={{  backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
+                <div className="row g-3 mx-auto p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <div className='col-md-5'>
-                    <h3 className='m-0'>Mahsulotlar</h3>
+                        <h3 className='m-0'>Mahsulotlar</h3>
                     </div>
                     <div className='col-md-7'>
-                    <input type='search' className='form-control rounded' placeholder="Qidiruv" onInput={handleClick} />
+                        <input type='search' className='form-control rounded' placeholder="Qidiruv" onInput={handleClick} />
                     </div>
                 </div>
                 <div className="row pb-5" style={{ alignItems: "flex-start" }}>
@@ -213,7 +211,7 @@ function ProductsLists() {
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
                                         <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
-                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{height:"48px"}}><span className='fs-3'>Arxivlangan holatlar</span></Button>
+                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
                                     </div>
                                     <Table scroll={{ x: 1300 }} dataSource={data} columns={columns} />
                                 </div>
@@ -221,14 +219,6 @@ function ProductsLists() {
                         </div>
                     </div>
                 </div>
-                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditProducts" onSubmited={handleItemsEditProducts} formID="products-edit" >
-                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectValProducts(e.target.value)}>
-                        <option className='fs-3' selected disabled value="approved">Holatni tanlang</option>
-                        <option className='fs-3' value="approved">Tasdiqlangan </option>
-                        <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                        <option className='fs-3' value="moderation">Moderatsiya</option>
-                    </select>
-                </ModalDeletePostEdit >
                 <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
@@ -242,12 +232,13 @@ function ProductsLists() {
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body pt-5">
-                                            <p className="card-text"> <strong>Nomi:</strong> {deleteIdView?.title}</p>
+                                            <p className="card-text"><strong>Sotuvchi ism familiyasi:</strong> {deleteIdView?.seller?.first_name}   {deleteIdView?.seller?.last_name }</p>
+                                            <p className="card-text"> <strong>Mahsulot nomi:</strong> {deleteIdView?.title}</p>
                                             <p className="card-text"> <strong>Kategoriya:</strong> {deleteIdView?.category?.name}</p>
-                                            <p className="card-text"><strong>Narxi:</strong>  ${deleteIdView?.price} </p>
+                                            <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            <p><strong>Teg:</strong> {deleteIdView?.tag?.name}</p>
+                                            <p><strong>Teg:</strong> #{deleteIdView?.active_tag?.map(item=>(item.name))} {deleteIdView?.deactive_tag?.map(item=>(<span>#{item.name} </span>))} </p>
 
                                         </div>
                                     </div>

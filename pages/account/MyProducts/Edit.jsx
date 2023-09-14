@@ -16,7 +16,7 @@ var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
 
 
-const Posts = () => {
+const PostsMyProducts = () => {
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
@@ -365,4 +365,4 @@ const Posts = () => {
     );
 };
 
-export default Posts;
+export default PostsMyProducts;
