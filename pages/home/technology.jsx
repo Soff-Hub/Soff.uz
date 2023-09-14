@@ -40,7 +40,7 @@ const HomeTechnologyPage = () => {
 
     return (
         <PageContainer
-            header={headers}
+            // header={headers}
             footer={footer}
             title="Homepage Technology">
             <main id="homepage-10">
