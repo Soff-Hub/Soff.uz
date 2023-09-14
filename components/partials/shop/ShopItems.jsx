@@ -72,6 +72,7 @@ const ShopItems = ({
             setLoad(true);
         }
     }, [query, data]);
+    
     console.log(chaildId, parentId, 'id');
 
     const handlePagination = async (e) => {
@@ -300,7 +301,7 @@ const ShopItems = ({
                     {data?.length > 0 && (
                         <Pagination
                             total={dataCount}
-                            pageSize={10}
+                            pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
                             current={page}

@@ -26,11 +26,11 @@ const SearchPage = () => {
         }
     }
 
-    document.addEventListener("keydown", function(event) {
-        if(event.key === "Enter" && query != ''){
-            getSearchData()
-        }
-      })
+    // document.addEventListener("keydown", function(event) {
+    //     if(event.key === "Enter" && query != ''){
+    //         getSearchData()
+    //     }
+    //   })
 
     function handleSetKeyword() {
         if (query && query.keyword !== '') {

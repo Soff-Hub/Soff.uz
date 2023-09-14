@@ -19,7 +19,7 @@ const HomeMarketPlace2Page = () => {
     const footer = <FooterMarketPlace2 />;
     return (
         <PageContainer
-            header={headers}
+            // header={headers}
             footer={footer}
             title="Home Marketplace 2">
             <main id="homepage-4">

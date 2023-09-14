@@ -23,7 +23,9 @@ const HomeMarketPlacePage = () => {
         </>
     );
     return (
-        <PageContainer header={headers} title="Home Market Place">
+        <PageContainer 
+        // header={headers} 
+        title="Home Market Place">
             <main id="homepage-3">
                 <MarketPlaceHomeBanner />
                 <MarketPlaceSiteFeatures />

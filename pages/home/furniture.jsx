@@ -24,7 +24,9 @@ const HomeFurniturePage = () => {
     const footer = <FooterSecond classes="ps-footer--furniture" />;
 
     return (
-        <PageContainer header={headers} footer={footer}>
+        <PageContainer 
+        // header={headers} 
+        footer={footer}>
             <main id="homepage-8">
                 <FurnitureBanner />
                 <FurnitureSiteFeatures />

@@ -129,7 +129,7 @@ class ProductRepository {
     
     async getTotalRecords() {
         const reponse = await Repository.get(
-            `${baseUrl}customer/category-list/`
+            `${baseUrl}customer/category-list`
         )
             .then((response) => {
                 return response.data.results;

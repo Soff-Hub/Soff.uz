@@ -4,10 +4,10 @@ import Link from 'next/link';
 import FooterDefault from '../components/shared/footers/FooterDefault';
 import HeaderDefault from '../components/shared/headers/HeaderDefault';
 
-function Error({ statusCode }) {
+function Error() {
     return (
         <div className="site-content pb-5">
-            <HeaderDefault />
+            {/* <HeaderDefault /> */}
             <div className="ps-page--404">
                 <div className="container">
                     <div className="ps-section__content">
