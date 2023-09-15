@@ -27,7 +27,7 @@ const CheckoutPage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Checkout />
             </div>
-            <Newletters layout="container" />
+            {/* <Newletters layout="container" /> */}
         </PageContainer>
     );
 };
