@@ -56,16 +56,11 @@ function Notifications() {
                                     <h3>Sozlamalar</h3>
                                 </div>
                                 <div className="ps-section__content">
-                                    <form className='row g-3' onSubmit={handleClickEdit}>
-                                        <div className='col-md-5'>
-                                            <input type="text" defaultValue={profile?.first_name} required placeholder='Ismingiz' className='form-control rounded-3' onChange={(e) => setProfileData((prev) => ({ ...prev, first_name: e.target.value }))} />
-                                        </div>
-                                        <div className='col-md-5'>
-                                            <input type="text" required defaultValue={profile?.last_name} placeholder='Familiyangiz' className='form-control rounded-3' onChange={(e) => setProfileData((prev) => ({ ...prev, last_name: e.target.value }))} />
+                                    <form className='row gap-4 row-gap-3 mx-auto ' onSubmit={handleClickEdit} >
+                                            <input type="text" defaultValue={profile?.first_name} required placeholder='Ismingiz' className='form-control rounded-3 col-md-4' onChange={(e) => setProfileData((prev) => ({ ...prev, first_name: e.target.value }))} />
+                                            <input type="text" required defaultValue={profile?.last_name} placeholder='Familiyangiz' className='form-control rounded-3 col-md-4' onChange={(e) => setProfileData((prev) => ({ ...prev, last_name: e.target.value }))} />
 
-
-                                        </div>
-                                        <button type='submit' className='btn btn-success py-3 px-4 col-md-2 mx-auto ' style={{ maxWidth: "470px" }}>
+                                        <button type='submit' className='btn btn-success py-3 col-md-2  ' >
                                             {
                                                 loading ?
                                                     <BeatLoader size={10} color="#fff" /> :

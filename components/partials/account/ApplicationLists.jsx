@@ -21,6 +21,7 @@ function Notifications() {
     const [dataCardModalImg, setDataCardModalImg] = useState(null);
     const [dataCardModalDes, setDataCardModalDes] = useState(null);
     const [profile, setProfile] = useState(null);
+    const [profileCard, setProfileCard] = useState([]);
 
 
     async function ProfileUsers() {
@@ -40,6 +41,12 @@ function Notifications() {
             }
         }
     }
+    async function getItemsSellerCardList() {
+        const Items = await GetRepository.getProfileArizaCardLists(user?.access);
+        if (Items?.results) {
+            setProfileCard(Items?.results)
+        }
+    }
     async function getItemsSellerAdmin(page) {
         if (page === 1) {
             setDataAdmin([])
@@ -54,7 +61,7 @@ function Notifications() {
     }
 
     async function getItemsSellerPost() {
-        const data = { "credit_card": dataCard, "amount": dataPrice }
+        const data = { "credit_card": JSON.parse(dataCard), "amount": dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
         getItemsSeller(1, dataCat);
         setProfile(null)
@@ -65,7 +72,6 @@ function Notifications() {
         formData.append("receipt", dataCardModalImg)
         formData.append("status", dataCardModalStatus)
         formData.append("description", dataCardModalDes)
-        const data = { "credit_card": dataCard, "amount": dataPrice }
         const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
         getItemsSellerAdmin(1, dataCat);
 
@@ -91,6 +97,7 @@ function Notifications() {
         getItemsSeller(1);
         getItemsSellerAdmin(1, dataCat);
         ProfileUsers();
+        getItemsSellerCardList()
     }, [1, dataCat])
 
     const columns = [
@@ -214,9 +221,9 @@ function Notifications() {
             key: 'id',
             render: (id) => (
                 dataAdmin.some(el => el.id == id && el.is_answer === true) ?
-                <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
-               :
-               <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
+                    <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
+                    :
+                    <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
 
             )
         },
@@ -240,34 +247,34 @@ function Notifications() {
                                     {
                                         user?.role === "seller" ?
                                             (<>
-                                                <form className='row g-2'>
-                                                    <div className='col-md-4'>
-                                                        <label for="count">Summani kiriting</label>
-                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3' onChange={(e) => (setDataPrice(e.target.value))} />
-                                                    </div>
-                                                    <div className='col-md-5'>
-                                                        <label for="ccn">Karta raqam kiriting</label>
-                                                        <input   defaultValue={profile?.credit_card} required onChange={(e) => (setDataCard(e.target.value))} id="ccn" type="tel" className='form-control rounded-3' inputmode="numeric" pattern="[0-9\s]{13,19}" autocomplete="cc-number" maxlength="19" placeholder="xxxx xxxx xxxx xxxx" />
+                                                <form className='row row-gap-3 gap-4 mx-auto'>
+                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                    <select className='form-select rounded-3 col-md-5 fs-3  ' style={{height:"50px"}} onChange={(e) => setDataCard(e.target.value)} >
+                                                        <option className='fs-3' value=''>Kartalaringiz</option>
 
-                                                    </div>
-                                                    <div className='col-md-2'>
+                                                        {
+                                                            profileCard?.length > 0 && (
+                                                                profileCard?.map(item => (
+                                                                    <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
+                                                                ))
+                                                            )
+                                                        }
+                                                        
+                                                    </select>
                                                         {
                                                             profile?.is_application === true && profile?.is_payment === true ?
-                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light' style={{
+                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
                                                                     height: "50px",
-                                                                    marginTop: "25px"
-                                                                }}><span className='fs-4'>Ariza Yuborish</span></Button>
+                                                                }}><span className='fs-4'>Yuborish</span></Button>
                                                                 :
-                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light' style={{
+                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
                                                                     height: "50px",
-                                                                    marginTop: "25px"
                                                                 }}>
-                    
+
                                                                     <span className='fs-4'>Ariza Yuborish</span>
-                                                                    </Button>
+                                                                </Button>
                                                         }
 
-                                                    </div>
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
                                                 <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
@@ -300,7 +307,7 @@ function Notifications() {
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
-                        <input  required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
+                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
                     </label>
                     <select required className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
                         <option className='fs-3' selected disabled value="approved">Holatni tanlang</option>
