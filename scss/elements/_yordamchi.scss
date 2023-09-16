@@ -210,8 +210,25 @@
     background-clip: border-box;
 }
 
+// .ps-product{
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     &:hover{
+//         .ps-product__content.hover{
+//             display: flex;
+//             flex-direction: column;
+//             justify-content: center;
+//             align-items: center;
+//         }
+//     }
+// }
 
 @include media('<lg') {
+    .ps-product__actions{
+        display: none;
+    }
     .carosusel-cards {
         justify-content: center;
     }
@@ -280,6 +297,7 @@
         min-height: 100px;
         max-height: 100px;
         width: 100%;
+       
     }
 
     .ps-product__thumbnail {
@@ -403,6 +421,7 @@
 }
 
 @include media('<md') {
+   
     .ps-pagination {
         padding-top: 200px;
     }
@@ -421,6 +440,11 @@
             .ps-product__title {
                 padding-left: 10px;
             }
+        }
+    }
+    .yaxshi-categoriyalar{
+        .yaxshi-categoriyalar-image{
+           margin: 10px auto;
         }
     }
 
@@ -468,6 +492,9 @@
         min-height: 60px;
         max-height: 90px;
         width: 100%;
+    }
+    .yaxshi-categoriyalar{
+        justify-content: center;
     }
 
     .ps-block__content {

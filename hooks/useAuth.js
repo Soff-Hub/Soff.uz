@@ -23,7 +23,6 @@ export default function useAuth() {
     };
 
     const loginUser = (e) => {
-        console.log(e);
         let endPoint = 'auth/login/';
        
         let user = Repository.post(baseUrlAuth + endPoint, e)
@@ -173,6 +172,31 @@ export default function useAuth() {
 
         return user;
     };
+    const logOutAuth = (e) => {
+        let endPoint = 'auth/logout/';
+        let config = {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('token')} `,
+            },
+        };
+        let user = Repository.post(baseUrlAuth + endPoint, e, config)
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response) {
+                    return error.response;
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
 
     return {
         registerUser,
@@ -182,5 +206,6 @@ export default function useAuth() {
         qaytaRaqamYuborishAuth,
         NewVerifyCode,
         qaytaParolYuborishAuth,
+        logOutAuth
     };
 }

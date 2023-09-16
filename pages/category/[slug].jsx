@@ -23,15 +23,15 @@ const ProductCategoryScreen = () => {
     const [chaildId, setchaildId] = useState(null);
     const [parentId, setParentId] = useState(null);
 
-    const [Parent, setParent] = useState(null);
-    const [Chaild, setChaild] = useState(null);
+    const [ParentPagen, setParentPagen] = useState('');
+    const [ChaildPagen, setChaildPagen] = useState('');
     const [count, setCount] = useState(null);
     const [nom, setNom] = useState('Kategoriyalar');
 
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
-            if (responseData.every(cat => Number(cat.id) !== Number(slug))) {
+            if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
                 setchaildId(slug)
             }
             else {
@@ -85,52 +85,11 @@ const ProductCategoryScreen = () => {
         }
         setParentId(null);
     }
-    //     async function tekChaild(chaildID) {
-    //         // setParentId(null);
-    //         const responseData = await ProductRepository.getFilderProduct(
-    //             1,
-    //             chaildID,
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             null, null
-    //         );
-    //         if (responseData) {
-    //             console.log('parent', responseData.results);
-    //             setChaild(true)
-    //             setParent(!true)
-    //         }
-    //     }
-
-    //     async function tekParent(parentID) {
-    //         // setchaildId(null);
-    //         const responseData = await ProductRepository.getFilderProduct(
-    //             1,
-    //             null,
-    //             parentID,
-    //             null,
-    //             null,
-    //             null,
-    //             null,
-    //             null, null
-    //         );
-    //         if (responseData) {
-    //             console.log('chaild', responseData.results);
-    // setParent(true)
-    // setChaild(!true)
-    //         }
-    //     }
-
     useEffect(() => {
         getCategry();
     }, [slug])
 
     useEffect(() => {
-        // tekChaild();
-        // tekParent();
-
         if (chaildId) {
             getChaildData(slug);
         }

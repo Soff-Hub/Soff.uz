@@ -10,9 +10,10 @@ export default function QaytaNomerKiritish() {
     const [number, setNumber] = useState('');
 
     const QaytaRaqamJonatish = async (e) => {
+        localStorage.setItem('qayta_', number)
         e.preventDefault();
         const data = {
-            phone: `+998` + number.toString(),
+            phone_or_email:  number,
         };
         const { qaytaRaqamYuborishAuth } = useAuth();
         const response = await qaytaRaqamYuborishAuth(data);
@@ -39,12 +40,12 @@ export default function QaytaNomerKiritish() {
                     <form
                         className="ps-form--account forma-raqam position-relative"
                         onSubmit={(e) => QaytaRaqamJonatish(e)}>
-                        <label className="label-before"> Raqam kiriting </label>
+                        <label className="fw-1"> Raqam yoki emailingizni kiriting </label>
                         <input
-                            type="number"
+                            type="text"
+                            placeholder='Raqam yoki email'
                             className="raqam-input"
                             onChange={(e) => setNumber(e.target.value)}
-                            maxLength="13"
                         />
 
                         <div className="form-group submit">

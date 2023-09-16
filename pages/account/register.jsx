@@ -24,7 +24,6 @@ const RegisterPage = () => {
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
                     <BreadCrumb breacrumb={breadCrumb} />
-
                     <Register url={sallerEndPoint} />
                 </div>
             </PageContainer>
