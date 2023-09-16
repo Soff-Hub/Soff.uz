@@ -161,10 +161,18 @@
 
 .mahsulotingiz{
     position: fixed;
-
    top: 50%;
    left: 50%;
    transform: translate(36%, 0%);
+}
+
+@media screen and (max-width: 524px){
+    .mahsulotingiz{
+        position: fixed;
+       top: 50%;
+       left: 50%;
+       transform: translate(26%, 0%);
+    }
 }
 
 .fixed-btn{
@@ -613,12 +621,6 @@
     }
 }
 
-@media screen and (max-width: 768px) {
-    .colCard {
-        margin-top: 5rem;
-    }
-}
-
 @media screen and (max-width: 544px) {
     .banner-placholder {
         display: flex;
@@ -909,17 +911,14 @@
     background: #dadbe1;
 }
 
-.formCard {
-    border-radius: 10px;
-    box-shadow: -1px 8px 15px 0px rgba(0, 0, 0, 0.44);
-}
+
 #Card {
-    margin: 0 auto;
     height: 183px;
+    width: 300px;
 }
 .colCard {
     position: absolute;
-    top: 52%;
+    top: 36%;
 }
 
 /* rccs-signature-background: repeating-linear-gradient(
@@ -940,7 +939,7 @@
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
-    max-width: 300px;
+   
 }
 
 .BackImg1 {
@@ -948,7 +947,7 @@
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
-    max-width: 300px;
+   
 }
 
 .BackImg2 {
@@ -956,7 +955,7 @@
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
-    max-width: 300px;
+    
 }
 
 .cardText {

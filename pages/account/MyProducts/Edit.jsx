@@ -188,7 +188,7 @@ const PostsMyProducts = () => {
                                 accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                             />
                         </label>
-                        <div className="rounded-3 col-md-5 p-0 m-0 d-flex flex-column">
+                        <div className="rounded-3 col-md-10 p-0 m-0 d-flex flex-column">
                             <Select
                                 className="py-2"
                                 mode="tags"
@@ -233,7 +233,7 @@ const PostsMyProducts = () => {
                         />
                         <input
                             type='number'
-                            className="form-control col-md-10 rounded-3"
+                            className="form-control col-md-5 rounded-3"
                             placeholder="Hujjatingizga qo'ygan chegirmangiz"
                             name="price"
                             defaultValue={products?.discount}
@@ -263,12 +263,12 @@ const PostsMyProducts = () => {
                                 type='submit'
                                 className="btn btn-success py-3 col-md-3 ">
                                 <span className="fs-4">
-                                    Mahsulot qo'shish
+                                    Mahsulot tahrirlash
                                 </span>
                             </button>
                         </div>
                         <div className="mahsulotingiz" >
-                            <p>Hujjatingiz</p>
+                            <p>Tahrirlangan</p>
                            <span
                                 className='fixed-btn'
                                 type="button"
