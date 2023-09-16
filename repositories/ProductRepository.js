@@ -202,7 +202,7 @@ class ProductRepository {
     }
 
     async getProductsByIds(payload) {
-        const endPoint = `${baseUrl}customer/documents/${payload}/`;
+        const endPoint = `${baseUrl}customer/documents/${payload}`;
         const reponse = await Repository.get(endPoint)
             .then((response) => {
                 if (response.data) {
