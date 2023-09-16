@@ -4,7 +4,7 @@ import { PropagateLoader } from 'react-spinners';
 import ProductRepository from '~/repositories/ProductRepository';
 
 const SiteFeatures = () => {
-    const [card, setCard] = useState([])
+    const [card, setCard] = useState(null)
     async function getProducts() {
         const responseData = await ProductRepository.getCardData();
         if (responseData) {
@@ -36,7 +36,7 @@ const SiteFeatures = () => {
                     )
                 }) : 
                 <div style={{display:'flex', justifyContent:'center', marginLeft:'50%', marginTop:'5%'}}>
-                <PropagateLoader color="#FFC107" />
+                {/* <PropagateLoader color="#FFC107" /> */}
                 </div>
                }
 

@@ -1,13 +1,13 @@
 {
-    "name": "martfury_react",
+    "name": "faylBazar",
     "version": "2.2.1",
     "private": true,
-    "author": "nouthemes",
-    "homepage": "https://themeforest.net/user/nouthemes",
+    "author": "Soff Hub",
+    "homepage": "https://soffhub.uz",
     "scripts": {
         "dev": "next dev",
         "build": "next build",
-        "start": "next start -p 3003",
+        "start": "next start -p 3001",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
         "compile": "npm run clean && antd-tools"
     },

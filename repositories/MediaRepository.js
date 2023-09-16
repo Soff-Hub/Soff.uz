@@ -21,7 +21,7 @@ class MediaRespository {
     async getTagItmes() {
         const endPoint = `customer/tag/`;
 
-        const reponse = await Repository.get(`${baseUrl}/${endPoint}`)
+        const reponse = await Repository.get(`${baseUrl}${endPoint}`)
             .then((response) => {
                 if (response.data) {
                     return response.data
