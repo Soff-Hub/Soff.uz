@@ -11,19 +11,15 @@ import { BeatLoader } from 'react-spinners';
 const Xabar = (e) => {
     // e.preventDefault();
     const tokenn = useSelector((state) => state.auth);
-    const [countdown, setCoutdown] = useState(60);
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true);
     const [loader, setLoader] = useState(false);
     const [countSekond, setCountSekond] = useState(true);
     const [firstSendCode, setFirstSendCode] = useState(true);
-
-
+    const tek = localStorage.getItem('via_')
+    const [countdown, setCoutdown] = useState(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60);
     const [kod, setKod] = useState(null);
 
-    // if (tokenn.user) {
-    //     console.log('redux', tokenn.user);
-    // }
 
     const handleSubmitKod = async () => {
         setLoader(true);
@@ -44,8 +40,8 @@ const Xabar = (e) => {
             setLoader(false);
             const modal = Modal.error({
                 centered: true,
-                title: 'Nimadir xato bor!',
-                content: message,
+                title: 'Xatolik',
+                content: `${user?.data?.msg}`,
             });
             modal.update;
         }
@@ -55,7 +51,12 @@ const Xabar = (e) => {
 
     const qaytaKodOlish = async () => {
         setLoader(true);
-        setCoutdown(60);
+        if (tek === 'via_phone') {
+            setCoutdown(60);
+        }else if(tek === 'via_email'){
+            setCoutdown(120);
+        }
+        
 
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
@@ -65,8 +66,8 @@ const Xabar = (e) => {
             let message = '';
             const modal = Modal.success({
                 centered: true,
-                title: 'Telefoningizga sms boradi!',
-                content: message,
+                title: 'Ijobiy',
+                content: qaytaUser?.data?.msg,
             });
             modal.update;
             setReport(true);
@@ -82,8 +83,8 @@ const Xabar = (e) => {
             modal.update;
             setLoader(false);
         }
+        
         setKod('');
-
         console.log(kod);
     };
 
@@ -97,7 +98,7 @@ const Xabar = (e) => {
 
 
         if (localStorage.getItem('data')) {
-            setNomer(JSON.parse(localStorage.getItem('data')).phone);
+            setNomer(JSON.parse(localStorage.getItem('data')).phone_or_email);
         }
 
         const interval = setInterval(() => {
@@ -129,10 +130,10 @@ const Xabar = (e) => {
                                         type="number"
                                         placeholder="Kodni kiriting..."
                                         onChange={(e) => setKod(e.target.value)}
-
+                                        min="0"
                                         maxLength={'4'}
                                     />
-                                    <p> {nomer} nomerga sms boradi</p>
+                                    <p> {nomer}  ga sms boradi</p>
 
                                     <p>
                                         Kod kelishiga qolgan vaqt: {countdown}

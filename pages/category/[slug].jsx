@@ -20,16 +20,24 @@ const ProductCategoryScreen = () => {
     const [detail_arr, setDetail_arr] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
 
-    const [chaildId, setchaildId] = useState(!true);
+    const [chaildId, setchaildId] = useState(null);
+    const [parentId, setParentId] = useState(null);
 
-    const [parentId, setParentId] = useState(true);
-    const [Parent, setParent] = useState(null);
-    const [Chaild, setChaild] = useState(null);
+    const [ParentPagen, setParentPagen] = useState('');
+    const [ChaildPagen, setChaildPagen] = useState('');
     const [count, setCount] = useState(null);
     const [nom, setNom] = useState('Kategoriyalar');
+
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData) {
+            if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
+                setchaildId(slug)
+            }
+            else {
+                setParentId(slug)
+            }
+
             setCategory(responseData);
             console.log('default data', responseData);
         }
@@ -46,13 +54,15 @@ const ProductCategoryScreen = () => {
             null,
             null,
             null,
-            null, null
+            null,
+            null
         );
         if (responseData) {
             console.log('respons chaild data', responseData?.results);
             setFilteredData(responseData?.results);
             setCount(responseData.count);
         }
+        setchaildId(null);
     }
 
     async function getParentData(parentID) {
@@ -66,53 +76,20 @@ const ProductCategoryScreen = () => {
             null,
             null,
             null,
-            null, null
+            null,
+            null
         );
         if (responseData) {
             setFilteredData(responseData?.results);
             setCount(responseData.count);
         }
+        setParentId(null);
     }
-    async function tekChaild(chaildID) {
-        // setParentId(null);
-        const responseData = await ProductRepository.getFilderProduct(
-            1,
-            chaildID,
-            null,
-            null,
-            null,
-            null,
-            null,
-            null, null
-        );
-        if (responseData) {
-            console.log('parent', responseData.results);
-        }
-    }
-
-    async function tekParent(parentID) {
-        // setchaildId(null);
-        const responseData = await ProductRepository.getFilderProduct(
-            1,
-            null,
-            parentID,
-            null,
-            null,
-            null,
-            null,
-            null, null
-        );
-        if (responseData) {
-            console.log('chaild', responseData.results);
-
-        }
-    }
+    useEffect(() => {
+        getCategry();
+    }, [slug])
 
     useEffect(() => {
-        tekChaild();
-        tekParent();
-
-
         if (chaildId) {
             getChaildData(slug);
         }
@@ -121,7 +98,6 @@ const ProductCategoryScreen = () => {
             getParentData(slug);
         }
 
-        getCategry();
 
         if (category?.length) {
             for (let i = 0; i < category.length; i++) {
@@ -135,12 +111,8 @@ const ProductCategoryScreen = () => {
                     }
                 }
             }
-
         }
-    }, [slug]);
-
-
-
+    }, [slug, parentId, chaildId]);
 
     const breadCrumb = [
         {
@@ -183,7 +155,6 @@ const ProductCategoryScreen = () => {
                                 setParentId={(id) => getParentData(id)}
                             />
                             <WidgetShopFilterByPriceRange
-
                                 // data={filteredData}
                                 setFilteredData={setFilteredData}
                             />
@@ -197,7 +168,6 @@ const ProductCategoryScreen = () => {
                                 setDataCount={setCount}
                                 chaildId={chaildId}
                                 parentId={parentId}
-
                             />
                         </div>
                     </div>

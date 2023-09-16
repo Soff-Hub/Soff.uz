@@ -72,7 +72,7 @@ class Login extends Component {
 
     componentDidMount() {
         this.defaultRoutePage();
-        this.setState({value: JSON.parse(localStorage.getItem('data'))?.phone})
+        this.setState({value: JSON.parse(localStorage.getItem('data'))?.phone_or_email})
 
     }
 
@@ -100,11 +100,11 @@ class Login extends Component {
                                 <h5>Profilga kirish</h5>
                                 <div className="form-group">
                                     <Form.Item
-                                        name="phone"
+                                        name="phone_or_email"
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Telefon raqam',
+                                                message: 'Telefon raqam yoki email',
                                             },
                                         ]}>
                                         <Input
@@ -112,8 +112,7 @@ class Login extends Component {
                                         // defaultValue ={JSON.parse(localStorage.getItem('data'))?.phone && ''}
                                             className="form-control"
                                             type="text"
-                                            placeholder="Telefon raqam"
-                                            maxLength="13"
+                                            placeholder="Telefon raqam yoki email"
                                         />
                                     </Form.Item>
                                 </div>
@@ -123,7 +122,6 @@ class Login extends Component {
                                         rules={[
                                             {
                                                 required: true,
-
                                                 message: 'Parolni kiriting',
                                             },
                                         ]}>

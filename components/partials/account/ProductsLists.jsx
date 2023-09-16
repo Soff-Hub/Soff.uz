@@ -10,6 +10,7 @@ import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { MyProductsEdit } from '~/store/auth/action';
 import Link from 'next/link';
+import Axios from 'axios';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -46,7 +47,9 @@ function ProductsLists() {
             setDataVal([])
         }
         const ItemsData = await GetRepository.getCategory(page, user?.access);
-        setDataVal((prev) => [...prev, ...ItemsData.results]);
+        if (ItemsData.results) {
+            setDataVal((prev) => [...prev, ...ItemsData.results]);
+        }
     }
     async function handleClickView(item) {
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, user?.access);
@@ -83,6 +86,26 @@ function ProductsLists() {
 
         return formattedNumber;
     }
+    const handleButtonClickViewProducts = async () => {
+
+        try {
+            const fileContent = deleteIdView
+            const response = await Axios.get(
+                fileContent.file,
+                { responseType: 'blob' }
+            );
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileContent.title+"." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading file: ', error);
+        }
+    };
     useEffect(() => {
         GetItemsCategory(1)
     }, [])
@@ -246,7 +269,7 @@ function ProductsLists() {
                                         <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
                                         <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description}</p>
                                         <div className='d-flex justify-content-end py-3'>
-                                            <a href={deleteIdView?.file} className='btn btn-outline-warning w-25 py-2  fs-5' target='_blank' download> <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
+                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={()=>handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
 
                                         </div>
                                     </div>

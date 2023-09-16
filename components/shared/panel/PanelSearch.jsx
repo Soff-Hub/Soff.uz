@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Router from 'next/router';
-import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import { Spin } from 'antd';
+import PostRepository from '~/repositories/PostRepository';
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -69,17 +69,17 @@ const PanelSearch = () => {
                     title_contains: keyword,
                 };
 
-                const products = ProductRepository.getRecordsSearch();
+                const products = PostRepository.postSearchFilter(keyword);
 
                 products.then((result) => {
                     setLoading(false);
                     setIsSearch(true);
-                    let Result = result.filter((item) => {
-                        return item.title
-                            .toLowerCase()
-                            .includes(keyword.toLocaleLowerCase());
-                    });
-                    setSetSearchResult(Result);
+                    // let Result = result.filter((item) => {
+                    //     return item.title
+                    //         .toLowerCase()
+                    //         .includes(keyword.toLocaleLowerCase());
+                    // });
+                    setSetSearchResult(result);
                 });
             } else  {
                 setIsSearch(false);

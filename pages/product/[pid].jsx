@@ -72,6 +72,7 @@ const ProductDefaultPage = () => {
     } else {
         productView = <SkeletonProductDetail />;
     }
+    console.log('dfghj',pid, product);
 
     return (
         <PageContainer
