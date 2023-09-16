@@ -155,7 +155,6 @@ const ProductCategoryScreen = () => {
                                 setParentId={(id) => getParentData(id)}
                             />
                             <WidgetShopFilterByPriceRange
-                                // data={filteredData}
                                 setFilteredData={setFilteredData}
                             />
                         </div>

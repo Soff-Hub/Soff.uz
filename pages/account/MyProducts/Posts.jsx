@@ -271,7 +271,7 @@ console.log(tagSearchResult);
                                 className="py-2"
                                 mode="tags"
                                 style={{ width: '100%' }}
-                                placeholder="Hujjatlaringizga tag qo'shing"
+                                placeholder="Hujjatlaringizga kamida 3 ta tag qo'shish zarur"
                                 onChange={handleChange}>
                                 {children}
                             </Select>
@@ -392,7 +392,7 @@ console.log(tagSearchResult);
                                     <strong>Nomi : </strong> <span style={{maxWidth:'150px'}} > {title ? title : "To'ldirilmadi"}</span>
                                 </p>
                                 <p className="live-card-p">
-                                    <strong>Narxi : </strong>{' '}
+                                    <strong>Narxi : </strong>
                                     <strong style={{maxWidth:'150px'}} >
                                        <span> {taxminiyNarx
                                             ?   addPeriodToThousands(removePrefix(taxminiyNarx)) + "so'm"
