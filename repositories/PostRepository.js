@@ -103,12 +103,6 @@ class PostRepository {
         const endPoint = 'customer/cart-list/';
 
         const response = await Repository.get(baseUrl + endPoint, token)
-
-
-
-
-
-
             .then((response) => {
                 return response.data;
             })
