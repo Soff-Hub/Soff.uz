@@ -1,4 +1,4 @@
-import Repository, { baseUrl } from './Repository';
+import Repository, { baseUrl, baseUrlProfie } from './Repository';
 
 class PatchRepository {
     async PatchCategory(data, id, token) {
@@ -148,8 +148,9 @@ class PatchRepository {
         return reponse;
     }
     async getPatchProfile(data ,token) {
+        const endPoint = "auth/profile/"
         const reponse = await Repository({
-            url:"https://alldataaa.pythonanywhere.com/auth/profile/",
+            url:baseUrlProfie+endPoint,
             method: 'PATCH',
             headers: {
                 'Authorization' : `Bearer ${token}`

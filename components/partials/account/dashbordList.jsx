@@ -339,7 +339,7 @@ function DashbordList() {
             :
             <></>
               }
-                <div>
+                <div className='pb-5'>
                     <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                     <Table scroll={{ x: 850 }} dataSource={dataOrders} columns={columnsOrders} />
                 </div>

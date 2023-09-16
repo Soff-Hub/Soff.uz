@@ -1,5 +1,5 @@
 
-import Repository, { baseUrl, baseUrlCustomer } from "./Repository";
+import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from "./Repository";
 
 class GetRepository {
     async getSellerDashbord(token) {
@@ -302,8 +302,9 @@ class GetRepository {
         return reponse;
     }
     async getProfile(token) {
+        const endPoint ="auth/profile/"
         const reponse = await Repository({
-            url: "https://alldataaa.pythonanywhere.com/auth/profile/",
+            url:baseUrlProfie+endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
