@@ -3,7 +3,7 @@ import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from "./Repositor
 
 class GetRepository {
     async getSellerDashbord(token) {
-        const endPoint = `/admin/dashboard/`;
+        const endPoint = `admin/dashboard/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
