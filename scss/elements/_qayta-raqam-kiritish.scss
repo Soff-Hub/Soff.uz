@@ -14,7 +14,7 @@
 
 
 .raqam-input{
-    padding-left: 59px;
+    padding: 0 10px;
     height: 50px;
     border-radius: 0;
     border: 1px solid #dddddd;
@@ -27,6 +27,9 @@
     }
     &:valid{
         font-size: 18px;
+    }
+    &::placeholder{
+        font-size: 14px;
     }
 }
 
@@ -88,7 +91,7 @@
         height: 100px;
         width: 100%;
         display: inline-block;
-        margin: 0 auto;
+       
     }
 }
 

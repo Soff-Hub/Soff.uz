@@ -35,44 +35,8 @@ function FormCheckoutInformation() {
     console.log('cardd', card);
 
     useEffect(() => {
-        // let cookeCard = cookies?.cart;
         select && GetCard()
-
         setData(cookies?.cart);
-
-        // if (card?.length > 0) {
-        //     // function Tekshirish(array1, array2) {
-        //     //     const yangiData = [];
-
-        //     //     for (let i = 0; i < array1.length; i++) {
-        //     //       let isIdFound = false;
-
-        //     //       for (let j = 0; j < array2.length; j++) {
-        //     //         if (array1[i].id !== array2[j].id) {
-        //     //             yangiData.push(array1[i]);
-        //     //           break;
-        //     //         }
-        //     //       }
-
-        //     //       if (!isIdFound) {
-        //     //         yangiData.push(array1[i]);
-        //     //       }
-        //     //     }
-
-        //     //     return yangiData;
-        //     //   }
-
-        //     function Tekshirish(array1, array2) {
-        //         return array2.filter(
-        //             (obj1) => !array1.some((obj2) => obj2.id !== obj1.id)
-        //         );
-        //     }
-
-        //     setData(Tekshirish(cookeCard, card));
-        //     console.log('tek', Tekshirish(cookeCard, card));
-        // }else{
-        //     setData(cookies?.cart)
-        // }
     }, [cookies]);
 
     function extractIds(data) {
@@ -96,22 +60,23 @@ function FormCheckoutInformation() {
             },
         };
         const respons = await ClickRepository.postClick(data, token);
-
+console.log(respons);
         if (respons?.status === 200 || respons?.status === 201) {
             setCookie('cart', [], { path: '/' });
             removeItems('cart');
             window.open(`${respons?.data?.url}`, '_blank');
             setMessage(true);
-        } else {
+        }else {
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
-                title: 'Nimadir xato!',
-                content: `Sizning savatdagi hujjatlaringiz sotib olish uchun qo'shilmadi`,
+                title: 'Xatolik!',
+                content: `${respons?.error?.message}`,
             });
             modal.update;
+        
         }
-
+       
         // const responsClick = await ClickRepository.postClick( token)
     };
 

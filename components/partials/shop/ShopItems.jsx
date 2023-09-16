@@ -16,9 +16,12 @@ const ShopItems = ({
     setDataCount,
     chaildId,
     parentId,
+    parentPagen, 
+    chaildPagen
 }) => {
     const Router = useRouter();
     const { query } = Router;
+    const {slug} = Router.query
     const [listView, setListView] = useState(true);
     const [total, setTotal] = useState(0);
     const [classes, setClasses] = useState(
@@ -32,6 +35,8 @@ const ShopItems = ({
     const [newData, setNewData] = useState([]);
     const [selectData, setSelectData] = useState([]);
     const [page, setPage] = useState(1);
+    const [chaildSlug, setchaildSlug] = useState('')
+    const [parentSlug, setParentSlug] = useState('')
 
     function handleChangeViewMode(e) {
         e.preventDefault();
@@ -58,6 +63,24 @@ const ShopItems = ({
         }
     }
 
+    async function getCategry() {
+        const responseData = await ProductRepository.getTotalRecords();
+        if (responseData) {
+            if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
+                setchaildSlug(slug)
+                console.log('chaild' , slug);
+            }
+            else {
+                setParentSlug(slug)
+                console.log('parent', slug);
+            }
+        }
+    }
+
+    useEffect(() => {
+        getCategry()
+    }, [slug])
+
     useEffect(() => {
         setTimeout(() => {
             setLoad(true);
@@ -73,15 +96,32 @@ const ShopItems = ({
         }
     }, [query, data]);
     
-    console.log(chaildId, parentId, 'id');
 
     const handlePagination = async (e) => {
         setPage(e);
-        if (chaildId !== null) {
+        if (chaildSlug) {
             const respons = await ProductRepository.getFilderProduct(
                 e,
-                chaildId,
+                slug,
                 null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+                );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
+        } else if (parentSlug) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                null,
+                slug,
                 null,
                 null,
                 null,
@@ -95,44 +135,27 @@ const ShopItems = ({
             } else {
                 setLoad(true);
             }
-        } else if (parentId !== null && parentId !== true) {
-            const respons = await ProductRepository.getFilderProduct(
-                e,
-                null,
-                parentId,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            );
-            if (respons) {
-                setDataCount(respons.count);
-                setNewData(respons.results);
-            } else {
-                setLoad(true);
-            }
-        } else{
-            const respons = await ProductRepository.getFilderProduct(
-                e,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            );
-            if (respons) {
-                setDataCount(respons.count);
-                setNewData(respons.results);
-            } else {
-                setLoad(true);
-            }
+        } 
+        // else{
+        //     const respons = await ProductRepository.getFilderProduct(
+        //         e,
+        //         null,
+        //         null,
+        //         null,
+        //         null,
+        //         null,
+        //         null,
+        //         null,
+        //         null
+        //     );
+        //     if (respons) {
+        //         setDataCount(respons.count);
+        //         setNewData(respons.results);
+        //     } else {
+        //         setLoad(true);
+        //     }
     
-        }
+        // }
     }
    
 

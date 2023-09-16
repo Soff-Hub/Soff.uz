@@ -28,6 +28,8 @@ function reducer(state = initState, actions) {
             localStorage.removeItem('token');
             localStorage.removeItem('data')
             localStorage.removeItem('qayta_token')
+            localStorage.removeItem('via_');
+            localStorage.removeItem('qayta_');
             return {
                 ...state,
                 ...{ isLoggedIn: false },

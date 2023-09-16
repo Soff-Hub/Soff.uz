@@ -35,6 +35,7 @@ class Register extends Component {
             } else if (user.status == 200 || user.status == 201) {
                 this.setState({ report: !this.state.report });
                 localStorage.setItem('token', user.data.access);
+                localStorage.setItem('via_', user?.data?.via_)
                 localStorage.setItem('data', JSON.stringify(e));
 
                 Router.push('/account/xabar');
@@ -69,21 +70,20 @@ class Register extends Component {
                             <div className="ps-form__content">
                                 <h5>Ro'yxatdan o'tish</h5>
                                 <div className="form-group">
-                                    <p>Telefon</p>
+                                    <p>Telefon raqam yoki email</p>
                                     <Form.Item
-                                        name="phone"
+                                        name="phone_or_email"
                                         rules={[
                                             {
                                                 required: true,
                                                 message:
-                                                    'Iltimos telefon raqamingizni kiriting!',
+                                                    'Iltimos telefon raqam yoki emailingizni  kiriting!',
                                             },
                                         ]}>
                                         <Input
                                             className="form-control"
-                                            maxLength="13"
                                             type="text"
-                                            placeholder="+998 00 000 00 00"
+                                            placeholder="Telefon raqam yoki email"
                                         />
                                     </Form.Item>
                                 </div>

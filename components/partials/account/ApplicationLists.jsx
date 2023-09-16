@@ -247,13 +247,10 @@ function Notifications() {
                                     {
                                         user?.role === "seller" ?
                                             (<>
-                                                <form className='row g-2'>
-                                                    <div className='col-md-4'>
-                                                        <label for="count">Summani kiriting</label>
-                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3' onChange={(e) => (setDataPrice(e.target.value))} />
-                                                    </div>
-                                                    <select className='form-select rounded-3 col-md-5 fs-3 mt-5 ' style={{height:"50px"}} onChange={(e) => setDataCard(e.target.value)} >
-                                                        <option className='fs-3' value=''>Kartalardan birini tanlang</option>
+                                                <form className='row row-gap-3 gap-4 mx-auto'>
+                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                    <select className='form-select rounded-3 col-md-5 fs-3  ' style={{height:"50px"}} onChange={(e) => setDataCard(e.target.value)} >
+                                                        <option className='fs-3' value=''>Kartalaringiz</option>
 
                                                         {
                                                             profileCard?.length > 0 && (
@@ -264,24 +261,20 @@ function Notifications() {
                                                         }
                                                         
                                                     </select>
-                                                    <div className='col-md-2'>
                                                         {
                                                             profile?.is_application === true && profile?.is_payment === true ?
-                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light' style={{
+                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
                                                                     height: "50px",
-                                                                    marginTop: "25px"
-                                                                }}><span className='fs-4'>Ariza Yuborish</span></Button>
+                                                                }}><span className='fs-4'>Yuborish</span></Button>
                                                                 :
-                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light' style={{
+                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
                                                                     height: "50px",
-                                                                    marginTop: "25px"
                                                                 }}>
 
                                                                     <span className='fs-4'>Ariza Yuborish</span>
                                                                 </Button>
                                                         }
 
-                                                    </div>
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
                                                 <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />

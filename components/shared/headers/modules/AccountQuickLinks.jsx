@@ -4,21 +4,33 @@ import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
 import Router from 'next/router';
 import { Modal } from 'antd';
-
+import useAuth from '~/hooks/useAuth';
 
 const AccountQuickLinks = (props) => {
-    const { accountLinks } = useSelector(state => state.auth)
+    const { accountLinks } = useSelector((state) => state.auth);
 
     const dispatch = useDispatch();
+    const refresh = useSelector(state => state.auth?.user?.refresh)
+console.log(refresh);
     const handleLogout = (e) => {
         e.preventDefault();
-        dispatch(logOut());
-        const modal = Modal.info({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz muvaffaqqiyatli chiqdingiz`,
-        });
-        Router.push("/")
+       
+        const data = {
+            'refresh' : refresh
+        }
+        const { logOutAuth } = useAuth();
+        const res = logOutAuth(data)
+        
+        if (res) {
+            const modal = Modal.info({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz muvaffaqqiyatli chiqdingiz`,
+            });
+            dispatch(logOut());
+        }
+
+        Router.push('/');
     };
     const { isLoggedIn } = props;
 
@@ -36,7 +48,6 @@ const AccountQuickLinks = (props) => {
             <div className="ps-block--user-account">
                 <i className="icon-user"></i>
                 <div className="ps-block__content">
-
                     <ul className="ps-list--arrow">
                         {linksView}
                         <li className="ps-block__footer">
@@ -55,8 +66,8 @@ const AccountQuickLinks = (props) => {
                     <i className="icon-user"></i>
                 </div>
                 <div className="ps-block__right">
-                    <Link href="/account/login" >
-                        <a >Kirish</a>
+                    <Link href="/account/login">
+                        <a>Kirish</a>
                     </Link>
 
                     <Link href="/account/foydalanuvchi">

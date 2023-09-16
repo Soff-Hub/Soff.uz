@@ -13,8 +13,8 @@ const Xabar = (e) => {
     const [countdown, setCoutdown] = useState(60);
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true)
-
     const [kod, setKod] = useState(null);
+
 
     // if (tokenn.user) {
     //     console.log('redux', tokenn.user);
@@ -57,8 +57,8 @@ const Xabar = (e) => {
         }else(
             setReport(false)
         )
-        if (localStorage.getItem('data')) {
-            setNomer(JSON.parse(localStorage.getItem('data')).phone);
+        if (localStorage.getItem('qayta_')) {
+            setNomer(localStorage.getItem('qayta_'));
         }
         const interval = setInterval(() => {
             if (countdown > 0) {
@@ -91,6 +91,8 @@ const Xabar = (e) => {
                                         className="form-control mb-4"
                                         type="number"
                                         placeholder="Kodni kiriting..."
+                                        maxLength="4"
+                                        min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
                                     {/* </Form.Item> */}
