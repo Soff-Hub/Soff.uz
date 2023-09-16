@@ -7,7 +7,7 @@ class SaqlashRepository {
         const data = {
             'document' : id
         }
-        const reponse = await Repository.post(`${baseUrl}/${endPoint}`, data)
+        const reponse = await Repository.post(`${baseUrl}${endPoint}`, data)
             .then((response) => {
                 if (response.data) {
                     return response.data.results    

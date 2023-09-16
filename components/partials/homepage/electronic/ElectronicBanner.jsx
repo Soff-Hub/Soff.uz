@@ -42,9 +42,11 @@ function ElectronicBanner() {
                                         style={{
                                             width: '100%',
                                             height: '370px',
+                                            backgroundImage: `url(${bannerItem[0]?.image})`,
+                                            backgroundPosition: 'center',
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover',
                                         }}
-                                        src={`${bannerItem[0]?.image}`}
-                                        alt="alldata"
                                     />
                                 </a>
                             </Link>
@@ -75,41 +77,43 @@ function ElectronicBanner() {
                 </div>
                 <div className="ps-section__right">
                     {bannerItem[1] ? (
-                        <div
-                           
-                            className='banner-right'
-                            >
-                                
+                        <div className="banner-right">
                             <Link href={`${bannerItem[1].url}`} target="_blank">
                                 <a className="ps-collection" target="_blank">
-                                    <img
-                                        style={{ height: '170px' }}
-                                        src={bannerItem[1]?.image}
-                                        alt="alldata"
-                                    />
+                                    <div
+                                        style={{
+                                            height: '170px',
+                                            backgroundImage: `url(${bannerItem[1]?.image})`,
+                                            backgroundPosition: 'center',
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover',
+                                        }}></div>
                                 </a>
                             </Link>
                             <Link href={`${bannerItem[2].url}`} target="_blank">
                                 <a className="ps-collection" target="_blank">
-                                    <img
-                                        style={{ height: '170px' }}
-                                        src={bannerItem[2]?.image}
-                                        alt="alldata"
-                                    />
+                                    <div
+                                        style={{
+                                            height: '170px',
+                                            backgroundImage: `url(${bannerItem[2]?.image})`,
+                                            backgroundPosition: 'center',
+                                            backgroundRepeat: 'no-repeat',
+                                            backgroundSize: 'cover',
+                                        }}>
+                                        {' '}
+                                    </div>
                                 </a>
                             </Link>
                         </div>
                     ) : (
-                        <div
-                        className='banner-placholder'>
+                        <div className="banner-placholder">
                             {[1, 2].map((item, i) => {
                                 return (
                                     <div key={i}>
                                         <div
                                             class="placeholder "
                                             alt="banner"
-                                            id='banner-placholder-item'
-                                            >
+                                            id="banner-placholder-item">
                                             <div
                                                 class="spinner-border"
                                                 role="status">

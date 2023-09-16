@@ -8,6 +8,8 @@ import { Form, Input, Modal } from 'antd';
 import { connect, useDispatch } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
+import ModalDeletePostEdit from './ModalPostEdit';
+import ModalTanishuv from './modules/Modal-tanishuv';
 
 class Register extends Component {
     constructor(props) {
@@ -35,7 +37,7 @@ class Register extends Component {
             } else if (user.status == 200 || user.status == 201) {
                 this.setState({ report: !this.state.report });
                 localStorage.setItem('token', user.data.access);
-                localStorage.setItem('via_', user?.data?.via_)
+                localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
 
                 Router.push('/account/xabar');
@@ -48,6 +50,7 @@ class Register extends Component {
     };
 
     render() {
+        // console.log('taqdiqlash', tasqidlash);
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -123,7 +126,6 @@ class Register extends Component {
                                         />
                                     </Form.Item>
 
-                                    
                                     <div className="tanishuv-chekbox">
                                         <label className="chekboxx">
                                             <input
@@ -132,8 +134,11 @@ class Register extends Component {
                                                 onChange={this.handleChekked}
                                             />
                                         </label>
-                                        <Link href="/account/tanishish" >
-                                            <a target='_blank' className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
+                                        <Link href="#">
+                                            <a
+                                                data-bs-target="#exampleModalToggleEditCategory2"
+                                                data-bs-toggle="modal"
+                                                className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
                                                 Tanishib chiqdim , shartlariga
                                                 roziman!
                                             </a>
@@ -170,6 +175,16 @@ class Register extends Component {
                             </div>
                         </div>
                     </Form>
+
+                    <ModalTanishuv
+                        dataBsTarget="exampleModalToggleEditCategory2"
+                        formID={'modal-tanishuv'}>
+                        <div className="container">
+                                Tanishuv shartlari...
+                                <br /> <br />
+                                Biz bilan o'z biznesingizni boshlang!!!
+                        </div>
+                    </ModalTanishuv>
                 </div>
             </div>
         );
