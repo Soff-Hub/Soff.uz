@@ -17,7 +17,7 @@ const Xabar = (e) => {
     const [countSekond, setCountSekond] = useState(true);
     const [firstSendCode, setFirstSendCode] = useState(true);
     const tek = localStorage.getItem('via_')
-    const [countdown, setCoutdown] = useState(tek === 'via_phone' ? 60 : tek === 'via_email' ?  10 : 60);
+    const [countdown, setCoutdown] = useState(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60);
     const [kod, setKod] = useState(null);
 
 
@@ -40,8 +40,8 @@ const Xabar = (e) => {
             setLoader(false);
             const modal = Modal.error({
                 centered: true,
-                title: 'Nimadir xato bor!',
-                content: message,
+                title: 'Xatolik',
+                content: `${user?.data?.msg}`,
             });
             modal.update;
         }
@@ -83,8 +83,8 @@ const Xabar = (e) => {
             modal.update;
             setLoader(false);
         }
+        
         setKod('');
-
         console.log(kod);
     };
 
