@@ -90,12 +90,14 @@ useEffect(() => {
   <div className="col-md-6 mx-auto d-flex flex-column row-gap-3" >
     <h4>Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-2 text-primary"></i></h4>
     {
-      profileCard?.length > 0 && profileCard?.map((item, index)=>(
+      profileCard?.length > 0 ? profileCard?.map((item, index)=>(
        <div className="d-flex gap-4" key={index} >
         <h4 className=" text-warning  fs-2  p-3 px-5 m-0 rounded-3 bg-white form-control" style={{width:"330px", fontWeight:"bold", fontFamily:"monospace"}} >{item.credit_card}</h4>
         <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"  style={{cursor:"pointer"}} onClick={() => setDeleteId(item.id)} ><i className="fa-solid fa-trash-can fa-2x mt-2  text-danger" ></i></a>
        </div>
       ))
+      :
+      <h4 className="mt-5 mx-5"><span>Hozircha karta mavjud emas!</span></h4>
     }
   </div>
   <ModalDelete onSuccess={handleClickDelete} />
