@@ -47,7 +47,9 @@ function ProductsLists() {
             setDataVal([])
         }
         const ItemsData = await GetRepository.getCategory(page, user?.access);
-        setDataVal((prev) => [...prev, ...ItemsData.results]);
+        if (ItemsData.results) {
+            setDataVal((prev) => [...prev, ...ItemsData.results]);
+        }
     }
     async function handleClickView(item) {
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, user?.access);
