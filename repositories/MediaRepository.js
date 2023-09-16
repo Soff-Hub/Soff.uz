@@ -4,8 +4,7 @@ class MediaRespository {
 
     async getBannersBySlug(payload) {
         const endPoint = `customer/banner/`;
-
-        const reponse = await Repository.get(`${baseUrl}/${endPoint}`)
+        const reponse = await Repository.get(`${baseUrl}${endPoint}`)
             .then((response) => {
                 if (response.data) {
                     return response.data.results    
