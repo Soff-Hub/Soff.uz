@@ -93,7 +93,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                         </div>
 
                         <div className="ps-section__cart-actions">
-                            <Link href="/shop">
+                            <Link href="/">
                                 <a className="ps-btn">Ortga</a>
                             </Link>
                         </div>

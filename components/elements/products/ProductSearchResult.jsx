@@ -5,7 +5,7 @@ import useProduct from '~/hooks/useProduct';
 
 const ProductSearchResult = ({ product }) => {
     const { thumbnailImage, price, title } = useProduct();
-
+console.log('search', product);
     return (
         <div className="ps-product ps-product--wide ps-product--search-result">
             <div className="ps-product__thumbnail">

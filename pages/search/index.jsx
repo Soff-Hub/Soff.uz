@@ -99,8 +99,8 @@ const SearchPage = () => {
                     <p>
                         <strong style={{ color: '#000' }}>
                             {resultdata?.length}
-                        </strong>{' '}
-                        yozuv(lar) topildi.
+                        </strong> ta
+                        hujjat(lar) topildi.
                     </p>
                 );
             } else {

@@ -9,6 +9,7 @@ import HeaderMobileElectronic from '~/components/shared/headers/HeaderMobileElec
 import FooterSecond from '~/components/shared/footers/FooterSecond';
 
 import CollectionRepository from '~/repositories/CollectionRepository';
+import { PropagateLoader } from 'react-spinners';
 
 const HomeElectronicsPage = () => {
 
@@ -72,7 +73,7 @@ const HomeElectronicsPage = () => {
          /> */}
          {
             categoryData && categoryData.map((item, index) => (
-                    item.promotional_sliders?.length > 0 &&
+                    item.promotional_sliders?.length > 0 ?
                 <ElectronicProductGroupWithCarousel
                     collectionSlug="electronics-best-sellers"
                     title={item.name}
@@ -80,6 +81,12 @@ const HomeElectronicsPage = () => {
                     id={item.id}
                     key={item.id}
                 />
+                :
+                <div style={{
+                    display:'flex',
+                    justifyContent:'center',
+                    alignContent:'center'
+                }}><PropagateLoader color="#F4CA16" /></div>
             ))
          }
         
