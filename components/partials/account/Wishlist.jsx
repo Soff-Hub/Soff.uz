@@ -70,7 +70,7 @@ const Wishlist = ({ ecomerce }) => {
                                 <td>
                                     <ProductCart product={product} />
                                 </td>
-                                <td >
+                                <td>
                                    <span> {product.price} so'm</span>
 
                                 </td>
@@ -83,7 +83,8 @@ const Wishlist = ({ ecomerce }) => {
                                                 e,
                                                 product
                                             )
-                                        }>
+                                        }
+>
                                        Savatga qo'shish
                                     </a>
                                 </td>

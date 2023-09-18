@@ -71,6 +71,7 @@ const MiniCart = ({ ecomerce }) => {
                 <ProductOnCart product={item} key={item.id}>
                     <a
                         className="ps-product__remove"
+                        style={{cursor:'pointer'}}
                         onClick={(e) => handleRemoveItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
@@ -114,7 +115,8 @@ const MiniCart = ({ ecomerce }) => {
 // console.log(cart.results);
     return (
         <div className="ps-cart--mini">
-            <a className="header__extra" href="#">
+          <Link href='/account/shopping-cart'>
+          <a className="header__extra" >
                 <i className="icon-bag2"></i>
                 <span>
                     {
@@ -122,6 +124,7 @@ const MiniCart = ({ ecomerce }) => {
                     }
                 </span>
             </a>
+          </Link>
             {cartItemsView}
         </div>
     );

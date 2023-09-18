@@ -8,37 +8,20 @@ import NextArrow from '~/components/elements/carousel/NextArrow';
 import PrevArrow from '~/components/elements/carousel/PrevArrow';
 import ProductRepository from '~/repositories/ProductRepository';
 
-const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
+const RelatedProduct = ({ collectionSlug, boxed, layout, pid , data}) => {
     // console.log('kk' , pid);
-    const [productItems, setProductItems] = useState(null);
+    const [relatedProduct, setRelatedProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
-    async function getProducts(parentID) {
-        if (parentID) {
-            setLoading(true);
-            const responseData = await ProductRepository.getFilderProduct(null , null , parentID, null, null, null, null, null, null);
-
-            if (responseData) {
-                setProductItems(responseData);
-                setTimeout(
-                    function () {
-                        setLoading(false);
-                    }.bind(this),
-                    250
-                );
-            }
-        }
-    }
-
     useEffect(() => {
-        if (pid) {
-            getProducts(pid);
+        if (data) {
+            setRelatedProduct(data)
         }
     }, [collectionSlug, pid]);
 
     const carouselFullwidth = {
         dots: false,
-        infinite: productItems && productItems.length > 7 ? true : false,
+        infinite: relatedProduct && relatedProduct.length > 7 ? true : false,
         speed: 750,
         slidesToShow: 7,
         slidesToScroll: 3,
@@ -106,15 +89,15 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
     };
     // Views
     let carouselView;
-    if (!loading) {
-        if (productItems) {
+    if (loading) {
+        if (relatedProduct) {
             if ((layout = 'fullwidth')) {
                 carouselView = (
-                    <div className='d-flex align-content-center  flex-wrap carosusel-cards'>
-                        {productItems?.length > 0 &&
-                            productItems?.map((item, i) => (
+                    <div className='d-flex align-content-center row   carosusel-cards'>
+                        {relatedProduct?.length > 0 &&
+                            relatedProduct?.map((item, i) => (
                                
-                                  <div className='detail-card'>  <Product product={item} key={i} /></div>
+                                  <div className='detail-card '>  <Product product={item} key={i} /></div>
                             ))}
                     </div>
                 );
@@ -122,15 +105,9 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
             } else {
                 carouselView = (
                     <>
-                      {productItems?.length > 0 &&
-                            productItems?.map((item, i) => (
-                                <Slider
-                                    {...carouselFullwidth}
-                                    className="ps-carousel"
-                                    arrows={true}
-                                    >
-                                    <Product product={item} key={i} />
-                                </Slider>
+                      {relatedProduct?.length > 0 &&
+                            relatedProduct?.map((item, i) => (
+                                <div className='detail-card '>  <Product product={item} key={i} /></div>
                             ))}
                     </>
                 );
@@ -144,7 +121,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid }) => {
 
     return (
         <>
-            {productItems?.length > 0 ? (
+            {relatedProduct?.length > 0 ? (
                 <div
                     className={`ps-section--default ps-related-products ${
                         boxed === true ? 'boxed' : ''
