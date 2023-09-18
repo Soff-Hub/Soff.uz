@@ -78,9 +78,15 @@ function CategoryLists() {
 
     async function handleItemsEdit(values) {
         const formData = new FormData()
-        formData.append('image', file)
-        formData.append('icon', values.icon)
-        formData.append('name', values.name)
+          if (file) {
+            formData.append('image', file)
+          } 
+          if (values) {
+            formData.append('icon', values.icon)
+          }
+         if (values) {
+            formData.append('name', values.name)
+         } 
         if (tagName) {
             formData.append('parent', tagName)
         }

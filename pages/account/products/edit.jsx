@@ -161,10 +161,10 @@ const PostsProductsEdit = () => {
                             onChange={(e) =>
                                 setCategory_id(e.target.value)
                             }>
-                            <option value=""  >Barcha Kategoriyalar</option>
+                            <option value="" selected disabled  >Barcha Kategoriyalar</option>
                             {dataCategory?.length > 0 &&
                                 dataCategory.map((item) => (
-                                    <option value={item.id}>{item.name}</option>
+                                    <option value={item.id}> {item.name}</option>
                                 ))}
                         </select>
 

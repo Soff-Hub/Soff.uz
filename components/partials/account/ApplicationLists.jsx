@@ -276,8 +276,9 @@ function Notifications() {
                                                         }
 
                                                 </form>
-                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                                <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
+                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>  
+                                                    <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
+                                                
                                             </>
                                             ) :
                                             <></>
@@ -295,6 +296,7 @@ function Notifications() {
                                                     </select>
                                                 </div>
                                                 <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin} />
+                                             
                                             </>) :
                                             <></>
 

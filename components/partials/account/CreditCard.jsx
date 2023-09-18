@@ -42,13 +42,13 @@ const CreditCard = () => {
   }
 
   async function handleClickCardPosts(){
-   
     const ItemsData= await PostsRepository.CardPostsCredit({"credit_card":JSON.parse(numberCardVal)},user?.access );
     const modal = Modal.success({
       centered: true,
       title: 'Muvaffaqqiyatli!',
       content: ` ${ItemsData?.msg}`,
   });
+
   getItemsSellerCardList();
   } 
 
@@ -82,10 +82,9 @@ useEffect(() => {
         <h5 className="cardText text-white" style={{ marginRight: "8rem" }}>{numberCard === 9860 ? "HUMO" : numberCard === 8600 ? "UZCARD" : "Karta nomi"}</h5>
       </div>
     </div>
-  <form >
   <CreditCardInput onChange={value => numberTyper(value)} />
       <button onClick={handleClickCardPosts} className="btn btn-success py-3 " style={{ width: "300px" }}><span className="fs-4">Saqlash</span></button>
-  </form>
+ 
   </div>
   <div className="col-md-6 mx-auto d-flex flex-column row-gap-3" >
     <h4>Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-2 text-primary"></i></h4>

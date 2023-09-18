@@ -106,8 +106,9 @@ class PostRepository {
     }
     
     async CardPostsCredit(data, token) {
+        const endPoint ="seller-card-create"
         const reponse = await Repository({
-            url: `https://alldataaa.pythonanywhere.com/api/v1/seller/seller-card-create`,
+            url:baseUrl+endPoint,
             method: 'POST',
             headers: {
                 'Authorization' : `Bearer ${token}`
