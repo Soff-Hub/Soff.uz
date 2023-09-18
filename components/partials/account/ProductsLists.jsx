@@ -28,17 +28,15 @@ function ProductsLists() {
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv) {
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv, search) {
         if (page === 1) {
             await setData([])
-            setSerach([])
         }
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv, user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv,search, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id, arxiv)
+                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id, arxiv, search)
             }
         }
     }
@@ -55,13 +53,7 @@ function ProductsLists() {
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, user?.access);
         setDeleteIdView(ItemsData);
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.title.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
+
     function handleClickIdEditProducts(productsItems) {
         dispatch(MyProductsEdit(productsItems))
     }
@@ -111,8 +103,8 @@ function ProductsLists() {
     }, [])
 
     useEffect(() => {
-        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv)
-    }, [dataValCat, dataValStatus, dataFormat, dateArxiv])
+        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv, search)
+    }, [dataValCat, dataValStatus, dataFormat, dateArxiv, search])
 
 
     const columns = [
@@ -203,7 +195,7 @@ function ProductsLists() {
                         <h3 className='m-0'>Mahsulotlar</h3>
                     </div>
                     <div className='col-md-7'>
-                        <input type='search' className='form-control rounded' placeholder="Qidiruv" onInput={handleClick} />
+                        <input type='search' className='form-control rounded' placeholder="Qidiruv" onInput={(e)=>setSerach(e.target.value)} />
                     </div>
                 </div>
                 <div className="row pb-5" style={{ alignItems: "flex-start" }}>
