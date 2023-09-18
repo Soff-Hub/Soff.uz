@@ -253,7 +253,7 @@ function ProductsLists() {
                                             <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            <p><strong>Teg:</strong> #{deleteIdView?.active_tag?.map(item=>(item.name))} {deleteIdView?.deactive_tag?.map(item=>(<span>#{item.name} </span>))} </p>
+                                            <p>{deleteIdView?.active_tag?.map(item=>(<span>#{item.name}</span>))} {deleteIdView?.deactive_tag?.map(item=>(<span>#{item.name} </span>))} </p>
 
                                         </div>
                                     </div>
