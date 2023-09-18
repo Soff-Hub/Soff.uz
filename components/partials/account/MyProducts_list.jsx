@@ -348,7 +348,7 @@ function MyProductsLists() {
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
 
-                                            <p><strong>Teg:</strong> {View?.tag?.map(item => (
+                                            <p>{View?.tag?.map(item => (
                                                 <span> #{item?.name} </span>
                                             ))}</p>
 

@@ -121,6 +121,7 @@ function Example() {
                         borderColor: '#3cba9f',
                         backgroundColor: '#71d1bd',
                         borderWidth: 2,
+                        
                     },
                 ],
             },

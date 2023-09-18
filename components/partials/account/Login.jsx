@@ -128,7 +128,7 @@ class Login extends Component {
                                         <Input
                                             className="form-control"
                                             type="password"
-                                            placeholder="Parol..."
+                                            placeholder="Parol"
                                         />
                                     </Form.Item>
                                 </div>
@@ -152,10 +152,10 @@ class Login extends Component {
                                 <p
                                     style={{ paddingBottom: '15px' }}
                                     className="mb-4">
-                                    Parolni{' '}
+                                    
                                     <Link href="/account/qayta-nomer-kiritish">
                                         <a>
-                                        unutdingizmi?
+                                        Parolni  unutdingizmi?
                                         </a>
                                     </Link>{' '}
                                 </p>

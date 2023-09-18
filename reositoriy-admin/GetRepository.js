@@ -3,7 +3,7 @@ import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from "./Repositor
 
 class GetRepository {
     async getSellerDashbord(token) {
-        const endPoint = `/admin/dashboard/`;
+        const endPoint = `admin/dashboard/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -78,12 +78,12 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShopsProducts(page, category, dataValStatus, date, id,arxiv, token) {
+    async getShopsProducts(page, category, dataValStatus, date, id,arxiv,search, token) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
         }?page=${page}&category=${category || ''}&start_date=${
             date || ''
-        }&status=${dataValStatus || ''}&arxiv=${arxiv || ""}`;
+        }&status=${dataValStatus || ''}&arxiv=${arxiv || ""}&search=${search || ""}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

@@ -3,9 +3,24 @@ import { connect } from 'react-redux';
 import Link from 'next/link';
 import AccountQuickLinksMobile from './AccountQuickLinksMobile';
 import { useCookies } from 'react-cookie';
+import { Dropdown, Menu } from 'antd';
 
 const MobileHeaderActions = ({ auth, ecomerce }) => {
 
+    const menu = (
+
+        <Menu>
+           <div className='d-flex flex-column p-2'>
+           <Link href="/account/login" >
+                    <a>Kirish</a>
+                </Link>
+
+                <Link href="/account/foydalanuvchi">
+                    <a>Ro'yxatdan o'tish</a>
+                </Link>
+            </div>      
+        </Menu>
+    );
     const [cookies, setCookie] = useCookies(['cart']);
     const { cartItems, wishlist } = ecomerce;
     return (
@@ -31,11 +46,11 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinksMobile />
             ) : (
-                <div className="header__extra color-light">
-                    <Link href="/account/login">
-                      <a> <i className="icon-user"></i></a>
-                    </Link>
-                </div>
+                <Dropdown overlay={menu} placement="bottomLeft">
+                    <a href="#" className="header__extra ps-user--mobile">
+                        <i className="icon-user"></i>
+                    </a>
+                </Dropdown>
             )}
         </div>
     );

@@ -295,22 +295,6 @@ function DashbordList() {
 
                                 </div>
                             </div>
-
-                            <div>
-                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                                    <div className='d-flex justify-content-between pb-4'>
-                                        <div>
-                                            <h4>Shaxsiy hisob</h4>
-                                            <span>(Butun davr mobaynida)</span>
-                                        </div>
-                                        <div><i className="fa-solid fa-file-invoice-dollar fa-2x text-warning"></i></div>
-                                    </div>
-
-                          
-                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.wallet)} so'm</h4>
-                
-                                </div>
-                            </div>
                         </div>
                 }
                 <div className="row pb-5 mt-5" style={{ alignItems: "flex-start" }}>
