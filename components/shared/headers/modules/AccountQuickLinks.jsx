@@ -11,7 +11,7 @@ const AccountQuickLinks = (props) => {
 
     const dispatch = useDispatch();
     const refresh = useSelector(state => state.auth?.user?.refresh)
-console.log(refresh);
+
     const handleLogout = (e) => {
         e.preventDefault();
        

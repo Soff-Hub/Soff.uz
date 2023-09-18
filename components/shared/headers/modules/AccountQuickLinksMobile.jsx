@@ -1,18 +1,37 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import { logOut } from '../../../../store/auth/action';
-import { Dropdown, Menu } from 'antd';
-import { useSelector } from 'react-redux';
+import { Dropdown, Menu, Modal } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import useAuth from '~/hooks/useAuth';
+import Router from 'next/router';
 
 function AccountQuickLinks() {
     const { accountLinks } = useSelector(state => state.auth)
+    const refresh = useSelector(state => state.auth?.user?.refresh)
+    const dispatch = useDispatch();
 
-//    const handleLogout = e => {
-//         e.preventDefault();
-//         dispatch(logOut());
-//         localStorage.removeItem('token')
-//     };
-    
+    const handleLogout = (e) => {
+        e.preventDefault();
+       
+        const data = {
+            'refresh' : refresh
+        }
+        const { logOutAuth } = useAuth();
+        const res = logOutAuth(data)
+        
+        if (res) {
+            const modal = Modal.info({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz muvaffaqqiyatli chiqdingiz`,
+            });
+            dispatch(logOut());
+        }
+
+        Router.push('/');
+    };
+
     const menu = (
         <Menu>
             {accountLinks.map(link => (
@@ -22,9 +41,14 @@ function AccountQuickLinks() {
                     </Link>
                 </Menu.Item>
             ))}
-
+           <Menu.Item>
+           <a href="#" onClick={(e) => handleLogout(e)}>
+                Chiqish
+            </a>
+           </Menu.Item>
         </Menu>
     );
+
 
     return (
         <Dropdown overlay={menu} placement="bottomLeft">
@@ -33,6 +57,6 @@ function AccountQuickLinks() {
             </a>
         </Dropdown>
     );
-    
+
 };
 export default AccountQuickLinks;

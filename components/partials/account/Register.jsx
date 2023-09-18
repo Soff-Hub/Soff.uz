@@ -44,6 +44,7 @@ class Register extends Component {
             }
         }
     };
+    
 
     handleChekked = () => {
         this.setState({ chekked: !this.state.chekked });
@@ -122,7 +123,7 @@ class Register extends Component {
                                         <Input
                                             className="form-control"
                                             type="password"
-                                            placeholder="Parol 2..."
+                                            placeholder="Parolni takrorlash"
                                         />
                                     </Form.Item>
 
