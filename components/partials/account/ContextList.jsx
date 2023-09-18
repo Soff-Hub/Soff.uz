@@ -90,9 +90,8 @@ function ContextLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => (
-                <button className='btn btn-success ' style={{ padding: "12px 12px" }} onClick={() => handleClickID(id)}><span className='fs-5 d-flex gap-2 ' >
-                    Tahrirlash
-                    <i className="fa-solid fa-pen-to-square pt-1"></i>
+                <button className='btn btn-success ' style={{ padding: "12px 12px" }} onClick={() => handleClickID(id)}><span className='fs-4 d-flex gap-2 ' >
+                    Saqlash
                 </span></button>
             )
         },

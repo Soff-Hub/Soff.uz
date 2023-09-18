@@ -276,15 +276,9 @@ function Notifications() {
                                                         }
 
                                                 </form>
-                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                                {
-                                                    data?.length>0 ?  
+                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>  
                                                     <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
-                                                    :
-                                                   <div className='d-flex justify-content-center'>
-                                                     <h4 ><span>Yuborilgan Arizalar yo'q</span></h4>
-                                                   </div>
-                                                }
+                                                
                                             </>
                                             ) :
                                             <></>
@@ -301,14 +295,8 @@ function Notifications() {
                                                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                                     </select>
                                                 </div>
-                                                  {
-                                                    dataAdmin?.length>0 ?
                                                 <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin} />
-                                                :
-                                                <div className='d-flex justify-content-center'>
-                                                <h4 ><span>Arizalar yo'q</span></h4>
-                                              </div>
-                                                  }
+                                             
                                             </>) :
                                             <></>
 
