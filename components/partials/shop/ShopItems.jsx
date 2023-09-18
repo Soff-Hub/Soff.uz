@@ -89,7 +89,7 @@ const ShopItems = ({
         data ? setSuccess(false) : setSuccess(true);
 
         handleSetColumns();
-        if (data) {
+        if (true) {
             setNewData(data);
         } else {
             setLoad(true);
