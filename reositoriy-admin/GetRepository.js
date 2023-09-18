@@ -78,12 +78,12 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShopsProducts(page, category, dataValStatus, date, id,arxiv,search, token) {
+    async getShopsProducts(page, category, dataValStatus, date, id,arxiv, token) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
         }?page=${page}&category=${category || ''}&start_date=${
             date || ''
-        }&status=${dataValStatus || ''}&arxiv=${arxiv || ""}&search=${search || ""}`;
+        }&status=${dataValStatus || ''}&arxiv=${arxiv || ""}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

@@ -6,13 +6,17 @@ import CreditCard from './CreditCard';
 import { BeatLoader } from 'react-spinners';
 import { Modal } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import PostsRepository from '~/reositoriy-admin/PostsRepository';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth);
     const [profileData, setProfileData] = useState({});
     const [renderProfile, setRenderProfile] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [loading1, setLoading1] = useState(false);
     const [profile, setProfile] = useState(null);
+    const [profilePassword, setProfilePassword] = useState(null);
+    const [profilePassword1, setProfilePassword2] = useState(null);
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -38,6 +42,32 @@ function Notifications() {
 
         });
         modal.update;
+    }
+    async function handleClickEditChangePassword(e) {
+        e.preventDefault();
+        setLoading1(true)
+        const ItemsData = await PostsRepository.ChangePassword({"old_password": profilePassword, "new_password": profilePassword1}, user?.access);
+        setRenderProfile(!renderProfile)
+        e.target.reset()
+        setLoading1(false)
+       if (ItemsData.status === 200) {
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: ItemsData?.data?.msg,
+
+        });
+        modal.update;
+       }else{
+        const modal = Modal.error({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: ItemsData?.data?.msg,
+
+        });
+        modal.update;
+       }
+      
     }
 
     return (
@@ -65,6 +95,19 @@ function Notifications() {
                                                 loading ?
                                                     <BeatLoader size={10} color="#fff" /> :
                                                     <span className='fs-3'>Saqlash</span>
+
+                                            }
+                                        </button>
+                                    </form>
+                                    <form className='row gap-4 row-gap-3 mx-auto pt-4' onSubmit={handleClickEditChangePassword} >
+                                            <input type="text"  required placeholder='Eski parolni kiriting' className='form-control rounded-3 col-md-4' onChange={(e)=>setProfilePassword(e.target.value)}  />
+                                            <input type="text" required  placeholder='Yangi parol kiriting' className='form-control rounded-3 col-md-4' onChange={(e)=>setProfilePassword2(e.target.value)}  />
+
+                                        <button type='submit' className='btn btn-success py-3 col-md-2  ' >
+                                            {
+                                                loading1 ?
+                                                    <BeatLoader size={10} color="#fff" /> :
+                                                    <span className='fs-3'>O'zgartirish</span>
 
                                             }
                                         </button>

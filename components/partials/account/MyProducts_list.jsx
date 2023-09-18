@@ -180,6 +180,7 @@ function MyProductsLists() {
             title: 'Nomi',
             dataIndex: 'title',
             key: 'age',
+            width:300,
             render: (title) => (
                 <span className="truncate whitespace-nowrap"> {title}</span>
 
@@ -319,7 +320,7 @@ function MyProductsLists() {
                                     </div>
                                     {
                                         user?.role === "seller" ?
-                                            <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} />
+                                            <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} />
                                             :
                                             <Table dataSource={data} scroll={{ x: 900 }} columns={columns} />
 
@@ -343,7 +344,7 @@ function MyProductsLists() {
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body pt-5">
-                                            <p className="card-text"> <strong>Nomi:</strong> {View?.category?.name}</p>
+                                            <p className="card-text"> <strong>Kategoriyasi:</strong> {View?.category?.name}</p>
                                             <p className="card-text"><strong>Narxi:</strong> {View?.price} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {View?.title}</p>
@@ -358,7 +359,7 @@ function MyProductsLists() {
                                         <p className="card-text"><strong>Qisqa tasvir:</strong> {View?.short_description}</p>
                                         <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description}</p>
                                         <div className='d-flex justify-content-end py-3'>
-                                            <a  className='btn btn-outline-warning w-25 py-2  fs-5' onClick={()=>handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
+                                            <a  className='btn btn-outline-warning w-25 py-2  fs-5' onClick={()=>handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 
                                         </div>
                                     </div>

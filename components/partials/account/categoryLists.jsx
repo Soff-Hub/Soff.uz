@@ -90,6 +90,7 @@ function CategoryLists() {
         if (tagName) {
             formData.append('parent', tagName)
         }
+        
         const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
         const modal = Modal.success({
             centered: true,
