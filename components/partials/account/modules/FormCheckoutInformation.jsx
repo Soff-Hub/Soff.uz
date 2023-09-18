@@ -6,6 +6,8 @@ import PostRepository from '~/repositories/PostRepository';
 import useEcomerce from '~/hooks/useEcomerce';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
+import  Router  from 'next/router';
+
 
 function FormCheckoutInformation() {
     const { increaseQty, decreaseQty, removeItem, removeItems } = useEcomerce();
@@ -67,11 +69,12 @@ console.log(respons);
             window.open(`${respons?.data?.url}`, '_blank');
             setMessage(true);
         }else {
+            Router.push('/account/register-user');
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: `${respons?.error?.message}`,
+                content: 'Siz sotuvchisiz , foydalanuvchi bo\'lib ro\'yxatdan o\'tishingiz zarur' ,
             });
             modal.update;
         
@@ -107,7 +110,7 @@ console.log(respons);
                     className="ps-btn"
                     onClick={() => ProductToApi()}>
                     <i class="fa-solid fa-angles-left fa-fade me-2"></i> To'lov
-                    qilish{' '}
+                    qilish
                 </p>
             ) : (
                 <p>
