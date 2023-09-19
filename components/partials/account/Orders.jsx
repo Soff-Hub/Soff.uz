@@ -71,8 +71,6 @@ function OrdersLists() {
         GetItemsProducts(1, selector , dataFormat)
     }, [1, selector, dataFormat])
 
-
-    
     const columns = [
         {
             title: 'Buyurtmachi',
@@ -163,7 +161,7 @@ function OrdersLists() {
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 <div className="row g-3 p-5 mb-5 mx-auto rounded" style={{  backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-5'>Buyurtmalar</h3>
+                    <h3 className='col-md-5'>Buyurtmalar </h3>
                     <input type='search' className='form-control rounded col-md-7' placeholder="Qidiruv" onInput={handleClick} />
                 </div>
                 <div className="row pb-5 " style={{ alignItems: "flex-start" }}>

@@ -24,15 +24,14 @@ class PostRepository {
     }
     async PostsUsers(data, token) {
         const endPoint = `admin/customer-list/`;
-        const response = await Repository.post(
-            baseUrl + endPoint,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
             },
-            data
-        )
+            data:data
+        })
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
