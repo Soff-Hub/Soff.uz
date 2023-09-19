@@ -17,14 +17,11 @@ const ProductCategoryScreen = () => {
     const { slug } = Router.query;
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [detail_arr, setDetail_arr] = useState([]);
     const [filteredData, setFilteredData] = useState([]);
 
     const [chaildId, setchaildId] = useState(null);
     const [parentId, setParentId] = useState(null);
 
-    const [ParentPagen, setParentPagen] = useState('');
-    const [ChaildPagen, setChaildPagen] = useState('');
     const [count, setCount] = useState(null);
     const [nom, setNom] = useState('Kategoriyalar');
 
@@ -39,7 +36,6 @@ const ProductCategoryScreen = () => {
             }
 
             setCategory(responseData);
-            console.log('default data', responseData);
         }
     }
 
@@ -58,7 +54,6 @@ const ProductCategoryScreen = () => {
             null
         );
         if (responseData) {
-            console.log('respons chaild data', responseData?.results);
             setFilteredData(responseData?.results);
             setCount(responseData.count);
         }
@@ -151,8 +146,8 @@ const ProductCategoryScreen = () => {
                         <div className="ps-layout__left">
                             <WidgetShopCategories
                                 data={category}
-                                setchaildId={setchaildId}
-                                setParentId={(id) => getParentData(id)}
+                                setchaildId={getChaildData}
+                                setParentId={getParentData}
                             />
                             <WidgetShopFilterByPriceRange
                                 setFilteredData={setFilteredData}

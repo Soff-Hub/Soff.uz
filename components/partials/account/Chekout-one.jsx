@@ -1,7 +1,7 @@
 import React from 'react';
-import FormCheckoutInformation from './modules/FormCheckoutInformation';
 import ModulePaymentOrderSummary from '~/components/partials/account/modules/ModulePaymentOrderSummary';
-const Checkout = () => {
+import FormCheckoutInformationOne from './modules/FormCheckoutInformationOne';
+const CheckoutOne = () => {
 
 
     return (
@@ -15,7 +15,7 @@ const Checkout = () => {
                         <div className="ps-form__content">
                             <div className="row">
                                 <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <FormCheckoutInformation />
+                                    <FormCheckoutInformationOne />
                                 </div>
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12  ps-block--checkout-order">
                                     <div className="ps-form__orders">
@@ -32,4 +32,4 @@ const Checkout = () => {
     );
 };
 
-export default Checkout;
+export default CheckoutOne;
