@@ -17,7 +17,7 @@ function CategoryLists() {
     const [tagItems, setTagItems] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
-    const [file, setFile] = useState({});
+    const [file, setFile] = useState(null);
     const [tagName, setTagName] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -75,6 +75,7 @@ function CategoryLists() {
         });
         GetItemsProducts(1)
     }
+   
 
     async function handleItemsEdit(values) {
         const formData = new FormData()
@@ -90,12 +91,26 @@ function CategoryLists() {
         if (tagName) {
             formData.append('parent', tagName)
         }
+        
         const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: "Siz  malumotlarni o'zgartirdingiz ",
-        });
+        if (patchItems?.status===400) {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Nimadir xato ketidi qaytadan urinib ko'ring",
+            });
+            modal.update
+        }
+        else{
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+            modal.update
+         
+        }
+
         GetItemsProducts(1)
 
     }
@@ -104,7 +119,7 @@ function CategoryLists() {
         GetItemsProducts(1)
     }
 
-
+  
 
     function handleClickPostsImg(e) {
         setFile(e.target.files[0])
@@ -113,6 +128,8 @@ function CategoryLists() {
         GetItemsProducts(1)
         getParentLists()
     }, []);
+
+
     const columns = [
         {
             title: 'Belgi',
@@ -154,7 +171,7 @@ function CategoryLists() {
             title: 'Top',
             dataIndex: 'top',
             key: 'address',
-            render: (top, id) => (
+            render: (top, id)=> (
                 <input type='checkbox' defaultChecked={top} onChange={() => handleClickChecked(id)} />
             )
         },
@@ -204,7 +221,7 @@ function CategoryLists() {
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
                      <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
-                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                        <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
                     {
                         data.some(el =>( el?.id==deleteIdEdit?.id && el.is_update === true)) ?

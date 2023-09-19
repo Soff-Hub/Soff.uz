@@ -38,7 +38,7 @@ const PostsMyProducts = () => {
             url: '/',
         },
         {
-            text: "Mening mahsulotlarim tahrirlash",
+            text: "Hujjatni tahrirlash",
         },
     ];
 
@@ -151,7 +151,7 @@ const PostsMyProducts = () => {
 
         return formattedNumber;
     }
-    
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -166,74 +166,95 @@ const PostsMyProducts = () => {
                         id="FormPostsMyProducts"
                         className="row mx-auto  gap-3 py-5 w-100">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
-                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3 text-truncate">
-                            {
-                                livePoster ? livePoster :
-                                    " Hujjatingizni saytda ko'rinishi (Rasm)"
-                            }
-                            <input type="file" onChange={(e) => LiveImage(e)} />
-                        </label>
-                        <label className="add-product-user-image form-control col-md-5 pt-4 rounded-3 text-truncate">
 
-                            {
-                                fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
-                                    "Hujjatingizni joylang (File)"
-                            }
-                            <input
-                                type="file"
-                                onChange={(e) =>
-                                    setFileImgFile(e.target.files[0])
-
+                        <div className='col-md-5'>
+                            <label>Hujjat saytdagi ko'rinishi (rasm)</label>
+                            <label className="add-product-user-image form-control  pt-4 rounded-3 text-truncate">
+                                {
+                                    livePoster ? livePoster :
+                                        products.poster_url
                                 }
-                                accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
-                            />
-                        </label>
-                        <div className="rounded-3 col-md-10 p-0 m-0 d-flex flex-column">
+                                <input type="file" onChange={(e) => LiveImage(e)} />
+                            </label>
+                        </div>
+                        <div className='col-md-5'>
+                            <label>Hujjat yuklab olish uchun (file)</label>
+                            <label className="add-product-user-image form-control  pt-4 rounded-3 text-truncate">
+
+                                {
+                                    fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
+                                        products.file
+                                }
+                                <input
+                                    type="file"
+                                    onChange={(e) =>
+                                        setFileImgFile(e.target.files[0])
+
+                                    }
+                                    accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                />
+                            </label>
+                        </div>
+                        <div className="rounded-3 col-md-10 px-4  m-0 d-flex flex-column">
+                            <label>Hujjat teglari</label>
                             <Select
                                 className="py-2"
                                 mode="tags"
                                 style={{ width: '100%' }}
-                                placeholder="Hujjatlaringizga tag qo'shing"
+                                placeholder="Hujjatga tag qo'shing"
                                 onChange={handleChange}
-                                defaultValue={ products?.tag && products?.tag?.map(item=>(item.name))}
+                                defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
                             >
                                 {children}
                             </Select>
                         </div>
+                        <div className='col-md-5'>
+                            <label>Kategoriya</label>
+                            <select
+                                style={{ alignItems: "flex-start" }}
+                                className="form-select rounded-3 py-4 fs-4"
+                                onChange={(e) =>
+                                    setCategory_id(e.target.value)
+                                }>
+                                {dataCategory?.length > 0 &&
+                                    dataCategory.map((item) => (
+                                        products?.category === item.name ?
+                                            <option selected value={item.id}>{item.name}</option>
+                                            :
+                                            <option value={item.id}>{item.name}</option>
 
-                        <select
-                            style={{ alignItems: "flex-start" }}
-                            className="form-select rounded-3 col-md-5 fs-4"
-                            onChange={(e) =>
-                                setCategory_id(e.target.value)
-                            }>
-                            <option value=""  >Barcha Kategoriyalar</option>
-                            {dataCategory?.length > 0 &&
-                                dataCategory.map((item) => (
-                                    <option value={item.id}>{item.name}</option>
-                                ))}
-                        </select>
-                        <input
-                            type="text"
-                            className="form-control  rounded-3 col-md-5"
-                            placeholder="Hujjatingizning nomi"
-                            name="title"
-                            onChange={(e) => setTitle(e.target.value)}
-                            defaultValue={products?.title}
-                        />
-                        <input
+                                    ))}
+                            </select>
+                        </div>
+                        <div className='col-md-5'>
+                            <label>Hujjat nomi</label>
+                            <input
+                                type="text"
+                                className="form-control  rounded-3 "
+                                placeholder="Hujjat nomi"
+                                name="title"
+                                onChange={(e) => setTitle(e.target.value)}
+                                defaultValue={products?.title}
+                            />
+                        </div>
+                        <div className='col-md-5'>
+                            <label >Hujjat narxi</label>
+                            <input
+                                type='number'
+                                className="form-control  rounded-3"
+                                placeholder="Hujjatingizning narxi"
+                                name="price"
+                                defaultValue={products?.price}
+                                onChange={(e) => (
+                                    setTaxminiyNarx(e.target.value)
+                                )}
+                            />
+                        </div>
+                       <div className='col-md-5'>
+                        <label>Hujjatga qo'ygan chegirmangiz</label>
+                       <input
                             type='number'
-                            className="form-control col-md-5 rounded-3"
-                            placeholder="Hujjatingizning narxi"
-                            name="price"
-                            defaultValue={products?.price}
-                            onChange={(e) => (
-                                setTaxminiyNarx(e.target.value)
-                            )}
-                        />
-                        <input
-                            type='number'
-                            className="form-control col-md-5 rounded-3"
+                            className="form-control  rounded-3"
                             placeholder="Hujjatingizga qo'ygan chegirmangiz"
                             name="price"
                             defaultValue={products?.discount}
@@ -241,19 +262,21 @@ const PostsMyProducts = () => {
                                 setDiscount(e.target.value)
                             )}
                         />
+                       </div>
 
-                        <div className=" p-0 rounded-3 col-md-10">
+                        <div className=" rounded-3 col-md-10">
                             <span>Qisqa tavsif</span>
                             <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
                         </div>
-                        <div className=" p-0 rounded-3 col-md-10">
-                            <span>Hujjatingiz haqida to'liq ma'umot</span>
+                        <div className=" p-0 px-4 rounded-3 col-md-10">
+                            <span>Hujjat haqida to'liq ma'umot</span>
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
                                     setFullData(parse(data));
                                 }}
                                 editorLoaded={editorLoaded}
+                                value={products?.description}
 
                             />
                         </div>
@@ -263,21 +286,21 @@ const PostsMyProducts = () => {
                                 type='submit'
                                 className="btn btn-success py-3 col-md-3 ">
                                 <span className="fs-4">
-                                    Mahsulot tahrirlash
+                                    Saqlash
                                 </span>
                             </button>
                         </div>
                         <div className="mahsulotingiz" >
                             <p>Tahrirlangan</p>
-                           <span
+                            <span
                                 className='fixed-btn'
                                 type="button"
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasRight"
                                 aria-controls="offcanvasRight">
-                                 <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                                <i class="fa-solid fa-id-card fa-beat fs-1"></i>
                             </span>
-                           </div>
+                        </div>
                     </form>
                     <div
                         class="offcanvas offcanvas-end"
@@ -317,7 +340,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Teglari</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                products?.tag ? products?.tag?.map(item=>(item.name)) : "Teg qo'shing"
+                                                products?.tag?.map(item => (<span>#{item.name} </span>))
                                             }
                                         </span>
                                     </p>
@@ -344,7 +367,7 @@ const PostsMyProducts = () => {
                                             {
                                                 Shortdata ? Shortdata : products?.short_description
                                             }
-                                            
+
                                         </span>
                                     </p>
                                     <p className="live-card-p">
@@ -353,7 +376,7 @@ const PostsMyProducts = () => {
                                             {
                                                 Fulldata?.props?.children ? Fulldata?.props?.children : products?.description
                                             }
-                                            
+
                                         </span>
                                     </p>
                                 </div>

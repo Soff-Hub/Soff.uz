@@ -18,7 +18,6 @@ function OrdersLists() {
     const [search, setSerach] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
-    const [file, setFIle] = useState({});
     const [selectVal, setSelectVal] = useState({});
 
 
@@ -51,13 +50,8 @@ function OrdersLists() {
         });
         GetItemsUsers(1)
     }
-    async function handleItemsPost(values) {
-        const formData = new FormData()
-        formData.append('image', file)
-        formData.append('first_name', values.first_name)
-        formData.append('phone', values.phone)
-        formData.append('auth_status', selectVal)
-        const postsItems = await PostsRepository.PostsUsers(formData, user?.access);
+    async function handleItemsPost() {
+        const postsItems = await PostsRepository.PostsUsers(selectVal, user?.access);
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -65,13 +59,8 @@ function OrdersLists() {
         });
         GetItemsUsers(1)
     }
-    async function handleItemsEdit(values) {
-        const formData = new FormData()
-        formData.append('image', file)
-        formData.append('first_name', values.first_name)
-        formData.append('phone', values.phone)
-        formData.append('auth_status', selectVal)
-        const patchItems = await PatchRepository.PatchUsers(formData, deleteIdEdit?.id, user?.access)
+    async function handleItemsEdit() {
+        const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -79,10 +68,6 @@ function OrdersLists() {
         });
         GetItemsUsers(1)
     }
-    const handleSelectFileFile = (e) => {
-        setFIle(e.target.files[0])
-    };
-
 
     useEffect(() => {
         GetItemsUsers(1)
@@ -152,18 +137,12 @@ function OrdersLists() {
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalTogglEdit" onSubmited={handleItemsEdit} formID={'edit-form-users'}>
                     <input
-                        type='file'
-                        placeholder="Belgi"
-                        className="form-control pt-4 rounded-3"
-                        onChange={handleSelectFileFile}
-                        defaultValue={deleteIdEdit?.image}
-                    />
-                    <input
                         type='text'
                         placeholder="Ism"
                         className="form-control rounded-3"
                         name='first_name'
                         defaultValue={deleteIdEdit?.first_name}
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, first_name: e.target.value }))}
                     />
                     <input
                         type='tel'
@@ -171,8 +150,9 @@ function OrdersLists() {
                         className="form-control rounded-3"
                         name='phone'
                         defaultValue={deleteIdEdit?.phone}
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, phone: e.target.value }))}
                     />
-                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
+                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
                         <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
                         <option className='fs-3' value="new">Faol emas</option>
                         <option className='fs-3' value="code_verified">Faol</option>
@@ -180,18 +160,12 @@ function OrdersLists() {
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>
                     <input
-                        type='file'
-                        placeholder="Belgi"
-                        className="form-control pt-4 rounded-3"
-                        onChange={handleSelectFileFile}
-                        required
-                    />
-                    <input
                         type='text'
                         placeholder="Ism"
                         className="form-control rounded-3"
                         name='first_name'
                         required
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, first_name: e.target.value }))}
 
                     />
                     <input
@@ -201,9 +175,10 @@ function OrdersLists() {
                         name='phone'
                         defaultValue="+998"
                         required
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, phone: e.target.value }))}
 
                     />
-                    <select required className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
+                    <select required className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
                         <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
                         <option className='fs-3' value="new">Faol emas</option>
                         <option className='fs-3' value="code_verified">Faol</option>

@@ -114,7 +114,7 @@ function ContextLists() {
                                     <h3>Bannerlarni o'zgartirish</h3>
                                 </div>
                                 <div>
-                                    <Table scroll={{ x: 750 }} pagination={{ disabled: true }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 750 }} pagination={false} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>

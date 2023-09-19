@@ -69,9 +69,15 @@ function Notifications() {
 
     async function handleClickAriza() {
         const formData = new FormData();
-        formData.append("receipt", dataCardModalImg)
-        formData.append("status", dataCardModalStatus)
-        formData.append("description", dataCardModalDes)
+        if (dataCardModalImg) {
+            formData.append("receipt", dataCardModalImg)
+        }
+        if (dataCardModalStatus) {
+            formData.append("status", dataCardModalStatus)
+        }
+        if (dataCardModalDes) {
+            formData.append("description", dataCardModalDes)
+        }
         const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
         getItemsSellerAdmin(1, dataCat);
 
@@ -100,13 +106,14 @@ function Notifications() {
         getItemsSellerCardList()
     }, [1, dataCat])
 
+  
     const columns = [
         {
             title: 'Summa',
             dataIndex: 'amount',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)} so'm</span>
             )
         },
         {
@@ -128,7 +135,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                            <a href={image} download>
+                            <a href={image} download target='_blank'>
                                 <img src={image} width={74} height={46} className='rounded-3 mb-2' />
                             </a>
                             :
@@ -158,15 +165,15 @@ function Notifications() {
             dataIndex: 'amount',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)} so'm</span>
             )
         },
         {
             title: 'Karta raqam',
-            dataIndex: 'user',
+            dataIndex: 'credit_card',
             key: 'address',
-            render: (user) => (
-                <span>{user?.credit_card}</span>
+            render: (credit_card) => (
+                <span>{credit_card}</span>
             )
         },
         {
@@ -192,7 +199,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                            <a href={image} download>
+                            <a href={image} download target='_blank'>
                                 <img src={image} width={74} height={46} className='rounded-3 mb-2' />
                             </a>
                             :
@@ -223,7 +230,7 @@ function Notifications() {
                 dataAdmin.some(el => el.id == id && el.is_answer === true) ?
                     <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
                     :
-                    <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
+                    <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" ></i></a>
 
             )
         },
@@ -250,7 +257,7 @@ function Notifications() {
                                                 <form className='row row-gap-3 gap-4 mx-auto'>
                                                         <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     <select className='form-select rounded-3 col-md-5 fs-3  ' style={{height:"50px"}} onChange={(e) => setDataCard(e.target.value)} >
-                                                        <option className='fs-3' value=''>Kartalaringiz</option>
+                                                        <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
 
                                                         {
                                                             profileCard?.length > 0 && (
@@ -271,7 +278,7 @@ function Notifications() {
                                                                     height: "50px",
                                                                 }}>
 
-                                                                    <span className='fs-4'>Ariza Yuborish</span>
+                                                                    <span className='fs-4'>Yuborish</span>
                                                                 </Button>
                                                         }
 
@@ -309,15 +316,15 @@ function Notifications() {
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
-                        <input required type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
+                        <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
                     </label>
-                    <select required className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
+                    <select  className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
                         <option className='fs-3' selected disabled value="approved">Holatni tanlang</option>
                         <option className='fs-3' value="approved">Tasdiqlangan </option>
                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                         <option className='fs-3' value="moderation">Moderatsiya</option>
                     </select>
-                    <input type="text" required className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
+                    <input type="text"  className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
                 </ModalDeletePostEdit>
             </div>
         </section>
