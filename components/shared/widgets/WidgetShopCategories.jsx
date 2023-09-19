@@ -17,14 +17,6 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
         }
     }
 
-    const IdYuborish = (id) => {
-        setchaildId(id);
-    };
-
-    const ParentDocumentId = (id) => {
-        setParentId(id);
-    };
-
     const [categoriesView, setcategoriesView] = useState(null);
 
 
@@ -76,11 +68,12 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                                                                     ? 'active'
                                                                     : ''
                                                             }
-                                                            onClick={() =>
-                                                                IdYuborish(
-                                                                    item.id
-                                                                )
-                                                            }>
+                                                            // onClick={() =>
+                                                            //     IdYuborish(
+                                                            //         item.id
+                                                            //     )
+                                                            // }
+                                                            >
                                                             {item.name}
                                                         </a>
                                                     </Link>
@@ -93,9 +86,10 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                                 <Link href={`/category/${item.id}`}>
                                     <a
                                         className="category-list-item"
-                                        onClick={() =>
-                                            ParentDocumentId(item.id)
-                                        }>
+                                        // onClick={() =>
+                                        //     ParentDocumentId(item.id)
+                                        // }
+                                        >
                                         {item.name}
                                     </a>
                                 </Link>

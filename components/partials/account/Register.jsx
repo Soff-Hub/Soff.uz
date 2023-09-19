@@ -17,6 +17,7 @@ class Register extends Component {
         this.state = {
             report: true,
             chekked: false,
+            passwordFocused: false,
         };
     }
 
@@ -48,6 +49,20 @@ class Register extends Component {
 
     handleChekked = () => {
         this.setState({ chekked: !this.state.chekked });
+    };
+
+    handleEnterKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.passwordInput.focus();
+        }
+    };
+    
+    handleEnterKeyPress2 = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.password2Input.focus();
+        }
     };
 
     render() {
@@ -88,6 +103,7 @@ class Register extends Component {
                                             className="form-control"
                                             type="text"
                                             placeholder="Telefon raqam yoki email"
+                                            onKeyDown={this.handleEnterKeyPress}
                                         />
                                     </Form.Item>
                                 </div>
@@ -105,12 +121,14 @@ class Register extends Component {
                                             className="form-control"
                                             type="password"
                                             placeholder="Parol..."
+                                            ref={(input) => (this.passwordInput = input)}
+                                            onKeyDown={this.handleEnterKeyPress2}
                                         />
                                     </Form.Item>
                                 </div>
 
                                 <div className="form-group form-forgot">
-                                    <p>Parol 2</p>
+                                    <p>Parolni takrorlash</p>
                                     <Form.Item
                                         name="password2"
                                         rules={[
@@ -124,6 +142,7 @@ class Register extends Component {
                                             className="form-control"
                                             type="password"
                                             placeholder="Parolni takrorlash"
+                                            ref={(input) => (this.password2Input = input)}
                                         />
                                     </Form.Item>
 

@@ -1,34 +1,31 @@
 import React from 'react';
-
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import Checkout from '~/components/partials/account/Checkout';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import PageContainer from '~/components/layouts/PageContainer';
-import Newletters from '~/components/partials/commons/Newletters';
+import CheckoutOne from '~/components/partials/account/Chekout-one';
+import { useSelector } from 'react-redux';
 
-const CheckoutPage = () => {
+const CheckoutOnePage = () => {
     const breadCrumb = [
         {
             text: 'Home',
             url: '/',
         },
         {
-            text: 'Xarid savati',
-            url: '/account/shopping-cart',
-        },
-        {
             text: 'Hisob - kitob ma\'lumotlari',
         },
     ];
+    const state = useSelector(state => state)
+    console.log('state|', state);
 
     return (
         <PageContainer footer={<FooterDefault />} title="Checkout">
             <div className="ps-page--simple">
                 <BreadCrumb breacrumb={breadCrumb} />
-                <Checkout />
+                <CheckoutOne  />
             </div>
         </PageContainer>
     );
 };
 
-export default CheckoutPage;
+export default CheckoutOnePage;

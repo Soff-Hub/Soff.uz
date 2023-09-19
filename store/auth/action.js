@@ -7,10 +7,10 @@ export const actionTypes = {
     ISLOGINNING: 'ISLOGINNING',
     ACCOUNT_LINKS: 'ACCOUNT_LINKS',
     MYPODUCTS_LISTS: 'MYPODUCTS_LISTS',
+    ONESHOPDOC: 'ONESHOPDOC'
 };
 
 export function login({ user, data }) {
-    console.log(user, data);
     return { type: actionTypes.LOGIN_REQUEST, user, data };
 }
 
@@ -36,6 +36,9 @@ export function accountLinksReducers(payload) {
 }
 export function MyProductsEdit(payload) {
     return { type: actionTypes.MYPODUCTS_LISTS, payload };
+}
+export function OneShopDoc(payload) {
+    return { type: actionTypes.ONESHOPDOC, payload };
 }
 
 

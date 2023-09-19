@@ -77,6 +77,13 @@ class Login extends Component {
 
     }
 
+    handleEnterKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            this.passwordInput.focus();
+        }
+    };
+
     render() {
         return (
             <div className="ps-my-account">
@@ -114,6 +121,7 @@ class Login extends Component {
                                             className="form-control"
                                             type="text"
                                             placeholder="Telefon raqam yoki email"
+                                            onKeyDown={this.handleEnterKeyPress}
                                         />
                                     </Form.Item>
                                 </div>
@@ -130,6 +138,7 @@ class Login extends Component {
                                             className="form-control"
                                             type="password"
                                             placeholder="Parol"
+                                            ref={(input) => (this.passwordInput = input)}
                                         />
                                     </Form.Item>
                                 </div>

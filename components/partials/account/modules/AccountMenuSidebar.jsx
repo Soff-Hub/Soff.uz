@@ -60,7 +60,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                     ?
                     <div className='pb-3'>
                         <Tooltip title={`${profile?.is_payment === false ? `Pul yechib olish uchun ` + profile?.min_sum + " So'mdan o'tish kerak " : " Pulni yechib olishingiz mumkin"}`} defaultOpen color={`${profile?.is_payment === false ? "red" : "green"}`}>
-                            <Button className='w-100 pb-5 text-truncate ' ><strong className={`fs-3 text-${profile?.is_payment === false ? "danger" : "success"}`} > Hisobingizda: {addPeriodToThousands(profile?.wallet)} so'm</strong></Button>
+                            <p style={{border:"1px solid black"}} className='w-100 py-2 shadow rounded-3 px-5 text-truncate ' ><strong className={`fs-3 text-${profile?.is_payment === false ? "danger" : "success"}`} > Hisobingizda: {addPeriodToThousands(profile?.wallet)} so'm</strong></p>
                         </Tooltip>
                     </div>
                     :

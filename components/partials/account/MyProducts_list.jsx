@@ -74,14 +74,12 @@ function MyProductsLists() {
     }
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyProductsDelete(deleteId, user?.access);
-
-
-
         const modal = Modal.error({
             centered: true,
             title: 'Muvaffaqqiyatli!',
             content: `Siz malumotlarni o'chirdingiz`,
         });
+        modal.update
         GetItemsProducts(1, dataValCat, tagName, dataFormat)
 
     }
@@ -225,7 +223,7 @@ function MyProductsLists() {
         } : <></>,
 
         user?.role === "seller" ? {
-            title: 'Harakatlar',
+            title: 'File',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >

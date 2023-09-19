@@ -28,16 +28,16 @@ function ProductsLists() {
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv, ) {
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv,) {
         if (page === 1) {
-             setData([])
+            setData([])
         }
         const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id, arxiv, )
+                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id, arxiv,)
             }
         }
     }
@@ -97,7 +97,7 @@ function ProductsLists() {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = fileContent.title+"." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -110,8 +110,8 @@ function ProductsLists() {
     }, [])
 
     useEffect(() => {
-        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv, )
-    }, [dataValCat, dataValStatus, dataFormat, dateArxiv, ])
+        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
+    }, [dataValCat, dataValStatus, dataFormat, dateArxiv,])
 
 
     const columns = [
@@ -235,6 +235,11 @@ function ProductsLists() {
                                         <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
                                         <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
                                     </div>
+                                    <div className='d-flex flex-column gap-2 bg-white px-3 py-4 rounded'>
+                                        <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                                        <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                                        <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                                    </div>
                                     <Table scroll={{ x: 1300 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
@@ -254,13 +259,13 @@ function ProductsLists() {
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body pt-5">
-                                            <p className="card-text"><strong>Sotuvchi ism familiyasi:</strong> {deleteIdView?.seller?.first_name}   {deleteIdView?.seller?.last_name }</p>
+                                            <p className="card-text"><strong>Sotuvchi ism familiyasi:</strong> {deleteIdView?.seller?.first_name}   {deleteIdView?.seller?.last_name}</p>
                                             <p className="card-text"> <strong>Mahsulot nomi:</strong> {deleteIdView?.title}</p>
                                             <p className="card-text"> <strong>Kategoriya:</strong> {deleteIdView?.category?.name}</p>
                                             <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            <p>{deleteIdView?.active_tag?.map(item=>(<span>#{item.name}</span>))} {deleteIdView?.deactive_tag?.map(item=>(<span>#{item.name} </span>))} </p>
+                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}</span>))} {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
 
                                         </div>
                                     </div>
@@ -268,7 +273,7 @@ function ProductsLists() {
                                         <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
                                         <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description}</p>
                                         <div className='d-flex justify-content-end py-3'>
-                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={()=>handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File ochish</a>
+                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 
                                         </div>
                                     </div>

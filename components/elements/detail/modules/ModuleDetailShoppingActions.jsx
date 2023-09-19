@@ -4,9 +4,8 @@ import { useRouter } from 'next/router';
 import { Modal } from 'antd';
 import useEcomerce from '~/hooks/useEcomerce';
 
-import PostRepo from '~/repositories/PostRepo';
 import { useCookies } from 'react-cookie';
-import PostRepository from '~/repositories/PostRepository';
+import { OneShopDoc } from '~/store/auth/action';
 
 const ModuleDetailShoppingActions = ({
     ecomerce,
@@ -18,6 +17,7 @@ const ModuleDetailShoppingActions = ({
     const Router = useRouter();
     const select = useSelector((state) => state.auth.user?.access);
     const { addItem } = useEcomerce();
+    const dispatch = useDispatch()
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -36,7 +36,8 @@ const ModuleDetailShoppingActions = ({
         e.preventDefault();
         if (state ) {
             addItem(product, ecomerce.cartItems, 'cart');
-                Router.push('/account/checkout');
+                dispatch(OneShopDoc(product))
+                Router.push('/account/checkout-one');
         } else {
                 Router.push('/account/register-user');
         }

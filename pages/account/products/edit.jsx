@@ -33,7 +33,7 @@ const PostsProductsEdit = () => {
             url: '/',
         },
         {
-            text: "Mening mahsulotlarim tahrirlash",
+            text: "Hujjatni tahrirlash",
         },
     ];
     const Option = Select.Option;
@@ -107,11 +107,22 @@ const PostsProductsEdit = () => {
         }
         const patchItems = await PatchRepository.getProductsPatch(data, products?.id, user?.access);
         Router.push('/account/products');
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni yangiladingiz`,
-        });
+        if (patchItems?.status === 400) {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Nimadir xato ketidi qaytadan urinib ko'ring",
+            });
+            modal.update
+        }
+        else {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+            modal.update
+        }
     }
 
     return user?.role === 'admin' ? (
@@ -128,26 +139,43 @@ const PostsProductsEdit = () => {
                         className="row mx-auto  gap-3 py-5 w-100">
                         <h4 className="col-md-12">Mahsulot Qo'shish</h4>
 
-                        <input
-                            type="text"
-                            className="form-control  rounded-3 col-md-5"
-                            placeholder="Hujjatingizning nomi"
-                            name="title"
-                            onChange={(e) => setTitle(e.target.value)}
-                            defaultValue={products?.title}
-                        />
-                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
-                            <option className='fs-3' selected value="">Barcha holatlar</option>
-                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                        </select>
-                        <div className="rounded-3 col-md-5 p-0 m-0 d-flex flex-column">
+                        <div className='col-md-5'>
+                            <label>Hujjat nomi</label>
+                            <input
+                                type="text"
+                                className="form-control  rounded-3 "
+                                placeholder="Hujjat nomi"
+                                name="title"
+                                onChange={(e) => setTitle(e.target.value)}
+                                defaultValue={products?.title}
+                            />
+                        </div>
+                        <div className='col-md-5 '>
+                            <label>Holatlar</label>
+                            <select className='form-select fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
+                                {
+                                    products.status==="moderation" ?
+                                    <option className='fs-3' selected value="moderation">Moderatsiya</option>
+                                    :
+                                    <option className='fs-3' value="moderation">Moderatsiya</option> ||
+                                    products.status==="approved" ?
+                                    <option className='fs-3' selected value="approved">Tasdiqlangan</option>
+                                    :
+                                    <option className='fs-3' value="approved">Tasdiqlangan</option> ||
+                                    products.status==="approved" ?
+                                    <option className='fs-3' selected value="cancelled">Bekor qilingan</option>
+                                    :
+                                    <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                    
+                    
+                                }
+                            </select>
+                        </div>
+                        <div className="rounded-3 col-md-5  m-0 d-flex flex-column">
+                            <label>Teglar</label>
                             <Select
-                                className="py-2"
                                 mode="tags"
-                                style={{ width: '100%' }}
-                                placeholder="Hujjatlaringizga tag qo'shing"
+                                placeholder="Hujjatga tag qo'shing"
                                 onChange={handleChange}
                                 defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
                             >
@@ -155,31 +183,37 @@ const PostsProductsEdit = () => {
                             </Select>
                         </div>
 
-                        <select
-                            style={{ alignItems: "flex-start" }}
-                            className="form-select rounded-3 col-md-5 fs-4"
-                            onChange={(e) =>
-                                setCategory_id(e.target.value)
-                            }>
-                            <option value="" selected disabled  >Barcha Kategoriyalar</option>
-                            {dataCategory?.length > 0 &&
-                                dataCategory.map((item) => (
-                                    <option value={item.id}> {item.name}</option>
-                                ))}
-                        </select>
+                        <div className='col-md-5'>
+                            <label>Kategoriya</label>
+                            <select
+                                style={{ alignItems: "flex-start" }}
+                                className="form-select rounded-3 fs-4 py-3"
+                                onChange={(e) =>
+                                    setCategory_id(e.target.value)
+                                }>
+                                {dataCategory?.length > 0 &&
+                                    dataCategory.map((item) => (
+                                        products?.category === item.name ?
+                                            <option selected value={item.id}>{item.name}</option>
+                                            :
+                                            <option value={item.id}>{item.name}</option>
+                                    ))}
+                            </select>
+                        </div>
 
-                        <div className=" p-0 rounded-3 col-md-10">
+                        <div className=" rounded-3 col-md-10">
                             <span>Qisqa tavsif</span>
                             <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
                         </div>
-                        <div className=" p-0 rounded-3 col-md-10">
-                            <span>Hujjatingiz haqida to'liq ma'umot</span>
+                        <div className="rounded-3 col-md-10">
+                            <span>Hujjat haqida to'liq ma'umot</span>
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
                                     setFullData(parse(data));
                                 }}
                                 editorLoaded={editorLoaded}
+                                value={products?.description}
 
                             />
                         </div>
@@ -189,21 +223,21 @@ const PostsProductsEdit = () => {
                                 type='submit'
                                 className="btn btn-success py-3 col-md-3 ">
                                 <span className="fs-4">
-                                    Mahsulot qo'shish
+                                    Saqlash
                                 </span>
                             </button>
                         </div>
                         <div className="mahsulotingiz" >
                             <p>Hujjatingiz</p>
-                           <span
+                            <span
                                 className='fixed-btn'
                                 type="button"
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasRight"
                                 aria-controls="offcanvasRight">
-                                 <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                                <i class="fa-solid fa-id-card fa-beat fs-1"></i>
                             </span>
-                           </div>
+                        </div>
                     </form>
                     <div
                         class="offcanvas offcanvas-end"
@@ -232,7 +266,7 @@ const PostsProductsEdit = () => {
                                         <span><strong>Teglari</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                             products?.tag?.map(item => (<span>#{item.name} </span>)) 
+                                                products?.tag?.map(item => (<span>#{item.name} </span>))
                                             }
                                         </span>
                                     </p>
