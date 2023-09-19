@@ -5,8 +5,8 @@ import ProductRepository from '~/repositories/ProductRepository';
 
 const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     const Router = useRouter();
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(500000); // price_lt: value[1], setMax(value[1]);
+    const [min, setMin] = useState('');
+    const [max, setMax] = useState(''); // price_lt: value[1], setMax(value[1]);
     const { slug } = Router.query;
     const [chaildId, setchaildId] = useState('');
     const [parentId, setParentId] = useState('');
@@ -38,10 +38,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             if (respons && setFilteredData) {
                 setFilteredData(respons?.results);
             }
-            
-            
         } else if (parentId !== '') {
-            const respons = await ProductRepository.getFilderProduct(
+            const respons = await ProductRepository.getFilderPrice(
                 1,
                 null,
                 parentId,
@@ -53,10 +51,10 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                 null
             );
             if (respons && setFilteredData) {
-                setFilteredData(respons?.results);
+                setFilteredData(respons?.data?.results);
             }
         } else {
-            const respons = await ProductRepository.getFilderProduct(
+            const respons = await ProductRepository.getFilderPrice(
                 1,
                 null,
                 null,
@@ -68,24 +66,34 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                 null
             );
             if (respons && setFilteredData) {
-                setFilteredData(respons?.results);
+                setFilteredData(respons?.data?.results);
             }
         }
     };
 
-
     function handleChangeRange(value) {
+        console.log('jhjhkjhkjhkhkhk', value);
         setMin(value[0]);
         setMax(value[1]);
 
         filterByPrice(value[0], value[1]);
     }
 
+    const Price = async () => {
+        const respons = await ProductRepository.getDefaultPrice();
+        if (respons) {
+            setMax(respons?.data?.max_price);
+            setMin(respons?.data?.min_price);
+        }
+    };
+
     useEffect(() => {
         getCategry();
     }, [slug]);
-
-
+    
+    useEffect(() => {
+        Price();
+    }, [])
 
     return (
         <aside className="widget widget_shop">
@@ -93,8 +101,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                 <h4 className="widget-title">Narx </h4>
                 <Slider
                     range
-                    defaultValue={[0, 500000]}
-                    max={500000}
+                    // defaultValue={[min, 20000]}
+                    max={20000}
                     onAfterChange={(e) => handleChangeRange(e)}
                 />
                 <p>

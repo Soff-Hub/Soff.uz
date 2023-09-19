@@ -8,6 +8,7 @@ export const initState = {
     accountLinks: [],
     data: {},
     products:{},
+    shop: []
 };
 
 function reducer(state = initState, actions) {
@@ -49,12 +50,18 @@ function reducer(state = initState, actions) {
                 return { ...state, ...{ products: actions.payload } };
 
         case actionTypes.DATA:
-            console.log('actions', actions);
             localStorage.setItem('data', JSON.stringify(actions.data));
             return {
                 ...state,
                 ...{ isLoggedIn: true },
                 ...{ data: actions.data },
+            };
+        case actionTypes.ONESHOPDOC:
+            console.log('actions||||', actions.payload);
+            return {
+                ...state,
+                ...{ isLoggedIn: true },
+                ...{ shop: actions.payload },
             };
        
             default:

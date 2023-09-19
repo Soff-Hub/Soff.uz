@@ -65,11 +65,9 @@ const ShopItems = ({
         if (responseData) {
             if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
                 setchaildSlug(slug)
-                console.log('chaild' , slug);
             }
             else {
                 setParentSlug(slug)
-                console.log('parent', slug);
             }
         }
     }
