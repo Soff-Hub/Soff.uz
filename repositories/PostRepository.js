@@ -64,7 +64,7 @@ class PostRepository {
 
     async postSearchFilter(payload) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/tag/?search=${payload ? payload : ''}`
+            `${baseUrl}customer/documents/?search=${payload ? payload : ''}`
         )
             .then((response) => {
                 return response.data;

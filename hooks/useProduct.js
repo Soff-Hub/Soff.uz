@@ -33,7 +33,7 @@ function getImageURL(source, size) {
                 image = source.url;
             }
         } else {
-            image = source.poster_url   ;
+            image = source.poster_url;
         }
         imageURL = `${baseUrl}${image}`;
     } else {
@@ -46,22 +46,32 @@ export default function useProduct() {
     return {
         thumbnailImage: (payload) => {
             if (payload) {
-
                 if (payload?.poster_url !== '') {
                     return (
                         <>
                             <LazyLoad>
-                                {
-                                    payload?.poster_url 
-                                     ? 
-                                   <div style={{backgroundImage: `url(${payload.poster_url})`}} className='products-image1'>
+                                {payload?.poster_url ? (
+                                    <div
+                                        style={{
+                                            backgroundImage: `url(${payload.poster_url})`,
+                                            backgroundPosition: 'center',
+                                            backgroundSize:'cover',
+                                            backgroundRepeat:'no-repeat'
+                                        }}
+                                        className="products-image1"></div>
+                                ) : (
+                                  
+                                    <div
+                                    style={{
+                                        backgroundImage: `url(/static/img/docCopy.jpg)`,
+                                        backgroundPosition: 'center',
+                                        backgroundSize:'cover',
+                                        backgroundRepeat:'no-repeat',
 
-                                   </div>
-                                   
-                                     :
-                                    <img src="/static/img/not-found.png" alt="not found image" />
-
-                                }
+                                    }}
+                                    className='placholder-hujjat products-image1'
+                                    ></div>
+                                )}
                             </LazyLoad>
                         </>
                     );
@@ -73,7 +83,6 @@ export default function useProduct() {
             if (payload.sale_price) {
                 view = (
                     <p className="ps-product__price sale">
-
                         {formatCurrency(payload.sale_price)}
                         <span> so'm</span>
                         <del className="ml-2">
@@ -85,7 +94,6 @@ export default function useProduct() {
             } else {
                 view = (
                     <p className="ps-product__price">
-
                         {formatCurrency(payload.price)}
                         <span> so'm</span>
                     </p>
@@ -94,7 +102,7 @@ export default function useProduct() {
             return view;
         },
 
-               title: (payload) => {
+        title: (payload) => {
             let view = (
                 <Link href="/product/[pid]" as={`/product/${payload.id}`}>
                     <a className="ps-product__title">{payload.title}</a>

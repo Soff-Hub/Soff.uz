@@ -149,7 +149,7 @@ const SearchHeader = () => {
             if (resultItems.length > 5) {
                 loadMoreView = (
                     <div className="ps-panel__footer text-center">
-                        <Link href="/search">
+                        <Link href={`/search?keyword=${keyword}`}>
                             <a>Hamma natijalarni ko'rish</a>
                         </Link>
                     </div>
@@ -188,9 +188,7 @@ const SearchHeader = () => {
             method="get"
             action="/"
             onSubmit={handleSubmit}>
-            {/* <div className="ps-form__categories">
-                <select className="form-control">{selectOptionView}</select>
-            </div> */}
+  
             <div className="ps-form__input">
                 <input
                     ref={inputEl}

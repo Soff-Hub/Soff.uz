@@ -100,13 +100,14 @@ function Notifications() {
         getItemsSellerCardList()
     }, [1, dataCat])
 
+  
     const columns = [
         {
             title: 'Summa',
             dataIndex: 'amount',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)} so'm</span>
             )
         },
         {
@@ -128,7 +129,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                            <a href={image} download>
+                            <a href={image} download target='_blank'>
                                 <img src={image} width={74} height={46} className='rounded-3 mb-2' />
                             </a>
                             :
@@ -158,15 +159,15 @@ function Notifications() {
             dataIndex: 'amount',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)} so'm</span>
             )
         },
         {
             title: 'Karta raqam',
-            dataIndex: 'user',
+            dataIndex: 'credit_card',
             key: 'address',
-            render: (user) => (
-                <span>{user?.credit_card}</span>
+            render: (credit_card) => (
+                <span>{credit_card}</span>
             )
         },
         {
@@ -192,7 +193,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                            <a href={image} download>
+                            <a href={image} download target='_blank'>
                                 <img src={image} width={74} height={46} className='rounded-3 mb-2' />
                             </a>
                             :
@@ -250,7 +251,7 @@ function Notifications() {
                                                 <form className='row row-gap-3 gap-4 mx-auto'>
                                                         <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     <select className='form-select rounded-3 col-md-5 fs-3  ' style={{height:"50px"}} onChange={(e) => setDataCard(e.target.value)} >
-                                                        <option className='fs-3' value=''>Kartalaringiz</option>
+                                                        <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
 
                                                         {
                                                             profileCard?.length > 0 && (
@@ -271,7 +272,7 @@ function Notifications() {
                                                                     height: "50px",
                                                                 }}>
 
-                                                                    <span className='fs-4'>Ariza Yuborish</span>
+                                                                    <span className='fs-4'>Yuborish</span>
                                                                 </Button>
                                                         }
 

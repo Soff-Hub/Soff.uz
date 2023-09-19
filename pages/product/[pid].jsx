@@ -72,7 +72,6 @@ const ProductDefaultPage = () => {
     } else {
         productView = <SkeletonProductDetail />;
     }
-    console.log('dfghj',pid, product);
 
     return (
         <PageContainer
@@ -95,8 +94,9 @@ const ProductDefaultPage = () => {
                     /> */}
                     {
                         product?.similar?.length > 0
-                        &&
-                    <RelatedProduct pid={pid} collectionSlug="shop-recommend-items" />
+                        ?
+                    <RelatedProduct data={product?.similar} pid={pid} collectionSlug="shop-recommend-items" />
+                    : ''
                     }
                 </div>
             </div>

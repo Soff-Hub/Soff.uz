@@ -43,11 +43,24 @@ const CreditCard = () => {
 
   async function handleClickCardPosts(){
     const ItemsData= await PostsRepository.CardPostsCredit({"credit_card":JSON.parse(numberCardVal)},user?.access );
-    const modal = Modal.success({
-      centered: true,
-      title: 'Muvaffaqqiyatli!',
-      content: ` ${ItemsData?.msg}`,
-  });
+    if (ItemsData.status === 201) {
+      const modal = Modal.success({
+          centered: true,
+          title: 'Muvaffaqqiyatli!',
+          content: ItemsData?.data?.msg,
+
+      });
+      modal.update;
+     }else{
+      const modal = Modal.error({
+          centered: true,
+          title: 'Muvaffaqqiyatli!',
+          content: ItemsData?.data?.msg,
+
+      });
+      modal.update;
+     }
+
 
   getItemsSellerCardList();
   } 

@@ -31,6 +31,7 @@ export default function useAuth() {
             })
 
             .catch((error) => {
+                console.log('err', error);
                 console.log(error.response);
                 if (error.response) {
                     return error.response;

@@ -23,20 +23,17 @@ const ShopItems = ({
     const { query } = Router;
     const {slug} = Router.query
     const [listView, setListView] = useState(true);
-    const [total, setTotal] = useState(0);
     const [classes, setClasses] = useState(
         'col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6 '
     );
     const [load, setLoad] = useState(false);
     const [success, setSuccess] = useState(true);
 
-    const { productItems, loading, getProducts } = useGetProducts();
-    const [pagenationData, setPagenationData] = useState([]);
     const [newData, setNewData] = useState([]);
-    const [selectData, setSelectData] = useState([]);
     const [page, setPage] = useState(1);
     const [chaildSlug, setchaildSlug] = useState('')
     const [parentSlug, setParentSlug] = useState('')
+    // const [searchValue, setSearchValue] = useState('')
 
     function handleChangeViewMode(e) {
         e.preventDefault();
@@ -136,38 +133,18 @@ const ShopItems = ({
                 setLoad(true);
             }
         } 
-        // else{
-        //     const respons = await ProductRepository.getFilderProduct(
-        //         e,
-        //         null,
-        //         null,
-        //         null,
-        //         null,
-        //         null,
-        //         null,
-        //         null,
-        //         null
-        //     );
-        //     if (respons) {
-        //         setDataCount(respons.count);
-        //         setNewData(respons.results);
-        //     } else {
-        //         setLoad(true);
-        //     }
-    
-        // }
     }
    
 
     async function handleSelect(e) {
-        // const respons = await ProductRepository.getFilterSelect(payload)
         const ID = 'id';
         const PRICE = 'price';
         const DePRICE = '-price';
+      if (chaildSlug) {
         if (e.target.value === 'all') {
             const respons = await ProductRepository.getFilderProduct(
                 1,
-                null,
+                slug,
                 null,
                 null,
                 null,
@@ -184,7 +161,7 @@ const ShopItems = ({
         } else if (e.target.value === 'mashhur') {
             const respons = await ProductRepository.getFilderProduct(
                 1,
-                null,
+                slug,
                 null,
                 null,
                 null,
@@ -197,7 +174,7 @@ const ShopItems = ({
         } else if (e.target.value === 'arzondan') {
             const respons = await ProductRepository.getFilderProduct(
                 1,
-                null,
+                slug,
                 null,
                 null,
                 null,
@@ -210,7 +187,7 @@ const ShopItems = ({
         } else if (e.target.value === 'qimmatdan') {
             const respons = await ProductRepository.getFilderProduct(
                 1,
-                null,
+                slug,
                 null,
                 null,
                 null,
@@ -221,7 +198,109 @@ const ShopItems = ({
             );
             setNewData(respons?.results);
         }
+      }else if(parentSlug){
+        if (e.target.value === 'all') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                slug,
+                null,
+                null,
+                null,
+                ID,
+                null,
+                null
+            );
+            if (respons) {
+                setNewData(respons?.results);
+            } else {
+                setNewData(respons?.results);
+            }
+        } else if (e.target.value === 'mashhur') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                PRICE,
+                'approved_count'
+            );
+            setNewData(respons?.results);
+        } else if (e.target.value === 'arzondan') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                PRICE,
+                null
+            );
+            setNewData(respons?.results);
+        } else if (e.target.value === 'qimmatdan') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                DePRICE,
+                null
+            );
+            setNewData(respons?.results);
+        }
+      }
     }
+
+    async function detailSearch(e){
+        // setSearchValue(e)
+        if (chaildSlug) {
+            const respons = await ProductRepository.getSearchProduct( 
+                1,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                e)
+                if (respons) {
+                    setDataCount(respons.count);
+                    setNewData(respons.results);
+                } else {
+                    setLoad(true);
+                }
+            
+        }else if (parentSlug) {
+            const respons = await ProductRepository.getSearchProduct( 
+                1,
+                null,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                e)
+                if (respons) {
+                    setDataCount(respons.count);
+                    setNewData(respons.results);
+                } else {
+                    setLoad(true);
+                }
+        }
+    }
+
 
     // Views
     let productItemsView;
@@ -279,6 +358,12 @@ const ShopItems = ({
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
+              
+                   <label className='category-search-label'>
+                   <i class="fa-solid fa-magnifying-glass search-label"></i>
+                   <input type="text" placeholder='Hujjatingizni izlang...' onChange={(e) => detailSearch(e.target.value)} />
+                   </label>
+              
                     <select
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
@@ -320,18 +405,21 @@ const ShopItems = ({
                 {productItemsView}
             </div>
             <div className="ps-shopping__footer text-center">
+              {
+                data?.length > 16 && 
                 <div className="ps-pagination">
-                    {data?.length > 0 && (
-                        <Pagination
-                            total={dataCount}
-                            pageSize={pageSize}
-                            responsive={true}
-                            showSizeChanger={false}
-                            current={page}
-                            onChange={(e) => handlePagination(e)}
-                        />
-                    )}
-                </div>
+                  
+                <Pagination
+                    total={dataCount}
+                    pageSize={pageSize}
+                    responsive={true}
+                    showSizeChanger={false}
+                    current={page}
+                    onChange={(e) => handlePagination(e)}
+                />
+            
+        </div>
+              }
             </div>
         </div>
     );

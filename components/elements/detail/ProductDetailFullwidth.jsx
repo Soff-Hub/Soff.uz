@@ -9,21 +9,20 @@ import ModuleDetailActionsMobile from '~/components/elements/detail/modules/Modu
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
+import Router from 'next/router';
 
 const ProductDetailFullwidth = ({ product }) => {
+    const [tag, setTag] = useState([]);
 
-    const [tag, setTag] = useState([])
+    const searchTag = (e) => {
+        console.log('onclick',e);
 
-    const getTagData = async () => {
-        const data = await ProductRepository.getTagData()
-        if (data) {
-            setTag(data)
-        }
+        Router.push(`/search?keyword=${e}`)
     }
 
     useEffect(() => {
-        getTagData()
-    },[])
+        setTag(product?.tag);
+    }, []);
 
     return (
         <div className="ps-product--detail ps-product--fullwidth">
@@ -33,16 +32,18 @@ const ProductDetailFullwidth = ({ product }) => {
                     <ModuleDetailTopInformation product={product} />
                     <ModuleProductDetailDescription product={product} />
                     <ModuleDetailShoppingActions product={product} />
-                    <div className='d-flex align-content-center'>
-                        {
-                            tag?.length > 0 &&
-                            tag.map((item,i) => (
-                                <div key={i} className='mx-4' > <a href='#' > # {item.name} </a> </div>
-                            ))
-                        }
+                    <div className=" row d-flex justify-content-center">
+                        {tag?.length > 0 &&
+                            tag.map((item, i) => (
+                                <div
+                                    key={i}
+                                    className="mx-4 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-4 col-5">
+                                    <Link href="#" as='#' >
+                                        <a onClick={() => searchTag(item?.name)}> # {item.name} </a>
+                                    </Link>
+                                </div>
+                            ))}
                     </div>
-                    {/* <ModuleProductDetailSpecification /> */}
-                    {/* <ModuleProductDetailSharing /> */}
                     <ModuleDetailActionsMobile product={product} />
                 </div>
             </div>

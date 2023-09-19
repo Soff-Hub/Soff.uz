@@ -50,6 +50,7 @@ class Login extends Component {
 
         const user = await loginUser(e);
         if (user) {
+            console.log(user);
             if (user.status >= 400) {
                 notification.open({
                     message: `${user?.data?.msg}`,

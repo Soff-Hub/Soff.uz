@@ -26,15 +26,17 @@ const Product = ({ product }) => {
     }
     return (
         <div className="ps-product">
-            <div className="ps-product__thumbnail">
+            <div className="ps-product__thumbnail" style={{
+                       margin:'0 auto'
+                    }}>
                 <Link href="/product/[pid]" as={`/product/${product.id}`}>
-                    <a>
+                    <a >
                         { 
                         product.poster_url ?
                     
                         thumbnailImage(product)
                     :
-                    <img src="/static/img/not-found.png" alt="" />
+                    <img src="/static/img/docCopy.jpg" alt="hujjat" />
                     }
                     
                     </a>
