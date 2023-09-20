@@ -1,6 +1,6 @@
 import React from 'react';
-import ModulePaymentOrderSummary from '~/components/partials/account/modules/ModulePaymentOrderSummary';
 import FormCheckoutInformationOne from './modules/FormCheckoutInformationOne';
+import ModulePaymentOrderSummaryOne from './modules/ModulePaymentOrderSummaryOne';
 const CheckoutOne = () => {
 
 
@@ -20,7 +20,7 @@ const CheckoutOne = () => {
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12  ps-block--checkout-order">
                                     <div className="ps-form__orders">
                                         <h3>Sizning buyurtmangiz</h3>
-                                        <ModulePaymentOrderSummary />
+                                        <ModulePaymentOrderSummaryOne/>
                                     </div>
                                 </div>
                             </div>
