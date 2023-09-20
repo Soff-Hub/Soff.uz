@@ -305,13 +305,10 @@ function DashbordList() {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        <div className="ps-page__content">
-                            <div className="ps-section--account-setting">
-                                <div className="ps-section__content">
-                                    <Example />
-                                </div>
-                            </div>
-                        </div>
+                    <div className='pb-5'>
+                    <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
+                    <Table scroll={{ x: 1200 }} dataSource={dataOrders} columns={columnsOrders} />
+                </div> 
                     </div>
                 </div>
               {
@@ -323,10 +320,6 @@ function DashbordList() {
             :
             <></>
               }
-                <div className='pb-5'>
-                    <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
-                    <Table scroll={{ x: 850 }} dataSource={dataOrders} columns={columnsOrders} />
-                </div>
                 <div className="modal fade " id="staticBackdropViewPopular" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
