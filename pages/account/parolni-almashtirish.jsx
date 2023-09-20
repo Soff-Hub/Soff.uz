@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
-import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 
 const Xabar = (e) => {
-    // e.preventDefault();
     const tokenn = useSelector((state) => state.auth);
     const [countdown, setCoutdown] = useState(60);
     const [nomer, setNomer] = useState('');
@@ -16,9 +13,6 @@ const Xabar = (e) => {
     const [kod, setKod] = useState(null);
 
 
-    // if (tokenn.user) {
-    //     console.log('redux', tokenn.user);
-    // }
 
     const handleSubmitKod = async () => {
         let data = {
@@ -95,7 +89,6 @@ const Xabar = (e) => {
                                         min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                    {/* </Form.Item> */}
                                     <p> {nomer} nomerga sms boradi</p>
 
                                     <p>

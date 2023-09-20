@@ -3,10 +3,8 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import Product from '~/components/elements/products/Product';
 import ProductGroupGridItems from '~/components/partials/product/ProductGroupGridItems';
 import PageContainer from '~/components/layouts/PageContainer';
-import Newsletters from '~/components/partials/commons/Newletters';
 import useGetProducts from '~/hooks/useGetProducts';
 import { useRouter } from 'next/router';
-import ProductRepository from '~/repositories/ProductRepository';
 import PostRepository from '~/repositories/PostRepository';
 
 const SearchPage = () => {
@@ -26,11 +24,7 @@ const SearchPage = () => {
         }
     }
 
-    // document.addEventListener("keydown", function(event) {
-    //     if(event.key === "Enter" && query != ''){
-    //         getSearchData()
-    //     }
-    //   })
+
 
     function handleSetKeyword() {
         if (query && query.keyword !== '') {
@@ -43,7 +37,6 @@ const SearchPage = () => {
    
 
     useEffect(() => {
-        // filterFunc()
     }, [data])
     
     useEffect(() => {
@@ -59,7 +52,6 @@ const SearchPage = () => {
         }
 
 
-        // filterFunc();
     }, [ keyword ]);
 
   

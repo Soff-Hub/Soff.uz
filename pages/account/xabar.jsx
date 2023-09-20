@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
-import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 import { BeatLoader } from 'react-spinners';
 
 const Xabar = (e) => {
-    // e.preventDefault();
     const tokenn = useSelector((state) => state.auth);
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true);
@@ -118,7 +115,6 @@ const Xabar = (e) => {
                 <div className="container">
                     <Form
                         className="ps-form--account"
-                        // onFinish={(e) => handleSubmitKod(e)}
                     >
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
