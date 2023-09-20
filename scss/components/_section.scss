@@ -521,6 +521,30 @@
         margin-top: 40px;
     }
 
+    @media screen and (max-width: 768px) {
+        .ps-shopping__view{
+            display: none;
+        }
+        .ps-shopping__actions {
+            width: 100%;
+            flex-direction: column;
+            .ps-input{
+                width: 100%;
+            }
+            .category-search-label{
+                width: 100%;
+            }
+            .category-search-label {
+                .search-label{
+                    left: 6%;
+                }
+            } 
+            .select2 {
+                display: none;
+            }
+        }
+    }
+
     @include media('<sm') {
         .ps-shopping__header {
             flex-flow: row nowrap;
@@ -528,7 +552,7 @@
 
             > * {
                 flex-basis: 100%;
-                max-width: 50%;
+                max-width: 70%;
             }
 
             .ps-shopping__view {
