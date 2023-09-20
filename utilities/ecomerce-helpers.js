@@ -95,12 +95,3 @@ export function calculateAmount(obj) {
         .reduce((acc, { price }) => acc + Number(price), 0)
         // .toFixed(2);
 }
-
-
-// export function calculateCartQuantity(obj) {
-//     return Object.values(obj).reduce((acc, { quantity }) => acc + 0, 0);
-// }
-
-// export function caculateArrayQuantity(obj) {
-//     return Object.values(obj).reduce((acc) => acc + 1, 0);
-// }

@@ -14,47 +14,24 @@ function FormCheckoutInformationOne() {
 
     const [cookies, setCookie] = useCookies(['cart']);
     const select = useSelector((state) => state.auth.user?.access);
-    const [card, setCard] = useState([]);
-    const [data, setData] = useState([]);
     const [selectedValue, setSelectedValue] = useState('click');
     const [message, setMessage] = useState(true);
 
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
     };
-    const GetCard = async () => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${select} `,
-            },
-        };
-        const respons = await PostRepository.getCartData(config);
-        setTimeout(() => {
-            setCard(respons?.results?.[0]?.documents);
-        }, 1000);
-    };
-
-    console.log('cardd', card);
-
-    useEffect(() => {
-        select && GetCard()
-        setData(cookies?.cart);
-    }, [cookies]);
-
-    function extractIds(data) {
-        const ids = [];
-        for (const item of data) {
-            ids.push(Number(item.id));
-        }
-        return ids;
-    }
-    const ids = extractIds(data);
-    console.log("to'lov uchun berib yuborilgan id lar ", ids);
+  
+    const state = useSelector(state => state?.auth?.shop)
+console.log('state', state.id);
+   let arr = []
+   arr.push(state?.id)
+    console.log("to'lov uchun berib yuborilgan id lar ", arr);
+   
 
     const ProductToApi = async () => {
         setMessage(false);
         const data = {
-            documents: ids,
+            documents: arr,
         };
         const token = {
             headers: {
@@ -64,8 +41,6 @@ function FormCheckoutInformationOne() {
         const respons = await ClickRepository.postClick(data, token);
 console.log(respons);
         if (respons?.status === 200 || respons?.status === 201) {
-            setCookie('cart', [], { path: '/' });
-            removeItems('cart');
             window.open(`${respons?.data?.url}`, '_blank');
             setMessage(true);
         }else {
