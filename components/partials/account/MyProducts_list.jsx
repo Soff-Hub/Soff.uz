@@ -118,7 +118,7 @@ function MyProductsLists() {
     const handleButtonClick = async (ID) => {
 
         try {
-            const fileContent = data?.find(item=>(item.id==ID))
+            const fileContent = data?.find(item => (item.id == ID))
             const response = await axios.get(
                 fileContent.file,
                 { responseType: 'blob' }
@@ -127,7 +127,7 @@ function MyProductsLists() {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = fileContent.title+"." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -148,7 +148,7 @@ function MyProductsLists() {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = fileContent.title+"." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -178,7 +178,7 @@ function MyProductsLists() {
             title: 'Nomi',
             dataIndex: 'title',
             key: 'age',
-            width:300,
+            width: 300,
             render: (title) => (
                 <span className="truncate whitespace-nowrap"> {title}</span>
 
@@ -251,7 +251,7 @@ function MyProductsLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={()=>handleButtonClick(id)}></i></a>
+                <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
             </div>
         },
 
@@ -299,7 +299,10 @@ function MyProductsLists() {
                                             {
                                                 dataCategory?.length > 0 && (
                                                     dataCategory?.map(item => (
-                                                        <option key={item.id} value={item.id}>{item.name} </option>
+                                                        item.is_child===true ?
+                                                        <option key={item.id} value={item.id}>{ item.name} </option> 
+                                                        :
+                                                        <></>
                                                     ))
                                                 )
                                             }
@@ -357,7 +360,7 @@ function MyProductsLists() {
                                         <p className="card-text"><strong>Qisqa tasvir:</strong> {View?.short_description}</p>
                                         <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description}</p>
                                         <div className='d-flex justify-content-end py-3'>
-                                            <a  className='btn btn-outline-warning w-25 py-2  fs-5' onClick={()=>handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File ochish</a>
+                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 
                                         </div>
                                     </div>
