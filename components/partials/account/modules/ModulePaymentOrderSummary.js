@@ -14,7 +14,7 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
             getProducts(ecomerce.cartItems, 'cart');
         }
     }, [ecomerce]);
-    let amount = cookies?.cart && calculateAmount(cookies?.cart)
+    let amount = cookies?.cart && calculateAmount(cookies?.cart);
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -37,14 +37,27 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
     // view
     let listItemsView, shippingView, totalView;
     if (cookies?.cart && cookies?.cart?.length > 0) {
-        
         listItemsView = cookies?.cart?.map((item, i) => (
             <Link href="/" key={item.id}>
                 <a>
                     <strong>
-                      {i+1}.  {item.title}
+                        {i + 1}. {item.title}
                     </strong>
-                    <small>{addPeriodToThousands(item.price)} so'm </small>
+                    <small>
+                        {item.price === item.discount_price ? (
+                           <p>{ addPeriodToThousands(item.price)} so'm</p>
+                        ) : (
+                            <>
+                                <del>
+                                    {addPeriodToThousands(item.price)} so'm
+                                </del>
+                                <p>
+                                    {addPeriodToThousands(item.discount_price)}{' '}
+                                    so'm
+                                </p>
+                            </>
+                        )}
+                    </small>
                 </a>
             </Link>
         ));
@@ -63,7 +76,7 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
         totalView = (
             <figure className="ps-block__total">
                 <h3>
-                Umumiy hisob: 
+                    Umumiy hisob:
                     <strong>{hisob}.00</strong>
                 </h3>
             </figure>
@@ -72,7 +85,7 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
         totalView = (
             <figure className="ps-block__total">
                 <h3>
-                    Umumiy hisob: 
+                    Umumiy hisob:
                     <strong>{hisob}.00 so'm </strong>
                 </h3>
             </figure>

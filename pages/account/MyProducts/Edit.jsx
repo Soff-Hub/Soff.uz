@@ -107,8 +107,8 @@ const PostsMyProducts = () => {
         if (Shortdata) {
             formData.append('short_description', Shortdata);
         }
-        if (Fulldata?.props?.children) {
-            formData.append('description', Fulldata?.props?.children);
+        if (Fulldata) {
+            formData.append('description', Fulldata);
         }
         if (category_id) {
             formData.append('category', category_id);
@@ -273,7 +273,7 @@ const PostsMyProducts = () => {
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
-                                    setFullData(parse(data));
+                                    setFullData(data);
                                 }}
                                 editorLoaded={editorLoaded}
                                 value={products?.description}
@@ -374,7 +374,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Fulldata?.props?.children ? Fulldata?.props?.children : products?.description
+                                                Fulldata ? parse(Fulldata) : products?.description
                                             }
 
                                         </span>

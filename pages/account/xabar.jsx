@@ -85,8 +85,7 @@ const Xabar = (e) => {
     };
 
     useEffect(() => {
-        const tek = localStorage.getItem('via_')
-        setCoutdown(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60)
+       
         if (countdown > 0) {
             setReport(true);
         } else {
@@ -98,16 +97,25 @@ const Xabar = (e) => {
         if (localStorage.getItem('data')) {
             setNomer(JSON.parse(localStorage.getItem('data')).phone_or_email);
         }
-
+        const tek = localStorage.getItem('via_')
+        setCoutdown(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60)
+        
         const interval = setInterval(() => {
             if (countdown > 0) {
                 setCoutdown((prevCountdown) => prevCountdown - 1);
             }
         }, 1000);
+        
+
 
         return () => {
             clearInterval(interval);
         };
+
+
+         
+        
+
     }, [tokenn, countdown]);
 
     return (
