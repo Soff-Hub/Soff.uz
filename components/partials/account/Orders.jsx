@@ -106,6 +106,7 @@ function OrdersLists() {
             title: 'Buyurtma nomi',
             dataIndex: 'title',
             key: 'address',
+            width:350,
         },
         {
             title: 'Holat',

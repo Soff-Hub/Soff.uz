@@ -22,7 +22,7 @@ class PatchRepository {
         return reponse;
     }
     async PatchUsers(data, id, token) {
-        const endPoint = `admin/customer-list/${id}/`;
+        const endPoint = `admin/customer-update/${id}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'PATCH',
@@ -132,7 +132,6 @@ class PatchRepository {
             headers: {
                 'Authorization' : `Bearer ${token}`
             },
-            data:data
         })
 
 

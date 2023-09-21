@@ -124,6 +124,20 @@ const PostsProductsEdit = () => {
             modal.update
         }
     }
+    const dataStatus = [
+        {
+            id: 1,
+            status : "moderation"
+        },
+        {
+            id: 2,
+            status : "approved"
+        },
+        {
+            id: 3,
+            status : "cancelled"
+        }
+    ]
 
     return user?.role === 'admin' ? (
         <PageContainer
@@ -154,19 +168,12 @@ const PostsProductsEdit = () => {
                             <label>Holatlar</label>
                             <select className='form-select fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
                                 {
-                                    products.status==="moderation" ?
-                                    <option className='fs-3' selected value="moderation">Moderatsiya</option>
-                                    :
-                                    <option className='fs-3' value="moderation">Moderatsiya</option> ||
-                                    products.status==="approved" ?
-                                    <option className='fs-3' selected value="approved">Tasdiqlangan</option>
-                                    :
-                                    <option className='fs-3' value="approved">Tasdiqlangan</option> ||
-                                    products.status==="approved" ?
-                                    <option className='fs-3' selected value="cancelled">Bekor qilingan</option>
-                                    :
-                                    <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                    
+                            dataStatus?.map(item=>(
+                                products.status===item.status ?
+                                <option selected value={item.status} >{item.status==="moderation" ?  "Moderatsiya"  : item.status==="cancelled" ? "Bekor qilingan" : item.status==="approved" ? "Tasdiqlangan" : ""}</option>
+                                :
+                                <option value={item.status}>{item.status==="moderation" ?  "Moderatsiya"  : item.status==="cancelled" ? "Bekor qilingan" : item.status==="approved" ? "Tasdiqlangan" : ""}</option>
+                            ))
                     
                                 }
                             </select>
@@ -193,6 +200,7 @@ const PostsProductsEdit = () => {
                                 }>
                                 {dataCategory?.length > 0 &&
                                     dataCategory.map((item) => (
+                                        
                                         products?.category === item.name ?
                                             <option selected value={item.id}>{item.name}</option>
                                             :
@@ -203,7 +211,7 @@ const PostsProductsEdit = () => {
 
                         <div className=" rounded-3 col-md-10">
                             <span>Qisqa tavsif</span>
-                            <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
+                            <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12 form-control' name='textarea' rows={"4"}></textarea>
                         </div>
                         <div className="rounded-3 col-md-10">
                             <span>Hujjat haqida to'liq ma'umot</span>

@@ -220,7 +220,10 @@ function CategoryLists() {
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
                      <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
-                        Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
+                     {
+                         file  ?  "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
+                             <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
+                         } 
                         <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
                     {
@@ -255,7 +258,10 @@ function CategoryLists() {
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>
                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
-                        Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
+                         {
+                            file ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
+                             <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
+                         } 
                         <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
                     <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
@@ -273,14 +279,12 @@ function CategoryLists() {
                         placeholder="Belgi"
                         className="form-control rounded-3"
                         name='icon'
-                        required
                     />
                     <input
                         type='text'
                         placeholder="Nomi"
                         className="form-control rounded-3"
                         name='name'
-                        required
                     />
                 </ModalDeletePostEdit>
             </div>

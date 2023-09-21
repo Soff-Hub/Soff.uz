@@ -42,7 +42,7 @@ const CreditCard = () => {
   }
 
   async function handleClickCardPosts(){
-    const ItemsData= await PostsRepository.CardPostsCredit({"credit_card":JSON.parse(numberCardVal)},user?.access );
+    const ItemsData= await PostsRepository.CardPostsCredit({"credit_card":numberCardVal},user?.access );
     if (ItemsData.status === 201) {
       const modal = Modal.success({
           centered: true,

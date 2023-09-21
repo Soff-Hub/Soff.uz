@@ -360,7 +360,7 @@ const Posts = () => {
                             <span>Qisqa tavsif</span>
                             <textarea
                                 onChange={(e) => setShortData(e.target.value)}
-                                className=" rounded p-3 col-md-12"
+                                className=" rounded p-3 col-md-12 form-control"
                                 name="textarea"
                                 rows={'4'}></textarea>
                         </div>

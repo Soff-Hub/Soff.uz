@@ -61,7 +61,10 @@ function ProductsLists() {
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
-            item.title.toLowerCase().includes(text.toLowerCase())
+            item.title.toLowerCase().includes(text.toLowerCase()) ||
+            item.seller?.last_name.toLowerCase().includes(text.toLowerCase()) ||
+            item.seller?.first_name.toLowerCase().includes(text.toLowerCase()) ||
+            item.seller?.phone?.includes(text) 
         ))
         setData(filterSearch)
     }
@@ -155,7 +158,7 @@ function ProductsLists() {
             render: (seller) => (
         <div className='d-flex flex-column'>
              <span> {seller?.first_name } {seller.last_name}</span>
-                <span><i className="fa-solid fa-child-reaching text-primary-emphasis"></i> {seller?.phone}</span>
+                <span> {seller?.phone}</span>
         </div>
             ),
         },
