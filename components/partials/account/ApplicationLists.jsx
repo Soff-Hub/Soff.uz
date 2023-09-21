@@ -2,7 +2,7 @@ import React, { Component, useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Button, Table } from 'antd';
+import { Button, Modal, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -63,8 +63,15 @@ function Notifications() {
     async function getItemsSellerPost() {
         const data = { "credit_card": JSON.parse(dataCard), "amount": dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
+        const modal = Modal.error({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: Items.msg,
+        });
+        modal.update
         getItemsSeller(1, dataCat);
         setProfile(null)
+
     }
 
     async function handleClickAriza() {
@@ -248,6 +255,7 @@ function Notifications() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__header mb-4 mx-3 mt-4">
+                                   
                                     <h3>Ariza bo'limi</h3>
                                 </div>
                                 <div className="ps-section__content">
@@ -255,6 +263,7 @@ function Notifications() {
                                         user?.role === "seller" ?
                                             (<>
                                                 <form className='row row-gap-3 gap-4 mx-auto'>
+                                                <label className='text-danger h3' >Minimal summa 10 000 so'm!</label>
                                                         <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     <select className='form-select rounded-3 col-md-5 fs-3  ' style={{height:"50px"}} onChange={(e) => setDataCard(e.target.value)} >
                                                         <option className='fs-3' value='' selected disabled >Kartalaringiz</option>

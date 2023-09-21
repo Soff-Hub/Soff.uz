@@ -153,7 +153,10 @@ function ProductsLists() {
             dataIndex: 'seller',
             key: 'address',
             render: (seller) => (
+        <div className='d-flex flex-column'>
+             <span> {seller?.first_name } {seller.last_name}</span>
                 <span><i className="fa-solid fa-child-reaching text-primary-emphasis"></i> {seller?.phone}</span>
+        </div>
             ),
         },
         {
@@ -221,7 +224,10 @@ function ProductsLists() {
                                             {
                                                 dataVal.length > 0 && (
                                                     dataVal.map(item => (
-                                                        <option key={item.id} value={item.id}>{item.name} </option>
+                                                        item.is_child === true ?
+                                                            <option key={item.id} value={item.id}>{item.name} </option>
+                                                            :
+                                                            <></>
                                                     ))
                                                 )
                                             }
