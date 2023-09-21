@@ -27,6 +27,7 @@ function MyProductsLists() {
     const [dataValCat, setDataCat] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
+    const [selectValStatus, setSelectValStatus] = useState("");
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
@@ -35,16 +36,16 @@ function MyProductsLists() {
     const { accountLinks, user, products } = useSelector(state => state.auth)
 
 
-    async function GetItemsProducts(page, category, tagName, dataFormat) {
+    async function GetItemsProducts(page, category, tagName, dataFormat,status) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, user?.access);
+        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat,status, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                GetItemsProducts(page + 1, category, tagName, dataFormat)
+                GetItemsProducts(page + 1, category, tagName, dataFormat,status)
             }
         }
     }
@@ -80,7 +81,7 @@ function MyProductsLists() {
             content: `Siz malumotlarni o'chirdingiz`,
         });
         modal.update
-        GetItemsProducts(1, dataValCat, tagName, dataFormat)
+        GetItemsProducts(1, dataValCat, tagName, dataFormat,selectValStatus)
 
     }
     function handleClickIdEdit(productsItems) {
@@ -91,12 +92,12 @@ function MyProductsLists() {
         GetItemsTag()
     }, [])
     useEffect(() => {
-        GetItemsProducts(1, dataValCat, tagName, dataFormat)
-    }, [dataValCat, tagName, dataFormat])
+        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
+    }, [dataValCat, tagName, dataFormat, selectValStatus])
 
     async function handleItemsEditProductsPosts() {
         const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
-        GetItemsProducts(1, dataValCat, tagName, dataFormat)
+        GetItemsProducts(1, dataValCat, tagName, dataFormat, status)
     }
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -293,7 +294,7 @@ function MyProductsLists() {
                                             <></>
                                     }
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <select className='form-select rounded-3 col-md-4 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                        <select className='form-select rounded-3 col-md-5 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''>Kategoriyalar</option>
 
                                             {
@@ -304,7 +305,7 @@ function MyProductsLists() {
                                                 )
                                             }
                                         </select>
-                                        <select required className='form-select col-md-3 rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                                        <select required className='form-select col-md-5 rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
                                             <option value="">Teglar</option>
                                             {
                                                 tagItems?.length > 0 && (
@@ -314,7 +315,13 @@ function MyProductsLists() {
                                                 )
                                             }
                                         </select>
-                                        <RangePicker className='col-md-4 py-3   rounded-3' onChange={(e) => setDate(e)} />
+                                    <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
+                                            <option className='fs-3' selected value="">Barcha holatlar</option>
+                                            <option className='fs-3' value="moderation">Moderatsiya</option>
+                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                        </select>
+                                        <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
                                     </div>
                                     {
                                         user?.role === "seller" ?
