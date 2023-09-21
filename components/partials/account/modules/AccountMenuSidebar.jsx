@@ -59,7 +59,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                 user?.role === "seller"
                     ?
                     <div className='pb-3'>
-                            <Button className='w-100  rounded-3 px-5 text-truncate ' ><strong className={`fs-3 text-${profile?.is_payment === false ? "danger" : "success"}`} > Hisobingizda: {addPeriodToThousands(profile?.wallet)} so'm</strong></Button>
+                            <Button className='w-100  rounded-3 px-5 text-truncate ' ><strong className={`fs-3 text-${profile?.is_payment === false ? "danger" : "success"}`} > Balans: {addPeriodToThousands(profile?.wallet)} so'm</strong></Button>
                     </div>
                     :
                     <></>

@@ -45,7 +45,6 @@ class Register extends Component {
             }
         }
     };
-    
 
     handleChekked = () => {
         this.setState({ chekked: !this.state.chekked });
@@ -57,7 +56,7 @@ class Register extends Component {
             this.passwordInput.focus();
         }
     };
-    
+
     handleEnterKeyPress2 = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -120,9 +119,13 @@ class Register extends Component {
                                         <Input
                                             className="form-control"
                                             type="password"
-                                            placeholder="Parol..."
-                                            ref={(input) => (this.passwordInput = input)}
-                                            onKeyDown={this.handleEnterKeyPress2}
+                                            placeholder="Parol"
+                                            ref={(input) =>
+                                                (this.passwordInput = input)
+                                            }
+                                            onKeyDown={
+                                                this.handleEnterKeyPress2
+                                            }
                                         />
                                     </Form.Item>
                                 </div>
@@ -142,7 +145,9 @@ class Register extends Component {
                                             className="form-control"
                                             type="password"
                                             placeholder="Parolni takrorlash"
-                                            ref={(input) => (this.password2Input = input)}
+                                            ref={(input) =>
+                                                (this.password2Input = input)
+                                            }
                                         />
                                     </Form.Item>
 
@@ -200,9 +205,9 @@ class Register extends Component {
                         dataBsTarget="exampleModalToggleEditCategory2"
                         formID={'modal-tanishuv'}>
                         <div className="container">
-                                Tanishuv shartlari...
-                                <br /> <br />
-                                Biz bilan o'z biznesingizni boshlang!!!
+                            Tanishuv shartlari...
+                            <br /> <br />
+                            Biz bilan o'z biznesingizni boshlang!!!
                         </div>
                     </ModalTanishuv>
                 </div>

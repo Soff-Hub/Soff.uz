@@ -23,7 +23,7 @@ function Notifications() {
     const [profile, setProfile] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
 
-
+    console.log(dataCardModal);
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
         setProfile(ItemsData)
@@ -113,7 +113,7 @@ function Notifications() {
         getItemsSellerCardList()
     }, [1, dataCat])
 
-  
+
     const columns = [
         {
             title: 'Summa',
@@ -242,6 +242,20 @@ function Notifications() {
             )
         },
     ];
+    const dataStatus = [
+        {
+            id: 1,
+            status : "moderation"
+        },
+        {
+            id: 2,
+            status : "approved"
+        },
+        {
+            id: 3,
+            status : "cancelled"
+        }
+    ]
     return (
         <section className="ps-my-account ps-page--account pb-5">
             <div className="container">
@@ -255,7 +269,7 @@ function Notifications() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__header mb-4 mx-3 mt-4">
-                                   
+
                                     <h3>Ariza bo'limi</h3>
                                 </div>
                                 <div className="ps-section__content">
@@ -263,9 +277,9 @@ function Notifications() {
                                         user?.role === "seller" ?
                                             (<>
                                                 <form className='row row-gap-3 gap-4 mx-auto'>
-                                                <label className='text-danger h3' >Minimal summa 10 000 so'm!</label>
-                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
-                                                    <select className='form-select rounded-3 col-md-5 fs-3  ' style={{height:"50px"}} onChange={(e) => setDataCard(e.target.value)} >
+                                                    <label className='text-danger h3' >Minimal summa 10 000 so'm!</label>
+                                                    <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                    <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
                                                         <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
 
                                                         {
@@ -275,26 +289,26 @@ function Notifications() {
                                                                 ))
                                                             )
                                                         }
-                                                        
-                                                    </select>
-                                                        {
-                                                            profile?.is_application === true && profile?.is_payment === true ?
-                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
-                                                                    height: "50px",
-                                                                }}><span className='fs-4'>Yuborish</span></Button>
-                                                                :
-                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
-                                                                    height: "50px",
-                                                                }}>
 
-                                                                    <span className='fs-4'>Yuborish</span>
-                                                                </Button>
-                                                        }
+                                                    </select>
+                                                    {
+                                                        profile?.is_application === true && profile?.is_payment === true ?
+                                                            <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
+                                                                height: "50px",
+                                                            }}><span className='fs-4'>Yuborish</span></Button>
+                                                            :
+                                                            <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
+                                                                height: "50px",
+                                                            }}>
+
+                                                                <span className='fs-4'>Yuborish</span>
+                                                            </Button>
+                                                    }
 
                                                 </form>
-                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>  
-                                                    <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
-                                                
+                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>
+                                                <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
+
                                             </>
                                             ) :
                                             <></>
@@ -312,7 +326,7 @@ function Notifications() {
                                                     </select>
                                                 </div>
                                                 <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin} />
-                                             
+
                                             </>) :
                                             <></>
 
@@ -323,17 +337,26 @@ function Notifications() {
                     </div>
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
-                    <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
-                        Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i>
-                        <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
+                    <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                        {
+                            dataCardModal?.receipt ? dataCardModal?.receipt :
+                                <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
+                        }
+
+                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
                     </label>
-                    <select  className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
-                        <option className='fs-3' selected disabled value="approved">Holatni tanlang</option>
-                        <option className='fs-3' value="approved">Tasdiqlangan </option>
-                        <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                        <option className='fs-3' value="moderation">Moderatsiya</option>
+                    <select className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
+                        {
+                            dataStatus?.map(item => (
+                                dataCardModal?.status === item.status ?
+                                    <option selected value={item.status} >{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
+                                    :
+                                    <option value={item.status}>{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
+                            ))
+
+                        }
                     </select>
-                    <input type="text"  className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
+                    <input type="text" defaultValue={dataCardModal?.description} className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
                 </ModalDeletePostEdit>
             </div>
         </section>

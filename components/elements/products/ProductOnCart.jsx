@@ -34,7 +34,19 @@ const ProductOnCart = ({ product, children }) => {
                 {title(product)}
                 <p>
                     <small>
-                         {addPeriodToThousands(product.price)} so'm
+                    {product.price === product.discount_price ? (
+                        <p>{addPeriodToThousands(product.price)} so'm</p>
+                    ) : (
+                        <>
+                            <del>
+                                {addPeriodToThousands(product.price)} so'm
+                            </del>
+                            <p>
+                                {addPeriodToThousands(product.discount_price)}{' '}
+                                so'm
+                            </p>
+                        </>
+                    )}
                     </small>
                 </p>{' '}
                 {children}

@@ -15,15 +15,14 @@ const ProductDetailFullwidth = ({ product }) => {
     const [tag, setTag] = useState([]);
 
     const searchTag = (e) => {
-        console.log('onclick',e);
+        console.log('onclick', e);
 
-        Router.push(`/search?keyword=${e}`)
-    }
+        Router.push(`/search?keyword=${e}`);
+    };
 
     useEffect(() => {
         setTag(product?.tag);
     }, []);
-
     return (
         <div className="ps-product--detail ps-product--fullwidth">
             <div className="ps-product__header">
@@ -38,8 +37,14 @@ const ProductDetailFullwidth = ({ product }) => {
                                 <div
                                     key={i}
                                     className="mx-4 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-4 col-5">
-                                    <Link href="#" as='#' >
-                                        <a onClick={() => searchTag(item?.name)}> # {item.name} </a>
+                                    <Link href="#" as="#">
+                                        <a
+                                            onClick={() =>
+                                                searchTag(item?.name)
+                                            }>
+                                            {' '}
+                                            # {item.name}{' '}
+                                        </a>
                                     </Link>
                                 </div>
                             ))}

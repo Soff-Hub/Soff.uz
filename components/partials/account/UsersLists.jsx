@@ -26,7 +26,7 @@ function OrdersLists() {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getUsersLists(page,status, user?.access);
+        const ItemsData = await GetRepository.getUsersLists(page, status, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
@@ -38,7 +38,9 @@ function OrdersLists() {
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
-            item.first_name.toLowerCase().includes(text.toLowerCase())
+            item.first_name.toLowerCase().includes(text.toLowerCase()) ||
+            item.data?.email?.toLowerCase().includes(text.toLowerCase()) ||
+            item.data?.phone.toLowerCase().includes(text.toLowerCase())
         ))
         setData(filterSearch)
     }
@@ -49,7 +51,7 @@ function OrdersLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsUsers(1, selectValStatus )
+        GetItemsUsers(1, selectValStatus)
     }
     async function handleItemsPost() {
         const postsItems = await PostsRepository.PostsUsers(selectVal, user?.access);
@@ -58,7 +60,7 @@ function OrdersLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  yangi malumot qo'shdingiz`,
         });
-        GetItemsUsers(1,selectValStatus)
+        GetItemsUsers(1, selectValStatus)
     }
     async function handleItemsEdit() {
         const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
@@ -67,7 +69,7 @@ function OrdersLists() {
             title: 'Muvaffaqqiyatli!',
             content: "Siz  malumotlarni o'zgartirdingiz ",
         });
-        GetItemsUsers(1,selectValStatus )
+        GetItemsUsers(1, selectValStatus)
     }
 
     useEffect(() => {
@@ -88,7 +90,10 @@ function OrdersLists() {
             dataIndex: 'data',
             key: 'address',
             render: (data) => (
-                <span className="truncate whitespace-nowrap"> {data.phone || data.email}</span>
+            <div className='d-flex flex-column'>
+                <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                <span className="truncate whitespace-nowrap"> {data.email}</span>
+            </div>
 
             ),
         },
@@ -129,8 +134,8 @@ function OrdersLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <select className='form-select fs-3 py-3 w-50 mb-4' onChange={(e)=>setSelectValStatus(e.target.value)}>
-                                        <option className='fs-3'  value="" >Barcha holat</option>
+                                    <select className='form-select fs-3 py-3 w-50 mb-4' onChange={(e) => setSelectValStatus(e.target.value)}>
+                                        <option className='fs-3' value="" >Barcha holat</option>
                                         <option className='fs-3' value="new">Faol emas</option>
                                         <option className='fs-3' value="code_verified">Faol</option>
                                     </select>
@@ -155,9 +160,19 @@ function OrdersLists() {
                         placeholder="Telefon raqam"
                         className="form-control rounded-3"
                         name='phone'
-                        defaultValue={deleteIdEdit?.phone}
+                        defaultValue={deleteIdEdit?.data?.phone}
                         onChange={(e) => setSelectVal((prev) => ({ ...prev, phone: e.target.value }))}
+                        maxLength={13}
                     />
+                    <input
+                        type='email'
+                        placeholder="Elektron pochta"
+                        className="form-control rounded-3"
+                        name='email'
+                        defaultValue={deleteIdEdit?.data?.email}
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, email: e.target.value }))}
+                    />
+
                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
                         <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
                         <option className='fs-3' value="new">Faol emas</option>
@@ -182,7 +197,16 @@ function OrdersLists() {
                         defaultValue="+998"
                         required
                         onChange={(e) => setSelectVal((prev) => ({ ...prev, phone: e.target.value }))}
+                        maxLength={13}
 
+                    />
+                    <input
+                        type='email'
+                        placeholder="Elektron pochta"
+                        className="form-control rounded-3"
+                        name='email'
+                        defaultValue={deleteIdEdit?.data?.email}
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, email: e.target.value }))}
                     />
                     <select required className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
                         <option className='fs-3' selected disabled value="new">Holatni tanlang</option>

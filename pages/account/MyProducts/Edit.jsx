@@ -107,8 +107,8 @@ const PostsMyProducts = () => {
         if (Shortdata) {
             formData.append('short_description', Shortdata);
         }
-        if (Fulldata?.props?.children) {
-            formData.append('description', Fulldata?.props?.children);
+        if (Fulldata) {
+            formData.append('description', Fulldata);
         }
         if (category_id) {
             formData.append('category', category_id);
@@ -176,6 +176,7 @@ const PostsMyProducts = () => {
                                 }
                                 <input type="file" onChange={(e) => LiveImage(e)} />
                             </label>
+                            <a className='text-primary' href={products.poster_url} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
                         </div>
                         <div className='col-md-5'>
                             <label>Hujjat yuklab olish uchun (file)</label>
@@ -194,6 +195,7 @@ const PostsMyProducts = () => {
                                     accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                                 />
                             </label>
+                                <a className='text-primary' href={products.file} target="_blank" rel="noopener noreferrer">Link (file)</a>
                         </div>
                         <div className="rounded-3 col-md-10 px-4  m-0 d-flex flex-column">
                             <label>Hujjat teglari</label>
@@ -266,14 +268,14 @@ const PostsMyProducts = () => {
 
                         <div className=" rounded-3 col-md-10">
                             <span>Qisqa tavsif</span>
-                            <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12' name='textarea' rows={"4"}></textarea>
+                            <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12 form-control' name='textarea' rows={"4"}></textarea>
                         </div>
                         <div className=" p-0 px-4 rounded-3 col-md-10">
                             <span>Hujjat haqida to'liq ma'umot</span>
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
-                                    setFullData(parse(data));
+                                    setFullData(data);
                                 }}
                                 editorLoaded={editorLoaded}
                                 value={products?.description}
@@ -374,7 +376,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Fulldata?.props?.children ? Fulldata?.props?.children : products?.description
+                                                Fulldata ? parse(Fulldata) : products?.description
                                             }
 
                                         </span>

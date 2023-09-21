@@ -13,7 +13,23 @@ const Wishlist = ({ ecomerce }) => {
 
     const state = useSelector((state) => state);
 
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
 
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
@@ -71,7 +87,21 @@ const Wishlist = ({ ecomerce }) => {
                                     <ProductCart product={product} />
                                 </td>
                                 <td>
-                                   <span> {product.price} so'm</span>
+                                   <span> 
+                                      {product.price === product.discount_price ? (
+                        addPeriodToThousands(product.price)
+                    ) : (
+                        <>
+                            <del>
+                                {addPeriodToThousands(product.price)} so'm
+                            </del>
+                            <p>
+                                {addPeriodToThousands(product.discount_price)}{' '}
+                                so'm
+                            </p>
+                        </>
+                    )}
+                                    </span>
 
                                 </td>
                                 <td style={{margin: "0 auto"}} >
