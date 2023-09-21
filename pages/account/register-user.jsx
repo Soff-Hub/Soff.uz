@@ -4,7 +4,6 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import Register from '~/components/partials/account/Register';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 
 const RegisterPage = () => {
     const breadCrumb = [
@@ -13,11 +12,11 @@ const RegisterPage = () => {
             url: '/',
         },
         {
-            text: 'Ro\'yxatdan o\'tish',
+            text: "Ro'yxatdan o'tish",
         },
     ];
 
-    const userEndPoint = 'auth/register/'
+    const userEndPoint = 'auth/register/';
     return (
         <>
             <PageContainer footer={<FooterDefault />} title="Register">
@@ -25,7 +24,6 @@ const RegisterPage = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Register url={userEndPoint} />
                 </div>
-                {/* <Newletters layout="container" /> */}
             </PageContainer>
         </>
     );

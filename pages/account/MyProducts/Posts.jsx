@@ -176,7 +176,7 @@ const Posts = () => {
         formData.append('discount', discount || 0);
         formData.append('price', narx);
         formData.append('short_description', Shortdata);
-        formData.append('description', Fulldata?.props?.children);
+        formData.append('description', Fulldata);
         formData.append('category', category_id);
         for (let i = 0; i < tagSearchResult.length; i++) {
             formData.append('tag', tagSearchResult[i]);
@@ -253,7 +253,7 @@ const Posts = () => {
     useEffect(() => {
         GetItemsCategoryLists();
     }, [user?.access]);
-
+console.log('fulldata', Fulldata);
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -362,14 +362,14 @@ const Posts = () => {
                                 onChange={(e) => setShortData(e.target.value)}
                                 className=" rounded p-3 col-md-12 form-control"
                                 name="textarea"
-                                rows={'4'}></textarea>
+                                rows={'1'}></textarea>
                         </div>
                         <div className=" p-0 rounded-3 col-md-10">
                             <span>Hujjat haqida to'liq ma'umot</span>
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
-                                    setFullData(parse(data));
+                                    setFullData(data);
                                 }}
                                 editorLoaded={editorLoaded}
                             />
@@ -486,8 +486,8 @@ const Posts = () => {
                                     <p className="live-card-p">
                                         <strong> To'liq ma'lumot : </strong>{' '}
                                         <span style={{ maxWidth: '150px' }}>
-                                            {Fulldata?.props?.children
-                                                ? Fulldata?.props?.children
+                                            {Fulldata
+                                                ? parse(Fulldata)
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </p>

@@ -95,18 +95,36 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
         Price();
     }, [])
 
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+
     return (
         <aside className="widget widget_shop">
             <figure>
                 <h4 className="widget-title">Narx </h4>
                 <Slider
                     range
-                    // defaultValue={[min, 20000]}
+                    defaultValue={[min, 20000]}
                     max={20000}
                     onAfterChange={(e) => handleChangeRange(e)}
                 />
                 <p>
-                    Narx: {min} so'm - {max} so'm
+                    Narx: {addPeriodToThousands(min)} so'm - {addPeriodToThousands(max)} so'm
                 </p>
             </figure>
         </aside>

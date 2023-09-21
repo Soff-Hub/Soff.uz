@@ -35,7 +35,6 @@ const ModuleDetailShoppingActions = ({
     function handleBuynow(e) {
         e.preventDefault();
         if (state ) {
-            addItem(product, ecomerce.cartItems, 'cart');
                 dispatch(OneShopDoc(product))
                 Router.push('/account/checkout-one');
         } else {

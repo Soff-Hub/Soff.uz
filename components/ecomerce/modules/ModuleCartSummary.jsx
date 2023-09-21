@@ -22,7 +22,6 @@ const ModuleCartSummary = ({ source }) => {
         return formattedNumber;
     }
     const hisob = addPeriodToThousands(amount);
-
     // View
     let productItemsView;
     if (source && source.length > 0) {

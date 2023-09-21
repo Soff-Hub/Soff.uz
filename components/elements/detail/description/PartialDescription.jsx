@@ -1,22 +1,12 @@
 import React from 'react';
+var parse = require('html-react-parser');
 
-
-const PartialDescription = ({product}) => {
-    // console.log(product);
+const PartialDescription = ({ product }) => {
     return (
         <div className="ps-document">
-        <p>
-          {
-              product && product.description
-          }
-        </p>
-          {/* <img
-              className="mb-30"
-              src={product.file}
-              alt={product.name}
-          /> */}
-      </div>
-    )
-}
+            <p>{product?.description ? parse(product.description) : ''}</p>
+        </div>
+    );
+};
 
 export default PartialDescription;

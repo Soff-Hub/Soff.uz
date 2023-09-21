@@ -3,14 +3,10 @@ import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import ProductWidgets from '~/components/partials/product/ProductWidgets';
 import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
-import CustomerBought from '~/components/partials/product/CustomerBought';
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
-import HeaderProduct from '~/components/shared/headers/HeaderProduct';
 import HeaderDefault from '~/components/shared/headers/HeaderDefault';
 import PageContainer from '~/components/layouts/PageContainer';
-import Newletters from '~/components/partials/commons/Newletters';
 import HeaderMobileProduct from '~/components/shared/header-mobile/HeaderMobileProduct';
 
 import HeaderElectronic from '~/components/shared/headers/HeaderElectronic';
@@ -45,10 +41,10 @@ const ProductDefaultPage = () => {
             url: '/',
         },
         {
-
             text: product ? product.title : 'Loading...',
         },
     ];
+
     // Views
     let productView, headerView;
     if (!loading) {
@@ -56,7 +52,6 @@ const ProductDefaultPage = () => {
             productView = <ProductDetailFullwidth product={product} />;
             headerView = (
                 <>
-
                     <HeaderElectronic product={product} />
                     <HeaderMobileProduct />
                 </>
@@ -72,7 +67,7 @@ const ProductDefaultPage = () => {
     } else {
         productView = <SkeletonProductDetail />;
     }
-
+console.log('mahsulot detail', product);
     return (
         <PageContainer
             header={headerView}
@@ -82,22 +77,17 @@ const ProductDefaultPage = () => {
                 <div className="ps-container">
                     <div className="ps-page__container">
                         <div className="ps-page__left">{productView}</div>
-                        <div className="ps-page__right">
-
-                            {/* <ProductWidgets /> */}
-                        </div>
                     </div>
 
-                    {/* <CustomerBought
-                        layout="fullwidth"
-                        collectionSlug="deal-of-the-day"
-                    /> */}
-                    {
-                        product?.similar?.length > 0
-                        ?
-                    <RelatedProduct data={product?.similar} pid={pid} collectionSlug="shop-recommend-items" />
-                    : ''
-                    }
+                    {product?.similar?.length > 0 ? (
+                        <RelatedProduct
+                            data={product?.similar}
+                            pid={pid}
+                            collectionSlug="shop-recommend-items"
+                        />
+                    ) : (
+                        ''
+                    )}
                 </div>
             </div>
             {/* <Newletters /> */}

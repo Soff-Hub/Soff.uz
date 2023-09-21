@@ -99,8 +99,8 @@ const PostsProductsEdit = () => {
         if (dataCatStatus) {
             Object.assign(data, { "status": dataCatStatus })
         }
-        if (Fulldata?.props) {
-            Object.assign(data, { "description": Fulldata?.props?.children })
+        if (Fulldata) {
+            Object.assign(data, { "description": Fulldata })
         }
         if (Shortdata) {
             Object.assign(data, { "short_description": Shortdata })
@@ -218,7 +218,7 @@ const PostsProductsEdit = () => {
                             <CKeditor
                                 name="description"
                                 onChange={(data) => {
-                                    setFullData(parse(data));
+                                    setFullData(data);
                                 }}
                                 editorLoaded={editorLoaded}
                                 value={products?.description}
@@ -299,7 +299,7 @@ const PostsProductsEdit = () => {
                                         <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Fulldata?.props?.children ? Fulldata?.props?.children : products?.description
+                                                Fulldata ? parse(Fulldata) : products?.description
                                             }
 
                                         </span>

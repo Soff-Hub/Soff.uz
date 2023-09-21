@@ -34,7 +34,7 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
 
         return formattedNumber;
     }
-    const hisob = addPeriodToThousands(state.price);
+    const hisob = addPeriodToThousands(state.discount_price);
 
     // view
     let listItemsView, shippingView, totalView;
@@ -54,14 +54,6 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
         listItemsView = <p>Hujjat yo'q.</p>;
     }
     if (shipping === true) {
-        // shippingView = (
-        //     <figure>
-        //         <figcaption>
-        //             <strong>Shipping Fee</strong>
-        //             <small>$20.00</small>
-        //         </figcaption>
-        //     </figure>
-        // );
         totalView = (
             <figure className="ps-block__total">
                 <h3>

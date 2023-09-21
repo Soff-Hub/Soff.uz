@@ -408,7 +408,7 @@ const ShopItems = ({
             </div>
             <div className="ps-shopping__footer text-center">
               {
-                data?.length > 16 && 
+                data?.length >= 16 && 
                 <div className="ps-pagination">
                   
                 <Pagination

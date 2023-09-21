@@ -2,21 +2,20 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 
-import { isLoginning, login, loginGetData } from '../../../store/auth/action';
+import { isLoginning, login } from '../../../store/auth/action';
 
-import { Form, Input, notification, Modal } from 'antd';
+import { Form, Input, notification } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
-// import Modal from 'antd/lib/modal/Modal';
-
+import useSelection from 'antd/es/table/hooks/useSelection';
 
 class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
             report: true,
-            value: ''
+            value: '',
         };
     }
     modalSuccess = (type) => {
@@ -25,13 +24,13 @@ class Login extends Component {
             description: 'Siz muvaffaqqiyatli kirdingiz!',
         });
     };
-
+    
     static getDerivedStateFromProps(props) {
         if (props.isLoggedIn === true) {
         }
         return false;
     }
-
+    
     handleFeatureWillUpdate(e) {
         e.preventDefault();
         notification.open({
@@ -40,14 +39,14 @@ class Login extends Component {
             duration: 500,
         });
     }
-
+    
     defaultRoutePage = async () => {
         await this.props.dispatch(isLoginning());
     };
 
     handleLoginSubmit = async (e) => {
         const { loginUser } = useAuth();
-
+        
         const user = await loginUser(e);
         if (user) {
             console.log(user);
@@ -55,7 +54,7 @@ class Login extends Component {
                 notification.open({
                     message: `${user?.data?.msg}`,
                     duration: 500,
-                    type:'error'
+                    type: 'error',
                 });
             } else {
                 this.setState({ report: !this.state.report });
@@ -65,7 +64,7 @@ class Login extends Component {
                     type: 'success',
                 });
                 this.props.dispatch(login({ user: user.data, data: e }));
-
+                
                 Router.push('/');
             }
         }
@@ -73,18 +72,20 @@ class Login extends Component {
 
     componentDidMount() {
         this.defaultRoutePage();
-        this.setState({value: JSON.parse(localStorage.getItem('data'))?.phone_or_email})
-
+        this.setState({
+            value: JSON.parse(localStorage.getItem('data'))?.phone_or_email,
+        });
     }
-
+    
     handleEnterKeyPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
             this.passwordInput.focus();
         }
     };
-
+    
     render() {
+
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -98,7 +99,7 @@ class Login extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/account/register">
+                                <Link href="/account/foydalanuvchi">
                                     <a>Ro'yxatdan o'tish</a>
                                 </Link>
                             </li>
@@ -112,12 +113,11 @@ class Login extends Component {
                                         rules={[
                                             {
                                                 required: true,
-                                                message: 'Telefon raqam yoki email',
+                                                message:
+                                                    'Telefon raqam yoki email',
                                             },
                                         ]}>
                                         <Input
-                                        // defaultValue={this.state.value}
-                                        // defaultValue ={JSON.parse(localStorage.getItem('data'))?.phone && ''}
                                             className="form-control"
                                             type="text"
                                             placeholder="Telefon raqam yoki email"
@@ -138,11 +138,13 @@ class Login extends Component {
                                             className="form-control"
                                             type="password"
                                             placeholder="Parol"
-                                            ref={(input) => (this.passwordInput = input)}
+                                            ref={(input) =>
+                                                (this.passwordInput = input)
+                                            }
                                         />
                                     </Form.Item>
                                 </div>
-                               
+
                                 <div className="form-group submit">
                                     {this.state.report ? (
                                         <button
@@ -162,11 +164,8 @@ class Login extends Component {
                                 <p
                                     style={{ paddingBottom: '15px' }}
                                     className="mb-4">
-                                    
                                     <Link href="/account/qayta-nomer-kiritish">
-                                        <a>
-                                        Parolni  unutdingizmi?
-                                        </a>
+                                        <a>Parolni unutdingizmi?</a>
                                     </Link>{' '}
                                 </p>
                             </div>
