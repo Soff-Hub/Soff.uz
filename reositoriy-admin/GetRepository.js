@@ -245,7 +245,7 @@ class GetRepository {
         return reponse;
     }
     async getUsersLists(page, status, token) {
-        const endPoint = `admin/customer-list/?page=${page}&status=${status}`;
+        const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

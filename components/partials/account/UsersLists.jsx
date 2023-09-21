@@ -49,7 +49,7 @@ function OrdersLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsUsers(1)
+        GetItemsUsers(1, selectValStatus )
     }
     async function handleItemsPost() {
         const postsItems = await PostsRepository.PostsUsers(selectVal, user?.access);
@@ -58,7 +58,7 @@ function OrdersLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  yangi malumot qo'shdingiz`,
         });
-        GetItemsUsers(1)
+        GetItemsUsers(1,selectValStatus)
     }
     async function handleItemsEdit() {
         const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
@@ -67,7 +67,7 @@ function OrdersLists() {
             title: 'Muvaffaqqiyatli!',
             content: "Siz  malumotlarni o'zgartirdingiz ",
         });
-        GetItemsUsers(1)
+        GetItemsUsers(1,selectValStatus )
     }
 
     useEffect(() => {
@@ -85,10 +85,10 @@ function OrdersLists() {
         },
         {
             title: 'Telefon raqam',
-            dataIndex: 'phone',
+            dataIndex: 'data',
             key: 'address',
-            render: (title) => (
-                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-phone-volume"></i> {title}</span>
+            render: (data) => (
+                <span className="truncate whitespace-nowrap"> {data.phone || data.email}</span>
 
             ),
         },
@@ -130,7 +130,7 @@ function OrdersLists() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <select className='form-select fs-3 py-3 w-50 mb-4' onChange={(e)=>setSelectValStatus(e.target.value)}>
-                                        <option className='fs-3' selected disabled value="" >Barcha holat</option>
+                                        <option className='fs-3'  value="" >Barcha holat</option>
                                         <option className='fs-3' value="new">Faol emas</option>
                                         <option className='fs-3' value="code_verified">Faol</option>
                                     </select>
