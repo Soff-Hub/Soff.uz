@@ -56,7 +56,11 @@ const ProductItems = ({ products, columns = 4 }) => {
         if (productItems && productItems.length > 0) {
             if (listView) {
                 const items = productItems.map((item) => (
-                    <div className={classes} key={item.id}>
+                    <div className={classes} key={item.id}  style={{
+                        display:'flex',
+                        justifyContent:'center',
+                        alignContent:'center'
+                    }} >
                         <Product product={item} />
                     </div>
                 ));

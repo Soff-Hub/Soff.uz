@@ -1,23 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
-import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import Router from 'next/router';
 import { BeatLoader } from 'react-spinners';
 
 const Xabar = (e) => {
-    // e.preventDefault();
     const tokenn = useSelector((state) => state.auth);
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true);
     const [loader, setLoader] = useState(false);
     const [countSekond, setCountSekond] = useState(true);
     const [firstSendCode, setFirstSendCode] = useState(true);
-    const tek = localStorage.getItem('via_')
-    const [countdown, setCoutdown] = useState(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60);
+    const [countdown, setCoutdown] = useState(null);
     const [kod, setKod] = useState(null);
 
 
@@ -89,6 +85,8 @@ const Xabar = (e) => {
     };
 
     useEffect(() => {
+        const tek = localStorage.getItem('via_')
+        setCoutdown(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60)
         if (countdown > 0) {
             setReport(true);
         } else {
@@ -118,7 +116,6 @@ const Xabar = (e) => {
                 <div className="container">
                     <Form
                         className="ps-form--account"
-                        // onFinish={(e) => handleSubmitKod(e)}
                     >
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">

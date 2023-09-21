@@ -38,7 +38,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
                 <a className="header__extra" href="#">
                     <i className="icon-bag2"></i>
                     <span>
-                        <i>{cookies ? cookies.cart?.length : 0}</i>
+                        <i>{cookies?.cart ? cookies?.cart?.length : 0}</i>
                     </span>
                 </a>
             </Link>

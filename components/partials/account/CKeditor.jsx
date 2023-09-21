@@ -5,10 +5,12 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
+           setTimeout(() => {
             editorRef.current = {
                 CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
                 ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
             };
+           }, 0)
         }
     }, []);
 

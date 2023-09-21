@@ -318,12 +318,16 @@ const ShopItems = ({
             const items =
                 newData?.length > 0 &&
                 newData?.map((item) => (
-                    <div className={classes} key={item.id}>
+                    <div className={classes} key={item.id}  style={{
+                        display:'flex',
+                        justifyContent:'center',
+                        alignContent:'center'
+                    }} >
                         <Product product={item} />
                     </div>
                 ));
             productItemsView = (
-                <div className="ps-shop-items">
+                <div className="ps-shop-items" >
                     <div className="row">{items}</div>
                 </div>
             );
@@ -359,7 +363,7 @@ const ShopItems = ({
               
                    <label className='category-search-label'>
                    <i class="fa-solid fa-magnifying-glass search-label"></i>
-                   <input type="text" placeholder='Hujjatingizni izlang...' onChange={(e) => detailSearch(e.target.value)} />
+                   <input className='ps-input' type="text" placeholder='Hujjatingizni izlang...' onChange={(e) => detailSearch(e.target.value)} />
                    </label>
               
                     <select
