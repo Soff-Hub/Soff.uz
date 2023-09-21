@@ -13,8 +13,7 @@ const Xabar = (e) => {
     const [loader, setLoader] = useState(false);
     const [countSekond, setCountSekond] = useState(true);
     const [firstSendCode, setFirstSendCode] = useState(true);
-    const tek = localStorage.getItem('via_')
-    const [countdown, setCoutdown] = useState(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60);
+    const [countdown, setCoutdown] = useState(null);
     const [kod, setKod] = useState(null);
 
 
@@ -86,6 +85,8 @@ const Xabar = (e) => {
     };
 
     useEffect(() => {
+        const tek = localStorage.getItem('via_')
+        setCoutdown(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60)
         if (countdown > 0) {
             setReport(true);
         } else {
