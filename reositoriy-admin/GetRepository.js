@@ -101,10 +101,10 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getMyProducts(page, category, tagItems, date, token) {
+    async getMyProducts(page, category, tagItems, date,status, token) {
         const endPoint = `product-list/?page=${page}&category=${
             category || ''
-        }${tagItems ? `&tag=${tagItems}` : ``}&start_date=${date || ''}`;
+        }${tagItems ? `&tag=${tagItems}` : ``}&start_date=${date || ''}&status=${status || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -244,8 +244,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getUsersLists(page, token) {
-        const endPoint = `admin/customer-list/?page=${page}`;
+    async getUsersLists(page, status, token) {
+        const endPoint = `admin/customer-list/?page=${page}&status=${status}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
