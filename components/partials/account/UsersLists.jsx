@@ -19,18 +19,19 @@ function OrdersLists() {
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [selectVal, setSelectVal] = useState({});
+    const [selectValStatus, setSelectValStatus] = useState("");
 
 
-    async function GetItemsUsers(page) {
+    async function GetItemsUsers(page, status) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getUsersLists(page, user?.access);
+        const ItemsData = await GetRepository.getUsersLists(page,status, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                GetItemsUsers(page + 1)
+                GetItemsUsers(page + 1, status)
             }
         }
     }
@@ -70,8 +71,8 @@ function OrdersLists() {
     }
 
     useEffect(() => {
-        GetItemsUsers(1)
-    }, [])
+        GetItemsUsers(1, selectValStatus)
+    }, [selectValStatus])
     const columns = [
         {
             title: 'Ism',
@@ -115,8 +116,8 @@ function OrdersLists() {
             <div className="container">
                 <div className="row gap-5 row-gap-3 mx-auto p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
                     <h3 className='col-md-4'>Xaridorlar</h3>
-                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor qo'shish </span></button>
+                    <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
+                    <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor qo'shish </span></button>
                 </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
@@ -128,7 +129,12 @@ function OrdersLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <Table dataSource={data} scroll={{x:740}} columns={columns} />
+                                    <select className='form-select fs-3 py-3 w-50 mb-4' onChange={(e)=>setSelectValStatus(e.target.value)}>
+                                        <option className='fs-3' selected disabled value="" >Barcha holat</option>
+                                        <option className='fs-3' value="new">Faol emas</option>
+                                        <option className='fs-3' value="code_verified">Faol</option>
+                                    </select>
+                                    <Table dataSource={data} scroll={{ x: 740 }} columns={columns} />
                                 </div>
                             </div>
                         </div>
