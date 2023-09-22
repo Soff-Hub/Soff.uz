@@ -3,11 +3,8 @@ import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDe
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
-import ModuleProductDetailSpecification from '~/components/elements/detail/modules/ModuleProductDetailSpecification';
-import ModuleProductDetailSharing from '~/components/elements/detail/modules/ModuleProductDetailSharing';
 import ModuleDetailActionsMobile from '~/components/elements/detail/modules/ModuleDetailActionsMobile';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
-import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
 import Router from 'next/router';
 
@@ -23,8 +20,7 @@ const ProductDetailFullwidth = ({ product }) => {
     }, []);
     return (
         <div className="ps-product--detail ps-product--fullwidth">
-          <div className="container">
-          <div className="ps-product__header d-flex">
+         <div className="ps-product__header ">
             <ThumbnailDefault product={product} />
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
@@ -55,7 +51,6 @@ const ProductDetailFullwidth = ({ product }) => {
                 </div>
             </div>
             <DefaultDescription product={product} />
-          </div>
         </div>
     );
 };
