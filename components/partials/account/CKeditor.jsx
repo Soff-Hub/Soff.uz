@@ -11,6 +11,7 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                 ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
             };
            }, 0)
+           
         }
     }, [editorRef.current]);
 
