@@ -30,7 +30,7 @@ class Register extends Component {
                 let message = '';
                 const modal = Modal.error({
                     centered: true,
-                    title: `${user?.data?.msg[0]}`,
+                    title: `${user?.data?.message[0]}`,
                     content: message,
                 });
                 modal.update;
