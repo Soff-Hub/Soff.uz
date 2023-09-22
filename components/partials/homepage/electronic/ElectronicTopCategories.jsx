@@ -58,16 +58,16 @@ function ElectronicTopCategories() {
                         <div className="yaxshi-categ-placholder-box">
                             {[1, 2, 3, 4, 5, 6].map((item, i) => {
                                 return (
-                                    <div class="card" aria-hidden="true">
+                                    <div className="card" aria-hidden="true">
                                         <div
-                                            class="card-img-top placeholder"
+                                            className="card-img-top placeholder"
                                             alt="..."
                                         />
-                                        <div class="card-body">
-                                            <p class="card-text placeholder-glow">
-                                                <span class="placeholder col-7"></span>
-                                                <span class="placeholder col-6"></span>
-                                                <span class="placeholder col-6"></span>
+                                        <div className="card-body">
+                                            <p className="card-text placeholder-glow">
+                                                <span className="placeholder col-7"></span>
+                                                <span className="placeholder col-6"></span>
+                                                <span className="placeholder col-6"></span>
                                             </p>
                                         </div>
                                     </div>

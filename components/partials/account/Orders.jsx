@@ -116,7 +116,7 @@ function OrdersLists() {
 
                 status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
                 status === "cancelled" ?
-                 (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                 (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
                  status === "pending" ?
                  (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
                    <></>
@@ -150,7 +150,7 @@ function OrdersLists() {
 
                 status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
                 status === "cancelled" ?
-                 (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                 (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
                  status === "pending" ?
                  (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
                    <></>

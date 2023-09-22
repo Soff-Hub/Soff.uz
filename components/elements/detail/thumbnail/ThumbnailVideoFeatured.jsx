@@ -86,7 +86,7 @@ class ThumbnailVideoFeatured extends Component {
                                     />
                                 </a>
                                 <Modal
-                                    visible={this.state.modalVisible}
+                                    open={this.state.modalVisible}
                                     onOk={e => this.handleOpenModal(e)}
                                     onCancel={e => this.handleCloseModal(e)}
                                     width={1024}

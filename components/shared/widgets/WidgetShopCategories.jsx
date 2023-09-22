@@ -32,7 +32,7 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                             }>
                             {item.children !== null ? (
                                 <div
-                                    class="accordion accordion-flush"
+                                    className="accordion accordion-flush"
                                     id="accordionFlushExample">
                                     <div
                                         className="accordion-item"
@@ -54,7 +54,7 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                                         </h2>
                                         <div
                                             id={`flush-collapseOne-${i}`}
-                                            class="accordion-collapse collapse"
+                                            className="accordion-collapse collapse"
                                             aria-labelledby="flush-headingOne"
                                             data-bs-parent="#accordionFlushExample">
                                             {item?.children?.map((item, i) => {

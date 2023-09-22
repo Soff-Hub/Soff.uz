@@ -390,26 +390,26 @@ console.log('fulldata', Fulldata);
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasRight"
                                 aria-controls="offcanvasRight">
-                                <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                                <i className="fa-solid fa-id-card fa-beat fs-1"></i>
                             </span>
                         </div>
                     </form>
                     <div
-                        class="offcanvas offcanvas-end"
+                        className="offcanvas offcanvas-end"
                         tabindex="-1"
                         id="offcanvasRight"
                         aria-labelledby="offcanvasRightLabel">
-                        <div class="offcanvas-header">
+                        <div className="offcanvas-header">
                             <h5 id="offcanvasRightLabel" className='fs-xl-3 fs-lg-3 fs-3'>
                                 Qo'shayotgan mahsulotingizni ko'rinishi
                             </h5>
                             <button
                                 type="button"
-                                class="btn-close text-reset"
+                                className="btn-close text-reset"
                                 data-bs-dismiss="offcanvas"
                                 aria-label="Close"></button>
                         </div>
-                        <div class="offcanvas-body">
+                        <div className="offcanvas-body">
                             <div className="card rounded-3 ">
                                 <div
                                     className="image"
