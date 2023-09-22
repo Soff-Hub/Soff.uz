@@ -18,6 +18,7 @@ class Register extends Component {
             report: true,
             chekked: false,
             passwordFocused: false,
+            inputType: 'text'
         };
     }
 
@@ -31,7 +32,7 @@ class Register extends Component {
                 let message = '';
                 const modal = Modal.error({
                     centered: true,
-                    title: `${user?.data?.msg[0]}`,
+                    title: `${user?.data?.message[0]}`,
                     content: message,
                 });
                 modal.update;
@@ -58,6 +59,20 @@ class Register extends Component {
             this.passwordInput.focus();
         }
     };
+
+    handleChangeType = (e) => {
+        if (e.target.value === "") {
+            this.setState({ inputType: 'text' })
+            return;
+        }
+        const value = e.target.value.split('')
+        if (value[0] === "+") {
+            this.setState({ inputType: 'tel' })
+        }
+        else {
+            this.setState({ inputType: 'email' })
+        }
+    }
 
     handleEnterKeyPress2 = (e) => {
         if (e.key === 'Enter') {
@@ -102,9 +117,11 @@ class Register extends Component {
                                         ]}>
                                         <Input
                                             className="form-control"
-                                            type="text"
+                                            type={this.state.inputType}
                                             placeholder="Telefon raqam yoki email"
                                             onKeyDown={this.handleEnterKeyPress}
+                                            onChange={this.handleChangeType}
+                                            defaultValue={"+998"}
                                         />
                                     </Form.Item>
                                 </div>
