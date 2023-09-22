@@ -8,7 +8,6 @@ import { Form, Input, notification } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
-import useSelection from 'antd/es/table/hooks/useSelection';
 
 class Login extends Component {
     constructor(props) {
@@ -164,9 +163,9 @@ class Login extends Component {
                                 <p
                                     style={{ paddingBottom: '15px' }}
                                     className="mb-4">
-                                    <Link href="/account/qayta-nomer-kiritish">
+                                    <Link href="/account/re-enter-number">
                                         <a>Parolni unutdingizmi?</a>
-                                    </Link>{' '}
+                                    </Link>
                                 </p>
                             </div>
                         </div>
