@@ -154,10 +154,6 @@
     padding: 40px 0;
 }
 
-// .top-category-items {
-//     min-width: 170px;
-// }
-
 .mahsulotingiz {
     position: fixed;
     top: 50%;
@@ -274,6 +270,16 @@
     text-align: center;
 }
 
+
+#homepage-7 {
+    .ps-product-list{
+        margin-bottom: 100px;
+    }
+}
+
+
+
+
 // .home-car{
 //     max-width: 200px;
 //     min-width: 190px;
@@ -287,6 +293,11 @@
         .ps-product__thumbnail {
             img {
                 height: 75px !important;
+            }
+        }
+        &:hover{
+            .ps-product__content.hover{
+                padding-bottom: 0;
             }
         }
     }
@@ -497,6 +508,10 @@
 }
 
 @include media('<md') {
+    #homepage-7 {.ps-product-list{
+            margin-bottom: 90px;
+        }
+    }
     .ps-input {
         width: 100%;
     }
@@ -626,6 +641,10 @@
                 }
             }
         }
+    }
+
+    .ps-product:hover{
+        height: 130px;
     }
 
     // .home-car{
