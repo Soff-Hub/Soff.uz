@@ -343,7 +343,7 @@ function MyProductsLists() {
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="card" style={{ maxWidth: "840px" }}>
                                 <div className="row g-0 px-3 modal-body m-0">

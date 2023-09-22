@@ -17,7 +17,7 @@ class Login extends Component {
             value: '',
         };
     }
-    modalSuccess = (type) => {
+    modalSuccess = () => {
         notification.open({
             message: 'Xush kelibsiz saytimizga!',
             description: 'Siz muvaffaqqiyatli kirdingiz!',

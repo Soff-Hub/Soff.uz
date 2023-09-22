@@ -73,7 +73,7 @@ class NavigationList extends Component {
                     placement="right"
                     closable={false}
                     onClose={this.handleDrawerClose}
-                    visible={this.state.menuDrawer}>
+                    open={this.state.menuDrawer}>
                     <div className="ps-panel--wrapper">
                         <div className="ps-panel__header">
                             <h3>Menu</h3>
@@ -93,7 +93,7 @@ class NavigationList extends Component {
                     placement="right"
                     closable={false}
                     onClose={this.handleDrawerClose}
-                    visible={this.state.cartDrawer}>
+                    open={this.state.cartDrawer}>
                     <div className="ps-panel--wrapper">
                         <div className="ps-panel__header">
                             <h3>Xarid savati</h3>
@@ -113,7 +113,7 @@ class NavigationList extends Component {
                     placement="right"
                     closable={false}
                     onClose={this.handleDrawerClose}
-                    visible={this.state.searchDrawer}>
+                    open={this.state.searchDrawer}>
                     <div className="ps-panel--wrapper">
                         <div className="ps-panel__header">
                             <h3>Qidiruv</h3>
@@ -133,7 +133,7 @@ class NavigationList extends Component {
                     placement="right"
                     closable={false}
                     onClose={this.handleDrawerClose}
-                    visible={this.state.categoriesDrawer}>
+                    open={this.state.categoriesDrawer}>
                     <div className="ps-panel--wrapper">
                         <div className="ps-panel__header">
                             <h3>Kategoriya</h3>

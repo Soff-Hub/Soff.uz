@@ -54,7 +54,7 @@ function ElectronicBanner() {
                             <>
                                 <div>
                                     <div
-                                        class="placeholder col-12"
+                                        className="placeholder col-12"
                                         style={{
                                             width: '100%',
                                             height: '370px',
@@ -63,9 +63,9 @@ function ElectronicBanner() {
                                             alignItems: 'center',
                                         }}>
                                         <div
-                                            class="spinner-border"
+                                            className="spinner-border"
                                             role="status">
-                                            <span class="visually-hidden">
+                                            <span className="visually-hidden">
                                                 Loading...
                                             </span>
                                         </div>
@@ -111,13 +111,13 @@ function ElectronicBanner() {
                                 return (
                                     <div key={i}>
                                         <div
-                                            class="placeholder "
+                                            className="placeholder "
                                             alt="banner"
                                             id="banner-placholder-item">
                                             <div
-                                                class="spinner-border"
+                                                className="spinner-border"
                                                 role="status">
-                                                <span class="visually-hidden">
+                                                <span className="visually-hidden">
                                                     Loading...
                                                 </span>
                                             </div>

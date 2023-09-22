@@ -78,7 +78,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                 footer={null}
                 width={1024}
                 onCancel={(e) => handleHideQuickView(e)}
-                visible={isQuickView}
+                open={isQuickView}
                 closeIcon={<i className="icon icon-cross2"></i>}>
                 <h3>Tezkor ko'rish</h3>
                 <ProductDetailQuickView product={product} />

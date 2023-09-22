@@ -300,24 +300,24 @@ const PostsMyProducts = () => {
                                 data-bs-toggle="offcanvas"
                                 data-bs-target="#offcanvasRight"
                                 aria-controls="offcanvasRight">
-                                <i class="fa-solid fa-id-card fa-beat fs-1"></i>
+                                <i className="fa-solid fa-id-card fa-beat fs-1"></i>
                             </span>
                         </div>
                     </form>
                     <div
-                        class="offcanvas offcanvas-end"
+                        className="offcanvas offcanvas-end"
                         tabindex="-1"
                         id="offcanvasRight"
                         aria-labelledby="offcanvasRightLabel">
-                        <div class="offcanvas-header pt-5">
+                        <div className="offcanvas-header pt-5">
                             <h3 id="offcanvasRightLabel" className='m-0 '><span >Tahrirlanayotgan  mahsulotingizni ko'rinishi</span> </h3>
                             <button
                                 type="button"
-                                class="btn-close text-reset"
+                                className="btn-close text-reset"
                                 data-bs-dismiss="offcanvas"
                                 aria-label="Close"></button>
                         </div>
-                        <div class="offcanvas-body">
+                        <div className="offcanvas-body">
                             <div className="card rounded-3 ">
                                 <div className="image" style={{
                                     backgroundImage: `url(${livePoster
