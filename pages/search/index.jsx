@@ -39,8 +39,8 @@ const SearchPage = () => {
         getSearchData();
         console.log(query.keyword);
 
+        handleSetKeyword();
         if (query && query.keyword) {
-            handleSetKeyword(query.keyword);
             const queries = {
                 _limit: pageSize,
                 title_contains: query.keyword,
@@ -60,7 +60,6 @@ const SearchPage = () => {
             text: 'Qidiruv natijalari',
         },
     ];
-    console.log('qidiruv', resultdata);
     let shopItemsView, statusView;
     if (loading) {
         if (resultdata) {
