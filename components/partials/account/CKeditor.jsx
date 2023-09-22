@@ -12,7 +12,7 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
             };
            }, 0)
         }
-    }, []);
+    }, [editorRef.current]);
 
     return (
         <>
