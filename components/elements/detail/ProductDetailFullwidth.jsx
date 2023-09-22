@@ -21,11 +21,11 @@ const ProductDetailFullwidth = ({ product }) => {
     useEffect(() => {
         setTag(product?.tag);
     }, []);
-    console.log(product);
     return (
         <div className="ps-product--detail ps-product--fullwidth">
-            <div className="ps-product__header">
-                <ThumbnailDefault product={product} />
+          <div className="container">
+          <div className="ps-product__header d-flex">
+            <ThumbnailDefault product={product} />
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
                     <div>
@@ -55,6 +55,7 @@ const ProductDetailFullwidth = ({ product }) => {
                 </div>
             </div>
             <DefaultDescription product={product} />
+          </div>
         </div>
     );
 };

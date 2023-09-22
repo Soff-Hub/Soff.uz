@@ -67,7 +67,6 @@ const ProductDefaultPage = () => {
     } else {
         productView = <SkeletonProductDetail />;
     }
-    console.log(product);
     return (
         <PageContainer
             header={headerView}

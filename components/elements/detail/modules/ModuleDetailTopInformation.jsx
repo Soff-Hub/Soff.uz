@@ -27,7 +27,7 @@ const ModuleDetailTopInformation = ({ product }) => {
         priceView = (
             <div className="ps-product__price sale">
                 {product.price === product.discount_price ? (
-                   <p> {addPeriodToThousands(product.price)} so'm </p>
+                    <p> {addPeriodToThousands(product.price)} so'm </p>
                 ) : (
                     <>
                         <del>{addPeriodToThousands(product.price)} so'm</del>
@@ -35,14 +35,14 @@ const ModuleDetailTopInformation = ({ product }) => {
                             {addPeriodToThousands(product.discount_price)} so'm
                         </p>
                     </>
-                )}  
+                )}
             </div>
         );
     } else {
         priceView = (
             <h4 className="ps-product__price">
                 {product.price === product.discount_price ? (
-                   <h4> {addPeriodToThousands(product.price)} so'm </h4>
+                    <h4> {addPeriodToThousands(product.price)} so'm </h4>
                 ) : (
                     <>
                         <del>{addPeriodToThousands(product.price)} so'm</del>
@@ -50,26 +50,13 @@ const ModuleDetailTopInformation = ({ product }) => {
                             {addPeriodToThousands(product.discount_price)} so'm
                         </h4>
                     </>
-                )}  
+                )}
             </h4>
         );
     }
     return (
         <header>
             <h1>{product.title}</h1>
-
-            {/* <div className="ps-product__meta">
-                <p>
-                    Brand:
-                    <Link href="/shop">
-                        <a className="ml-2 text-capitalize">{product.vendor}</a>
-                    </Link>
-                </p>
-                <div className="ps-product__rating">
-                    <Rating />
-                    <span>(1 review)</span>
-                </div>
-            </div> */}
             {priceView}
         </header>
     );

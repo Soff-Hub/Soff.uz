@@ -25,14 +25,13 @@ const ElectronicProductGroupWithCarousel = ({
 
     let productItemsView;
     if (!loading) {
-        if (data && data.promotional_sliders.length > 0) {
-            //  let slideItems
+        if (data && data?.promotional_sliders.length > 0) {
             productItemsView = 
             (
-              <div className='d-flex align-content-center carosusel-cards'>
+              <div className='d-flex align-content-center row'>
                {
-                 data.promotional_sliders?.slice(0,5).map((item, index) => (
-                  <div className='home-card' >   <Product key={item.id} product={item} /> </div>
+                 data?.promotional_sliders?.slice(0,6).map((item, index) => (
+                  <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6' >   <Product key={item.id} product={item} /> </div>
                 ))
                }
               </div>
