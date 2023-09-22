@@ -163,9 +163,9 @@ class Login extends Component {
                                 <p
                                     style={{ paddingBottom: '15px' }}
                                     className="mb-4">
-                                    <Link href="/account/qayta-nomer-kiritish">
+                                    <Link href="/account/re-enter-number">
                                         <a>Parolni unutdingizmi?</a>
-                                    </Link>{' '}
+                                    </Link>
                                 </p>
                             </div>
                         </div>
