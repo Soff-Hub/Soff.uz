@@ -73,9 +73,6 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     };
 
     function handleChangeRange(value) {
-        setMin(value[0]);
-        setMax(value[1]);
-
         filterByPrice(value[0], value[1]);
     }
 
