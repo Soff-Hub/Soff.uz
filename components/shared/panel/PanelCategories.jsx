@@ -36,6 +36,17 @@ class PanelCategories extends Component {
             });
         }
     };
+
+    handleDrawerClose = () => {
+        this.setState({
+            menuDrawer: false,
+            cartDrawer: false,
+            searchDrawer: false,
+            categoriesDrawer: false,
+
+        });
+    };
+
     componentDidMount(){
         this.getCategiries()
     }
@@ -47,7 +58,7 @@ class PanelCategories extends Component {
                 openKeys={this.state.openKeys}
                 onOpenChange={this.onOpenChange}>
                 {this.state.data.map(category => (
-                    <Menu.Item key={category.id}>
+                    <Menu.Item key={category.id} onClick={this.handleDrawerClose} >
                         <Link href={`/category/${category.id}`}>
                             {category.name}
                         </Link>

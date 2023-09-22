@@ -270,13 +270,27 @@
     text-align: center;
 }
 
-
 #homepage-7 {
-    .ps-product-list{
+    .ps-product-list {
         margin-bottom: 100px;
     }
 }
 
+.ps-block--shopping-total {
+    .ps-block__product {
+        .ps-block__estimate a:first-child {
+            display: block;
+            width: 70% !important;
+            padding-right: 10px;
+        }
+    }
+}
+
+.ps-block--checkout-order {
+    .ps-block__items a strong{
+        width: 67% !important;
+    }
+}
 
 
 
@@ -295,8 +309,8 @@
                 height: 75px !important;
             }
         }
-        &:hover{
-            .ps-product__content.hover{
+        &:hover {
+            .ps-product__content.hover {
                 padding-bottom: 0;
             }
         }
@@ -508,7 +522,8 @@
 }
 
 @include media('<md') {
-    #homepage-7 {.ps-product-list{
+    #homepage-7 {
+        .ps-product-list {
             margin-bottom: 90px;
         }
     }
@@ -629,7 +644,6 @@
 
         .ps-product__content {
             padding-left: 10px;
-            max-width: 80px;
         }
     }
 
@@ -643,7 +657,7 @@
         }
     }
 
-    .ps-product:hover{
+    .ps-product:hover {
         height: 130px;
     }
 
@@ -762,10 +776,10 @@
     .hujjat-detail-full-image {
         height: 200px;
     }
-    #homepage-7 .ps-product-list{
+    #homepage-7 .ps-product-list {
         margin-bottom: 60px;
     }
-    .home-card{
+    .home-card {
         margin: 10px 0;
     }
 }
@@ -1015,28 +1029,27 @@
         min-width: 160px;
     }
 }
-@media screen and (max-width: 370px){
+@media screen and (max-width: 370px) {
     // .home-card{
     //     max-width: 160px;
     //     min-width: 160px;
     // }
     .ps-product-list {
         .ps-section__header {
-            h3{
+            h3 {
                 padding-bottom: 0;
                 font-size: 16px;
             }
         }
-        .ps-section__links  {
+        .ps-section__links {
             li {
-                a{
+                a {
                     font-size: 13px;
                 }
             }
+        }
     }
 }
-}
-
 
 @media screen and (max-width: 353px) {
     .ps-product__thumbnail {
@@ -1060,7 +1073,7 @@
 //     }
 // }
 
-@media screen and (max-width: 329px) {
+@media screen and (max-width: 330px) {
     .ps-product__thumbnail {
         margin: 0 auto;
     }
@@ -1074,9 +1087,16 @@
         min-width: 140px;
     }
 
-    .yaxshi-categoriyalar{
-        .yaxshi-categoriyalar-image{
+    .yaxshi-categoriyalar {
+        .yaxshi-categoriyalar-image {
             height: 75px;
+        }
+    }
+    .ps-block--shopping-total {
+        .ps-block__product {
+            .ps-block__estimate a {
+                font-size: 11px;
+            }
         }
     }
 }

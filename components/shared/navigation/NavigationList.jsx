@@ -144,7 +144,7 @@ class NavigationList extends Component {
                             </span>
                         </div>
                         <div className="ps-panel__content">
-                            <PanelCategories />
+                            <PanelCategories  />
                         </div>
                     </div>
                 </Drawer>
