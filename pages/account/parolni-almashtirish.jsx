@@ -51,9 +51,9 @@ const Xabar = (e) => {
         const qaytaUser = await qaytaKodYuborish();
         console.log('qayta', qaytaUser);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
-            setCoutdown(query.via === 'via_phone' ? 20 : 20);
+            setCoutdown(query.via === 'via_phone' ? 60 : 120);
             setReport(true)
-            counter(query.via === 'via_phone' ? 20 : 20)
+            counter(query.via === 'via_phone' ? 60 : 120)
         } else {
             let message = '';
             const modal = Modal.error({
@@ -76,10 +76,10 @@ const Xabar = (e) => {
     useEffect(() => {
         if (localStorage.getItem('qayta_')) {
             setNomer(localStorage.getItem('qayta_'));
-            setCoutdown(query.via === 'via_phone' ? 20 : 20);
+            setCoutdown(query.via === 'via_phone' ? 60 : 120);
         }
 
-        return () => counter(query.via === 'via_phone' ? 20 : 20)
+        return () => counter(query.via === 'via_phone' ? 60 : 120)
     }, [tokenn]);
 
 
