@@ -16,7 +16,6 @@ export default function NewPassword() {
         }
         const { qaytaParolYuborishAuth} = useAuth()
         const user = await qaytaParolYuborishAuth(data)
-        console.log(user);
         if (user.status === 200 || user.status === 201) {
             Router.push('/account/login')
         }else{
@@ -29,7 +28,6 @@ export default function NewPassword() {
             modal.update;
         }
     }
-console.log(parol1, parol2);
     return (
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">

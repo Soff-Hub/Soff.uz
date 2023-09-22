@@ -274,6 +274,13 @@
     text-align: center;
 }
 
+.home-card{
+    max-width: 230px;
+    min-width: 230px;
+    min-height: 200px;
+    max-height: 200px;
+}
+
 
 @include media('<lg') {
 

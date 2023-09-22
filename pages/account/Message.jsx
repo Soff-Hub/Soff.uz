@@ -26,7 +26,6 @@ const Xabar = (e) => {
 
         const { verifyCode } = useAuth();
         const user = await verifyCode(data);
-        console.log('verfy respons', user);
         if (user.status === 200 || user.status === 201) {
             setLoader(false);
             Router.push('/account/login');
@@ -57,7 +56,6 @@ const Xabar = (e) => {
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
         setCountSekond(false);
-        console.log('qayta', qaytaUser);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
             let message = '';
             const modal = Modal.success({
@@ -81,7 +79,6 @@ const Xabar = (e) => {
         }
         
         setKod('');
-        console.log(kod);
     };
 
     useEffect(() => {

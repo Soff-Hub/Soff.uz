@@ -15,20 +15,22 @@ const ProductDetailFullwidth = ({ product }) => {
     const [tag, setTag] = useState([]);
 
     const searchTag = (e) => {
-        console.log('onclick', e);
-
         Router.push(`/search?keyword=${e}`);
     };
 
     useEffect(() => {
         setTag(product?.tag);
     }, []);
+    console.log(product);
     return (
         <div className="ps-product--detail ps-product--fullwidth">
             <div className="ps-product__header">
                 <ThumbnailDefault product={product} />
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
+                    <div>
+                        <h4> Muallif : {product?.seller?.first_name}</h4>
+                    </div>
                     <ModuleProductDetailDescription product={product} />
                     <ModuleDetailShoppingActions product={product} />
                     <div className=" row d-flex justify-content-center">

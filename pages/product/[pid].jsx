@@ -67,7 +67,7 @@ const ProductDefaultPage = () => {
     } else {
         productView = <SkeletonProductDetail />;
     }
-console.log('mahsulot detail', product);
+    console.log(product);
     return (
         <PageContainer
             header={headerView}

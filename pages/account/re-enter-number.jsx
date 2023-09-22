@@ -18,17 +18,15 @@ export default function QaytaNomerKiritish() {
         const { qaytaRaqamYuborishAuth } = useAuth();
         const response = await qaytaRaqamYuborishAuth(data);
         if (response.status === 200 || response.status === 201) {
-            Router.push('/account/parolni-almashtirish');
+            Router.push('/account/change-password');
             const { access } = response.data;
-            console.log('qayta access', access);
             setReport(false)
             localStorage.setItem('qayta_token', access);
         } else {
-            let message = '';
             const modal = Modal.error({
                 centered: true,
-                title: 'Nimadir xato bor!',
-                content: message,
+                title: 'Xatolik!',
+                content: response.data.msg,
             });
             modal.update;
         }

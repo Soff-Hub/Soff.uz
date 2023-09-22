@@ -65,7 +65,6 @@ const SearchPage = () => {
             text: 'Qidiruv natijalari',
         },
     ];
-    console.log('qidiruv', resultdata);
     let shopItemsView, statusView;
     if (loading) {
         if (resultdata) {

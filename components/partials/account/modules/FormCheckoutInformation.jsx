@@ -34,7 +34,6 @@ function FormCheckoutInformation() {
         }, 1000);
     };
 
-    console.log('cardd', card);
 
     useEffect(() => {
         select && GetCard()
@@ -49,7 +48,6 @@ function FormCheckoutInformation() {
         return ids;
     }
     const ids = extractIds(data);
-    console.log("to'lov uchun berib yuborilgan id lar ", ids);
 
     const ProductToApi = async () => {
         setMessage(false);
@@ -62,7 +60,6 @@ function FormCheckoutInformation() {
             },
         };
         const respons = await ClickRepository.postClick(data, token);
-console.log(respons);
         if (respons?.status === 200 || respons?.status === 201) {
             setCookie('cart', [], { path: '/' });
             removeItems('cart');

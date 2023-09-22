@@ -20,7 +20,6 @@ const Xabar = (e) => {
         };
             const { NewVerifyCode} = useAuth()
             const user = await NewVerifyCode(data)
-            console.log(user);
             if (user.status === 200 || user.status === 201) {
                 Router.push('/account/new-password');
             }
@@ -31,7 +30,6 @@ const Xabar = (e) => {
     const qaytaKodOlish = async () => {
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
-        console.log('qayta', qaytaUser);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
             setReport(true)
         }else{
@@ -89,7 +87,7 @@ const Xabar = (e) => {
                                         min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                    <p> {nomer} nomerga sms boradi</p>
+                                    <p> {nomer} ga sms boradi</p>
 
                                     <p>
                                         Kod kelishiga qolgan vaqt: {countdown}{' '}

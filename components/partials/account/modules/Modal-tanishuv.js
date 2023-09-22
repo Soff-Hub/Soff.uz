@@ -20,7 +20,6 @@ function ModalTanishuv({
     dataBsTarget,
     tasdiqlash,
 }) {
-    console.log('jhgjj', tasdiqlash);
     
     function handleSuccess(e) {
         e.preventDefault();

@@ -83,7 +83,6 @@ const Posts = () => {
     }
 
     async function handleChange(value) {
-        console.log('value', value);
         if (value.length <= 3) {
             setTagSearchResult(value);
         }
@@ -185,7 +184,6 @@ const Posts = () => {
             formData,
             user?.access
         );
-        console.log(patchItems);
         if (patchItems?.status === 201 || patchItems?.status === 200) {
             Router.push('/account/MyProducts');
             const modal = Modal.success({
@@ -237,7 +235,6 @@ const Posts = () => {
             const chegirmaNarx = narx -  ((narx * foiz) / 100) ;
             if (chegirmaNarx < 1000) {
                 setChegirmaTek(false);
-                console.log('narxx', chegirmaNarx);
             } else {
                 setChegirmaTek(true);
             }
@@ -253,7 +250,6 @@ const Posts = () => {
     useEffect(() => {
         GetItemsCategoryLists();
     }, [user?.access]);
-console.log('fulldata', Fulldata);
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}

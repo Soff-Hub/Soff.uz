@@ -19,7 +19,6 @@ const HomeDefaultBanner = () => {
         );
         if (responseData) {
             setBannerItems(responseData);
-            console.log(responseData);
         }
     }
 
