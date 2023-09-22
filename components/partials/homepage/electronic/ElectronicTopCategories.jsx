@@ -25,7 +25,7 @@ function ElectronicTopCategories() {
                 <div className="yaxshi-categoriyalar">
                     {category ? (
                         category.map((category) => (
-                            <div className="col-xl-2 col-lg-2 col-sm-4 col-xs-4 col-5 ">
+                            <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
                                 <Link
                                     key={category.id}
                                     href="/category/[pid]"

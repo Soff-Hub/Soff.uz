@@ -51,7 +51,8 @@ function AccountQuickLinks() {
 
 
     return (
-        <Dropdown menu={menu} placement="bottomLeft">
+
+        <Dropdown overlay={menu} placement="bottomLeft">
             <a href="#" className="header__extra ps-user--mobile">
                 <i className="icon-user"></i>
             </a>

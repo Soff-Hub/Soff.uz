@@ -8,7 +8,8 @@ const BreadCrumb = ({ breacrumb, layout }) => {
                 className={
                     layout === 'fullwidth' ? 'ps-container' : 'container'
                 }>
-                <ul className="breadcrumb">
+               <div className="container">
+               <ul className="breadcrumb">
                     {breacrumb.map((item, index) => {
                         if (!item.url) {
                             return <li key={index}>{item.text}</li>;
@@ -23,6 +24,7 @@ const BreadCrumb = ({ breacrumb, layout }) => {
                         }
                     })}
                 </ul>
+               </div>
             </div>
         </div>
     );

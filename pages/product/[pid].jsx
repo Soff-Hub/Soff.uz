@@ -67,30 +67,32 @@ const ProductDefaultPage = () => {
     } else {
         productView = <SkeletonProductDetail />;
     }
-console.log('mahsulot detail', product);
     return (
         <PageContainer
             header={headerView}
             title={product ? product.title : 'Loading...'}>
-            <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
-            <div className="ps-page--product">
-                <div className="ps-container">
-                    <div className="ps-page__container">
-                        <div className="ps-page__left">{productView}</div>
-                    </div>
 
-                    {product?.similar?.length > 0 ? (
-                        <RelatedProduct
-                            data={product?.similar}
-                            pid={pid}
-                            collectionSlug="shop-recommend-items"
-                        />
-                    ) : (
-                        ''
-                    )}
+
+            <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+            <div className="container">
+                <div className="ps-page--product">
+                    <div className="ps-container">
+                        <div className="ps-page__container">
+                            <div className="ps-page__left">{productView}</div>
+                        </div>
+
+                        {product?.similar?.length > 0 ? (
+                            <RelatedProduct
+                                data={product?.similar}
+                                pid={pid}
+                                collectionSlug="shop-recommend-items"
+                            />
+                        ) : (
+                            ''
+                        )}
+                    </div>
                 </div>
             </div>
-            {/* <Newletters /> */}
         </PageContainer>
     );
 };

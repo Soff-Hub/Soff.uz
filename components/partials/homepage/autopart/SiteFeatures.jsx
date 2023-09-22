@@ -35,9 +35,10 @@ const SiteFeatures = () => {
                     </div>
                     )
                 }) : 
-                <div style={{display:'flex', justifyContent:'center', marginLeft:'50%', marginTop:'5%'}}>
-                {/* <PropagateLoader color="#FFC107" /> */}
-                </div>
+                // <div style={{display:'flex', justifyContent:'center', marginLeft:'50%', marginTop:'5%'}}>
+                // <PropagateLoader color="#FFC107" />
+                // </div>
+                ""
                }
 
               

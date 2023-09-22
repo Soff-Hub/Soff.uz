@@ -2280,7 +2280,11 @@
         padding: 60px 0 40px;
         h1 {
             font-size: 24px;
-            font-weight: 600;
+            font-weight: 500;
+
+            i {
+                text-decoration: underline;
+            }
         }
     }
 

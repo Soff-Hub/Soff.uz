@@ -18,6 +18,7 @@ class Register extends Component {
             report: true,
             chekked: false,
             passwordFocused: false,
+            inputType: 'text'
         };
     }
 
@@ -25,13 +26,12 @@ class Register extends Component {
         const url = this.props.url;
         const { registerUser } = useAuth();
         const user = await registerUser(url, e);
-        console.log(user);
         if (user) {
             if (user.status >= 400) {
                 let message = '';
                 const modal = Modal.error({
                     centered: true,
-                    title: `${user?.data?.msg[0]}`,
+                    title: `${user?.data?.message[0]}`,
                     content: message,
                 });
                 modal.update;
@@ -41,8 +41,11 @@ class Register extends Component {
                 localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
 
-                Router.push('/account/xabar');
+
+                Router.push(`/account/Message?via=${user.data.via_}`);
             }
+
+            console.log(user.data);
         }
     };
 
@@ -57,6 +60,20 @@ class Register extends Component {
         }
     };
 
+    handleChangeType = (e) => {
+        if (e.target.value === "") {
+            this.setState({ inputType: 'text' })
+            return;
+        }
+        const value = e.target.value.split('')
+        if (value[0] === "+") {
+            this.setState({ inputType: 'tel' })
+        }
+        else {
+            this.setState({ inputType: 'email' })
+        }
+    }
+
     handleEnterKeyPress2 = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -65,7 +82,6 @@ class Register extends Component {
     };
 
     render() {
-        // console.log('taqdiqlash', tasqidlash);
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -100,9 +116,11 @@ class Register extends Component {
                                         ]}>
                                         <Input
                                             className="form-control"
-                                            type="text"
+                                            type={this.state.inputType}
                                             placeholder="Telefon raqam yoki email"
                                             onKeyDown={this.handleEnterKeyPress}
+                                            onChange={this.handleChangeType}
+                                            defaultValue={"+998"}
                                         />
                                     </Form.Item>
                                 </div>

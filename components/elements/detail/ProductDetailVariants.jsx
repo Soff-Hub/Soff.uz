@@ -11,7 +11,6 @@ import ModuleDetailTopInformation from '~/components/elements/detail/modules/Mod
 
 const ProductDetailVariants = ({ product }) => {
 
-    // console.log({ product });
     if (product !== null && typeof product !== 'Array') {
         if (product.variants.length > 0) {
             return (

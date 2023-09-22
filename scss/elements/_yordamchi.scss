@@ -154,10 +154,6 @@
     padding: 40px 0;
 }
 
-// .top-category-items {
-//     min-width: 170px;
-// }
-
 .mahsulotingiz {
     position: fixed;
     top: 50%;
@@ -206,7 +202,7 @@
             height: 100px !important;
         }
     }
-    .ps-product__container{
+    .ps-product__container {
         text-align: center;
     }
 }
@@ -265,7 +261,7 @@
     }
 }
 
-.chegirma-xato{
+.chegirma-xato {
     border: 1px solid red !important;
 }
 
@@ -275,12 +271,33 @@
 }
 
 
-@include media('<lg') {
+#homepage-7 {
+    .ps-product-list{
+        margin-bottom: 100px;
+    }
+}
 
+
+
+
+// .home-car{
+//     max-width: 200px;
+//     min-width: 190px;
+//     min-height: 200px;
+//     max-height: 200px;
+//     width: 100%;
+// }
+
+@include media('<lg') {
     .ps-product {
         .ps-product__thumbnail {
             img {
                 height: 75px !important;
+            }
+        }
+        &:hover{
+            .ps-product__content.hover{
+                padding-bottom: 0;
             }
         }
     }
@@ -292,11 +309,13 @@
         justify-content: space-around;
     }
 
-    .home-card {
-        max-width: 237px;
-        min-height: 200px;
-        max-height: 200px;
-    }
+    // .home-car{
+    //     max-width: 230px;
+    //     min-width: 150px;
+    //     width: 100%;
+    //     min-height: 200px;
+    //     max-height: 200px;
+    // }
 
     .products-image1 {
         height: 100px;
@@ -483,14 +502,17 @@
 }
 
 @media screen and (max-width: 1060px) {
-    .detail-card{
+    .detail-card {
         max-width: 230px;
     }
 }
 
 @include media('<md') {
-    .ps-input{
-        // max-width: 400px;
+    #homepage-7 {.ps-product-list{
+            margin-bottom: 90px;
+        }
+    }
+    .ps-input {
         width: 100%;
     }
     .ps-pagination {
@@ -512,13 +534,6 @@
                 padding-left: 10px;
             }
         }
-    }
-    .yaxshi-categoriyalar {
-        gap: 10px;
-        // .yaxshi-categoriyalar-image {
-        //     // margin: 10px auto;
-        //     width: 80px;
-        // }
     }
 
     .banner-placholder {
@@ -550,8 +565,8 @@
                 width: 100%;
                 max-width: 323px;
                 min-width: 323px;
-                max-height: 191px;
-                min-height: 191px;
+                max-height: 151px;
+                min-height: 151px;
                 object-fit: cover;
             }
         }
@@ -560,12 +575,6 @@
     .ps-btn {
         padding: 7px 6px;
     }
-
-    // .yaxshi-categoriyalar-image {
-    //     min-height: 60px;
-    //     max-height: 90px;
-    //     width: 100%;
-    // }
 
     .ps-block__content {
         h4 {
@@ -593,6 +602,9 @@
 
     .ps-product:hover {
         .ps-product__actions {
+            display: none;
+        }
+        .card-narx-box {
             display: none;
         }
 
@@ -630,20 +642,31 @@
             }
         }
     }
+
+    .ps-product:hover{
+        height: 130px;
+    }
+
+    // .home-car{
+    //     max-width: 230px;
+    //     min-width: 110px;
+    //     width: 100%;
+    //     min-height: 200px;
+    //     max-height: 200px;
+    // }
 }
 
-@media screen and (max-width: 719px){
-    .detail-card{
+@media screen and (max-width: 719px) {
+    .detail-card {
         max-width: 200px;
     }
 }
 
-@media screen and (max-width: 629px){
-    .detail-card{
+@media screen and (max-width: 629px) {
+    .detail-card {
         max-width: 150px;
     }
 }
-
 
 @include media('<sm') {
     .banner-placholder {
@@ -661,8 +684,8 @@
     }
 
     .products-image1 {
-        height: 60px;
-        width: 80px;
+        height: 75px;
+        width: 90px;
     }
 
     .banner-right {
@@ -695,18 +718,18 @@
     }
 
     .top-category-items {
-        min-height: 130px;
+        min-height: 120px;
     }
 
     .ps-product {
         .ps-product__thumbnail {
-            min-height: 60px;
+            min-height: 65px;
         }
     }
 
-    .home-card {
-        min-height: auto;
-    }
+    // .home-car{
+    //    min-width: 105px;
+    // }
 
     .ps-block--category-2 .ps-block__content {
         padding: 8px 2px 8px;
@@ -738,6 +761,12 @@
 @include media('<xs') {
     .hujjat-detail-full-image {
         height: 200px;
+    }
+    #homepage-7 .ps-product-list{
+        margin-bottom: 60px;
+    }
+    .home-card{
+        margin: 10px 0;
     }
 }
 
@@ -918,9 +947,11 @@
         flex-wrap: wrap !important;
     }
 
-    .home-card {
-        padding: 15px 0;
-    }
+    // .home-car{
+    //     padding: 15px 0;
+    //     min-width: 170px;
+    //     max-width: 170px;
+    // }
 
     .ps-product__actions {
         a {
@@ -984,6 +1015,28 @@
         min-width: 160px;
     }
 }
+@media screen and (max-width: 370px){
+    // .home-card{
+    //     max-width: 160px;
+    //     min-width: 160px;
+    // }
+    .ps-product-list {
+        .ps-section__header {
+            h3{
+                padding-bottom: 0;
+                font-size: 16px;
+            }
+        }
+        .ps-section__links  {
+            li {
+                a{
+                    font-size: 13px;
+                }
+            }
+    }
+}
+}
+
 
 @media screen and (max-width: 353px) {
     .ps-product__thumbnail {
@@ -1000,6 +1053,13 @@
     }
 }
 
+// @media screen and (max-width: 350px){
+//     .home-card{
+//         max-width: 130px;
+//         min-width: 130px;
+//     }
+// }
+
 @media screen and (max-width: 329px) {
     .ps-product__thumbnail {
         margin: 0 auto;
@@ -1014,9 +1074,11 @@
         min-width: 140px;
     }
 
-    // .hover {
-    //     display: none;
-    // }
+    .yaxshi-categoriyalar{
+        .yaxshi-categoriyalar-image{
+            height: 75px;
+        }
+    }
 }
 
 * {

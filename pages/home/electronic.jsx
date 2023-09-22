@@ -37,7 +37,7 @@ const HomeElectronicsPage = () => {
          <ElectronicBanner />
          <ElectronicTopCategories />
          {
-            categoryData && categoryData.map((item, index) => (
+            categoryData?.length > 0 && categoryData?.map((item, index) => (
                     item.promotional_sliders?.length > 0 ?
                 <ElectronicProductGroupWithCarousel
                     collectionSlug="electronics-best-sellers"
@@ -47,11 +47,12 @@ const HomeElectronicsPage = () => {
                     key={item.id}
                 />
                 :
-                <div style={{
-                    display:'flex',
-                    justifyContent:'center',
-                    alignContent:'center'
-                }}><PropagateLoader color="#F4CA16" /></div>
+                // <div style={{
+                //     display:'flex',
+                //     justifyContent:'center',
+                //     alignContent:'center'
+                // }}><PropagateLoader color="#F4CA16" /></div>
+                ""
             ))
          }
         

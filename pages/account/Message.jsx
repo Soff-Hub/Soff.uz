@@ -3,7 +3,7 @@ import { Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { BeatLoader } from 'react-spinners';
 
 const Xabar = (e) => {
@@ -15,6 +15,8 @@ const Xabar = (e) => {
     const [firstSendCode, setFirstSendCode] = useState(true);
     const [countdown, setCoutdown] = useState(null);
     const [kod, setKod] = useState(null);
+    const Router = useRouter()
+    const { query } = Router
 
 
     const handleSubmitKod = async () => {
@@ -26,7 +28,6 @@ const Xabar = (e) => {
 
         const { verifyCode } = useAuth();
         const user = await verifyCode(data);
-        console.log('verfy respons', user);
         if (user.status === 200 || user.status === 201) {
             setLoader(false);
             Router.push('/account/login');
@@ -45,19 +46,30 @@ const Xabar = (e) => {
         setKod('');
     };
 
+    const counter = (count) => {
+        const interval = setInterval(() => {
+            setCoutdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
+
+        setTimeout(() => {
+            clearInterval(interval)
+        }, count * 1000);
+    }
+
     const qaytaKodOlish = async () => {
         setLoader(true);
-        if (tek === 'via_phone') {
+        if (query.via === 'via_phone') {
             setCoutdown(60);
-        }else if(tek === 'via_email'){
+            counter(60)
+        } else if (query.via === 'via_email') {
             setCoutdown(120);
+            counter(120)
         }
-        
+
 
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
         setCountSekond(false);
-        console.log('qayta', qaytaUser);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
             let message = '';
             const modal = Modal.success({
@@ -66,57 +78,39 @@ const Xabar = (e) => {
                 content: qaytaUser?.data?.msg,
             });
             modal.update;
-            setReport(true);
             setLoader(false);
 
         } else {
             let message = '';
             const modal = Modal.error({
                 centered: true,
-                title: 'Nimadir xato bor!',
+                title: qaytaUser.data.msg,
                 content: message,
             });
             modal.update;
             setLoader(false);
         }
-        
+
         setKod('');
-        console.log(kod);
     };
 
     useEffect(() => {
-       
-        if (countdown > 0) {
+        if (countdown === 0) {
+            setFirstSendCode(false);
             setReport(true);
         } else {
             setReport(false);
-            setFirstSendCode(false);
         }
+    }, [countdown])
 
-
+    useEffect(() => {
         if (localStorage.getItem('data')) {
             setNomer(JSON.parse(localStorage.getItem('data')).phone_or_email);
         }
-        const tek = localStorage.getItem('via_')
-        setCoutdown(tek === 'via_phone' ? 60 : tek === 'via_email' ?  120 : 60)
-        
-        const interval = setInterval(() => {
-            if (countdown > 0) {
-                setCoutdown((prevCountdown) => prevCountdown - 1);
-            }
-        }, 1000);
-        
+        setCoutdown(query.via === 'via_phone' ? 60 : 120)
+        return () => counter(query.via === 'via_phone' ? 60 : 120)
 
-
-        return () => {
-            clearInterval(interval);
-        };
-
-
-         
-        
-
-    }, [tokenn, countdown]);
+    }, [tokenn]);
 
     return (
         <PageContainer>
@@ -163,7 +157,7 @@ const Xabar = (e) => {
                                                 Yuborish
                                             </button>
                                         )
-                                    ) : !report ? (
+                                    ) : report ? (
                                         loader ? (
                                             <button
                                                 type="submit"
@@ -178,21 +172,15 @@ const Xabar = (e) => {
                                                 Qayta kod olish
                                             </button>
                                         )
-                                    ) : loader ? (
-
-                                        <button
-                                            type="submit"
-                                            className="ps-btn ps-btn--fullwidth mb-5">
-                                            <BeatLoader color="#fff" />
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={() => handleSubmitKod()}
-                                            type="button"
-                                            className="ps-btn ps-btn--fullwidth">
-                                            Yuborish
-                                        </button>
-                                    )}
+                                    ) : <button
+                                        onClick={() =>
+                                            handleSubmitKod()
+                                        }
+                                        type="button"
+                                        className="ps-btn ps-btn--fullwidth">
+                                        Yuborish
+                                    </button>
+                                    }
                                 </div>
                             </div>
                         </div>

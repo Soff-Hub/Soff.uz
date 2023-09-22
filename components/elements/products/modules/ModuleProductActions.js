@@ -7,7 +7,6 @@ import useEcomerce from '~/hooks/useEcomerce';
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { addItem } = useEcomerce();
-// console.log(';;', product);
 
     function handleAddItemToCart(e) {
         e.preventDefault();

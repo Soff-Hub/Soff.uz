@@ -247,7 +247,7 @@ function CategoryLists() {
                         {
                             tagItems?.length > 0 && (
                                 tagItems?.map(item => (
-                                    <option value={item.id}>{item.name}</option>
+                                    <option key={item.id} value={item.id}>{item.name}</option>
                                 ))
                             )
                         }
@@ -290,7 +290,7 @@ function CategoryLists() {
                         {
                             tagItems?.length > 0 && (
                                 tagItems?.map(item => (
-                                    <option value={item.id}>{item.name}</option>
+                                    <option key={item.id} value={item.id}>{item.name}</option>
                                 ))
                             )
                         }

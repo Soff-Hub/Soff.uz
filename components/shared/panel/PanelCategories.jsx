@@ -48,9 +48,9 @@ class PanelCategories extends Component {
                 onOpenChange={this.onOpenChange}>
                 {this.state.data.map(category => (
                     <Menu.Item key={category.id}>
-                        <a href={`/category/${category.id}`}>
+                        <Link href={`/category/${category.id}`}>
                             {category.name}
-                        </a>
+                        </Link>
                     </Menu.Item>
                 ))}
             </Menu>

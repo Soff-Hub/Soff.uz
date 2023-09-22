@@ -34,27 +34,22 @@ const SearchPage = () => {
         }
     }
 
-   
 
-    useEffect(() => {
-    }, [data])
-    
     useEffect(() => {
         getSearchData();
+        console.log(query.keyword);
 
+        handleSetKeyword();
         if (query && query.keyword) {
-            handleSetKeyword(query.keyword);
             const queries = {
                 _limit: pageSize,
                 title_contains: query.keyword,
             };
             getProducts(queries);
         }
+    }, [query.keyword, query]);
 
 
-    }, [ keyword ]);
-
-  
 
     const breadcrumb = [
         {
@@ -65,7 +60,6 @@ const SearchPage = () => {
             text: 'Qidiruv natijalari',
         },
     ];
-    console.log('qidiruv', resultdata);
     let shopItemsView, statusView;
     if (loading) {
         if (resultdata) {
@@ -115,7 +109,7 @@ const SearchPage = () => {
                     <div className="container">
                         <div className="ps-shop__header">
                             <h1>
-                                Qidiruv uchun: "<strong>{keyword}</strong>"
+                                <i>{keyword}</i> {keyword === '' ? "Qidirish uchun qiymat kiring" : "Bo'yicha qidiruv natijalari"}
                             </h1>
                         </div>
                         <div className="ps-shop__content">
