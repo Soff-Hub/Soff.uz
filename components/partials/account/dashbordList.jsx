@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Table } from 'antd';
-// import dynamic from 'next/dynamic';
 import CalculateTimeDifference from './DateFormatter';
-import Example from './Chart';
+// import Example from './Chart';
 import { useSelector } from 'react-redux';
 
 
@@ -155,10 +154,6 @@ function DashbordList() {
 
         },
     ];
-    // const DynamicComponentWithNoSSR = dynamic(
-    //     () => import('./Chart'),
-    //     { ssr: false }
-    //   )
 
     return (
         <section className="ps-my-account ps-page--account">
@@ -226,13 +221,12 @@ function DashbordList() {
                                 <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
                                     <div className='d-flex justify-content-between pb-4'>
                                         <div>
-                                            <h4>Jami Sotuvchilar</h4>
-                                            <span>(Butun davr mobaynida)</span>
+                                            <h4>Aktiv sotuvchilar</h4>
                                         </div>
                                         <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
                                     </div>
 
-                                        <h4 className='mt-5 '>{addPeriodToThousands(data?.total_shops)} ta</h4>
+                                        <h4 className='mt-5 pt-4 '>{addPeriodToThousands(data?.total_shops)} ta</h4>
         
                                 </div>
                             </div>

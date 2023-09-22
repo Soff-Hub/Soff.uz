@@ -4,13 +4,13 @@ import { Button, Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import ModalDeletePostEdit from './ModalPostEdit';
 import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { MyProductsEdit } from '~/store/auth/action';
 import Link from 'next/link';
 import Axios from 'axios';
+var parse = require("html-react-parser");
+import CalculateTimeDifference from './DateFormatter';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -64,7 +64,7 @@ function ProductsLists() {
             item.title.toLowerCase().includes(text.toLowerCase()) ||
             item.seller?.last_name.toLowerCase().includes(text.toLowerCase()) ||
             item.seller?.first_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.seller?.phone?.includes(text) 
+            item.seller?.phone?.includes(text)
         ))
         setData(filterSearch)
     }
@@ -156,11 +156,17 @@ function ProductsLists() {
             dataIndex: 'seller',
             key: 'address',
             render: (seller) => (
-        <div className='d-flex flex-column'>
-             <span> {seller?.first_name } {seller.last_name}</span>
-                <span> {seller?.phone}</span>
-        </div>
+                <div className='d-flex flex-column'>
+                    <span> {seller?.first_name} {seller.last_name}</span>
+                    <span> {seller?.phone}</span>
+                </div>
             ),
+        },
+        {
+            title: 'Sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
             title: 'Narxi',
@@ -221,7 +227,7 @@ function ProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
-                                    <div className='row  pb-3 gap-4 mx-auto w-100'>
+                                    <div className='row  pb-2 gap-4 mx-auto w-100'>
                                         <select className='form-select rounded-3 col-md-6 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
                                             <option className='fs-3' value=''> Barcha Kategoriyalar</option>
                                             {
@@ -243,13 +249,14 @@ function ProductsLists() {
                                         </select>
                                         <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
                                         <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
+                                        <span className='col-md-12 m-0 py-3 d-flex bg-white justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
                                     </div>
                                     <div className='d-flex flex-column gap-2 bg-white px-3 py-4 rounded'>
                                         <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
                                         <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                         <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                     </div>
-                                    <Table scroll={{ x: 1300 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 1400 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>
@@ -264,7 +271,7 @@ function ProductsLists() {
                             <div className="card  " style={{ maxWidth: "840px" }}>
                                 <div className="row g-0 px-3 modal-body m-0">
                                     <div className="col-md-4 mt-4 ">
-                                        <img src={deleteIdView?.poster_url} className="img-fluid rounded-start" alt="..." />
+                                        <a href={deleteIdView?.poster_url} target="_blank" rel="noopener noreferrer"><img src={deleteIdView?.poster_url} className="img-fluid rounded-start" alt="..." /></a>
                                     </div>
                                     <div className="col-md-8">
                                         <div className="card-body pt-5">
@@ -274,13 +281,13 @@ function ProductsLists() {
                                             <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}</span>))} {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
+                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
 
                                         </div>
                                     </div>
                                     <div className='col-md-12 pt-3'>
                                         <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description}</p>
+                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description ? parse(deleteIdView?.description) : ""}</p>
                                         <div className='d-flex justify-content-end py-3'>
                                             <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 

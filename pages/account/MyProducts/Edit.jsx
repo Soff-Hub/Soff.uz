@@ -3,10 +3,8 @@ import { useSelector } from 'react-redux';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import Page404 from '~/pages/page/page-404';
-import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
@@ -376,7 +374,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Fulldata ? parse(Fulldata) : products?.description
+                                                Fulldata ? parse(Fulldata) : parse(products?.description)
                                             }
 
                                         </span>

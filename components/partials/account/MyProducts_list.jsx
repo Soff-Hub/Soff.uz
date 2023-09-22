@@ -12,6 +12,7 @@ import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
 import { MyProductsEdit } from '~/store/auth/action';
 import ModalDeletePostEdit from './ModalPostEdit';
+var parse = require("html-react-parser");
 import axios from 'axios';
 
 
@@ -36,16 +37,16 @@ function MyProductsLists() {
     const { accountLinks, user, products } = useSelector(state => state.auth)
 
 
-    async function GetItemsProducts(page, category, tagName, dataFormat,status) {
+    async function GetItemsProducts(page, category, tagName, dataFormat, status) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat,status, user?.access);
+        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, status, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                GetItemsProducts(page + 1, category, tagName, dataFormat,status)
+                GetItemsProducts(page + 1, category, tagName, dataFormat, status)
             }
         }
     }
@@ -62,6 +63,7 @@ function MyProductsLists() {
             setTagItems(ItemsData.results);
         }
     }
+
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
@@ -69,6 +71,7 @@ function MyProductsLists() {
         ))
         setData(filterSearch)
     }
+
     async function handleClickView(item) {
         const ItemsData = await GetRepository.getMyProductsView(item.id, user?.access);
         setView(ItemsData);
@@ -81,19 +84,12 @@ function MyProductsLists() {
             content: `Siz malumotlarni o'chirdingiz`,
         });
         modal.update
-        GetItemsProducts(1, dataValCat, tagName, dataFormat,selectValStatus)
+        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
 
     }
     function handleClickIdEdit(productsItems) {
         dispatch(MyProductsEdit(productsItems))
     }
-    useEffect(() => {
-        GetItemsCategory(1)
-        GetItemsTag()
-    }, [])
-    useEffect(() => {
-        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
-    }, [dataValCat, tagName, dataFormat, selectValStatus])
 
     async function handleItemsEditProductsPosts() {
         const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
@@ -158,7 +154,15 @@ function MyProductsLists() {
         }
     };
 
+    useEffect(() => {
+        GetItemsCategory(1)
+        GetItemsTag()
+    }, [])
+    useEffect(() => {
+        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
+    }, [dataValCat, tagName, dataFormat, selectValStatus])
 
+console.log(View?.description);
     const columns = [
         {
             title: 'Rasm',
@@ -300,25 +304,29 @@ function MyProductsLists() {
                                             {
                                                 dataCategory?.length > 0 && (
                                                     dataCategory?.map(item => (
-                                                        item.is_child===true ?
-                                                        <option key={item.id} value={item.id}>{ item.name} </option> 
-                                                        :
-                                                        <></>
+                                                        item.is_child === true ?
+                                                            <option key={item.id} value={item.id}>{item.name} </option>
+                                                            :
+                                                            <></>
                                                     ))
                                                 )
                                             }
                                         </select>
-                                        <select required className='form-select col-md-5 rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                                        <select
+                                            className='form-select col-md-5 rounded-3 py-3 fs-3'
+                                            onChange={(e) => setTagName(e.target.value)}
+                                            style={{height:"50px"}}
+                                        >
                                             <option value="">Teglar</option>
-                                            {
-                                                tagItems?.length > 0 && (
-                                                    tagItems.map(item => (
-                                                        <option value={item.id}>{item.name}</option>
-                                                    ))
-                                                )
-                                            }
+                                            {tagItems?.length > 0 &&
+                                                tagItems.map((item) => (
+                                                    <option key={item.id} value={item.id}>
+                                                        {item.name}
+                                                    </option>
+                                                ))}
                                         </select>
-                                    <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
+
+                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
                                             <option className='fs-3' selected value="">Barcha holatlar</option>
                                             <option className='fs-3' value="moderation">Moderatsiya</option>
                                             <option className='fs-3' value="approved">Tasdiqlangan</option>
@@ -365,7 +373,7 @@ function MyProductsLists() {
                                     </div>
                                     <div className='col-md-12 pt-3'>
                                         <p className="card-text"><strong>Qisqa tasvir:</strong> {View?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description}</p>
+                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description ? parse(View?.description) : ""}</p>
                                         <div className='d-flex justify-content-end py-3'>
                                             <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 

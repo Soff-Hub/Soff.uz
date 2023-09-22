@@ -133,6 +133,7 @@ function Notifications() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
+                                <span className='col-md-12 m-0 py-3 d-flex bg-white justify-content-center rounded mb-2 h4'>Sotuvchilar soni: {data.length} ta</span>
                                     <Table scroll={{ x: 750 }} dataSource={data} columns={columns}
                                     />
                                 </div>
