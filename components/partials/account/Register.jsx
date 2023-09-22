@@ -41,8 +41,10 @@ class Register extends Component {
                 localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
 
-                Router.push('/account/xabar');
+                Router.push(`/account/xabar?via=${user.data.via_}`);
             }
+
+            console.log(user.data);
         }
     };
 

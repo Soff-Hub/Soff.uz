@@ -3,29 +3,47 @@ import { Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);
-    const [countdown, setCoutdown] = useState(60);
+    const [countdown, setCoutdown] = useState(0);
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true)
     const [kod, setKod] = useState(null);
+    const Router = useRouter()
+    const { query } = Router
 
+
+    const counter = (count) => {
+        const interval = setInterval(() => {
+            setCoutdown((prevCountdown) => prevCountdown - 1);
+        }, 1000);
+
+        setTimeout(() => {
+            clearInterval(interval)
+        }, count * 1000);
+    }
 
 
     const handleSubmitKod = async () => {
         let data = {
             code: `${kod}`,
         };
-            const { NewVerifyCode} = useAuth()
-            const user = await NewVerifyCode(data)
-            console.log(user);
-            if (user.status === 200 || user.status === 201) {
-                Router.push('/account/new-password');
-            }
-       
-
+        const { NewVerifyCode } = useAuth()
+        const user = await NewVerifyCode(data)
+        console.log(user);
+        if (user.status === 200 || user.status === 201) {
+            Router.push('/account/new-password');
+        } else {
+            let message = '';
+            const modal = Modal.error({
+                centered: true,
+                title: user.data.msg,
+                content: message,
+            });
+            modal.update;
+        }
     };
 
     const qaytaKodOlish = async () => {
@@ -33,12 +51,14 @@ const Xabar = (e) => {
         const qaytaUser = await qaytaKodYuborish();
         console.log('qayta', qaytaUser);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
+            setCoutdown(query.via === 'via_phone' ? 20 : 20);
             setReport(true)
-        }else{
+            counter(query.via === 'via_phone' ? 20 : 20)
+        } else {
             let message = '';
             const modal = Modal.error({
                 centered: true,
-                title: 'Nimadir xato bor!',
+                title: qaytaUser.data.msg,
                 content: message,
             });
             modal.update;
@@ -47,27 +67,22 @@ const Xabar = (e) => {
 
     useEffect(() => {
         if (countdown > 0) {
-            setReport(true)
-        }else(
-            setReport(false)
-        )
+            setReport(true);
+        } else {
+            setReport(false);
+        }
+    }, [countdown])
+
+    useEffect(() => {
         if (localStorage.getItem('qayta_')) {
             setNomer(localStorage.getItem('qayta_'));
+            setCoutdown(query.via === 'via_phone' ? 20 : 20);
         }
-        const interval = setInterval(() => {
-            if (countdown > 0) {
-                setCoutdown((prevCountdown) => prevCountdown - 1);
-            }
-        }, 1000);
 
-        return () => {
-            clearInterval(interval);
-        };
-       
-       
-    }, [tokenn, countdown]);
+        return () => counter(query.via === 'via_phone' ? 20 : 20)
+    }, [tokenn]);
 
-   
+
 
     return (
         <PageContainer>
@@ -97,7 +112,7 @@ const Xabar = (e) => {
                                     </p>
                                 </div>
                                 <div className="form-group submit">
-                                    {report  ? (
+                                    {report ? (
                                         <button
                                             type="submit"
                                             className="ps-btn ps-btn--fullwidth">

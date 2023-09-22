@@ -23,7 +23,7 @@ export default function NewPassword() {
             let message = '';
             const modal = Modal.error({
                 centered: true,
-                title: 'Nimadir xato bor!',
+                title: user.data.msg,
                 content: message,
             });
             modal.update;
