@@ -17,7 +17,7 @@ class Login extends Component {
             value: '',
         };
     }
-    modalSuccess = (type) => {
+    modalSuccess = () => {
         notification.open({
             message: 'Xush kelibsiz saytimizga!',
             description: 'Siz muvaffaqqiyatli kirdingiz!',
@@ -48,7 +48,6 @@ class Login extends Component {
         
         const user = await loginUser(e);
         if (user) {
-            console.log(user);
             if (user.status >= 400) {
                 notification.open({
                     message: `${user?.data?.msg}`,
@@ -163,9 +162,9 @@ class Login extends Component {
                                 <p
                                     style={{ paddingBottom: '15px' }}
                                     className="mb-4">
-                                    <Link href="/account/qayta-nomer-kiritish">
+                                    <Link href="/account/re-enter-number">
                                         <a>Parolni unutdingizmi?</a>
-                                    </Link>{' '}
+                                    </Link>
                                 </p>
                             </div>
                         </div>

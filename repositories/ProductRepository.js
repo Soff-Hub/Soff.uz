@@ -41,7 +41,6 @@ class ProductRepository {
         // const select = useSelector(state => state.auth.user?.access)
         const select = localStorage.getItem('token');
         // console.log('select', select);
-        console.log('id', id);
 
         const reponse = await Repository({
             url: `${baseUrl}customer/wishlist/${id}/`,

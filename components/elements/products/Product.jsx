@@ -5,7 +5,6 @@ import useProduct from '~/hooks/useProduct';
 
 const Product = ({ product }) => {
     const { thumbnailImage, price, title } = useProduct();
-    console.log('//', product);
     function addPeriodToThousands(number) {
         const numStr = String(number);
 

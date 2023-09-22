@@ -15,7 +15,6 @@ function reducer(state = initState, actions) {
   
     switch (actions.type) {
         case actionTypes.LOGIN_REQUEST:
-           console.log('==', actions);
             localStorage.setItem('user', JSON.stringify(actions.user));
             localStorage.setItem('data', JSON.stringify(actions.data));
             return {
@@ -57,7 +56,6 @@ function reducer(state = initState, actions) {
                 ...{ data: actions.data },
             };
         case actionTypes.ONESHOPDOC:
-            console.log('actions||||', actions.payload);
             return {
                 ...state,
                 ...{ isLoggedIn: true },

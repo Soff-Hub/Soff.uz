@@ -29,8 +29,8 @@ export default function QaytaNomerKiritish() {
         const response = await qaytaRaqamYuborishAuth(data);
         console.log(response)
         if (response.status === 200 || response.status === 201) {
+            Router.push('/account/change-password');
             const { access } = response.data;
-            console.log('qayta access', access);
             setReport(false)
             // const modal = Modal.success({
             //     centered: true,
@@ -39,13 +39,12 @@ export default function QaytaNomerKiritish() {
             // });
             // modal.update;
             localStorage.setItem('qayta_token', access);
-            Router.push(`/account/parolni-almashtirish?via=${response.data.via_}`);
+            Router.push(`/account/change-password?via=${response.data.via_}`);
         } else {
-            let message = '';
             const modal = Modal.error({
                 centered: true,
                 title: response.data.msg,
-                content: message,
+                content: '',
             });
             modal.update;
         }

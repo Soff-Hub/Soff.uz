@@ -21,7 +21,6 @@ const Compare = ({ ecomerce }) => {
     }
 
     useEffect(() => {
-        console.log(ecomerce);
         if (ecomerce) {
             getProducts(ecomerce.compareItems);
         }

@@ -25,34 +25,38 @@ function ElectronicTopCategories() {
                 <div className="yaxshi-categoriyalar">
                     {category ? (
                         category.map((category) => (
-                            <Link
-                                key={category.id}
-                                href="/category/[pid]"
-                                as={`/category/${category.id}`}>
-                                <a>
-                                <div className="col-md-2 col-sm-3 col-xs-4 col-6 ">
-                                    <div
-                                        className="ps-block--category-2 top-category-items "
-                                        style={{ cursor: 'pointer' }}>
+                            <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
+                                <Link
+                                    key={category.id}
+                                    href="/category/[pid]"
+                                    as={`/category/${category.id}`}>
+                                    <a>
                                         <div
-                                            style={{
-                                                display: 'flex',
-                                                alignContent: 'center',
-                                                justifyContent: 'center',
-                                            }}>
-                                            <img
+                                            className="ps-block--category-2 top-category-items "
+                                            style={{ cursor: 'pointer' }}>
+                                            <div
+                                                style={{
+                                                    display: 'flex',
+                                                    alignContent: 'center',
+                                                    justifyContent: 'center',
+                                                }}>
+                                             
+                                                <div style={{
+                                                    backgroundImage:`url(${category.image})`,
+                                                    backgroundRepeat:'no-repeat',
+                                                    backgroundSize:'cover',
+                                                    backgroundPosition:'center'
+                                                }}
                                                 className="yaxshi-categoriyalar-image"
-                                                src={category.image}
-                                                alt="banner"
-                                            />
+                                                ></div>
+                                            </div>
+                                            <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
+                                                <h4>{category.name}</h4>
+                                            </div>
                                         </div>
-                                        <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
-                                            <h4>{category.name}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                                </a>
-                            </Link>
+                                    </a>
+                                </Link>
+                            </div>
                         ))
                     ) : (
                         <div className="yaxshi-categ-placholder-box">

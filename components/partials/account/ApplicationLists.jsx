@@ -23,7 +23,6 @@ function Notifications() {
     const [profile, setProfile] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
 
-    console.log(dataCardModal);
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
         setProfile(ItemsData)
@@ -349,9 +348,9 @@ function Notifications() {
                         {
                             dataStatus?.map(item => (
                                 dataCardModal?.status === item.status ?
-                                    <option selected value={item.status} >{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
+                                    <option key={item.status} selected value={item.status} >{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
                                     :
-                                    <option value={item.status}>{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
+                                    <option key={item.status} value={item.status}>{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
                             ))
 
                         }

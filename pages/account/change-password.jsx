@@ -49,7 +49,6 @@ const Xabar = (e) => {
     const qaytaKodOlish = async () => {
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
-        console.log('qayta', qaytaUser);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
             setCoutdown(query.via === 'via_phone' ? 60 : 120);
             setReport(true)
@@ -104,7 +103,7 @@ const Xabar = (e) => {
                                         min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                    <p> {nomer} nomerga sms boradi</p>
+                                    <p> {nomer} ga sms boradi</p>
 
                                     <p>
                                         Kod kelishiga qolgan vaqt: {countdown}{' '}

@@ -26,7 +26,6 @@ class Register extends Component {
         const url = this.props.url;
         const { registerUser } = useAuth();
         const user = await registerUser(url, e);
-        console.log(user);
         if (user) {
             if (user.status >= 400) {
                 let message = '';
@@ -42,7 +41,8 @@ class Register extends Component {
                 localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
 
-                Router.push(`/account/xabar?via=${user.data.via_}`);
+
+                Router.push(`/account/Message?via=${user.data.via_}`);
             }
 
             console.log(user.data);
@@ -82,7 +82,6 @@ class Register extends Component {
     };
 
     render() {
-        // console.log('taqdiqlash', tasqidlash);
         return (
             <div className="ps-my-account">
                 <div className="container">

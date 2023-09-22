@@ -22,10 +22,8 @@ function FormCheckoutInformationOne() {
     };
   
     const state = useSelector(state => state?.auth?.shop)
-console.log('state', state.id);
    let arr = []
    arr.push(state?.id)
-    console.log("to'lov uchun berib yuborilgan id lar ", arr);
    
 
     const ProductToApi = async () => {
@@ -39,7 +37,6 @@ console.log('state', state.id);
             },
         };
         const respons = await ClickRepository.postClick(data, token);
-console.log(respons);
         if (respons?.status === 200 || respons?.status === 201) {
             window.open(`${respons?.data?.url}`, '_blank');
             setMessage(true);
