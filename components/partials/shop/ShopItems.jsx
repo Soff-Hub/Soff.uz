@@ -362,7 +362,7 @@ const ShopItems = ({
                 <div className="ps-shopping__actions">
               
                    <label className='category-search-label'>
-                   <i class="fa-solid fa-magnifying-glass search-label"></i>
+                   <i className="fa-solid fa-magnifying-glass search-label"></i>
                    <input className='ps-input' type="text" placeholder='Hujjatingizni izlang...' onChange={(e) => detailSearch(e.target.value)} />
                    </label>
               

@@ -150,7 +150,7 @@ function DashbordList() {
             dataIndex: 'status',
             key: 'address',
             render: (status) => (
-                <span>{status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> tasdiqlanganmagan</span>)}</span>
+                <span>{status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) : (<span><i className="fa-solid fa-circle-xmark text-danger"></i> tasdiqlanganmagan</span>)}</span>
             ),
 
         },
@@ -324,7 +324,7 @@ function DashbordList() {
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="card  " style={{ maxWidth: "840px" }}>
                                 <div className="row g-0 px-3 modal-body m-0">

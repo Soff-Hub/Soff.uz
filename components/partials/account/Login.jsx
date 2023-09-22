@@ -8,7 +8,6 @@ import { Form, Input, notification } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
-import useSelection from 'antd/es/table/hooks/useSelection';
 
 class Login extends Component {
     constructor(props) {

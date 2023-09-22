@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BackTop } from 'antd';
+import { FloatButton } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import {
@@ -37,11 +37,11 @@ const MasterLayout = ({ children }) => {
             {children}
             <PageLoader />
             <NavigationList />
-            <BackTop>
+            <FloatButton.BackTop>
                 <button className="ps-btn--backtop">
                     <i className="icon-arrow-up" />
                 </button>
-            </BackTop>
+            </FloatButton.BackTop>
         </>
     );
 };

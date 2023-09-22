@@ -95,7 +95,7 @@ function Notifications() {
             dataIndex: 'auth_status',
             key: 'address',
             render: (auth_status) => (
-                <span>{auth_status === 'code_verified' ? (<span><i className="fa-solid text-success fa-circle-check"></i> Faol</span>) : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Faol emas</span>)}</span>
+                <span>{auth_status === 'code_verified' ? (<span><i className="fa-solid text-success fa-circle-check"></i> Faol</span>) : (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Faol emas</span>)}</span>
             )
 
         },

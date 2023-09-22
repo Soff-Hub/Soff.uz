@@ -109,7 +109,7 @@ console.log(respons);
                     style={{ display: 'inline-block' }}
                     className="ps-btn"
                     onClick={() => ProductToApi()}>
-                    <i class="fa-solid fa-angles-left fa-fade me-2"></i> To'lov
+                    <i className="fa-solid fa-angles-left fa-fade me-2"></i> To'lov
                     qilish
                 </p>
             ) : (
