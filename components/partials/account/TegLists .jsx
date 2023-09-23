@@ -30,7 +30,7 @@ function TegLists() {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                // GetItemsUsers(page + 1, )
+                GetItemsUsers(page + 1, )
             }
         }
     }

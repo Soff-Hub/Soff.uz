@@ -171,7 +171,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
                                     </div>
                                     {
-                                        data?.all_revenue ?
+                                        data?.all_revenue || data?.all_revenue == 0 ?
                                             <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
                                             :
                                             <div className="spinner-border mt-5" role="status">
@@ -191,7 +191,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
                                     </div>
                                     {
-                                        data?.total_revenue ?
+                                        data?.total_revenue || data?.total_revenue == 0 ?
                                             <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.total_revenue)} so'm</h4>
                                             :
                                             <div className="spinner-border mt-5" role="status">
@@ -210,15 +210,12 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
                                     </div>
                                     {
-                                        data?.today_revenue ?
+                                        data?.today_revenue || data?.today_revenue === 0 ?
                                             <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
                                             :
                                             <div className="spinner-border mt-5" role="status">
                                                 <span className="visually-hidden">Loading...</span>
-                                            </div> 
-                                            ||
-                                            data?.today_revenue===0 ?
-                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4> : <></>
+                                            </div>
 
                                     }
 
@@ -233,8 +230,14 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
                                     </div>
-
-                                    <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
+                                    {
+                                        data?.total_order || data?.total_order === 0 ?
+                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
 
                                 </div>
                             </div>
@@ -247,8 +250,14 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
                                     </div>
-
-                                    <h4 className='mt-5 pt-4 '>{addPeriodToThousands(data?.total_shops)} ta</h4>
+                                    {
+                                        data?.total_shops || data?.total_shops === 0 ?
+                                            <h4 className='mt-5 pt-4 '>{addPeriodToThousands(data?.total_shops)} ta</h4>
+                                            :
+                                            <div className="spinner-border mt-5 pt-4" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
 
                                 </div>
                             </div>
@@ -264,8 +273,14 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
                                     </div>
-
-                                    <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
+                                    {
+                                        data?.all_revenue || data?.all_revenue === 0 ?
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
 
                                 </div>
                             </div>
@@ -278,8 +293,14 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
                                     </div>
-
-                                    <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.last_month_revenue)} so'm</h4>
+                                    {
+                                        data?.last_month_revenue || data?.last_month_revenue === 0 ?
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.last_month_revenue)} so'm</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
 
                                 </div>
                             </div>
@@ -292,8 +313,14 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
                                     </div>
-
-                                    <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
+                                    {
+                                        data?.today_revenue || data?.today_revenue === 0 ?
+                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
 
                                 </div>
                             </div>
@@ -306,8 +333,14 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
                                     </div>
-
-                                    <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
+                                    {
+                                        data?.total_order || data?.total_order === 0 ?
+                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
 
                                 </div>
                             </div>
