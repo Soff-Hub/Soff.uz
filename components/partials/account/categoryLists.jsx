@@ -119,6 +119,7 @@ function CategoryLists() {
         GetItemsProducts(1)
     }
 
+
   
 
     function handleClickPostsImg(e) {
@@ -128,7 +129,6 @@ function CategoryLists() {
         GetItemsProducts(1)
         getParentLists()
     }, []);
-
 
     const columns = [
         {
@@ -160,7 +160,7 @@ function CategoryLists() {
                 <div>
                     {
                         poster_url ?
-                            <img src={poster_url} width={54} height={54} className='rounded-3' />
+                            <a href={poster_url} target='blank'><img src={poster_url} width={54} height={54} className='rounded-3' /></a>
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }
@@ -169,11 +169,23 @@ function CategoryLists() {
         },
         {
             title: 'Top',
-            dataIndex: 'top',
+            dataIndex: 'data',
             key: 'address',
-            render: (top, id)=> (
-                <input type='checkbox' defaultChecked={top} onChange={() => handleClickChecked(id)} />
-            )
+            render: (datas) => {
+                const isTop = data.some((el) => el.id === datas?.id && el.is_parent === true);
+        
+                if (isTop) {
+                    return (
+                        <input
+                            type='checkbox'
+                            defaultChecked={datas?.top}
+                            onChange={() => handleClickChecked(datas)}
+                        />
+                    );
+                }
+        
+                return <></>;
+            },
         },
         {
             title: 'Harakatlar',
@@ -210,6 +222,7 @@ function CategoryLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
+                                    <h5 className='bg-white m-0 p-4 rounded text-danger '> <i class="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
                                     <Table scroll={{ x: 750 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
@@ -221,11 +234,12 @@ function CategoryLists() {
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
                      <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                      {
-                         file  ?  "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
+                         deleteIdEdit?.image ? deleteIdEdit?.image :
                              <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
                          } 
                         <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
+                    <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
                     {
                         data.some(el =>( el?.id==deleteIdEdit?.id && el.is_update === true)) ?
                     <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
@@ -264,6 +278,13 @@ function CategoryLists() {
                          } 
                         <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
+                    {
+                        file?
+                        <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
+                     :
+                     <></>
+                    }
+
                     <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
                         <option value="">Parent</option>
                         {
