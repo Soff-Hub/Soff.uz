@@ -37,24 +37,24 @@ const HomeElectronicsPage = () => {
          <ElectronicBanner />
          <ElectronicTopCategories />
          {
-            categoryData?.length > 0 && categoryData?.map((item, index) => (
-                    item.promotional_sliders?.length > 0 ?
+            categoryData?.length > 0 ?
+            categoryData?.map((item, index) => (
+                    item.promotional_sliders?.length > 0 &&
                 <ElectronicProductGroupWithCarousel
                     collectionSlug="electronics-best-sellers"
                     title={item.name}
                     data={item}
                     id={item.id}
-                    key={item.id}
+                    key={index}
                 />
-                :
-                // <div style={{
-                //     display:'flex',
-                //     justifyContent:'center',
-                //     alignContent:'center'
-                // }}><PropagateLoader color="#F4CA16" /></div>
-                ""
-            ))
-         }
+
+            )) :
+             <div style={{
+                    display:'flex',
+                    justifyContent:'center',
+                    alignContent:'center'
+                }}><PropagateLoader color="#F4CA16" /></div>
+         } 
         
          <SiteFeatures />
      </main>

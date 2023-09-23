@@ -292,7 +292,13 @@
     }
 }
 
+#acc-li-xl{
+    padding: 3px 10px;
+}
 
+.accordion-button{
+    padding: 10px 7px;
+}
 
 // .home-car{
 //     max-width: 200px;
@@ -303,6 +309,13 @@
 // }
 
 @include media('<lg') {
+    .acc-li{
+        padding: 5px 5px 0 5px;
+    }
+    .accordion-button{
+        padding: 5px 8px;
+    }
+
     .ps-product {
         .ps-product__thumbnail {
             img {

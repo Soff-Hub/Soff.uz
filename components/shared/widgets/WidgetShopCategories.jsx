@@ -19,7 +19,6 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
 
     const [categoriesView, setcategoriesView] = useState(null);
 
-
     const categoryView2 = () => {
         if (category?.length > 0) {
             if (!loading) {
@@ -62,18 +61,13 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                                                     <Link
                                                         href={`/category/${item.id}`}>
                                                         <a
+                                                        id='acc-li-xl'
                                                             className={
                                                                 item.id ===
                                                                 Number(slug)
                                                                     ? 'active'
                                                                     : ''
-                                                            }
-                                                            // onClick={() =>
-                                                            //     IdYuborish(
-                                                            //         item.id
-                                                            //     )
-                                                            // }
-                                                            >
+                                                            }>
                                                             {item.name}
                                                         </a>
                                                     </Link>
@@ -86,10 +80,7 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
                                 <Link href={`/category/${item.id}`}>
                                     <a
                                         className="category-list-item"
-                                        // onClick={() =>
-                                        //     ParentDocumentId(item.id)
-                                        // }
-                                        >
+                                    >
                                         {item.name}
                                     </a>
                                 </Link>
@@ -106,25 +97,27 @@ const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
 
     useEffect(() => {
         getCategry();
-
     }, [data]);
 
-
     useEffect(() => {
-        categoryView2()
-    }, [category])
+        categoryView2();
+    }, [category]);
 
     return (
         <aside className="widget widget_shop">
             <h4 className="widget-title">Kategoriyalar</h4>
-            {categoriesView?.length ?  <ul className="ps-list--categories">{categoriesView}</ul> : <div
+            {categoriesView?.length ? (
+                <ul className="ps-list--categories">{categoriesView}</ul>
+            ) : (
+                <div
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
                         alignContent: 'center',
                     }}>
                     <PropagateLoader color="#C9C9C9" />
-                </div> }
+                </div>
+            )}
         </aside>
     );
 };

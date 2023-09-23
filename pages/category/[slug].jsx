@@ -27,7 +27,7 @@ const ProductCategoryScreen = () => {
 
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
-        if (responseData) {
+        if (responseData?.length > 0) {
             if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
                 setchaildId(slug)
             }
