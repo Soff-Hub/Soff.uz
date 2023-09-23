@@ -59,15 +59,6 @@ const Xabar = (e) => {
 
     const qaytaKodOlish = async () => {
         setLoader(true);
-        if (query.via === 'via_phone') {
-            setCoutdown(60);
-            counter(60)
-        } else if (query.via === 'via_email') {
-            setCoutdown(120);
-            counter(120)
-        }
-
-
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
         setCountSekond(false);
@@ -78,6 +69,13 @@ const Xabar = (e) => {
                 title: 'Ijobiy',
                 content: qaytaUser?.data?.msg,
             });
+            if (query.via === 'via_phone') {
+                setCoutdown(60);
+                counter(60)
+            } else if (query.via === 'via_email') {
+                setCoutdown(120);
+                counter(120)
+            }
             modal.update;
             setLoader(false);
 
@@ -135,8 +133,7 @@ const Xabar = (e) => {
                                         maxLength={'4'}
                                     />
                                     <p>
-                                       01 :  {countdown}
-                                       
+                                       {countdown}
                                     </p>
                                 </div>
                                 <div className="form-group submit">

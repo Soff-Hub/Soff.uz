@@ -30,7 +30,6 @@ export default function QaytaNomerKiritish() {
         const response = await qaytaRaqamYuborishAuth(data);
         console.log(response)
         if (response.status === 200 || response.status === 201) {
-            Router.push('/account/change-password');
             const { access } = response.data;
             setReport(false)
             localStorage.setItem('qayta_token', access);

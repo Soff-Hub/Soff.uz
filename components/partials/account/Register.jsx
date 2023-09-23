@@ -123,7 +123,6 @@ class Register extends Component {
                                             placeholder="Telefon raqam yoki email"
                                             onKeyDown={this.handleEnterKeyPress}
                                             onChange={this.handleChangeType}
-                                            defaultValue={"+998"}
                                             maxLength={this.state.inputLength}
                                         />
                                     </Form.Item>
