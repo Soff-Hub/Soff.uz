@@ -7,7 +7,7 @@ import Router, { useRouter } from 'next/router';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);
-    const [countdown, setCoutdown] = useState(0);
+    const [countdown, setCoutdown] = useState(120);
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true)
     const [kod, setKod] = useState(null);
@@ -47,8 +47,11 @@ const Xabar = (e) => {
     };
 
     const qaytaKodOlish = async () => {
-        const { qaytaKodYuborish } = useAuth();
-        const qaytaUser = await qaytaKodYuborish();
+        const data = {
+            'phone_or_email' : localStorage.getItem('qayta_')
+        }
+        const { qaytaKodYuborishParol } = useAuth();
+        const qaytaUser = await qaytaKodYuborishParol(data);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
             setCoutdown(query.via === 'via_phone' ? 60 : 120);
             setReport(true)
@@ -75,10 +78,11 @@ const Xabar = (e) => {
     useEffect(() => {
         if (localStorage.getItem('qayta_')) {
             setNomer(localStorage.getItem('qayta_'));
-            setCoutdown(query.via === 'via_phone' ? 60 : 120);
+            setCoutdown( 120);
         }
 
-        return () => counter(query.via === 'via_phone' ? 60 : 120)
+        return () => counter(120)
+        
     }, [tokenn]);
 
 
@@ -92,7 +96,13 @@ const Xabar = (e) => {
                         onFinish={(e) => handleSubmitKod(e)}>
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
-                                <h5>Kodni kiriting</h5>
+                            <h5>
+                                    Tasdiqlash SMS - kodi quyidagiga
+                                    yuborildi:
+                                </h5>
+                                <h4 style={{ marginBottom: '20px' }}>
+                                    {nomer}
+                                </h4>
                                 <div className="form-group form-forgot">
                                     <Input
                                         required
@@ -103,12 +113,7 @@ const Xabar = (e) => {
                                         min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                    <p> {nomer} ga sms boradi</p>
-
-                                    <p>
-                                        Kod kelishiga qolgan vaqt: {countdown}{' '}
-                                        soniya
-                                    </p>
+                                     <p>{countdown}</p>
                                 </div>
                                 <div className="form-group submit">
                                     {report ? (

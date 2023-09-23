@@ -11,13 +11,12 @@ const Xabar = (e) => {
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true);
     const [loader, setLoader] = useState(false);
-    const [countSekond, setCountSekond] = useState(true);
+    const [countSekond, setCountSekond] = useState(120);
     const [firstSendCode, setFirstSendCode] = useState(true);
-    const [countdown, setCoutdown] = useState(null);
+    const [countdown, setCoutdown] = useState(120);
     const [kod, setKod] = useState(null);
-    const Router = useRouter()
-    const { query } = Router
-
+    const Router = useRouter();
+    const { query } = Router;
 
     const handleSubmitKod = async () => {
         setLoader(true);
@@ -32,9 +31,6 @@ const Xabar = (e) => {
             setLoader(false);
             Router.push('/account/login');
         } else {
-
-            
-            let message = '';
             setLoader(false);
             const modal = Modal.error({
                 centered: true,
@@ -53,38 +49,41 @@ const Xabar = (e) => {
         }, 1000);
 
         setTimeout(() => {
-            clearInterval(interval)
+            clearInterval(interval);
         }, count * 1000);
-    }
+    };
 
     const qaytaKodOlish = async () => {
+        const data = {
+            phone_or_email: JSON.parse(localStorage.getItem('data'))
+                .phone_or_email,
+        };
+        console.log('dataa', data);
         setLoader(true);
         const { qaytaKodYuborish } = useAuth();
-        const qaytaUser = await qaytaKodYuborish();
+        const qaytaUser = await qaytaKodYuborish(data);
         setCountSekond(false);
-        if (qaytaUser.status === 200 || qaytaUser.status === 201) {
+        if (qaytaUser?.status === 200 || qaytaUser?.status === 201) {
             let message = '';
             const modal = Modal.success({
                 centered: true,
                 title: 'Ijobiy',
                 content: qaytaUser?.data?.msg,
             });
-            if (query.via === 'via_phone') {
-                setCoutdown(60);
-                counter(60)
-            } else if (query.via === 'via_email') {
-                setCoutdown(120);
-                counter(120)
-            }
+            // if (query.via === 'via_phone') {
+            //     setCoutdown(60);
+            //     counter(60);
+            // } else if (query.via === 'via_email') {
+            //     setCoutdown(120);
+            //     counter(120);
+            // }
             modal.update;
             setLoader(false);
-
         } else {
-            let message = '';
             const modal = Modal.error({
                 centered: true,
-                title: qaytaUser.data.msg,
-                content: message,
+                title: 'Xatolik',
+                content: '',
             });
             modal.update;
             setLoader(false);
@@ -100,41 +99,40 @@ const Xabar = (e) => {
         } else {
             setReport(false);
         }
-    }, [countdown])
+    }, [countdown]);
 
     useEffect(() => {
         if (localStorage.getItem('data')) {
             setNomer(JSON.parse(localStorage.getItem('data')).phone_or_email);
         }
-        setCoutdown(query.via === 'via_phone' ? 60 : 120)
-        return () => counter(query.via === 'via_phone' ? 60 : 120)
-
+        setCoutdown( 120);
+        return () => counter( 120);
     }, [tokenn]);
 
     return (
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
-                    <Form
-                        className="ps-form--account"
-                    >
+                    <Form className="ps-form--account">
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
-                                <h5> Tasdiqlash SMS - kodi quyidagi raqamga yuborildi: </h5>
-                                <h4 style={{marginBottom:'20px'}}> {nomer} </h4>
+                                <h5>
+                                    Tasdiqlash SMS - kodi quyidagiga
+                                    yuborildi:
+                                </h5>
+                                <h4 style={{ marginBottom: '20px' }}>
+                                    {nomer}
+                                </h4>
                                 <div className="kod-input">
                                     <Input
-                                        required
                                         className="form-control mb-4 "
                                         type="number"
                                         placeholder="Kodni kiriting..."
                                         onChange={(e) => setKod(e.target.value)}
                                         min="0"
-                                        maxLength={'4'}
+                                        maxLength="4"
                                     />
-                                    <p>
-                                       {countdown}
-                                    </p>
+                                    <p>{countdown}</p>
                                 </div>
                                 <div className="form-group submit">
                                     {firstSendCode ? (
@@ -169,15 +167,14 @@ const Xabar = (e) => {
                                                 Qayta kod olish
                                             </button>
                                         )
-                                    ) : <button
-                                        onClick={() =>
-                                            handleSubmitKod()
-                                        }
-                                        type="button"
-                                        className="ps-btn ps-btn--fullwidth">
-                                        Yuborish
-                                    </button>
-                                    }
+                                    ) : (
+                                        <button
+                                            onClick={() => handleSubmitKod()}
+                                            type="button"
+                                            className="ps-btn ps-btn--fullwidth">
+                                            Yuborish
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>
