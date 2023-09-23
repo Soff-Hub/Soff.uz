@@ -8,7 +8,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Modal, Select } from 'antd';
+import { Modal, Select, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
@@ -158,27 +158,27 @@ const PostsMyProducts = () => {
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
-                    <form
+                  <div className='row w-100 gap-5 ' style={{alignItems:"flex-start"}}>
+                  <form
                         onSubmit={handleClickPostsEdit}
                         style={{ position: "relative" }}
                         id="FormPostsMyProducts"
-                        className="row mx-auto  gap-3 py-5 w-100">
-                        <h4 className="col-md-12">Mahsulot Qo'shish</h4>
+                        className=" py-5  col-md-8">
+                        <h4 className="col-md-12">Hujjatni tahrirlash</h4>
 
-                        <div className='col-md-5'>
-                            <label>Hujjat saytdagi ko'rinishi (rasm)</label>
-                            <label className="add-product-user-image form-control  pt-4 rounded-3 text-truncate">
+                        <div className='row'>
+                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
+                            <label className="add-product-user-image form-control  pt-4 mb-3 rounded-3 text-truncate col-md-8 m-0">
                                 {
                                     livePoster ? livePoster :
                                         products.poster_url
                                 }
                                 <input type="file" onChange={(e) => LiveImage(e)} />
                             </label>
-                            <a className='text-primary' href={products.poster_url} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
                         </div>
-                        <div className='col-md-5'>
-                            <label>Hujjat yuklab olish uchun (file)</label>
-                            <label className="add-product-user-image form-control  pt-4 rounded-3 text-truncate">
+                        <div className='row'>
+                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
+                            <label className="add-product-user-image form-control  pt-4 m-0 mb-3  rounded-3 text-truncate col-md-8">
 
                                 {
                                     fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
@@ -193,12 +193,11 @@ const PostsMyProducts = () => {
                                     accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                                 />
                             </label>
-                                <a className='text-primary' href={products.file} target="_blank" rel="noopener noreferrer">Link (file)</a>
                         </div>
-                        <div className="rounded-3 col-md-10 px-4  m-0 d-flex flex-column">
-                            <label>Hujjat teglari</label>
+                        <div className="row">
+                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
                             <Select
-                                className="py-2"
+                                className=" p-0 col-md-8 mb-3"
                                 mode="tags"
                                 style={{ width: '100%' }}
                                 placeholder="Hujjatga tag qo'shing"
@@ -208,11 +207,11 @@ const PostsMyProducts = () => {
                                 {children}
                             </Select>
                         </div>
-                        <div className='col-md-5'>
-                            <label>Kategoriya</label>
+                        <div className='row'>
+                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
                             <select
                                 style={{ alignItems: "flex-start" }}
-                                className="form-select rounded-3 py-4 fs-4"
+                                className="form-select rounded-3 py-3 fs-4 col-md-8 mb-3"
                                 onChange={(e) =>
                                     setCategory_id(e.target.value)
                                 }>
@@ -226,22 +225,22 @@ const PostsMyProducts = () => {
                                     ))}
                             </select>
                         </div>
-                        <div className='col-md-5'>
-                            <label>Hujjat nomi</label>
+                        <div className='row'>
+                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
                             <input
                                 type="text"
-                                className="form-control  rounded-3 "
+                                className="form-control  rounded-3 col-md-8 mb-3 "
                                 placeholder="Hujjat nomi"
                                 name="title"
                                 onChange={(e) => setTitle(e.target.value)}
                                 defaultValue={products?.title}
                             />
                         </div>
-                        <div className='col-md-5'>
-                            <label >Hujjat narxi</label>
+                        <div className='row'>
+                        <div className='col-md-4 d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
                             <input
                                 type='number'
-                                className="form-control  rounded-3"
+                                className="form-control  rounded-3 col-md-8 mb-3 "
                                 placeholder="Hujjatingizning narxi"
                                 name="price"
                                 defaultValue={products?.price}
@@ -250,11 +249,11 @@ const PostsMyProducts = () => {
                                 )}
                             />
                         </div>
-                       <div className='col-md-5'>
-                        <label>Hujjatga qo'ygan chegirmangiz</label>
+                       <div className='row'>
+                       <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
                        <input
                             type='number'
-                            className="form-control  rounded-3"
+                            className="form-control  rounded-3 col-md-8 mb-3"
                             placeholder="Hujjatingizga qo'ygan chegirmangiz"
                             name="price"
                             defaultValue={products?.discount}
@@ -264,13 +263,25 @@ const PostsMyProducts = () => {
                         />
                        </div>
 
-                        <div className=" rounded-3 col-md-10">
-                            <span>Qisqa tavsif</span>
-                            <textarea onChange={(e) => setShortData(e.target.value)} defaultValue={products?.short_description} className=' rounded p-3 col-md-12 form-control' name='textarea' rows={"4"}></textarea>
-                        </div>
-                        <div className=" p-0 px-4 rounded-3 col-md-10">
-                            <span>Hujjat haqida to'liq ma'umot</span>
-                            <CKeditor
+                        <div className="row">
+                        <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
+
+                            <div className='col-md-8 p-0 mb-3 '>
+                       <CKeditor
+                                name="short_description"
+                                onChange={(data) => {
+                                    setShortData(data);
+                                }}
+                                editorLoaded={editorLoaded}
+                                value={products?.short_description}
+
+                            />
+                       </div>
+                        </div> 
+                        <div className="row">
+                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
+                       <div className='col-md-8 p-0  mb-3'>
+                       <CKeditor
                                 name="description"
                                 onChange={(data) => {
                                     setFullData(data);
@@ -279,9 +290,10 @@ const PostsMyProducts = () => {
                                 value={products?.description}
 
                             />
+                       </div>
                         </div>
 
-                        <div className="d-flex justify-content-center col-md-10">
+                        <div className="d-flex justify-content-center ">
                             <button
                                 type='submit'
                                 className="btn btn-success py-3 col-md-3 ">
@@ -302,6 +314,72 @@ const PostsMyProducts = () => {
                             </span>
                         </div>
                     </form>
+                    <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{maxWidth:"370px", marginTop:"6rem"}}>
+                                <div className="image" style={{
+                                    backgroundImage: `url(${livePoster
+                                        ? livePoster
+                                        : products?.poster_url})`
+                                }}>
+                                </div>
+                                <div className="text-start">
+                                    <p className="live-card-p">
+                                        <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Narxi</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {taxminiyNarx
+                                                ? addPeriodToThousands(taxminiyNarx)
+                                                : addPeriodToThousands(products?.price)}
+                                            so'm
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Teglari</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                products?.tag?.map(item => (<span>#{item.name} </span>))
+                                            }
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Kategoriya</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                category_id ? category_id : "Kategoriya qo'shing"
+                                            }
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Chegirma</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                discount ? discount : products?.discount
+                                            }
+                                            %
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Qisqa tavsif</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
+                                            }
+
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                Fulldata ? parse(Fulldata) : products?.description ?  parse(products?.description) : ""
+                                            }
+
+                                        </span>
+                                    </p>
+                                </div>
+                            </div>
+                  </div>
                     <div
                         className="offcanvas offcanvas-end"
                         tabindex="-1"
@@ -365,7 +443,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Qisqa tavsif</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Shortdata ? Shortdata : products?.short_description
+                                                Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
                                             }
 
                                         </span>

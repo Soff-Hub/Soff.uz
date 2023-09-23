@@ -88,7 +88,8 @@ useEffect(() => {
 
   return (
 <div className="row g-3  overflow-x-auto" >
-  <div className="col-md-5" >
+  <div className="col-md-5 border p-4 rounded" >
+    <h4>Yangi karta qo'shish</h4>
     <div id="Card" className={numberCard === 9860 ? "BackImg" : numberCard === 8600 ? "BackImg2" : "BackImg1"}>
       <div className="colCard px-5">
         <h5 className="cardText cardColorHumo">{number}</h5>
@@ -99,8 +100,8 @@ useEffect(() => {
       <button onClick={handleClickCardPosts} className="btn btn-success py-3 " style={{ width: "300px" }}><span className="fs-4">Saqlash</span></button>
  
   </div>
-  <div className="col-md-6 mx-auto d-flex flex-column row-gap-3" >
-    <h4>Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-2 text-primary"></i></h4>
+  <div className="col-md-6 mx-auto d-flex flex-column row-gap-3 rounded border " >
+    <h4 className="m-0 mt-3">Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-2 text-primary m-0"></i></h4>
     {
       profileCard?.length > 0 ? profileCard?.map((item, index)=>(
        <div className="d-flex gap-4" key={index} >

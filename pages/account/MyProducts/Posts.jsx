@@ -109,10 +109,9 @@ const Posts = () => {
             );
             if (respons?.recommended_price !== undefined) {
                 setTaxminiyNarx(
-                    `Tavsiya etilgan narx: ${
-                        respons?.recommended_price !== 0
-                            ? addPeriodToThousands(respons?.recommended_price)
-                            : ''
+                    `Tavsiya etilgan narx: ${respons?.recommended_price !== 0
+                        ? addPeriodToThousands(respons?.recommended_price)
+                        : ''
                     } `
                 );
                 setNarx(respons?.recommended_price);
@@ -154,10 +153,9 @@ const Posts = () => {
             );
             if (respons?.recommended_price !== undefined) {
                 setTaxminiyNarx(
-                    `Tavsiya etilgan narx: ${
-                        respons?.recommended_price !== 0
-                            ? addPeriodToThousands(respons?.recommended_price)
-                            : ''
+                    `Tavsiya etilgan narx: ${respons?.recommended_price !== 0
+                        ? addPeriodToThousands(respons?.recommended_price)
+                        : ''
                     } `
                 );
                 setNarx(respons?.recommended_price);
@@ -191,7 +189,7 @@ const Posts = () => {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz yangi mahsulot qo'shdingiz`,
             });
-        }else{
+        } else {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
@@ -232,7 +230,7 @@ const Posts = () => {
 
     const chegirma = (foiz) => {
         if (narx) {
-            const chegirmaNarx = narx -  ((narx * foiz) / 100) ;
+            const chegirmaNarx = narx - ((narx * foiz) / 100);
             if (chegirmaNarx < 1000) {
                 setChegirmaTek(false);
             } else {
@@ -257,250 +255,249 @@ const Posts = () => {
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center ">
-                   <div className='row  w-100 gap-5'  style={{alignItems:"flex-start"}}>
-                   <form
-                        onSubmit={handleClickPosts}
-                        style={{ position: 'relative', width: '100%' }}
-                        id="FormPostsMyProducts"
-                        className=" col-md-8 py-5">
-                        <h4>Hujjat Qo'shish</h4>
-                         <div className='row'>
-                            <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                         <label className="add-product-user-image  d-flex flex-column justify-content-center align-content-center form-control col-md-8 pt-4 rounded-3 text-truncate">
-                            {livePoster ? (
-                                livePoster
-                            ) : (
-                                <span className="d-flex justify-content-between">
-                                    Hujjat posterini yuklash (Rasm)
-                                    <i className="fa-solid fa-cloud-arrow-up"></i>
-                                </span>
-                            )}
-
-                            <input type="file" required onChange={(e) => LiveImage(e)} />
-                        </label>
-                         </div>
-                          <div className='row '>
-                            <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Hujjat teglari</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                            <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control pt-4 rounded-3 text-truncate">
-                            {liveFile ? (
-                                liveFile
-                            ) : (
-                                <span className="d-flex justify-content-between">
-                                    {' '}
-                                    Hujjatni yuklash - max: 50mb (pdf, doc,
-                                    word, excel, zip ){' '}
-                                    <i className="fa-solid fa-cloud-arrow-up"></i>
-                                </span>
-                            )}
-                            <input
-                            required
-                                type="file"
-                                onChange={(e) => LiveFileValue(e)}
-                                accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
-                            />
-                        </label>
-                          </div>
-                         <div className=' row '>
-                     <div className='col-md-4 m-0 pt-2 d-flex justify-content-between'><p>Barcha Teglar</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                     <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
-                            <Select
-                                className="py-2"
-                                mode="tags"
-                                style={{ width: '100%' }}
-                                placeholder="Hujjatga kamida 3 dan 10 tagacha tag qo'shish zarur"
-                                onChange={handleChange}>
-                                {children}
-                            </Select>
-                        </div>
-                         </div>
-                          <div className=' row  mt-2'>
-                        <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Barcha Kategoriyalar</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                        <select
-                            style={{ alignItems: 'center' }}
-                            className="form-select form-control rounded-3 5 fs-4 col-md-8"
-                            onChange={(e) =>
-                                handleChangeCategory(e.target.value)
-                            }>
-                            <option className="mt-2 pt-3" value="">
-                                Barcha Kategoriyalar
-                            </option>
-                            {dataCategory?.length > 0 &&
-                                dataCategory.map((item) => (
-                                    <option value={item.id}>{item.name}</option>
-                                ))}
-                        </select>
-                          </div>
-                     <div className='row   mt-3'>  
-                      <div className='col-md-4 mt-2 d-flex justify-content-between'> <p>Hujjat nomi</p><Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                      <input
-                        required
-                            type="text"
-                            className="form-control  rounded-3 col-md-8"
-                            placeholder="Hujjat nomi"
-                            name="title"
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                     </div>
-                      <div className='row   mt-3'>
-                 <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Hujjat narxxi</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                 <input
-                        
-                        type={narxNomi ? 'text' : 'number'}
-                        className="form-control  rounded-3 col-md-8"
-                        placeholder="Hujjat narxi"
-                        name="price"
-                        value={taxminiyNarx}
-                        onChange={(e) => (
-                            setNarxNomi(false),
-                            setTaxminiyNarx(e.target.value),
-                            setNarx(e.target.value)
-                        )}
-                    />
-                      </div>
-                     <div className='row   mt-3'>
-                       <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Hujjat chegirmasi</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                       <input
-                            type="number"
-                            className={`form-control col-md-8 rounded-3 ${
-                                chegirmaTek ? '' : 'chegirma-xato'
-                            } `}
-                            placeholder="Chegirma qo'ying (%)"
-                            name="price"
-                            onChange={(e) => (
-                                setDiscount(e.target.value),
-                                chegirma(e.target.value)
-                            )}
-                        />
-                     </div>
-                      <div className='row   mt-3'>
-                       <div className='col-md-4 d-flex justify-content-between'><p>Qisqa tavsif</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                       <div className=" p-0 rounded-3 col-md-8">
-                            <CKeditor
-                                name="description"
-                                onChange={(data) => {
-                                    setShortData(data);
-                                }}
-                                editorLoaded={editorLoaded}
-                            />
-                        </div>
-                      </div>
-                       
-                  <div className='  row mt-3'>
-                    <div className='col-md-4 d-flex justify-content-between'><p>Hujjat haqida to'liq ma'umot</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                    <div className=" p-0 rounded-3 col-md-8">
-                            <CKeditor
-                                name="description"
-                                onChange={(data) => {
-                                    setFullData(data);
-                                }}
-                                editorLoaded={editorLoaded}
-                            />
-                        </div>
-                  </div>
-
-                        <div className="d-flex justify-content-center  mt-4 ">
-                            <button
-                                type="submit"
-                                className="btn btn-success py-3 w-25">
-                                <span className="fs-4">Hujjat qo'shish</span>
-                            </button>
-                        </div>
-                        <div className="mahsulotingiz">
-                            <p>Hujjatingiz</p>
-                            <span
-                                className="fixed-btn"
-                                type="button"
-                                data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight"
-                                aria-controls="offcanvasRight">
-                                <i className="fa-solid fa-id-card fa-beat fs-1"></i>
-                            </span>
-                        </div>
-                    </form>
-                    <div className="col-md-4 rounded-3  p-3 cardResponsive  card" style={{maxWidth:"370px", marginTop:"6rem"}} >
-                                <div
-                                    className="image"
-                                    style={{
-                                        backgroundImage: `url(${
-                                            livePoster
-                                                ? livePoster
-                                                : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-                                        })`,
-                                    }}></div>
-                                <div className="text-start">
-                                    <p className="live-card-p">
-                                        <strong>Nomi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
+                    <div className='row  w-100 gap-5' style={{ alignItems: "flex-start" }}>
+                        <form
+                            onSubmit={handleClickPosts}
+                            style={{ position: 'relative', width: '100%' }}
+                            id="FormPostsMyProducts"
+                            className=" col-md-8 py-5">
+                            <h4>Hujjat Qo'shish</h4>
+                            <div className='row   mt-3'>
+                                <div className='col-md-4  d-flex justify-content-between'> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <input
+                                    required
+                                    type="text"
+                                    className="form-control  rounded-3 col-md-8 mb-2"
+                                    placeholder="Hujjat nomi"
+                                    name="title"
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </div>
+                            <div className='row '>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control pt-4 rounded-3 text-truncate">
+                                    {liveFile ? (
+                                        liveFile
+                                    ) : (
+                                        <span className="d-flex justify-content-between">
                                             {' '}
-                                            {title ? title : "To'ldirilmadi"}
+                                            Hujjatni yuklash - max: 50mb (pdf, doc,
+                                            word, excel, zip ){' '}
+                                            <i className="fa-solid fa-cloud-arrow-up"></i>
                                         </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong>Narxi : </strong>
-                                        <strong style={{ maxWidth: '150px' }}>
-                                            <span>
-                                                {' '}
-                                                {taxminiyNarx
-                                                    ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
-                                                    : "To'ldirilmadi"}
-                                            </span>
-                                        </strong>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong>Kategoriyasi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {categoryName
-                                                ? categoryName
-                                                : "To'ldirilmadi"}{' '}
+                                    )}
+                                    <input
+                                        required
+                                        type="file"
+                                        onChange={(e) => LiveFileValue(e)}
+                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                    />
+                                </label>
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
+                                <label className="add-product-user-image  d-flex flex-column justify-content-center align-content-center form-control col-md-8 pt-4 rounded-3 text-truncate">
+                                    {livePoster ? (
+                                        livePoster
+                                    ) : (
+                                        <span className="d-flex justify-content-between">
+                                            Hujjat posterini yuklash (Rasm)
+                                            <i className="fa-solid fa-cloud-arrow-up"></i>
                                         </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong>Chegirmasi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {' '}
-                                            {discount
-                                                ? discount + '%'
-                                                : "To'ldirilmadi"}{' '}
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong>Taglari : </strong>
-                                        {/* <span style={{maxWidth:'150px'}} > </span> */}
-                                        {tagSearchResult.length > 0
-                                            ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              #{item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
-                                            : "To'ldirilmadi"}
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong>Qisqa tavsif : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {Shortdata
-                                                ? parse(Shortdata)
-                                                : "To'ldirilmadi"}
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p ">
-                                        <strong> To'liq ma'lumot : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {Fulldata
-                                                ? parse(Fulldata)
-                                                : "To'ldirilmadi"}
-                                        </span>
-                                    </p>
+                                    )}
+
+                                    <input type="file" required onChange={(e) => LiveImage(e)} />
+                                </label>
+                            </div>
+
+                            <div className=' row '>
+                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
+                                    <Select
+                                        className="py-2"
+                                        mode="tags"
+                                        style={{ width: '100%' }}
+                                        placeholder="Hujjatga kamida 3 dan 10 tagacha tag qo'shish zarur"
+                                        onChange={handleChange}>
+                                        {children}
+                                    </Select>
                                 </div>
                             </div>
-                   </div>
+                            <div className=' row  mt-2'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <select
+                                    style={{ alignItems: 'center' }}
+                                    className="form-select form-control rounded-3 5 fs-4 col-md-8"
+                                    onChange={(e) =>
+                                        handleChangeCategory(e.target.value)
+                                    }>
+                                    <option className="mt-2 pt-3" value="">
+                                        Barcha Kategoriyalar
+                                    </option>
+                                    {dataCategory?.length > 0 &&
+                                        dataCategory.map((item) => (
+                                            <option value={item.id}>{item.name}</option>
+                                        ))}
+                                </select>
+                            </div>
+                            <div className='row   mt-3'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <input
+
+                                    type={narxNomi ? 'text' : 'number'}
+                                    className="form-control  rounded-3 col-md-8"
+                                    placeholder="Hujjat narxi"
+                                    name="price"
+                                    value={taxminiyNarx}
+                                    onChange={(e) => (
+                                        setNarxNomi(false),
+                                        setTaxminiyNarx(e.target.value),
+                                        setNarx(e.target.value)
+                                    )}
+                                />
+                            </div>
+                            <div className='row   mt-3'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question  mt-2"></i></Tooltip></div>
+                                <input
+                                    type="number"
+                                    className={`form-control col-md-8 rounded-3 ${chegirmaTek ? '' : 'chegirma-xato'
+                                        } `}
+                                    placeholder="Chegirma qo'ying (%)"
+                                    name="price"
+                                    onChange={(e) => (
+                                        setDiscount(e.target.value),
+                                        chegirma(e.target.value)
+                                    )}
+                                />
+                            </div>
+                            <div className='row   mt-3'>
+                                <div className='col-md-4 d-flex justify-content-between'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className=" p-0 rounded-3 col-md-8">
+                                    <CKeditor
+                                        name="description"
+                                        onChange={(data) => {
+                                            setShortData(data);
+                                        }}
+                                        editorLoaded={editorLoaded}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className='  row mt-3'>
+                                <div className='col-md-4 d-flex justify-content-between'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className=" p-0 rounded-3 col-md-8">
+                                    <CKeditor
+                                        name="description"
+                                        onChange={(data) => {
+                                            setFullData(data);
+                                        }}
+                                        editorLoaded={editorLoaded}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="d-flex justify-content-center  mt-4 ">
+                                <button
+                                    type="submit"
+                                    className="btn btn-success py-3 w-25">
+                                    <span className="fs-4">Hujjat qo'shish</span>
+                                </button>
+                            </div>
+                            <div className="mahsulotingiz">
+                                <p>Hujjatingiz</p>
+                                <span
+                                    className="fixed-btn"
+                                    type="button"
+                                    data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight">
+                                    <i className="fa-solid fa-id-card fa-beat fs-1"></i>
+                                </span>
+                            </div>
+                        </form>
+                        <div className="col-md-4 rounded-3  p-3 cardResponsive  card" style={{ maxWidth: "370px", marginTop: "6rem" }} >
+                            <div
+                                className="image"
+                                style={{
+                                    backgroundImage: `url(${livePoster
+                                            ? livePoster
+                                            : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
+                                        })`,
+                                }}></div>
+                            <div className="text-start">
+                                <p className="live-card-p">
+                                    <strong>Nomi : </strong>{' '}
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {' '}
+                                        {title ? title : "To'ldirilmadi"}
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Narxi : </strong>
+                                    <strong style={{ maxWidth: '150px' }}>
+                                        <span>
+                                            {' '}
+                                            {taxminiyNarx
+                                                ? addPeriodToThousands(
+                                                    removePrefix(
+                                                        taxminiyNarx
+                                                    )
+                                                ) + "so'm"
+                                                : "To'ldirilmadi"}
+                                        </span>
+                                    </strong>
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Kategoriyasi : </strong>{' '}
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {categoryName
+                                            ? categoryName
+                                            : "To'ldirilmadi"}{' '}
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Chegirmasi : </strong>{' '}
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {' '}
+                                        {discount
+                                            ? discount + '%'
+                                            : "To'ldirilmadi"}{' '}
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Taglari : </strong>
+                                    {/* <span style={{maxWidth:'150px'}} > </span> */}
+                                    {tagSearchResult.length > 0
+                                        ? tagSearchResult?.map(
+                                            (item, i) => {
+                                                return (
+                                                    <span key={i}>
+                                                        #{item}{' '}
+                                                    </span>
+                                                );
+                                            }
+                                        )
+                                        : "To'ldirilmadi"}
+                                </p>
+                                <p className="live-card-p">
+                                    <strong>Qisqa tavsif : </strong>{' '}
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {Shortdata
+                                            ? parse(Shortdata)
+                                            : "To'ldirilmadi"}
+                                    </span>
+                                </p>
+                                <p className="live-card-p ">
+                                    <strong> To'liq ma'lumot : </strong>{' '}
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {Fulldata
+                                            ? parse(Fulldata)
+                                            : "To'ldirilmadi"}
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     <div
                         className="offcanvas offcanvas-end"
                         tabindex="-1"
@@ -521,11 +518,10 @@ const Posts = () => {
                                 <div
                                     className="image"
                                     style={{
-                                        backgroundImage: `url(${
-                                            livePoster
+                                        backgroundImage: `url(${livePoster
                                                 ? livePoster
                                                 : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-                                        })`,
+                                            })`,
                                     }}></div>
                                 <div className="text-start">
                                     <p className="live-card-p">
@@ -542,10 +538,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -572,14 +568,14 @@ const Posts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              #{item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            #{item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
