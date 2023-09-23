@@ -8,6 +8,7 @@ import { BeatLoader } from 'react-spinners'
 export default function QaytaNomerKiritish() {
     const [report, setReport] = useState(true)
     const [number, setNumber] = useState('');
+    const [telLenght, setTelLenght] = useState('')
 
     const counter = (count) => {
         const interval = setInterval(() => {
@@ -20,7 +21,7 @@ export default function QaytaNomerKiritish() {
     }
 
     const QaytaRaqamJonatish = async (e) => {
-        localStorage.setItem('qayta_', number)
+        localStorage.setItem('qayta_', number, e)
         e.preventDefault();
         const data = {
             phone_or_email: number,
@@ -29,26 +30,29 @@ export default function QaytaNomerKiritish() {
         const response = await qaytaRaqamYuborishAuth(data);
         console.log(response)
         if (response.status === 200 || response.status === 201) {
-            Router.push('/account/change-password');
             const { access } = response.data;
             setReport(false)
-            // const modal = Modal.success({
-            //     centered: true,
-            //     title: response.data.msg,
-            //     content: '',
-            // });
-            // modal.update;
             localStorage.setItem('qayta_token', access);
             Router.push(`/account/change-password?via=${response.data.via_}`);
         } else {
             const modal = Modal.error({
                 centered: true,
-                title: response.data.msg,
-                content: '',
+                title: 'Xatolik',
+                content: response.data.msg,
             });
             modal.update;
         }
     };
+
+    const handleChange = (e) => {
+        setNumber(e)
+        if (e[0] == "+") {
+            setTelLenght('13')
+        }else{
+            setTelLenght('')
+        }
+    }
+
     return (
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
@@ -61,7 +65,9 @@ export default function QaytaNomerKiritish() {
                             type="text"
                             placeholder='Raqam yoki email'
                             className="raqam-input"
-                            onChange={(e) => setNumber(e.target.value)}
+                            onChange={(e) => handleChange(e.target.value)}
+                            defaultValue={"+998"}
+                            maxLength={telLenght}
                         />
 
                         <div className="form-group submit">

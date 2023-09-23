@@ -83,7 +83,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             setMin(respons?.data?.min_price);
         }
     };
-
+    
     useEffect(() => {
         getCategry();
     }, [slug]);
@@ -91,8 +91,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     useEffect(() => {
         if (min === null) {
             Price();
-        }
-    }, [min])
+            }
+    }, [min, max, slug])
 
     function addPeriodToThousands(number) {
         const numStr = String(number);

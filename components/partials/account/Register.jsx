@@ -18,7 +18,8 @@ class Register extends Component {
             report: true,
             chekked: false,
             passwordFocused: false,
-            inputType: 'text'
+            inputType: 'text',
+            inputLength: ''
         };
     }
 
@@ -45,7 +46,6 @@ class Register extends Component {
                 Router.push(`/account/Message?via=${user.data.via_}`);
             }
 
-            console.log(user.data);
         }
     };
 
@@ -63,14 +63,17 @@ class Register extends Component {
     handleChangeType = (e) => {
         if (e.target.value === "") {
             this.setState({ inputType: 'text' })
+            this.setState({ inputLength: '' })
             return;
         }
         const value = e.target.value.split('')
         if (value[0] === "+") {
             this.setState({ inputType: 'tel' })
+            this.setState({ inputLength: '13'})
         }
         else {
-            this.setState({ inputType: 'email' })
+            this.setState({ inputType: 'text' })
+            this.setState({inputLength: ''})
         }
     }
 
@@ -109,6 +112,7 @@ class Register extends Component {
                                         name="phone_or_email"
                                         rules={[
                                             {
+                                                required:'true',
                                                 message:
                                                     'Iltimos telefon raqam yoki emailingizni  kiriting!',
                                             },
@@ -119,7 +123,7 @@ class Register extends Component {
                                             placeholder="Telefon raqam yoki email"
                                             onKeyDown={this.handleEnterKeyPress}
                                             onChange={this.handleChangeType}
-                                            defaultValue={"+998"}
+                                            maxLength={this.state.inputLength}
                                         />
                                     </Form.Item>
                                 </div>

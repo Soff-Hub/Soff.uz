@@ -33,6 +33,7 @@ const Xabar = (e) => {
             Router.push('/account/login');
         } else {
 
+            
             let message = '';
             setLoader(false);
             const modal = Modal.error({
@@ -58,15 +59,6 @@ const Xabar = (e) => {
 
     const qaytaKodOlish = async () => {
         setLoader(true);
-        if (query.via === 'via_phone') {
-            setCoutdown(60);
-            counter(60)
-        } else if (query.via === 'via_email') {
-            setCoutdown(120);
-            counter(120)
-        }
-
-
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish();
         setCountSekond(false);
@@ -77,6 +69,13 @@ const Xabar = (e) => {
                 title: 'Ijobiy',
                 content: qaytaUser?.data?.msg,
             });
+            if (query.via === 'via_phone') {
+                setCoutdown(60);
+                counter(60)
+            } else if (query.via === 'via_email') {
+                setCoutdown(120);
+                counter(120)
+            }
             modal.update;
             setLoader(false);
 
@@ -121,7 +120,8 @@ const Xabar = (e) => {
                     >
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
-                                <h5>Kodni kiriting</h5>
+                                <h5> Tasdiqlash SMS - kodi quyidagi raqamga yuborildi: </h5>
+                                <h4 style={{marginBottom:'20px'}}> {nomer} </h4>
                                 <div className="kod-input">
                                     <Input
                                         required
@@ -132,11 +132,8 @@ const Xabar = (e) => {
                                         min="0"
                                         maxLength={'4'}
                                     />
-                                    <p> {nomer}  ga sms boradi</p>
-
                                     <p>
-                                        Kod kelishiga qolgan vaqt: {countdown}
-                                        <span> soniya</span>
+                                       {countdown}
                                     </p>
                                 </div>
                                 <div className="form-group submit">
