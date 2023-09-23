@@ -11,7 +11,7 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 
-function OrdersLists() {
+function AccountUserPages() {
     const { accountLinks, user } = useSelector(state => state.auth)
 
     const [data, setData] = useState([]);
@@ -90,10 +90,10 @@ function OrdersLists() {
             dataIndex: 'data',
             key: 'address',
             render: (data) => (
-            <div className='d-flex flex-column'>
-                <span className="truncate whitespace-nowrap"> {data.phone}</span>
-                <span className="truncate whitespace-nowrap"> {data.email}</span>
-            </div>
+                <div className='d-flex flex-column'>
+                    <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    <span className="truncate whitespace-nowrap"> {data.email}</span>
+                </div>
 
             ),
         },
@@ -119,11 +119,6 @@ function OrdersLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="row gap-5 row-gap-3 mx-auto p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-4'>Xaridorlar</h3>
-                    <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
-                    <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor qo'shish </span></button>
-                </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -134,11 +129,16 @@ function OrdersLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <select className='form-select fs-3 py-3 w-50 mb-4' onChange={(e) => setSelectValStatus(e.target.value)}>
-                                        <option className='fs-3' value="" >Barcha holat</option>
-                                        <option className='fs-3' value="new">Faol emas</option>
-                                        <option className='fs-3' value="code_verified">Faol</option>
-                                    </select>
+                                    <div className='row row-gap-3 gap-3 m-0 pb-3'>
+                                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
+                                        <select className='form-select fs-3 py-3   col-md-4' onChange={(e) => setSelectValStatus(e.target.value)}>
+                                            <option className='fs-3' value="" >Barcha holat</option>
+                                            <option className='fs-3' value="new">Faol emas</option>
+                                            <option className='fs-3' value="code_verified">Faol</option>
+                                        </select>
+                                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
+                                    </div>
+
                                     <Table dataSource={data} scroll={{ x: 740 }} columns={columns} />
                                 </div>
                             </div>
@@ -220,4 +220,4 @@ function OrdersLists() {
 
 }
 
-export default OrdersLists;
+export default AccountUserPages;

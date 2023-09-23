@@ -109,10 +109,6 @@ function ContextLists() {
                     <div className="col-lg-8">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div className="ps-section__header mx-3 mt-4 mb-4">
-
-                                    <h3>Bannerlarni o'zgartirish</h3>
-                                </div>
                                 <div>
                                     <Table scroll={{ x: 750 }} pagination={false} dataSource={data} columns={columns} />
                                 </div>

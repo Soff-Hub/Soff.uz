@@ -209,14 +209,6 @@ function ProductsLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="row g-3 mx-auto p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <div className='col-md-5'>
-                        <h3 className='m-0'>Mahsulotlar</h3>
-                    </div>
-                    <div className='col-md-7'>
-                        <input type='' className='form-control rounded' placeholder="Qidiruv" onInput={handleClick} />
-                    </div>
-                </div>
                 <div className="row pb-5" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -250,6 +242,7 @@ function ProductsLists() {
                                         <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
                                         <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
                                         <span className='col-md-12 m-0 py-3 d-flex bg-white justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
+                                        <input type='' className='form-control rounded bg-white' placeholder="Qidiruv" onInput={handleClick} />
                                     </div>
                                     <div className='d-flex flex-column gap-2 bg-white px-3 py-4 rounded'>
                                         <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>

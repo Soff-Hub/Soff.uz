@@ -16,6 +16,7 @@ function ModalDeletePostEdit({ children, onSubmited, formID, dataBsTarget }) {
     function handleSuccess(e) {
         e.preventDefault();
         onSubmited?.(getFormValues(formID));
+        e.target.reset();
     }
 
     return (

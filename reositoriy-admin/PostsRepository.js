@@ -42,6 +42,26 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
+    async TegUsers(data, token) {
+        const endPoint = `admin/tag-list/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
+    }
     async PostsMyProducts(data, token) {
         const endPoint = `product-create/`;
         const response = await Repository({
