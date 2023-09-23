@@ -267,10 +267,6 @@ function Notifications() {
                     <div className="col-lg-8">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div className="ps-section__header mb-4 mx-3 mt-4">
-
-                                    <h3>Ariza bo'limi</h3>
-                                </div>
                                 <div className="ps-section__content">
                                     {
                                         user?.role === "seller" ?
@@ -316,7 +312,7 @@ function Notifications() {
                                         user?.role === "admin" ?
                                             (<>
                                                 <div className='row g-3 mx-auto'>
-                                                    <h4 className='py-3 col-md-4'>Arizalar</h4>
+                                                    <h4 className='py-3 col-md-4'>{user?.role==="seller" ? "Arizalar" : "Arizalar Bo'limi"}</h4>
                                                     <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
                                                         <option className='fs-3' selected value="">Holatlar</option>
                                                         <option className='fs-3' value="moderation">Moderatsiya</option>

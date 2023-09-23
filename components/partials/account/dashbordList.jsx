@@ -116,28 +116,28 @@ function DashbordList() {
             dataIndex: 'user_name',
             key: 'age',
         },
-       user?.role==="admin" ?  {
+        user?.role === "admin" ? {
             title: 'Telefon raqam',
             dataIndex: 'phone',
             key: 'age',
-        } 
-        : <></>,
+        }
+            : <></>,
         {
             title: 'Buyurtma nomi',
             dataIndex: 'title',
             key: 'age',
-            width:300,
+            width: 300,
         },
-        user.role==="admin" ?
-        {
-            title: 'Narx',
-            dataIndex: 'price',
-            key: 'address',
-            render: (total_price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
-            ),
-        }
-        : <></> ,   
+        user.role === "admin" ?
+            {
+                title: 'Narx',
+                dataIndex: 'price',
+                key: 'address',
+                render: (total_price) => (
+                    <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
+                ),
+            }
+            : <></>,
         {
             title: 'Buyurtma sanasi',
             dataIndex: 'created_at',
@@ -170,6 +170,100 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
                                     </div>
+                                    {
+                                        data?.all_revenue ?
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
+
+                                </div>
+                            </div>
+                            <div>
+                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami daromad</h4>
+                                            <span>(Oxirgi 30 kun)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
+                                    </div>
+                                    {
+                                        data?.total_revenue ?
+                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.total_revenue)} so'm</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                    }
+                                </div>
+                            </div>
+                            <div>
+                                <div className=' bg-white py-5 px-4  ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Bugungi daromad</h4>
+                                            <span>(Bugungi daromad)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
+                                    </div>
+                                    {
+                                        data?.today_revenue ?
+                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
+                                            :
+                                            <div className="spinner-border mt-5" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div> 
+                                            ||
+                                            data?.today_revenue===0 ?
+                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4> : <></>
+
+                                    }
+
+                                </div>
+                            </div>
+                            <div>
+                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami buyurtma</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
+                                    </div>
+
+                                    <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
+
+                                </div>
+                            </div>
+
+                            <div>
+                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Aktiv sotuvchilar</h4>
+                                        </div>
+                                        <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
+                                    </div>
+
+                                    <h4 className='mt-5 pt-4 '>{addPeriodToThousands(data?.total_shops)} ta</h4>
+
+                                </div>
+                            </div>
+                        </div>
+                        :
+                        <div className='pb-4  d-flex gap-3 overflow-x-scroll' >
+                            <div>
+                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
+                                    <div className='d-flex justify-content-between pb-4'>
+                                        <div>
+                                            <h4>Jami daromad</h4>
+                                            <span>(Butun davr mobaynida)</span>
+                                        </div>
+                                        <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
+                                    </div>
 
                                     <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
 
@@ -185,7 +279,8 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
                                     </div>
 
-                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.total_revenue)} so'm</h4>
+                                    <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.last_month_revenue)} so'm</h4>
+
                                 </div>
                             </div>
                             <div>
@@ -198,7 +293,7 @@ function DashbordList() {
                                         <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
                                     </div>
 
-                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
+                                    <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
 
                                 </div>
                             </div>
@@ -211,81 +306,8 @@ function DashbordList() {
                                         </div>
                                         <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
                                     </div>
-    
-                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
-                   
-                                </div>
-                            </div>
 
-                            <div>
-                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                                    <div className='d-flex justify-content-between pb-4'>
-                                        <div>
-                                            <h4>Aktiv sotuvchilar</h4>
-                                        </div>
-                                        <div><i className="fa-solid fa-shop fa-2x text-primary"></i></div>
-                                    </div>
-
-                                        <h4 className='mt-5 pt-4 '>{addPeriodToThousands(data?.total_shops)} ta</h4>
-        
-                                </div>
-                            </div>
-                        </div>
-                        :
-                        <div className='pb-4  d-flex gap-3 overflow-x-scroll' >
-                            <div>
-                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                                    <div className='d-flex justify-content-between pb-4'>
-                                        <div>
-                                            <h4>Jami daromad</h4>
-                                            <span>(Butun davr mobaynida)</span>
-                                        </div>
-                                        <div><i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i></div>
-                                    </div>
-     
-                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.all_revenue)} so'm</h4>
-               
-                                </div>
-                            </div>
-                            <div>
-                                <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                                    <div className='d-flex justify-content-between pb-4'>
-                                        <div>
-                                            <h4>Jami daromad</h4>
-                                            <span>(Oxirgi 30 kun)</span>
-                                        </div>
-                                        <div><i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i></div>
-                                    </div>
-
-                                            <h4 className='mt-5 '> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.last_month_revenue)} so'm</h4>
-                      
-                                </div>
-                            </div>
-                            <div>
-                                <div className=' bg-white py-5 px-4  ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                                    <div className='d-flex justify-content-between pb-4'>
-                                        <div>
-                                            <h4>Bugungi daromad</h4>
-                                            <span>(Bugungi daromad)</span>
-                                        </div>
-                                        <div><i className="fa-solid fa-sack-dollar fa-2x text-warning"></i></div>
-                                    </div>
-   
-                                            <h4 className='mt-5'> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(data?.today_revenue)} so'm</h4>
-
-                                </div>
-                            </div>
-                            <div>
-                                <div className=' bg-white py-5 px-4 ' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
-                                    <div className='d-flex justify-content-between pb-4'>
-                                        <div>
-                                            <h4>Jami buyurtma</h4>
-                                            <span>(Butun davr mobaynida)</span>
-                                        </div>
-                                        <div><i className="fa-solid fa-truck fa-2x text-danger"></i></div>
-                                    </div>
-        
-                                            <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
+                                    <h4 className='mt-5'>{addPeriodToThousands(data?.total_order)} ta</h4>
 
                                 </div>
                             </div>
@@ -299,21 +321,21 @@ function DashbordList() {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                    <div className='pb-5'>
-                    <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
-                    <Table scroll={{ x: 1200 }} dataSource={dataOrders} columns={columnsOrders} />
-                </div> 
+                        <div className='pb-5'>
+                            <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
+                            <Table scroll={{ x: 1200 }} dataSource={dataOrders} columns={columnsOrders} />
+                        </div>
                     </div>
                 </div>
-              {
-                user?.role==="admin" ?
-                <div>
-                <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
-                <Table scroll={{ x: 850 }} dataSource={dataProducts} columns={columns} className='pb-5' />
-            </div>
-            :
-            <></>
-              }
+                {
+                    user?.role === "admin" ?
+                        <div>
+                            <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
+                            <Table scroll={{ x: 850 }} dataSource={dataProducts} columns={columns} className='pb-5' />
+                        </div>
+                        :
+                        <></>
+                }
                 <div className="modal fade " id="staticBackdropViewPopular" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>
                         <div className='modal-content'>

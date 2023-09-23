@@ -75,25 +75,25 @@ function CategoryLists() {
         });
         GetItemsProducts(1)
     }
-   
+
 
     async function handleItemsEdit(values) {
         const formData = new FormData()
-          if (file) {
+        if (file) {
             formData.append('image', file)
-          } 
-          if (values) {
+        }
+        if (values) {
             formData.append('icon', values.icon)
-          }
-         if (values) {
+        }
+        if (values) {
             formData.append('name', values.name)
-         } 
+        }
         if (tagName) {
             formData.append('parent', tagName)
         }
-        
+
         const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
-        if (patchItems?.status===400) {
+        if (patchItems?.status === 400) {
             const modal = Modal.error({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -101,14 +101,14 @@ function CategoryLists() {
             });
             modal.update
         }
-        else{
+        else {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
             });
             modal.update
-         
+
         }
 
         GetItemsProducts(1)
@@ -120,7 +120,7 @@ function CategoryLists() {
     }
 
 
-  
+
 
     function handleClickPostsImg(e) {
         setFile(e.target.files[0])
@@ -148,7 +148,7 @@ function CategoryLists() {
             title: 'Parent',
             dataIndex: 'parent',
             key: 'address',
-            render:(parent)=>(
+            render: (parent) => (
                 <span>{parent?.name}</span>
             )
         },
@@ -173,7 +173,7 @@ function CategoryLists() {
             key: 'address',
             render: (datas) => {
                 const isTop = data.some((el) => el.id === datas?.id && el.is_parent === true);
-        
+
                 if (isTop) {
                     return (
                         <input
@@ -183,7 +183,7 @@ function CategoryLists() {
                         />
                     );
                 }
-        
+
                 return <></>;
             },
         },
@@ -207,11 +207,6 @@ function CategoryLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="row  mx-auto gap-5 row-gap-3 p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-4'>Kategoriya</h3>
-                    <input type='search' className='form-control rounded col-md-5 ' placeholder="Qidiruv" onInput={handleClick} />
-                    <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'>Kategoriya qo'shish </span></button>
-                </div>
                 <div className="row ">
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -222,7 +217,11 @@ function CategoryLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
-                                    <h5 className='bg-white m-0 p-4 rounded text-danger '> <i class="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
+                                    <div className='row row-gap-3 bg-white m-0 gap-5 px-4 mb-3 pb-4 rounded'>
+                                    <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i class="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
+                                        <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={handleClick} />
+                                        <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'> <i className="fa-solid fa-plus"></i> Kategoriya qo'shish</span></button>
+                                    </div>
                                     <Table scroll={{ x: 750 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
@@ -232,28 +231,28 @@ function CategoryLists() {
 
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
-                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
-                     {
-                         deleteIdEdit?.image ? deleteIdEdit?.image :
-                             <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
-                         } 
-                        <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                    <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                        {
+                            deleteIdEdit?.image ? deleteIdEdit?.image :
+                                <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
+                        }
+                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
                     <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
                     {
-                        data.some(el =>( el?.id==deleteIdEdit?.id && el.is_update === true)) ?
-                    <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
-                        <option value="">Parent</option>
-                        {
-                            tagItems?.length > 0 && (
-                                tagItems?.map(item => (
-                                    <option key={item.id} value={item.id}>{item.name}</option>
-                                ))
-                            )
-                        }
-                    </select>
-                    :
-                    <></>
+                        data.some(el => (el?.id == deleteIdEdit?.id && el.is_update === true)) ?
+                            <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                                <option value="">Parent</option>
+                                {
+                                    tagItems?.length > 0 && (
+                                        tagItems?.map(item => (
+                                            <option key={item.id} value={item.id}>{item.name}</option>
+                                        ))
+                                    )
+                                }
+                            </select>
+                            :
+                            <></>
                     }
                     <input
                         type='text'
@@ -272,17 +271,17 @@ function CategoryLists() {
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>
                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
-                         {
+                        {
                             file ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
-                             <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
-                         } 
-                        <input  type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                                <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
+                        }
+                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
                     </label>
                     {
-                        file?
-                        <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
-                     :
-                     <></>
+                        file ?
+                            <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
+                            :
+                            <></>
                     }
 
                     <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >

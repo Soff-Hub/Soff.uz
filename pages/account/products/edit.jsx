@@ -253,7 +253,7 @@ const PostsProductsEdit = () => {
                         id="offcanvasRight"
                         aria-labelledby="offcanvasRightLabel">
                         <div className="offcanvas-header pt-5">
-                            <h3 id="offcanvasRightLabel" className='m-0 '><span >Tahrirlanayotgan  mahsulotingizni ko'rinishi</span> </h3>
+                            <h3 id="offcanvasRightLabel" className='m-0 elh3'><span >Tahrirlanayotgan  mahsulotingizni ko'rinishi</span> </h3>
                             <button
                                 type="button"
                                 className="btn-close text-reset"
@@ -299,7 +299,7 @@ const PostsProductsEdit = () => {
                                         <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Fulldata ? parse(Fulldata) : products?.description
+                                                Fulldata ? parse(Fulldata) : products?.description ?  parse(products?.description) : ""
                                             }
 
                                         </span>

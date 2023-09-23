@@ -162,7 +162,7 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
     }, [dataValCat, tagName, dataFormat, selectValStatus])
 
-console.log(View?.description);
+    console.log(View?.description);
     const columns = [
         {
             title: 'Rasm',
@@ -264,19 +264,6 @@ console.log(View?.description);
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className=" p-5 mb-5 rounded row gap-5 row-gap-3 mx-auto" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-4'>Mening hujjatlarim</h3>
-                    <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-5' : "form-control rounded col-md-7"} placeholder="Qidiruv" onInput={handleClick} />
-                    {
-                        user?.role === "seller" ?
-                            <Link href={"/account/MyProducts/Posts"}>
-                                <button className="  btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Hujjat qo'shish</span></button>
-                            </Link>
-                            :
-                            <></>
-                    }
-
-                </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -315,7 +302,7 @@ console.log(View?.description);
                                         <select
                                             className='form-select col-md-5 rounded-3 py-3 fs-3'
                                             onChange={(e) => setTagName(e.target.value)}
-                                            style={{height:"50px"}}
+                                            style={{ height: "50px" }}
                                         >
                                             <option value="">Teglar</option>
                                             {tagItems?.length > 0 &&
@@ -334,6 +321,15 @@ console.log(View?.description);
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
                                         <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
+                                        <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-8' : "form-control rounded col-md-7"} placeholder="Qidiruv" onInput={handleClick} />
+                                        {
+                                            user?.role === "seller" ?
+                                                <Link href={"/account/MyProducts/Posts"}>
+                                                    <button className="  btn btn-success col-md-3 py-3 "  ><span className='fs-4'>+ Hujjat qo'shish</span></button>
+                                                </Link>
+                                                :
+                                                <></>
+                                        }
                                     </div>
                                     {
                                         user?.role === "seller" ?

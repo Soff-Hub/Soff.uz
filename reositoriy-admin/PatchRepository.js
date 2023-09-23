@@ -41,6 +41,26 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async PatchTegs(data, id, token) {
+        const endPoint = `admin/tag-list/${id}/`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'PATCH',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
     async getShopsPatch(data, id, token) {
         const endPoint = `admin/seller-list/${id}`;
         const reponse = await Repository({

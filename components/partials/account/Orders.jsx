@@ -161,10 +161,6 @@ function OrdersLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="row g-3 p-5 mb-5 mx-auto rounded" style={{  backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-5'>Buyurtmalar </h3>
-                    <input type='search' className='form-control rounded col-md-7' placeholder="Qidiruv" onInput={handleClick} />
-                </div>
                 <div className="row pb-5 " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -191,6 +187,7 @@ function OrdersLists() {
                                         </select>
 
                                    <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e)=>setDate(e)} />
+                                   <input type='search' className='form-control rounded col-md-12 ' placeholder="Qidiruv" onInput={handleClick} />
                                    </div>
                                    {
                                     user?.role==="admin" ?

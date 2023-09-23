@@ -53,6 +53,11 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-users',
     },
     {
+        text: 'Teglar',
+        url: '/account/tegs',
+        icon: 'fa-solid fa-tags',
+    },
+    {
         text: "Ariza bo'limi",
         url: '/account/Application',
         icon: 'fa-solid fa-file-signature',

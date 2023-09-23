@@ -82,9 +82,6 @@ function Notifications() {
                     <div className="col-lg-8">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting ">
-                                <div className="ps-section__header mx-3 mt-4 mb-4">
-                                    <h3>Sozlamalar</h3>
-                                </div>
                                 <div className="ps-section__content">
                                     <form className='row gap-4 row-gap-3 mx-auto ' onSubmit={handleClickEdit} >
                                             <input type="text" defaultValue={profile?.first_name} required placeholder='Ismingiz' className='form-control rounded-3 col-md-4' onChange={(e) => setProfileData((prev) => ({ ...prev, first_name: e.target.value }))} />
