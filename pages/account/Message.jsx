@@ -33,6 +33,7 @@ const Xabar = (e) => {
             Router.push('/account/login');
         } else {
 
+            
             let message = '';
             setLoader(false);
             const modal = Modal.error({
@@ -121,7 +122,8 @@ const Xabar = (e) => {
                     >
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
-                                <h5>Kodni kiriting</h5>
+                                <h5> Tasdiqlash SMS - kodi quyidagi raqamga yuborildi: </h5>
+                                <h4 style={{marginBottom:'20px'}}> {nomer} </h4>
                                 <div className="kod-input">
                                     <Input
                                         required
@@ -132,11 +134,9 @@ const Xabar = (e) => {
                                         min="0"
                                         maxLength={'4'}
                                     />
-                                    <p> {nomer}  ga sms boradi</p>
-
                                     <p>
-                                        Kod kelishiga qolgan vaqt: {countdown}
-                                        <span> soniya</span>
+                                       01 :  {countdown}
+                                       
                                     </p>
                                 </div>
                                 <div className="form-group submit">

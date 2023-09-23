@@ -300,6 +300,31 @@
     padding: 10px 7px;
 }
 
+.footer-left-a{
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.footer-icon-parent-div{
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.footer-right-ul-social{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
 // .home-car{
 //     max-width: 200px;
 //     min-width: 190px;
