@@ -23,90 +23,143 @@ const FooterSecond = ({ classes }) => {
     return (
         <footer className={`ps-footer ps-footer--2 ${classes}`}>
             <div className="container">
-                <div className="ps-footer__content">
-                    <div className="row">
-                        <div className="col-xl-12">
-                            <div className="row">
-                                <div className="col-md-3 col-sm-6 text-center">
-                                    <aside className="widget widget_footer">
-                                        <ul className="ps-list--link">
-                                            {categoryList?.slice(0, 4).length >
-                                                0 &&
-                                                categoryList
-                                                    .slice(0, 4)
-                                                    .map((item, i) => (
-                                                        <li key={i}>
-                                                            <Link href="#">
-                                                                <a>
-                                                                    {item.name}
-                                                                </a>
-                                                            </Link>
-                                                        </li>
-                                                    ))}
-                                        </ul>
-                                    </aside>
-                                </div>
-                                <div className="col-md-3 col-sm-6 text-center">
-                                    <aside className="widget widget_footer">
-                                        <ul className="ps-list--link">
-                                            {categoryList?.slice(3, 7).length >
-                                                0 &&
-                                                categoryList
-                                                    .slice(4, 8)
-                                                    .map((item, i) => (
-                                                        <li key={i}>
-                                                            <Link href="#">
-                                                                <a>
-                                                                    {item.name}
-                                                                </a>
-                                                            </Link>
-                                                        </li>
-                                                    ))}
-                                        </ul>
-                                    </aside>
-                                </div>
-                                <div className="col-md-3 col-sm-6 text-center">
-                                    <aside className="widget widget_footer">
-                                        <ul className="ps-list--link">
-                                            {categoryList?.slice(8, 12).length >
-                                                0 &&
-                                                categoryList
-                                                    .slice(8, 12)
-                                                    .map((item, i) => (
-                                                        <li key={i}>
-                                                            <Link href="#">
-                                                                <a>
-                                                                    {item.name}
-                                                                </a>
-                                                            </Link>
-                                                        </li>
-                                                    ))}
-                                        </ul>
-                                    </aside>
-                                </div>
-                                <div className="col-md-3 col-sm-6 text-center">
-                                    <aside className="widget widget_footer">
-                                        <ul className="ps-list--link">
-                                            {categoryList?.slice(12, 16)
-                                                .length > 0 &&
-                                                categoryList
-                                                    .slice(12, 16)
-                                                    .map((item, i) => (
-                                                        <li key={i}>
-                                                            <Link href="#">
-                                                                <a>
-                                                                    {item.name}
-                                                                </a>
-                                                            </Link>
-                                                        </li>
-                                                    ))}
-                                        </ul>
-                                    </aside>
-                                </div>
-                            </div>
-                        </div>
+            <div className="row d-flex justify-content-between">
+        <div className="col-xl-7 col-lg-7  col-md-6 col-sm-12 col-xs-12">
+            <aside className="widget widget_footer widget_contact-us">
+                <div className="footer-icon-parent-div">
+                    <Link href="#">
+                        <a className="footer-left-a">
+                            <i class="fa-solid fa-location-dot fs-1"></i>
+                        </a>
+                    </Link>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            flexDirection: 'column',
+                        }}>
+                        <p
+                            style={{
+                                padding: '0',
+                                margin: '0',
+                            }}>
+                            8/1 Bunyodkor Avenue
+                        </p>
+                        <h4
+                            style={{
+                                margin: '0',
+                            }}>
+                            Toshkent
+                        </h4>
                     </div>
                 </div>
+            </aside>
+            <aside className="widget widget_footer widget_contact-us">
+                <div className="footer-icon-parent-div">
+                    <Link href="#">
+                        <a className="footer-left-a">
+                            <i class="fa-solid fa-phone fs-1"></i>
+                        </a>
+                    </Link>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            flexDirection: 'column',
+                        }}>
+                        <h4
+                            style={{
+                                margin: '0',
+                            }}>
+                            +998 (91) 008 67 89
+                        </h4>
+                    </div>
+                </div>
+            </aside>
+            <aside className="widget widget_footer widget_contact-us">
+                <div className="footer-icon-parent-div">
+                    <Link href="#">
+                        <a className="footer-left-a">
+                            <i class="fa-solid fa-envelope fs-1"></i>
+                        </a>
+                    </Link>
+                    <div
+                        style={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            flexDirection: 'column',
+                        }}>
+                        <h4
+                            style={{
+                                margin: '0',
+                            }}>
+                            soff@gmail.uz
+                        </h4>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <div className="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-xs-12 ">
+            <aside className="widget widget_footer widget_contact-us">
+                <h4>Sayt haqida</h4>
+            </aside>
+            <p>
+                Lorem, ipsum dolor sit amet consectetur adipisicing
+                elit. Officiis incidunt, cum consequuntur fugit rerum
+                maiores. Lorem ipsum, dolor sit amet consectetur
+                adipisicing elit. Ad, corrupti.{' '}
+            </p>
+            <aside className="widget widget_footer widget_contact-us">
+                <ul
+                    style={{
+                        margin: '0',
+                        padding: '0',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                    }}
+                    className="footer-right-ul-social">
+                    <li>
+                        <Link href="#">
+                            <a
+                                target="_blank"
+                                className="footer-left-a">
+                                <i class="fa-brands fa-facebook fs-1"></i>
+                            </a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="#">
+                            <a
+                                target="_blank"
+                                className="footer-left-a">
+                                <i class="fa-brands fa-square-instagram fs-1"></i>
+                            </a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="#">
+                            <a
+                                target="_blank"
+                                className="footer-left-a">
+                                <i class="fa-brands fa-telegram fs-1"></i>
+                            </a>
+                        </Link>
+                    </li>
+                    <li>
+                        <Link href="#">
+                            <a
+                                target="_blank"
+                                className="footer-left-a">
+                                <i class="fa-brands fa-square-x-twitter fs-1"></i>
+                            </a>
+                        </Link>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+    </div>
                 <div className="ps-footer__copyright">
                     <p>
                         &copy; {vaqt.getFullYear()} alldata. Barcha huquqlar
