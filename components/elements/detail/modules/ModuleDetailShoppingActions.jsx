@@ -17,7 +17,7 @@ const ModuleDetailShoppingActions = ({
     const Router = useRouter();
     const select = useSelector((state) => state.auth.user?.access);
     const { addItem } = useEcomerce();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -34,14 +34,14 @@ const ModuleDetailShoppingActions = ({
 
     function handleBuynow(e) {
         e.preventDefault();
-        if (state ) {
-                dispatch(OneShopDoc(product))
-                Router.push('/account/checkout-one');
+        if (state) {
+            dispatch(OneShopDoc(product));
+            Router.push('/account/checkout-one');
         } else {
-                Router.push('/account/register-user');
+            Router.push('/account/register-user');
         }
     }
-    
+
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
         addItem(product, ecomerce.wishlistItems, 'wishlist');
@@ -51,32 +51,18 @@ const ModuleDetailShoppingActions = ({
             content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
         });
         modal.update;
-
-
     };
 
+    
 
     if (select) {
         return (
             <div className="ps-product__shopping">
-                {/* <a
-
+                <a
                     className="ps-btn ps-btn--black"
                     href="#"
-                    onClick={() => postCart()}>
-                    Savatga qo'shish R
-                </a> */}
-
-                 <a
-                    className="ps-btn ps-btn--black"
-                    href="#"
-
-
                     onClick={(e) => handleAddItemToCart(e)}>
                     Savatga qo'shish
-
-
-
                 </a>
                 <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
                     Sotib olish

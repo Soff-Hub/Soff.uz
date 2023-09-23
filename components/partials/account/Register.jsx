@@ -31,8 +31,8 @@ class Register extends Component {
                 let message = '';
                 const modal = Modal.error({
                     centered: true,
-                    title: `${user?.data?.message[0]}`,
-                    content: message,
+                    title: "Xatolik",
+                    content: user?.data?.msg[0],
                 });
                 modal.update;
             } else if (user.status == 200 || user.status == 201) {
@@ -109,7 +109,6 @@ class Register extends Component {
                                         name="phone_or_email"
                                         rules={[
                                             {
-                                                required: true,
                                                 message:
                                                     'Iltimos telefon raqam yoki emailingizni  kiriting!',
                                             },

@@ -5,7 +5,10 @@ import useEcomerce from '~/hooks/useEcomerce';
 import useProduct from '~/hooks/useProduct';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 
-const PanelCartMobile = ({ ecomerce }) => {
+const PanelCartMobile = ({ ecomerce ,  setMenuDrawer,
+    setCartDrawer,
+    setCategoriesDrawer,
+    setSearchDrawer, }) => {
     const { products, getProducts, removeItem } = useEcomerce();
     const { title, thumbnailImage } = useProduct();
 
@@ -14,30 +17,20 @@ const PanelCartMobile = ({ ecomerce }) => {
         removeItem(product, ecomerce.cartItems, 'cart');
     }
 
+    const handleDrawerClose = () => {
+        setMenuDrawer(false);
+        setCartDrawer(false);
+        setCategoriesDrawer(false);
+        setSearchDrawer(false);
+    };
+
     useEffect(() => {
         if (ecomerce.cartItems) {
             getProducts(ecomerce.cartItems);
         }
     }, [ecomerce]);
-    // const amount = calculateAmount(products);
-    // function addPeriodToThousands(number) {
-    //     const numStr = String(number);
+   
 
-    //     const [integerPart, decimalPart] = numStr.split('.');
-
-    //     const formattedIntegerPart = integerPart.replace(
-    //         /\B(?=(\d{3})+(?!\d))/g,
-    //         ' '
-    //     );
-
-    //     const formattedNumber =
-    //         decimalPart !== undefined
-    //             ? `${formattedIntegerPart}.${decimalPart}`
-    //             : formattedIntegerPart;
-
-    //     return formattedNumber;
-    // }
-    // const hisob = addPeriodToThousands(amount);
 
 
     //view
@@ -47,7 +40,7 @@ const PanelCartMobile = ({ ecomerce }) => {
         const amount = calculateAmount(products);
         const items = products.map((item) => (
             <div className="ps-product--cart-mobile" key={item.id}>
-                <div className="ps-product__thumbnail">
+                <div className="ps-product__thumbnail" onClick={handleDrawerClose}>
                     <Link href="/product/[pid]" as={`/product/${item.id}`}>
                        {
                         item ?
@@ -57,13 +50,13 @@ const PanelCartMobile = ({ ecomerce }) => {
                        }
                     </Link>
                 </div>
-                <div className="ps-product__content">
+                <div className="ps-product__content" onClick={handleDrawerClose}>
                     <a
                         className="ps-product__remove"
                         onClick={(e) => handleRemoveCartItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
-                    <Link href="/product/[pid]" as={`/product/${item.id}`}>
+                    <Link href="/product/[pid]" as={`/product/${item.id}`} >
                         <a className="ps-product__title">{item.title}</a>
                     </Link>
                     <p>
@@ -81,7 +74,7 @@ const PanelCartMobile = ({ ecomerce }) => {
                 <h3>
                   Umumiy narx :<strong>{amount} so'm </strong>
                 </h3>
-                <figure>
+                <figure onClick={handleDrawerClose}>
                     <Link href="/account/shopping-cart">
                         <a className="ps-btn">Savat</a>
                     </Link>

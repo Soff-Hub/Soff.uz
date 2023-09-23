@@ -22,6 +22,7 @@ const Product = ({ product }) => {
 
         return formattedNumber;
     }
+    console.log(product);
     return (
         <div className="ps-product">
             <div
@@ -44,15 +45,15 @@ const Product = ({ product }) => {
             <div className="ps-product__container">
                 <div className="ps-product__content card-narx-box">
                     {title(product)}
-                    {product.price === product.discount_price ? (
-                        addPeriodToThousands(product.price)
+                    {product?.discount === 0 ? (
+                        <p>{addPeriodToThousands(product.price)} so'm</p>
                     ) : (
                         <>
                             <del>
                                 {addPeriodToThousands(product.price)} so'm
                             </del>
                             <p>
-                                {addPeriodToThousands(product.discount_price)}{' '}
+                                {addPeriodToThousands(product.discount_price)}
                                 so'm
                             </p>
                         </>
@@ -60,15 +61,15 @@ const Product = ({ product }) => {
                 </div>
                 <div className="ps-product__content hover">
                     {title(product)}
-                    {product.price === product.discount_price ? (
-                        addPeriodToThousands(product.price)
+                    {product.discount === 0 ? (
+                        <p>{addPeriodToThousands(product.price)} so'm</p>
                     ) : (
                         <>
                             <del>
                                 {addPeriodToThousands(product.price)} so'm
                             </del>
                             <p>
-                                {addPeriodToThousands(product.discount_price)}{' '}
+                                {addPeriodToThousands(product.discount_price)}
                                 so'm
                             </p>
                         </>

@@ -14,7 +14,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
 
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
-        if (responseData) {
+        if (responseData?.length > 0) {
             if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
                 setchaildId(slug);
             } else {
@@ -118,8 +118,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                 <h4 className="widget-title">Narx </h4>
                 <Slider
                     range
-                    defaultValue={[min, max]}
-                    max={max}
+                    defaultValue={[min ? min : 0, max ? max : 0]}
+                    max={max ? max : 0}
                     onAfterChange={(e) => handleChangeRange(e)}
                 />
                 <p>

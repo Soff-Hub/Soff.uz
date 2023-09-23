@@ -41,12 +41,11 @@ function App({ Component, pageProps }) {
                 <meta name="author" content="nouthemes" />
                 <meta
                     name="keywords"
-
                     content="Alldata, React, eCommerce, Template"
                 />
                 <meta
                     name="description"
-                    content="Alldata - React eCommerce Template"
+                    content="Soff - hujjatlar bazasi"
                 />
             </Head>
             <CookiesProvider>
