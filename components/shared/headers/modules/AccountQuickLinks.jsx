@@ -38,7 +38,7 @@ const AccountQuickLinks = (props) => {
     const linksView = accountLinks.map((item) => (
         <li key={item.text}>
             <Link href={item.url}>
-                <a>{item.text}</a>
+               <a>  <span><i className={` text-dark fs-4 me-2  ${item.icon}`}></i> </span> {item.text}</a>
             </Link>
         </li>
     ));
@@ -52,7 +52,7 @@ const AccountQuickLinks = (props) => {
                         {linksView}
                         <li className="ps-block__footer">
                             <a href="#" onClick={(e) => handleLogout(e)}>
-                                Chiqish
+                            <i className="fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4"></i>    Chiqish
                             </a>
                         </li>
                     </ul>

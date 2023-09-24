@@ -244,15 +244,15 @@ function Notifications() {
     const dataStatus = [
         {
             id: 1,
-            status : "moderation"
+            status: "moderation"
         },
         {
             id: 2,
-            status : "approved"
+            status: "approved"
         },
         {
             id: 3,
-            status : "cancelled"
+            status: "cancelled"
         }
     ]
     return (
@@ -272,7 +272,10 @@ function Notifications() {
                                         user?.role === "seller" ?
                                             (<>
                                                 <form className='row row-gap-3 gap-4 mx-auto'>
-                                                    <label className='text-danger h3' >Minimal summa 10 000 so'm!</label>
+                                                    <label className='h4 ' style={{color:"orange"}} >
+                                                        Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
+                                                       <strong>!Eslatma: Xisobingizda kamida 10 000 so’m bo’lishi kerak.</strong>
+                                                    </label>
                                                     <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
                                                         <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
@@ -312,7 +315,7 @@ function Notifications() {
                                         user?.role === "admin" ?
                                             (<>
                                                 <div className='row g-3 mx-auto'>
-                                                    <h4 className='py-3 col-md-4'>{user?.role==="seller" ? "Arizalar" : "Arizalar Bo'limi"}</h4>
+                                                    <h4 className='py-3 col-md-4'>{user?.role === "seller" ? "Arizalar" : "Arizalar Bo'limi"}</h4>
                                                     <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
                                                         <option className='fs-3' selected value="">Holatlar</option>
                                                         <option className='fs-3' value="moderation">Moderatsiya</option>

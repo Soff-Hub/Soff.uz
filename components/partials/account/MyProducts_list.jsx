@@ -325,7 +325,7 @@ function MyProductsLists() {
                                         {
                                             user?.role === "seller" ?
                                                 <Link href={"/account/MyProducts/Posts"}>
-                                                    <button className="  btn btn-success col-md-3 py-3 "  ><span className='fs-4'>+ Hujjat qo'shish</span></button>
+                                                    <button className="  btn btn-success col-md-3 py-3 "  ><span className='fs-4'><i className="fa-solid fa-circle-plus"></i> Yangi mahsulot</span></button>
                                                 </Link>
                                                 :
                                                 <></>

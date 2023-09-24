@@ -30,7 +30,7 @@ function TegLists() {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                // GetItemsUsers(page + 1, )
+                GetItemsUsers(page + 1, )
             }
         }
     }
@@ -100,7 +100,12 @@ function TegLists() {
             key: 'address',
             render: (id) => <div >
                 <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
+                {
+                    data.some(el => el.id == id && el.delete_tag === true) ?
+                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
+                    :
+                    <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger" ></i></a>
+                }
             </div>
         },
     ];

@@ -80,6 +80,11 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-shop-lock',
     },
     {
+        text: 'Yangi mahsulot',
+        url: '/account/MyProducts/Posts',
+        icon: 'fa-solid fa-circle-plus',
+    },
+    {
         text: 'Buyurtmalar',
         url: '/account/orders',
         icon: 'fa-solid fa-truck',
