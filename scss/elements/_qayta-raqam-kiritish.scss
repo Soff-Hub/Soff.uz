@@ -74,6 +74,22 @@
     }
 }
 
+@include media('<xs'){
+    .register-choose-button{
+        width: 150px;
+    }
+}
+
+@media screen and (max-width:360px) {
+    .ps-form--account{
+        display: block !important;
+    }
+    .register-choose-button{
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
 // home => top category items
 
 .top-category-items{

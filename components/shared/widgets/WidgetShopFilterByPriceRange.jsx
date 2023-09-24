@@ -38,6 +38,9 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.results);
+                setMax(respons?.max_price);
+                setMin(respons?.min_price);
+                console.log(respons.min_price);
             }
         } else if (parentId !== '') {
             const respons = await ProductRepository.getFilderPrice(
@@ -53,6 +56,9 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.data?.results);
+                setMax(respons?.max_price);
+                setMin(respons?.min_price);
+                console.log(respons.min_price);
             }
         } else {
             const respons = await ProductRepository.getFilderPrice(
@@ -68,6 +74,9 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.data?.results);
+                setMax(respons?.max_price);
+                setMin(respons?.min_price);
+                console.log(respons.min_price);
             }
         }
     };
@@ -119,7 +128,6 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                 <Slider
                     range
                     defaultValue={[min ? min : 0, max ? max : 0]}
-                    max={max ? max : 0}
                     onAfterChange={(e) => handleChangeRange(e)}
                 />
                 <p>

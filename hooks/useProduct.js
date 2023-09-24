@@ -51,7 +51,8 @@ export default function useProduct() {
                         <>
                             <LazyLoad>
                                 {payload?.poster_url ? (
-                                    <div
+                                   <div style={{overflow:'hidden'}}>
+                                     <div
                                         style={{
                                             backgroundImage: `url(${payload.poster_url})`,
                                             backgroundPosition: 'center',
@@ -59,6 +60,7 @@ export default function useProduct() {
                                             backgroundRepeat:'no-repeat'
                                         }}
                                         className="products-image1"></div>
+                                   </div>
                                 ) : (
                                   
                                     <div
