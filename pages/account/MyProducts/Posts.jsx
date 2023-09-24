@@ -263,27 +263,25 @@ const Posts = () => {
                             className=" col-md-8 py-5">
                             <h4>Hujjat Qo'shish</h4>
                             <div className='row   mt-3'>
-                                <div className='col-md-4  d-flex justify-content-between'> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
                                 <input
                                     required
                                     type="text"
                                     className="form-control  rounded-3 col-md-8 mb-2"
-                                    placeholder="Hujjat nomi"
                                     name="title"
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
                             <div className='row '>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
-                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control pt-4 rounded-3 text-truncate">
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
                                     {liveFile ? (
                                         liveFile
                                     ) : (
-                                        <span className="d-flex justify-content-between">
-                                            {' '}
-                                            Hujjatni yuklash - max: 50mb (pdf, doc,
-                                            word, excel, zip ){' '}
-                                            <i className="fa-solid fa-cloud-arrow-up"></i>
+                                        <span className="d-flex flex-column align-items-center" style={{cursor:"pointer"}}>
+                                           <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                          <span> Yuklash uchun faylni ushbu hududga bosing. </span>
+                                           
                                         </span>
                                     )}
                                     <input
@@ -295,15 +293,16 @@ const Posts = () => {
                                 </label>
                             </div>
                             <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                                <label className="add-product-user-image  d-flex flex-column justify-content-center align-content-center form-control col-md-8 pt-4 rounded-3 text-truncate">
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip> </div>
+                                <label className="add-product-user-image  d-flex flex-column justify-content-center align-content-center form-control col-md-8 py-5 rounded-3 text-truncate " style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
                                     {livePoster ? (
                                         livePoster
                                     ) : (
-                                        <span className="d-flex justify-content-between">
-                                            Hujjat posterini yuklash (Rasm)
-                                            <i className="fa-solid fa-cloud-arrow-up"></i>
-                                        </span>
+                                        <span className="d-flex flex-column align-items-center " style={{cursor:"pointer"}}>
+                                        <i className="fa-solid fa-cloud-arrow-up text-primary mt-1"></i>
+                                       <span > Yuklash uchun fayl rasmini ushbu hududga bosing.</span>
+                                        
+                                     </span>
                                     )}
 
                                     <input type="file" required onChange={(e) => LiveImage(e)} />
@@ -311,20 +310,18 @@ const Posts = () => {
                             </div>
 
                             <div className=' row '>
-                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
                                     <Select
-                                        className="py-2"
                                         mode="tags"
                                         style={{ width: '100%' }}
-                                        placeholder="Hujjatga kamida 3 dan 10 tagacha tag qo'shish zarur"
                                         onChange={handleChange}>
                                         {children}
                                     </Select>
                                 </div>
                             </div>
                             <div className=' row  mt-2'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <select
                                     style={{ alignItems: 'center' }}
                                     className="form-select form-control rounded-3 5 fs-4 col-md-8"
@@ -341,12 +338,12 @@ const Posts = () => {
                                 </select>
                             </div>
                             <div className='row   mt-3'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <input
 
                                     type={narxNomi ? 'text' : 'number'}
                                     className="form-control  rounded-3 col-md-8"
-                                    placeholder="Hujjat narxi"
+                                   
                                     name="price"
                                     value={taxminiyNarx}
                                     onChange={(e) => (
@@ -357,12 +354,12 @@ const Posts = () => {
                                 />
                             </div>
                             <div className='row   mt-3'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question  mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4  mt-2"></i></Tooltip></div>
                                 <input
                                     type="number"
                                     className={`form-control col-md-8 rounded-3 ${chegirmaTek ? '' : 'chegirma-xato'
                                         } `}
-                                    placeholder="Chegirma qo'ying (%)"
+                                   
                                     name="price"
                                     onChange={(e) => (
                                         setDiscount(e.target.value),
@@ -371,7 +368,7 @@ const Posts = () => {
                                 />
                             </div>
                             <div className='row   mt-3'>
-                                <div className='col-md-4 d-flex justify-content-between'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <div className=" p-0 rounded-3 col-md-8">
                                     <CKeditor
                                         name="description"
@@ -384,7 +381,7 @@ const Posts = () => {
                             </div>
 
                             <div className='  row mt-3'>
-                                <div className='col-md-4 d-flex justify-content-between'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <div className=" p-0 rounded-3 col-md-8">
                                     <CKeditor
                                         name="description"
@@ -399,12 +396,11 @@ const Posts = () => {
                             <div className="d-flex justify-content-center  mt-4 ">
                                 <button
                                     type="submit"
-                                    className="btn btn-success py-3 w-25">
-                                    <span className="fs-4">Hujjat qo'shish</span>
+                                    className="btn btn-success py-3 ">
+                                    <span className="fs-4 px-5">Mahsulot qo'shish</span>
                                 </button>
                             </div>
                             <div className="mahsulotingiz">
-                                <p>Hujjatingiz</p>
                                 <span
                                     className="fixed-btn"
                                     type="button"
@@ -417,7 +413,7 @@ const Posts = () => {
                         </form>
                         <div className="col-md-4 rounded-3  p-3 cardResponsive  card" style={{ maxWidth: "370px", marginTop: "6rem" }} >
                             <div
-                                className="image"
+                                className="image mb-3 rounded"
                                 style={{
                                     backgroundImage: `url(${livePoster
                                             ? livePoster
@@ -504,9 +500,7 @@ const Posts = () => {
                         id="offcanvasRight"
                         aria-labelledby="offcanvasRightLabel">
                         <div className="offcanvas-header">
-                            <h5 id="offcanvasRightLabel" className='fs-xl-3 fs-lg-3 fs-3 elh3'>
-                                Qo'shayotgan mahsulotingizni ko'rinishi
-                            </h5>
+                            <h4 id="offcanvasRightLabel" className='mt-5 '><span >Qo'shayotgan mahsulotingizni ko'rinishi</span> </h4>
                             <button
                                 type="button"
                                 className="btn-close text-reset"
@@ -516,7 +510,7 @@ const Posts = () => {
                         <div className="offcanvas-body">
                             <div className="card  rounded-3 ">
                                 <div
-                                    className="image"
+                                    className="image mb-3 rounded"
                                     style={{
                                         backgroundImage: `url(${livePoster
                                                 ? livePoster

@@ -158,228 +158,231 @@ const PostsMyProducts = () => {
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
-                  <div className='row w-100 gap-5 ' style={{alignItems:"flex-start"}}>
-                  <form
-                        onSubmit={handleClickPostsEdit}
-                        style={{ position: "relative" }}
-                        id="FormPostsMyProducts"
-                        className=" py-5  col-md-8">
-                        <h4 className="col-md-12">Hujjatni tahrirlash</h4>
-
-                        <div className='row'>
-                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                            <label className="add-product-user-image form-control  pt-4 mb-3 rounded-3 text-truncate col-md-8 m-0">
-                                {
-                                    livePoster ? livePoster :
-                                        products.poster_url
-                                }
-                                <input type="file" onChange={(e) => LiveImage(e)} />
-                            </label>
-                        </div>
-                        <div className='row'>
-                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                            <label className="add-product-user-image form-control  pt-4 m-0 mb-3  rounded-3 text-truncate col-md-8">
-
-                                {
-                                    fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
-                                        products.file
-                                }
+                    <div className='row w-100 gap-5 ' style={{ alignItems: "flex-start" }}>
+                        <form
+                            onSubmit={handleClickPostsEdit}
+                            style={{ position: "relative" }}
+                            id="FormPostsMyProducts"
+                            className=" py-5  col-md-8">
+                            <h4 className="col-md-12">Hujjatni tahrirlash</h4>
+                            <div className='row'>
+                                <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
                                 <input
-                                    type="file"
-                                    onChange={(e) =>
-                                        setFileImgFile(e.target.files[0])
-
-                                    }
-                                    accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                    type="text"
+                                    className="form-control  rounded-3 col-md-8 mb-3 "
+                                    name="title"
+                                    onChange={(e) => setTitle(e.target.value)}
+                                    defaultValue={products?.title}
                                 />
-                            </label>
-                        </div>
-                        <div className="row">
-                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                            <Select
-                                className=" p-0 col-md-8 mb-3"
-                                mode="tags"
-                                style={{ width: '100%' }}
-                                placeholder="Hujjatga tag qo'shing"
-                                onChange={handleChange}
-                                defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
-                            >
-                                {children}
-                            </Select>
-                        </div>
-                        <div className='row'>
-                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                            <select
-                                style={{ alignItems: "flex-start" }}
-                                className="form-select rounded-3 py-3 fs-4 col-md-8 mb-3"
-                                onChange={(e) =>
-                                    setCategory_id(e.target.value)
-                                }>
-                                {dataCategory?.length > 0 &&
-                                    dataCategory.map((item) => (
-                                        products?.category === item.name ?
-                                            <option selected value={item.id}>{item.name}</option>
-                                            :
-                                            <option value={item.id}>{item.name}</option>
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
-                                    ))}
-                            </select>
-                        </div>
-                        <div className='row'>
-                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                            <input
-                                type="text"
-                                className="form-control  rounded-3 col-md-8 mb-3 "
-                                placeholder="Hujjat nomi"
-                                name="title"
-                                onChange={(e) => setTitle(e.target.value)}
-                                defaultValue={products?.title}
-                            />
-                        </div>
-                        <div className='row'>
-                        <div className='col-md-4 d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                            <input
-                                type='number'
-                                className="form-control  rounded-3 col-md-8 mb-3 "
-                                placeholder="Hujjatingizning narxi"
-                                name="price"
-                                defaultValue={products?.price}
-                                onChange={(e) => (
-                                    setTaxminiyNarx(e.target.value)
-                                )}
-                            />
-                        </div>
-                       <div className='row'>
-                       <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                       <input
-                            type='number'
-                            className="form-control  rounded-3 col-md-8 mb-3"
-                            placeholder="Hujjatingizga qo'ygan chegirmangiz"
-                            name="price"
-                            defaultValue={products?.discount}
-                            onChange={(e) => (
-                                setDiscount(e.target.value)
-                            )}
-                        />
-                       </div>
+                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
 
-                        <div className="row">
-                        <div className='col-md-4 mt-2 d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
+                                    {
+                                        fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
+                                            products.file
+                                    }
+                                    <input
+                                        type="file"
+                                        onChange={(e) =>
+                                            setFileImgFile(e.target.files[0])
 
-                            <div className='col-md-8 p-0 mb-3 '>
-                       <CKeditor
-                                name="short_description"
-                                onChange={(data) => {
-                                    setShortData(data);
-                                }}
-                                editorLoaded={editorLoaded}
-                                value={products?.short_description}
+                                        }
+                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                    />
+                                </label>
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip> </div>
+                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
+                                    {
+                                        livePoster ? livePoster :
+                                            products.poster_url
+                                    }
+                                    <input type="file" onChange={(e) => LiveImage(e)} />
+                                </label>
+                            </div>
 
-                            />
-                       </div>
-                        </div> 
-                        <div className="row">
-                        <div className='col-md-4  d-flex justify-content-between'><p>Hujjat posterini yuklang</p> <Tooltip title="prompt text"  ><i style={{cursor:"pointer"}} className="fa-regular fa-circle-question mt-2"></i></Tooltip> </div>
-                       <div className='col-md-8 p-0  mb-3'>
-                       <CKeditor
-                                name="description"
-                                onChange={(data) => {
-                                    setFullData(data);
-                                }}
-                                editorLoaded={editorLoaded}
-                                value={products?.description}
+                            <div className="row">
+                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
-                            />
-                       </div>
-                        </div>
 
-                        <div className="d-flex justify-content-center ">
-                            <button
-                                type='submit'
-                                className="btn btn-success py-3 col-md-3 ">
-                                <span className="fs-4">
-                                    Saqlash
-                                </span>
-                            </button>
-                        </div>
-                        <div className="mahsulotingiz" >
-                            <p>Tahrirlangan</p>
-                            <span
-                                className='fixed-btn'
-                                type="button"
-                                data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasRight"
-                                aria-controls="offcanvasRight">
-                                <i className="fa-solid fa-id-card fa-beat fs-1"></i>
-                            </span>
-                        </div>
-                    </form>
-                    <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{maxWidth:"370px", marginTop:"6rem"}}>
-                                <div className="image" style={{
-                                    backgroundImage: `url(${livePoster
-                                        ? livePoster
-                                        : products?.poster_url})`
-                                }}>
-                                </div>
-                                <div className="text-start">
-                                    <p className="live-card-p">
-                                        <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Narxi</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {taxminiyNarx
-                                                ? addPeriodToThousands(taxminiyNarx)
-                                                : addPeriodToThousands(products?.price)}
-                                            so'm
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Teglari</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                products?.tag?.map(item => (<span>#{item.name} </span>))
-                                            }
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Kategoriya</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                category_id ? category_id : "Kategoriya qo'shing"
-                                            }
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Chegirma</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                discount ? discount : products?.discount
-                                            }
-                                            %
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Qisqa tavsif</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
-                                            }
+                                <Select
+                                    className=" p-0 col-md-8 mb-3"
+                                    mode="tags"
+                                    style={{ width: '100%' }}
+                                    onChange={handleChange}
+                                    defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
+                                >
+                                    {children}
+                                </Select>
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Fulldata ? parse(Fulldata) : products?.description ?  parse(products?.description) : ""
-                                            }
+                                <select
+                                    style={{ alignItems: "flex-start" }}
+                                    className="form-select rounded-3 py-3 fs-4 col-md-8 mb-3"
+                                    onChange={(e) =>
+                                        setCategory_id(e.target.value)
+                                    }>
+                                    {dataCategory?.length > 0 &&
+                                        dataCategory.map((item) => (
+                                            products?.category === item.name ?
+                                                <option selected value={item.id}>{item.name}</option>
+                                                :
+                                                <option value={item.id}>{item.name}</option>
 
-                                        </span>
-                                    </p>
+                                        ))}
+                                </select>
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+
+                                <input
+                                    type='number'
+                                    className="form-control  rounded-3 col-md-8 mb-3 "
+                                    name="price"
+                                    defaultValue={products?.price}
+                                    onChange={(e) => (
+                                        setTaxminiyNarx(e.target.value)
+                                    )}
+                                />
+                            </div>
+                            <div className='row'>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4  mt-2"></i></Tooltip></div>
+
+                                <input
+                                    type='number'
+                                    className="form-control  rounded-3 col-md-8 mb-3"
+                                    name="price"
+                                    defaultValue={products?.discount}
+                                    onChange={(e) => (
+                                        setDiscount(e.target.value)
+                                    )}
+                                />
+                            </div>
+
+                            <div className="row">
+                            <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+
+
+                                <div className='col-md-8 p-0 mb-3 '>
+                                    <CKeditor
+                                        name="short_description"
+                                        onChange={(data) => {
+                                            setShortData(data);
+                                        }}
+                                        editorLoaded={editorLoaded}
+                                        value={products?.short_description}
+
+                                    />
                                 </div>
                             </div>
-                  </div>
+                            <div className="row">
+                            <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+
+                                <div className='col-md-8 p-0  mb-3'>
+                                    <CKeditor
+                                        name="description"
+                                        onChange={(data) => {
+                                            setFullData(data);
+                                        }}
+                                        editorLoaded={editorLoaded}
+                                        value={products?.description}
+
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="d-flex justify-content-center ">
+                                <button
+                                    type='submit'
+                                    className="btn btn-success py-3 px-5 ">
+                                    <span className="fs-4">
+                                        Saqlash
+                                    </span>
+                                </button>
+                            </div>
+                            <div className="mahsulotingiz" >
+                                <span
+                                    className='fixed-btn'
+                                    type="button"
+                                    data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasRight"
+                                    aria-controls="offcanvasRight">
+                                    <i className="fa-solid fa-id-card fa-beat fs-1"></i>
+                                </span>
+                            </div>
+                        </form>
+                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", marginTop: "6rem" }}>
+                            <div className="image rounded mb-3" style={{
+                                backgroundImage: `url(${livePoster
+                                    ? livePoster
+                                    : products?.poster_url})`
+                            }}>
+                            </div>
+                            <div className="text-start">
+                                <p className="live-card-p">
+                                    <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Narxi</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {taxminiyNarx
+                                            ? addPeriodToThousands(taxminiyNarx)
+                                            : addPeriodToThousands(products?.price)}
+                                        so'm
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Teglari</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            products?.tag?.map(item => (<span>#{item.name} </span>))
+                                        }
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Kategoriya</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            category_id ? category_id : "Kategoriya qo'shing"
+                                        }
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Chegirma</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            discount ? discount : products?.discount
+                                        }
+                                        %
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Qisqa tavsif</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
+                                        }
+
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
+                                        }
+
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                     <div
                         className="offcanvas offcanvas-end"
                         tabindex="-1"
@@ -395,7 +398,7 @@ const PostsMyProducts = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card rounded-3 ">
-                                <div className="image" style={{
+                                <div className="image rounded mb-3" style={{
                                     backgroundImage: `url(${livePoster
                                         ? livePoster
                                         : products?.poster_url})`
@@ -452,7 +455,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Fulldata ? parse(Fulldata) : products?.description ?  parse(products?.description) : ""
+                                                Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
                                             }
 
                                         </span>
