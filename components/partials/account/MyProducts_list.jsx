@@ -285,43 +285,7 @@ function MyProductsLists() {
                                             <></>
                                     }
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <select className='form-select rounded-3 col-md-5 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                            <option className='fs-3' value=''>Kategoriyalar</option>
-
-                                            {
-                                                dataCategory?.length > 0 && (
-                                                    dataCategory?.map(item => (
-                                                        item.is_child === true ?
-                                                            <option key={item.id} value={item.id}>{item.name} </option>
-                                                            :
-                                                            <></>
-                                                    ))
-                                                )
-                                            }
-                                        </select>
-                                        <select
-                                            className='form-select col-md-5 rounded-3 py-3 fs-3'
-                                            onChange={(e) => setTagName(e.target.value)}
-                                            style={{ height: "50px" }}
-                                        >
-                                            <option value="">Teglar</option>
-                                            {tagItems?.length > 0 &&
-                                                tagItems.map((item) => (
-                                                    <option key={item.id} value={item.id}>
-                                                        {item.name}
-                                                    </option>
-                                                ))}
-
-                                        </select>
-
-                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
-                                            <option className='fs-3' selected value="">Barcha holatlar</option>
-                                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                        </select>
-                                        <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
-                                        <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-8' : "form-control rounded col-md-7"} placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-6' : "form-control rounded col-md-9"} placeholder="Qidiruv" onInput={handleClick} />
                                         {
                                             user?.role === "seller" ?
                                                 <Link href={"/account/MyProducts/Posts"}>
@@ -330,6 +294,56 @@ function MyProductsLists() {
                                                 :
                                                 <></>
                                         }
+                                        <div className="accordion accordion-flush" id="accordionFlushExample">
+                                            <div className="accordion-item">
+                                                <h2 className="accordion-header m-0">
+                                                    <button  style={{backgroundColor:"#F1F1F1", padding:"17px"}} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                      <strong> Filter</strong>
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                    <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
+                                                        <select className='form-select rounded-3 col-md-5 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                                            <option className='fs-3' value=''>Kategoriyalar</option>
+
+                                                            {
+                                                                dataCategory?.length > 0 && (
+                                                                    dataCategory?.map(item => (
+                                                                        item.is_child === true ?
+                                                                            <option key={item.id} value={item.id}>{item.name} </option>
+                                                                            :
+                                                                            <></>
+                                                                    ))
+                                                                )
+                                                            }
+                                                        </select>
+                                                        <select
+                                                            className='form-select col-md-5 rounded-3 py-3 fs-3'
+                                                            onChange={(e) => setTagName(e.target.value)}
+                                                            style={{ height: "50px" }}
+                                                        >
+                                                            <option value="">Teglar</option>
+                                                            {tagItems?.length > 0 &&
+                                                                tagItems.map((item) => (
+                                                                    <option key={item.id} value={item.id}>
+                                                                        {item.name}
+                                                                    </option>
+                                                                ))}
+
+                                                        </select>
+
+                                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
+                                                            <option className='fs-3' selected value="">Barcha holatlar</option>
+                                                            <option className='fs-3' value="moderation">Moderatsiya</option>
+                                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                                        </select>
+                                                        <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     {
                                         user?.role === "seller" ?
@@ -343,6 +357,7 @@ function MyProductsLists() {
                         </div>
                     </div>
                 </div>
+
                 <ModalDelete onSuccess={DeleteItemsProducts} />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog modal-dialog-centered modal-lg'>

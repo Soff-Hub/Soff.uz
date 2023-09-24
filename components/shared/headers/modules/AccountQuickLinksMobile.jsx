@@ -37,13 +37,13 @@ function AccountQuickLinks() {
             {accountLinks.map(link => (
                 <Menu.Item key={link.url}>
                     <Link href={link.url}>
-                        <a>{link.text}</a>
+                        <a> <span><i className={` text-dark fs-4 me-2  ${link.icon}`}></i> </span> {link.text}</a>
                     </Link>
                 </Menu.Item>
             ))}
            <Menu.Item>
            <a href="#" onClick={(e) => handleLogout(e)}>
-                Chiqish
+           <i className="fa-solid fa-right-from-bracket me-3 mx-1 text-dark fs-4"></i>  Chiqish
             </a>
            </Menu.Item>
         </Menu>

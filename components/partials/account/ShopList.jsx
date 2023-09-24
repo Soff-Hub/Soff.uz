@@ -125,9 +125,9 @@ function Notifications() {
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div>
-                                    <span className='col-md-12 m-0 py-3 d-flex bg-white justify-content-center rounded mb-2 h4' style={{backgroundColor:"GrayText"}} >Sotuvchilar soni: {data.length} ta</span>
-                                        <input type='search' className='form-control rounded bg-white mb-3 ' placeholder="Qidiruv" onInput={handleClick} />
+                                <div className='bg-white p-3'>
+                                    <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{backgroundColor:"GrayText"}} >Sotuvchilar soni: {data.length} ta</span>
+                                        <input type='search' className='form-control rounded bg-white mb-3 ' style={{backgroundColor:"#F1F1F1"}} placeholder="Qidiruv" onInput={handleClick} />
                                     <Table scroll={{ x: 750 }} dataSource={data} columns={columns}
                                     />
                                 </div>
