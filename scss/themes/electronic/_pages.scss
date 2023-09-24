@@ -88,7 +88,23 @@
     }
 
     .ps-product-list {
-        margin-bottom: 150px;
+        margin-bottom: 70px;
+    }
+
+    @include media('<md') {
+        .ps-product-list {
+            margin-bottom: 50px;
+        }
+    }
+    @include media('<sm') {
+        .ps-product-list {
+            margin-bottom: 10px;
+        }
+    }
+    @media screen and (max-width: 495px) {
+        .ps-product-list {
+            margin-bottom: 100px;
+        }
     }
 
     .ps-deal-of-day {

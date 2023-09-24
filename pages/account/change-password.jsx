@@ -4,38 +4,32 @@ import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
 import Router, { useRouter } from 'next/router';
+import { BeatLoader } from 'react-spinners';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);
     const [countdown, setCoutdown] = useState(120);
     const [nomer, setNomer] = useState('');
-    const [report, setReport] = useState(true)
+    const [report, setReport] = useState(false);
+    const [buttonTrue, setButtonTrue] = useState(true);
+    const [loader, setLoader] = useState(false);
     const [kod, setKod] = useState(null);
-    const Router = useRouter()
-    const { query } = Router
-
-
-    const counter = (count) => {
-        const interval = setInterval(() => {
-            setCoutdown((prevCountdown) => prevCountdown - 1);
-        }, 1000);
-
-        setTimeout(() => {
-            clearInterval(interval)
-        }, count * 1000);
-    }
-
+    const Router = useRouter();
+    const { query } = Router;
 
     const handleSubmitKod = async () => {
+        setLoader(true)
         let data = {
             code: `${kod}`,
         };
-        const { NewVerifyCode } = useAuth()
-        const user = await NewVerifyCode(data)
+        const { NewVerifyCode } = useAuth();
+        const user = await NewVerifyCode(data);
         console.log(user);
         if (user.status === 200 || user.status === 201) {
+            setLoader(false)
             Router.push('/account/new-password');
         } else {
+            setLoader(false)
             let message = '';
             const modal = Modal.error({
                 centered: true,
@@ -47,16 +41,19 @@ const Xabar = (e) => {
     };
 
     const qaytaKodOlish = async () => {
+        setLoader(true)
+        setCoutdown(120)
+        setButtonTrue(true)
         const data = {
-            'phone_or_email' : localStorage.getItem('qayta_')
-        }
+            phone_or_email: localStorage.getItem('qayta_'),
+        };
         const { qaytaKodYuborishParol } = useAuth();
         const qaytaUser = await qaytaKodYuborishParol(data);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
-            setCoutdown(query.via === 'via_phone' ? 60 : 120);
-            setReport(true)
-            counter(query.via === 'via_phone' ? 60 : 120)
+            setReport(true);
+            setLoader(false)
         } else {
+            setLoader(false)
             let message = '';
             const modal = Modal.error({
                 centered: true,
@@ -68,24 +65,38 @@ const Xabar = (e) => {
     };
 
     useEffect(() => {
-        if (countdown > 0) {
-            setReport(true);
+       
+
+        const interval = setInterval(() => {
+            setCoutdown((prevCountdown) => {
+              if (prevCountdown === 0) {
+                clearInterval(interval); // Stop the countdown when it reaches 0
+                return 0;
+              } else {
+                return prevCountdown - 1;
+              }
+            });
+          }, 1000);
+
+
+          if (countdown <= 0) {
+            setButtonTrue(false)
+            setReport( true);
         } else {
             setReport(false);
         }
-    }, [countdown])
+        
+        return () => {
+            clearInterval(interval); // Clean up the interval when the component unmounts
+          };
+    }, [countdown]);
 
     useEffect(() => {
         if (localStorage.getItem('qayta_')) {
             setNomer(localStorage.getItem('qayta_'));
-            setCoutdown( 120);
+            setCoutdown(120);
         }
-
-        return () => counter(120)
-        
     }, [tokenn]);
-
-
 
     return (
         <PageContainer>
@@ -96,9 +107,8 @@ const Xabar = (e) => {
                         onFinish={(e) => handleSubmitKod(e)}>
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
-                            <h5>
-                                    Tasdiqlash SMS - kodi quyidagiga
-                                    yuborildi:
+                                <h5>
+                                    Tasdiqlash SMS - kodi quyidagiga yuborildi:
                                 </h5>
                                 <h4 style={{ marginBottom: '20px' }}>
                                     {nomer}
@@ -113,21 +123,43 @@ const Xabar = (e) => {
                                         min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                     <p>{countdown}</p>
+                                    <h4>{` 0 ${Math.floor(countdown / 60 ) } : ${countdown >=  10 ?  countdown % 60 : "0 " + countdown}`}</h4>
                                 </div>
                                 <div className="form-group submit">
-                                    {report ? (
+                                    {buttonTrue ? (
+                                        loader ? (
+                                            <button
+                                                type="submit"
+                                                className="ps-btn ps-btn--fullwidth mb-5">
+                                                <BeatLoader color="#fff" />
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type="submit"
+                                                className="ps-btn ps-btn--fullwidth">
+                                                Yuborish
+                                            </button>
+                                        )
+                                    ) : report ? (
+                                        loader ? (
+                                            <button
+                                                type="submit"
+                                                className="ps-btn ps-btn--fullwidth mb-5">
+                                                <BeatLoader color="#fff" />
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                onClick={() => qaytaKodOlish()}
+                                                className="ps-btn ps-btn--fullwidth bg-danger">
+                                                Qayta kod olish
+                                            </button>
+                                        )
+                                    ) : (
                                         <button
                                             type="submit"
                                             className="ps-btn ps-btn--fullwidth">
                                             Yuborish
-                                        </button>
-                                    ) : (
-                                        <button
-                                            type="button"
-                                            onClick={() => qaytaKodOlish()}
-                                            className="ps-btn ps-btn--fullwidth bg-danger">
-                                            Qayta kod olish
                                         </button>
                                     )}
                                 </div>

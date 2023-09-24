@@ -270,10 +270,8 @@
     text-align: center;
 }
 
-#homepage-7 {
-    .ps-product-list {
-        margin-bottom: 100px;
-    }
+#homepage-7 .ps-product-list {
+        margin-bottom: 80px
 }
 
 .ps-block--shopping-total {
@@ -334,6 +332,10 @@
 // }
 
 @include media('<lg') {
+    
+#homepage-7 .ps-product-list {
+    margin-bottom: 80px
+}
     .acc-li{
         padding: 5px 5px 0 5px;
     }
@@ -562,7 +564,7 @@
 @include media('<md') {
     #homepage-7 {
         .ps-product-list {
-            margin-bottom: 90px;
+            margin-bottom: 80px;
         }
     }
     .ps-input {
@@ -657,9 +659,9 @@
         .ps-product__actions {
             display: none;
         }
-        .card-narx-box {
-            display: none;
-        }
+        // .card-narx-box {
+        //     display: none;
+        // }
 
         .ps-product__content {
             visibility: visible;
@@ -721,6 +723,9 @@
 }
 
 @include media('<sm') {
+    .ps-product{
+        height: 140px;
+    }
     .banner-placholder {
         display: flex;
         flex-direction: row;
@@ -766,7 +771,7 @@
     }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 15px;
+        padding: 0;
     }
 
     .top-category-items {
@@ -784,7 +789,7 @@
     // }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 8px;
+        padding: 0;
     }
 
     // .yaxshi-categoriyalar-image {
@@ -840,6 +845,9 @@
 }
 
 @media screen and (max-width: 524px) {
+    .ps-product-list .ps-section__content{
+        padding-top: 0;
+    }
     .banner-right {
         display: flex;
         flex-direction: row !important;
@@ -874,12 +882,12 @@
     }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 8px;
+        padding: 0;
     }
 
     .ps-product__thumbnail {
-        min-height: 90px;
-        height: 100%;
+        min-height: 50px;
+        height: 50%;
         max-width: 80px;
         display: flex;
         align-items: center;
@@ -977,7 +985,7 @@
 
     .ps-product__thumbnail {
         min-height: 80px;
-        height: 100%;
+        height: 50%;
         max-width: 60px;
         display: flex;
         align-items: center;
@@ -996,11 +1004,11 @@
         text-align: center;
     }
 
-    .ps-product-list {
-        .ps-section__content {
-            padding-top: 25px;
-        }
-    }
+    // .ps-product-list {
+    //     .ps-section__content {
+    //         padding-top: 25px;
+    //     }
+    // }
 
     .carosusel-cards {
         flex-wrap: wrap !important;

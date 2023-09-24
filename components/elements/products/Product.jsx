@@ -22,7 +22,6 @@ const Product = ({ product }) => {
 
         return formattedNumber;
     }
-    console.log(product);
     return (
         <div className="ps-product">
             <div
@@ -31,7 +30,10 @@ const Product = ({ product }) => {
                     margin: '0 auto',
                 }}>
                 <Link href="/product/[pid]" as={`/product/${product.id}`}>
-                    <a>
+                    <a style={{
+                        display:'flex',
+                        justifyContent:'center'
+                    }}>
                         {product.poster_url ? (
                             thumbnailImage(product)
                         ) : (
@@ -59,7 +61,7 @@ const Product = ({ product }) => {
                         </>
                     )}
                 </div>
-                <div className="ps-product__content hover">
+                {/* <div className="ps-product__content hover">
                     {title(product)}
                     {product.discount === 0 ? (
                         <p>{addPeriodToThousands(product.price)} so'm</p>
@@ -74,7 +76,7 @@ const Product = ({ product }) => {
                             </p>
                         </>
                     )}
-                </div>
+                </div> */}
             </div>
         </div>
     );
