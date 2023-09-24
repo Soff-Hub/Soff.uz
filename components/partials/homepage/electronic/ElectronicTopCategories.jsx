@@ -39,19 +39,21 @@ function ElectronicTopCategories() {
                                                     display: 'flex',
                                                     alignContent: 'center',
                                                     justifyContent: 'center',
+                                                    overflow:'hidden'
                                                 }}>
                                              
                                                 <div style={{
                                                     backgroundImage:`url(${category.image})`,
                                                     backgroundRepeat:'no-repeat',
                                                     backgroundSize:'cover',
-                                                    backgroundPosition:'center'
+                                                    backgroundPosition:'center',
+                                            
                                                 }}
                                                 className="yaxshi-categoriyalar-image"
                                                 ></div>
                                             </div>
                                             <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
-                                                <h4 className='text-truncate'>{category.name}</h4>
+                                                <h4 className='text-truncate text-uppercase'>{category.name}</h4>
                                             </div>
                                         </div>
                                     </a>

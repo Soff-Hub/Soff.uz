@@ -56,6 +56,10 @@
     background-size: cover;
     background-position: center;
     margin: 0 auto;
+    transition: .5s;
+    &:hover{
+        transform: scale(1.1);
+    }
 }
 
 .carosusel-cards {
@@ -327,13 +331,18 @@
     gap: 10px;
 }
 
-// .home-car{
-//     max-width: 200px;
-//     min-width: 190px;
-//     min-height: 200px;
-//     max-height: 200px;
-//     width: 100%;
-// }
+.yaxshi-categoriyalar-image{
+    transition: .5s;
+   
+    &:hover{
+        transform: scale(1.1);
+    }
+}
+
+.ps-product{
+    border: 1px solid #00000005;
+    box-shadow: 0px 0px 15px -15px black;
+}
 
 @include media('<lg') {
     .cardResponsive{
@@ -349,6 +358,7 @@
     }
     .accordion-button{
         padding: 5px 8px;
+        
     }
 
     .ps-product {
@@ -953,25 +963,6 @@
         }
     }
 }
-
-@media screen and (max-width: 477px) {
-    .ps-section__righ {
-        justify-content: center;
-    }
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        #banner-placholder-item {
-            width: 200px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-}
-
 @media screen and (max-width: 494px) {
     .banner-right {
         display: flex;
@@ -1044,6 +1035,26 @@
     }
 }
 
+@media screen and (max-width: 477px) {
+    .ps-section__righ {
+        justify-content: center;
+    }
+    .banner-placholder {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        #banner-placholder-item {
+            width: 200px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+
+
 @media screen and (max-width: 441px) {
     .ps-section__righ {
         justify-content: center;
@@ -1061,25 +1072,18 @@
             align-items: center;
         }
     }
+
+    .ps-form--account .ps-tab-list li.active a{
+        font-size: 22px !important;
+    }
+
+    .ps-form--account .ps-tab-list li a{
+        font-size: 17px !important;
+    }
+    
 }
 
-@media screen and (max-width: 441px) {
-    .ps-section__righ {
-        justify-content: center;
-    }
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        #banner-placholder-item {
-            width: 130px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-}
+
 
 @media screen and (max-width: 425px) {
     .ps-product__container {
@@ -1167,6 +1171,14 @@
                 font-size: 11px;
             }
         }
+    }
+
+    .ps-form--account .ps-tab-list li.active a{
+        font-size: 20px !important;
+    }
+
+    .ps-form--account .ps-tab-list li a{
+        font-size: 15px !important;
     }
 }
 
