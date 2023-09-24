@@ -227,15 +227,6 @@
             }
         }
 
-        .ps-product__content {
-            @include hidden;
-            height: 0;
-
-            &.hover {
-                height: auto;
-                @include show;
-            }
-        }
 
         &.ps-product--inner {
             border: none;
@@ -246,6 +237,28 @@
             }
         }
     }
+
+    @include media('<lg') {
+        &:hover {
+            border: none;
+            .ps-product__thumbnail {
+                .ps-product__actions {
+                    // @include transform(translate(-50%, 0));
+                }
+            }
+    
+    
+            &.ps-product--inner {
+                border: none;
+    
+                .ps-product__content {
+                    // display: block;
+                    // @include show;
+                }
+            }
+        }
+    }
+
 
     @include media('<sm') {
         padding: 0;

@@ -30,7 +30,7 @@ function App({ Component, pageProps }) {
         <>
             <Head>
 
-                <title>Alldata</title>
+                <title>Soff</title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta
                     name="viewport"
@@ -41,7 +41,7 @@ function App({ Component, pageProps }) {
                 <meta name="author" content="nouthemes" />
                 <meta
                     name="keywords"
-                    content="Alldata, React, eCommerce, Template"
+                    content="Soff "
                 />
                 <meta
                     name="description"

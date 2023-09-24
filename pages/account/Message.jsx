@@ -11,7 +11,6 @@ const Xabar = (e) => {
     const [nomer, setNomer] = useState('');
     const [report, setReport] = useState(true);
     const [loader, setLoader] = useState(false);
-    const [countSekond, setCountSekond] = useState(120);
     const [firstSendCode, setFirstSendCode] = useState(true);
     const [countdown, setCoutdown] = useState(120);
     const [kod, setKod] = useState(null);
@@ -43,26 +42,16 @@ const Xabar = (e) => {
         setKod('');
     };
 
-    const counter = (count) => {
-        const interval = setInterval(() => {
-            setCoutdown((prevCountdown) => prevCountdown - 1);
-        }, 1000);
-
-        setTimeout(() => {
-            clearInterval(interval);
-        }, count * 1000);
-    };
-
     const qaytaKodOlish = async () => {
+        setCoutdown(120)
+        setLoader(true);
         const data = {
             phone_or_email: JSON.parse(localStorage.getItem('data'))
                 .phone_or_email,
         };
         console.log('dataa', data);
-        setLoader(true);
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish(data);
-        setCountSekond(false);
         if (qaytaUser?.status === 200 || qaytaUser?.status === 201) {
             let message = '';
             const modal = Modal.success({
@@ -70,13 +59,6 @@ const Xabar = (e) => {
                 title: 'Ijobiy',
                 content: qaytaUser?.data?.msg,
             });
-            // if (query.via === 'via_phone') {
-            //     setCoutdown(60);
-            //     counter(60);
-            // } else if (query.via === 'via_email') {
-            //     setCoutdown(120);
-            //     counter(120);
-            // }
             modal.update;
             setLoader(false);
         } else {
@@ -93,20 +75,38 @@ const Xabar = (e) => {
     };
 
     useEffect(() => {
-        if (countdown === 0) {
+
+        const interval = setInterval(() => {
+            setCoutdown((prevCountdown) => {
+              if (prevCountdown === 0) {
+                clearInterval(interval); 
+                return 0;
+              } else {
+                return prevCountdown - 1;
+              }
+            });
+          }, 1000);
+
+
+        if (countdown <= 0) {
             setFirstSendCode(false);
             setReport(true);
         } else {
             setReport(false);
         }
+        
+        return () => {
+            clearInterval(interval); 
+          };
+
+      
     }, [countdown]);
 
     useEffect(() => {
         if (localStorage.getItem('data')) {
             setNomer(JSON.parse(localStorage.getItem('data')).phone_or_email);
         }
-        setCoutdown( 120);
-        return () => counter( 120);
+        setCoutdown(120);
     }, [tokenn]);
 
     return (
@@ -132,7 +132,7 @@ const Xabar = (e) => {
                                         min="0"
                                         maxLength="4"
                                     />
-                                    <p>{countdown}</p>
+                                    <h4>{` 0 ${Math.floor(countdown / 60 ) } : ${countdown >=  10 ?  countdown % 60 : "0 " + countdown}`}</h4>
                                 </div>
                                 <div className="form-group submit">
                                     {firstSendCode ? (
