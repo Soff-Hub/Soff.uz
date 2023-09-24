@@ -1,7 +1,7 @@
 import axios from 'axios';
-const baseDomain = 'http://46.101.123.144/api/v1/seller/'; 
-const baseDomainProfile = 'http://46.101.123.144/'; 
-export const baseUrlCustomer = 'http://46.101.123.144/api/v1/'
+const baseDomain = 'https://api.soff.uz/api/v1/seller/'; 
+const baseDomainProfile = 'https://api.soff.uz/'; 
+export const baseUrlCustomer = 'https://api.soff.uz/api/v1/'
 
 
 export const baseUrl = `${baseDomain}`;
