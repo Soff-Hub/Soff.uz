@@ -336,11 +336,14 @@
 // }
 
 @include media('<lg') {
-
+    .cardResponsive{
+        display: none;
+    }
     
 #homepage-7 .ps-product-list {
     margin-bottom: 80px
 }
+
     .acc-li{
         padding: 5px 5px 0 5px;
     }
