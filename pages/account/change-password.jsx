@@ -5,6 +5,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
 import Router, { useRouter } from 'next/router';
 import { BeatLoader } from 'react-spinners';
+import Page404 from '../page/page-404';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);
@@ -16,6 +17,7 @@ const Xabar = (e) => {
     const [kod, setKod] = useState(null);
     const Router = useRouter();
     const { query } = Router;
+    const { user } = useSelector(state => state.auth)
 
     const handleSubmitKod = async () => {
         setLoader(true)
@@ -99,6 +101,8 @@ const Xabar = (e) => {
     }, [tokenn]);
 
     return (
+        user?.access ?
+        <Page404/> :
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">

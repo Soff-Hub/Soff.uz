@@ -261,7 +261,7 @@ const Posts = () => {
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
                             className=" col-md-8 py-5">
-                            <h4>Hujjat Qo'shish</h4>
+                            <h4> Yangi mahsulot</h4>
                             <div className='row   mt-3'>
                                 <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
                                 <input
@@ -353,7 +353,7 @@ const Posts = () => {
                                     )}
                                 />
                             </div>
-                            <div className='row   mt-3'>
+                            {/* <div className='row   mt-3'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4  mt-2"></i></Tooltip></div>
                                 <input
                                     type="number"
@@ -366,7 +366,7 @@ const Posts = () => {
                                         chegirma(e.target.value)
                                     )}
                                 />
-                            </div>
+                            </div> */}
                             <div className='row   mt-3'>
                                 <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <div className=" p-0 rounded-3 col-md-8">
@@ -393,11 +393,11 @@ const Posts = () => {
                                 </div>
                             </div>
 
-                            <div className="d-flex justify-content-center  mt-4 ">
+                            <div className="d-flex justify-content-end mt-4 " style={{transform:"translateX(16px)"}}>
                                 <button
                                     type="submit"
                                     className="btn btn-success py-3 ">
-                                    <span className="fs-4 px-5">Mahsulot qo'shish</span>
+                                    <span className="fs-4 px-5">Mahsulot qo'shish <i className="fa-solid fa-cloud-arrow-down mx-2"></i></span>
                                 </button>
                             </div>
                             <div className="mahsulotingiz">
@@ -451,7 +451,7 @@ const Posts = () => {
                                             : "To'ldirilmadi"}{' '}
                                     </span>
                                 </p>
-                                <p className="live-card-p">
+                                {/* <p className="live-card-p">
                                     <strong>Chegirmasi : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>
                                         {' '}
@@ -459,7 +459,7 @@ const Posts = () => {
                                             ? discount + '%'
                                             : "To'ldirilmadi"}{' '}
                                     </span>
-                                </p>
+                                </p> */}
                                 <p className="live-card-p">
                                     <strong>Taglari : </strong>
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
@@ -548,7 +548,7 @@ const Posts = () => {
                                                 : "To'ldirilmadi"}{' '}
                                         </span>
                                     </p>
-                                    <p className="live-card-p">
+                                    {/* <p className="live-card-p">
                                         <strong>Chegirmasi : </strong>{' '}
                                         <span style={{ maxWidth: '150px' }}>
                                             {' '}
@@ -556,7 +556,7 @@ const Posts = () => {
                                                 ? discount + '%'
                                                 : "To'ldirilmadi"}{' '}
                                         </span>
-                                    </p>
+                                    </p> */}
                                     <p className="live-card-p">
                                         <strong>Taglari : </strong>
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}

@@ -4,11 +4,14 @@ import React, { useState } from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners'
+import { useSelector } from 'react-redux';
+import Page404 from '../page/page-404';
 
 export default function QaytaNomerKiritish() {
     const [report, setReport] = useState(true)
     const [number, setNumber] = useState('');
     const [telLenght, setTelLenght] = useState('')
+    const { user } = useSelector(state => state.auth)
 
     const counter = (count) => {
         const interval = setInterval(() => {
@@ -54,6 +57,8 @@ export default function QaytaNomerKiritish() {
     }
 
     return (
+        user?.access ?
+        <Page404/> :
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">

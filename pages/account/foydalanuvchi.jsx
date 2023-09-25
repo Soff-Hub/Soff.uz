@@ -1,9 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import PageContainer from '~/components/layouts/PageContainer';
+import { useSelector } from 'react-redux';
+import Page404 from '../page/page-404';
 
 const Foydalanuvchi = () => {
+    const { user } = useSelector(state => state.auth)
     return (
+        user?.access ?
+        <Page404/> :
       <PageContainer>
           <div className="ps-checkout ps-section--shopping">
             <div className="container">

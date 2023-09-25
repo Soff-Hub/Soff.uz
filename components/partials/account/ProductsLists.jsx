@@ -218,31 +218,46 @@ function ProductsLists() {
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div>
-                                    <div className='row  pb-2 gap-4 mx-auto w-100'>
-                                        <select className='form-select rounded-3 col-md-6 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                            <option className='fs-3' value=''> Barcha Kategoriyalar</option>
-                                            {
-                                                dataVal.length > 0 && (
-                                                    dataVal.map(item => (
-                                                        item.is_child === true ?
-                                                            <option key={item.id} value={item.id}>{item.name} </option>
-                                                            :
-                                                            <></>
-                                                    ))
-                                                )
-                                            }
-                                        </select>
-                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
-                                            <option className='fs-3' selected value="">Barcha holatlar</option>
-                                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                        </select>
-                                        <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
-                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
-                                        <span className='col-md-12 m-0 py-3 d-flex bg-white justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
-                                        <input type='' className='form-control rounded bg-white' placeholder="Qidiruv" onInput={handleClick} />
+                                <div className='bg-white p-3'>
+                                <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
+                                    <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
+                                        
+                                        <input style={{backgroundColor:"#F2F3F4F6"}} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={handleClick} />
+                                        <div className="accordion accordion-flush" id="accordionFlushExample">
+                                            <div className="accordion-item">
+                                                <h2 className="accordion-header m-0">
+                                                    <button style={{ backgroundColor:"#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                        <strong> Filter</strong>
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                    <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
+                                                        <select className='form-select rounded-3 col-md-6 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                                            <option className='fs-3' value=''> Barcha Kategoriyalar</option>
+                                                            {
+                                                                dataVal.length > 0 && (
+                                                                    dataVal.map(item => (
+                                                                        item.is_child === true ?
+                                                                            <option key={item.id} value={item.id}>{item.name} </option>
+                                                                            :
+                                                                            <></>
+                                                                    ))
+                                                                )
+                                                            }
+                                                        </select>
+                                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
+                                                            <option className='fs-3' selected value="">Barcha holatlar</option>
+                                                            <option className='fs-3' value="moderation">Moderatsiya</option>
+                                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                                        </select>
+                                                        <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
+                                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <div className='d-flex flex-column gap-2 bg-white px-3 py-4 rounded'>
                                         <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
@@ -274,13 +289,14 @@ function ProductsLists() {
                                             <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
-
+                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))}Aktiv teglar : {deleteIdView?.active_tag?.map(item => (<span>#{item.name} </span>))} </p>
+                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} Aktivmas teglar: {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
+                                           
                                         </div>
                                     </div>
                                     <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description ? parse(deleteIdView?.description) : ""}</p>
+                                        <p className="card-text"><strong>Qisqa tavsif:</strong> {deleteIdView?.short_description ? parse(deleteIdView?.short_description) : ""}</p>
+                                        <p className="card-text m-0"><strong>To'liq tavsif:</strong> {deleteIdView?.description ? parse(deleteIdView?.description) : ""}</p>
                                         <div className='d-flex justify-content-end py-3'>
                                             <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 

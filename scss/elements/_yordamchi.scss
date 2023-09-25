@@ -572,11 +572,21 @@
         height: 350px;
     }
 }
+@include media ('>lg'){
+    .responsiveCardButton{
+        position: absolute;
+        bottom: 15px;
+        left: 80%;
+        width: 140px;
+    }
+
+}
 
 @media screen and (max-width: 1060px) {
     .detail-card {
         max-width: 230px;
     }
+    
 }
 
 @include media('<md') {
@@ -1257,3 +1267,4 @@
         opacity: 0;
     }
 }
+
