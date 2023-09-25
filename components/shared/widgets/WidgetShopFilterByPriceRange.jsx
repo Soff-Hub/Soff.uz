@@ -101,7 +101,9 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
         if (min === null) {
             Price();
             }
-    }, [min, max, slug])
+    }, [ slug])
+
+    
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -131,7 +133,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                     onAfterChange={(e) => handleChangeRange(e)}
                 />
                 <p>
-                    Narx: {addPeriodToThousands(min)} so'm - {addPeriodToThousands(max)} so'm
+                    Narx: { min === undefined || min === null ? 0 : addPeriodToThousands(min)} so'm - { max === undefined || max === null ? 0 : addPeriodToThousands(max)} so'm
                 </p>
             </figure>
         </aside>

@@ -336,11 +336,22 @@
 }
 
 .ps-product{
+    height: 150px;
     border: 1px solid #00000005;
     box-shadow: 0px 0px 15px -15px black;
 }
 
+:where(.css-dev-only-do-not-override-17a39f8).ant-notification {
+    z-index: 9999999999 !important;
+}
+
+
+
 @include media('<lg') {
+    .ant-float-btn-default{
+        bottom: 90px;
+    }
+    
     .cardResponsive{
         display: none;
     }

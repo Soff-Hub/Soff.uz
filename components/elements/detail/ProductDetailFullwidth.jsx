@@ -18,6 +18,9 @@ const ProductDetailFullwidth = ({ product }) => {
     useEffect(() => {
         setTag(product?.tag);
     }, []);
+
+    console.log('.', product);
+
     return (
         <div className="ps-product--detail ps-product--fullwidth">
          <div className="ps-product__header ">
@@ -29,12 +32,12 @@ const ProductDetailFullwidth = ({ product }) => {
                     </div>
                     <ModuleProductDetailDescription product={product } />
                     <ModuleDetailShoppingActions product={product} />
-                    <div className=" row d-flex justify-content-center">
+                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
                         {tag?.length > 0 &&
                             tag.map((item, i) => (
                                 <div
                                     key={i}
-                                    className="mx-4 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-4 col-5">
+                                    className="mx-2">
                                     <Link href="#" as="#">
                                         <a
                                             onClick={() =>

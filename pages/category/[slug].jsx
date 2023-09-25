@@ -25,6 +25,10 @@ const ProductCategoryScreen = () => {
     const [count, setCount] = useState(null);
     const [nom, setNom] = useState('Kategoriyalar');
 
+    const [min , setMin] = useState(null)
+    const [max , setMax] = useState(null)
+
+
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData?.length > 0) {
@@ -76,6 +80,9 @@ const ProductCategoryScreen = () => {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
+            setMin(responseData?.min_price)
+            setMax(responseData?.max_price)
+            // console.log(responseData);
             setCount(responseData.count);
         }
         setParentId(null);
