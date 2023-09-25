@@ -41,7 +41,7 @@ const ModuleCartSummary = ({ source }) => {
                     </Link>
                     <Link href="/product/[pid]" as={`/product/${item.id}`}>
                         <a className="ps-product__price">
-                            {addPeriodToThousands(item.price)} so'm
+                            {addPeriodToThousands(item.discount_price)} so'm
                         </a>
                     </Link>
                 </div>

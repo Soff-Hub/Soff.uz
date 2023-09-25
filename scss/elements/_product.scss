@@ -539,6 +539,8 @@
         a {
             font-size: 16px;
             color: #0066cc;
+            display: block;
+            width: 230px;
 
             &:hover {
                 color: $color-1st;
