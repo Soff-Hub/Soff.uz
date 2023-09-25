@@ -345,6 +345,7 @@ const PostsMyProducts = () => {
                                         so'm
                                     </span>
                                 </p>
+                                
                                 <p className="live-card-p">
                                     <span><strong>Teglari</strong>: </span>
                                     <span style={{ maxWidth: '150px' }} >

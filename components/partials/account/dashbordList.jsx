@@ -117,9 +117,25 @@ function DashbordList() {
             key: 'age',
         },
         user?.role === "admin" ? {
-            title: 'Telefon raqam',
-            dataIndex: 'phone',
+            title: 'Telefon raqam yoki email',
+            dataIndex: 'data',
             key: 'age',
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    {
+                        data.phone==="None" ?
+                        <></> :
+                        <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    }
+                    {
+                          data.email==="None" ?
+                          <></> :
+                    <span className="truncate whitespace-nowrap"> {data.email}</span>
+                    }
+
+                </div>
+
+            ),
         }
             : <></>,
         {

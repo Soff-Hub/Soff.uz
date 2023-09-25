@@ -159,10 +159,6 @@
 }
 
 .mahsulotingiz {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(36%, 0%);
     display: none;
 }
  .cardResponsive{
@@ -942,7 +938,7 @@
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(26%, 0%);
+        transform: translate(100%, 180%);
         display: block;
         
     }
@@ -1217,7 +1213,7 @@
 }
 .colCard {
     position: absolute;
-    top: 36%;
+    top: 51%;
 }
 
 /* rccs-signature-background: repeating-linear-gradient(
@@ -1234,21 +1230,33 @@
   rccs-animate-background: true; */
 
 .BackImg {
-    background-image: url('../../public/static/CardCredit/humo_.png');
+    background-image: url('../../public/static/CardCredit/humoca.gif');
+    background-size: 100%;
+    background-position: center;
+    border-radius: 10px;
+}
+.BackImg4 {
+    background-image: url('../../public/static/CardCredit/moster.gif');
+    background-size: 100%;
+    background-position: center;
+    border-radius: 10px;
+}
+.BackImg3 {
+    background-image: url('../../public/static/CardCredit/ei-flex-elite-550x347.png');
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
 }
 
 .BackImg1 {
-    background-image: url('../../public/static/CardCredit/cartaDD.jpg');
+    background-image: url('../../public/static/CardCredit/defaukt6.jpg');
     background-size: 100%;
-    background-position: center;
     border-radius: 10px;
+    
 }
 
 .BackImg2 {
-    background-image: url('../../public/static/CardCredit/png.png');
+    background-image: url('../../public/static/CardCredit/Uzcard.jpg');
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
@@ -1260,7 +1268,7 @@
     font-size: 17px;
 }
 .cardColorHumo {
-    color: #ffc107;
+    color:#F1F1F1;
 }
 .add-product-user-image {
     input {
