@@ -27,7 +27,7 @@ const ProductDetailFullwidth = ({ product }) => {
                     <div>
                         <h4> Muallif : {product?.seller?.first_name}</h4>
                     </div>
-                    <ModuleProductDetailDescription product={product} />
+                    <ModuleProductDetailDescription product={product } />
                     <ModuleDetailShoppingActions product={product} />
                     <div className=" row d-flex justify-content-center">
                         {tag?.length > 0 &&

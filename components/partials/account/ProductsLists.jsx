@@ -289,13 +289,14 @@ function ProductsLists() {
                                             <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
                                             <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
                                             <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
-
+                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))}Aktiv teglar : {deleteIdView?.active_tag?.map(item => (<span>#{item.name} </span>))} </p>
+                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} Aktivmas teglar: {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
+                                           
                                         </div>
                                     </div>
                                     <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description ? parse(deleteIdView?.description) : ""}</p>
+                                        <p className="card-text"><strong>Qisqa tavsif:</strong> {deleteIdView?.short_description ? parse(deleteIdView?.short_description) : ""}</p>
+                                        <p className="card-text m-0"><strong>To'liq tavsif:</strong> {deleteIdView?.description ? parse(deleteIdView?.description) : ""}</p>
                                         <div className='d-flex justify-content-end py-3'>
                                             <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 

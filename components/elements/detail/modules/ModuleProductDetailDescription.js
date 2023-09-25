@@ -1,5 +1,6 @@
 import React from 'react';
-import Link from 'next/link';
+var parse = require("html-react-parser");
+
 
 const ModuleProductDetailDescription = ({ product }) => (
     <div className="ps-product__desc">
@@ -15,7 +16,7 @@ const ModuleProductDetailDescription = ({ product }) => (
         </p> */}
         <ul className="ps-list--dot">
            {
-            <li>{product.short_description}</li>
+            <li>{product?.short_description ? parse(product?.short_description) : ""}</li>
            }
         </ul>
     </div>

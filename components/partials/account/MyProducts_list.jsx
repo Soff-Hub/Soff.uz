@@ -384,8 +384,8 @@ function MyProductsLists() {
                                         </div>
                                     </div>
                                     <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tasvir:</strong> {View?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description ? parse(View?.description) : ""}</p>
+                                        <p className="card-text"><strong>Qisqa tavsif:</strong> {View?.short_description ? parse(View?.short_description) : ""}</p>
+                                        <p className="card-text m-0"><strong>To'liq tavsif:</strong> {View?.description ? parse(View?.description) : ""}</p>
                                         <div className='d-flex justify-content-end py-3'>
                                             <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File ochish</a>
 

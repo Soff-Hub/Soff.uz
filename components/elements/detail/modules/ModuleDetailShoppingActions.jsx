@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Modal } from 'antd';
 import useEcomerce from '~/hooks/useEcomerce';
 
-import { useCookies } from 'react-cookie';
 import { OneShopDoc } from '~/store/auth/action';
 
 const ModuleDetailShoppingActions = ({
@@ -12,8 +11,6 @@ const ModuleDetailShoppingActions = ({
     product,
     extended = false,
 }) => {
-    const [cookies, setCookie] = useCookies(['cart']);
-    const [redux, setRedux] = useState(false);
     const Router = useRouter();
     const select = useSelector((state) => state.auth.user?.access);
     const { addItem } = useEcomerce();

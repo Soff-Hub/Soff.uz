@@ -43,9 +43,17 @@ const PostsMyProducts = () => {
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
+        const data = [];
         const token = user?.access;
         const ItemsData = await GetRepository.getCategoryLists(token);
-        setDataCategory(ItemsData.results);
+        if (ItemsData?.results) {
+            for (let i = 0; i < ItemsData?.results?.length; i++) {
+                if (ItemsData?.results[i].parent !== null) {
+                    data.push(ItemsData?.results[i]);
+                }
+            setDataCategory(data);
+        }
+    }
     }
 
     async function GetItemsTag() {
@@ -251,7 +259,7 @@ const PostsMyProducts = () => {
                                     )}
                                 />
                             </div>
-                            <div className='row'>
+                            {/* <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4  mt-2"></i></Tooltip></div>
 
                                 <input
@@ -263,7 +271,7 @@ const PostsMyProducts = () => {
                                         setDiscount(e.target.value)
                                     )}
                                 />
-                            </div>
+                            </div> */}
 
                             <div className="row">
                             <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
@@ -297,12 +305,12 @@ const PostsMyProducts = () => {
                                 </div>
                             </div>
 
-                            <div className="d-flex justify-content-center ">
+                            <div className="d-flex justify-content-end " style={{transform:"translateX(16px)"}}>
                                 <button
                                     type='submit'
                                     className="btn btn-success py-3 px-5 ">
                                     <span className="fs-4">
-                                        Saqlash
+                                        Saqlash <i class="fa-solid fa-floppy-disk mx-2"></i>
                                     </span>
                                 </button>
                             </div>
@@ -353,7 +361,7 @@ const PostsMyProducts = () => {
                                         }
                                     </span>
                                 </p>
-                                <p className="live-card-p">
+                                {/* <p className="live-card-p">
                                     <span><strong>Chegirma</strong>: </span>
                                     <span style={{ maxWidth: '150px' }} >
                                         {
@@ -361,7 +369,7 @@ const PostsMyProducts = () => {
                                         }
                                         %
                                     </span>
-                                </p>
+                                </p> */}
                                 <p className="live-card-p">
                                     <span><strong>Qisqa tavsif</strong>: </span>
                                     <span style={{ maxWidth: '150px' }} >
@@ -433,7 +441,7 @@ const PostsMyProducts = () => {
                                             }
                                         </span>
                                     </p>
-                                    <p className="live-card-p">
+                                    {/* <p className="live-card-p">
                                         <span><strong>Chegirma</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
@@ -441,7 +449,7 @@ const PostsMyProducts = () => {
                                             }
                                             %
                                         </span>
-                                    </p>
+                                    </p> */}
                                     <p className="live-card-p">
                                         <span><strong>Qisqa tavsif</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >

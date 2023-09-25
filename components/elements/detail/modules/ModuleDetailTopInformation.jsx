@@ -26,7 +26,7 @@ const ModuleDetailTopInformation = ({ product }) => {
     if (product.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
-                {product.price === product.discount_price ? (
+                {product.discount===0 ? (
                     <p> {addPeriodToThousands(product.price)} so'm </p>
                 ) : (
                     <>
@@ -41,7 +41,7 @@ const ModuleDetailTopInformation = ({ product }) => {
     } else {
         priceView = (
             <h4 className="ps-product__price">
-                {product.price === product.discount_price ? (
+                {product.discount===0 ? (
                     <h4> {addPeriodToThousands(product.price)} so'm </h4>
                 ) : (
                     <>
