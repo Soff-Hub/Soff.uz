@@ -101,7 +101,9 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
         if (min === null) {
             Price();
             }
-    }, [min, max, slug])
+    }, [ slug])
+
+    
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
