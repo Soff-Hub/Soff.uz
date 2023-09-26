@@ -55,8 +55,7 @@ export default function useProduct() {
                                      <div
                                         style={{
                                             backgroundImage: `url(${payload.poster_url})`,
-                                            backgroundPosition: 'center',
-                                            backgroundSize:'cover',
+                                            backgroundSize:'contain',
                                             backgroundRepeat:'no-repeat'
                                         }}
                                         className="products-image1"></div>
@@ -66,8 +65,7 @@ export default function useProduct() {
                                     <div
                                     style={{
                                         backgroundImage: `url(/static/img/docCopy.jpg)`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize:'cover',
+                                        backgroundSize:'contain',
                                         backgroundRepeat:'no-repeat',
 
                                     }}

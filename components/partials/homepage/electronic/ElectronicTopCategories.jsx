@@ -45,7 +45,7 @@ function ElectronicTopCategories() {
                                                 <div style={{
                                                     backgroundImage:`url(${category.image})`,
                                                     backgroundRepeat:'no-repeat',
-                                                    backgroundSize:'cover',
+                                                    backgroundSize:'contain',
                                                     backgroundPosition:'center',
                                             
                                                 }}

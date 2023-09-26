@@ -27,7 +27,7 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
                         width:'100%',
                         backgroundPosition:'center',
                         backgroundRepeat:'no-repeat',
-                        backgroundSize:'cover'
+                        backgroundSize:'contain'
                     }}
                     className='hujjat-detail-full-image'></div>
                         :

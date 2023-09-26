@@ -45,7 +45,7 @@ function ElectronicBanner() {
                                             backgroundImage: `url(${bannerItem[0]?.image})`,
                                             backgroundPosition: 'center',
                                             backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'cover',
+                                            backgroundSize: 'contain',
                                         }}
                                     />
                                 </a>
@@ -86,7 +86,7 @@ function ElectronicBanner() {
                                             backgroundImage: `url(${bannerItem[1]?.image})`,
                                             backgroundPosition: 'center',
                                             backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'cover',
+                                            backgroundSize: 'contain',
                                         }}></div>
                                 </a>
                             </Link>
@@ -98,7 +98,7 @@ function ElectronicBanner() {
                                             backgroundImage: `url(${bannerItem[2]?.image})`,
                                             backgroundPosition: 'center',
                                             backgroundRepeat: 'no-repeat',
-                                            backgroundSize: 'cover',
+                                            backgroundSize: 'contain',
                                         }}>
                                         {' '}
                                     </div>
