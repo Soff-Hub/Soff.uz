@@ -8,7 +8,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Modal, Select } from 'antd';
+import { Modal, Select, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
@@ -51,131 +51,135 @@ const PostsProductsEdit = () => {
                 setDataCategory(data);
             }
         }
-        }
+    }
 
-        async function GetItemsTag() {
-            const ItemsData = await MediaRepository.getTagItmes();
-            if (ItemsData?.results) {
-                setTagItems(ItemsData.results);
-            }
+    async function GetItemsTag() {
+        const ItemsData = await MediaRepository.getTagItmes();
+        if (ItemsData?.results) {
+            setTagItems(ItemsData.results);
         }
+    }
 
-        async function handleChange(value) {
-            setTagSearchResult(value);
-            let arr = [];
-            if (value?.length > 0) {
-                for (let i = 0; i < tagItems.length; i++) {
-                    for (let j = 0; j < value.length; j++) {
-                        if (tagItems[i].name === value[j]) {
-                            arr.push(tagItems[i].id);
-                        }
+    async function handleChange(value) {
+        setTagSearchResult(value);
+        let arr = [];
+        if (value?.length > 0) {
+            for (let i = 0; i < tagItems.length; i++) {
+                for (let j = 0; j < value.length; j++) {
+                    if (tagItems[i].name === value[j]) {
+                        arr.push(tagItems[i].id);
                     }
                 }
             }
         }
+    }
 
-        const children = [];
-        for (let i = 0; i < tagItems?.length; i++) {
-            children.push(
-                <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
-            );
+    const children = [];
+    for (let i = 0; i < tagItems?.length; i++) {
+        children.push(
+            <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
+        );
+    }
+
+
+    useEffect(() => {
+        GetItemsTag();
+        setEditorLoaded(true);
+    }, []);
+
+    useEffect(() => {
+        GetItemsCategoryLists();
+    }, [user?.access]);
+
+    const tags = JSON.stringify(tagSearchResult.join(" "));
+    async function handleClickPostsEdit(e) {
+        e.preventDefault()
+        const data = {}
+
+        if (title) {
+            Object.assign(data, { "title": title })
         }
-
-
-        useEffect(() => {
-            GetItemsTag();
-            setEditorLoaded(true);
-        }, []);
-
-        useEffect(() => {
-            GetItemsCategoryLists();
-        }, [user?.access]);
-
-        const tags = JSON.stringify(tagSearchResult.join(" "));
-        async function handleClickPostsEdit(e) {
-            e.preventDefault()
-            const data = {}
-
-            if (title) {
-                Object.assign(data, { "title": title })
-            }
-            if (tags) {
-                Object.assign(data, { "tags": tags })
-            }
-            if (category_id) {
-                Object.assign(data, { "category": category_id })
-            }
-            if (dataCatStatus) {
-                Object.assign(data, { "status": dataCatStatus })
-            }
-            if (Fulldata) {
-                Object.assign(data, { "description": Fulldata })
-            }
-            if (Shortdata) {
-                Object.assign(data, { "short_description": Shortdata })
-            }
-            const patchItems = await PatchRepository.getProductsPatch(data, products?.id, user?.access);
-            Router.push('/account/products');
-            if (patchItems?.status === 400) {
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: "Nimadir xato ketidi qaytadan urinib ko'ring",
-                });
-                modal.update
-            }
-            else {
-                const modal = Modal.success({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: "Siz  malumotlarni o'zgartirdingiz ",
-                });
-                modal.update
-            }
+        if (tags) {
+            Object.assign(data, { "tags": tags })
         }
-        const dataStatus = [
-            {
-                id: 1,
-                status: "moderation"
-            },
-            {
-                id: 2,
-                status: "approved"
-            },
-            {
-                id: 3,
-                status: "cancelled"
-            }
-        ]
+        if (category_id) {
+            Object.assign(data, { "category": category_id })
+        }
+        if (dataCatStatus) {
+            Object.assign(data, { "status": dataCatStatus })
+        }
+        if (Fulldata) {
+            Object.assign(data, { "description": Fulldata })
+        }
+        if (Shortdata) {
+            Object.assign(data, { "short_description": Shortdata })
+        }
+        const patchItems = await PatchRepository.getProductsPatch(data, products?.id, user?.access);
+        Router.push('/account/products');
+        if (patchItems?.status === 400) {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Nimadir xato ketidi qaytadan urinib ko'ring",
+            });
+            modal.update
+        }
+        else {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+            modal.update
+        }
+    }
+    console.log(products);
+    const dataStatus = [
+        {
+            id: 1,
+            status: "moderation"
+        },
+        {
+            id: 2,
+            status: "approved"
+        },
+        {
+            id: 3,
+            status: "cancelled"
+        }
+    ]
 
-        return user?.role === 'admin' ? (
-            <PageContainer
-                footer={<FooterDefault />}
-                title="Recent Viewed Products">
-                <div className="ps-page--my-account">
-                    <BreadCrumb breacrumb={breadCrumb} />
-                    <div className="d-flex container justify-content-center">
+    return user?.role === 'admin' ? (
+        <PageContainer
+            footer={<FooterDefault />}
+            title="Recent Viewed Products">
+            <div className="ps-page--my-account">
+                <BreadCrumb breacrumb={breadCrumb} />
+                <div className="d-flex container justify-content-center">
+                    <div className='row w-100 gap-5' style={{ alignItems: "flex-start" }}>
                         <form
                             onSubmit={handleClickPostsEdit}
                             style={{ position: "relative" }}
                             id="FormPostsMyProducts"
-                            className="row mx-auto  gap-3 py-5 w-100">
+                            className="py-5 col-md-8">
                             <h4 className="col-md-12">Mahsulot Qo'shish</h4>
 
-                            <div className='col-md-5'>
-                                <label>Hujjat nomi</label>
+                            <div className='row'>
+                            <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
+
                                 <input
                                     type="text"
-                                    className="form-control  rounded-3 "
+                                    className="form-control  rounded-3 col-md-8 mb-3 "
                                     placeholder="Hujjat nomi"
                                     name="title"
                                     onChange={(e) => setTitle(e.target.value)}
                                     defaultValue={products?.title}
                                 />
                             </div>
-                            <div className='col-md-5 '>
-                                <label>Holatlar</label>
-                                <select className='form-select fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
+                            <div className='row'>
+                            <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot holati: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
+
+                                <select className='form-select fs-3 py-3 rounded-3 col-md-8 mb-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
                                     {
                                         dataStatus?.map(item => (
                                             products.status === item.status ?
@@ -187,23 +191,26 @@ const PostsProductsEdit = () => {
                                     }
                                 </select>
                             </div>
-                            <div className="rounded-3 col-md-5  m-0 d-flex flex-column">
-                                <label>Teglar</label>
+                            <div className="row">
+                            <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+
                                 <Select
                                     mode="tags"
-                                    placeholder="Hujjatga tag qo'shing"
                                     onChange={handleChange}
                                     defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
+                                    className='col-md-8 p-0 mb-3'
                                 >
                                     {children}
                                 </Select>
                             </div>
 
-                            <div className='col-md-5'>
-                                <label>Kategoriya</label>
+
+                            <div className='row'>
+                            <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+
                                 <select
                                     style={{ alignItems: "flex-start" }}
-                                    className="form-select rounded-3 fs-4 py-3"
+                                    className="form-select rounded-3 fs-4 py-3 col-md-8 mb-3"
                                     onChange={(e) =>
                                         setCategory_id(e.target.value)
                                     }>
@@ -218,8 +225,10 @@ const PostsProductsEdit = () => {
                                 </select>
                             </div>
 
-                            <div className="rounded-3 col-md-10">
-                                <span>Hujjat haqida qisqa ma'umot</span>
+                            <div className="row">
+                            <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+
+                                <div className='col-md-8 p-0 mb-3'>
                                 <CKeditor
                                     name="description"
                                     onChange={(data) => {
@@ -229,10 +238,13 @@ const PostsProductsEdit = () => {
                                     value={products?.short_description}
 
                                 />
+                                </div>
                             </div>
-                            <div className="rounded-3 col-md-10">
-                                <span>Hujjat haqida to'liq ma'umot</span>
-                                <CKeditor
+                            <div className="row">
+                            <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+
+                               <div className='col-md-8 p-0 mb-3'>
+                               <CKeditor
                                     name="description"
                                     onChange={(data) => {
                                         setFullData(data);
@@ -241,19 +253,19 @@ const PostsProductsEdit = () => {
                                     value={products?.description}
 
                                 />
+                               </div>
                             </div>
 
-                            <div className="d-flex justify-content-center col-md-10">
+                            <div className="d-flex justify-content-end " style={{transform:"translateX(16px)"}}>
                                 <button
                                     type='submit'
-                                    className="btn btn-success py-3 col-md-3 ">
+                                    className="btn btn-success py-3 px-5 ">
                                     <span className="fs-4">
-                                        Saqlash
+                                        Saqlash <i class="fa-solid fa-floppy-disk mx-2"></i>
                                     </span>
                                 </button>
                             </div>
                             <div className="mahsulotingiz" >
-                                <p>Hujjatingiz</p>
                                 <span
                                     className='fixed-btn'
                                     type="button"
@@ -264,75 +276,121 @@ const PostsProductsEdit = () => {
                                 </span>
                             </div>
                         </form>
-                        <div
-                            className="offcanvas offcanvas-end"
-                            tabindex="-1"
-                            id="offcanvasRight"
-                            aria-labelledby="offcanvasRightLabel">
-                            <div className="offcanvas-header pt-5">
-                                <h3 id="offcanvasRightLabel" className='m-0 elh3'><span >Tahrirlanayotgan  mahsulotingizni ko'rinishi</span> </h3>
-                                <button
-                                    type="button"
-                                    className="btn-close text-reset"
-                                    data-bs-dismiss="offcanvas"
-                                    aria-label="Close"></button>
+                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", marginTop: "6rem" }}>
+                            <div className="image rounded mb-4" style={{
+                                backgroundImage: `url(${products?.poster_url})`
+                            }}>
                             </div>
-                            <div className="offcanvas-body">
-                                <div className="card rounded-3 ">
-                                    <div className="image" style={{
-                                        backgroundImage: `url(${products?.poster_url})`
-                                    }}>
-                                    </div>
-                                    <div className="text-start">
-                                        <p className="live-card-p">
-                                            <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
-                                        </p>
-                                        <p className="live-card-p">
-                                            <span><strong>Teglari</strong>: </span>
-                                            <span style={{ maxWidth: '150px' }} >
-                                                {
-                                                    products?.tag?.map(item => (<span>#{item.name} </span>))
-                                                }
-                                            </span>
-                                        </p>
-                                        <p className="live-card-p">
-                                            <span><strong>Kategoriya</strong>: </span>
-                                            <span style={{ maxWidth: '150px' }} >
-                                                {
-                                                    category_id ? category_id : "Kategoriya qo'shing"
-                                                }
-                                            </span>
-                                        </p>
-                                        <p className="live-card-p">
-                                            <span><strong>Qisqa tavsif</strong>: </span>
-                                            <span style={{ maxWidth: '150px' }} >
-                                                {
-                                                    Shortdata ? Shortdata : products?.short_description
-                                                }
+                            <div className="text-start">
+                                <p className="live-card-p">
+                                    <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Teglari</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            products?.tag?.map(item => (<span>#{item.name} </span>))
+                                        }
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Kategoriya</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            category_id ? category_id : "Kategoriya qo'shing"
+                                        }
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Qisqa tavsif</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            Shortdata ? parse(Shortdata) : products?.short_description? parse(products?.short_description) : ""
+                                        }
 
-                                            </span>
-                                        </p>
-                                        <p className="live-card-p">
-                                            <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
-                                            <span style={{ maxWidth: '150px' }} >
-                                                {
-                                                    Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
-                                                }
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
+                                    <span style={{ maxWidth: '150px' }} >
+                                        {
+                                            Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
+                                        }
 
-                                            </span>
-                                        </p>
-                                    </div>
+                                    </span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        className="offcanvas offcanvas-end"
+                        tabindex="-1"
+                        id="offcanvasRight"
+                        aria-labelledby="offcanvasRightLabel">
+                        <div className="offcanvas-header pt-5">
+                            <h3 id="offcanvasRightLabel" className='m-0 elh3'><span >Tahrirlanayotgan  mahsulotingizni ko'rinishi</span> </h3>
+                            <button
+                                type="button"
+                                className="btn-close text-reset"
+                                data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div className="offcanvas-body">
+                            <div className="card rounded-3 ">
+                                <div className="image rounded mb-4" style={{
+                                    backgroundImage: `url(${products?.poster_url})`
+                                }}>
+                                </div>
+                                <div className="text-start">
+                                    <p className="live-card-p">
+                                        <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Teglari</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                products?.tag?.map(item => (<span>#{item.name} </span>))
+                                            }
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Kategoriya</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                category_id ? category_id : "Kategoriya qo'shing"
+                                            }
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Qisqa tavsif</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                Shortdata ? parse(Shortdata) : products?.short_description? parse(products?.short_description) : ""
+                                            }
+
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
+                                        <span style={{ maxWidth: '150px' }} >
+                                            {
+                                                Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
+                                            }
+
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </PageContainer>
-        ) : user?.access ? (
-            <Page404 />
-        ) : (
-            <LoginPage />
-        );
-    };
+            </div>
+        </PageContainer>
+    ) : user?.access ? (
+        <Page404 />
+    ) : (
+        <LoginPage />
+    );
+};
 
-    export default PostsProductsEdit;
+export default PostsProductsEdit;

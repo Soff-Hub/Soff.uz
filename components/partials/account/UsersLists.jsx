@@ -86,13 +86,22 @@ function AccountUserPages() {
             ),
         },
         {
-            title: 'Telefon raqam',
+            title: 'Telefon raqam yoki email',
             dataIndex: 'data',
             key: 'address',
             render: (data) => (
                 <div className='d-flex flex-column'>
-                    <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    {
+                        data.phone==="None" ?
+                        <></> :
+                        <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    }
+                    {
+                          data.email==="None" ?
+                          <></> :
                     <span className="truncate whitespace-nowrap"> {data.email}</span>
+                    }
+
                 </div>
 
             ),

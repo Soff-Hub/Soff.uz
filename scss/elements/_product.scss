@@ -1355,7 +1355,7 @@
     .ps-product__thumbnail {
         width: 100%;
         display: flex;
-        flex-flow: row-reverse nowrap;
+        // flex-flow: row-reverse nowrap;
         align-content: flex-start;
 
         > * {
@@ -1488,7 +1488,7 @@
         }
 
         .ps-product__thumbnail {
-            max-width: 43%;
+            // max-width: 43%;
         }
 
         .ps-product__info {

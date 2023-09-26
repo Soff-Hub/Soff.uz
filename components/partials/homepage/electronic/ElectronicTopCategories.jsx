@@ -32,7 +32,7 @@ function ElectronicTopCategories() {
                                     as={`/category/${category.id}`}>
                                     <a>
                                         <div
-                                            className="ps-block--category-2 top-category-items "
+                                            className="ps-block--category-2 top-category-items p-3 rounded "
                                             style={{ cursor: 'pointer' }}>
                                             <div
                                                 style={{
@@ -45,7 +45,7 @@ function ElectronicTopCategories() {
                                                 <div style={{
                                                     backgroundImage:`url(${category.image})`,
                                                     backgroundRepeat:'no-repeat',
-                                                    backgroundSize:'cover',
+                                                    backgroundSize:'contain',
                                                     backgroundPosition:'center',
                                             
                                                 }}

@@ -328,7 +328,7 @@ const Posts = () => {
                                     onChange={(e) =>
                                         handleChangeCategory(e.target.value)
                                     }>
-                                    <option className="mt-2 pt-3" value="">
+                                    <option selected disabled className="mt-2 pt-3" value="">
                                         Barcha Kategoriyalar
                                     </option>
                                     {dataCategory?.length > 0 &&
@@ -556,7 +556,7 @@ const Posts = () => {
                                                 ? discount + '%'
                                                 : "To'ldirilmadi"}{' '}
                                         </span>
-                                    </p> */}
+                                    </p> */}    
                                     <p className="live-card-p">
                                         <strong>Taglari : </strong>
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
