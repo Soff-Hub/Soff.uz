@@ -8,7 +8,7 @@ const BannerItem = ({ source }) => {
             <Link href="/shop">
                 <a>
 
-                    <img src={`${baseUrl}${source.image.url}`} alt="alldata" />
+                    <img src={`${baseUrl}${source.image.url}`} alt="soff" />
                 </a>
             </Link>
         );
@@ -18,7 +18,7 @@ const BannerItem = ({ source }) => {
                 <a>
                     <a className="ps-collection">
 
-                        <img src="/static/img/not-found.jpg" alt="alldata" />
+                        <img src="/static/img/not-found.jpg" alt="soff" />
                     </a>
                 </a>
             </Link>

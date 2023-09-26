@@ -8,17 +8,17 @@ export default function Document() {
         <Html>
             <Head>
 
-                <link rel="shortcut icon" href={'/static/img/alldata_logo.png'} />
-                <link rel="icon" href={'/static/img/alldata_logo.png'}  sizes="32x32" />
+                <link rel="shortcut icon" href={'/static/img/soff_logo.png'} />
+                <link rel="icon" href={'/static/img/soff_logo.png'}  sizes="32x32" />
                 <link
                     rel="icon"
-                    href={'/static/img/alldata_logo.png'}
+                    href={'/static/img/soff_logo.png'}
                     sizes="192x192"
                 />
                 <link
                     rel="apple-touch-icon-precomposed"
 
-                    href={'/static/img/alldata_logo.png'}
+                    href={'/static/img/soff_logo.png'}
                 />
 
                 <link

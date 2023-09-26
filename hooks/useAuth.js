@@ -104,7 +104,7 @@ export default function useAuth() {
         let endPoint = 'auth/get-new-code/';
         let config = {
           
-                Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
+                Authorization: `Bearer ${localStorage.getItem('token')} `,
         }
         let user = Repository({
             url: baseUrlAuth + endPoint,

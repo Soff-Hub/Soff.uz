@@ -6,7 +6,7 @@ const FooterCopyright = () => {
     return (
         <div className="ps-footer__copyright">
             <p>
-                &copy; {vaqt.getFullYear()} alldata. Barcha huquqlar
+                &copy; {vaqt.getFullYear()} soff. Barcha huquqlar
                 himoyalangan
             </p>
             <p>
@@ -15,14 +15,14 @@ const FooterCopyright = () => {
                     <img
                         src="/static/img/payment-method/click_logo.png"
                         style={{ height: '35px' }}
-                        alt="alldata click"
+                        alt="soff click"
                     />
                 </a>
                 <a href="#">
                     <img
                         src="/static/img/payment-method/payme_logo.png"
                         style={{ height: '25px' }}
-                        alt="alldata payme"
+                        alt="soff payme"
                     />
                 </a>
             </p>

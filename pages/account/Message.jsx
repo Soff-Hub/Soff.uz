@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import PageContainer from '~/components/layouts/PageContainer';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Router, { useRouter } from 'next/router';
 import { BeatLoader } from 'react-spinners';
+import { login } from '~/store/auth/action';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);
@@ -16,6 +17,7 @@ const Xabar = (e) => {
     const [kod, setKod] = useState(null);
     const Router = useRouter();
     const { query } = Router;
+    const dispatch = useDispatch()
 
     const handleSubmitKod = async () => {
         setLoader(true);
@@ -28,7 +30,8 @@ const Xabar = (e) => {
         const user = await verifyCode(data);
         if (user.status === 200 || user.status === 201) {
             setLoader(false);
-            Router.push('/account/login');
+            Router.push('/');
+            dispatch(login({ user: user.data, data: e }));
         } else {
             setLoader(false);
             const modal = Modal.error({
@@ -49,11 +52,9 @@ const Xabar = (e) => {
             phone_or_email: JSON.parse(localStorage.getItem('data'))
                 .phone_or_email,
         };
-        console.log('dataa', data);
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish(data);
         if (qaytaUser?.status === 200 || qaytaUser?.status === 201) {
-            let message = '';
             const modal = Modal.success({
                 centered: true,
                 title: 'Ijobiy',
@@ -62,10 +63,11 @@ const Xabar = (e) => {
             modal.update;
             setLoader(false);
         } else {
+            setReport(true)
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik',
-                content: '',
+                content:  qaytaUser?.data?.msg
             });
             modal.update;
             setLoader(false);

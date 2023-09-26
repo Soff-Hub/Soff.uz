@@ -79,7 +79,7 @@ class ProductDetailImageSwatches extends Component {
                                                                     src={
                                                                         item.image
                                                                     }
-                                                                    alt="alldata"
+                                                                    alt="soff"
                                                                 />
                                                             </a>
                                                         </div>
@@ -110,7 +110,7 @@ class ProductDetailImageSwatches extends Component {
                                                 <img
                                                     src={item.image}
 
-                                                    alt="alldata"
+                                                    alt="soff"
                                                 />
                                             </div>
                                         ))}
@@ -177,7 +177,7 @@ class ProductDetailImageSwatches extends Component {
                                             <img
                                                 src={variant.image}
 
-                                                alt="alldata"
+                                                alt="soff"
                                             />
                                         </div>
                                     );
