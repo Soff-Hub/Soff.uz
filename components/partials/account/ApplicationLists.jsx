@@ -6,7 +6,6 @@ import { Button, Modal, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { BeatLoader } from 'react-spinners';
 
 
 function Notifications() {
@@ -62,14 +61,24 @@ function Notifications() {
     async function getItemsSellerPost() {
         const data = { "credit_card": JSON.parse(dataCard), "amount": dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: Items.msg,
-        });
-        modal.update
-        getItemsSeller(1, dataCat);
-        setProfile(null)
+        console.log('respons', Items)
+        if (Items?.status === 200 || Items?.status === 201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: 'Arizangiz muvaffaqqiyatli qabul qilindi, admin tomonidan ko\'rib chiqilmoqda',
+            });
+            modal.update
+            getItemsSeller(1, dataCat);
+            setProfile(null)
+        }else if(Items?.status >= 400){
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: `${Items?.data?.msg ? Items?.data?.msg[0] : 'Ariza yuborishda narx va kartangizni belgilashingiz zarur!'}`,
+            });
+            modal.update
+        }
 
     }
 

@@ -162,7 +162,7 @@ const FooterSecond = ({ classes }) => {
                 </div>
                 <div className="ps-footer__copyright">
                     <p>
-                        &copy; {vaqt.getFullYear()} alldata. Barcha huquqlar
+                        &copy; {vaqt.getFullYear()} soff. Barcha huquqlar
                         himoyalangan
                     </p>
                     <p>

@@ -13,6 +13,7 @@ export default function useEcomerce() {
     const [cartItemsOnCookie] = useState(null);
     const [cookies, setCookie] = useCookies(['cart']);
     const [products, setProducts] = useState(null);
+    console.log('cookie', cookies);
     return {
         loading,
         cartItemsOnCookie,
@@ -22,18 +23,13 @@ export default function useEcomerce() {
             if (true) {
                 let queries = '';
                 payload.forEach((item) => {
-                    // if (queries === '') {
                     queries = `${item.id}`;
-                    // } else {
-                    //     queries = queries + `&id_in=${item.id}`;
-                    // }
                 });
                 const responseData = await ProductRepository.getProductsByIds(
                     queries
                 );
-                // console.log(responseData,'ll');
                 if (responseData) {
-                    if (group === 'cart') {
+                    if (group === 'cart' || group === 'wishlist') {
                         let cartItems = payload;
                         cartItems.forEach((item) => {
                             let existItem = cartItems.find(
@@ -44,7 +40,7 @@ export default function useEcomerce() {
                             }
                         });
 
-                        setProducts(responseData);
+                        setProducts(cartItems);
                     } else {
                         setProducts(payload);
                     }
@@ -62,35 +58,38 @@ export default function useEcomerce() {
         },
 
         addItem: (newItem, items, group) => {
-            if (
-                group === 'cart' && ( cookies.cart ?  cookies?.cart?.every((el) => el.id !== newItem.id) : true)
-               
-            ) {
-                
-                let newItems = cookies?.cart ? cookies.cart : [];
-                newItems.push(newItem);
-                setCookie('cart', newItems, { path: '/' });
-                dispatch(setCartItems(newItems));
-            }
+            console.log(newItem);
             if (
                 group === 'wishlist' &&
-               (cookies.wishlist ?  cookies?.wishlist?.every((el) => el.id !== newItem.id) : true)
+                (cookies?.wishlist
+                    ? cookies?.wishlist?.every((el) => el.id !== newItem.id)
+                    : true)
             ) {
                 let newItems = cookies?.wishlist ? cookies.wishlist : [];
                 newItems.push(newItem);
                 setCookie('wishlist', newItems, { path: '/' });
-
                 dispatch(setWishlistTtems(newItems));
+            }
+
+            if (
+                group === 'cart' &&
+                (cookies?.cart
+                    ? cookies?.cart?.every((el) => el.id !== newItem.id)
+                    : true)
+            ) {
+                let newItems = cookies?.cart ? cookies.cart : [];
+                newItems.push(newItem);
+                setCookie('cart', newItems, { path: '/' });
+                dispatch(setCartItems(newItems));
             }
 
             return items;
         },
 
         removeItem: (selectedItem, items, group) => {
-            // console.log('rw', selectedItem);
 
             if (group === 'cart') {
-                let currentItems = cookies.cart;
+                let currentItems = cookies?.cart;
                 if (currentItems?.length > 0) {
                     const index = currentItems.findIndex(
                         (item) => item.id === selectedItem.id
@@ -102,7 +101,7 @@ export default function useEcomerce() {
             }
 
             if (group === 'wishlist') {
-                let currentItems = cookies.wishlist;
+                let currentItems = cookies?.wishlist;
                 if (currentItems?.length > 0) {
                     const index = currentItems.findIndex(
                         (item) => item.id === selectedItem.id

@@ -58,7 +58,6 @@ const MiniCart = ({ ecomerce }) => {
 
 
     useEffect(() => {
-        // getCardListData()
         getProducts(ecomerce.cartItems, 'cart');
     }, [ecomerce]);
 

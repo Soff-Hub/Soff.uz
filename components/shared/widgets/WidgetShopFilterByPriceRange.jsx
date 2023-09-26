@@ -9,8 +9,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     const [max, setMax] = useState(null);
 
     const { slug } = Router.query;
-    const [chaildId, setchaildId] = useState('');
-    const [parentId, setParentId] = useState('');
+    const [chaildId, setchaildId] = useState(null);
+    const [parentId, setParentId] = useState(null);
 
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
@@ -24,7 +24,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     }
 
     const filterByPrice = async (minPriceVal, maxPriceVal) => {
-        if (chaildId !== '') {
+        if (chaildId !== null) {
             const respons = await ProductRepository.getFilderProduct(
                 1,
                 chaildId,
@@ -38,11 +38,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.results);
-                setMax(respons?.max_price);
-                setMin(respons?.min_price);
-                console.log(respons.min_price);
             }
-        } else if (parentId !== '') {
+        } else if (parentId !== null) {
             const respons = await ProductRepository.getFilderPrice(
                 1,
                 null,
@@ -56,9 +53,6 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.data?.results);
-                setMax(respons?.max_price);
-                setMin(respons?.min_price);
-                console.log(respons.min_price);
             }
         } else {
             const respons = await ProductRepository.getFilderPrice(
@@ -74,9 +68,6 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.data?.results);
-                setMax(respons?.max_price);
-                setMin(respons?.min_price);
-                console.log(respons.min_price);
             }
         }
     };
@@ -92,16 +83,61 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             setMin(respons?.data?.min_price);
         }
     };
+
+    const chaildPrice = async (id) => {
+        const respons = await ProductRepository.getFilderPrice(
+            1,
+            id,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        if (respons) {
+            setMax(respons?.data?.max_price);
+            setMin(respons?.data?.min_price);
+        }
+        setParentId(null)
+    }
+
+
+    const parentPrice = async (id) => {
+        const respons = await ProductRepository.getFilderPrice(
+            1,
+            null,
+            id,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        if (respons) {
+            setMax(respons?.data?.max_price);
+            setMin(respons?.data?.min_price);
+        }
+        setchaildId(null)
+    }
+    
+
     
     useEffect(() => {
         getCategry();
-    }, [slug]);
-    
-    useEffect(() => {
-        if (min === null) {
-            Price();
-            }
     }, [ slug])
+
+    useEffect(() => {
+        getCategry();
+        if(parentId){
+            parentPrice(parentId)
+        }
+        if (chaildId) {
+            chaildPrice(chaildId)
+        }
+    }, [parentId, chaildId])
 
     
 
@@ -130,6 +166,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                 <Slider
                     range
                     defaultValue={[min ? min : 0, max ? max : 0]}
+                    max={max}
                     onAfterChange={(e) => handleChangeRange(e)}
                 />
                 <p>
