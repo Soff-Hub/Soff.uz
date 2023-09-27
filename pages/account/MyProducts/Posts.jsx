@@ -12,11 +12,11 @@ import CKeditor from '../../../components/partials/account/CKeditor';
 import { Modal, Select, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
 
 const Posts = () => {
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState('');
-    const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
@@ -28,7 +28,7 @@ const Posts = () => {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Shortdata, setShortData] = useState('');
     const [Fulldata, setFullData] = useState('');
-    const [livePoster, setLivePoster] = useState('');
+    const [livePosterFile, setLivePosterFile] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [discount, setDiscount] = useState(null);
     const [liveFile, setLiveFile] = useState('');
@@ -165,24 +165,22 @@ const Posts = () => {
 
     async function handleClickPosts(e) {
         e.preventDefault();
+        const data = {
+            'title': title,
+            // 'discount': discount,
+            'price': narx,
+            'short_description': Shortdata,
+            'description': Fulldata,
+            'category': category_id,
+            "tags" : tagSearchResult,
 
-        const formData = new FormData();
-        formData.append('file', fileImgFile);
-        formData.append('poster', fileImgPoster);
-        formData.append('title', title);
-        formData.append('discount', discount || 0);
-        formData.append('price', narx);
-        formData.append('short_description', Shortdata);
-        formData.append('description', Fulldata);
-        formData.append('category', category_id);
-        for (let i = 0; i < tagSearchResult.length; i++) {
-            formData.append('tag', tagSearchResult[i]);
         }
-        const patchItems = await PostsRepository.PostsMyProducts(
-            formData,
+        const patchItems = await PatchRepository.getPatchPoster(
+            data,
+            livePosterFile?.id,
             user?.access
         );
-        if (patchItems?.status === 201 || patchItems?.status === 200) {
+        if (patchItems?.status === 202  ) {
             Router.push('/account/MyProducts');
             const modal = Modal.success({
                 centered: true,
@@ -197,18 +195,14 @@ const Posts = () => {
             });
         }
     }
+  
+     async function PostFilePoster(){
+        const formData = new FormData();
+        formData.append("file",fileImgFile )
+        const ItemsData= await PostsRepository.PostsMyProductsPoster(formData ,user?.access);
+        setLivePosterFile(ItemsData?.data)
+     }
 
-    function LiveImage(e) {
-        setFileImgPoster(e.target.files[0]);
-        const img = window.URL.createObjectURL(e.target.files[0]);
-        setLivePoster(img);
-    }
-
-    function LiveFileValue(e) {
-        setFileImgFile(e.target.files[0]);
-        const img = window.URL.createObjectURL(e.target.files[0]);
-        setLiveFile(img);
-    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -238,7 +232,8 @@ const Posts = () => {
             }
         }
     };
-
+    const dataImages = livePosterFile?.images?.map(item=>(item?.image_url));
+ 
     useEffect(() => {
         GetItemsTag();
         setEditorLoaded(true);
@@ -248,6 +243,12 @@ const Posts = () => {
     useEffect(() => {
         GetItemsCategoryLists();
     }, [user?.access]);
+
+    useEffect(() => {
+        PostFilePoster();
+    }, [fileImgFile]);
+    
+
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -287,25 +288,10 @@ const Posts = () => {
                                     <input
                                         required
                                         type="file"
-                                        onChange={(e) => LiveFileValue(e)}
-                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                        onChange={(e) => setFileImgFile(e.target.files[0])}
+                                        // accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.pdf"
                                     />
-                                </label>
-                            </div>
-                            <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip> </div>
-                                <label className="add-product-user-image  d-flex flex-column justify-content-center align-content-center form-control col-md-8 py-5 rounded-3 text-truncate " style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
-                                    {livePoster ? (
-                                        livePoster
-                                    ) : (
-                                        <span className="d-flex flex-column align-items-center " style={{cursor:"pointer"}}>
-                                        <i className="fa-solid fa-cloud-arrow-up text-primary mt-1"></i>
-                                       <span > Yuklash uchun fayl rasmini ushbu hududga bosing.</span>
-                                        
-                                     </span>
-                                    )}
-
-                                    <input type="file" required onChange={(e) => LiveImage(e)} />
                                 </label>
                             </div>
 
@@ -412,14 +398,20 @@ const Posts = () => {
                             </div>
                         </form>
                         <div className="col-md-4 rounded-3  p-3 cardResponsive  card" style={{ maxWidth: "370px", marginTop: "6rem" }} >
-                            <div
-                                className="image mb-3 rounded"
-                                style={{
-                                    backgroundImage: `url(${livePoster
-                                            ? livePoster
-                                            : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-                                        })`,
-                                }}></div>
+                         <div className='overflow-y-scroll mb-3 ' style={{height:"228px" }} >
+                            {
+                                !livePosterFile?.images ? 
+                                <img src="https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="" />
+                          : 
+                                livePosterFile?.images?.map(item=>(
+                                    <div
+                                    className="image mb-3 rounded ">
+                                <img src={item.image_url }  alt="" />
+                                  
+                                    </div>
+                                ))
+                              }
+                         </div>
                             <div className="text-start">
                                 <p className="live-card-p">
                                     <strong>Nomi : </strong>{' '}
@@ -509,14 +501,20 @@ const Posts = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card  rounded-3 ">
-                                <div
-                                    className="image mb-3 rounded"
-                                    style={{
-                                        backgroundImage: `url(${livePoster
-                                                ? livePoster
-                                                : 'https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png'
-                                            })`,
-                                    }}></div>
+                            <div className='overflow-y-scroll mb-3 ' style={{height:"228px" }} >
+                            {
+                                !livePosterFile?.images ? 
+                                <img src="https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="" />
+                          : 
+                                livePosterFile?.images?.map(item=>(
+                                    <div
+                                    className="image mb-3 rounded ">
+                                <img src={item.image_url }  alt="" />
+                                  
+                                    </div>
+                                ))
+                              }
+                         </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
                                         <strong>Nomi : </strong>{' '}

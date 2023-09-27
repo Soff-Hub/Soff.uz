@@ -76,6 +76,28 @@ function Notifications() {
             ),
         },
         {
+            title: 'Telefon raqam yoki email',
+            dataIndex: 'data',
+            key: 'address',
+            width:300,
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    {
+                        data.phone==="None" ?
+                        <></> :
+                        <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    }
+                    {
+                          data.email==="None" ?
+                          <></> :
+                    <span className="truncate whitespace-nowrap"> {data.email}</span>
+                    }
+
+                </div>
+
+            ),
+        },
+        {
             title: 'Mahsulotlar',
             dataIndex: 'total_product',
             key: 'address',
@@ -128,7 +150,7 @@ function Notifications() {
                                 <div className='bg-white p-3'>
                                     <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{backgroundColor:"GrayText"}} >Sotuvchilar soni: {data.length} ta</span>
                                         <input type='search' className='form-control rounded bg-white mb-3 ' style={{backgroundColor:"#F1F1F1"}} placeholder="Qidiruv" onInput={handleClick} />
-                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns}
+                                    <Table scroll={{ x: 1050 }} dataSource={data} columns={columns}
                                     />
                                 </div>
                             </div>

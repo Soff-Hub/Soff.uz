@@ -40,8 +40,7 @@ const PostsProductsEdit = () => {
 
     async function GetItemsCategoryLists() {
         const data = [];
-        const token = user?.access;
-        const ItemsData = await GetRepository.getCategoryLists(token);
+        const ItemsData = await GetRepository.getCategoryLists(user?.access);
         if (ItemsData?.results) {
             for (let i = 0; i < ItemsData?.results?.length; i++) {
                 if (ItemsData?.results[i].parent !== null) {
@@ -88,6 +87,7 @@ const PostsProductsEdit = () => {
     }, []);
 
     useEffect(() => {
+        
         GetItemsCategoryLists();
     }, [user?.access]);
 
@@ -133,7 +133,7 @@ const PostsProductsEdit = () => {
             modal.update
         }
     }
-    console.log(products);
+
     const dataStatus = [
         {
             id: 1,

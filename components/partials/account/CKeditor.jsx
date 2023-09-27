@@ -13,11 +13,11 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
            }, 0)
            
         }
-    }, [editorRef.current]);
+    }, [editorRef?.current]);
 
     return (
         <>
-            {editorLoaded && editorRef.current ? (
+            {editorLoaded && editorRef?.current ? (
                 <editorRef.current.CKEditor
                     type=""
                     name={name}
