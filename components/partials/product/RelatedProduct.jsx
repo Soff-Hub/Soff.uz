@@ -8,14 +8,14 @@ import NextArrow from '~/components/elements/carousel/NextArrow';
 import PrevArrow from '~/components/elements/carousel/PrevArrow';
 import ProductRepository from '~/repositories/ProductRepository';
 
-const RelatedProduct = ({ collectionSlug, boxed, layout, pid , data}) => {
+const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
     // console.log('kk' , pid);
     const [relatedProduct, setRelatedProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (data) {
-            setRelatedProduct(data)
+            setRelatedProduct(data);
         }
     }, [collectionSlug, pid]);
 
@@ -25,21 +25,25 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid , data}) => {
         if (relatedProduct) {
             if ((layout = 'fullwidth')) {
                 carouselView = (
-                    <div className='d-flex align-content-center row  '>
+                    <div className="d-flex align-content-center row  ">
                         {relatedProduct?.length > 0 &&
                             relatedProduct?.map((item, i) => (
-                               
-                                  <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 '>  <Product product={item} key={i} /></div>
+                                <div className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
+                                    {' '}
+                                    <Product product={item} key={i} />
+                                </div>
                             ))}
                     </div>
-                );
-
+                )
             } else {
                 carouselView = (
                     <>
-                      {relatedProduct?.length > 0 &&
+                        {relatedProduct?.length > 0 &&
                             relatedProduct?.map((item, i) => (
-                                <div className='detail-card '>  <Product product={item} key={i} /></div>
+                                <div className="detail-card ">
+                                    {' '}
+                                    <Product product={item} key={i} />
+                                </div>
                             ))}
                     </>
                 );
@@ -67,7 +71,6 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid , data}) => {
                 <></>
             )}
         </>
-
     );
 };
 
