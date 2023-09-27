@@ -44,16 +44,15 @@ const PostsMyProducts = () => {
 
     async function GetItemsCategoryLists() {
         const data = [];
-        const token = user?.access;
-        const ItemsData = await GetRepository.getCategoryLists(token);
+        const ItemsData = await GetRepository.getCategoryLists(user?.access);
         if (ItemsData?.results) {
             for (let i = 0; i < ItemsData?.results?.length; i++) {
                 if (ItemsData?.results[i].parent !== null) {
                     data.push(ItemsData?.results[i]);
                 }
+            }
             setDataCategory(data);
         }
-    }
     }
 
     async function GetItemsTag() {
@@ -183,7 +182,7 @@ const PostsMyProducts = () => {
                                     defaultValue={products?.title}
                                 />
                             </div>
-                            <div className='row'>
+                            {/* <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
                                 <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
@@ -211,7 +210,7 @@ const PostsMyProducts = () => {
                                     }
                                     <input type="file" onChange={(e) => LiveImage(e)} />
                                 </label>
-                            </div>
+                            </div> */}
 
                             <div className="row">
                                 <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>

@@ -126,7 +126,7 @@ function ProductsLists() {
                 <div>
                     {
                         poster_url ?
-                            <img src={poster_url} width={54} height={54} />
+                            <img src={poster_url} width={54} className='rounded' height={54} />
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }

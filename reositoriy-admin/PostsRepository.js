@@ -82,6 +82,26 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
+    async PostsMyProductsPoster(data, token) {
+        const endPoint = `product-create-first/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
+    }
 
     async PostsMyProductsAriza(data, token) {
         const endPoint = `application/`;
