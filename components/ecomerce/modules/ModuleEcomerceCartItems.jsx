@@ -39,10 +39,26 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                     <ProductCart product={item} />
                 </td>
                 <td data-label="narxi" className="price pe-5">
-                   <span> {addPeriodToThousands(item.price)} so'm</span>
+                   <span>
+                      {item.discount === 0 ? (
+                        <p>
+                        {addPeriodToThousands(item.discount_price)}{' '}
+                        so'm
+                    </p>
+                    ) : (
+                        <>
+                            <del>
+                                {addPeriodToThousands(item.price)} so'm
+                            </del>
+                            <p>
+                                {addPeriodToThousands(item.discount_price)}{' '}
+                                so'm
+                            </p>
+                        </>
+                    )}
+                     </span>
                 </td>
                 <td >
-                    {/* <strong>${(item.price * item.quantity).toFixed(2)}</strong> */}
                 </td>
                 <td >
 

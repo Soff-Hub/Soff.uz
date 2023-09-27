@@ -345,6 +345,9 @@
     z-index: 9999999999 !important;
 }
 
+#heart-danger{
+    color: red !important;
+}
 
 
 @include media('<lg') {

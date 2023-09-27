@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Pagination } from 'antd';
 import Product from '~/components/elements/products/Product';
-import ProductWide from '~/components/elements/products/ProductWide';
 import { useRouter } from 'next/router';
-import useGetProducts from '~/hooks/useGetProducts';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';

@@ -9,7 +9,7 @@ import { useCookies } from 'react-cookie';
 
 
 const ElectronicHeaderActions = ({ auth, ecomerce }) => {
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
 
     useEffect(() => {

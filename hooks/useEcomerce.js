@@ -11,7 +11,7 @@ export default function useEcomerce() {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [cartItemsOnCookie] = useState(null);
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const [products, setProducts] = useState(null);
     console.log('cookie', cookies);
     return {
@@ -22,7 +22,7 @@ export default function useEcomerce() {
             setLoading(true);
             if (true) {
                 let queries = '';
-                payload.forEach((item) => {
+                payload?.forEach((item) => {
                     queries = `${item.id}`;
                 });
                 const responseData = await ProductRepository.getProductsByIds(
@@ -31,7 +31,7 @@ export default function useEcomerce() {
                 if (responseData) {
                     if (group === 'cart' || group === 'wishlist') {
                         let cartItems = payload;
-                        cartItems.forEach((item) => {
+                        cartItems?.forEach((item) => {
                             let existItem = cartItems.find(
                                 (val) => val.id === item.id
                             );
@@ -40,7 +40,8 @@ export default function useEcomerce() {
                             }
                         });
 
-                        setProducts(cartItems);
+                        // setProducts(cartItems);
+                        setProducts(payload);
                     } else {
                         setProducts(payload);
                     }
@@ -58,14 +59,13 @@ export default function useEcomerce() {
         },
 
         addItem: (newItem, items, group) => {
-            console.log(newItem);
             if (
                 group === 'wishlist' &&
                 (cookies?.wishlist
                     ? cookies?.wishlist?.every((el) => el.id !== newItem.id)
                     : true)
             ) {
-                let newItems = cookies?.wishlist ? cookies.wishlist : [];
+                let newItems = cookies?.wishlist ? cookies?.wishlist : [];
                 newItems.push(newItem);
                 setCookie('wishlist', newItems, { path: '/' });
                 dispatch(setWishlistTtems(newItems));
@@ -109,7 +109,6 @@ export default function useEcomerce() {
                     currentItems.splice(index, 1);
                 }
 
-                // console.log('wshshsh',currentItems);
                 setCookie('wishlist', currentItems, { path: '/' });
                 dispatch(setWishlistTtems(currentItems));
             }

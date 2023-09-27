@@ -5,6 +5,8 @@ import { Modal } from 'antd';
 import useEcomerce from '~/hooks/useEcomerce';
 
 import { OneShopDoc } from '~/store/auth/action';
+import Cookies from 'js-cookie';
+import { useCookies } from 'react-cookie';
 
 const ModuleDetailShoppingActions = ({
     ecomerce,
@@ -15,6 +17,8 @@ const ModuleDetailShoppingActions = ({
     const select = useSelector((state) => state.auth.user?.access);
     const { addItem } = useEcomerce();
     const dispatch = useDispatch();
+    const { pid } = Router.query
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -51,7 +55,7 @@ const ModuleDetailShoppingActions = ({
     };
 
     
-
+console.log(cookies?.wishlist, cookies?.wishlist?.some(item => Number(item.id) === Number(pid)));
     if (select) {
         return (
             <div className="ps-product__shopping">
@@ -66,7 +70,7 @@ const ModuleDetailShoppingActions = ({
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                        <i className="icon-heart"></i>
+                    <i  className={`icon-heart   ${cookies?.wishlist?.some(item => Number(item.id) === Number(pid) ? 'text-danger' : '')} `} ></i>
                     </a>
                 </div>
             </div>
@@ -85,7 +89,7 @@ const ModuleDetailShoppingActions = ({
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                        <i className="icon-heart"></i>
+                        <i  className={`icon-heart  ${cookies?.wishlist?.find(item => Number(item.id) === Number(pid) ? 'text-danger' : '')} `} ></i>
                     </a>
                 </div>
             </div>

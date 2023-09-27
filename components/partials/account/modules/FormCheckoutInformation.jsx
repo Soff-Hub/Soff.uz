@@ -12,7 +12,7 @@ import  Router  from 'next/router';
 function FormCheckoutInformation() {
     const { increaseQty, decreaseQty, removeItem, removeItems } = useEcomerce();
 
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const select = useSelector((state) => state.auth.user?.access);
     const [card, setCard] = useState([]);
     const [data, setData] = useState([]);

@@ -21,7 +21,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             </div>      
         </Menu>
     );
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const { cartItems, wishlist } = ecomerce;
     return (
         <div className="navigation__right">

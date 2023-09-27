@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie';
 
 const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
     const { products, getProducts } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
     useEffect(() => {
         if (ecomerce.cartItems) {
@@ -44,7 +44,7 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
                         {i + 1}. {item.title}
                     </strong>
                     <small>
-                        {item.price === item.discount_price ? (
+                        {item.discount === 0 ? (
                            <p>{ addPeriodToThousands(item.price)} so'm</p>
                         ) : (
                             <>
