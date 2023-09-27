@@ -25,11 +25,11 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid , data}) => {
         if (relatedProduct) {
             if ((layout = 'fullwidth')) {
                 carouselView = (
-                    <div className='d-flex align-content-center row   carosusel-cards'>
+                    <div className='d-flex align-content-center row  '>
                         {relatedProduct?.length > 0 &&
                             relatedProduct?.map((item, i) => (
                                
-                                  <div className='detail-card '>  <Product product={item} key={i} /></div>
+                                  <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 '>  <Product product={item} key={i} /></div>
                             ))}
                     </div>
                 );
