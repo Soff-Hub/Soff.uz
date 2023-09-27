@@ -264,6 +264,7 @@ function Notifications() {
             status: "cancelled"
         }
     ]
+    
     return (
         <section className="ps-my-account ps-page--account pb-5">
             <div className="container">
