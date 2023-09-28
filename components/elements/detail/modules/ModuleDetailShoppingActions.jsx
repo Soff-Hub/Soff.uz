@@ -13,10 +13,9 @@ const ModuleDetailShoppingActions = ({
     product,
     extended = false,
 }) => {
-    const Router = useRouter();
-    const select = useSelector((state) => state.auth.user?.access);
     const { addItem } = useEcomerce();
     const dispatch = useDispatch();
+    const Router = useRouter();
     const { pid } = Router.query
     const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
@@ -56,7 +55,7 @@ const ModuleDetailShoppingActions = ({
 
     
 console.log(cookies?.wishlist, cookies?.wishlist?.some(item => Number(item.id) === Number(pid)));
-    if (select) {
+    if (true) {
         return (
             <div className="ps-product__shopping">
                 <a
@@ -70,31 +69,33 @@ console.log(cookies?.wishlist, cookies?.wishlist?.some(item => Number(item.id) =
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                    <i  className={`icon-heart   ${cookies?.wishlist?.some(item => Number(item.id) === Number(pid) ? 'text-danger' : '')} `} ></i>
+                    <i  className={`icon-heart   ${cookies?.wishlist?.some(item => Number(item.id) ===  Number(product.id) ) ? 'text-danger' : ''} `} ></i>
                     </a>
                 </div>
             </div>
         );
-    } else {
-        return (
-            <div className="ps-product__shopping">
-                <a
-                    className="ps-btn ps-btn--black"
-                    href="#"
-                    onClick={(e) => handleAddItemToCart(e)}>
-                    Savatga qo'shish
-                </a>
-                <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
-                    Sotib olish
-                </a>
-                <div className="ps-product__actions">
-                    <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                        <i  className={`icon-heart  ${cookies?.wishlist?.find(item => Number(item.id) === Number(pid) ? 'text-danger' : '')} `} ></i>
-                    </a>
-                </div>
-            </div>
-        );
-    }
+    } 
+    
+    // else {
+    //     return (
+    //         <div className="ps-product__shopping">
+    //             <a
+    //                 className="ps-btn ps-btn--black"
+    //                 href="#"
+    //                 onClick={(e) => handleAddItemToCart(e)}>
+    //                 Savatga qo'shish
+    //             </a>
+    //             <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
+    //                 Sotib olish
+    //             </a>
+    //             <div className="ps-product__actions">
+    //                 <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
+    //                     <i  className={`icon-heart  ${cookies?.wishlist?.find(item => Number(item.id) === Number(pid) ? 'text-danger' : '')} `} ></i>
+    //                 </a>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 };
 
 export default connect((state) => state)(ModuleDetailShoppingActions);

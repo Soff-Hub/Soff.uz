@@ -3,10 +3,12 @@ import { Modal } from 'antd';
 import { connect } from 'react-redux';
 import ProductDetailQuickView from '~/components/elements/detail/ProductDetailQuickView';
 import useEcomerce from '~/hooks/useEcomerce';
+import { useCookies } from 'react-cookie';
 
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { addItem } = useEcomerce();
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -69,7 +71,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                     data-placement="top"
                     title="Tanlanganlarga qo'shish"
                     onClick={handleAddItemToWishlist}>
-                    <i className="icon-heart"></i>
+                    <i className={`icon-heart   ${cookies?.wishlist?.some(item => Number(item.id) === Number(product?.id)) ? 'text-danger' : ''} `}></i>
                 </a>
             </li>
             <Modal

@@ -4,7 +4,6 @@ import Router from 'next/router';
 import { Spin } from 'antd';
 
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
-import ProductRepository from '~/repositories/ProductRepository';
 import PostRepository from '~/repositories/PostRepository';
 
 const exampleCategories = [
@@ -70,7 +69,6 @@ function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
-        // Update debounced value after delay
         const handler = setTimeout(() => {
             setDebouncedValue(value);
         }, delay);
@@ -90,13 +88,6 @@ const SearchHeader = () => {
     const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 300);
-
-    // async function getSearchData() {
-    //     const responseData = await ProductRepository.getRecordsSearch();
-    //     if (responseData) {
-    //         setResultItems(responseData);
-    //     }
-    // }
 
     function handleClearKeyword() {
         setKeyword('');

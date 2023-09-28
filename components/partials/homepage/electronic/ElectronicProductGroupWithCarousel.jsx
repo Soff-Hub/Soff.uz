@@ -22,7 +22,7 @@ const ElectronicProductGroupWithCarousel = ({
     }, [collectionSlug]);
 
     // Views
-
+console.log(data);
     let productItemsView;
     if (!loading) {
         if (data && data?.promotional_sliders.length > 0) {

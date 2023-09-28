@@ -252,6 +252,24 @@ class ProductRepository {
             });
         return reponse;
     }
+    async getSellerProduct(payload) {
+        const endPoint = `${baseUrl}customer/documents/?seller__id=${payload}`;
+        const reponse = await Repository.get(endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                // console.log(JSON.stringify(error));
+                return null;
+            });
+        return reponse;
+    }
+
+
 }
 
 export default new ProductRepository();

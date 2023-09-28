@@ -15,29 +15,40 @@ const ProductDetailFullwidth = ({ product }) => {
         Router.push(`/search?keyword=${e}`);
     };
 
+    const SellerPage = (e) => {
+        Router.push(`/seller/${e}`);
+    };
+
     useEffect(() => {
         setTag(product?.tag);
     }, []);
-
-    console.log('.', product);
-
+    console.log('product', product);
     return (
         <div className="ps-product--detail ps-product--fullwidth">
-         <div className="ps-product__header ">
-            <ThumbnailDefault product={product} />
+            <div className="ps-product__header ">
+                <ThumbnailDefault product={product} />
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
                     <div>
-                        <h4> Muallif : {product?.seller?.first_name}</h4>
+                        {product?.seller?.first_name && (
+                            <h4
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() =>
+                                    SellerPage(product?.seller?.id)
+                                }>
+                                {' '}
+                                Muallif : {product?.seller?.first_name}
+                            </h4>
+                        )}
                     </div>
-                    <ModuleProductDetailDescription product={product } />
+                    <ModuleProductDetailDescription product={product} />
                     <ModuleDetailShoppingActions product={product} />
                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
                         {tag?.length > 0 &&
                             tag.map((item, i) => (
-                                <div
-                                    key={i}
-                                    className="mx-2">
+                                <div key={i} className="mx-2">
                                     <Link href="#" as="#">
                                         <a
                                             onClick={() =>

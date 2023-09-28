@@ -54,13 +54,18 @@ const Xabar = (e) => {
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
             setReport(true);
             setLoader(false)
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: qaytaUser.data.msg,
+            });
+            modal.update;
         } else {
             setLoader(false)
-            let message = '';
             const modal = Modal.error({
                 centered: true,
-                title: qaytaUser.data.msg,
-                content: message,
+                title: 'Xatolik!',
+                content: qaytaUser.data.msg,
             });
             modal.update;
         }
