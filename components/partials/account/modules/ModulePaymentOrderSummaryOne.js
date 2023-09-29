@@ -33,14 +33,15 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
 
         return formattedNumber;
     }
-    const hisob = addPeriodToThousands(state?.discount_price);
+    const hisob = addPeriodToThousands(state?.price);
+console.log('state', state);
 
     // view
     let listItemsView, shippingView, totalView;
     if (state ) {
         
         listItemsView = 
-            <Link href="/" >
+            <Link href={`/product/${state?.slug}`} >
                 <a>
                     <strong>
                       {1}.  {state.title}
@@ -84,7 +85,7 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
                 <figure>
                     <figcaption>
                         <strong>Jami narx:</strong>
-                        <small>{hisob}.00 so'm </small>
+                        <small>{hisob} so'm </small>
                     </figcaption>
                 </figure>
                 {shippingView}

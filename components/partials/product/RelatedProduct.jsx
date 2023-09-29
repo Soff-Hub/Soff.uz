@@ -19,9 +19,11 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
         }
     }, [collectionSlug, pid]);
 
+    console.log('jkj', relatedProduct);
+
     // Views
     let carouselView;
-    if (loading) {
+    if (true) {
         if (relatedProduct) {
             if ((layout = 'fullwidth')) {
                 carouselView = (
@@ -32,7 +34,8 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
                                     {' '}
                                     <Product product={item} key={i} />
                                 </div>
-                            ))}
+                            ))
+                            }
                     </div>
                 )
             } else {

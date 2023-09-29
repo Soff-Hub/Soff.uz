@@ -25,18 +25,16 @@ const ProductCategoryScreen = () => {
     const [count, setCount] = useState(null);
     const [nom, setNom] = useState('Kategoriyalar');
 
-    const [min , setMin] = useState(null)
-    const [max , setMax] = useState(null)
-
+    const [min, setMin] = useState(null);
+    const [max, setMax] = useState(null);
 
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData?.length > 0) {
-            if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
-                setchaildId(slug)
-            }
-            else {
-                setParentId(slug)
+            if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
+                setchaildId(slug);
+            } else {
+                setParentId(slug);
             }
 
             setCategory(responseData);
@@ -80,8 +78,8 @@ const ProductCategoryScreen = () => {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
-            setMin(responseData?.min_price)
-            setMax(responseData?.max_price)
+            setMin(responseData?.min_price);
+            setMax(responseData?.max_price);
             // console.log(responseData);
             setCount(responseData.count);
         }
@@ -89,7 +87,7 @@ const ProductCategoryScreen = () => {
     }
     useEffect(() => {
         getCategry();
-    }, [slug])
+    }, [slug]);
 
     useEffect(() => {
         if (chaildId) {
@@ -99,7 +97,6 @@ const ProductCategoryScreen = () => {
         if (parentId) {
             getParentData(slug);
         }
-
 
         if (category?.length) {
             for (let i = 0; i < category.length; i++) {

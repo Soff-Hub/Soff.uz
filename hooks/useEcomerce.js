@@ -24,10 +24,8 @@ export default function useEcomerce() {
                 payload?.forEach((item) => {
                     queries = `${item.id}`;
                 });
-                const responseData = await ProductRepository.getProductsByIds(
-                    queries
-                );
-                if (responseData) {
+               
+                if (true) {
                     if (group === 'cart' || group === 'wishlist') {
                         let cartItems = payload;
                         cartItems?.forEach((item) => {
