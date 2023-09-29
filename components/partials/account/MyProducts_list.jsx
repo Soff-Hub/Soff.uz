@@ -14,6 +14,11 @@ import { MyProductsEdit } from '~/store/auth/action';
 import ModalDeletePostEdit from './ModalPostEdit';
 var parse = require("html-react-parser");
 import axios from 'axios';
+import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
+import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
+import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
+import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 
 
 function MyProductsLists() {
@@ -139,7 +144,9 @@ function MyProductsLists() {
             const fileContent = View
             const response = await axios.get(
                 fileContent.file,
-                { responseType: 'blob' }
+                {
+                    responseType: 'blob',
+                }
             );
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
@@ -162,7 +169,6 @@ function MyProductsLists() {
         GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
     }, [dataValCat, tagName, dataFormat, selectValStatus])
 
-    console.log(View?.description);
     const columns = [
         {
             title: 'Rasm',
@@ -297,8 +303,8 @@ function MyProductsLists() {
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
-                                                    <button  style={{backgroundColor:"#F1F1F1", padding:"17px"}} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                      <strong> Filter</strong>
+                                                    <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                        <strong> Filter</strong>
                                                     </button>
                                                 </h2>
                                                 <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
@@ -360,38 +366,47 @@ function MyProductsLists() {
 
                 <ModalDelete onSuccess={DeleteItemsProducts} />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                    <div className='modal-dialog modal-dialog-centered modal-lg'>
+                    <div className='modal-dialog container '>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="card" style={{ maxWidth: "840px" }}>
-                                <div className="row g-0 px-3 modal-body m-0">
-                                    <div className="col-md-4 mt-4 ">
-                                        <img src={View?.poster_url} className="img-fluid rounded-start" alt="..." />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body pt-5">
-                                            <p className="card-text"> <strong>Kategoriyasi:</strong> {View?.category?.name}</p>
-                                            <p className="card-text"><strong>Narxi:</strong> {View?.price} so'm </p>
-                                            <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
-                                            <p className="card-text"><strong>Nomi:</strong> {View?.title}</p>
-
-                                            <p>{View?.tag?.map(item => (
-                                                <span> #{item?.name} </span>
-                                            ))}</p>
-
+                            <div className="ps-container">
+                                <div className="ps-product--detail ps-product--fullwidth">
+                                    <div className="ps-product__header ">
+                                        <ThumbnailDefault product={View} />
+                                        <div className="ps-product__info">
+                                            <ModuleDetailTopInformation product={View} />
+                                            <div>
+                                                <h4> Muallif : {View?.seller?.first_name}</h4>
+                                            </div>
+                                            <ModuleProductDetailDescription product={View} />
+                                            <div className="ps-product__shopping" >
+                                                <button
+                                                    className="ps-btn ps-btn--black"
+                                                    style={{cursor:"not-allowed"}}
+                                                   >
+                                                    Savatga qo'shish
+                                                </button>
+                                                <button className="ps-btn" style={{cursor:"not-allowed"}} >
+                                                    Sotib olish
+                                                </button>
+                                                <div className="ps-product__actions">
+                                                    <a style={{cursor:"not-allowed"}} >
+                                                        <i className={`icon-heart`} ></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                <p>{View?.tag?.map(item => (
+                                                    <span> #{item?.name} </span>
+                                                ))}</p>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tavsif:</strong> {View?.short_description ? parse(View?.short_description) : ""}</p>
-                                        <p className="card-text m-0"><strong>To'liq tavsif:</strong> {View?.description ? parse(View?.description) : ""}</p>
-                                        <div className='d-flex justify-content-end py-3'>
-                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File ochish</a>
-
-                                        </div>
-                                    </div>
+                                    <DefaultDescription product={View} />
                                 </div>
+
                             </div>
                         </div>
                     </div>

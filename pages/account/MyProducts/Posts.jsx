@@ -9,7 +9,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Modal, Select, Tooltip } from 'antd';
+import { Button, Modal, Select, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -30,7 +30,7 @@ const Posts = () => {
     const [Fulldata, setFullData] = useState('');
     const [livePosterFile, setLivePosterFile] = useState('');
     const [categoryName, setCategoryName] = useState('');
-    const [discount, setDiscount] = useState(null);
+    const [fileImgPoster, setFileImgPoster] = useState('');
     const [liveFile, setLiveFile] = useState('');
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
@@ -172,7 +172,7 @@ const Posts = () => {
             'short_description': Shortdata,
             'description': Fulldata,
             'category': category_id,
-            "tags" : tagSearchResult,
+            "tags": tagSearchResult,
 
         }
         const patchItems = await PatchRepository.getPatchPoster(
@@ -180,7 +180,7 @@ const Posts = () => {
             livePosterFile?.id,
             user?.access
         );
-        if (patchItems?.status === 202  ) {
+        if (patchItems?.status === 202) {
             Router.push('/account/MyProducts');
             const modal = Modal.success({
                 centered: true,
@@ -195,13 +195,19 @@ const Posts = () => {
             });
         }
     }
-  
-     async function PostFilePoster(){
+
+    async function PostFilePoster() {
         const formData = new FormData();
-        formData.append("file",fileImgFile )
-        const ItemsData= await PostsRepository.PostsMyProductsPoster(formData ,user?.access);
+        formData.append("file", fileImgFile)
+        const ItemsData = await PostsRepository.PostsMyProductsPoster(formData, user?.access);
         setLivePosterFile(ItemsData?.data)
-     }
+    }
+    
+    function LiveImage(e) {
+        setFileImgPoster(e.target.files[0]);
+        const img = window.URL.createObjectURL(e.target.files[0]);
+        setLiveFile(img);
+    }
 
 
     function addPeriodToThousands(number) {
@@ -232,8 +238,7 @@ const Posts = () => {
             }
         }
     };
-    const dataImages = livePosterFile?.images?.map(item=>(item?.image_url));
- 
+
     useEffect(() => {
         GetItemsTag();
         setEditorLoaded(true);
@@ -247,7 +252,7 @@ const Posts = () => {
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);
-    
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -256,13 +261,18 @@ const Posts = () => {
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center ">
-                    <div className='row  w-100 gap-5' style={{ alignItems: "flex-start" }}>
+                    <div className='row  w-100 gap-3 pt-5' style={{ alignItems: "flex-start" }}>
+                    <h4 className="col-md-8 m-0 p-0">Yangi mahsulot : </h4>
+                        <div  className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px",}}>
+                            <h4> Sotuvdagi ko'rinishi   : </h4>
+                        <Button className='btn-warning' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
+
+                        </div>
                         <form
                             onSubmit={handleClickPosts}
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
-                            className=" col-md-8 py-5">
-                            <h4> Yangi mahsulot</h4>
+                            className=" col-md-8 pb-5">
                             <div className='row   mt-3'>
                                 <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
                                 <input
@@ -275,14 +285,14 @@ const Posts = () => {
                             </div>
                             <div className='row '>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
-                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
+                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{ backgroundColor: "#F1F1F1", border: "1px dashed green" }}>
                                     {liveFile ? (
                                         liveFile
                                     ) : (
-                                        <span className="d-flex flex-column align-items-center" style={{cursor:"pointer"}}>
-                                           <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                          <span> Yuklash uchun faylni ushbu hududga bosing. </span>
-                                           
+                                        <span className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }}>
+                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                            <span> Yuklash uchun faylni ushbu hududga bosing. </span>
+
                                         </span>
                                     )}
                                     <input
@@ -294,7 +304,31 @@ const Posts = () => {
                                     />
                                 </label>
                             </div>
-
+                            <div className='row '>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot rasmi: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3" style={{ backgroundColor: "#F1F1F1", border: "1px dashed green", height:"100px" }}>
+                                   <label style={{width:"50px"}} >
+                                    <i className='fa-solid fa-plus'></i>
+                                   <input
+                                        required
+                                        type="file"
+                                        onChange={(e) => LiveImage(e)}
+                                        accept="image/*"
+                                    />
+                                   </label>
+                                   <div className='overflow-x-scroll  d-flex  gap-1
+                                   ' style={{width:"430px"}}>
+                                   {
+                                        !livePosterFile?.images ?
+                                            <img width={450} src="https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="" />
+                                            :
+                                            livePosterFile?.images?.map(item => (
+                                                <img src={item.image_url} alt=" " width={600} height={600} style={{display: 'block'}}  />
+                                            ))
+                                    }
+                                   </div>
+                                </div>
+                            </div>
                             <div className=' row '>
                                 <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
@@ -329,7 +363,7 @@ const Posts = () => {
 
                                     type={narxNomi ? 'text' : 'number'}
                                     className="form-control  rounded-3 col-md-8"
-                                   
+
                                     name="price"
                                     value={taxminiyNarx}
                                     onChange={(e) => (
@@ -379,7 +413,7 @@ const Posts = () => {
                                 </div>
                             </div>
 
-                            <div className="d-flex justify-content-end mt-4 " style={{transform:"translateX(16px)"}}>
+                            <div className="d-flex justify-content-end mt-4 " style={{ transform: "translateX(16px)" }}>
                                 <button
                                     type="submit"
                                     className="btn btn-success py-3 ">
@@ -397,21 +431,21 @@ const Posts = () => {
                                 </span>
                             </div>
                         </form>
-                        <div className="col-md-4 rounded-3  p-3 cardResponsive  card" style={{ maxWidth: "370px", marginTop: "6rem" }} >
-                         <div className='overflow-y-scroll mb-3 ' style={{height:"228px" }} >
-                            {
-                                !livePosterFile?.images ? 
-                                <img src="https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="" />
-                          : 
-                                livePosterFile?.images?.map(item=>(
-                                    <div
-                                    className="image mb-3 rounded ">
-                                <img src={item.image_url }  alt="" />
-                                  
-                                    </div>
-                                ))
-                              }
-                         </div>
+                        <div className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3" style={{ maxWidth: "370px" }} >
+                            <div className='overflow-y-scroll mb-3 ' style={{ height: "228px" }} >
+                                {
+                                    !livePosterFile?.images ?
+                                        <img src="https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="" />
+                                        :
+                                        livePosterFile?.images?.map(item => (
+                                            <div
+                                                className="image mb-3 rounded border">
+                                                <img src={item.image_url} alt="" />
+
+                                            </div>
+                                        ))
+                                }
+                            </div>
                             <div className="text-start">
                                 <p className="live-card-p">
                                     <strong>Nomi : </strong>{' '}
@@ -501,20 +535,20 @@ const Posts = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card  rounded-3 ">
-                            <div className='overflow-y-scroll mb-3 ' style={{height:"228px" }} >
-                            {
-                                !livePosterFile?.images ? 
-                                <img src="https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="" />
-                          : 
-                                livePosterFile?.images?.map(item=>(
-                                    <div
-                                    className="image mb-3 rounded ">
-                                <img src={item.image_url }  alt="" />
-                                  
-                                    </div>
-                                ))
-                              }
-                         </div>
+                                <div className='overflow-y-scroll mb-3 ' style={{ height: "228px" }} >
+                                    {
+                                        !livePosterFile?.images ?
+                                            <img src="https://www.charlotteathleticclub.com/assets/camaleon_cms/image-not-found-4a963b95bf081c3ea02923dceaeb3f8085e1a654fc54840aac61a57a60903fef.png" alt="" />
+                                            :
+                                            livePosterFile?.images?.map(item => (
+                                                <div
+                                                    className="image mb-3 rounded ">
+                                                    <img src={item.image_url} alt="" />
+
+                                                </div>
+                                            ))
+                                    }
+                                </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
                                         <strong>Nomi : </strong>{' '}
@@ -554,7 +588,7 @@ const Posts = () => {
                                                 ? discount + '%'
                                                 : "To'ldirilmadi"}{' '}
                                         </span>
-                                    </p> */}    
+                                    </p> */}
                                     <p className="live-card-p">
                                         <strong>Taglari : </strong>
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
