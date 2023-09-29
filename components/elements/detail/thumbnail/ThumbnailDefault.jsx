@@ -21,6 +21,7 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
                 <div className="ps-wrapper" >
                     {
                         product?.poster_url ?
+                    //   <img src={product?.poster_url} alt="soff-hujjat" />
                     <div style={{
                         backgroundImage:`url(${product?.poster_url})`,
                         width:'100%',

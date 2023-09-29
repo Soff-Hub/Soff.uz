@@ -336,7 +336,7 @@ const PostsMyProducts = () => {
                                     ? livePoster
                                     : products?.poster_url})`
                             }}>
-                            </div>
+                            </div>  
                             <div className="text-start">
                                 <p className="live-card-p">
                                     <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>

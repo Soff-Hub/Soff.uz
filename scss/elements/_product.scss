@@ -988,6 +988,15 @@
                 text-align: center;
             }
         }
+        @media (max-width: 1200px) {
+
+            .ps-btn {
+                margin-right: 10px;
+                text-align: center;
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
     }
 
     .ps-product__shopping-2 {

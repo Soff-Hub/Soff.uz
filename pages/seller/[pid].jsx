@@ -11,7 +11,7 @@ import HeaderMobileProduct from '~/components/shared/header-mobile/HeaderMobileP
 
 import HeaderElectronic from '~/components/shared/headers/HeaderElectronic';
 
-const ProductDefaultPage = () => {
+const SellerPage = () => {
     const router = useRouter();
     const { pid } = router.query;
     const [product, setProduct] = useState([]);
@@ -19,7 +19,7 @@ const ProductDefaultPage = () => {
 
     async function getProduct(pid) {
         setLoading(true);
-        const responseData = await ProductRepository.getProductsById(pid);
+        const responseData = await ProductRepository.getSellerProduct(pid);
         if (responseData) {
             setProduct(responseData);
             setTimeout(
@@ -31,9 +31,9 @@ const ProductDefaultPage = () => {
         }
     }
 
-    useEffect(() => {
-        getProduct(pid);
-    }, [pid]);
+    // useEffect(() => {
+    //     getProduct(pid);
+    // }, [pid]);
 
     const breadCrumb = [
         {
@@ -45,31 +45,10 @@ const ProductDefaultPage = () => {
         },
     ];
 
-    // Views
-    let productView, headerView;
-    if (!loading) {
-        if (product) {
-            productView = <ProductDetailFullwidth product={product} />;
-            headerView = (
-                <>
-                    <HeaderElectronic product={product} />
-                    <HeaderMobileProduct />
-                </>
-            );
-        } else {
-            headerView = (
-                <>
-                    <HeaderDefault />
-                    <HeaderMobileProduct />
-                </>
-            );
-        }
-    } else {
-        productView = <SkeletonProductDetail />;
-    }
+  let  productView = <SkeletonProductDetail />;
     return (
         <PageContainer
-            header={headerView}
+            // header={headerView}
             title={product ? product.title : 'Loading...'}>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <div className="container">
@@ -78,16 +57,6 @@ const ProductDefaultPage = () => {
                         <div className="ps-page__container">
                             <div className="ps-page__left">{productView}</div>
                         </div>
-
-                        {product?.similar?.length > 0 ? (
-                            <RelatedProduct
-                                data={product?.similar}
-                                pid={pid}
-                                collectionSlug="shop-recommend-items"
-                            />
-                        ) : (
-                            ''
-                        )}
                     </div>
                 </div>
             </div>
@@ -95,4 +64,4 @@ const ProductDefaultPage = () => {
     );
 };
 
-export default ProductDefaultPage;
+export default SellerPage;

@@ -29,7 +29,7 @@ const Product = ({ product }) => {
                 style={{
                     margin: '0 auto',
                 }}>
-                <Link href="/product/[pid]" as={`/product/${product.id}`}>
+                <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                     <a style={{
                         display:'flex',
                         justifyContent:'center'

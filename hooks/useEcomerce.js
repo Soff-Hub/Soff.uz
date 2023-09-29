@@ -13,7 +13,6 @@ export default function useEcomerce() {
     const [cartItemsOnCookie] = useState(null);
     const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const [products, setProducts] = useState(null);
-    console.log('cookie', cookies);
     return {
         loading,
         cartItemsOnCookie,
