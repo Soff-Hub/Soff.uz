@@ -356,7 +356,7 @@ function MyProductsLists() {
                                         user?.role === "seller" ?
                                             <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} />
                                             :
-                                            <Table dataSource={data} scroll={{ x: 900 }} columns={columns} />
+                                            <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} />
 
                                     }
                                 </div>
