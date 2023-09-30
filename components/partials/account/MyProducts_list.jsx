@@ -15,7 +15,6 @@ import ModalDeletePostEdit from './ModalPostEdit';
 var parse = require("html-react-parser");
 import axios from 'axios';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
@@ -172,7 +171,7 @@ function MyProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
+            dataIndex: 'poster',
             key: 'name',
             render: (poster_url) => (
                 <div >
@@ -381,7 +380,7 @@ function MyProductsLists() {
                                                 <h4> Muallif : {View?.seller?.first_name}</h4>
                                             </div>
                                             <ModuleProductDetailDescription product={View} />
-                                            <div className="ps-product__shopping" >
+                                            <div className="ps-product__shopping row-gap-3" >
                                                 <button
                                                     className="ps-btn ps-btn--black"
                                                     style={{cursor:"not-allowed"}}
@@ -399,7 +398,7 @@ function MyProductsLists() {
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 <p>{View?.tag?.map(item => (
-                                                    <span> #{item?.name} </span>
+                                                    <span className='mx-2'> #{item?.name} </span>
                                                 ))}</p>
                                             </div>
                                         </div>

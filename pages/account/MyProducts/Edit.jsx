@@ -12,10 +12,11 @@ import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
-import TabPane from 'antd/es/tabs/TabPane';
+
 
 
 const PostsMyProducts = () => {
+    const { TabPane } = Tabs;
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
@@ -168,9 +169,9 @@ const PostsMyProducts = () => {
                 <div className="d-flex container justify-content-center">
                     <div className='row w-100 gap-3 pt-5 ' style={{ alignItems: "flex-start" }}>
                         <h4 className="col-md-8 m-0 p-0">Hujjatni tahrirlash</h4>
-                        <div  className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px",}}>
+                        <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
                             <h4>Sotuvdagi ko'rinishi : </h4>
-                        <Button className='btn-warning' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
+                            <Button className='btn-warning' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
 
                         </div>
                         <form
@@ -206,17 +207,17 @@ const PostsMyProducts = () => {
                                         accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                                     />
                                 </label>
-                            </div>
+                            </div> */}
                             <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip> </div>
-                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
+                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{ backgroundColor: "#F1F1F1", border: "1px dashed green" }}>
                                     {
                                         livePoster ? livePoster :
-                                            products.poster_url
+                                            "blob:http://localhost:3000/1ba7f287-c435-4e10-9080-6c01990d7f21"
                                     }
                                     <input type="file" onChange={(e) => LiveImage(e)} />
                                 </label>
-                            </div> */}
+                            </div>
 
                             <div className="row">
                                 <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
@@ -330,13 +331,13 @@ const PostsMyProducts = () => {
                                 </span>
                             </div>
                         </form>
-                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px",}}>
+                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", }}>
                             <div className="image rounded mb-3" style={{
                                 backgroundImage: `url(${livePoster
                                     ? livePoster
-                                    : products?.poster_url})`
+                                    : products?.poster})`
                             }}>
-                            </div>  
+                            </div>
                             <div className="text-start">
                                 <p className="live-card-p">
                                     <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
@@ -415,7 +416,7 @@ const PostsMyProducts = () => {
                                 <div className="image rounded mb-3" style={{
                                     backgroundImage: `url(${livePoster
                                         ? livePoster
-                                        : products?.poster_url})`
+                                        : products?.poster})`
                                 }}>
                                 </div>
                                 <div className="text-start">
@@ -490,23 +491,19 @@ const PostsMyProducts = () => {
                                     <div className="ps-product__header ">
                                         <div
                                             className="ps-product__thumbnail"
-                                            >
+                                        >
 
                                             <figure >
                                                 <div className="ps-wrapper" >
                                                     {
-                                                        products?.poster_url ?
-                                                            <div style={{
-                                                                backgroundImage: `url(${products?.poster_url})`,
-                                                                width: '100%',
-                                                                backgroundPosition: 'center',
-                                                                backgroundRepeat: 'no-repeat',
-                                                                backgroundSize: 'contain'
-                                                            }}
-                                                                className='hujjat-detail-full-image'></div>
-                                                            :
+                                                        products?.iamges ?
+                                                            products?.iamges?.map(item => (
+                                                                <img src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
+                                                            ))
 
+                                                            :
                                                             <img src="/static/img/docCopy.jpg" alt="doc" />
+
 
                                                     }
                                                 </div>
@@ -546,7 +543,7 @@ const PostsMyProducts = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div className="ps-product__shopping" >
+                                            <div className="ps-product__shopping row-gap-3" >
                                                 <button
                                                     className="ps-btn ps-btn--black"
                                                     style={{ cursor: "not-allowed" }}
@@ -564,16 +561,7 @@ const PostsMyProducts = () => {
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 {
-                                                    products?.active_tag?.length > 0 ?
-                                                        <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
-                                                        :
-                                                        <></>
-                                                }
-                                                {
-                                                    products?.deactive_tag?.length > 0 ?
-                                                        <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
-                                                        :
-                                                        <></>
+                                                    products?.tag?.map(item => (<span className='mx-3'>#{item.name} </span>))
                                                 }
                                             </div>
                                         </div>

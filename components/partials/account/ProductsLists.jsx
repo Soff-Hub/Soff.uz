@@ -124,7 +124,7 @@ function ProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
+            dataIndex: 'poster',
             key: 'name',
             render: (poster_url) => (
                 <div>
@@ -290,7 +290,7 @@ function ProductsLists() {
                                                 <h4> Muallif : {deleteIdView?.seller?.first_name}</h4>
                                             </div>
                                             <ModuleProductDetailDescription product={deleteIdView} />
-                                            <div className="ps-product__shopping" >
+                                            <div className="ps-product__shopping row-gap-3" >
                                                 <button
                                                     className="ps-btn ps-btn--black"
                                                     style={{cursor:"not-allowed"}}

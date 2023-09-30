@@ -20,19 +20,14 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
             <figure >
                 <div className="ps-wrapper" >
                     {
-                        product?.poster_url ?
-                    //   <img src={product?.poster_url} alt="soff-hujjat" />
-                    <div style={{
-                        backgroundImage:`url(${product?.poster_url})`,
-                        width:'100%',
-                        backgroundPosition:'center',
-                        backgroundRepeat:'no-repeat',
-                        backgroundSize:'contain'
-                    }}
-                    className='hujjat-detail-full-image'></div>
+                        product?.iamges  ?
+                        product?.iamges?.map(item=>(
+                            <img src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
+                        )) 
+                            
                         :
-                       
                         <img src="/static/img/docCopy.jpg" alt="doc" />
+                       
 
                     }
                 </div>

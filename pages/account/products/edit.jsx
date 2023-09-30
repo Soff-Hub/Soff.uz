@@ -8,15 +8,16 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Modal, Select, Tabs, Tooltip } from 'antd';
+import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
-import TabPane from 'antd/es/tabs/TabPane';
+
 
 
 
 const PostsProductsEdit = () => {
+    const { TabPane } = Tabs;
     const Router = useRouter();
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
@@ -169,7 +170,7 @@ const PostsProductsEdit = () => {
             status: "cancelled"
         }
     ]
-  
+
     return user?.role === 'admin' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -177,13 +178,18 @@ const PostsProductsEdit = () => {
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
-                    <div className='row w-100 gap-5' style={{ alignItems: "flex-start" }}>
+                    <div className='row w-100 gap-3 mt-5 ' style={{ alignItems: "flex-start" }}>
+                        <h4 className="col-md-8 m-0 p-0">Hujjatni tahrirlash</h4>
+                        <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
+                            <h4>Sotuvdagi ko'rinishi : </h4>
+                            <Button className='btn-warning' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
+
+                        </div>
                         <form
                             onSubmit={handleClickPostsEdit}
                             style={{ position: "relative" }}
                             id="FormPostsMyProducts"
-                            className="py-5 col-md-8">
-                            <h4 className="col-md-12">Mahsulot Qo'shish</h4>
+                            className="pb-5 col-md-8">
 
                             <div className='row'>
                                 <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
@@ -297,10 +303,10 @@ const PostsProductsEdit = () => {
                                 </span>
                             </div>
                         </form>
-                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", marginTop: "6rem" }}>
-                            <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3"></i></a>
+                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px" }}>
                             <div className="image rounded mb-4" style={{
-                                backgroundImage: `url(${products?.poster_url})`
+                                backgroundImage: `url(${products?.poster
+                                    })`
                             }}>
                             </div>
                             <div className="text-start">
@@ -422,18 +428,14 @@ const PostsProductsEdit = () => {
                                             <figure >
                                                 <div className="ps-wrapper" >
                                                     {
-                                                        products?.poster_url ?
-                                                            <div style={{
-                                                                backgroundImage: `url(${products?.poster_url})`,
-                                                                width: '100%',
-                                                                backgroundPosition: 'center',
-                                                                backgroundRepeat: 'no-repeat',
-                                                                backgroundSize: 'contain'
-                                                            }}
-                                                                className='hujjat-detail-full-image'></div>
-                                                            :
+                                                        products?.iamges ?
+                                                            products?.iamges?.map(item => (
+                                                                <img src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
+                                                            ))
 
+                                                            :
                                                             <img src="/static/img/docCopy.jpg" alt="doc" />
+
 
                                                     }
                                                 </div>
@@ -444,8 +446,8 @@ const PostsProductsEdit = () => {
                                                 <h1  >{title ? title : products?.title}</h1>
                                                 <h4 >
                                                     {products ?
-                                                     addPeriodToThousands(products?.price)  : "0" }   so'm 
-  
+                                                        addPeriodToThousands(products?.price) : "0"}   so'm
+
 
                                                 </h4>
                                             </header>
@@ -472,7 +474,7 @@ const PostsProductsEdit = () => {
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div className="ps-product__shopping" >
+                                            <div className="ps-product__shopping row-gap-3" >
                                                 <button
                                                     className="ps-btn ps-btn--black"
                                                     style={{ cursor: "not-allowed" }}
@@ -491,13 +493,13 @@ const PostsProductsEdit = () => {
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 {
                                                     products?.active_tag?.length > 0 ?
-                                                        <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
+                                                        <p> <strong>Aktiv teglar: </strong> {products?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
                                                         :
                                                         <></>
                                                 }
                                                 {
                                                     products?.deactive_tag?.length > 0 ?
-                                                        <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
+                                                        <p> <strong>Aktiv emas teglar: </strong> {products?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
                                                         :
                                                         <></>
                                                 }
