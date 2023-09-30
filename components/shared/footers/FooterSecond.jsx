@@ -158,6 +158,11 @@ const FooterSecond = ({ classes }) => {
                                 </li>
                             </ul>
                         </aside>
+                        <aside className="widget widget_footer widget_contact-us d-flex align-items-center" >
+                                <h4 style={{
+                                    marginBottom:'0'
+                                }} >Sayt ishlab chiqaruvchi : </h4> <img className='footer-company-logo d-block ps-2' src="/static/img/soffhub.jpeg" alt="soff hub logo" />
+                        </aside>
                     </div>
                 </div>
                 <div className="ps-footer__copyright">

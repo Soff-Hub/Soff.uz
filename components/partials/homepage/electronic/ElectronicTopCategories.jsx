@@ -28,8 +28,9 @@ function ElectronicTopCategories() {
                             <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
                                 <Link
                                     key={category.id}
-                                    href="/category/[pid]"
-                                    as={`/category/${category.id}`}>
+                                    href={`/category/${category.id}`}
+                                    // as={`/category/${category.id}`}
+                                    >
                                     <a>
                                         <div
                                             className="ps-block--category-2 top-category-items p-3 rounded "

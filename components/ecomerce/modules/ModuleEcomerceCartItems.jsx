@@ -29,6 +29,7 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
 
         return formattedNumber;
     }
+    console.log('cart', cartItems);
 
     // View
     let cartItemsViews;

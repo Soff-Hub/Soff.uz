@@ -316,7 +316,7 @@ const ShopItems = ({
             const items =
                 newData?.length > 0 &&
                 newData?.map((item) => (
-                    <div className={classes} key={item.id}  style={{
+                    <div className={classes + ' home-card-category'} key={item.id}  style={{
                         display:'flex',
                         justifyContent:'center',
                         alignContent:'center'

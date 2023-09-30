@@ -362,6 +362,16 @@
     }
 }
 
+.footer-company-logo{
+    width: 90px;
+}
+
+.home-card-category{
+    margin-bottom: 42px;
+}
+.home-card{
+    margin-bottom: 42px;
+}
 
 @include media('<lg') {
     .ant-float-btn-default{

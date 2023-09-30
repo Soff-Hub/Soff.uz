@@ -7,6 +7,7 @@ import ModuleDetailActionsMobile from '~/components/elements/detail/modules/Modu
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
 import Router from 'next/router';
+import Meta from '~/components/shared/headers/Meta';
 
 const ProductDetailFullwidth = ({ product }) => {
     const [tag, setTag] = useState([]);
@@ -22,8 +23,9 @@ const ProductDetailFullwidth = ({ product }) => {
     useEffect(() => {
         setTag(product?.tag);
     }, []);
-    console.log('product', product);
     return (
+        <>
+        <Meta  title={product?.title} image={product?.iamges[0]?.image_url}/>
         <div className="ps-product--detail ps-product--fullwidth">
             <div className="ps-product__header ">
                 <ThumbnailDefault product={product} />
@@ -66,6 +68,8 @@ const ProductDetailFullwidth = ({ product }) => {
             </div>
             <DefaultDescription product={product} />
         </div>
+        </>
+
     );
 };
 

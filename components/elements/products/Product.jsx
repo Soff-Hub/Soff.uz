@@ -42,6 +42,7 @@ const Product = ({ product }) => {
                     </a>
                 </Link>
 
+
                 <ModuleProductActions product={product} />
             </div>
             <div className="ps-product__container">
