@@ -8,13 +8,16 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Modal, Select, Tooltip } from 'antd';
+import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
 
 
+
+
 const PostsProductsEdit = () => {
+    const { TabPane } = Tabs;
     const Router = useRouter();
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
@@ -47,10 +50,11 @@ const PostsProductsEdit = () => {
                     data.push(ItemsData?.results[i]);
                 }
 
-                setDataCategory(data);
             }
+            setDataCategory(data);
         }
     }
+
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -87,9 +91,27 @@ const PostsProductsEdit = () => {
     }, []);
 
     useEffect(() => {
-        
         GetItemsCategoryLists();
     }, [user?.access]);
+
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+
 
     const tags = JSON.stringify(tagSearchResult.join(" "));
     async function handleClickPostsEdit(e) {
@@ -156,16 +178,21 @@ const PostsProductsEdit = () => {
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
-                    <div className='row w-100 gap-5' style={{ alignItems: "flex-start" }}>
+                    <div className='row w-100 gap-3 mt-5 ' style={{ alignItems: "flex-start" }}>
+                        <h4 className="col-md-8 m-0 p-0">Hujjatni tahrirlash</h4>
+                        <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
+                            <h4>Sotuvdagi ko'rinishi : </h4>
+                            <Button className='btn-warning' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
+
+                        </div>
                         <form
                             onSubmit={handleClickPostsEdit}
                             style={{ position: "relative" }}
                             id="FormPostsMyProducts"
-                            className="py-5 col-md-8">
-                            <h4 className="col-md-12">Mahsulot Qo'shish</h4>
+                            className="pb-5 col-md-8">
 
                             <div className='row'>
-                            <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
+                                <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
 
                                 <input
                                     type="text"
@@ -177,7 +204,7 @@ const PostsProductsEdit = () => {
                                 />
                             </div>
                             <div className='row'>
-                            <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot holati: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
+                                <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot holati: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
 
                                 <select className='form-select fs-3 py-3 rounded-3 col-md-8 mb-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
                                     {
@@ -192,7 +219,7 @@ const PostsProductsEdit = () => {
                                 </select>
                             </div>
                             <div className="row">
-                            <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
                                 <Select
                                     mode="tags"
@@ -206,7 +233,7 @@ const PostsProductsEdit = () => {
 
 
                             <div className='row'>
-                            <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
                                 <select
                                     style={{ alignItems: "flex-start" }}
@@ -226,37 +253,37 @@ const PostsProductsEdit = () => {
                             </div>
 
                             <div className="row">
-                            <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
                                 <div className='col-md-8 p-0 mb-3'>
-                                <CKeditor
-                                    name="description"
-                                    onChange={(data) => {
-                                        setShortData(data);
-                                    }}
-                                    editorLoaded={editorLoaded}
-                                    value={products?.short_description}
+                                    <CKeditor
+                                        name="description"
+                                        onChange={(data) => {
+                                            setShortData(data);
+                                        }}
+                                        editorLoaded={editorLoaded}
+                                        value={products?.short_description}
 
-                                />
+                                    />
                                 </div>
                             </div>
                             <div className="row">
-                            <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
-                               <div className='col-md-8 p-0 mb-3'>
-                               <CKeditor
-                                    name="description"
-                                    onChange={(data) => {
-                                        setFullData(data);
-                                    }}
-                                    editorLoaded={editorLoaded}
-                                    value={products?.description}
+                                <div className='col-md-8 p-0 mb-3'>
+                                    <CKeditor
+                                        name="description"
+                                        onChange={(data) => {
+                                            setFullData(data);
+                                        }}
+                                        editorLoaded={editorLoaded}
+                                        value={products?.description}
 
-                                />
-                               </div>
+                                    />
+                                </div>
                             </div>
 
-                            <div className="d-flex justify-content-end " style={{transform:"translateX(16px)"}}>
+                            <div className="d-flex justify-content-end " style={{ transform: "translateX(16px)" }}>
                                 <button
                                     type='submit'
                                     className="btn btn-success py-3 px-5 ">
@@ -276,9 +303,10 @@ const PostsProductsEdit = () => {
                                 </span>
                             </div>
                         </form>
-                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", marginTop: "6rem" }}>
+                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px" }}>
                             <div className="image rounded mb-4" style={{
-                                backgroundImage: `url(${products?.poster_url})`
+                                backgroundImage: `url(${products?.poster
+                                    })`
                             }}>
                             </div>
                             <div className="text-start">
@@ -305,7 +333,7 @@ const PostsProductsEdit = () => {
                                     <span><strong>Qisqa tavsif</strong>: </span>
                                     <span style={{ maxWidth: '150px' }} >
                                         {
-                                            Shortdata ? parse(Shortdata) : products?.short_description? parse(products?.short_description) : ""
+                                            Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
                                         }
 
                                     </span>
@@ -365,7 +393,7 @@ const PostsProductsEdit = () => {
                                         <span><strong>Qisqa tavsif</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                Shortdata ? parse(Shortdata) : products?.short_description? parse(products?.short_description) : ""
+                                                Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
                                             }
 
                                         </span>
@@ -379,6 +407,116 @@ const PostsProductsEdit = () => {
 
                                         </span>
                                     </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+                    <div className='modal-dialog container '>
+                        <div className='modal-content'>
+                            <div className='d-flex justify-content-end p-3'>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="ps-container">
+                                <div className="ps-product--detail ps-product--fullwidth">
+                                    <div className="ps-product__header ">
+                                        <div
+                                            className="ps-product__thumbnail"
+                                        >
+
+                                            <figure >
+                                                <div className="ps-wrapper" >
+                                                    {
+                                                        products?.iamges ?
+                                                            products?.iamges?.map(item => (
+                                                                <img src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
+                                                            ))
+
+                                                            :
+                                                            <img src="/static/img/docCopy.jpg" alt="doc" />
+
+
+                                                    }
+                                                </div>
+                                            </figure>
+                                        </div>
+                                        <div className="ps-product__info">
+                                            <header>
+                                                <h1  >{title ? title : products?.title}</h1>
+                                                <h4 >
+                                                    {products ?
+                                                        addPeriodToThousands(products?.price) : "0"}   so'm
+
+
+                                                </h4>
+                                            </header>
+                                            <div>
+                                                <h4> Muallif : {products?.seller?.first_name}</h4>
+                                            </div>
+                                            <div className="ps-product__desc">
+
+
+                                                <ul className="ps-list--dot">
+                                                    <li >
+                                                        {
+                                                            Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
+                                                        }
+
+                                                    </li>
+                                                </ul>
+                                                <ul>
+                                                    <li>
+                                                        <strong>Kategoriyasi</strong> : {
+                                                            category_id ? category_id : products?.category?.name
+                                                        }
+
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div className="ps-product__shopping row-gap-3" >
+                                                <button
+                                                    className="ps-btn ps-btn--black"
+                                                    style={{ cursor: "not-allowed" }}
+                                                >
+                                                    Savatga qo'shish
+                                                </button>
+                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                    Sotib olish
+                                                </button>
+                                                <div className="ps-product__actions">
+                                                    <a style={{ cursor: "not-allowed" }} >
+                                                        <i className={`icon-heart`} ></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                {
+                                                    products?.active_tag?.length > 0 ?
+                                                        <p> <strong>Aktiv teglar: </strong> {products?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    products?.deactive_tag?.length > 0 ?
+                                                        <p> <strong>Aktiv emas teglar: </strong> {products?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
+                                                        :
+                                                        <></>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="ps-product__content ps-tab-root">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane tab="Description" key="1">
+                                                <div className="ps-document">
+                                                    {
+                                                        Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
+                                                    }
+                                                </div>
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
                                 </div>
                             </div>
                         </div>

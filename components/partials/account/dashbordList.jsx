@@ -372,7 +372,7 @@ function DashbordList() {
                     <div className="col-lg-8 pb-5">
                         <div className='pb-5'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
-                            <Table scroll={{ x: 1200 }} dataSource={dataOrders} columns={columnsOrders} />
+                            <Table scroll={{ x: 1350 }} dataSource={dataOrders} columns={columnsOrders} />
                         </div>
                     </div>
                 </div>
@@ -380,7 +380,7 @@ function DashbordList() {
                     user?.role === "admin" ?
                         <div>
                             <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
-                            <Table scroll={{ x: 850 }} dataSource={dataProducts} columns={columns} className='pb-5' />
+                            <Table scroll={{ x: 1250 }} dataSource={dataProducts} columns={columns} className='pb-5' />
                         </div>
                         :
                         <></>

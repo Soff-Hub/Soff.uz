@@ -11,6 +11,12 @@ import Link from 'next/link';
 import Axios from 'axios';
 var parse = require("html-react-parser");
 import CalculateTimeDifference from './DateFormatter';
+import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
+import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
+import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+import PartialDescription from '~/components/elements/detail/description/PartialDescription';
+const { TabPane } = Tabs;
+import { Tabs } from 'antd';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -120,7 +126,7 @@ function ProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
+            dataIndex: 'poster',
             key: 'name',
             render: (poster_url) => (
                 <div>
@@ -219,14 +225,14 @@ function ProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
-                                <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
+                                    <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
                                     <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
-                                        
-                                        <input style={{backgroundColor:"#F2F3F4F6"}} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={handleClick} />
+
+                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={handleClick} />
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
-                                                    <button style={{ backgroundColor:"#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                                         <strong> Filter</strong>
                                                     </button>
                                                 </h2>
@@ -271,52 +277,68 @@ function ProductsLists() {
                     </div>
                 </div>
                 <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                    <div className='modal-dialog modal-dialog-centered modal-lg'>
+                    <div className='modal-dialog container '>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="card  " style={{ maxWidth: "840px" }}>
-                                <div className="row g-0 px-3 modal-body m-0">
-                                    <div className="col-md-4 mt-4 ">
-                                        <a href={deleteIdView?.poster_url} target="_blank" rel="noopener noreferrer"><img src={deleteIdView?.poster_url} className="img-fluid rounded-start" alt="..." /></a>
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body pt-5">
-                                            <p className="card-text"><strong>Sotuvchi ism familiyasi:</strong> {deleteIdView?.seller?.first_name}   {deleteIdView?.seller?.last_name}</p>
-                                            <p className="card-text"> <strong>Mahsulot nomi:</strong> {deleteIdView?.title}</p>
-                                            <p className="card-text"> <strong>Kategoriya:</strong> {deleteIdView?.category?.name}</p>
-                                            <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
-                                            <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
-                                            <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            {
-                                                deleteIdView?.active_tag?.length>0 ?
-                                                <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
-                                                :
-                                                <></>
-                                            }
-                                            {
-                                                deleteIdView?.deactive_tag?.length>0 ?
-                                                <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
-                                                :
-                                                <></>
-                                            }
-                                           
+                            <div className="ps-container">
+                                <div className="ps-product--detail ps-product--fullwidth">
+                                    <div className="ps-product__header ">
+                                        <ThumbnailDefault product={deleteIdView} />
+                                        <div className="ps-product__info">
+                                            <ModuleDetailTopInformation product={deleteIdView} />
+                                            <div>
+                                                <h4> Muallif : {deleteIdView?.seller?.first_name}</h4>
+                                            </div>
+                                            <ModuleProductDetailDescription product={deleteIdView} />
+                                            <div className="ps-product__shopping row-gap-3" >
+                                                <button
+                                                    className="ps-btn ps-btn--black"
+                                                    style={{ cursor: "not-allowed" }}
+                                                >
+                                                    Savatga qo'shish
+                                                </button>
+                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                    Sotib olish
+                                                </button>
+                                                <div className="ps-product__actions">
+                                                    <a style={{ cursor: "not-allowed" }} >
+                                                        <i className={`icon-heart`} ></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                {
+                                                    deleteIdView?.active_tag?.length > 0 ?
+                                                        <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    deleteIdView?.deactive_tag?.length > 0 ?
+                                                        <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
+                                                        :
+                                                        <></>
+                                                }
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tavsif:</strong> {deleteIdView?.short_description ? parse(deleteIdView?.short_description) : ""}</p>
-                                        <p className="card-text m-0"><strong>To'liq tavsif:</strong> {deleteIdView?.description ? parse(deleteIdView?.description) : ""}</p>
-                                        <div className='d-flex justify-content-end py-3'>
-                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File ochish</a>
-
-                                        </div>
+                                    <div className="ps-product__content ps-tab-root">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane tab="Izoh" key="1">
+                                                <PartialDescription product={deleteIdView} />
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                    <div className='d-flex justify-content-end '>
+                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning p-2 px-5 fs-4 "> <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span></button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div >
+                </div>
             </div>
         </section>
     );

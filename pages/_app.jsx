@@ -19,7 +19,7 @@ import '~/scss/technology.scss';
 import '~/scss/autopart.scss';
 import '~/scss/electronic.scss';
 import Head from 'next/head';
-import NextProgress from "next-progress"
+import NextProgress from 'next-progress';
 function App({ Component, pageProps }) {
     useEffect(() => {
         setTimeout(function () {

@@ -220,13 +220,13 @@ class PatchRepository {
         })
 
             .then((response) => {
-                if (response.status === 200) {
-                    return response.data;
+                if (response.status === 202) {
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => error.response);
         return reponse;
     }
 
