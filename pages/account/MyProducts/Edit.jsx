@@ -120,7 +120,7 @@ const PostsMyProducts = () => {
         if (category_id) {
             formData.append('category', category_id);
         }
-        if (tags) {
+        if (tags || tags!=="") {
             formData.append('tags', tags);
         }
         if (discount) {
