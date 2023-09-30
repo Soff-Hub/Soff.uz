@@ -451,9 +451,9 @@ const Posts = () => {
                         <div className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3" style={{ maxWidth: "370px" }} >
                             {
                                 (!liveFile ?
-                                    <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' />
+                                    <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{objectFit:"cover"}} />
                                     :
-                                    <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350} />)
+                                    <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350}  style={{objectFit:"cover"}}/>)
                             }
                             <div className="text-start">
                                 <p className="live-card-p">
@@ -547,9 +547,9 @@ const Posts = () => {
                                 <div className='overflow-y-scroll mb-3 ' style={{ height: "228px" }} >
                                     {
                                         (!liveFile ?
-                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' />
+                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{objectFit:"cover"}} />
                                             :
-                                            <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350} />)
+                                            <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350} style={{objectFit:"cover"}} />)
                                     }
                                 </div>
                                 <div className="text-start">
@@ -645,7 +645,7 @@ const Posts = () => {
                                                 <div className="ps-wrapper" >
                                                     {
                                                         (!liveFile ?
-                                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' />
+                                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4 mx-2' />
                                                             :
                                                             <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350} />)
                                                     }
