@@ -5,16 +5,12 @@ import Link from 'next/link';
 import MiniCart from './MiniCart';
 import AccountQuickLinks from './AccountQuickLinks';
 import { useCookies } from 'react-cookie';
+import cookie from 'js-cookie';
 
 
 
 const ElectronicHeaderActions = ({ auth, ecomerce }) => {
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
-
-
-    useEffect(() => {
-
-    },[ecomerce.wishlistItems])
+    const [cookies, setCookie] = useCookies(['wishlist']);
 
     return (
         <div className="header__actions">

@@ -4,43 +4,7 @@ import { baseUrl } from '~/repositories/Repository';
 import { formatCurrency } from '~/utilities/product-helper';
 import Link from 'next/link';
 
-function getImageURL(source, size) {
-    let image, imageURL;
 
-    if (source) {
-        if (size && size === 'large') {
-            if (source.formats.large) {
-                image = source.formats.large.url;
-            } else {
-                image = source.url;
-            }
-        } else if (size && size === 'medium') {
-            if (source.formats.medium) {
-                image = source.formats.medium.url;
-            } else {
-                image = source.url;
-            }
-        } else if (size && size === 'thumbnail') {
-            if (source.formats.thumbnail) {
-                image = source.formats.source.url;
-            } else {
-                image = source.url;
-            }
-        } else if (size && size === 'small') {
-            if (source.formats.small !== undefined) {
-                image = source.formats.small.url;
-            } else {
-                image = source.url;
-            }
-        } else {
-            image = source.poster_url;
-        }
-        imageURL = `${baseUrl}${image}`;
-    } else {
-        imageURL = `/static/img/undefined-product-thumbnail.jpg`;
-    }
-    return imageURL;
-}
 
 export default function useProduct() {
     return {
@@ -54,7 +18,7 @@ export default function useProduct() {
                                    <div style={{overflow:'hidden'}}>
                                      <div
                                         style={{
-                                            backgroundImage: `url(${payload.poster_url})`,
+                                            backgroundImage: `url(${payload?.poster_url})`,
                                             backgroundSize:'contain',
                                             backgroundRepeat:'no-repeat'
                                         }}

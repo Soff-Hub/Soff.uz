@@ -3,21 +3,26 @@ import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import useEcomerce from '~/hooks/useEcomerce';
-import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import { calculateAmount, getCartItemsFromCookies } from '~/utilities/ecomerce-helpers';
 import { useCookies } from 'react-cookie';
 import { Modal } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
+import cookie from 'js-cookie';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const MiniCart = ({ ecomerce }) => {
-    const { products, removeItem, removeItems, getProducts } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
+    const {  removeItem,  addProductToCart} = useEcomerce();
+    const [cookies, setCookie] = useCookies(['cart']);
     const [cart, setCart] = useState([]);
     const state = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth.user?.access);
+    const [data, setData] = useState([])
     function handleRemoveItem(e, item) {
         e.preventDefault();
-        removeItem(item, ecomerce.cartItems, 'cart');
+        removeItem(item, 'cart');
     }
+    // const cartL = getCartLength()
+
     const amount = calculateAmount(ecomerce.cartItems);
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -53,20 +58,27 @@ const MiniCart = ({ ecomerce }) => {
         }
     };
 
-    useEffect(() => {
-        getProducts(ecomerce.cartItems, 'cart');
-        getProducts(ecomerce.wishlistItems, 'wishlist');
-    }, [ecomerce]);
+    const cartData = async () => {
+        const respons = await ProductRepository.postCartData(cookies?.cart)
+        if (respons) {
+            setData(respons?.data?.data)
+        }
+    }
+
+    useEffect (() => {
+        cartData()
+    }, [])
+   console.log('dataa', data);
 
     let cartItemsView;
-    if (ecomerce.cartItems && ecomerce.cartItems?.length > 0) {
-        const productItems = ecomerce.cartItems?.map((item) => {
+    if ( data && data.length > 0) {
+        const productItems = data?.map((item) => {
             return (
                 <ProductOnCart product={item} key={item.id}>
                     <a
                         className="ps-product__remove"
                         style={{ cursor: 'pointer' }}
-                        onClick={(e) => handleRemoveItem(e, item)}>
+                        onClick={(e) => handleRemoveItem( e,item)}>
                         <i className="icon-cross"></i>
                     </a>
                 </ProductOnCart>
@@ -106,13 +118,15 @@ const MiniCart = ({ ecomerce }) => {
             </div>
         );
     }
+
+// console.log('cart uzunligi', cartL);
     return (
         <div className="ps-cart--mini">
             <Link href="/account/shopping-cart">
                 <a className="header__extra">
                     <i className="icon-bag2"></i>
                     <span>
-                        {<i>{cookies?.cart ? cookies?.cart?.length : 0}</i>}
+                        {<i>{cookies?.cart?.length > 0 ? cookies?.cart?.length : 0}</i>}
                     </span>
                 </a>
             </Link>

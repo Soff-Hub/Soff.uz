@@ -49,7 +49,7 @@ const Product = ({ product }) => {
                 <div className="ps-product__content card-narx-box">
                     {title(product)}
                     {product?.discount === 0 ? (
-                        <p>{addPeriodToThousands(product.price)} so'm</p>
+                        <p>{addPeriodToThousands(product.discount_price)} so'm</p>
                     ) : (
                         <>
                             <del>

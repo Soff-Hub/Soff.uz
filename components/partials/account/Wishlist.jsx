@@ -5,11 +5,12 @@ import ProductCart from '~/components/elements/products/ProductCart';
 import ProductRepository from '~/repositories/ProductRepository';
 import { Modal, Table } from 'antd';
 import { useCookies } from 'react-cookie';
+import Repository from '~/repositories/Repository';
 
 const Wishlist = ({ ecomerce }) => {
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
-    const { loading, products, getProducts } = useEcomerce();
+    const [cookies, setCookie] = useCookies(['wishlist']);
     const { addItem, removeItem } = useEcomerce();
+    const [idArr, setIdArr] = useState([]);
 
     const state = useSelector((state) => state);
 
@@ -34,6 +35,7 @@ const Wishlist = ({ ecomerce }) => {
     function handleAddItemToCart(e, product) {
         e.preventDefault();
         addItem(product, cookies.cart, 'cart');
+
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -44,18 +46,31 @@ const Wishlist = ({ ecomerce }) => {
 
     async function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
-        removeItem(item, ecomerce.wishlistItems, 'wishlist');
+        var data = removeItem(item, 'wishlist');
+        if (data) {
+            const response = await ProductRepository.postCartData(
+                cookies?.wishlist
+            );
+            
+            postData();
+        }
     }
 
-    useEffect(() => {
-        // getCategoryData();
-        if (ecomerce.wishlistItems) {
-            getProducts(cookies.wishlistItems, 'wishlist');
+    const postData = async () => {
+        const respons = await ProductRepository.postCartData(cookies?.wishlist);
+        if (respons) {
+            setIdArr(respons?.data?.data);
         }
-    }, [ecomerce.wishlistItems]);
+    };
+
+    useEffect(() => {
+        postData();
+    }, []);
+
+    console.log('wishlist arr', idArr);
     // views
     let wishlistItemsView;
-    if (cookies?.wishlist?.length > 0) {
+    if (idArr?.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist table-sm table-md table-xs">
@@ -70,8 +85,8 @@ const Wishlist = ({ ecomerce }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {cookies.wishlist?.length > 0 &&
-                            cookies.wishlist.map((product) => (
+                        {idArr?.length > 0 &&
+                            idArr?.map((product) => (
                                 <tr key={product?.id}>
                                     <td>
                                         <a
@@ -131,7 +146,7 @@ const Wishlist = ({ ecomerce }) => {
                 </table>
             </div>
         );
-    } else if (cookies?.wishlist?.length <= 0 ) {
+    } else if (idArr?.length <= 0) {
         // if (loading) {
         wishlistItemsView = (
             <div className="alert alert-danger" role="alert">

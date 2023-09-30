@@ -2,11 +2,8 @@ import { useCookies } from 'react-cookie';
 import { ReactDOM } from 'react';
 import { actionTypes } from './action';
 
-// if (typeof window !== 'undefined') {
-// local =  localStorage?.getItem('wishlist') ? JSON.parse(localStorage.getItem('wishlist')) : []
-// }
 
-
+// const loacl = localStorage.getItem('cart')
 
 // const userData = JSON.parse( cookies);
 export const initalState = {
