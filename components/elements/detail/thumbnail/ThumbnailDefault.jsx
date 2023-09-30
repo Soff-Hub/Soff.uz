@@ -10,12 +10,27 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
     const [photoIndex, setPhotoIndex] = useState(0);
     const [productImages, setProductImages] = useState([]);
 
- 
+
 
     return (
         <div
             className="ps-product__thumbnail"
             data-vertical={vertical ? 'true' : 'false'}>
+            <figure >
+                <div className="ps-wrapper" >
+                    {
+                        product?.iamges ?
+                        product?.iamges?.map(item => (
+                                <img src={item.image_url} alt="doc" className='border mb-3 ' style={{ objectFit: "contain" }} />
+                            ))
+
+                            :
+                            <img src="/static/img/docCopy.jpg" alt="doc" />
+
+
+                    }
+                </div>
+            </figure>
         </div>
     );
 };
