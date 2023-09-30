@@ -34,6 +34,7 @@ function MyProductsLists() {
     const [dataValCat, setDataCat] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState("");
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
@@ -79,8 +80,10 @@ function MyProductsLists() {
     }
 
     async function handleClickView(item) {
+        setLoading(true)
         const ItemsData = await GetRepository.getMyProductsView(item.id, user?.access);
         setView(ItemsData);
+        setLoading(false)
     }
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyProductsDelete(deleteId, user?.access);
@@ -139,28 +142,6 @@ function MyProductsLists() {
         }
     };
 
-    const handleButtonClickView = async () => {
-
-        try {
-            const fileContent = View
-            const response = await axios.get(
-                fileContent.file,
-                {
-                    responseType: 'blob',
-                }
-            );
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Error downloading file: ', error);
-        }
-    };
 
     useEffect(() => {
         GetItemsCategory(1)
@@ -373,46 +354,55 @@ function MyProductsLists() {
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="ps-container">
-                                <div className="ps-product--detail ps-product--fullwidth">
-                                    <div className="ps-product__header ">
-                                        <ThumbnailDefault product={View} />
-                                        <div className="ps-product__info">
-                                            <ModuleDetailTopInformation product={View} />
-                                            <div>
-                                                <h4> Muallif : {View?.seller?.first_name}</h4>
-                                            </div>
-                                            <ModuleProductDetailDescription product={View} />
-                                            <div className="ps-product__shopping row-gap-3" >
-                                                <button
-                                                    className="ps-btn ps-btn--black"
-                                                    style={{ cursor: "not-allowed" }}
-                                                >
-                                                    Savatga qo'shish
-                                                </button>
-                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
-                                                    Sotib olish
-                                                </button>
-                                                <div className="ps-product__actions">
-                                                    <a style={{ cursor: "not-allowed" }} >
-                                                        <i className={`icon-heart`} ></i>
-                                                    </a>
+                                {
+                                    !loading ?
+                                        <div className="ps-product--detail ps-product--fullwidth">
+                                            <div className="ps-product__header ">
+                                                <ThumbnailDefault product={View} />
+                                                <div className="ps-product__info">
+                                                    <ModuleDetailTopInformation product={View} />
+                                                    <div>
+                                                        <h4> Muallif : {View?.seller?.first_name}  {View?.seller?.last_name}</h4>
+                                                    </div>
+                                                    <ModuleProductDetailDescription product={View} />
+                                                    <div className="ps-product__shopping row-gap-3" >
+                                                        <button
+                                                            className="ps-btn ps-btn--black"
+                                                            style={{ cursor: "not-allowed" }}
+                                                        >
+                                                            Savatga qo'shish
+                                                        </button>
+                                                        <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                            Sotib olish
+                                                        </button>
+                                                        <div className="ps-product__actions">
+                                                            <a style={{ cursor: "not-allowed" }} >
+                                                                <i className={`icon-heart`} ></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                        <p>{View?.tag?.map(item => (
+                                                            <span className='mx-2'> #{item?.name} </span>
+                                                        ))}</p>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                <p>{View?.tag?.map(item => (
-                                                    <span className='mx-2'> #{item?.name} </span>
-                                                ))}</p>
+                                            <div className="ps-product__content ps-tab-root">
+                                                <Tabs defaultActiveKey="1">
+                                                    <TabPane tab="Mahsulot to’liq tavsifi" key="1">
+                                                        <PartialDescription product={View} />
+                                                    </TabPane>
+                                                </Tabs>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="ps-product__content ps-tab-root">
-                                        <Tabs defaultActiveKey="1">
-                                            <TabPane tab="Izoh" key="1">
-                                                <PartialDescription product={View} />
-                                            </TabPane>
-                                        </Tabs>
-                                    </div>
-                                </div>
+                                        :
+                                        <div className='ps-product--detail ps-product--fullwidth' style={{ height: "690px", display:"grid", placeContent:"center" }}>
+                                            <div className="spinner-border " role="status" style={{width:"150px", height:"150px"}} >
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                }
 
                             </div>
                         </div>

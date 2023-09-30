@@ -88,7 +88,7 @@ const Posts = () => {
     }
 
     async function handleChange(value) {
-            setTagSearchResult(value);
+        setTagSearchResult(value);
         let arr = [];
         if (value?.length > 0) {
             for (let i = 0; i < tagItems.length; i++) {
@@ -176,8 +176,8 @@ const Posts = () => {
             formData.append('short_description', Shortdata),
             formData.append('description', Fulldata),
             formData.append('tags', tagSearchResult),
-            fileImgPoster ?  formData.append('poster', fileImgPoster): "None" ,
-            fileImgFileID ?  formData.append('poster_id', fileImgFileID): "",
+            fileImgPoster ? formData.append('poster', fileImgPoster) : "None",
+            fileImgFileID ? formData.append('poster_id', fileImgFileID) : "",
             formData.append('category', category_id)
 
         const patchItems = await PatchRepository.getPatchPoster(
@@ -200,6 +200,7 @@ const Posts = () => {
             });
         }
     }
+  
 
     async function PostFilePoster() {
         setLoading(true)
@@ -211,6 +212,7 @@ const Posts = () => {
     }
 
     function LiveImage(e) {
+        setFileImgFileID("")
         setFileImgPoster(e.target.files[0]);
         const img = window.URL.createObjectURL(e.target.files[0]);
         setLiveFile(img);
@@ -294,12 +296,12 @@ const Posts = () => {
                                 <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{ backgroundColor: "#F1F1F1", border: "1px dashed green" }}>
                                     {fileImgFile ? (
                                         !loading ?
-                                        <span className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }}>
-                                            <span> Siz mahsulot yukladingiz <i className="fa-solid fa-circle-check text-success"></i> </span>
-                                        </span> :
-                                        <span className='d-flex justify-content-center'>
-                                            <ClipLoader size={25} color="#36d7b7" />
-                                        </span>
+                                            <span className="d-flex flex-column align-items-center" style={{ cursor: "pointer" }}>
+                                                <span> Siz mahsulot yukladingiz <i className="fa-solid fa-circle-check text-success"></i> </span>
+                                            </span> :
+                                            <span className='d-flex justify-content-center'>
+                                                <ClipLoader size={25} color="#36d7b7" />
+                                            </span>
                                     ) : (
                                         <span className="d-flex flex-column align-items-center " style={{ cursor: "pointer" }}>
                                             <i className="fa-solid fa-inbox text-primary mt-1"></i>
@@ -322,7 +324,7 @@ const Posts = () => {
                                     <label style={{ width: "50px", cursor: "pointer" }} >
                                         <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
                                         <input
-                                            
+
                                             type="file"
                                             onChange={(e) => LiveImage(e)}
                                             accept="image/*"
@@ -340,7 +342,10 @@ const Posts = () => {
                                                 </span>
                                                 :
                                                 livePosterFile?.images?.map(item => (
-                                                    <img onClick={() => {setLiveFile(item.image_url), setFileImgFileID(item.id)}} src={item.image_url} alt=" " width={600} style={{ display: 'block', cursor: "pointer" }} />
+                                                    item.id === fileImgFileID ?
+                                                        <img src={item.image_url} alt=" " style={{ display: 'block', border: "2px solid red", filter: "blur(1px)", cursor: "not-allowed" }} />
+                                                        :
+                                                        <img className='mx-1 ' onClick={() => { setLiveFile(item.image_url), setFileImgFileID(item.id) }} src={item.image_url} alt=" " style={{ display: 'block', cursor: "pointer" }} />
                                                 ))
                                         }
                                     </div>
@@ -434,7 +439,8 @@ const Posts = () => {
                                 <button
                                     type="submit"
                                     className="btn btn-success py-3 ">
-                                    <span className="fs-4 px-5">Mahsulot qo'shish <i className="fa-solid fa-cloud-arrow-down mx-2"></i></span>
+
+                                    <span className="fs-4 px-5">Mahsulot qo'shish <i className="fa-solid fa-cloud-arrow-up mx-2"></i></span>
                                 </button>
                             </div>
                             <div className="mahsulotingiz">
@@ -449,12 +455,14 @@ const Posts = () => {
                             </div>
                         </form>
                         <div className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3" style={{ maxWidth: "370px" }} >
-                            {
-                                (!liveFile ?
-                                    <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{objectFit:"cover"}} />
-                                    :
-                                    <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350}  style={{objectFit:"cover"}}/>)
-                            }
+                            <div className="image rounded mb-3" >
+                                {
+                                    (!liveFile ?
+                                        <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
+                                        :
+                                        <img src={liveFile} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
+                                }
+                            </div>
                             <div className="text-start">
                                 <p className="live-card-p">
                                     <strong>Nomi : </strong>{' '}
@@ -544,12 +552,12 @@ const Posts = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card  rounded-3 ">
-                                <div className='overflow-y-scroll mb-3 ' style={{ height: "228px" }} >
+                                <div className="image rounded mb-3">
                                     {
                                         (!liveFile ?
-                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{objectFit:"cover"}} />
+                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
                                             :
-                                            <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350} style={{objectFit:"cover"}} />)
+                                            <img src={liveFile} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
                                     }
                                 </div>
                                 <div className="text-start">
@@ -644,10 +652,15 @@ const Posts = () => {
                                             <figure >
                                                 <div className="ps-wrapper" >
                                                     {
-                                                        (!liveFile ?
-                                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4 mx-2' />
+                                                        livePosterFile?.images ?
+                                                            livePosterFile?.images?.map(item => (
+                                                                <img src={item.image_url} alt="doc" className='border mb-3 ' style={{ objectFit: "contain" }} />
+                                                            ))
+
                                                             :
-                                                            <img src={liveFile} alt="doc" className='mb-4 border' height={350} width={350} />)
+                                                            <img src="/static/img/docCopy.jpg" alt="doc" />
+
+
                                                     }
                                                 </div>
                                             </figure>
@@ -669,18 +682,18 @@ const Posts = () => {
                                                 </h4>
                                             </header>
                                             <div>
-                                                {/* <h4> Muallif : {products?.seller?.first_name}</h4> */}
                                             </div>
                                             <div className="ps-product__desc">
 
 
                                                 <ul className="ps-list--dot">
-                                                    <li >
+                                                    <span >
+                                                        <strong >Qisqa tavsif : </strong>
                                                         {Shortdata
                                                             ? parse(Shortdata)
                                                             : "To'ldirilmadi"}
 
-                                                    </li>
+                                                    </span>
                                                 </ul>
                                                 <ul>
                                                     <li>
@@ -713,7 +726,7 @@ const Posts = () => {
                                                         (item, i) => {
                                                             return (
                                                                 <span className='mx-2' key={i}>   #{item}{' '}
-                                                                    
+
                                                                 </span>
                                                             );
                                                         }
@@ -724,7 +737,7 @@ const Posts = () => {
                                     </div>
                                     <div className="ps-product__content ps-tab-root">
                                         <Tabs defaultActiveKey="1">
-                                            <TabPane tab="Description" key="1">
+                                            <TabPane tab="Mahsulot to’liq tavsifi" key="1">
                                                 <div className="ps-document">
                                                     {Fulldata
                                                         ? parse(Fulldata)

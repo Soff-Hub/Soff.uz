@@ -170,6 +170,34 @@ function DashbordList() {
 
         },
     ];
+    const columnsOrdersSeller = [
+        {
+            title: 'Buyurtmachi',
+            dataIndex: 'user_name',
+            key: 'age',
+        },
+          {
+            title: 'Buyurtma nomi',
+            dataIndex: 'title',
+            key: 'age',
+            width: 300,
+        },
+        {
+            title: 'Buyurtma sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Holat',
+            dataIndex: 'status',
+            key: 'address',
+            render: (status) => (
+                <span>{status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) : (<span><i className="fa-solid fa-circle-xmark text-danger"></i> tasdiqlanganmagan</span>)}</span>
+            ),
+
+        },
+    ];
 
     return (
         <section className="ps-my-account ps-page--account">
@@ -372,7 +400,12 @@ function DashbordList() {
                     <div className="col-lg-8 pb-5">
                         <div className='pb-5'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
-                            <Table scroll={{ x: 1350 }} dataSource={dataOrders} columns={columnsOrders} />
+                            {
+                                user?.role=="admin"  ?
+                                <Table scroll={{ x: 1350 }} dataSource={dataOrders} columns={columnsOrders} />
+                                :
+                                <Table scroll={{ x: 1150 }} dataSource={dataOrders} columns={columnsOrdersSeller} />
+                            }
                         </div>
                     </div>
                 </div>

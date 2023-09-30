@@ -19,7 +19,8 @@ import { useRouter } from 'next/router';
 const PostsProductsEdit = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [tagSearchResult, setTagSearchResult] = useState([]);
+    const [tagSearchResult, setTagSearchResult] = useState(null);
+    const [tagSearchResult1, setTagSearchResult2] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { products, user } = useSelector((state) => state.auth);
@@ -29,6 +30,8 @@ const PostsProductsEdit = () => {
     const [Shortdata, setShortData] = useState('');
     const [dataCatStatus, setDataCatStatus] = useState(null);
     const [Fulldata, setFullData] = useState('');
+    const [categoryName, setCategoryName] = useState('');
+    const [tegProductsLists, setTegProdcutsLists] = useState([]);
 
     const breadCrumb = [
         {
@@ -62,37 +65,55 @@ const PostsProductsEdit = () => {
             setTagItems(ItemsData.results);
         }
     }
-
-    async function handleChange(value) {
-        setTagSearchResult(value);
-        let arr = [];
-        if (value?.length > 0) {
-            for (let i = 0; i < tagItems.length; i++) {
-                for (let j = 0; j < value.length; j++) {
-                    if (tagItems[i].name === value[j]) {
-                        arr.push(tagItems[i].id);
-                    }
-                }
-            }
+    async function GetItemsTagAktivmas() {
+        const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access)
+        if (ItemsData?.results) {
+            setTegProdcutsLists(ItemsData.results);
         }
     }
 
-    const children = [];
+    const results = tagSearchResult?.concat(tagSearchResult1);
+
+    const childrenAktivmas = [];
+    for (let i = 0; i < tegProductsLists?.length; i++) {
+        childrenAktivmas.push(
+            <Option key={tegProductsLists[i].name}>{tegProductsLists[i].name}</Option>
+        );
+    }
+
+    const  children = [];
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
 
-
     useEffect(() => {
         GetItemsTag();
+       
         setEditorLoaded(true);
     }, []);
 
     useEffect(() => {
         GetItemsCategoryLists();
+        GetItemsTagAktivmas();
+    }, [user?.access]); 
+
+      useEffect(() => {
+        GetItemsTagAktivmas();
     }, [user?.access]);
+
+    const handleChangeCategory = async (e) => {
+        setCategory_id(e);
+
+        if (e) {
+            for (let i = 0; i < dataCategory.length; i++) {
+                if (dataCategory[i].id == e) {
+                    setCategoryName(dataCategory[i].name);
+                }
+            }
+        }
+    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -113,7 +134,6 @@ const PostsProductsEdit = () => {
     }
 
 
-    const tags = JSON.stringify(tagSearchResult.join(" "));
     async function handleClickPostsEdit(e) {
         e.preventDefault()
         const data = {}
@@ -121,8 +141,8 @@ const PostsProductsEdit = () => {
         if (title) {
             Object.assign(data, { "title": title })
         }
-        if (tags) {
-            Object.assign(data, { "tags": tags })
+        if (results) {
+            Object.assign(data, { "tags": results })
         }
         if (category_id) {
             Object.assign(data, { "category": category_id })
@@ -155,7 +175,6 @@ const PostsProductsEdit = () => {
             modal.update
         }
     }
-
     const dataStatus = [
         {
             id: 1,
@@ -219,16 +238,38 @@ const PostsProductsEdit = () => {
                                 </select>
                             </div>
                             <div className="row">
-                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Aktiv teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
                                 <Select
                                     mode="tags"
-                                    onChange={handleChange}
+                                    onChange={(e)=>(setTagSearchResult(e))}
                                     defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
                                     className='col-md-8 p-0 mb-3'
                                 >
                                     {children}
                                 </Select>
+                            </div>
+                            <div className="row">
+                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Aktiv emas teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                {
+                                    products?.tag && products?.tag?.some(item => (item.active===false)) ?
+                                <Select
+                                    mode="tags"
+                                    onChange={(e)=>(setTagSearchResult2(e))}
+                                    defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
+                                    className='col-md-8 p-0 mb-3'
+                                >
+                                    {childrenAktivmas}
+                                </Select>
+                                :
+                                <Select
+                                mode="tags"
+                                onChange={(e)=>(setTagSearchResult2(e))}
+                                className='col-md-8 p-0 mb-3'
+                            >
+                                {childrenAktivmas}
+                            </Select>
+                                }
                             </div>
 
 
@@ -239,7 +280,7 @@ const PostsProductsEdit = () => {
                                     style={{ alignItems: "flex-start" }}
                                     className="form-select rounded-3 fs-4 py-3 col-md-8 mb-3"
                                     onChange={(e) =>
-                                        setCategory_id(e.target.value)
+                                        handleChangeCategory(e.target.value)
                                     }>
                                     {dataCategory?.length > 0 &&
                                         dataCategory.map((item) => (
@@ -288,7 +329,7 @@ const PostsProductsEdit = () => {
                                     type='submit'
                                     className="btn btn-success py-3 px-5 ">
                                     <span className="fs-4">
-                                        Saqlash <i class="fa-solid fa-floppy-disk mx-2"></i>
+                                        Saqlash <i class="fa-solid fa-cloud-arrow-down mx-2"></i>
                                     </span>
                                 </button>
                             </div>
@@ -304,10 +345,15 @@ const PostsProductsEdit = () => {
                             </div>
                         </form>
                         <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px" }}>
-                            <div className="image rounded mb-4" style={{
-                                backgroundImage: `url(${products?.poster
-                                    })`
-                            }}>
+                            <div className="image rounded ">
+                                <div className="image rounded ">
+                                    {
+                                        (!products.poster ?
+                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
+                                            :
+                                            <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
+                                    }
+                                </div>
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
@@ -325,7 +371,7 @@ const PostsProductsEdit = () => {
                                     <span><strong>Kategoriya</strong>: </span>
                                     <span style={{ maxWidth: '150px' }} >
                                         {
-                                            category_id ? category_id : "Kategoriya qo'shing"
+                                            categoryName ? categoryName : products?.category?.name
                                         }
                                     </span>
                                 </p>
@@ -365,9 +411,15 @@ const PostsProductsEdit = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card rounded-3 ">
-                                <div className="image rounded mb-4" style={{
-                                    backgroundImage: `url(${products?.poster_url})`
-                                }}>
+                                <div className="image rounded" >
+                                      <div className="image rounded ">
+                                    {
+                                        (!products.poster ?
+                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
+                                            :
+                                            <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
+                                    }
+                                </div>
                                 </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
@@ -385,7 +437,7 @@ const PostsProductsEdit = () => {
                                         <span><strong>Kategoriya</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                category_id ? category_id : "Kategoriya qo'shing"
+                                                categoryName ? categoryName : products?.category?.name
                                             }
                                         </span>
                                     </p>
@@ -452,23 +504,24 @@ const PostsProductsEdit = () => {
                                                 </h4>
                                             </header>
                                             <div>
-                                                <h4> Muallif : {products?.seller?.first_name}</h4>
+                                                <h4> Muallif : {products?.seller?.first_name} {products?.seller?.last_name}</h4>
                                             </div>
                                             <div className="ps-product__desc">
 
 
                                                 <ul className="ps-list--dot">
-                                                    <li >
+                                                    <span >
+                                                        <strong>Qisqa tavsif :</strong>
                                                         {
                                                             Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
                                                         }
 
-                                                    </li>
+                                                    </span>
                                                 </ul>
                                                 <ul>
                                                     <li>
                                                         <strong>Kategoriyasi</strong> : {
-                                                            category_id ? category_id : products?.category?.name
+                                                            categoryName ? categoryName : products?.category?.name
                                                         }
 
                                                     </li>
@@ -508,7 +561,7 @@ const PostsProductsEdit = () => {
                                     </div>
                                     <div className="ps-product__content ps-tab-root">
                                         <Tabs defaultActiveKey="1">
-                                            <TabPane tab="Description" key="1">
+                                            <TabPane tab="Mahsulot to’liq tavsifi" key="1">
                                                 <div className="ps-document">
                                                     {
                                                         Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
