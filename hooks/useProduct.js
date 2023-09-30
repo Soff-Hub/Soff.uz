@@ -56,7 +56,8 @@ export default function useProduct() {
                                         style={{
                                             backgroundImage: `url(${payload.poster_url})`,
                                             backgroundSize:'contain',
-                                            backgroundRepeat:'no-repeat'
+                                            backgroundRepeat:'no-repeat',
+                                            backgroundPosition: 'center'
                                         }}
                                         className="products-image1"></div>
                                    </div>
