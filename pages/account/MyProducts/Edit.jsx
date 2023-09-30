@@ -18,15 +18,16 @@ import { useRouter } from 'next/router';
 const PostsMyProducts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [fileImgFile, setFileImgFile] = useState('');
+    // const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
-    const [tagSearchResult, setTagSearchResult] = useState([]);
+    const [tagSearchResult, setTagSearchResult] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { products, user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [category_id, setCategory_id] = useState(null);
     const [discount, setDiscount] = useState(null);
+    const [categoryName, setCategoryName] = useState('');
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Shortdata, setShortData] = useState('');
@@ -64,19 +65,6 @@ const PostsMyProducts = () => {
         }
     }
 
-    async function handleChange(value) {
-        setTagSearchResult(value);
-        let arr = [];
-        if (value?.length > 0) {
-            for (let i = 0; i < tagItems.length; i++) {
-                for (let j = 0; j < value.length; j++) {
-                    if (tagItems[i].name === value[j]) {
-                        arr.push(tagItems[i].id);
-                    }
-                }
-            }
-        }
-    }
 
     const children = [];
     for (let i = 0; i < tagItems?.length; i++) {
@@ -86,22 +74,14 @@ const PostsMyProducts = () => {
     }
 
 
-    useEffect(() => {
-        GetItemsTag();
-        setEditorLoaded(true);
-    }, []);
-
-    useEffect(() => {
-        GetItemsCategoryLists();
-    }, [user?.access]);
-    const tags = JSON.stringify(tagSearchResult.join(" "));
+    const tegdata = products?.tag && products?.tag?.map(item => (item.name))
 
     async function handleClickPostsEdit(e) {
         e.preventDefault()
         const formData = new FormData();
-        if (fileImgFile) {
-            formData.append('file', fileImgFile);
-        }
+        // if (fileImgFile) {
+        //     formData.append('file', fileImgFile);
+        // }
         if (fileImgPoster) {
             formData.append('poster', fileImgPoster);
         }
@@ -120,8 +100,8 @@ const PostsMyProducts = () => {
         if (category_id) {
             formData.append('category', category_id);
         }
-        if (tags || tags!=="") {
-            formData.append('tags', tags);
+        if (tagSearchResult) {
+            formData.append('tags', tagSearchResult )
         }
         if (discount) {
             formData.append("discount", discount);
@@ -141,6 +121,18 @@ const PostsMyProducts = () => {
         setLivePoster(img);
     }
 
+    const handleChangeCategory = async (e) => {
+        setCategory_id(e);
+
+        if (e) {
+            for (let i = 0; i < dataCategory.length; i++) {
+                if (dataCategory[i].id == e) {
+                    setCategoryName(dataCategory[i].name);
+                }
+            }
+        }
+    }
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -158,7 +150,16 @@ const PostsMyProducts = () => {
 
         return formattedNumber;
     }
+    useEffect(() => {
+        GetItemsTag();
+        setEditorLoaded(true);
+    }, []);
 
+    useEffect(() => {
+        GetItemsCategoryLists();
+    }, [user?.access]);
+
+  
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -227,7 +228,7 @@ const PostsMyProducts = () => {
                                     className=" p-0 col-md-8 mb-3"
                                     mode="tags"
                                     style={{ width: '100%' }}
-                                    onChange={handleChange}
+                                    onChange={(e)=>setTagSearchResult(e)}
                                     defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
                                 >
                                     {children}
@@ -240,14 +241,14 @@ const PostsMyProducts = () => {
                                     style={{ alignItems: "flex-start" }}
                                     className="form-select rounded-3 py-3 fs-4 col-md-8 mb-3"
                                     onChange={(e) =>
-                                        setCategory_id(e.target.value)
+                                        handleChangeCategory(e.target.value)
                                     }>
                                     {dataCategory?.length > 0 &&
                                         dataCategory.map((item) => (
                                             products?.category === item.name ?
                                                 <option selected value={item.id}>{item.name}</option>
                                                 :
-                                                <option value={item.id}>{item.name}</option>
+                                                <option value={item.id} >{item.name}</option>
 
                                         ))}
                                 </select>
@@ -316,7 +317,7 @@ const PostsMyProducts = () => {
                                     type='submit'
                                     className="btn btn-success py-3 px-5 ">
                                     <span className="fs-4">
-                                        Saqlash <i class="fa-solid fa-floppy-disk mx-2"></i>
+                                        Saqlash <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
                                     </span>
                                 </button>
                             </div>
@@ -332,11 +333,13 @@ const PostsMyProducts = () => {
                             </div>
                         </form>
                         <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", }}>
-                            <div className="image rounded mb-3" style={{
-                                backgroundImage: `url(${livePoster
-                                    ? livePoster
-                                    : products?.poster})`
-                            }}>
+                            <div className="image rounded mb-3" >
+                                {
+                                    (livePoster ?
+                                        <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
+                                        :
+                                        <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
+                                }
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
@@ -364,7 +367,7 @@ const PostsMyProducts = () => {
                                     <span><strong>Kategoriya</strong>: </span>
                                     <span style={{ maxWidth: '150px' }} >
                                         {
-                                            category_id ? category_id : products?.category?.name
+                                            categoryName ? categoryName : products?.category?.name
                                         }
                                     </span>
                                 </p>
@@ -413,11 +416,13 @@ const PostsMyProducts = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card rounded-3 ">
-                                <div className="image rounded mb-3" style={{
-                                    backgroundImage: `url(${livePoster
-                                        ? livePoster
-                                        : products?.poster})`
-                                }}>
+                                <div className="image rounded mb-3">
+                                    {
+                                        (livePoster ?
+                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
+                                            :
+                                            <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
+                                    }
                                 </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
@@ -444,7 +449,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Kategoriya</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                category_id ? category_id : products?.category?.name
+                                                categoryName ? categoryName : products?.category?.name
                                             }
                                         </span>
                                     </p>
@@ -521,23 +526,24 @@ const PostsMyProducts = () => {
                                                 </h4>
                                             </header>
                                             <div>
-                                                <h4> Muallif : {products?.seller?.first_name}</h4>
+                                                <h4> Muallif : {products?.seller?.first_name} {products?.seller?.last_name}</h4>
                                             </div>
                                             <div className="ps-product__desc">
 
 
                                                 <ul className="ps-list--dot">
-                                                    <li >
+                                                    <span  >
+                                                        <strong>Qisqa tavsif : </strong>
                                                         {
                                                             Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
                                                         }
 
-                                                    </li>
+                                                    </span>
                                                 </ul>
                                                 <ul>
                                                     <li>
                                                         <strong>Kategoriyasi</strong> : {
-                                                            category_id ? category_id : products?.category?.name
+                                                            categoryName ? categoryName : products?.category?.name
                                                         }
 
                                                     </li>
@@ -568,7 +574,7 @@ const PostsMyProducts = () => {
                                     </div>
                                     <div className="ps-product__content ps-tab-root">
                                         <Tabs defaultActiveKey="1">
-                                            <TabPane tab="Description" key="1">
+                                            <TabPane tab="Mahsulot to’liq tavsifi" key="1">
                                                 <div className="ps-document">
                                                     {
                                                         Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""

@@ -70,15 +70,6 @@ const Compare = ({ ecomerce }) => {
                                                 <td key={product.id}>
                                                     <div className="ps-product--compare">
                                                         <div className="ps-product__thumbnail">
-                                                            <Link
-                                                                href="/product/[pid]"
-                                                                as={`/product/${product.id}`}>
-                                                                <a>
-                                                                    {thumbnailImage(
-                                                                        product
-                                                                    )}
-                                                                </a>
-                                                            </Link>
                                                         </div>
                                                         <div className="ps-product__content">
                                                             <Link
