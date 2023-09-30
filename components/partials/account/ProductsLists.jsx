@@ -13,8 +13,10 @@ var parse = require("html-react-parser");
 import CalculateTimeDifference from './DateFormatter';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+import PartialDescription from '~/components/elements/detail/description/PartialDescription';
+const { TabPane } = Tabs;
+import { Tabs } from 'antd';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -223,14 +225,14 @@ function ProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
-                                <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
+                                    <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
                                     <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
-                                        
-                                        <input style={{backgroundColor:"#F2F3F4F6"}} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={handleClick} />
+
+                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={handleClick} />
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
-                                                    <button style={{ backgroundColor:"#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                                         <strong> Filter</strong>
                                                     </button>
                                                 </h2>
@@ -274,7 +276,7 @@ function ProductsLists() {
                         </div>
                     </div>
                 </div>
-                  <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
+                <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog container '>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
@@ -293,39 +295,45 @@ function ProductsLists() {
                                             <div className="ps-product__shopping row-gap-3" >
                                                 <button
                                                     className="ps-btn ps-btn--black"
-                                                    style={{cursor:"not-allowed"}}
-                                                   >
+                                                    style={{ cursor: "not-allowed" }}
+                                                >
                                                     Savatga qo'shish
                                                 </button>
-                                                <button className="ps-btn" style={{cursor:"not-allowed"}} >
+                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
                                                     Sotib olish
                                                 </button>
                                                 <div className="ps-product__actions">
-                                                    <a style={{cursor:"not-allowed"}} >
+                                                    <a style={{ cursor: "not-allowed" }} >
                                                         <i className={`icon-heart`} ></i>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                            {
-                                                deleteIdView?.active_tag?.length>0 ?
-                                                <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
-                                                :
-                                                <></>
-                                            }
-                                            {
-                                                deleteIdView?.deactive_tag?.length>0 ?
-                                                <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
-                                                :
-                                                <></>
-                                            }
+                                                {
+                                                    deleteIdView?.active_tag?.length > 0 ?
+                                                        <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
+                                                        :
+                                                        <></>
+                                                }
+                                                {
+                                                    deleteIdView?.deactive_tag?.length > 0 ?
+                                                        <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
+                                                        :
+                                                        <></>
+                                                }
                                             </div>
                                         </div>
                                     </div>
-                                    <DefaultDescription product={deleteIdView} />
-                                <div className='d-flex justify-content-end '>
-                                            <button onClick={handleButtonClickViewProducts} className="btn btn-warning p-2 px-5 fs-4 "> <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span></button>
-                                        </div>
+                                    <div className="ps-product__content ps-tab-root">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane tab="Izoh" key="1">
+                                                <PartialDescription product={deleteIdView} />
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                    <div className='d-flex justify-content-end '>
+                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning p-2 px-5 fs-4 "> <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span></button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

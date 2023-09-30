@@ -17,7 +17,9 @@ import axios from 'axios';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
-import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
+import { Tabs } from 'antd';
+import PartialDescription from '~/components/elements/detail/description/PartialDescription';
+const { TabPane } = Tabs;
 
 
 function MyProductsLists() {
@@ -383,15 +385,15 @@ function MyProductsLists() {
                                             <div className="ps-product__shopping row-gap-3" >
                                                 <button
                                                     className="ps-btn ps-btn--black"
-                                                    style={{cursor:"not-allowed"}}
-                                                   >
+                                                    style={{ cursor: "not-allowed" }}
+                                                >
                                                     Savatga qo'shish
                                                 </button>
-                                                <button className="ps-btn" style={{cursor:"not-allowed"}} >
+                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
                                                     Sotib olish
                                                 </button>
                                                 <div className="ps-product__actions">
-                                                    <a style={{cursor:"not-allowed"}} >
+                                                    <a style={{ cursor: "not-allowed" }} >
                                                         <i className={`icon-heart`} ></i>
                                                     </a>
                                                 </div>
@@ -403,7 +405,13 @@ function MyProductsLists() {
                                             </div>
                                         </div>
                                     </div>
-                                    <DefaultDescription product={View} />
+                                    <div className="ps-product__content ps-tab-root">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane tab="Izoh" key="1">
+                                                <PartialDescription product={View} />
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
                                 </div>
 
                             </div>
