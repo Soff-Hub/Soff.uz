@@ -31,7 +31,6 @@
 //     const [loading, setLoading] = useState(false);
 //     const debouncedSearchTerm = useDebounce(keyword, 300);
 
-
 //     function handleSubmit(e) {
 //         e.preventDefault();
 //     }
@@ -94,7 +93,7 @@
 //         } else {
 //             productItemsView = <p>Hujjat topilmadi</p>;
 //         }
-       
+
 //     } else {
 //         loadingView = (
 //             <span className="ps-form__action">
@@ -138,16 +137,15 @@
 
 // export default PanelSearch;
 
-
-
-
-
-
-
 import React, { useState } from 'react';
 import Router from 'next/router';
 
-const PanelSearch = () => {
+const PanelSearch = ({
+    setMenuDrawer,
+    setCartDrawer,
+    setCategoriesDrawer,
+    setSearchDrawer,
+}) => {
     const [keyword, setKeyword] = useState('');
 
     function handleSubmit(e) {
@@ -156,6 +154,13 @@ const PanelSearch = () => {
             Router.push(`/search?keyword=${keyword}`);
         }
     }
+
+    const handleDrawerClose = () => {
+        setMenuDrawer(false);
+        setCartDrawer(false);
+        setCategoriesDrawer(false);
+        setSearchDrawer(false);
+    };
 
     return (
         <div className="ps-panel__search-results">
@@ -171,7 +176,7 @@ const PanelSearch = () => {
                         placeholder="Hujjatlarni izlang..."
                         onChange={(e) => setKeyword(e.target.value)}
                     />
-                    <button>
+                    <button onClick={handleDrawerClose}>
                         <i className="icon-magnifier"></i>
                     </button>
                 </div>

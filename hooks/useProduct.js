@@ -51,21 +51,22 @@ export default function useProduct() {
                         <>
                             <LazyLoad>
                                 {payload?.poster_url ? (
-                                    <div
+                                   <div style={{overflow:'hidden'}}>
+                                     <div
                                         style={{
                                             backgroundImage: `url(${payload.poster_url})`,
-                                            backgroundPosition: 'center',
-                                            backgroundSize:'cover',
-                                            backgroundRepeat:'no-repeat'
+                                            backgroundSize:'contain',
+                                            backgroundRepeat:'no-repeat',
+                                            backgroundPosition: 'center'
                                         }}
                                         className="products-image1"></div>
+                                   </div>
                                 ) : (
                                   
                                     <div
                                     style={{
                                         backgroundImage: `url(/static/img/docCopy.jpg)`,
-                                        backgroundPosition: 'center',
-                                        backgroundSize:'cover',
+                                        backgroundSize:'contain',
                                         backgroundRepeat:'no-repeat',
 
                                     }}
@@ -104,8 +105,8 @@ export default function useProduct() {
 
         title: (payload) => {
             let view = (
-                <Link href="/product/[pid]" as={`/product/${payload.id}`}>
-                    <a className="ps-product__title">{payload.title}</a>
+                <Link href="/product/[pid]" as={`/product/${payload.slug}`}>
+                    <a className="ps-product__title ">{payload.title}</a>
                 </Link>
             );
             return view;

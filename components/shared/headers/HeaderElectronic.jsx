@@ -1,29 +1,25 @@
-
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
-import menuData from '~/public/static/data/menu';
-import CurrencyDropdown from '~/components/shared/headers/modules/CurrencyDropdown';
-import LanguageSwicher from '~/components/shared/headers/modules/LanguageSwicher';
 import SearchHeader from '~/components/shared/headers/modules/SearchHeader';
 import ElectronicHeaderActions from '~/components/shared/headers/modules/ElectronicHeaderActions';
 import Menu from '~/components/elements/menu/Menu';
 import { stickyHeader } from '~/utilities/common-helpers';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
+// import axios from 'axios';
+// import { baseUrl } from '~/repositories/Repository';
 
 const HeaderElectronic = () => {
     useEffect(() => {
         if (process.browser) {
             window.addEventListener('scroll', stickyHeader);
         }
-
-
     }, []);
-    
+
     const [categoryData, setCategoryData] = useState([])
     const [topCategoryData, setTopCategoryData] = useState([])
-    
+
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
             `customer/category-list/`
@@ -45,9 +41,7 @@ const HeaderElectronic = () => {
         getTopCategory()
     }, [])
 
-    
-
-
+    // console.log(topCategoryData, categoryData);
     return (
         <header
             className="header header--standard header--electronic"
@@ -59,7 +53,7 @@ const HeaderElectronic = () => {
                             <a className="ps-logo">
                                 <img
                                     src="/static/img/alldata_logo.png"
-                                    alt="alldata"
+                                    alt="soff"
                                 />
                             </a>
                         </Link>
@@ -88,7 +82,6 @@ const HeaderElectronic = () => {
             <nav className="navigation">
                 <div className="container">
                     <Menu
-
                         source={topCategoryData}
                         className="menu menu--electronic"
                     />
@@ -97,5 +90,32 @@ const HeaderElectronic = () => {
         </header>
     );
 };
+
+// export async function getStaticProps() {
+//     const requests = [
+//       axios.get("https://api.soff.uz/api/v1/customer/top-categories/"),
+//       axios.get("https://api.soff.uz/api/v1/customer/category-list/"),
+//     ];
+  
+//     const responses = await Promise.all(requests);
+  
+//     const successdata = [];
+  
+//     for (let i = 0; i < responses.length; i++) {
+//       if (responses[i].status === 200) {
+//         successdata.push(responses[i].data);
+//       }
+//     }
+
+//     console.log(responses);
+  
+//     return {
+//       props: {
+//         topCategoryData: successdata[0] || null,
+//         // categoryData: successdata[1] || null,
+//       },
+//       revalidate: 60,
+//     };
+//   }
 
 export default HeaderElectronic;

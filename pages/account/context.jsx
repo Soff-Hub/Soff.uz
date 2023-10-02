@@ -15,7 +15,7 @@ const AccountNotificationsPage = () => {
             url: '/',
         },
         {
-            text: 'Context',
+            text: "Bannerlarni o'zgartirish ",
         },
     ];
     const { user } = useSelector(state => state.auth)

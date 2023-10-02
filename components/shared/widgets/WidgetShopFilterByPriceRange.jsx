@@ -9,12 +9,14 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     const [max, setMax] = useState(null);
 
     const { slug } = Router.query;
-    const [chaildId, setchaildId] = useState('');
-    const [parentId, setParentId] = useState('');
+    const [chaildId, setchaildId] = useState(null);
+    const [parentId, setParentId] = useState(null);
+
+    const [defVal, setDefVal] = useState(null);
 
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
-        if (responseData) {
+        if (responseData?.length > 0) {
             if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
                 setchaildId(slug);
             } else {
@@ -24,7 +26,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     }
 
     const filterByPrice = async (minPriceVal, maxPriceVal) => {
-        if (chaildId !== '') {
+        if (chaildId !== null) {
             const respons = await ProductRepository.getFilderProduct(
                 1,
                 chaildId,
@@ -39,7 +41,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             if (respons && setFilteredData) {
                 setFilteredData(respons?.results);
             }
-        } else if (parentId !== '') {
+        } else if (parentId !== null) {
             const respons = await ProductRepository.getFilderPrice(
                 1,
                 null,
@@ -74,25 +76,65 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
 
     function handleChangeRange(value) {
         filterByPrice(value[0], value[1]);
+        setDefVal(value)
     }
 
-    const Price = async () => {
-        const respons = await ProductRepository.getDefaultPrice();
+    const chaildPrice = async (id) => {
+        const respons = await ProductRepository.getFilderPrice(
+            1,
+            id,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
         if (respons) {
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
         }
-    };
+        setParentId(null)
+    }
+
+
+    const parentPrice = async (id) => {
+        const respons = await ProductRepository.getFilderPrice(
+            1,
+            null,
+            id,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
+        if (respons) {
+            setMax(respons?.data?.max_price);
+            setMin(respons?.data?.min_price);
+        }
+        setchaildId(null)
+    }
+    
+
+    
+    useEffect(() => {
+        getCategry();
+    }, [ slug])
 
     useEffect(() => {
         getCategry();
-    }, [slug]);
-    
-    useEffect(() => {
-        if (min === null) {
-            Price();
+        if(parentId){
+            parentPrice(parentId)
         }
-    }, [min])
+        if (chaildId) {
+            chaildPrice(chaildId)
+        }
+    }, [parentId, chaildId])
+
+    
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -118,12 +160,13 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                 <h4 className="widget-title">Narx </h4>
                 <Slider
                     range
-                    defaultValue={[min, max]}
+                    value={[defVal?.[0] || 0, defVal?.[1]] || 0}
                     max={max}
                     onAfterChange={(e) => handleChangeRange(e)}
+                    onChange={(e) => setDefVal(e)}
                 />
                 <p>
-                    Narx: {addPeriodToThousands(min)} so'm - {addPeriodToThousands(max)} so'm
+                    Narx: { min === undefined || min === null ? 0 : addPeriodToThousands(min)} so'm - { max === undefined || max === null ? 0 : addPeriodToThousands(max)} so'm
                 </p>
             </figure>
         </aside>

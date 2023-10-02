@@ -53,6 +53,11 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-users',
     },
     {
+        text: 'Taglar',
+        url: '/account/tegs',
+        icon: 'fa-solid fa-tags',
+    },
+    {
         text: "Ariza bo'limi",
         url: '/account/Application',
         icon: 'fa-solid fa-file-signature',
@@ -78,6 +83,11 @@ export let accountSellerLink = [
         text: 'Mening mahsulotlarim',
         url: '/account/MyProducts',
         icon: 'fa-solid fa-shop-lock',
+    },
+    {
+        text: 'Yangi mahsulot',
+        url: '/account/MyProducts/Posts',
+        icon: 'fa-solid fa-circle-plus',
     },
     {
         text: 'Buyurtmalar',

@@ -19,6 +19,7 @@ import '~/scss/technology.scss';
 import '~/scss/autopart.scss';
 import '~/scss/electronic.scss';
 import Head from 'next/head';
+import NextProgress from 'next-progress';
 function App({ Component, pageProps }) {
     useEffect(() => {
         setTimeout(function () {
@@ -30,7 +31,7 @@ function App({ Component, pageProps }) {
         <>
             <Head>
 
-                <title>Alldata</title>
+                <title>Soff</title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta
                     name="viewport"
@@ -41,14 +42,14 @@ function App({ Component, pageProps }) {
                 <meta name="author" content="nouthemes" />
                 <meta
                     name="keywords"
-
-                    content="Alldata, React, eCommerce, Template"
+                    content="Soff "
                 />
                 <meta
                     name="description"
-                    content="Alldata - React eCommerce Template"
+                    content="Soff - hujjatlar bazasi"
                 />
             </Head>
+            <NextProgress delay={300} color='red' options={{ showSpinner: false }} />
             <CookiesProvider>
                 <MasterLayout>
                     <Component {...pageProps} />

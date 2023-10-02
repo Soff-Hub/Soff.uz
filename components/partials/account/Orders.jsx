@@ -81,11 +81,25 @@ function OrdersLists() {
             ),
         },
         {
-            title: 'Telefon raqam',
-            dataIndex: 'phone',
+            title: 'Telefon raqam yoki email',
+            dataIndex: 'data',
             key: 'age',
-            render: (phone) => (
-                <span className="truncate whitespace-nowrap"> {phone}</span>
+            width:300,
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    {
+                        data.phone==="None" ?
+                        <></> :
+                        <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    }
+                    {
+                          data.email==="None" ?
+                          <></> :
+                    <span className="truncate whitespace-nowrap"> {data.email}</span>
+                    }
+
+                </div>
+
             ),
         },
         {
@@ -161,10 +175,6 @@ function OrdersLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="row g-3 p-5 mb-5 mx-auto rounded" style={{  backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-5'>Buyurtmalar </h3>
-                    <input type='search' className='form-control rounded col-md-7' placeholder="Qidiruv" onInput={handleClick} />
-                </div>
                 <div className="row pb-5 " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -191,10 +201,11 @@ function OrdersLists() {
                                         </select>
 
                                    <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e)=>setDate(e)} />
+                                   <input type='search' className='form-control rounded col-md-12 ' placeholder="Qidiruv" onInput={handleClick} />
                                    </div>
                                    {
                                     user?.role==="admin" ?
-                                    <Table scroll={{ x:1100 }}  dataSource={ data} columns={columns} />
+                                    <Table scroll={{ x:1350 }}  dataSource={ data} columns={columns} />
                                     :
                                     <Table scroll={{ x:850 }}  dataSource={data} columns={columnSellers} />
 

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Pagination } from 'antd';
 import Product from '~/components/elements/products/Product';
-import ProductWide from '~/components/elements/products/ProductWide';
 import { useRouter } from 'next/router';
-import useGetProducts from '~/hooks/useGetProducts';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
@@ -62,7 +60,7 @@ const ShopItems = ({
 
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
-        if (responseData) {
+        if (responseData?.length > 0) {
             if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
                 setchaildSlug(slug)
             }
@@ -318,7 +316,7 @@ const ShopItems = ({
             const items =
                 newData?.length > 0 &&
                 newData?.map((item) => (
-                    <div className={classes} key={item.id}  style={{
+                    <div className={classes + ' home-card-category'} key={item.id}  style={{
                         display:'flex',
                         justifyContent:'center',
                         alignContent:'center'

@@ -4,13 +4,19 @@ import { Button, Modal, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import ModalDeletePostEdit from './ModalPostEdit';
 import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { MyProductsEdit } from '~/store/auth/action';
 import Link from 'next/link';
 import Axios from 'axios';
+var parse = require("html-react-parser");
+import CalculateTimeDifference from './DateFormatter';
+import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
+import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
+import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+import PartialDescription from '~/components/elements/detail/description/PartialDescription';
+const { TabPane } = Tabs;
+import { Tabs } from 'antd';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -23,6 +29,8 @@ function ProductsLists() {
     const [dataValStatus, setDataCatStatus] = useState(null);
     const [date, setDate] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
@@ -51,8 +59,10 @@ function ProductsLists() {
         }
     }
     async function handleClickView(item) {
+        setLoading(true);
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, user?.access);
         setDeleteIdView(ItemsData);
+        setLoading(false)
     }
 
     function handleClickIdEditProducts(productsItems) {
@@ -64,7 +74,7 @@ function ProductsLists() {
             item.title.toLowerCase().includes(text.toLowerCase()) ||
             item.seller?.last_name.toLowerCase().includes(text.toLowerCase()) ||
             item.seller?.first_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.seller?.phone?.includes(text) 
+            item.seller?.phone?.includes(text)
         ))
         setData(filterSearch)
     }
@@ -91,6 +101,7 @@ function ProductsLists() {
     const handleButtonClickViewProducts = async () => {
 
         try {
+            setLoading2(true)
             const fileContent = deleteIdView
             const response = await Axios.get(
                 fileContent.file,
@@ -104,8 +115,10 @@ function ProductsLists() {
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
+            setLoading2(false)
         } catch (error) {
             console.error('Error downloading file: ', error);
+            setLoading2(false)
         }
     };
     useEffect(() => {
@@ -120,13 +133,13 @@ function ProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
+            dataIndex: 'poster',
             key: 'name',
             render: (poster_url) => (
                 <div>
                     {
                         poster_url ?
-                            <img src={poster_url} width={54} height={54} />
+                            <img src={poster_url} width={54} className='rounded' height={54} />
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }
@@ -156,11 +169,17 @@ function ProductsLists() {
             dataIndex: 'seller',
             key: 'address',
             render: (seller) => (
-        <div className='d-flex flex-column'>
-             <span> {seller?.first_name } {seller.last_name}</span>
-                <span> {seller?.phone}</span>
-        </div>
+                <div className='d-flex flex-column'>
+                    <span> {seller?.first_name} {seller.last_name}</span>
+                    <span> {seller?.phone}</span>
+                </div>
             ),
+        },
+        {
+            title: 'Sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
             title: 'Narxi',
@@ -203,14 +222,6 @@ function ProductsLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className="row g-3 mx-auto p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <div className='col-md-5'>
-                        <h3 className='m-0'>Mahsulotlar</h3>
-                    </div>
-                    <div className='col-md-7'>
-                        <input type='' className='form-control rounded' placeholder="Qidiruv" onInput={handleClick} />
-                    </div>
-                </div>
                 <div className="row pb-5" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -220,77 +231,150 @@ function ProductsLists() {
                     <div className="col-lg-8 pb-5">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div>
-                                    <div className='row  pb-3 gap-4 mx-auto w-100'>
-                                        <select className='form-select rounded-3 col-md-6 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                            <option className='fs-3' value=''> Barcha Kategoriyalar</option>
-                                            {
-                                                dataVal.length > 0 && (
-                                                    dataVal.map(item => (
-                                                        item.is_child === true ?
-                                                            <option key={item.id} value={item.id}>{item.name} </option>
-                                                            :
-                                                            <></>
-                                                    ))
-                                                )
-                                            }
-                                        </select>
-                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
-                                            <option className='fs-3' selected value="">Barcha holatlar</option>
-                                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                        </select>
-                                        <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
-                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
+                                <div className='bg-white p-3'>
+                                    <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
+                                    <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
+
+                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={handleClick} />
+                                        <div className="accordion accordion-flush" id="accordionFlushExample">
+                                            <div className="accordion-item">
+                                                <h2 className="accordion-header m-0">
+                                                    <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                        <strong> Filter</strong>
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                    <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
+                                                        <select className='form-select rounded-3 col-md-6 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                                            <option className='fs-3' value=''> Barcha Kategoriyalar</option>
+                                                            {
+                                                                dataVal.length > 0 && (
+                                                                    dataVal.map(item => (
+                                                                        item.is_child === true ?
+                                                                            <option key={item.id} value={item.id}>{item.name} </option>
+                                                                            :
+                                                                            <></>
+                                                                    ))
+                                                                )
+                                                            }
+                                                        </select>
+                                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
+                                                            <option className='fs-3' selected value="">Barcha holatlar</option>
+                                                            <option className='fs-3' value="moderation">Moderatsiya</option>
+                                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                                        </select>
+                                                        <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
+                                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     <div className='d-flex flex-column gap-2 bg-white px-3 py-4 rounded'>
                                         <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
                                         <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                         <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                     </div>
-                                    <Table scroll={{ x: 1300 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 1400 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                    <div className='modal-dialog modal-dialog-centered modal-lg'>
+                    <div className='modal-dialog container '>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="card  " style={{ maxWidth: "840px" }}>
-                                <div className="row g-0 px-3 modal-body m-0">
-                                    <div className="col-md-4 mt-4 ">
-                                        <img src={deleteIdView?.poster_url} className="img-fluid rounded-start" alt="..." />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body pt-5">
-                                            <p className="card-text"><strong>Sotuvchi ism familiyasi:</strong> {deleteIdView?.seller?.first_name}   {deleteIdView?.seller?.last_name}</p>
-                                            <p className="card-text"> <strong>Mahsulot nomi:</strong> {deleteIdView?.title}</p>
-                                            <p className="card-text"> <strong>Kategoriya:</strong> {deleteIdView?.category?.name}</p>
-                                            <p className="card-text"><strong>Narxi:</strong> {addPeriodToThousands(deleteIdView?.price)} so'm </p>
-                                            <p className="card-text"><strong>Chegirma: </strong> {deleteIdView?.discount}%</p>
-                                            <p className="card-text"><strong>Sotuvchi:</strong> {deleteIdView?.seller?.phone}</p>
-                                            <p>{deleteIdView?.active_tag?.map(item => (<span>#{item.name}</span>))} {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name} </span>))} </p>
+                            <div className="ps-container">
+                                {
+                                    !loading ?
+                                        <div className="ps-product--detail ps-product--fullwidth">
+                                            <div className="ps-product__header ">
+                                                <ThumbnailDefault product={deleteIdView} />
+                                                <div className="ps-product__info">
+                                                    <ModuleDetailTopInformation product={deleteIdView} />
+                                                    <div>
+                                                        <h4> Muallif : {deleteIdView?.seller?.first_name}</h4>
+                                                    </div>
+                                                    <ModuleProductDetailDescription product={deleteIdView} />
+                                                    <div className="ps-product__shopping row-gap-3" >
+                                                        <button
+                                                            className="ps-btn ps-btn--black"
+                                                            style={{ cursor: "not-allowed" }}
+                                                        >
+                                                            Savatga qo'shish
+                                                        </button>
+                                                        <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                            Sotib olish
+                                                        </button>
+                                                        <div className="ps-product__actions">
+                                                            <a style={{ cursor: "not-allowed" }} >
+                                                                <i className={`icon-heart`} ></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                        {
+                                                            deleteIdView?.active_tag?.length > 0 ?
+                                                                <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
+                                                                :
+                                                                <></>
+                                                        }
 
-                                        </div>
-                                    </div>
-                                    <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tasvir:</strong> {deleteIdView?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {deleteIdView?.description}</p>
-                                        <div className='d-flex justify-content-end py-3'>
-                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickViewProducts()} > <i className="fa-solid fa-download mx-2"></i> File ochish</a>
+                                                    </div>
+                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
 
+                                                        {
+                                                            deleteIdView?.deactive_tag?.length > 0 ?
+                                                                <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
+                                                                :
+                                                                <></>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="ps-product__content ps-tab-root">
+                                                <Tabs defaultActiveKey="1">
+                                                    <TabPane tab="Izoh" key="1">
+                                                        <PartialDescription product={deleteIdView} />
+                                                    </TabPane>
+                                                </Tabs>
+                                            </div>
+                                            <div className='d-flex justify-content-end '>
+                                                {
+                                                        !loading2 ?
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning p-2 px-5 fs-4 ">
+
+                                                            <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
+
+                                                        </button>
+                                                        :
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning  p-2 px-5 fs-4 " style={{width:"179px"}}>
+
+                                                            <div class="spinner-border " role="status">
+                                                                <span class="visually-hidden">Loading...</span>
+                                                            </div>
+
+                                                        </button>
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                        :
+                                        <div className='ps-product--detail ps-product--fullwidth' style={{ height: "690px", display: "grid", placeContent: "center" }}>
+                                            <div className="spinner-border " role="status" style={{ width: "150px", height: "150px" }} >
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                }
+
                             </div>
                         </div>
                     </div>
-                </div >
+                </div>
             </div>
         </section>
     );

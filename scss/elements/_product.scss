@@ -21,7 +21,7 @@
 
 .ps-product {
     position: relative;
-    padding: 20px 20px 0;
+    // padding: 20px 20px 0;
     border: 1px solid transparent;
     border-bottom: none;
     @extend %list-reset;
@@ -185,6 +185,9 @@
             left: 50%;
             @include transform(translate(-50%, 100%));
         }
+        a {
+            display: block!important;
+        }
     }
 
     .ps-product__content {
@@ -219,7 +222,7 @@
     }
 
     &:hover {
-        border-color: silver;
+        border-color: none;
 
         .ps-product__thumbnail {
             .ps-product__actions {
@@ -227,15 +230,6 @@
             }
         }
 
-        .ps-product__content {
-            @include hidden;
-            height: 0;
-
-            &.hover {
-                height: auto;
-                @include show;
-            }
-        }
 
         &.ps-product--inner {
             border: none;
@@ -246,6 +240,28 @@
             }
         }
     }
+
+    @include media('<lg') {
+        &:hover {
+            border: none;
+            .ps-product__thumbnail {
+                .ps-product__actions {
+                    // @include transform(translate(-50%, 0));
+                }
+            }
+    
+    
+            &.ps-product--inner {
+                border: none;
+    
+                .ps-product__content {
+                    // display: block;
+                    // @include show;
+                }
+            }
+        }
+    }
+
 
     @include media('<sm') {
         padding: 0;
@@ -526,6 +542,8 @@
         a {
             font-size: 16px;
             color: #0066cc;
+            display: block;
+            width: 230px;
 
             &:hover {
                 color: $color-1st;
@@ -973,6 +991,15 @@
                 text-align: center;
             }
         }
+        @media (max-width: 1200px) {
+
+            .ps-btn {
+                margin-right: 10px;
+                text-align: center;
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
     }
 
     .ps-product__shopping-2 {
@@ -1340,7 +1367,7 @@
     .ps-product__thumbnail {
         width: 100%;
         display: flex;
-        flex-flow: row-reverse nowrap;
+        // flex-flow: row-reverse nowrap;
         align-content: flex-start;
 
         > * {
@@ -1473,7 +1500,7 @@
         }
 
         .ps-product__thumbnail {
-            max-width: 43%;
+            // max-width: 43%;
         }
 
         .ps-product__info {

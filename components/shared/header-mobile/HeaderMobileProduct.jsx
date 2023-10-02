@@ -36,7 +36,7 @@ const HeaderMobileProduct = () => {
                             <a className="ps-logo">
                                 <img
                                     src="/static/img/alldata_logo.png"
-                                    alt="alldata"
+                                    alt="soff"
                                 />
                             </a>
                         </Link>

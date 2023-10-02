@@ -100,14 +100,47 @@ export default function useAuth() {
         return user;
     };
 
-    const qaytaKodYuborish = () => {
+    const qaytaKodYuborish = (data) => {
         let endPoint = 'auth/get-new-code/';
         let config = {
-            headers: {
+          
+                Authorization: `Bearer ${localStorage.getItem('token')} `,
+        }
+        let user = Repository({
+            url: baseUrlAuth + endPoint,
+            method:'POST',
+            headers: config,
+            data: data
+        })
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response) {
+                    return error.response;
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
+    const qaytaKodYuborishParol = (data) => {
+        let endPoint = 'auth/get-new-code/';
+        let config = {
+          
                 Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
-            },
-        };
-        let user = Repository.get(baseUrlAuth + endPoint, config)
+        }
+        let user = Repository({
+            url: baseUrlAuth + endPoint,
+            method:'POST',
+            headers: config,
+            data: data
+        })
             .then((ress) => {
                 return ress;
             })
@@ -207,6 +240,7 @@ export default function useAuth() {
         qaytaRaqamYuborishAuth,
         NewVerifyCode,
         qaytaParolYuborishAuth,
-        logOutAuth
+        logOutAuth,
+        qaytaKodYuborishParol
     };
 }

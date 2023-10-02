@@ -7,7 +7,7 @@ import { Modal, Table } from 'antd';
 import { useCookies } from 'react-cookie';
 
 const Wishlist = ({ ecomerce }) => {
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const { loading, products, getProducts } = useEcomerce();
     const { addItem, removeItem } = useEcomerce();
 
@@ -50,12 +50,12 @@ const Wishlist = ({ ecomerce }) => {
     useEffect(() => {
         // getCategoryData();
         if (ecomerce.wishlistItems) {
-            getProducts(ecomerce.wishlistItems);
+            getProducts(cookies.wishlistItems, 'wishlist');
         }
     }, [ecomerce.wishlistItems]);
     // views
     let wishlistItemsView;
-    if ( cookies?.wishlist?.length > 0) {
+    if (cookies?.wishlist?.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist table-sm table-md table-xs">
@@ -64,68 +64,74 @@ const Wishlist = ({ ecomerce }) => {
                             <th></th>
                             <th>Hujjat nomi</th>
                             <th>Narxi</th>
-                            <th className='d-flex justify-content-center '>Qo'shish</th>
+                            <th className="d-flex justify-content-center ">
+                                Qo'shish
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        { cookies.wishlist?.length > 0 &&  cookies.wishlist.map((product) => (
-
-                            <tr key={product?.id}>
-                                <td>
-                                    <a
-                                        href="#"
-                                        onClick={(e) =>
-                                            handleRemoveWishlistItem(
-                                                e,
-                                                product
-                                            )
-                                        }>
-                                        <i className="icon-cross"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <ProductCart product={product} />
-                                </td>
-                                <td>
-                                   <span> 
-                                      {product.price === product.discount_price ? (
-                        addPeriodToThousands(product.price)
-                    ) : (
-                        <>
-                            <del>
-                                {addPeriodToThousands(product.price)} so'm
-                            </del>
-                            <p>
-                                {addPeriodToThousands(product.discount_price)}{' '}
-                                so'm
-                            </p>
-                        </>
-                    )}
-                                    </span>
-
-                                </td>
-                                <td style={{margin: "0 auto"}} >
-                                    <a
-                                        className="ps-btn d-inline-block"
-                                        href=""
-                                        onClick={(e) =>
-                                            handleAddItemToCart(
-                                                e,
-                                                product
-                                            )
-                                        }
->
-                                       Savatga qo'shish
-                                    </a>
-                                </td>
-                            </tr>
-                        ))}
+                        {cookies.wishlist?.length > 0 &&
+                            cookies.wishlist.map((product) => (
+                                <tr key={product?.id}>
+                                    <td>
+                                        <a
+                                            href="#"
+                                            onClick={(e) =>
+                                                handleRemoveWishlistItem(
+                                                    e,
+                                                    product
+                                                )
+                                            }>
+                                            <i className="icon-cross"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <ProductCart product={product} />
+                                    </td>
+                                    <td>
+                                        <span>
+                                            {product.discount === 0 ? (
+                                                <p>
+                                                    {addPeriodToThousands(
+                                                        product.discount_price
+                                                    )}{' '}
+                                                    so'm
+                                                </p>
+                                            ) : (
+                                                <>
+                                                    <del>
+                                                        {addPeriodToThousands(
+                                                            product.price
+                                                        )}{' '}
+                                                        so'm
+                                                    </del>
+                                                    <p>
+                                                        {addPeriodToThousands(
+                                                            product.discount_price
+                                                        )}{' '}
+                                                        so'm
+                                                    </p>
+                                                </>
+                                            )}
+                                        </span>
+                                    </td>
+                                    <td style={{ margin: '0 auto' }}>
+                                        <a
+                                            className="ps-btn d-inline-block"
+                                            href=""
+                                            onClick={(e) =>
+                                                handleAddItemToCart(e, product)
+                                            }>
+                                            Savatga qo'shish
+                                        </a>
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>
-
         );
-    } else if(cookies?.wishlist?.length <= 0) {
+    } else if (cookies?.wishlist?.length <= 0 ) {
         // if (loading) {
         wishlistItemsView = (
             <div className="alert alert-danger" role="alert">

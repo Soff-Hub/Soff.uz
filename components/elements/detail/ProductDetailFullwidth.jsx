@@ -7,6 +7,7 @@ import ModuleDetailActionsMobile from '~/components/elements/detail/modules/Modu
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
 import Router from 'next/router';
+import Meta from '~/components/shared/headers/Meta';
 
 const ProductDetailFullwidth = ({ product }) => {
     const [tag, setTag] = useState([]);
@@ -15,26 +16,41 @@ const ProductDetailFullwidth = ({ product }) => {
         Router.push(`/search?keyword=${e}`);
     };
 
+    const SellerPage = (e) => {
+        Router.push(`/seller/${e}`);
+    };
+
     useEffect(() => {
         setTag(product?.tag);
     }, []);
     return (
+        <>
+        <Meta  title={product?.title} image={product?.iamges[0]?.image_url}/>
         <div className="ps-product--detail ps-product--fullwidth">
-         <div className="ps-product__header ">
-            <ThumbnailDefault product={product} />
+            <div className="ps-product__header ">
+                <ThumbnailDefault product={product} />
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
                     <div>
-                        <h4> Muallif : {product?.seller?.first_name}</h4>
+                        {product?.seller?.first_name && (
+                            <h4
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() =>
+                                    SellerPage(product?.seller?.id)
+                                }>
+                                {' '}
+                                Muallif : {product?.seller?.first_name}
+                            </h4>
+                        )}
                     </div>
                     <ModuleProductDetailDescription product={product} />
                     <ModuleDetailShoppingActions product={product} />
-                    <div className=" row d-flex justify-content-center">
+                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
                         {tag?.length > 0 &&
                             tag.map((item, i) => (
-                                <div
-                                    key={i}
-                                    className="mx-4 col-xl-3 col-lg-3 col-md-4 col-sm-4 col-xs-4 col-5">
+                                <div key={i} className="mx-2">
                                     <Link href="#" as="#">
                                         <a
                                             onClick={() =>
@@ -52,6 +68,8 @@ const ProductDetailFullwidth = ({ product }) => {
             </div>
             <DefaultDescription product={product} />
         </div>
+        </>
+
     );
 };
 

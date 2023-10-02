@@ -7,7 +7,7 @@ import { useCookies } from 'react-cookie';
 
 const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
     const { products, getProducts } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const state = useSelector(state => state?.auth?.shop)
 
     useEffect(() => {
@@ -16,7 +16,6 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
         }
     }, [ecomerce]);
 
-    // let amount = state && calculateAmount(state)
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -34,14 +33,15 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
 
         return formattedNumber;
     }
-    const hisob = addPeriodToThousands(state.discount_price);
+    const hisob = addPeriodToThousands(state?.price);
+console.log('state', state);
 
     // view
     let listItemsView, shippingView, totalView;
     if (state ) {
         
         listItemsView = 
-            <Link href="/" >
+            <Link href={`/product/${state?.slug}`} >
                 <a>
                     <strong>
                       {1}.  {state.title}
@@ -85,7 +85,7 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
                 <figure>
                     <figcaption>
                         <strong>Jami narx:</strong>
-                        <small>{hisob}.00 so'm </small>
+                        <small>{hisob} so'm </small>
                     </figcaption>
                 </figure>
                 {shippingView}

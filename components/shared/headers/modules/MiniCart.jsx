@@ -10,8 +10,8 @@ import PostRepository from '~/repositories/PostRepository';
 
 const MiniCart = ({ ecomerce }) => {
     const { products, removeItem, removeItems, getProducts } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
-    const [cart, setCart] = useState([])
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
+    const [cart, setCart] = useState([]);
     const state = useSelector((state) => state.auth.user);
     const token = useSelector((state) => state.auth.user?.access);
     function handleRemoveItem(e, item) {
@@ -38,9 +38,7 @@ const MiniCart = ({ ecomerce }) => {
     }
     const hisob = addPeriodToThousands(amount);
 
-
-
-    const stat = useSelector(state => state)
+    const stat = useSelector((state) => state);
 
     const getCardListData = async () => {
         let config = {
@@ -48,21 +46,17 @@ const MiniCart = ({ ecomerce }) => {
                 Authorization: `Bearer ${localStorage.getItem('token')} `,
             },
         };
-        const respons = await PostRepository.getCartData(config)
+        const respons = await PostRepository.getCartData(config);
 
         if (respons) {
-            setCart(respons)
+            setCart(respons);
         }
-    }
-
-
+    };
 
     useEffect(() => {
-        // getCardListData()
         getProducts(ecomerce.cartItems, 'cart');
+        getProducts(ecomerce.wishlistItems, 'wishlist');
     }, [ecomerce]);
-
-
 
     let cartItemsView;
     if (ecomerce.cartItems && ecomerce.cartItems?.length > 0) {
@@ -71,7 +65,7 @@ const MiniCart = ({ ecomerce }) => {
                 <ProductOnCart product={item} key={item.id}>
                     <a
                         className="ps-product__remove"
-                        style={{cursor:'pointer'}}
+                        style={{ cursor: 'pointer' }}
                         onClick={(e) => handleRemoveItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
@@ -112,19 +106,16 @@ const MiniCart = ({ ecomerce }) => {
             </div>
         );
     }
-// console.log(cart.results);
     return (
         <div className="ps-cart--mini">
-          <Link href='/account/shopping-cart'>
-          <a className="header__extra" >
-                <i className="icon-bag2"></i>
-                <span>
-                    {
-                        <i>{ecomerce ? ecomerce.cartItems.length : 0}</i>
-                    }
-                </span>
-            </a>
-          </Link>
+            <Link href="/account/shopping-cart">
+                <a className="header__extra">
+                    <i className="icon-bag2"></i>
+                    <span>
+                        {<i>{cookies?.cart ? cookies?.cart?.length : 0}</i>}
+                    </span>
+                </a>
+            </Link>
             {cartItemsView}
         </div>
     );

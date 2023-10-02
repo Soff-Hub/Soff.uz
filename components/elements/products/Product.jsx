@@ -29,8 +29,11 @@ const Product = ({ product }) => {
                 style={{
                     margin: '0 auto',
                 }}>
-                <Link href="/product/[pid]" as={`/product/${product.id}`}>
-                    <a>
+                <Link href="/product/[pid]" as={`/product/${product.slug}`}>
+                    <a style={{
+                        display:'flex',
+                        justifyContent:'center'
+                    }}>
                         {product.poster_url ? (
                             thumbnailImage(product)
                         ) : (
@@ -39,41 +42,42 @@ const Product = ({ product }) => {
                     </a>
                 </Link>
 
+
                 <ModuleProductActions product={product} />
             </div>
             <div className="ps-product__container">
                 <div className="ps-product__content card-narx-box">
                     {title(product)}
-                    {product.price === product.discount_price ? (
-                        addPeriodToThousands(product.price)
+                    {product?.discount === 0 ? (
+                        <p>{addPeriodToThousands(product.price)} so'm</p>
                     ) : (
                         <>
                             <del>
                                 {addPeriodToThousands(product.price)} so'm
                             </del>
                             <p>
-                                {addPeriodToThousands(product.discount_price)}{' '}
+                                {addPeriodToThousands(product.discount_price)}
                                 so'm
                             </p>
                         </>
                     )}
                 </div>
-                <div className="ps-product__content hover">
+                {/* <div className="ps-product__content hover">
                     {title(product)}
-                    {product.price === product.discount_price ? (
-                        addPeriodToThousands(product.price)
+                    {product.discount === 0 ? (
+                        <p>{addPeriodToThousands(product.price)} so'm</p>
                     ) : (
                         <>
                             <del>
                                 {addPeriodToThousands(product.price)} so'm
                             </del>
                             <p>
-                                {addPeriodToThousands(product.discount_price)}{' '}
+                                {addPeriodToThousands(product.discount_price)}
                                 so'm
                             </p>
                         </>
                     )}
-                </div>
+                </div> */}
             </div>
         </div>
     );

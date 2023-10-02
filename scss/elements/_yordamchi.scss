@@ -52,10 +52,14 @@
 .products-image1 {
     max-height: 120px;
     height: 100px;
-    width: 180px;
-    background-size: cover;
-    background-position: center;
+    // width: 180px;
+    // background-size: cover;
+    // background-position: center;
     margin: 0 auto;
+    transition: .5s;
+    &:hover{
+        transform: scale(1.1);
+    }
 }
 
 .carosusel-cards {
@@ -155,10 +159,10 @@
 }
 
 .mahsulotingiz {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(36%, 0%);
+    display: none;
+}
+ .cardResponsive{
+    display: block;
 }
 
 .fixed-btn {
@@ -270,33 +274,134 @@
     text-align: center;
 }
 
+#homepage-7 .ps-product-list {
+        margin-bottom: 80px
+}
 
-#homepage-7 {
-    .ps-product-list{
-        margin-bottom: 100px;
+.ps-block--shopping-total {
+    .ps-block__product {
+        .ps-block__estimate a:first-child {
+            display: block;
+            width: 70% !important;
+            padding-right: 10px;
+        }
     }
 }
 
+.ps-block--checkout-order {
+    .ps-block__items a strong{
+        width: 67% !important;
+    }
+}
 
+#acc-li-xl{
+    padding: 3px 10px;
+}
 
+.accordion-button{
+    padding: 10px 7px;
+}
 
-// .home-car{
-//     max-width: 200px;
-//     min-width: 190px;
-//     min-height: 200px;
-//     max-height: 200px;
-//     width: 100%;
-// }
+.footer-left-a{
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.footer-icon-parent-div{
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.footer-right-ul-social{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.yaxshi-categoriyalar-image{
+    transition: .5s;
+   
+    &:hover{
+        transform: scale(1.1);
+    }
+}
+
+.ps-product{
+    height: 150px;
+    border: 1px solid #00000005;
+    box-shadow: 0px 0px 15px -15px black;
+}
+
+:where(.css-dev-only-do-not-override-17a39f8).ant-notification {
+    z-index: 9999999999 !important;
+}
+
+#heart-danger{
+    color: red !important;
+}
+
+.ps-wrapper {
+    position: relative;
+    text-align: center;
+    overflow-y: scroll;
+    height: 100%;
+    max-height: 350px !important;
+
+    img {
+        max-width: 300px;
+        width: 100%;
+    }
+}
+
+.footer-company-logo{
+    width: 90px;
+}
+
+.home-card-category{
+    margin-bottom: 42px;
+}
+.home-card{
+    margin-bottom: 42px;
+}
 
 @include media('<lg') {
+    .ant-float-btn-default{
+        bottom: 90px;
+    }
+    
+    .cardResponsive{
+        display: none;
+    }
+    
+#homepage-7 .ps-product-list {
+    margin-bottom: 80px
+}
+
+    .acc-li{
+        padding: 5px 5px 0 5px;
+    }
+    .accordion-button{
+        padding: 5px 8px;
+        
+    }
+
     .ps-product {
         .ps-product__thumbnail {
             img {
                 height: 75px !important;
             }
         }
-        &:hover{
-            .ps-product__content.hover{
+        &:hover {
+            .ps-product__content.hover {
                 padding-bottom: 0;
             }
         }
@@ -500,16 +605,30 @@
         height: 350px;
     }
 }
+@include media ('>lg'){
+    .responsiveCardButton{
+        position: absolute;
+        bottom: 15px;
+        left: 80%;
+        width: 140px;
+    }
+
+}
 
 @media screen and (max-width: 1060px) {
     .detail-card {
         max-width: 230px;
     }
+    
 }
 
 @include media('<md') {
-    #homepage-7 {.ps-product-list{
-            margin-bottom: 90px;
+    .cardResponsive{
+        display: none;
+    }
+    #homepage-7 {
+        .ps-product-list {
+            margin-bottom: 80px;
         }
     }
     .ps-input {
@@ -604,9 +723,9 @@
         .ps-product__actions {
             display: none;
         }
-        .card-narx-box {
-            display: none;
-        }
+        // .card-narx-box {
+        //     display: none;
+        // }
 
         .ps-product__content {
             visibility: visible;
@@ -629,7 +748,6 @@
 
         .ps-product__content {
             padding-left: 10px;
-            max-width: 80px;
         }
     }
 
@@ -643,7 +761,7 @@
         }
     }
 
-    .ps-product:hover{
+    .ps-product:hover {
         height: 130px;
     }
 
@@ -669,6 +787,9 @@
 }
 
 @include media('<sm') {
+    .ps-product{
+        height: 140px;
+    }
     .banner-placholder {
         display: flex;
         flex-direction: row;
@@ -714,7 +835,7 @@
     }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 15px;
+        padding: 0;
     }
 
     .top-category-items {
@@ -732,7 +853,7 @@
     // }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 8px;
+        padding: 0;
     }
 
     // .yaxshi-categoriyalar-image {
@@ -762,10 +883,10 @@
     .hujjat-detail-full-image {
         height: 200px;
     }
-    #homepage-7 .ps-product-list{
+    #homepage-7 .ps-product-list {
         margin-bottom: 60px;
     }
-    .home-card{
+    .home-card {
         margin: 10px 0;
     }
 }
@@ -788,6 +909,9 @@
 }
 
 @media screen and (max-width: 524px) {
+    .ps-product-list .ps-section__content{
+        padding-top: 0;
+    }
     .banner-right {
         display: flex;
         flex-direction: row !important;
@@ -822,12 +946,12 @@
     }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 8px;
+        padding: 0;
     }
 
     .ps-product__thumbnail {
-        min-height: 90px;
-        height: 100%;
+        min-height: 50px;
+        height: 50%;
         max-width: 80px;
         display: flex;
         align-items: center;
@@ -851,8 +975,20 @@
         position: fixed;
         top: 50%;
         left: 50%;
-        transform: translate(26%, 0%);
+        transform: translate(100%, 180%);
+        display: block;
+        
     }
+    .cardResponsive{
+        display: none;
+    }
+    .offcanvas-header{
+        margin-top: 4rem;
+
+    }
+    .elh3{
+        font-size: 18px;
+      }
 }
 
 @media screen and (max-width: 520px) {
@@ -870,25 +1006,6 @@
         }
     }
 }
-
-@media screen and (max-width: 477px) {
-    .ps-section__righ {
-        justify-content: center;
-    }
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        #banner-placholder-item {
-            width: 200px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-}
-
 @media screen and (max-width: 494px) {
     .banner-right {
         display: flex;
@@ -918,7 +1035,7 @@
 
     .ps-product__thumbnail {
         min-height: 80px;
-        height: 100%;
+        height: 50%;
         max-width: 60px;
         display: flex;
         align-items: center;
@@ -937,11 +1054,11 @@
         text-align: center;
     }
 
-    .ps-product-list {
-        .ps-section__content {
-            padding-top: 25px;
-        }
-    }
+    // .ps-product-list {
+    //     .ps-section__content {
+    //         padding-top: 25px;
+    //     }
+    // }
 
     .carosusel-cards {
         flex-wrap: wrap !important;
@@ -961,6 +1078,26 @@
     }
 }
 
+@media screen and (max-width: 477px) {
+    .ps-section__righ {
+        justify-content: center;
+    }
+    .banner-placholder {
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        #banner-placholder-item {
+            width: 200px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+
+
+
 @media screen and (max-width: 441px) {
     .ps-section__righ {
         justify-content: center;
@@ -978,25 +1115,18 @@
             align-items: center;
         }
     }
+
+    .ps-form--account .ps-tab-list li.active a{
+        font-size: 22px !important;
+    }
+
+    .ps-form--account .ps-tab-list li a{
+        font-size: 17px !important;
+    }
+    
 }
 
-@media screen and (max-width: 441px) {
-    .ps-section__righ {
-        justify-content: center;
-    }
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        #banner-placholder-item {
-            width: 130px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-}
+
 
 @media screen and (max-width: 425px) {
     .ps-product__container {
@@ -1015,28 +1145,27 @@
         min-width: 160px;
     }
 }
-@media screen and (max-width: 370px){
+@media screen and (max-width: 370px) {
     // .home-card{
     //     max-width: 160px;
     //     min-width: 160px;
     // }
     .ps-product-list {
         .ps-section__header {
-            h3{
+            h3 {
                 padding-bottom: 0;
                 font-size: 16px;
             }
         }
-        .ps-section__links  {
+        .ps-section__links {
             li {
-                a{
+                a {
                     font-size: 13px;
                 }
             }
+        }
     }
 }
-}
-
 
 @media screen and (max-width: 353px) {
     .ps-product__thumbnail {
@@ -1060,7 +1189,7 @@
 //     }
 // }
 
-@media screen and (max-width: 329px) {
+@media screen and (max-width: 330px) {
     .ps-product__thumbnail {
         margin: 0 auto;
     }
@@ -1074,10 +1203,25 @@
         min-width: 140px;
     }
 
-    .yaxshi-categoriyalar{
-        .yaxshi-categoriyalar-image{
+    .yaxshi-categoriyalar {
+        .yaxshi-categoriyalar-image {
             height: 75px;
         }
+    }
+    .ps-block--shopping-total {
+        .ps-block__product {
+            .ps-block__estimate a {
+                font-size: 11px;
+            }
+        }
+    }
+
+    .ps-form--account .ps-tab-list li.active a{
+        font-size: 20px !important;
+    }
+
+    .ps-form--account .ps-tab-list li a{
+        font-size: 15px !important;
     }
 }
 
@@ -1106,7 +1250,7 @@
 }
 .colCard {
     position: absolute;
-    top: 36%;
+    top: 51%;
 }
 
 /* rccs-signature-background: repeating-linear-gradient(
@@ -1123,21 +1267,33 @@
   rccs-animate-background: true; */
 
 .BackImg {
-    background-image: url('../../public/static/CardCredit/humo_.png');
+    background-image: url('../../public/static/CardCredit/humoca.gif');
+    background-size: 100%;
+    background-position: center;
+    border-radius: 10px;
+}
+.BackImg4 {
+    background-image: url('../../public/static/CardCredit/moster.gif');
+    background-size: 100%;
+    background-position: center;
+    border-radius: 10px;
+}
+.BackImg3 {
+    background-image: url('../../public/static/CardCredit/ei-flex-elite-550x347.png');
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
 }
 
 .BackImg1 {
-    background-image: url('../../public/static/CardCredit/cartaDD.jpg');
+    background-image: url('../../public/static/CardCredit/defaukt6.jpg');
     background-size: 100%;
-    background-position: center;
     border-radius: 10px;
+    
 }
 
 .BackImg2 {
-    background-image: url('../../public/static/CardCredit/png.png');
+    background-image: url('../../public/static/CardCredit/Uzcard.jpg');
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
@@ -1149,10 +1305,11 @@
     font-size: 17px;
 }
 .cardColorHumo {
-    color: #ffc107;
+    color:#F1F1F1;
 }
 .add-product-user-image {
     input {
         opacity: 0;
     }
 }
+

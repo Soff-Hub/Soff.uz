@@ -1,8 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-
 import FooterDefault from '../components/shared/footers/FooterDefault';
-import HeaderDefault from '../components/shared/headers/HeaderDefault';
 
 function Error() {
     return (

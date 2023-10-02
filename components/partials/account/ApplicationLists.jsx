@@ -6,7 +6,6 @@ import { Button, Modal, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { BeatLoader } from 'react-spinners';
 
 
 function Notifications() {
@@ -62,14 +61,24 @@ function Notifications() {
     async function getItemsSellerPost() {
         const data = { "credit_card": JSON.parse(dataCard), "amount": dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: Items.msg,
-        });
-        modal.update
-        getItemsSeller(1, dataCat);
-        setProfile(null)
+        console.log('respons', Items)
+        if (Items?.status === 200 || Items?.status === 201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: 'Arizangiz muvaffaqqiyatli qabul qilindi, admin tomonidan ko\'rib chiqilmoqda',
+            });
+            modal.update
+            getItemsSeller(1, dataCat);
+            setProfile(null)
+        }else if(Items?.status >= 400){
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: `${Items?.data?.msg ? Items?.data?.msg[0] : 'Ariza yuborishda narx va kartangizni belgilashingiz zarur!'}`,
+            });
+            modal.update
+        }
 
     }
 
@@ -244,17 +253,18 @@ function Notifications() {
     const dataStatus = [
         {
             id: 1,
-            status : "moderation"
+            status: "moderation"
         },
         {
             id: 2,
-            status : "approved"
+            status: "approved"
         },
         {
             id: 3,
-            status : "cancelled"
+            status: "cancelled"
         }
     ]
+    
     return (
         <section className="ps-my-account ps-page--account pb-5">
             <div className="container">
@@ -267,16 +277,15 @@ function Notifications() {
                     <div className="col-lg-8">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div className="ps-section__header mb-4 mx-3 mt-4">
-
-                                    <h3>Ariza bo'limi</h3>
-                                </div>
                                 <div className="ps-section__content">
                                     {
                                         user?.role === "seller" ?
                                             (<>
                                                 <form className='row row-gap-3 gap-4 mx-auto'>
-                                                    <label className='text-danger h3' >Minimal summa 10 000 so'm!</label>
+                                                    <label className='h4 ' style={{color:"orange"}} >
+                                                        Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
+                                                       <strong>!Eslatma: Xisobingizda kamida 10 000 so’m bo’lishi kerak.</strong>
+                                                    </label>
                                                     <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
                                                         <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
@@ -316,7 +325,7 @@ function Notifications() {
                                         user?.role === "admin" ?
                                             (<>
                                                 <div className='row g-3 mx-auto'>
-                                                    <h4 className='py-3 col-md-4'>Arizalar</h4>
+                                                    <h4 className='py-3 col-md-4'>{user?.role === "seller" ? "Arizalar" : "Arizalar Bo'limi"}</h4>
                                                     <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
                                                         <option className='fs-3' selected value="">Holatlar</option>
                                                         <option className='fs-3' value="moderation">Moderatsiya</option>

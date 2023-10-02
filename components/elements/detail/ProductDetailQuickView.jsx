@@ -3,28 +3,71 @@ import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDe
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
-import ModuleProductDetailSpecification from '~/components/elements/detail/modules/ModuleProductDetailSpecification';
-import ModuleProductDetailSharing from '~/components/elements/detail/modules/ModuleProductDetailSharing';
 import ModuleDetailActionsMobile from '~/components/elements/detail/modules/ModuleDetailActionsMobile';
+import DefaultDescription from './description/DefaultDescription';
+import { useState } from 'react';
+import  Router  from 'next/router';
 
-const ProductDetailQuickView = ({ product }) => (
+const ProductDetailQuickView = ({ product }) => {
+    console.log('==> ', product);
+    const [tag, setTag] = useState([]);
 
-    <div className="ps-product--detail ps-product--quickview" >
-        <div className="ps-product__header">
-            <ThumbnailDefault product={product} vertical={false} />
-            <div className="ps-product__info">
-                <ModuleDetailTopInformation product={product} />
-                <ModuleProductDetailDescription product={product} />
-                <ModuleDetailShoppingActions
-                    product={product}
-                    extended={true}
-                />
-                {/* <ModuleProductDetailSpecification /> */}
-                {/* <ModuleProductDetailSharing /> */}
-                <ModuleDetailActionsMobile />
+    const searchTag = (e) => {
+        Router.push(`/search?keyword=${e}`);
+    };
+
+    const SellerPage = (e) => {
+        Router.push(`/seller/${e}`);
+    };
+
+    return (
+        <div className="ps-product--detail ps-product--quickview">
+            <div className="ps-product__header">
+                <ThumbnailDefault product={product} vertical={false} />
+                
+                <div className="ps-product__info">
+                    <ModuleDetailTopInformation product={product} />
+                    <div>
+                        {product?.seller?.first_name && (
+                            <h4
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() =>
+                                    SellerPage(product?.seller?.id)
+                                }>
+                                {' '}
+                                Muallif : {product?.seller?.first_name}
+                            </h4>
+                        )}
+                    </div>
+                    <ModuleProductDetailDescription product={product} />
+                    <ModuleDetailShoppingActions
+                        product={product}
+                        extended={true}
+                    />
+                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                        {tag?.length > 0 &&
+                            tag.map((item, i) => (
+                                <div key={i} className="mx-2">
+                                    <Link href="#" as="#">
+                                        <a
+                                            onClick={() =>
+                                                searchTag(item?.name)
+                                            }>
+                                            {' '}
+                                            # {item.name}{' '}
+                                        </a>
+                                    </Link>
+                                </div>
+                            ))}
+                    </div>
+                    <ModuleDetailActionsMobile />
+                </div>
             </div>
+            <DefaultDescription product={product} />
         </div>
-    </div>
-);
+    );
+};
 
 export default ProductDetailQuickView;

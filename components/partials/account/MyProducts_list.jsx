@@ -12,7 +12,14 @@ import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
 import { MyProductsEdit } from '~/store/auth/action';
 import ModalDeletePostEdit from './ModalPostEdit';
+var parse = require("html-react-parser");
 import axios from 'axios';
+import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
+import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
+import { Tabs } from 'antd';
+import PartialDescription from '~/components/elements/detail/description/PartialDescription';
+const { TabPane } = Tabs;
 
 
 function MyProductsLists() {
@@ -27,6 +34,7 @@ function MyProductsLists() {
     const [dataValCat, setDataCat] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
+    const [loading, setLoading] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState("");
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
@@ -36,16 +44,16 @@ function MyProductsLists() {
     const { accountLinks, user, products } = useSelector(state => state.auth)
 
 
-    async function GetItemsProducts(page, category, tagName, dataFormat,status) {
+    async function GetItemsProducts(page, category, tagName, dataFormat, status) {
         if (page === 1) {
             setData([])
         }
-        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat,status, user?.access);
+        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, status, user?.access);
         if (ItemsData?.results) {
             setData((prev) => [...prev, ...ItemsData.results]);
             setSerach((prev) => [...prev, ...ItemsData.results]);
             if (ItemsData.next) {
-                GetItemsProducts(page + 1, category, tagName, dataFormat,status)
+                GetItemsProducts(page + 1, category, tagName, dataFormat, status)
             }
         }
     }
@@ -62,6 +70,7 @@ function MyProductsLists() {
             setTagItems(ItemsData.results);
         }
     }
+
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
@@ -69,9 +78,12 @@ function MyProductsLists() {
         ))
         setData(filterSearch)
     }
+
     async function handleClickView(item) {
+        setLoading(true)
         const ItemsData = await GetRepository.getMyProductsView(item.id, user?.access);
         setView(ItemsData);
+        setLoading(false)
     }
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyProductsDelete(deleteId, user?.access);
@@ -81,19 +93,12 @@ function MyProductsLists() {
             content: `Siz malumotlarni o'chirdingiz`,
         });
         modal.update
-        GetItemsProducts(1, dataValCat, tagName, dataFormat,selectValStatus)
+        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
 
     }
     function handleClickIdEdit(productsItems) {
         dispatch(MyProductsEdit(productsItems))
     }
-    useEffect(() => {
-        GetItemsCategory(1)
-        GetItemsTag()
-    }, [])
-    useEffect(() => {
-        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
-    }, [dataValCat, tagName, dataFormat, selectValStatus])
 
     async function handleItemsEditProductsPosts() {
         const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
@@ -137,32 +142,19 @@ function MyProductsLists() {
         }
     };
 
-    const handleButtonClickView = async () => {
 
-        try {
-            const fileContent = View
-            const response = await axios.get(
-                fileContent.file,
-                { responseType: 'blob' }
-            );
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-        } catch (error) {
-            console.error('Error downloading file: ', error);
-        }
-    };
-
+    useEffect(() => {
+        GetItemsCategory(1)
+        GetItemsTag()
+    }, [])
+    useEffect(() => {
+        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
+    }, [dataValCat, tagName, dataFormat, selectValStatus])
 
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
+            dataIndex: 'poster',
             key: 'name',
             render: (poster_url) => (
                 <div >
@@ -260,19 +252,6 @@ function MyProductsLists() {
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
-                <div className=" p-5 mb-5 rounded row gap-5 row-gap-3 mx-auto" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-4'>Mening hujjatlarim</h3>
-                    <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-5' : "form-control rounded col-md-7"} placeholder="Qidiruv" onInput={handleClick} />
-                    {
-                        user?.role === "seller" ?
-                            <Link href={"/account/MyProducts/Posts"}>
-                                <button className="  btn btn-success col-md-2 py-3 "  ><span className='fs-4'>+ Hujjat qo'shish</span></button>
-                            </Link>
-                            :
-                            <></>
-                    }
-
-                </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4 pb-5">
                         <div className="ps-page__left">
@@ -294,43 +273,71 @@ function MyProductsLists() {
                                             <></>
                                     }
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <select className='form-select rounded-3 col-md-5 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                            <option className='fs-3' value=''>Kategoriyalar</option>
+                                        <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-6' : "form-control rounded col-md-9"} placeholder="Qidiruv" onInput={handleClick} />
+                                        {
+                                            user?.role === "seller" ?
+                                                <Link href={"/account/MyProducts/Posts"}>
+                                                    <button className="  btn btn-success col-md-3 py-3 "  ><span className='fs-4'><i className="fa-solid fa-circle-plus"></i> Yangi mahsulot</span></button>
+                                                </Link>
+                                                :
+                                                <></>
+                                        }
+                                        <div className="accordion accordion-flush" id="accordionFlushExample">
+                                            <div className="accordion-item">
+                                                <h2 className="accordion-header m-0">
+                                                    <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                        <strong> Filter</strong>
+                                                    </button>
+                                                </h2>
+                                                <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                    <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
+                                                        <select className='form-select rounded-3 col-md-5 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
+                                                            <option className='fs-3' value=''>Kategoriyalar</option>
 
-                                            {
-                                                dataCategory?.length > 0 && (
-                                                    dataCategory?.map(item => (
-                                                        item.is_child===true ?
-                                                        <option key={item.id} value={item.id}>{ item.name} </option> 
-                                                        :
-                                                        <></>
-                                                    ))
-                                                )
-                                            }
-                                        </select>
-                                        <select required className='form-select col-md-5 rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
-                                            <option value="">Teglar</option>
-                                            {
-                                                tagItems?.length > 0 && (
-                                                    tagItems.map(item => (
-                                                        <option key={item.id} value={item.id}>{item.name}</option>
-                                                    ))
-                                                )
-                                            }
-                                        </select>
-                                    <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
-                                            <option className='fs-3' selected value="">Barcha holatlar</option>
-                                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                        </select>
-                                        <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
+                                                            {
+                                                                dataCategory?.length > 0 && (
+                                                                    dataCategory?.map(item => (
+                                                                        item.is_child === true ?
+                                                                            <option key={item.id} value={item.id}>{item.name} </option>
+                                                                            :
+                                                                            <></>
+                                                                    ))
+                                                                )
+                                                            }
+                                                        </select>
+                                                        <select
+                                                            className='form-select col-md-5 rounded-3 py-3 fs-3'
+                                                            onChange={(e) => setTagName(e.target.value)}
+                                                            style={{ height: "50px" }}
+                                                        >
+                                                            <option value="">Teglar</option>
+                                                            {tagItems?.length > 0 &&
+                                                                tagItems.map((item) => (
+                                                                    <option key={item.id} value={item.id}>
+                                                                        {item.name}
+                                                                    </option>
+                                                                ))}
+
+                                                        </select>
+
+                                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
+                                                            <option className='fs-3' selected value="">Barcha holatlar</option>
+                                                            <option className='fs-3' value="moderation">Moderatsiya</option>
+                                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                                        </select>
+                                                        <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                     {
                                         user?.role === "seller" ?
                                             <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} />
                                             :
-                                            <Table dataSource={data} scroll={{ x: 900 }} columns={columns} />
+                                            <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} />
 
                                     }
                                 </div>
@@ -338,40 +345,65 @@ function MyProductsLists() {
                         </div>
                     </div>
                 </div>
+
                 <ModalDelete onSuccess={DeleteItemsProducts} />
                 <div className="modal fade " id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                    <div className='modal-dialog modal-dialog-centered modal-lg'>
+                    <div className='modal-dialog container '>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="card" style={{ maxWidth: "840px" }}>
-                                <div className="row g-0 px-3 modal-body m-0">
-                                    <div className="col-md-4 mt-4 ">
-                                        <img src={View?.poster_url} className="img-fluid rounded-start" alt="..." />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body pt-5">
-                                            <p className="card-text"> <strong>Kategoriyasi:</strong> {View?.category?.name}</p>
-                                            <p className="card-text"><strong>Narxi:</strong> {View?.price} so'm </p>
-                                            <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
-                                            <p className="card-text"><strong>Nomi:</strong> {View?.title}</p>
-
-                                            <p>{View?.tag?.map(item => (
-                                                <span> #{item?.name} </span>
-                                            ))}</p>
-
+                            <div className="ps-container">
+                                {
+                                    !loading ?
+                                        <div className="ps-product--detail ps-product--fullwidth">
+                                            <div className="ps-product__header ">
+                                                <ThumbnailDefault product={View} />
+                                                <div className="ps-product__info">
+                                                    <ModuleDetailTopInformation product={View} />
+                                                    <div>
+                                                        <h4> Muallif : {View?.seller?.first_name}  {View?.seller?.last_name}</h4>
+                                                    </div>
+                                                    <ModuleProductDetailDescription product={View} />
+                                                    <div className="ps-product__shopping row-gap-3" >
+                                                        <button
+                                                            className="ps-btn ps-btn--black"
+                                                            style={{ cursor: "not-allowed" }}
+                                                        >
+                                                            Savatga qo'shish
+                                                        </button>
+                                                        <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                            Sotib olish
+                                                        </button>
+                                                        <div className="ps-product__actions">
+                                                            <a style={{ cursor: "not-allowed" }} >
+                                                                <i className={`icon-heart`} ></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                        <p>{View?.tag?.map(item => (
+                                                            <span className='mx-2'> #{item?.name} </span>
+                                                        ))}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="ps-product__content ps-tab-root">
+                                                <Tabs defaultActiveKey="1">
+                                                    <TabPane tab="Mahsulot to’liq tavsifi" key="1">
+                                                        <PartialDescription product={View} />
+                                                    </TabPane>
+                                                </Tabs>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tasvir:</strong> {View?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description}</p>
-                                        <div className='d-flex justify-content-end py-3'>
-                                            <a className='btn btn-outline-warning w-25 py-2  fs-5' onClick={() => handleButtonClickView()}> <i className="fa-solid fa-download mx-2"></i> File ochish</a>
-
+                                        :
+                                        <div className='ps-product--detail ps-product--fullwidth' style={{ height: "690px", display:"grid", placeContent:"center" }}>
+                                            <div className="spinner-border " role="status" style={{width:"150px", height:"150px"}} >
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                }
+
                             </div>
                         </div>
                     </div>

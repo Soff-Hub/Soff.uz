@@ -11,7 +11,7 @@ export default function useEcomerce() {
     const dispatch = useDispatch();
     const [loading, setLoading] = useState(false);
     const [cartItemsOnCookie] = useState(null);
-    const [cookies, setCookie] = useCookies(['cart']);
+    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const [products, setProducts] = useState(null);
     return {
         loading,
@@ -21,21 +21,14 @@ export default function useEcomerce() {
             setLoading(true);
             if (true) {
                 let queries = '';
-                payload.forEach((item) => {
-                    // if (queries === '') {
+                payload?.forEach((item) => {
                     queries = `${item.id}`;
-                    // } else {
-                    //     queries = queries + `&id_in=${item.id}`;
-                    // }
                 });
-                const responseData = await ProductRepository.getProductsByIds(
-                    queries
-                );
-                // console.log(responseData,'ll');
-                if (responseData) {
-                    if (group === 'cart') {
+               
+                if (true) {
+                    if (group === 'cart' || group === 'wishlist') {
                         let cartItems = payload;
-                        cartItems.forEach((item) => {
+                        cartItems?.forEach((item) => {
                             let existItem = cartItems.find(
                                 (val) => val.id === item.id
                             );
@@ -44,7 +37,8 @@ export default function useEcomerce() {
                             }
                         });
 
-                        setProducts(responseData);
+                        // setProducts(cartItems);
+                        setProducts(payload);
                     } else {
                         setProducts(payload);
                     }
@@ -63,34 +57,36 @@ export default function useEcomerce() {
 
         addItem: (newItem, items, group) => {
             if (
-                group === 'cart' && ( cookies.cart ?  cookies?.cart?.every((el) => el.id !== newItem.id) : true)
-               
+                group === 'wishlist' &&
+                (cookies?.wishlist
+                    ? cookies?.wishlist?.every((el) => el.id !== newItem.id)
+                    : true)
             ) {
-                
+                let newItems = cookies?.wishlist ? cookies?.wishlist : [];
+                newItems.push(newItem);
+                setCookie('wishlist', newItems, { path: '/' });
+                dispatch(setWishlistTtems(newItems));
+            }
+
+            if (
+                group === 'cart' &&
+                (cookies?.cart
+                    ? cookies?.cart?.every((el) => el.id !== newItem.id)
+                    : true)
+            ) {
                 let newItems = cookies?.cart ? cookies.cart : [];
                 newItems.push(newItem);
                 setCookie('cart', newItems, { path: '/' });
                 dispatch(setCartItems(newItems));
-            }
-            if (
-                group === 'wishlist' &&
-               (cookies.wishlist ?  cookies?.wishlist?.every((el) => el.id !== newItem.id) : true)
-            ) {
-                let newItems = cookies?.wishlist ? cookies.wishlist : [];
-                newItems.push(newItem);
-                setCookie('wishlist', newItems, { path: '/' });
-
-                dispatch(setWishlistTtems(newItems));
             }
 
             return items;
         },
 
         removeItem: (selectedItem, items, group) => {
-            // console.log('rw', selectedItem);
 
             if (group === 'cart') {
-                let currentItems = cookies.cart;
+                let currentItems = cookies?.cart;
                 if (currentItems?.length > 0) {
                     const index = currentItems.findIndex(
                         (item) => item.id === selectedItem.id
@@ -102,7 +98,7 @@ export default function useEcomerce() {
             }
 
             if (group === 'wishlist') {
-                let currentItems = cookies.wishlist;
+                let currentItems = cookies?.wishlist;
                 if (currentItems?.length > 0) {
                     const index = currentItems.findIndex(
                         (item) => item.id === selectedItem.id
@@ -110,7 +106,6 @@ export default function useEcomerce() {
                     currentItems.splice(index, 1);
                 }
 
-                // console.log('wshshsh',currentItems);
                 setCookie('wishlist', currentItems, { path: '/' });
                 dispatch(setWishlistTtems(currentItems));
             }
