@@ -8,10 +8,10 @@ const Meta = ({ title, image }) => {
       <meta property="og:title" content={title} />
       <meta
         property="og:description"
-        content="Soff Study - Zamonaviy kasblar o'quv markazi"
+        content="Soff | Soff online hujjatlar bazasi"
       />
       <meta property="og:image" content={image} />
-      <meta property="og:site_name" content="soffstudy.uz" />
+      <meta property="og:site_name" content="soff.uz" />
       <title>{title}</title>
     </Head>
   );

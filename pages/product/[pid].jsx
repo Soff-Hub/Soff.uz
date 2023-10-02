@@ -77,35 +77,35 @@ const ProductDefaultPage = (product) => {
     return (
 
         <>
-          <PageContainer
-            title={product.product ? product.product.title : 'Loading...'}>
-        <Meta  title={product?.product?.title} image={product?.product?.images[0]?.image_url}/>
-            <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
-            <div className="container">
-                <div className="ps-page--product">
-                    <div className="ps-container">
-                        <div className="ps-page__container">
-                            <div className="ps-page__left">
-                                <ProductDetailFullwidth product={product.product} />
+            <PageContainer
+                title={product.product ? product.product.title : 'Loading...'}>
+                <Meta title={product?.product?.title} image={product?.product?.iamges?.[0]?.image_url} />
+                <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+                <div className="container">
+                    <div className="ps-page--product">
+                        <div className="ps-container">
+                            <div className="ps-page__container">
+                                <div className="ps-page__left">
+                                    <ProductDetailFullwidth product={product.product} />
+                                </div>
                             </div>
-                        </div>
 
-                        {product.product?.similar?.length > 0 ? (
-                            <RelatedProduct
-                                data={product?.product?.similar}
-                                pid={pid}
-                                collectionSlug="shop-recommend-items"
-                            />
-                        ) : (
-                            ''
-                        )}
+                            {product.product?.similar?.length > 0 ? (
+                                <RelatedProduct
+                                    data={product?.product?.similar}
+                                    pid={pid}
+                                    collectionSlug="shop-recommend-items"
+                                />
+                            ) : (
+                                ''
+                            )}
+                        </div>
                     </div>
                 </div>
-            </div>
-        </PageContainer>
+            </PageContainer>
         </>
 
-      
+
     );
 };
 
