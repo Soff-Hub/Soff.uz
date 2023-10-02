@@ -102,13 +102,10 @@ const FooterSecond = ({ classes }) => {
 
                     <div className="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-xs-12 ">
                         <aside className="widget widget_footer widget_contact-us">
-                            <h4>Sayt haqida</h4>
+                            <h4>Soff.uz</h4>
                         </aside>
                         <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing
-                            elit. Officiis incidunt, cum consequuntur fugit
-                            rerum maiores. Lorem ipsum, dolor sit amet
-                            consectetur adipisicing elit. Ad, corrupti.{' '}
+                        Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. {' '}
                         </p>
                         <aside className="widget widget_footer widget_contact-us">
                             <ul
@@ -158,38 +155,30 @@ const FooterSecond = ({ classes }) => {
                                 </li>
                             </ul>
                         </aside>
-                        <aside className="widget widget_footer widget_contact-us d-flex align-items-center" >
-                                <h4 style={{
-                                    marginBottom:'0'
-                                }} >Sayt ishlab chiqaruvchi : </h4> <img className='footer-company-logo d-block ps-2' src="/static/img/soffhub.jpeg" alt="soff hub logo" />
+                        <aside className="widget widget_footer widget_contact-us">
+                            <img
+                                src="/static/img/payment-method/click_logo.png"
+                                alt="martfury"
+                                style={{ height: '35px', marginRight: '20px' }}
+                            />
+                            <img
+                                src="/static/img/payment-method/payme_logo.png"
+                                alt="martfury"
+                                style={{ height: '25px' }}
+                            />
                         </aside>
                     </div>
                 </div>
                 <div className="ps-footer__copyright">
                     <p>
-                        &copy; {vaqt.getFullYear()} soff. Barcha huquqlar
-                        himoyalangan
+                        &copy; {vaqt.getFullYear()} soff.uz | Barcha huquqlar himoyalangan.
                     </p>
                     <p>
-                        <span> Biz xavfsiz to'lovdan foydalanamiz:</span>
-                        <Link href="#">
-                            <a>
-                                <img
-                                    src="/static/img/payment-method/click_logo.png"
-                                    alt="martfury"
-                                    style={{ height: '35px' }}
-                                />
-                            </a>
-                        </Link>
-                        <Link href="#">
-                            <a>
-                                <img
-                                    src="/static/img/payment-method/payme_logo.png"
-                                    alt="martfury"
-                                    style={{ height: '25px' }}
-                                />
-                            </a>
-                        </Link>
+                        <aside className="widget widget_footer widget_contact-us d-flex align-items-center" >
+                                <p style={{
+                                    marginBottom:'0'
+                                }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'><img className='footer-company-logo d-block ps-2' src="/static/img/soffhub.jpeg" alt="soff hub logo" /></a>
+                        </aside>
                     </p>
                 </div>
             </div>

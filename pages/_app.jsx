@@ -42,11 +42,11 @@ function App({ Component, pageProps }) {
                 <meta name="author" content="nouthemes" />
                 <meta
                     name="keywords"
-                    content="Soff "
+                    content="Dars ishlanmalar, Diplom ishlar, Slaydlar (maktab darsliklari bo'yicha), Slaydlar, Referatlar, Kurs ishlari, Adabiyot, Algebra, Anatomiya, Arxitektura, Astronomiya, Biologiya, Biotexnologiya, Botanika, Chizmachilik, CHQBT, Davlat tilida ish yuritish, Dinshunoslik asoslari, Ekologiya, Energetika, Falsafa, Fizika, Fransuz tili, Geodeziya, Geografiya, Geologiya, Geometriya, Huquqshunoslik, Informatika va AT, Ingliz tili, Iqtisodiyot, Issiqlik texnikasi, Jismoniy tarbiya, Kimyo, Konchilik ishi, Madaniyatshunoslik, Maktabgacha va boshlang'ich ta'lim, Manaviyat asoslari, Mashinasozlik, Materialshunoslik, Mehnat, Melioratsiya, Metrologiya, Mexanika, Milliy istiqlol g'oyasi, Musiqa, Nemis tili, O'qish, Odam va uning salomatligi, Odobnoma, Oziq-ovqat texnologiyasi, Pedagogika, Prezident asarlari, Psixologiya, Psixologiya, Qishloq va o'rmon xo'jaligi, Radiotexnika, Rus tili va adabiyoti, San'at, Siyosatshunoslik, Sotsiologiya, Suv xo'jaligi, Tabiatshunoslik, Tarix, Tasviriy san'at, Texnika va texnologiya, Tibbiyot, Tilshunoslik, To'qimachilik, Transport, Valeologiya, Xayot faoliyati xavfsizligi, Zoologiya, Ko'chirib olish"
                 />
                 <meta
                     name="description"
-                    content="Soff - hujjatlar bazasi"
+                    content="Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. "
                 />
             </Head>
             <NextProgress delay={300} color='red' options={{ showSpinner: false }} />

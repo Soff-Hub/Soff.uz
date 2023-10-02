@@ -6,7 +6,7 @@ import HomeElectronicsPage from './home/electronic'
 
 const HomepageDefaultPage = () => {
     return (
-        <PageContainer title="Soff - online hujjatlar bazasi">
+        <PageContainer title="Soff - barcha ma'lumotlar bazasi">
            <HomeElectronicsPage/>
         </PageContainer>
     );

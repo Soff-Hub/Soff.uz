@@ -75,7 +75,7 @@
     }
 
     .header__content {
-        background-color: #022335;
+        background-color: &color-2st;
 
         .menu--product-categories {
             display: block;
@@ -93,7 +93,7 @@
     }
 
     .navigation {
-        background-color: #022335;
+        background-color: $color-2st;
     }
 
     .menu--electronic {
