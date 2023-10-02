@@ -277,16 +277,11 @@ const Posts = () => {
                         className="row  w-100 gap-3 pt-5"
                         style={{ alignItems: 'flex-start' }}>
                         <h4 className="col-md-8 m-0 p-0">Yangi mahsulot : </h4>
-                        <div
-                            className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                            style={{ maxWidth: '370px' }}>
-                            <h4> Sotuvdagi ko'rinishi : </h4>
-                            <Button
-                                className="btn-warning"
-                                data-bs-target="#staticBackdrop"
-                                data-bs-toggle="modal">
-                                <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>
-                            </Button>
+
+                        <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
+                            <h4> Sotuvdagi ko'rinishi   : </h4>
+                            <Button className='btn-success' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
+
                         </div>
 
                         <form

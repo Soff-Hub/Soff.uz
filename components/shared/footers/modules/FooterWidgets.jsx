@@ -98,15 +98,6 @@ const FooterWidgets = () => {
 
         <div className="col-xl-5 col-lg-5 col-md-6 col-sm-12 col-xs-12 ">
             <aside className="widget widget_footer widget_contact-us">
-                <h4>Sayt haqida</h4>
-            </aside>
-            <p>
-                Lorem, ipsum dolor sit amet consectetur adipisicing
-                elit. Officiis incidunt, cum consequuntur fugit rerum
-                maiores. Lorem ipsum, dolor sit amet consectetur
-                adipisicing elit. Ad, corrupti.{' '}
-            </p>
-            <aside className="widget widget_footer widget_contact-us">
                 <ul
                     style={{
                         margin: '0',
