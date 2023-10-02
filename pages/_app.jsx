@@ -29,7 +29,7 @@ function App({ Component, pageProps }) {
 
     return (
         <>
-            <Head>
+             <Head>
 
                 <title>Soff</title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -48,7 +48,7 @@ function App({ Component, pageProps }) {
                     name="description"
                     content="Soff - hujjatlar bazasi"
                 />
-            </Head>
+            </Head> 
             <NextProgress delay={300} color='red' options={{ showSpinner: false }} />
             <CookiesProvider>
                 <MasterLayout>

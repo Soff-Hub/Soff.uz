@@ -21,15 +21,9 @@ const HomeElectronicsPage = () => {
         }
     }
 
-
     useEffect(() => {
         getCategoryFunc();
     }, []);
-
-
-
-  
-   
 
     return (
 

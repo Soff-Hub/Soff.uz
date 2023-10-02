@@ -20,13 +20,15 @@ const ModuleDetailTopInformation = ({ product }) => {
 
         return formattedNumber;
     }
+
+
     // Views
     let priceView;
 
-    if (product.is_sale) {
+    if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
-                {product.discount===0 ? (
+                {product.discount === 0 ? (
                     <p> {addPeriodToThousands(product.discount_price)} so'm </p>
                 ) : (
                     <>
@@ -41,13 +43,15 @@ const ModuleDetailTopInformation = ({ product }) => {
     } else {
         priceView = (
             <h4 className="ps-product__price">
-                {product.discount===0 ? (
-                    <h4> {addPeriodToThousands(product.discount_price)} so'm </h4>
+                {product?.discount === 0 ? (
+                    <h4>
+                        {addPeriodToThousands(product?.discount_price)} so'm{' '}
+                    </h4>
                 ) : (
                     <>
-                        <del>{addPeriodToThousands(product.price)} so'm</del>
+                        <del>{addPeriodToThousands(product?.price)} so'm</del>
                         <h4>
-                            {addPeriodToThousands(product.discount_price)} so'm
+                            {addPeriodToThousands(product?.discount_price)} so'm
                         </h4>
                     </>
                 )}

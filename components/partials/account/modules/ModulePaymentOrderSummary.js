@@ -9,11 +9,11 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
     const { products, getProducts } = useEcomerce();
     const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
-    useEffect(() => {
-        if (ecomerce.cartItems) {
-            getProducts(ecomerce.cartItems, 'cart');
-        }
-    }, [ecomerce]);
+    // useEffect(() => {
+    //     if (ecomerce.cartItems) {
+    //         getProducts(ecomerce.cartItems, 'cart');
+    //     }
+    // }, [ecomerce]);
     let amount = cookies?.cart && calculateAmount(cookies?.cart);
     function addPeriodToThousands(number) {
         const numStr = String(number);

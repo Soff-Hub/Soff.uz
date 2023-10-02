@@ -1,6 +1,7 @@
 
 import Head from "next/head";
 import React from "react";
+var parse = require('html-react-parser');
 
 const Meta = ({ title, image }) => {
   return (

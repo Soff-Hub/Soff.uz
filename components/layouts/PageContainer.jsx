@@ -127,11 +127,11 @@ const PageContainer = ({
 }) => {
     let titleView;
 
-    if (title !== '') {
-        titleView = process.env.title + ' | ' + title;
-    } else {
-        titleView = process.env.title + ' | ' + process.env.titleDescription;
-    }
+    // if (title !== '') {
+    //     titleView = process.env.title + ' | ' + title;
+    // } else {
+    //     titleView = process.env.title + ' | ' + process.env.title;
+    // }
 
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();

@@ -10,11 +10,6 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
     const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const state = useSelector(state => state?.auth?.shop)
 
-    useEffect(() => {
-        if (ecomerce.cartItems) {
-            getProducts(ecomerce.cartItems, 'cart');
-        }
-    }, [ecomerce]);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
