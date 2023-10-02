@@ -19,7 +19,7 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
             <figure >
                 <div className="ps-wrapper" >
                     {
-                        product?.iamges.length >0  ?
+                        product?.iamges?.length >0  ?
                         product?.iamges?.map(item => (
                                 <img src={item.image_url} alt="doc" className='border mb-3 ' style={{ objectFit: "contain" }} />
                             ))

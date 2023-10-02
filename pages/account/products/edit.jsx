@@ -329,7 +329,7 @@ const PostsProductsEdit = () => {
                                     type='submit'
                                     className="btn btn-success py-3 px-5 ">
                                     <span className="fs-4">
-                                        Saqlash <i class="fa-solid fa-cloud-arrow-down mx-2"></i>
+                                        Saqlash <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
                                     </span>
                                 </button>
                             </div>

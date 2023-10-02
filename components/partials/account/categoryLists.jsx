@@ -218,7 +218,7 @@ function CategoryLists() {
                             <div className="ps-section--account-setting">
                                 <div>
                                     <div className='row row-gap-3 bg-white m-0 gap-5 px-4 mb-3 pb-4 rounded'>
-                                    <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i class="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
+                                    <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i className="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
                                         <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={handleClick} />
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'> <i className="fa-solid fa-plus"></i> Kategoriya qo'shish</span></button>
                                     </div>

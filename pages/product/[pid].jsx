@@ -79,7 +79,7 @@ const ProductDefaultPage = (product) => {
         <>
           <PageContainer
             title={product.product ? product.product.title : 'Loading...'}>
-        <Meta  title={product?.product?.title} image={product?.product?.iamges[0]?.image_url}/>
+        <Meta  title={product?.product?.title} image={product?.product?.images[0]?.image_url}/>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <div className="container">
                 <div className="ps-page--product">
