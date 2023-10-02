@@ -57,7 +57,7 @@ const HomeElectronicsPage = () => {
                     display:'flex',
                     justifyContent:'center',
                     alignContent:'center'
-                }}><PropagateLoader color="#F4CA16" /></div>
+                }}><PropagateLoader className='progres-color' /></div>
          } 
         
          <SiteFeatures />

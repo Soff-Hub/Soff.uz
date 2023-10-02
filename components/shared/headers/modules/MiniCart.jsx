@@ -7,17 +7,17 @@ import useCart from '~/hooks/useCart';
 
 const MiniCart = ({ ecomerce }) => {
     const state = useSelector((state) => state.auth.user);
-    const data = useSelector(state => state.ecomerce.cartDataItems)
+    const data = useSelector((state) => state.ecomerce.cartDataItems);
 
-    const { removeCartOneItem } = useCart()
+    const { removeCartOneItem } = useCart();
 
     function handleRemoveItem(e, item) {
         e.preventDefault();
         // removeItem(item, 'cart');
-        removeCartOneItem(item.id)
+        removeCartOneItem(item.id);
     }
     // const cartL = getCartLength()
-
+    console.log('data', data);
     const amount = calculateAmount(data);
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -100,27 +100,27 @@ const MiniCart = ({ ecomerce }) => {
             <Link href="/account/shopping-cart">
                 <a className="header__extra">
                     <i className="icon-bag2"></i>
-                    <span>
-                        {<i>{data.length}</i>}
-                    </span>
+                    <span>{<i>{data.length}</i>}</span>
                 </a>
             </Link>
-            {
-                data && data.length > 0 ? <div className="ps-cart__content">
-                    <div className="ps-cart__items">{
-                        data?.map((item) => {
+            {data && data.length > 0 ? (
+                <div className="ps-cart__content">
+                    <div className="ps-cart__items">
+                        {data?.map((item) => {
                             return (
                                 <ProductOnCart product={item} key={item.id}>
                                     <a
                                         className="ps-product__remove"
                                         style={{ cursor: 'pointer' }}
-                                        onClick={(e) => handleRemoveItem(e, item)}>
+                                        onClick={(e) =>
+                                            handleRemoveItem(e, item)
+                                        }>
                                         <i className="icon-cross"></i>
                                     </a>
                                 </ProductOnCart>
                             );
-                        })
-                    }</div>
+                        })}
+                    </div>
                     <div className="ps-cart__footer">
                         <h3>
                             Jami:
@@ -141,12 +141,14 @@ const MiniCart = ({ ecomerce }) => {
                             )}
                         </figure>
                     </div>
-                </div> : <div className="ps-cart__content">
+                </div>
+            ) : (
+                <div className="ps-cart__content">
                     <div className="ps-cart__items">
                         <span>Savatda hujjat yo'q</span>
                     </div>
                 </div>
-            }
+            )}
         </div>
     );
 };

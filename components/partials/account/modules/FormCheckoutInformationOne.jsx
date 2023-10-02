@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
-import PostRepository from '~/repositories/PostRepository';
 import useEcomerce from '~/hooks/useEcomerce';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
@@ -10,9 +9,7 @@ import  Router  from 'next/router';
 
 
 function FormCheckoutInformationOne() {
-    const { increaseQty, decreaseQty, removeItem, removeItems } = useEcomerce();
 
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const select = useSelector((state) => state.auth.user?.access);
     const [selectedValue, setSelectedValue] = useState('click');
     const [message, setMessage] = useState(true);

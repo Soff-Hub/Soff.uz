@@ -6,7 +6,6 @@ import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 import { useCookies } from 'react-cookie';
 
 const ShoppingCart = () => {
-    const [cartItems, setCartItems] = useState(null);
   
 
     return (
@@ -30,7 +29,7 @@ const ShoppingCart = () => {
                 <div className="ps-section__footer">
                     <div className="row justify-content-end">
                         <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
-                            <ModuleCartSummary source={cartItems} />
+                            <ModuleCartSummary />
                             <Link href="/account/checkout">
                                 <a className="ps-btn ps-btn--fullwidth">
                                     Proceed to checkout

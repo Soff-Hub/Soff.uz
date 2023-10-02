@@ -1,23 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
 import { useCookies } from 'react-cookie';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
 import useEcomerce from '~/hooks/useEcomerce';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
 import  Router  from 'next/router';
+import useCart from '~/hooks/useCart';
 
 
 function FormCheckoutInformation() {
-    const { increaseQty, decreaseQty, removeItem, removeItems } = useEcomerce();
-
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const select = useSelector((state) => state.auth.user?.access);
+    const cartData = useSelector((state) => state.ecomerce.cartDataItems);
     const [card, setCard] = useState([]);
     const [data, setData] = useState([]);
     const [selectedValue, setSelectedValue] = useState('click');
     const [message, setMessage] = useState(true);
+    const {removeAll} = useCart()
 
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
@@ -37,8 +37,8 @@ function FormCheckoutInformation() {
 
     useEffect(() => {
         select && GetCard()
-        setData(cookies?.cart);
-    }, [cookies]);
+        setData(cartData);
+    }, [cartData]);
 
     function extractIds(data) {
         const ids = [];
@@ -51,6 +51,7 @@ function FormCheckoutInformation() {
 
     const ProductToApi = async () => {
         setMessage(false);
+        removeAll()
         const data = {
             documents: ids,
         };
@@ -61,8 +62,6 @@ function FormCheckoutInformation() {
         };
         const respons = await ClickRepository.postClick(data, token);
         if (respons?.status === 200 || respons?.status === 201) {
-            setCookie('cart', [], { path: '/' });
-            removeItems('cart');
             window.open(`${respons?.data?.url}`, '_blank');
             setMessage(true);
         }else {

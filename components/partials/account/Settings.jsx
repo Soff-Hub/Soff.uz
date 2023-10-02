@@ -3,10 +3,10 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CreditCard from './CreditCard';
-import { BeatLoader } from 'react-spinners';
 import { Modal } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
+import { BeatLoader } from 'react-spinners';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth);

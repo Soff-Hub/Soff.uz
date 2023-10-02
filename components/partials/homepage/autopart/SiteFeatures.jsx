@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import { PropagateLoader } from 'react-spinners';
 import ProductRepository from '~/repositories/ProductRepository';
 
 const SiteFeatures = () => {

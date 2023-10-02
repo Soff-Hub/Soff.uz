@@ -35,14 +35,14 @@ function ElectronicBanner() {
                 <div className="ps-section__left">
                     {/* <Slider {...carouselSettings}> */}
                     <div className="item banner-left-one">
-                        {bannerItem[0]?.image ? (
-                            <Link target="_blank" href={`${bannerItem[0].url}`}>
+                        {bannerItem?.[0]?.image ? (
+                            <Link target="_blank" href={`${bannerItem?.[0].url}`}>
                                 <a target="_blank">
                                     <img
                                         style={{
                                             width: '100%',
                                             height: '370px',
-                                            backgroundImage: `url(${bannerItem[0]?.image})`,
+                                            backgroundImage: `url(${bannerItem?.[0]?.image})`,
                                             backgroundPosition: 'center',
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'contain',
@@ -76,26 +76,26 @@ function ElectronicBanner() {
                     </div>
                 </div>
                 <div className="ps-section__right">
-                    {bannerItem[1] ? (
+                    {bannerItem?.[1] ? (
                         <div className="banner-right">
-                            <Link href={`${bannerItem[1].url}`} target="_blank">
+                            <Link href={`${bannerItem?.[1].url}`} target="_blank">
                                 <a className="ps-collection" target="_blank">
                                     <div
                                         style={{
                                             height: '170px',
-                                            backgroundImage: `url(${bannerItem[1]?.image})`,
+                                            backgroundImage: `url(${bannerItem?.[1]?.image})`,
                                             backgroundPosition: 'center',
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'contain',
                                         }}></div>
                                 </a>
                             </Link>
-                            <Link href={`${bannerItem[2].url}`} target="_blank">
+                            <Link href={`${bannerItem?.[2].url}`} target="_blank">
                                 <a className="ps-collection" target="_blank">
                                     <div
                                         style={{
                                             height: '170px',
-                                            backgroundImage: `url(${bannerItem[2]?.image})`,
+                                            backgroundImage: `url(${bannerItem?.[2]?.image})`,
                                             backgroundPosition: 'center',
                                             backgroundRepeat: 'no-repeat',
                                             backgroundSize: 'contain',

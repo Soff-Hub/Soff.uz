@@ -80,8 +80,6 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                         <tr>
                             <th>Hujjat</th>
                             <th>Narx</th>
-
-                            {/* <th>Quantity</th> */}
                             <th></th>
                             <th>O'chirish</th>
                         </tr>

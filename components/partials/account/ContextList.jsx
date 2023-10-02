@@ -33,6 +33,7 @@ function ContextLists() {
         if (dataUrl) {
             formData.append("url", dataUrl);
         }
+
         const ItemsData = await PatchRepository.getBannersPatch(formData, ID, user?.access)
 
 
@@ -49,6 +50,7 @@ function ContextLists() {
     useEffect(() => {
         GetItemsBanners()
     }, [])
+    
     const columns = [
         {
             title: 'Rasm',
@@ -110,7 +112,7 @@ function ContextLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
-                                    <Table scroll={{ x: 750 }} pagination={false} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 750 }} pagination={false}  dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>
