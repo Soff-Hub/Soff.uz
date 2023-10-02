@@ -10,6 +10,7 @@ export const initalState = {
     wishlistItems: [],
     compareItems: [],
     cartItems: [],
+    cartDataItems: [],
 };
 
 
@@ -37,7 +38,7 @@ function reducer(state = initalState, action) {
                 };
             } else return state;
 
-        case actionTypes.SET_CART_ITEMS_SUCCESS:
+        case actionTypes.SET_cart_SUCCESS:
             return {
                 ...state,
                 cartItems: action.payload,
@@ -46,6 +47,17 @@ function reducer(state = initalState, action) {
             return {
                 ...state,
                 compareItems: action.payload,
+            };
+        case actionTypes.SET_CARTDATA_SUCCESS:
+            return {
+                ...state,
+                cartDataItems: action.payload,
+            };
+
+        case actionTypes.SET_CARTDATA_SUCCESS_ITEM:
+            return {
+                ...state,
+                cartDataItems: [...state.cartDataItems, ...action.payload],
             };
         default:
             return state;

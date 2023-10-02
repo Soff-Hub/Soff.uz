@@ -1,5 +1,5 @@
 import { all, put, takeEvery } from 'redux-saga/effects';
-import { actionTypes } from './action';
+import { actionTypes, setCartDataItemsSuccess, setCartItemDataItemsSuccess } from './action';
 
 import {
     setCartItemsSuccess,
@@ -32,9 +32,27 @@ function* getCompareItems({ payload }) {
     }
 }
 
+function* getCartDataItems({ payload }) {
+    try {
+        yield put(setCartDataItemsSuccess(payload));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+function* getCartItemDataItems({ payload }) {
+    try {
+        yield put(setCartItemDataItemsSuccess(payload));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
 export default function* rootSaga() {
     // new
     yield all([takeEvery(actionTypes.SET_WISHLIST_ITEMS, getWishlistItems)]);
-    yield all([takeEvery(actionTypes.SET_CART_ITEMS, getCartItems)]);
+    yield all([takeEvery(actionTypes.SET_cart, getCartItems)]);
     yield all([takeEvery(actionTypes.SET_COMPARE_ITEMS, getCompareItems)]);
+    yield all([takeEvery(actionTypes.SET_CARTDATA, getCartDataItems)]);
+    yield all([takeEvery(actionTypes.SET_CARTDATA_ITEM, getCartItemDataItems)]);
 }

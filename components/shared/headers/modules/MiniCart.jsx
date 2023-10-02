@@ -1,29 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
-import useEcomerce from '~/hooks/useEcomerce';
-import { calculateAmount, getCartItemsFromCookies } from '~/utilities/ecomerce-helpers';
-import { useCookies } from 'react-cookie';
-import { Modal } from 'antd';
-import PostRepository from '~/repositories/PostRepository';
-import cookie from 'js-cookie';
-import ProductRepository from '~/repositories/ProductRepository';
+import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import useCart from '~/hooks/useCart';
 
 const MiniCart = ({ ecomerce }) => {
-    const {  removeItem,  addProductToCart} = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
-    const [cart, setCart] = useState([]);
     const state = useSelector((state) => state.auth.user);
-    const token = useSelector((state) => state.auth.user?.access);
-    const [data, setData] = useState([])
+    const data = useSelector(state => state.ecomerce.cartDataItems)
+
+    const { removeCartOneItem } = useCart()
+
     function handleRemoveItem(e, item) {
         e.preventDefault();
-        removeItem(item, 'cart');
+        // removeItem(item, 'cart');
+        removeCartOneItem(item.id)
     }
     // const cartL = getCartLength()
 
-    const amount = calculateAmount(ecomerce.cartItems);
+    const amount = calculateAmount(data);
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -45,92 +40,113 @@ const MiniCart = ({ ecomerce }) => {
 
     const stat = useSelector((state) => state);
 
-    const getCardListData = async () => {
-        let config = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')} `,
-            },
-        };
-        const respons = await PostRepository.getCartData(config);
-
-        if (respons) {
-            setCart(respons);
-        }
-    };
-
-    const cartData = async () => {
-        const respons = await ProductRepository.postCartData(cookies?.cart)
-        if (respons) {
-            setData(respons?.data?.data)
-        }
-    }
-
-    useEffect (() => {
-        cartData()
-    }, [])
-   console.log('dataa', data);
+    // useEffect(() => {
+    //     setCartItems(data)
+    // }, [data])
+    // console.log('dataa', data);
 
     let cartItemsView;
-    if ( data && data.length > 0) {
-        const productItems = data?.map((item) => {
-            return (
-                <ProductOnCart product={item} key={item.id}>
-                    <a
-                        className="ps-product__remove"
-                        style={{ cursor: 'pointer' }}
-                        onClick={(e) => handleRemoveItem( e,item)}>
-                        <i className="icon-cross"></i>
-                    </a>
-                </ProductOnCart>
-            );
-        });
-        cartItemsView = (
-            <div className="ps-cart__content">
-                <div className="ps-cart__items">{productItems}</div>
-                <div className="ps-cart__footer">
-                    <h3>
-                        Jami:
-                        <strong>{hisob ? hisob : 0} so'm</strong>
-                    </h3>
-                    <figure>
-                        <Link href="/account/shopping-cart">
-                            <a className="ps-btn">Savat</a>
-                        </Link>
-                        {state !== null ? (
-                            <Link href="/account/checkout">
-                                <a className="ps-btn">Sotib olish</a>
-                            </Link>
-                        ) : (
-                            <Link href="/account/register-user">
-                                <a className="ps-btn">Sotib olish</a>
-                            </Link>
-                        )}
-                    </figure>
-                </div>
-            </div>
-        );
-    } else {
-        cartItemsView = (
-            <div className="ps-cart__content">
-                <div className="ps-cart__items">
-                    <span>Savatda hujjat yo'q</span>
-                </div>
-            </div>
-        );
-    }
+    // if (cartItems && cartItems.length > 0) {
+    //     const productItems = cartItems?.map((item) => {
+    //         return (
+    //             <ProductOnCart product={item} key={item.id}>
+    //                 <a
+    //                     className="ps-product__remove"
+    //                     style={{ cursor: 'pointer' }}
+    //                     onClick={(e) => handleRemoveItem(e, item)}>
+    //                     <i className="icon-cross"></i>
+    //                 </a>
+    //             </ProductOnCart>
+    //         );
+    //     });
+    //     cartItemsView = (
+    //         <div className="ps-cart__content">
+    //             <div className="ps-cart__items">{productItems}</div>
+    //             <div className="ps-cart__footer">
+    //                 <h3>
+    //                     Jami:
+    //                     <strong>{hisob ? hisob : 0} so'm</strong>
+    //                 </h3>
+    //                 <figure>
+    //                     <Link href="/account/shopping-cart">
+    //                         <a className="ps-btn">Savat</a>
+    //                     </Link>
+    //                     {state !== null ? (
+    //                         <Link href="/account/checkout">
+    //                             <a className="ps-btn">Sotib olish</a>
+    //                         </Link>
+    //                     ) : (
+    //                         <Link href="/account/register-user">
+    //                             <a className="ps-btn">Sotib olish</a>
+    //                         </Link>
+    //                     )}
+    //                 </figure>
+    //             </div>
+    //         </div>
+    //     );
+    // } else {
+    //     cartItemsView = (
+    //         <div className="ps-cart__content">
+    //             <div className="ps-cart__items">
+    //                 <span>Savatda hujjat yo'q</span>
+    //             </div>
+    //         </div>
+    //     );
+    // }
 
-// console.log('cart uzunligi', cartL);
+    // console.log('cart uzunligi', cartL);
     return (
         <div className="ps-cart--mini">
             <Link href="/account/shopping-cart">
                 <a className="header__extra">
                     <i className="icon-bag2"></i>
                     <span>
-                        {<i>{cookies?.cart?.length > 0 ? cookies?.cart?.length : 0}</i>}
+                        {<i>{data.length}</i>}
                     </span>
                 </a>
             </Link>
-            {cartItemsView}
+            {
+                data && data.length > 0 ? <div className="ps-cart__content">
+                    <div className="ps-cart__items">{
+                        data?.map((item) => {
+                            return (
+                                <ProductOnCart product={item} key={item.id}>
+                                    <a
+                                        className="ps-product__remove"
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={(e) => handleRemoveItem(e, item)}>
+                                        <i className="icon-cross"></i>
+                                    </a>
+                                </ProductOnCart>
+                            );
+                        })
+                    }</div>
+                    <div className="ps-cart__footer">
+                        <h3>
+                            Jami:
+                            <strong>{hisob ? hisob : 0} so'm</strong>
+                        </h3>
+                        <figure>
+                            <Link href="/account/shopping-cart">
+                                <a className="ps-btn">Savat</a>
+                            </Link>
+                            {state !== null ? (
+                                <Link href="/account/checkout">
+                                    <a className="ps-btn">Sotib olish</a>
+                                </Link>
+                            ) : (
+                                <Link href="/account/register-user">
+                                    <a className="ps-btn">Sotib olish</a>
+                                </Link>
+                            )}
+                        </figure>
+                    </div>
+                </div> : <div className="ps-cart__content">
+                    <div className="ps-cart__items">
+                        <span>Savatda hujjat yo'q</span>
+                    </div>
+                </div>
+            }
         </div>
     );
 };

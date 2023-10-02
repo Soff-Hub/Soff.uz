@@ -7,10 +7,14 @@ import SiteFeatures from '~/components/partials/homepage/autopart/SiteFeatures';
 
 import CollectionRepository from '~/repositories/CollectionRepository';
 import { PropagateLoader } from 'react-spinners';
+import useCart from '~/hooks/useCart';
+import { useSelector } from 'react-redux';
 
 const HomeElectronicsPage = () => {
 
     const [categoryData, setCategoryData] = useState([]);
+    const cartItems = useSelector(state => state.ecomerce.cartDataItems)
+
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
@@ -22,14 +26,17 @@ const HomeElectronicsPage = () => {
     }
 
 
+    const { setAllCartItem } = useCart()
+
+
     useEffect(() => {
+        if (cartItems.length !== JSON.parse(localStorage.getItem('cart'))) {
+            setAllCartItem();
+        }
         getCategoryFunc();
     }, []);
 
 
-
-  
-   
 
     return (
 
