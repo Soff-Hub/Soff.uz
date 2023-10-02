@@ -3,17 +3,11 @@ import { connect } from 'react-redux';
 import Link from 'next/link';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
+import { useCookies } from 'react-cookie';
 
-const ShoppingCart = ({ source }) => {
-
-    // console.log(source)
+const ShoppingCart = () => {
     const [cartItems, setCartItems] = useState(null);
-
-    useEffect(() => {
-        if (source && source.length > 0) {
-            setCartItems(source);
-        }
-    }, [source]);
+  
 
     return (
         <div className="ps-section--shopping ps-shopping-cart">

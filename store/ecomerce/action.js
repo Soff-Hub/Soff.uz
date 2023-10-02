@@ -13,7 +13,7 @@ export const actionTypes = {
 
 // new
 export function setWishlistTtems(payload) {
-
+    console.log(localStorage.getItem('hgf') || false);
     return { type: actionTypes.SET_WISHLIST_ITEMS, payload };
 }
 
@@ -23,7 +23,7 @@ export function setWishlistTtemsSuccess(payload) {
 }
 
 export function setCartItems(payload) {
-
+    localStorage.setItem('nimadr', true)
     // console.log(payload);
     return { type: actionTypes.SET_CART_ITEMS, payload };
 }

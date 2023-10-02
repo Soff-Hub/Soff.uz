@@ -19,7 +19,6 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
         }
     }, [collectionSlug, pid]);
 
-    console.log('jkj', relatedProduct);
 
     // Views
     let carouselView;
@@ -31,7 +30,6 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
                         {relatedProduct?.length > 0 &&
                             relatedProduct?.map((item, i) => (
                                 <div className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
-                                    {' '}
                                     <Product product={item} key={i} />
                                 </div>
                             ))

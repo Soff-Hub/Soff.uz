@@ -11,7 +11,7 @@ import { getProductsByIds } from '~/repositories/ProductRepository';
 export function getCartItemsFromCookies() {
     const cartItems = cookies.get('cart');
     if (cartItems) {
-        console.log('cooke', cartItems);
+        // console.log('cooke', cartItems);
         return JSON.parse(cartItems);
     } else {
         return null;
@@ -25,22 +25,25 @@ export function updateCartToCookies(payload) {
 export function addItemToCartHelper(product) {
     let cart;
     let cookieCart = getCartItemsFromCookies();
+    console.log('Product', product, cookieCart);
     if (cookieCart) {
         cart = cookieCart;
-        const existItem = cart.items.find((item) => item.id === product.id);
+        // const existItem = cart.items.find((item) => item.id === product.id);
         // if (existItem) {
         //     existItem.quantity += product.quantity;
         // } else {
             /* if (!product.quantity) {
                 product.quantity = 1;
             }*/
-            cart.items.push(product);
+            cart?.items.push(product);
+            console.log('if', cart);
         // }
     } else {
         cart = {
             items: [],
         };
         cart.items.push(product);
+        console.log('else', cart);
     }
     updateCartToCookies(cart);
     return cart;
@@ -92,6 +95,6 @@ export function removeCartItemHelper(product) {
 
 export function calculateAmount(obj) {
     return Object.values(obj)
-        .reduce((acc, { discount_price }) => acc + Number(discount_price), 0)
+        .reduce((acc, { price }) => acc + Number(price), 0)
         // .toFixed(2);
 }

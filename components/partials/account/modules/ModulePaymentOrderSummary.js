@@ -45,7 +45,7 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
                     </strong>
                     <small>
                         {item.discount === 0 ? (
-                           <p>{ addPeriodToThousands(item.price)} so'm</p>
+                           <p>{ addPeriodToThousands(item.discount_price)} so'm</p>
                         ) : (
                             <>
                                 <del>

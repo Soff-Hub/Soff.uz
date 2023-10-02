@@ -7,13 +7,13 @@ import { useCookies } from 'react-cookie';
 
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
-    const { addItem } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
+    const { addProductToWishlist, addProductToCart, addItem } = useEcomerce();
+    const [cookies, setCookie] = useCookies(['cart']);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
-        addItem( product, ecomerce.cartItems, 'cart');
-        
+        // addProductToCart( product);
+        addItem(product, 'cart')
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -21,9 +21,10 @@ const ModuleProductActions = ({ product, ecomerce }) => {
         });
         modal.update;
     }
+
     function handleAddItemToWishlist(e) {
         e.preventDefault();
-        addItem(product, ecomerce.wishlistItems, 'wishlist');
+        addItem(product, 'wishlist')
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',

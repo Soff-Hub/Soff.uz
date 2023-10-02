@@ -81,7 +81,7 @@ export function StrapiProductThumbnail(product) {
 
     if (product.thumbnail) {
         view = (
-            <Link href="/product/[pid]" as={`/product/${product.id}`}>
+            <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                 <a>
                     <LazyLoad>
                         <img
@@ -94,7 +94,7 @@ export function StrapiProductThumbnail(product) {
         );
     } else {
         view = (
-            <Link href="/product/[pid]" as={`/product/${product.id}`}>
+            <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                 <a>
                     <LazyLoad>
 

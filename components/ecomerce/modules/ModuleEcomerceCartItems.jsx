@@ -3,14 +3,20 @@ import { connect } from 'react-redux';
 import useEcomerce from '~/hooks/useEcomerce';
 import { Modal, Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
+import { useCookies } from 'react-cookie';
+import ProductRepository from '~/repositories/ProductRepository';
 
-const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
-    const { increaseQty, decreaseQty, removeItem } = useEcomerce();
+const ModuleEcomerceCartItems = ({ cartItems, func }) => {
+    const { removeItem } = useEcomerce();
+    const [cookies, setCookie] = useCookies(['cart']);
 
-    function handleRemoveItem(e, productId) {
+    const handleRemoveItem = async (e, item) => {
         e.preventDefault();
-        removeItem({ id: productId }, ecomerce.cartItems, 'cart');
-    }
+        const dataWithoutRemovedItem = removeItem(item, 'cart');
+        console.log("Before \response => ", dataWithoutRemovedItem);
+            const respons = ProductRepository.postCartData(dataWithoutRemovedItem);
+            console.log("respons = > ", respons)
+    };
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -29,41 +35,38 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
 
         return formattedNumber;
     }
-    console.log('cart', cartItems);
 
     // View
     let cartItemsViews;
     if (cartItems && cartItems.length > 0) {
         const items = cartItems.map((item) => (
             <tr key={item.id}>
-                <td className='cart-product'>
+                <td className="cart-product">
                     <ProductCart product={item} />
                 </td>
                 <td data-label="narxi" className="price pe-5">
-                   <span>
-                      {item.discount === 0 ? (
-                        <p>
-                        {addPeriodToThousands(item.discount_price)}{' '}
-                        so'm
-                    </p>
-                    ) : (
-                        <>
-                            <del>
-                                {addPeriodToThousands(item.price)} so'm
-                            </del>
+                    <span>
+                        {item.discount === 0 ? (
                             <p>
-                                {addPeriodToThousands(item.discount_price)}{' '}
+                                {addPeriodToThousands(item.discount_price)}
                                 so'm
                             </p>
-                        </>
-                    )}
-                     </span>
+                        ) : (
+                            <>
+                                <del>
+                                    {addPeriodToThousands(item.price)} so'm
+                                </del>
+                                <p>
+                                    {addPeriodToThousands(item.discount_price)}
+                                    so'm
+                                </p>
+                            </>
+                        )}
+                    </span>
                 </td>
-                <td >
-                </td>
-                <td >
-
-                    <a href="#" onClick={(e) => handleRemoveItem(e, item.id)}>
+                <td></td>
+                <td>
+                    <a href="#" onClick={(e) => handleRemoveItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
                 </td>
