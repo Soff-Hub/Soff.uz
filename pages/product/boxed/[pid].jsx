@@ -57,7 +57,7 @@ const ProductDefaultBoxedPage = () => {
         productView = <SkeletonProductDetail />;
     }
     return (
-        <PageContainer title={product ? product.title : 'Loading...'}>
+        <PageContainer title={product ? product?.title : 'Loading...'}>
             <BreadCrumb breacrumb={breadCrumb} />
             <div className="ps-page--product ps-page--product-box">
                 <div className="container">

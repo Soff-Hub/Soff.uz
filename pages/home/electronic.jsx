@@ -25,7 +25,6 @@ const HomeElectronicsPage = () => {
         }
     }
 
-
     const { setAllCartItem } = useCart()
 
 
@@ -35,8 +34,6 @@ const HomeElectronicsPage = () => {
         }
         getCategoryFunc();
     }, []);
-
-
 
     return (
 
