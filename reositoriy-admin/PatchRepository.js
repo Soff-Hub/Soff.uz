@@ -208,11 +208,11 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getPatchPoster(data,id,token) {
-        const endPoint =`product-create-second/${id}`
+    async getPatchPoster(data,token) {
+        const endPoint =`product-create-second/`
         const reponse = await Repository({
             url:baseUrl + endPoint,
-            method: 'PATCH',
+            method: 'POST',
             headers: {
                 'Authorization' : `Bearer ${token}`
             },
@@ -220,7 +220,7 @@ class PatchRepository {
         })
 
             .then((response) => {
-                if (response.status === 202) {
+                if (response.status === 201) {
                     return response;
                 } else {
                     return null;

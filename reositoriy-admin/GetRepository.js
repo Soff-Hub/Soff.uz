@@ -1,5 +1,8 @@
-
-import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from "./Repository";
+import Repository, {
+    baseUrl,
+    baseUrlCustomer,
+    baseUrlProfie,
+} from './Repository';
 
 class GetRepository {
     async getSellerDashbord(token) {
@@ -78,12 +81,20 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShopsProducts(page, category, dataValStatus, date, id,arxiv, token) {
+    async getShopsProducts(
+        page,
+        category,
+        dataValStatus,
+        date,
+        id,
+        arxiv,
+        token
+    ) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
         }?page=${page}&category=${category || ''}&start_date=${
             date || ''
-        }&status=${dataValStatus || ''}&arxiv=${arxiv || ""}`;
+        }&status=${dataValStatus || ''}&arxiv=${arxiv || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -101,10 +112,12 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getMyProducts(page, category, tagItems, date,status, token) {
+    async getMyProducts(page, category, tagItems, date, status, token) {
         const endPoint = `product-list/?page=${page}&category=${
             category || ''
-        }${tagItems ? `&tag=${tagItems}` : ``}&start_date=${date || ''}&status=${status || ''}`;
+        }${tagItems ? `&tag=${tagItems}` : ``}&start_date=${
+            date || ''
+        }&status=${status || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -160,6 +173,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
     async getCategoryLists(token) {
         const endPoint = `admin/category-list/`;
         const reponse = await Repository({
@@ -168,6 +182,22 @@ class GetRepository {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getAllCategoryLists(search) {
+        const endPoint = `admin/category-children/?search=${search || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -200,7 +230,6 @@ class GetRepository {
         return reponse;
     }
 
-
     async getOrdersLists(page, status, date, token) {
         const endPoint = `admin/order-list/?page=${page}&status=${
             status || ''
@@ -231,9 +260,6 @@ class GetRepository {
                 Authorization: `Bearer ${token}`,
             },
         })
-
-
-
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
@@ -263,7 +289,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getTagLists(page,  token) {
+    async getTagLists(page, token) {
         const endPoint = `admin/tag-list/?page=${page}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -340,9 +366,9 @@ class GetRepository {
         return reponse;
     }
     async getProfile(token) {
-        const endPoint ="auth/profile/"
+        const endPoint = 'auth/profile/';
         const reponse = await Repository({
-            url:baseUrlProfie+endPoint,
+            url: baseUrlProfie + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -358,10 +384,10 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getProfileAriza(page ,token) {
-        const endPoint = `application-list/?page=${page}`
+    async getProfileAriza(page, token) {
+        const endPoint = `application-list/?page=${page}`;
         const reponse = await Repository({
-            url:baseUrl + endPoint,
+            url: baseUrl + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -378,9 +404,9 @@ class GetRepository {
         return reponse;
     }
     async getProfileArizaCardLists(token) {
-        const endPoint = `seller-card-list`
+        const endPoint = `seller-card-list`;
         const reponse = await Repository({
-            url:baseUrl + endPoint,
+            url: baseUrl + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -396,10 +422,12 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getProfileArizaAdmin(page ,status , token) {
-        const endPoint = `admin/application/?page=${page}&status=${status ? status : ""}`
+    async getProfileArizaAdmin(page, status, token) {
+        const endPoint = `admin/application/?page=${page}&status=${
+            status ? status : ''
+        }`;
         const reponse = await Repository({
-            url:baseUrl + endPoint,
+            url: baseUrl + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -415,7 +443,6 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-   
 }
 
 export default new GetRepository();

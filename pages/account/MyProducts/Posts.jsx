@@ -50,19 +50,65 @@ const Posts = () => {
     ];
 
     async function GetItemsCategoryLists() {
-        const data = [];
-        const token = user?.access;
-        const ItemsData = await GetRepository.getCategoryLists(token);
+        const ItemsData = await GetRepository.getAllCategoryLists();
         if (ItemsData?.results) {
-            for (let i = 0; i < ItemsData?.results?.length; i++) {
-                if (ItemsData?.results[i].parent !== null) {
-                    data.push(ItemsData?.results[i]);
-                }
-            }
-            setDataCategory(data);
+            setDataCategory(ItemsData?.results);
         }
     }
     const Option = Select.Option;
+
+    const onChange = async (e) => {
+        setCategory_id(e.toString());
+
+        if (e) {
+            for (let i = 0; i < dataCategory.length; i++) {
+                if (dataCategory[i].id == e) {
+                    setCategoryName(dataCategory[i].name);
+                }
+            }
+        }
+
+        let arr = [];
+        if (tagSearchResult?.length > 0) {
+            for (let i = 0; i < tagItems.length; i++) {
+                for (let j = 0; j < tagSearchResult.length; j++) {
+                    if (tagItems[i].name === tagSearchResult[j]) {
+                        arr.push(tagItems[i].id);
+                    }
+                }
+            }
+        }
+
+        const data = {
+            category_id: e,
+            tag_id: arr,
+        };
+
+        if (tagSearchResult?.length > 0 && e !== null) {
+            const respons = await PostsRepository.TaxminiyNarxOlish(
+                data,
+                user?.access
+            );
+            if (
+                respons?.recommended_price !== undefined &&
+                respons?.recommended_price !== 0
+            ) {
+                setTaxminiyNarx(
+                    `Tavsiya etilgan narx: ${addPeriodToThousands(
+                        respons?.recommended_price
+                    )} `
+                );
+                setNarx(respons?.recommended_price);
+            }
+        }
+    };
+
+    const onSearch = async (value) => {
+        const ItemsData = await GetRepository.getAllCategoryLists(value);
+        if (ItemsData?.results) {
+            setDataCategory(ItemsData?.results);
+        }
+    };
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -72,9 +118,18 @@ const Posts = () => {
     }
 
     const children = [];
+    const options = [];
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
+        );
+    }
+
+    for (const item of dataCategory) {
+        options.push(
+            <Option key={item.name} value={item.id}>
+                {item.name}
+            </Option>
         );
     }
 
@@ -123,52 +178,6 @@ const Posts = () => {
         }
     }
 
-    const handleChangeCategory = async (e) => {
-        setCategory_id(e);
-
-        if (e) {
-            for (let i = 0; i < dataCategory.length; i++) {
-                if (dataCategory[i].id == e) {
-                    setCategoryName(dataCategory[i].name);
-                }
-            }
-        }
-
-        let arr = [];
-        if (tagSearchResult?.length > 0) {
-            for (let i = 0; i < tagItems.length; i++) {
-                for (let j = 0; j < tagSearchResult.length; j++) {
-                    if (tagItems[i].name === tagSearchResult[j]) {
-                        arr.push(tagItems[i].id);
-                    }
-                }
-            }
-        }
-
-        const data = {
-            category_id: e,
-            tag_id: arr,
-        };
-
-        if (tagSearchResult?.length > 0 && e !== null) {
-            const respons = await PostsRepository.TaxminiyNarxOlish(
-                data,
-                user?.access
-            );
-            if (
-                respons?.recommended_price !== undefined &&
-                respons?.recommended_price !== 0
-            ) {
-                setTaxminiyNarx(
-                    `Tavsiya etilgan narx: ${addPeriodToThousands(
-                        respons?.recommended_price
-                    )} `
-                );
-                setNarx(respons?.recommended_price);
-            }
-        }
-    };
-
     async function handleClickPosts(e) {
         e.preventDefault();
 
@@ -181,13 +190,13 @@ const Posts = () => {
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
             formData.append('category', category_id);
+            formData.append('document', livePosterFile?.id)
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
-            livePosterFile?.id,
             user?.access
         );
-        if (patchItems?.status === 202) {
+        if (patchItems?.status === 201) {
             Router.push('/account/MyProducts');
             const modal = Modal.success({
                 centered: true,
@@ -278,10 +287,16 @@ const Posts = () => {
                         style={{ alignItems: 'flex-start' }}>
                         <h4 className="col-md-8 m-0 p-0">Yangi mahsulot : </h4>
 
-                        <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
-                            <h4> Sotuvdagi ko'rinishi   : </h4>
-                            <Button className='btn-success' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
-
+                        <div
+                            className="col-md-4 m-0  d-flex justify-content-between p-0 "
+                            style={{ maxWidth: '370px' }}>
+                            <h4> Sotuvdagi ko'rinishi : </h4>
+                            <Button
+                                className="btn-success"
+                                data-bs-target="#staticBackdrop"
+                                data-bs-toggle="modal">
+                                <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>
+                            </Button>
                         </div>
 
                         <form
@@ -291,7 +306,6 @@ const Posts = () => {
                             className=" col-md-8 pb-5">
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                    {' '}
                                     <p>Mahsulot nomi: *</p>
                                     <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
                                         <i
@@ -347,9 +361,8 @@ const Posts = () => {
                                             style={{ cursor: 'pointer' }}>
                                             <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                             <span>
-                                                {' '}
                                                 Yuklash uchun faylni ushbu
-                                                hududga bosing.{' '}
+                                                hududga bosing.
                                             </span>
                                         </span>
                                     )}
@@ -478,26 +491,15 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                <select
-                                    style={{ alignItems: 'center' }}
-                                    className="form-select form-control rounded-3 5 fs-4 col-md-8"
-                                    onChange={(e) =>
-                                        handleChangeCategory(e.target.value)
-                                    }>
-                                    <option
-                                        selected
-                                        disabled
-                                        className="mt-2 pt-3"
-                                        value="">
-                                        Barcha Kategoriyalar
-                                    </option>
-                                    {dataCategory?.length > 0 &&
-                                        dataCategory.map((item) => (
-                                            <option value={item.id}>
-                                                {item.name}
-                                            </option>
-                                        ))}
-                                </select>
+                                <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
+                                    <Select
+                                        showSearch
+                                        style={{ width: '100%' }}
+                                        onChange={onChange}
+                                        onSearch={onSearch}>
+                                        {options}
+                                    </Select>
+                                </div>
                             </div>
                             <div className="row   mt-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
@@ -509,6 +511,7 @@ const Posts = () => {
                                     </Tooltip>
                                 </div>
                                 <input
+                                    required
                                     type={narxNomi ? 'text' : 'number'}
                                     className="form-control  rounded-3 col-md-8"
                                     name="price"

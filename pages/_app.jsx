@@ -49,7 +49,7 @@ function App({ Component, pageProps }) {
                     content="Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. "
                 />
             </Head> 
-            <NextProgress delay={300} color='red' options={{ showSpinner: false }} />
+            <NextProgress delay={300} className="progres-color" options={{ showSpinner: false }} />
             <CookiesProvider>
                 <MasterLayout>
                     <Component {...pageProps} />
