@@ -4,16 +4,17 @@ import { connect } from 'react-redux';
 import ProductDetailQuickView from '~/components/elements/detail/ProductDetailQuickView';
 import useEcomerce from '~/hooks/useEcomerce';
 import { useCookies } from 'react-cookie';
+import useCart from '~/hooks/useCart';
 
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { addProductToWishlist, addProductToCart, addItem } = useEcomerce();
     const [cookies, setCookie] = useCookies(['cart']);
+    const { setCartOneItem } = useCart()
 
     function handleAddItemToCart(e) {
         e.preventDefault();
-        // addProductToCart( product);
-        addItem(product, 'cart')
+        setCartOneItem(product.id)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',

@@ -7,29 +7,22 @@ import useEcomerce from '~/hooks/useEcomerce';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
-import { useCookies } from 'react-cookie';
-import ProductRepository from '~/repositories/ProductRepository';
-import { useState } from 'react';
+import useCart from '~/hooks/useCart';
 
 const ShoppingCartScreen = ({ ecomerce }) => {
-    const { products, getProducts } = useEcomerce();
     const state = useSelector((state) => state.auth.user);
-    const [cookies, setCookie] = useCookies(['cart']);
-    const [cartItems, setCartItems] = useState([])
+    const cartItems = useSelector(state => state.ecomerce.cartDataItems)
 
 
-    const postData = async () => {
-        const respons = await ProductRepository.postCartData(cookies?.cart)
-        if (respons) {
-            setCartItems(respons?.data?.data)
-        }
-
-    }
+    const { setAllCartItem } = useCart()
 
 
     useEffect(() => {
-        postData()
-    }, [cookies?.cart]);
+        if (cartItems.length !== JSON.parse(localStorage.getItem('cart'))) {
+            setAllCartItem();
+        }
+    }, []);
+
 
 
     const breadCrumb = [
@@ -44,9 +37,9 @@ const ShoppingCartScreen = ({ ecomerce }) => {
 
 
 
- 
 
-  
+
+
 
     // View
     let contentView;
@@ -57,7 +50,6 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                     <div className="ps-section__content">
                         <ModuleEcomerceCartItems
                             cartItems={cartItems}
-                            func={postData}
                         />
                         <div className="ps-section__cart-actions">
                             <Link href="/">
@@ -72,15 +64,15 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                                     source={cartItems}
                                 />
                                 {state !== null ? (
-                                  <Link href='/account/checkout' as='/account/checkout'>
+                                    <Link href='/account/checkout' as='/account/checkout'>
                                         <a className="ps-btn ps-btn--fullwidth"
-                                        
+
                                         >
                                             Sotib olish
                                         </a>
 
-                                  </Link>
-                                  
+                                    </Link>
+
                                 ) : (
                                     <Link href="/account/register-user">
                                         <a className="ps-btn ps-btn--fullwidth">

@@ -5,17 +5,17 @@ import { Modal, Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
 import { useCookies } from 'react-cookie';
 import ProductRepository from '~/repositories/ProductRepository';
+import useCart from '~/hooks/useCart';
 
-const ModuleEcomerceCartItems = ({ cartItems, func }) => {
+const ModuleEcomerceCartItems = ({ cartItems }) => {
     const { removeItem } = useEcomerce();
     const [cookies, setCookie] = useCookies(['cart']);
+    const { removeCartOneItem } = useCart()
 
     const handleRemoveItem = async (e, item) => {
         e.preventDefault();
-        const dataWithoutRemovedItem = removeItem(item, 'cart');
-        console.log("Before \response => ", dataWithoutRemovedItem);
-            const respons = ProductRepository.postCartData(dataWithoutRemovedItem);
-            console.log("respons = > ", respons)
+        // removeItem(item, 'cart');
+        removeCartOneItem(item.id)
     };
 
     function addPeriodToThousands(number) {

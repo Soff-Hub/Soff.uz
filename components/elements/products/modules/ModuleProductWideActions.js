@@ -3,13 +3,18 @@ import { connect } from 'react-redux';
 import { Modal } from 'antd';
 import useProduct from '~/hooks/useProduct';
 import useEcomerce from '~/hooks/useEcomerce';
+import useCart from '~/hooks/useCart';
 
 const ModuleProductWideActions = ({ ecomerce, product }) => {
     const { price } = useProduct();
     const { addItem } = useEcomerce();
+    const { setCartOneItem } = useCart()
+
+
     function handleAddItemToCart(e) {
         e.preventDefault();
-        addItem(product, ecomerce.cartItems, 'cart');
+        // addItem(product, ecomerce.cartItems, 'cart');
+        setCartOneItem(product)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',

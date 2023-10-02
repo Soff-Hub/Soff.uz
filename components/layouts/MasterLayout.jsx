@@ -16,9 +16,6 @@ const MasterLayout = ({ children }) => {
 
     function initEcomerceValues() {
         if (cookies) {
-            if (cookies.cart) {
-                dispatch(setCartItems(cookies.cart));
-            }
             if (cookies.wishlist) {
                 dispatch(setWishlistTtems(cookies.wishlist));
             }

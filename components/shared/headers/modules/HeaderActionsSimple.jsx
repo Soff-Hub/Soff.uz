@@ -6,6 +6,7 @@ import AccountQuickLinks from '~/components/shared/headers/modules/AccountQuickL
 
 const HeaderActionsSimple = (props) => {
     const { compare, wishlist, auth } = props;
+    
     // views
     let headerAuthView;
     if (auth.isLoggedIn && Boolean(auth.isLoggedIn) === true) {
