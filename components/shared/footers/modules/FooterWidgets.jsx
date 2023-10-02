@@ -25,7 +25,7 @@ const FooterWidgets = () => {
                 <div className="footer-icon-parent-div">
                     <Link href="#">
                         <a className="footer-left-a">
-                            <i class="fa-solid fa-location-dot fs-1"></i>
+                            <i className="fa-solid fa-location-dot fs-1"></i>
                         </a>
                     </Link>
                     <div
@@ -54,7 +54,7 @@ const FooterWidgets = () => {
                 <div className="footer-icon-parent-div">
                     <Link href="#">
                         <a className="footer-left-a">
-                            <i class="fa-solid fa-phone fs-1"></i>
+                            <i className="fa-solid fa-phone fs-1"></i>
                         </a>
                     </Link>
                     <div
@@ -76,7 +76,7 @@ const FooterWidgets = () => {
                 <div className="footer-icon-parent-div">
                     <Link href="#">
                         <a className="footer-left-a">
-                            <i class="fa-solid fa-envelope fs-1"></i>
+                            <i className="fa-solid fa-envelope fs-1"></i>
                         </a>
                     </Link>
                     <div
@@ -121,7 +121,7 @@ const FooterWidgets = () => {
                             <a
                                 target="_blank"
                                 className="footer-left-a">
-                                <i class="fa-brands fa-facebook fs-1"></i>
+                                <i className="fa-brands fa-facebook fs-1"></i>
                             </a>
                         </Link>
                     </li>
@@ -130,7 +130,7 @@ const FooterWidgets = () => {
                             <a
                                 target="_blank"
                                 className="footer-left-a">
-                                <i class="fa-brands fa-square-instagram fs-1"></i>
+                                <i className="fa-brands fa-square-instagram fs-1"></i>
                             </a>
                         </Link>
                     </li>
@@ -139,7 +139,7 @@ const FooterWidgets = () => {
                             <a
                                 target="_blank"
                                 className="footer-left-a">
-                                <i class="fa-brands fa-telegram fs-1"></i>
+                                <i className="fa-brands fa-telegram fs-1"></i>
                             </a>
                         </Link>
                     </li>
@@ -148,7 +148,7 @@ const FooterWidgets = () => {
                             <a
                                 target="_blank"
                                 className="footer-left-a">
-                                <i class="fa-brands fa-square-x-twitter fs-1"></i>
+                                <i className="fa-brands fa-square-x-twitter fs-1"></i>
                             </a>
                         </Link>
                     </li>
