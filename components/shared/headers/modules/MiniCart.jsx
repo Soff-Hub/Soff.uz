@@ -15,6 +15,7 @@ const MiniCart = () => {
         e.preventDefault();
         removeCartOneItem(item.id);
     }
+
     const amount = calculateAmount(data);
     function addPeriodToThousands(number) {
         const numStr = String(number);

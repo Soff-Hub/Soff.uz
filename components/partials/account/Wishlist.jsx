@@ -1,6 +1,7 @@
 import React, {useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import ProductCart from '~/components/elements/products/ProductCart';
+
 import { Modal } from 'antd';
 import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
@@ -97,7 +98,7 @@ const Wishlist = ({ ecomerce }) => {
                                                 <p>
                                                     {addPeriodToThousands(
                                                         product.discount_price
-                                                    )}{' '}
+                                                    )}
                                                     so'm
                                                 </p>
                                             ) : (
@@ -105,13 +106,13 @@ const Wishlist = ({ ecomerce }) => {
                                                     <del>
                                                         {addPeriodToThousands(
                                                             product.price
-                                                        )}{' '}
+                                                        )}
                                                         so'm
                                                     </del>
                                                     <p>
                                                         {addPeriodToThousands(
                                                             product.discount_price
-                                                        )}{' '}
+                                                        )}
                                                         so'm
                                                     </p>
                                                 </>

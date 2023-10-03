@@ -199,30 +199,30 @@
 }
 
 .ps-list--dot {
-    margin: 0;
-    padding: 0;
+    margin: 0 !important;
+    padding: 0 !important;
     margin-bottom: 2rem;
     list-style-type: none;
 
-    li {
-        margin-bottom: 1rem;
-        position: relative;
-        padding-left: 20px;
-        font-size: 1.4rem;
-        color: #000000;
-        line-height: 20px;
+    // li {
+    //     // margin-bottom: 1rem;
+    //     // position: relative;
+    //     // padding-left: 20px;
+    //     // font-size: 1.4rem;
+    //     // // color: #000000;
+    //     // line-height: 20px;
 
-        &:before {
-            content: '';
-            position: absolute;
-            top: 5px;
-            left: 0;
-            width: 6px;
-            height: 6px;
-            background-color: #000000;
-            @include border-radius(50%);
-        }
-    }
+    //     &:before {
+    //         content: '';
+    //         position: absolute;
+    //         top: 5px;
+    //         left: 0;
+    //         width: 6px;
+    //         height: 6px;
+    //         background-color: #000000;
+    //         @include border-radius(50%);
+    //     }
+    // }
 }
 
 .ps-list--plus {

@@ -45,7 +45,7 @@ const Posts = () => {
             url: '/',
         },
         {
-            text: "Mening mahsulotlarim Qo'shish",
+            text: "Mahsulot qo’shish",
         },
     ];
 
@@ -121,7 +121,7 @@ const Posts = () => {
     const options = [];
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
-            <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
+            <Option key={tagItems[i].name}   >{tagItems[i].name}</Option>
         );
     }
 
@@ -493,11 +493,14 @@ const Posts = () => {
                                 </div>
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
                                     <Select
+                                    mode='tags'
                                         showSearch
                                         style={{ width: '100%' }}
                                         onChange={onChange}
-                                        onSearch={onSearch}>
+                                        onSearch={onSearch}
+                                        >
                                         {options}
+                                        
                                     </Select>
                                 </div>
                             </div>

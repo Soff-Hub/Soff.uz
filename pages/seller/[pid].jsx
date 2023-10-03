@@ -5,6 +5,7 @@ import { baseUrl } from '~/repositories/Repository';
 import Product from '~/components/elements/products/Product';
 
 const SellerPage = ({ seller }) => {
+ 
 
     console.log('pid', seller.results);
     const breadCrumb = [
@@ -27,7 +28,7 @@ const SellerPage = ({ seller }) => {
             <div className="ps-product-list mb-5">
                 <div className="container">
                     <h4 className="pt-5">
-                        Muallif : {seller?.results[0]?.seller?.first_name}
+                        Muallif : {seller?.results[0]?.seller?.first_name} {seller?.results[0]?.seller?.last_name}
                     </h4>
 
                     <div className="row">

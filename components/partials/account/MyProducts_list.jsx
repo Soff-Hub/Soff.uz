@@ -240,7 +240,7 @@ function MyProductsLists() {
 
             </div>
         } : {
-            title: 'Harakatlar',
+            title: 'Hujjat',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
@@ -305,27 +305,37 @@ function MyProductsLists() {
                                                                 )
                                                             }
                                                         </select>
-                                                        <select
-                                                            className='form-select col-md-5 rounded-3 py-3 fs-3'
-                                                            onChange={(e) => setTagName(e.target.value)}
-                                                            style={{ height: "50px" }}
-                                                        >
-                                                            <option value="">Teglar</option>
-                                                            {tagItems?.length > 0 &&
-                                                                tagItems.map((item) => (
-                                                                    <option key={item.id} value={item.id}>
-                                                                        {item.name}
-                                                                    </option>
-                                                                ))}
+                                                        {
+                                                            user?.role === "seller" ?
+                                                                <select
+                                                                    className='form-select col-md-5 rounded-3 py-3 fs-3'
+                                                                    onChange={(e) => setTagName(e.target.value)}
+                                                                    style={{ height: "50px" }}
+                                                                >
+                                                                    <option value="">Teglar</option>
+                                                                    {tagItems?.length > 0 &&
+                                                                        tagItems.map((item) => (
+                                                                            <option key={item.id} value={item.id}>
+                                                                                {item.name}
+                                                                            </option>
+                                                                        ))}
 
-                                                        </select>
+                                                                </select>
+                                                                :
+                                                                <></>
+                                                        }
+                                                        {
+                                                            user?.role === "seller" ?
+                                                                <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
+                                                                    <option className='fs-3' selected value="">Barcha holatlar</option>
+                                                                    <option className='fs-3' value="moderation">Moderatsiya</option>
+                                                                    <option className='fs-3' value="approved">Tasdiqlangan</option>
+                                                                    <option className='fs-3' value="cancelled">Bekor qilingan</option>
+                                                                </select>
+                                                                :
+                                                                <></>
+                                                        }
 
-                                                        <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setSelectValStatus(e.target.value)}  >
-                                                            <option className='fs-3' selected value="">Barcha holatlar</option>
-                                                            <option className='fs-3' value="moderation">Moderatsiya</option>
-                                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                                        </select>
                                                         <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
                                                     </div>
                                                 </div>
@@ -397,8 +407,8 @@ function MyProductsLists() {
                                             </div>
                                         </div>
                                         :
-                                        <div className='ps-product--detail ps-product--fullwidth' style={{ height: "690px", display:"grid", placeContent:"center" }}>
-                                            <div className="spinner-border " role="status" style={{width:"150px", height:"150px"}} >
+                                        <div className='ps-product--detail ps-product--fullwidth' style={{ height: "690px", display: "grid", placeContent: "center" }}>
+                                            <div className="spinner-border " role="status" style={{ width: "150px", height: "150px" }} >
                                                 <span className="visually-hidden">Loading...</span>
                                             </div>
                                         </div>

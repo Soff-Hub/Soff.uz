@@ -16,8 +16,9 @@ class HeaderMobileElectronic extends Component {
                         <Link href="/">
                             <a className="ps-logo">
                                 <img
-                                    src="/static/img/alldata_logo.png"
+                                    src="/static/img/soff/soff_green_white.png"
                                     alt="soff"
+                                    width={100}
                                 />
                             </a>
                         </Link>

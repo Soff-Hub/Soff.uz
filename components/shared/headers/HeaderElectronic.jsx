@@ -8,6 +8,9 @@ import { stickyHeader } from '~/utilities/common-helpers';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
 
+import MenuCategory from '~/components/elements/menu/MenuCategory';
+
+
 const HeaderElectronic = () => {
     useEffect(() => {
         if (process.browser) {
@@ -17,15 +20,19 @@ const HeaderElectronic = () => {
 
     const [categoryData, setCategoryData] = useState([])
     const [topCategoryData, setTopCategoryData] = useState([])
+    const [count, setCount] = useState('')
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
-            `customer/category-list/`
+            `seller/admin/category-parent/`
         );
         if (responseData ) {
-            setCategoryData(responseData);
+            setCount(responseData.data.count)
+            setCategoryData(responseData.data.results)
+     
         }
     }
+
 
     async function getTopCategory(){
         const responsData = await ProductRepository.getTopCategories()
@@ -38,6 +45,7 @@ const HeaderElectronic = () => {
         getCategoryFunc()
         getTopCategory()
     }, [])
+
     return (
         <header
             className="header header--standard header--electronic"
@@ -60,9 +68,9 @@ const HeaderElectronic = () => {
                                 <span> Kategoriya </span>
                             </div>
                             <div className="menu__content">
-                                <Menu
-                                    source={categoryData}
-                                    className="menu--dropdown"
+                                <MenuCategory
+                                  source={categoryData}
+                                  className="menu--dropdown"
                                 />
                             </div>
                         </div>

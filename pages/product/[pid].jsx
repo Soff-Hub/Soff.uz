@@ -73,7 +73,6 @@ const ProductDefaultPage = (product) => {
         <>
             <PageContainer
                 title={product.product ? product.product.title : 'Loading...'}>
-
                 <Meta
                     title={product?.product?.title}
                     image={product?.product?.iamges?.[0]?.image_url}
@@ -110,31 +109,64 @@ const ProductDefaultPage = (product) => {
 };
 
 export async function getStaticPaths() {
-    const res = await fetch(baseUrl + 'customer/documents/');
-    const documents = await res.json();
-    const paths = documents.results.map((item) => ({
-        params: { pid: item.slug },
-    }));
+    try {
+        const res = await fetch(baseUrl + 'customer/documents/');
+        const documents = await res.json();
+        const paths = documents.results.map((item) => ({
+            params: { pid: item.slug },
+        }));
 
-    return { paths, fallback: false };
+        return { paths, fallback: false };
+    } catch (error) {
+        console.error('Error fetching paths:', error);
+        throw error; // Rethrow the error to see it in the console
+    }
 }
 
+// export async function getStaticProps({ params }) {
+//     const resquest = [Axios.get(baseUrl + `customer/documents/${params.pid}`)];
+
+//     const respons = await Promise.all(resquest);
+
+//     const successData = [];
+
+//     for (let i = 0; i < respons.length; i++) {
+//         if (respons[i].status === 200) {
+//             successData.push(respons[i].data);
+//         }
+//     }
+
+//     return {
+//         props: {
+//             product: successData[0] || null,
+//         },
+//         revalidate: 60,
+//     };
+// }
+
 export async function getStaticProps({ params }) {
-    const resquest = [Axios.get(baseUrl + `customer/documents/${params.pid}`)];
+    try {
+        const response = await Axios.get(
+            baseUrl + `customer/documents/${params.pid}`
+        );
 
-    const respons = await Promise.all(resquest);
-
-    const successData = [];
-
-    for (let i = 0; i < respons.length; i++) {
-        if (respons[i].status === 200) {
-            successData.push(respons[i].data);
+        if (response.status === 200) {
+            return {
+                props: {
+                    product: response.data || null,
+                },
+                revalidate: 60,
+            };
+        } else {
+            console.error('Error fetching product data:', response.statusText);
         }
+    } catch (error) {
+        console.error('Error fetching product data:', error);
     }
 
     return {
         props: {
-            product: successData[0] || null,
+            product: null,
         },
         revalidate: 60,
     };
