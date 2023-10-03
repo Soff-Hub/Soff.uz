@@ -22,23 +22,13 @@ const HeaderElectronic = () => {
     const [count, setCount] = useState('')
 
     async function getCategoryFunc() {
-        console.log('ishladi');
         const responseData = await CollectionRepository.getCategoryData(
-            `customer/category-list/`
+            `seller/admin/category-parent/`
         );
         if (responseData ) {
             setCount(responseData.data.count)
             setCategoryData(responseData.data.results)
      
-        }
-    }
-
-    async function getCategoryDataCount() {
-        const respons = await CollectionRepository.getCategoryDataCount(
-            `customer/category-list/?limit=${count}&offset=1`
-        )
-        if (respons) {
-            setCategoryData(respons);
         }
     }
 
@@ -53,7 +43,6 @@ const HeaderElectronic = () => {
     useEffect (() => {
         getCategoryFunc()
         getTopCategory()
-            getCategoryDataCount()
     }, [])
 
     return (

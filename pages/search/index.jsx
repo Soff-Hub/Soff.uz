@@ -40,13 +40,13 @@ const SearchPage = () => {
         console.log(query.keyword);
 
         handleSetKeyword();
-        if (query && query.keyword) {
-            const queries = {
-                _limit: pageSize,
-                title_contains: query.keyword,
-            };
-            getProducts(queries);
-        }
+        // if (query && query.keyword) {
+        //     const queries = {
+        //         _limit: pageSize,
+        //         title_contains: query.keyword,
+        //     };
+        //     getProducts(queries);
+        // }
     }, [query.keyword, query]);
 
 

@@ -171,7 +171,6 @@ class ProductRepository {
             `${baseUrl}customer/top-categories/`
         )
             .then((response) => {
-                // console.log(response.data.results);
                 return response.data.results;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
