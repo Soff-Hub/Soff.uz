@@ -85,6 +85,11 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-shop-lock',
     },
     {
+        text: 'Sotib olingan',
+        url: '/account/MyProductsSeller',
+        icon: 'fa-solid fa-bag-shopping',
+    },
+    {
         text: 'Yangi mahsulot',
         url: '/account/MyProducts/Posts',
         icon: 'fa-solid fa-circle-plus',

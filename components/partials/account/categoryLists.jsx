@@ -59,20 +59,28 @@ function CategoryLists() {
         });
         GetItemsProducts(1)
     }
+
     async function handleItemsPost(values) {
         const formData = new FormData()
-        formData.append('image', file)
-        formData.append('icon', values.icon)
+        if (file) {
+            formData.append('image', file)
+        }
+        if (values.icon) {
+            formData.append('icon', values.icon)
+        }
         formData.append('name', values.name)
         if (tagName) {
             formData.append('parent', tagName)
         }
         const postsItems = await PostsRepository.PostsCategory(formData, user?.access);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  yangi malumot qo'shdingiz`,
-        });
+        if (postsItems?.status===201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz  yangi malumot qo'shdingiz`,
+            });
+
+        }
         GetItemsProducts(1)
     }
 
@@ -114,13 +122,11 @@ function CategoryLists() {
         GetItemsProducts(1)
 
     }
+
     async function handleClickChecked(item) {
         const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id, user?.access)
         GetItemsProducts(1)
     }
-
-
-
 
     function handleClickPostsImg(e) {
         setFile(e.target.files[0])
@@ -183,7 +189,6 @@ function CategoryLists() {
                         />
                     );
                 }
-
                 return <></>;
             },
         },
@@ -204,6 +209,7 @@ function CategoryLists() {
             </div>
         },
     ];
+
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
@@ -231,7 +237,7 @@ function CategoryLists() {
 
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
-                    <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                    <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         {
                             deleteIdEdit?.image ? deleteIdEdit?.image :
                                 <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
@@ -272,7 +278,7 @@ function CategoryLists() {
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>
                     <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         {
-                            file ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
+                            file ? "soff.uz//b30b856b-606c-4001-8bee-4839557c" :
                                 <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
                         }
                         <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
@@ -304,7 +310,7 @@ function CategoryLists() {
                         type='text'
                         placeholder="Nomi"
                         className="form-control rounded-3"
-                        name='name'
+                        name='`name`'
                     />
                 </ModalDeletePostEdit>
             </div>
