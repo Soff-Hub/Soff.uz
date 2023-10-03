@@ -3,7 +3,6 @@ import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDe
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
-import ModuleDetailActionsMobile from '~/components/elements/detail/modules/ModuleDetailActionsMobile';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -63,7 +62,6 @@ const ProductDetailFullwidth = ({ product }) => {
                                 </div>
                             ))}
                     </div>
-                    <ModuleDetailActionsMobile product={product} />
                 </div>
             </div>
             <DefaultDescription product={product} />

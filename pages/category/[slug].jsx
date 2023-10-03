@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import ProductItems from '~/components/partials/product/ProductItems';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 
 import ShopItems from '~/components/partials/shop/ShopItems';
 

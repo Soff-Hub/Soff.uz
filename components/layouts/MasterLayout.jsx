@@ -3,7 +3,6 @@ import { FloatButton } from 'antd';
 import { useDispatch } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import {
-    setCartItems,
     setCompareItems,
     setWishlistTtems,
 } from '~/store/ecomerce/action';

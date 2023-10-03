@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Rating from '~/components/elements/Rating';
 import useProduct from '~/hooks/useProduct';
 
 const ProductSearchResult = ({ product }) => {

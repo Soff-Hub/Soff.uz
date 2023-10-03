@@ -1,11 +1,8 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 
 function ElectronicBanner() {
-    // constructor(props) {
-    //     super(props);
-    // }
 
     const [bannerItem, setBannerItems] = useState([]);
 
@@ -20,20 +17,11 @@ function ElectronicBanner() {
         getBannerItems();
     }, []);
 
-    const carouselSettings = {
-        dots: false,
-        arrows: false,
-        infinite: true,
-        speed: 1000,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-    };
 
     return (
         <section className="ps-home-banner">
             <div className="container">
                 <div className="ps-section__left">
-                    {/* <Slider {...carouselSettings}> */}
                     <div className="item banner-left-one">
                         {bannerItem?.[0]?.image ? (
                             <Link target="_blank" href={`${bannerItem?.[0].url}`}>

@@ -1,17 +1,8 @@
-import React, { Component, useEffect, useState } from 'react';
-import Slider from 'react-slick';
-import { connect } from 'react-redux';
-import { getProductsByCollectionHelper } from '~/utilities/strapi-fetch-data-helpers';
+import React, { useEffect, useState } from 'react';
 import Product from '~/components/elements/products/Product';
-import { carouselStandard } from '~/utilities/carousel-helpers';
-import NextArrow from '~/components/elements/carousel/NextArrow';
-import PrevArrow from '~/components/elements/carousel/PrevArrow';
-import ProductRepository from '~/repositories/ProductRepository';
 
 const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
-    // console.log('kk' , pid);
     const [relatedProduct, setRelatedProduct] = useState(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (data) {

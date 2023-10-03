@@ -7,8 +7,6 @@ import Menu from '~/components/elements/menu/Menu';
 import { stickyHeader } from '~/utilities/common-helpers';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
-// import axios from 'axios';
-// import { baseUrl } from '~/repositories/Repository';
 
 const HeaderElectronic = () => {
     useEffect(() => {
@@ -40,8 +38,6 @@ const HeaderElectronic = () => {
         getCategoryFunc()
         getTopCategory()
     }, [])
-
-    // console.log(topCategoryData, categoryData);
     return (
         <header
             className="header header--standard header--electronic"
@@ -90,32 +86,5 @@ const HeaderElectronic = () => {
         </header>
     );
 };
-
-// export async function getStaticProps() {
-//     const requests = [
-//       axios.get("https://api.soff.uz/api/v1/customer/top-categories/"),
-//       axios.get("https://api.soff.uz/api/v1/customer/category-list/"),
-//     ];
-  
-//     const responses = await Promise.all(requests);
-  
-//     const successdata = [];
-  
-//     for (let i = 0; i < responses.length; i++) {
-//       if (responses[i].status === 200) {
-//         successdata.push(responses[i].data);
-//       }
-//     }
-
-//     console.log(responses);
-  
-//     return {
-//       props: {
-//         topCategoryData: successdata[0] || null,
-//         // categoryData: successdata[1] || null,
-//       },
-//       revalidate: 60,
-//     };
-//   }
 
 export default HeaderElectronic;

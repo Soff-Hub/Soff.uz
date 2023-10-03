@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-import CurrencyDropdown from './modules/CurrencyDropdown';
 import Link from 'next/link';
-import LanguageSwicher from './modules/LanguageSwicher';
 import MobileHeaderActions from './modules/MobileHeaderActions';
 
 class HeaderMobileElectronic extends Component {

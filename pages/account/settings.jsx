@@ -3,7 +3,6 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import Settings from '~/components/partials/account/Settings';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
 import LoginPage from './login';
@@ -27,7 +26,6 @@ const AccountSettingsPage = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Settings />
                 </div>
-                <Newletters layout="container" />
             </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
 
     );

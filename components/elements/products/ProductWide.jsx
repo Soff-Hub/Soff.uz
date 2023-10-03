@@ -1,11 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
-import { StrapiProductThumbnail } from '~/utilities/product-helper';
 import ModuleProductWideActions from '~/components/elements/products/modules/ModuleProductWideActions';
 import useProduct from '~/hooks/useProduct';
 
 const ProductWide = ({ product }) => {
-    const { thumbnailImage, price, title, badge } = useProduct();
+    const { thumbnailImage, title } = useProduct();
     return (
         <div className="ps-product ps-product--wide">
 
