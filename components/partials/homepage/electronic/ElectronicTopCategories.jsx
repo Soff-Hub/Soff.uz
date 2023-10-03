@@ -7,10 +7,10 @@ function ElectronicTopCategories() {
 
     async function getCategoryData() {
         const responsData = await CollectionRepository.getCategoryData(
-            `customer/category-list/`
+            `customer/category-month/`
         );
         if (responsData) {
-            getCategory(responsData);
+            getCategory(responsData.data.results);
         }
     }
 

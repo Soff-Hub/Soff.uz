@@ -44,7 +44,7 @@ const Menu = ({ source, className }) => {
             </li>
         );
     }
-    return <ul className={className}>{menuView}</ul>;
+    return <ul className={className} >{menuView}</ul>;
 };
 
 export default Menu;

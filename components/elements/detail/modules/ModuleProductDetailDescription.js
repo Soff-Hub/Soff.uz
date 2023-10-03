@@ -3,7 +3,7 @@ var parse = require('html-react-parser');
 
 const ModuleProductDetailDescription = ({ product }) => (
     <div className="ps-product__desc">
-        <ul className="ps-list--dot">
+        <ul className="ps-list--dot" >
             {
                 <li>
                     {product?.short_description
@@ -13,7 +13,7 @@ const ModuleProductDetailDescription = ({ product }) => (
             }
         </ul>
         {product?.category?.name && (
-            <ul>
+            <ul style={{padding:'0', margin:'0'}}>
                 <li>
                     <strong> Kategoriyasi</strong> : {product?.category?.name}
                 </li>
