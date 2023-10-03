@@ -85,6 +85,11 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-shop-lock',
     },
     {
+        text: 'Sotib olingan',
+        url: '/account/MyProductsSeller',
+        icon: 'fa-solid fa-bag-shopping',
+    },
+    {
         text: 'Yangi mahsulot',
         url: '/account/MyProducts/Posts',
         icon: 'fa-solid fa-circle-plus',
@@ -127,11 +132,6 @@ const PageContainer = ({
 }) => {
     let titleView;
 
-    // if (title !== '') {
-    //     titleView = process.env.title + ' | ' + title;
-    // } else {
-    //     titleView = process.env.title + ' | ' + process.env.title;
-    // }
 
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();

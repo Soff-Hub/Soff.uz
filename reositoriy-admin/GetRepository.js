@@ -135,6 +135,29 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getMyProductsSeller(page, category,  date, token) {
+        const endPoint = `approved-product/?page=${page}&category=${
+            category || ''
+        }&start_date=${
+            date || ''
+        }`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
     async getMyProductsView(id, token) {
         const endPoint = `product-list/${id}`;
         const reponse = await Repository({

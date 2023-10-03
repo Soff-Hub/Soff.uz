@@ -1,15 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router';
-import ProductRepository from '~/repositories/ProductRepository';
-import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
-import HeaderDefault from '~/components/shared/headers/HeaderDefault';
 import PageContainer from '~/components/layouts/PageContainer';
-import HeaderMobileProduct from '~/components/shared/header-mobile/HeaderMobileProduct';
 
-import HeaderElectronic from '~/components/shared/headers/HeaderElectronic';
 import { baseUrl } from '~/repositories/Repository';
 import Axios from 'axios';
 import Meta from '~/components/shared/headers/Meta';

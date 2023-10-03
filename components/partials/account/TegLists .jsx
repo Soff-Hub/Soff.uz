@@ -158,11 +158,6 @@ function TegLists() {
                         defaultValue={deleteIdEdit?.first_name}
                         onChange={(e) => setSelectVal((prev) => ({ ...prev, name: e.target.value }))}
                     />
-                    {/* <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, active: e.target.value }))}>
-                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
-                        <option className='fs-3' value="true">Aktiv holat</option>
-                        <option className='fs-3' value="false">Aktiv emas</option>
-                    </select> */}
                 </ModalDeletePostEdit>
             </div>
         </section>

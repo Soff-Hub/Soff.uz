@@ -88,13 +88,6 @@ const PanelCartMobile = ({ ecomerce, setMenuDrawer,
         );
     } else {
         cartItemsView = <p>Savat bo'sh!</p>;
-        // footerView = (
-        //     <div className="ps-cart__footer">
-        //         <Link href="/shop">
-        //             <a className="ps-btn ps-btn--fullwidth">Qaytish</a>
-        //         </Link>
-        //     </div>
-        // );
     }
     return (
         <div className="ps-cart--mobile">

@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Product from '~/components/elements/products/Product';
 import ProductWide from '~/components/elements/products/ProductWide';
-import ModuleShopSortBy from '~/components/partials/shop/modules/ModuleShopSortBy';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 
-/*
- * NOTICE!
- * This component just dipslay product items, not fetching data.
- * */
+
 
 const ProductItems = ({ products, columns = 4 }) => {
     const [listView, setListView] = useState(true);
@@ -94,7 +90,6 @@ const ProductItems = ({ products, columns = 4 }) => {
                     Products found
                 </p>
                 <div className="ps-shopping__actions">
-                    <ModuleShopSortBy />
                     <div className="ps-shopping__view">
                         <p>View</p>
                         <ul className="ps-tab-list">

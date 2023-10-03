@@ -3,7 +3,6 @@ import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDe
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
-import ModuleDetailActionsMobile from '~/components/elements/detail/modules/ModuleDetailActionsMobile';
 import DefaultDescription from './description/DefaultDescription';
 import { useState } from 'react';
 import  Router  from 'next/router';
@@ -62,7 +61,6 @@ const ProductDetailQuickView = ({ product }) => {
                                 </div>
                             ))}
                     </div>
-                    <ModuleDetailActionsMobile />
                 </div>
             </div>
             <DefaultDescription product={product} />

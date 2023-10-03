@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import Link from 'next/link';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
-import { useCookies } from 'react-cookie';
 
 const ShoppingCart = () => {
   

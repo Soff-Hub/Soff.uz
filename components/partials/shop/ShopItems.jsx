@@ -12,10 +12,6 @@ const ShopItems = ({
     data,
     dataCount,
     setDataCount,
-    chaildId,
-    parentId,
-    parentPagen, 
-    chaildPagen
 }) => {
     const Router = useRouter();
     const { query } = Router;
