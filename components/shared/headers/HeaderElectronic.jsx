@@ -7,7 +7,7 @@ import Menu from '~/components/elements/menu/Menu';
 import { stickyHeader } from '~/utilities/common-helpers';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
-import MenuCategories from './modules/MenuCategories';
+
 import MenuCategory from '~/components/elements/menu/MenuCategory';
 
 
