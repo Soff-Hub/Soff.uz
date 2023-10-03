@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { Drawer } from 'antd';
 import PanelMenu from '../panel/PanelMenu';
@@ -21,12 +21,6 @@ function NavigationList() {
         setCategoriesDrawer(false);
     };
 
-    const handleShowMenuDrawer = () => {
-        setMenuDrawer(!menuDrawer);
-        setCartDrawer(false);
-        setSearchDrawer(false);
-        setCategoriesDrawer(false);
-    };
 
     const handleShowCartDrawer = () => {
         setMenuDrawer(false);

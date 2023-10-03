@@ -3,7 +3,6 @@ import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import Invoices from '~/components/partials/account/ProductsLists';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
@@ -29,7 +28,6 @@ const InvoicePage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Invoices />
             </div>
-            <Newletters layout="container" />
         </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
     );
 };

@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
-import { Checkbox } from 'antd';
-import { Radio, Input } from 'antd';
+import { Radio } from 'antd';
 import { useRouter } from 'next/router';
 
 const WidgetShopBrands = () => {

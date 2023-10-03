@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { Modal } from 'antd';
-import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
 import  Router  from 'next/router';

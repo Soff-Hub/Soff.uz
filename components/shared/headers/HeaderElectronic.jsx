@@ -10,6 +10,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import MenuCategories from './modules/MenuCategories';
 import MenuCategory from '~/components/elements/menu/MenuCategory';
 
+
 const HeaderElectronic = () => {
     useEffect(() => {
         if (process.browser) {
@@ -93,32 +94,5 @@ const HeaderElectronic = () => {
         </header>
     );
 };
-
-// export async function getStaticProps() {
-//     const requests = [
-//       axios.get("https://api.soff.uz/api/v1/customer/top-categories/"),
-//       axios.get("https://api.soff.uz/api/v1/customer/category-list/"),
-//     ];
-  
-//     const responses = await Promise.all(requests);
-  
-//     const successdata = [];
-  
-//     for (let i = 0; i < responses.length; i++) {
-//       if (responses[i].status === 200) {
-//         successdata.push(responses[i].data);
-//       }
-//     }
-
-//     console.log(responses);
-  
-//     return {
-//       props: {
-//         topCategoryData: successdata[0] || null,
-//         // categoryData: successdata[1] || null,
-//       },
-//       revalidate: 60,
-//     };
-//   }
 
 export default HeaderElectronic;

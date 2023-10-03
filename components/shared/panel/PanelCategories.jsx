@@ -1,13 +1,10 @@
-import React, { Component } from 'react';
-import { Menu } from 'antd';
+import React from 'react';
 import Link from 'next/link';
-import categories from '../../../public/static/data/static-categories.json';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import Router from 'next/router';
 
-const { SubMenu } = Menu;
 
 function PanelCategories({
     setMenuDrawer,

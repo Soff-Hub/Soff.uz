@@ -1,13 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { connect, useSelector } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
-import { calculateAmount } from '~/utilities/ecomerce-helpers';
-import { useCookies } from 'react-cookie';
 
 const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
-    const { products, getProducts } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
     const state = useSelector(state => state?.auth?.shop)
 
 

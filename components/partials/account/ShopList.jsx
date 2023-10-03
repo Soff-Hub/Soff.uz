@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Modal, Table } from 'antd';

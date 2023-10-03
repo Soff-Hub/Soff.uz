@@ -2,15 +2,13 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { connect } from 'react-redux';
 import ProductDetailQuickView from '~/components/elements/detail/ProductDetailQuickView';
-import useEcomerce from '~/hooks/useEcomerce';
-import { useCookies } from 'react-cookie';
 import useCart from '~/hooks/useCart';
+import useWishlist from '~/hooks/useWishlist';
 
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
-    const { addProductToWishlist, addProductToCart, addItem } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
     const { setCartOneItem } = useCart()
+    const { addSavedItem, wishlist } = useWishlist()
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -25,7 +23,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
-        addItem(product, 'wishlist')
+        addSavedItem(product.id)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -43,7 +41,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
         e.preventDefault();
         setIsQuickView(false);
     };
-    
+
     return (
         <ul className="ps-product__actions">
             <li>
@@ -73,11 +71,11 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                     data-placement="top"
                     title="Tanlanganlarga qo'shish"
                     onClick={handleAddItemToWishlist}>
-                    <i className={`icon-heart   ${cookies?.wishlist?.some(item => Number(item.id) === Number(product?.id)) ? 'text-danger' : ''} `}></i>
+                    <i className={`icon-heart   ${wishlist?.some(item => Number(item.id) === Number(product?.id)) ? 'text-danger' : ''} `}></i>
                 </a>
             </li>
             <Modal
-                centered
+                centeredwishlist
                 footer={null}
                 width={1024}
                 onCancel={(e) => handleHideQuickView(e)}

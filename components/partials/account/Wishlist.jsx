@@ -1,17 +1,25 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
 import ProductCart from '~/components/elements/products/ProductCart';
-import ProductRepository from '~/repositories/ProductRepository';
+
 import { Modal } from 'antd';
-import { useCookies } from 'react-cookie';
+import useWishlist from '~/hooks/useWishlist';
+import useCart from '~/hooks/useCart';
 
 const Wishlist = ({ ecomerce }) => {
-    const [cookies, setCookie] = useCookies(['wishlist']);
-    const { addItem, removeItem } = useEcomerce();
-    const [idArr, setIdArr] = useState([]);
 
-    const state = useSelector((state) => state);
+    const { removeSavedItem } = useWishlist()
+    const { setCartOneItem } = useCart()
+
+    const { wishlist } = useSelector((state) => state.ecomerce);
+    const { setAllSaved } = useWishlist()
+
+
+    useEffect(() => {
+        if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
+            setAllSaved();
+        }
+    }, []);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -33,7 +41,7 @@ const Wishlist = ({ ecomerce }) => {
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
-        addItem(product, cookies.cart, 'cart');
+        setCartOneItem(product.id);
 
         const modal = Modal.success({
             centered: true,
@@ -45,31 +53,13 @@ const Wishlist = ({ ecomerce }) => {
 
     async function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
-        var data = removeItem(item, 'wishlist');
-        if (data) {
-            const response = await ProductRepository.postCartData(
-                cookies?.wishlist
-            );
-            
-            postData();
-        }
+        removeSavedItem(item.id);
     }
 
-    const postData = async () => {
-        const respons = await ProductRepository.postCartData(cookies?.wishlist);
-        if (respons) {
-            setIdArr(respons?.data?.data);
-        }
-    };
 
-    useEffect(() => {
-        postData();
-    }, []);
-
-    console.log('wishlist arr', idArr);
     // views
     let wishlistItemsView;
-    if (idArr?.length > 0) {
+    if (wishlist?.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist table-sm table-md table-xs">
@@ -84,8 +74,8 @@ const Wishlist = ({ ecomerce }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {idArr?.length > 0 &&
-                            idArr?.map((product) => (
+                        {wishlist?.length > 0 &&
+                            wishlist?.map((product) => (
                                 <tr key={product?.id}>
                                     <td>
                                         <a
@@ -145,7 +135,7 @@ const Wishlist = ({ ecomerce }) => {
                 </table>
             </div>
         );
-    } else if (idArr?.length <= 0) {
+    } else if (wishlist?.length <= 0) {
         // if (loading) {
         wishlistItemsView = (
             <div className="alert alert-danger" role="alert">

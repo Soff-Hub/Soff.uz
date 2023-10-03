@@ -3,7 +3,6 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { connect, useSelector } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';

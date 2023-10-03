@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-
-import { isLoginning, login } from '../../../store/auth/action';
-
 import { Form, Input, Modal } from 'antd';
-import { connect, useDispatch } from 'react-redux';
+import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
-import ModalDeletePostEdit from './ModalPostEdit';
 import ModalTanishuv from './modules/Modal-tanishuv';
 
 class Register extends Component {

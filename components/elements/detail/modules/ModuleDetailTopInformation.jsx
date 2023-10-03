@@ -1,6 +1,4 @@
 import React from 'react';
-import Link from 'next/link';
-import Rating from '~/components/elements/Rating';
 
 const ModuleDetailTopInformation = ({ product }) => {
     function addPeriodToThousands(number) {

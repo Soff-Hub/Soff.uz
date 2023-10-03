@@ -4,6 +4,12 @@ export const actionTypes = {
     SET_WISHLIST_ITEMS: 'SET_WISHLIST_ITEMS',
     SET_WISHLIST_ITEMS_SUCCESS: 'SET_WISHLIST_ITEMS_SUCCESS',
 
+    SET_SAVED: 'SET_SAVED',
+    SET_SAVED_SUCCESS: 'SET_SAVED_SUCCESS',
+
+    SET_SAVED_ITEM: 'SET_SAVED_ITEM',
+    SET_SAVED_ITEM_SUCCESS: 'SET_SAVED_ITEM_SUCCESS',
+
     SET_cart: 'SET_cart',
     SET_cart_SUCCESS: 'SET_cart_SUCCESS',
 
@@ -19,12 +25,11 @@ export const actionTypes = {
 
 // new
 export function setWishlistTtems(payload) {
-    console.log(localStorage.getItem('hgf') || false);
+    console.log(payload);
     return { type: actionTypes.SET_WISHLIST_ITEMS, payload };
 }
 
 export function setWishlistTtemsSuccess(payload) {
-    // console.log(payload);
     return { type: actionTypes.SET_WISHLIST_ITEMS_SUCCESS, payload };
 }
 
@@ -70,3 +75,32 @@ export function setCartItemDataItemsSuccess(payload) {
     return { type: actionTypes.SET_CARTDATA_SUCCESS_ITEM, payload };
 }
 
+
+
+// wishlist
+
+
+export function setSaved(payload) {
+    const localData = []
+    for (let i = 0; i < payload.length; i++) {
+        localData.push(payload[i].id)
+    }
+    localStorage.setItem('wishlist', JSON.stringify(localData))
+    return { type: actionTypes.SET_SAVED, payload };
+}
+
+
+export function setSavedSuccess(payload) {
+    return { type: actionTypes.SET_SAVED_SUCCESS, payload };
+}
+
+
+export function setSavedItem(payload) {
+    const localData = JSON.parse(localStorage.getItem('wishlist')) || []
+    localStorage.setItem('wishlist', JSON.stringify([...localData, payload[0].id]))
+    return { type: actionTypes.SET_SAVED_ITEM, payload };
+}
+
+export function setSavedItemSuccess(payload) {
+    return { type: actionTypes.SET_SAVED_ITEM_SUCCESS, payload };
+}

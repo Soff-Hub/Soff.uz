@@ -2,7 +2,6 @@ import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import UsersLists from '~/components/partials/account/UsersLists';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
@@ -27,7 +26,6 @@ const AccountUsersPage = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <UsersLists/>
                 </div>
-                <Newletters layout="container" />
             </PageContainer> :  user?.access ? <Page404/> : <LoginPage /> 
       
     );
