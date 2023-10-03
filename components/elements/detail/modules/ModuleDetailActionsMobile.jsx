@@ -1,23 +1,7 @@
-import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
-import { useRouter } from 'next/router';
+import React from 'react';
+import { connect } from 'react-redux';
 
 const ModuleDetailActionsMobile = ({ ecomerce, product }) => {
-    const { addItem } = useEcomerce();
-    const Router = useRouter();
-    const handleAddItemToCart = (e) => {
-        e.preventDefault();
-        addItem({ id: product.id, quantity: 1 }, ecomerce.cartItems, 'cart');
-        Router.push('/account/shopping-cart');
-    };
-
-    const handleBuyNow = (e) => {
-        e.preventDefault();
-        addItem({ id: product.id, quantity: 1 }, ecomerce.cartItems, 'cart');
-        Router.push('/account/checkout');
-    };
-
     return (
         // <div className="ps-product__actions-mobile">
         //     <a

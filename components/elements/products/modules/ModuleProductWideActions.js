@@ -2,18 +2,17 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Modal } from 'antd';
 import useProduct from '~/hooks/useProduct';
-import useEcomerce from '~/hooks/useEcomerce';
 import useCart from '~/hooks/useCart';
+import useWishlist from '~/hooks/useWishlist';
 
 const ModuleProductWideActions = ({ ecomerce, product }) => {
     const { price } = useProduct();
-    const { addItem } = useEcomerce();
     const { setCartOneItem } = useCart()
+    const { addSavedItem } = useWishlist()
 
 
     function handleAddItemToCart(e) {
         e.preventDefault();
-        // addItem(product, ecomerce.cartItems, 'cart');
         setCartOneItem(product)
         const modal = Modal.success({
             centered: true,
@@ -25,7 +24,7 @@ const ModuleProductWideActions = ({ ecomerce, product }) => {
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
-        addItem(product, ecomerce.wishlistItems, 'wishlist');
+        addSavedItem(product.id);
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',

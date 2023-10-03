@@ -1,19 +1,20 @@
-import React  from 'react';
+import React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { Modal } from 'antd';
-import useEcomerce from '~/hooks/useEcomerce';
 
 import { OneShopDoc } from '~/store/auth/action';
-import Cookies from 'js-cookie';
 import { useCookies } from 'react-cookie';
+import useCart from '~/hooks/useCart';
+import useWishlist from '~/hooks/useWishlist';
 
 const ModuleDetailShoppingActions = ({
     ecomerce,
     product,
     extended = false,
 }) => {
-    const { addItem } = useEcomerce();
+    const { setCartOneItem } = useCart();
+    const { addSavedItem, wishlist } = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
     const { pid } = Router.query
@@ -21,7 +22,7 @@ const ModuleDetailShoppingActions = ({
 
     function handleAddItemToCart(e) {
         e.preventDefault();
-        addItem(product, ecomerce.cartItems, 'cart');
+        setCartOneItem(product.id);
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -44,7 +45,7 @@ const ModuleDetailShoppingActions = ({
 
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
-        addItem(product, ecomerce.wishlistItems, 'wishlist');
+        addSavedItem(product.id);
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -53,8 +54,6 @@ const ModuleDetailShoppingActions = ({
         modal.update;
     };
 
-    
-console.log(cookies?.wishlist, cookies?.wishlist?.some(item => Number(item.id) === Number(pid)));
     if (true) {
         return (
             <div className="ps-product__shopping">
@@ -69,12 +68,12 @@ console.log(cookies?.wishlist, cookies?.wishlist?.some(item => Number(item.id) =
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                    <i  className={`icon-heart   ${cookies?.wishlist?.some(item => Number(item.id) ===  Number(product.id) ) ? 'text-danger' : ''} `} ></i>
+                        <i className={`icon-heart   ${wishlist?.some(item => Number(item.id) === Number(product.id)) ? 'text-danger' : ''} `} ></i>
                     </a>
                 </div>
             </div>
         );
-    } 
+    }
 };
 
 export default connect((state) => state)(ModuleDetailShoppingActions);

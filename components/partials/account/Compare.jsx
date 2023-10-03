@@ -8,7 +8,6 @@ import useProduct from '~/hooks/useProduct';
 const Compare = ({ ecomerce }) => {
     const { products, getProducts } = useEcomerce();
     const { addItem, removeItem } = useEcomerce();
-    const { thumbnailImage } = useProduct();
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
