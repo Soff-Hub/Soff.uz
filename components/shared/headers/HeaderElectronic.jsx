@@ -7,8 +7,8 @@ import Menu from '~/components/elements/menu/Menu';
 import { stickyHeader } from '~/utilities/common-helpers';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
-// import axios from 'axios';
-// import { baseUrl } from '~/repositories/Repository';
+import MenuCategories from './modules/MenuCategories';
+import MenuCategory from '~/components/elements/menu/MenuCategory';
 
 const HeaderElectronic = () => {
     useEffect(() => {
@@ -19,15 +19,29 @@ const HeaderElectronic = () => {
 
     const [categoryData, setCategoryData] = useState([])
     const [topCategoryData, setTopCategoryData] = useState([])
+    const [count, setCount] = useState('')
 
     async function getCategoryFunc() {
+        console.log('ishladi');
         const responseData = await CollectionRepository.getCategoryData(
             `customer/category-list/`
         );
         if (responseData ) {
-            setCategoryData(responseData);
+            setCount(responseData.data.count)
+            setCategoryData(responseData.data.results)
+     
         }
     }
+
+    async function getCategoryDataCount() {
+        const respons = await CollectionRepository.getCategoryDataCount(
+            `customer/category-list/?limit=${count}&offset=1`
+        )
+        if (respons) {
+            setCategoryData(respons);
+        }
+    }
+
 
     async function getTopCategory(){
         const responsData = await ProductRepository.getTopCategories()
@@ -39,9 +53,9 @@ const HeaderElectronic = () => {
     useEffect (() => {
         getCategoryFunc()
         getTopCategory()
+            getCategoryDataCount()
     }, [])
 
-    // console.log(topCategoryData, categoryData);
     return (
         <header
             className="header header--standard header--electronic"
@@ -64,9 +78,9 @@ const HeaderElectronic = () => {
                                 <span> Kategoriya </span>
                             </div>
                             <div className="menu__content">
-                                <Menu
-                                    source={categoryData}
-                                    className="menu--dropdown"
+                                <MenuCategory
+                                  source={categoryData}
+                                  className="menu--dropdown"
                                 />
                             </div>
                         </div>

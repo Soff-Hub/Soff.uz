@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicProductGroupWithCarousel';
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
@@ -11,22 +10,19 @@ import useCart from '~/hooks/useCart';
 import { useSelector } from 'react-redux';
 
 const HomeElectronicsPage = () => {
-
     const [categoryData, setCategoryData] = useState([]);
-    const cartItems = useSelector(state => state.ecomerce.cartDataItems)
-
+    const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
             `customer/category-list/`
         );
-        if (responseData?.length > 0) {
-            setCategoryData(responseData);
+        if (responseData?.data.results.length > 0) {
+            setCategoryData(responseData.data.results);
         }
     }
 
-    const { setAllCartItem } = useCart()
-
+    const { setAllCartItem } = useCart();
 
     useEffect(() => {
         if (cartItems.length !== JSON.parse(localStorage.getItem('cart'))) {
@@ -34,34 +30,37 @@ const HomeElectronicsPage = () => {
         }
         getCategoryFunc();
     }, []);
-
+console.log('categoriya kelishi kerak', categoryData);
     return (
+        <main id="homepage-7">
+            <ElectronicBanner />
+            <ElectronicTopCategories />
+            {categoryData?.length > 0 ? (
+                categoryData?.map(
+                    (item, index) =>
+                        item.promotional_sliders?.length > 0 && (
+                            <ElectronicProductGroupWithCarousel
+                                collectionSlug="electronics-best-sellers"
+                                title={item.name}
+                                data={item}
+                                id={item.id}
+                                key={index}
+                            />
+                        )
+                )
+            ) : (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}>
+                    <PropagateLoader className="progres-color" />
+                </div>
+            )}
 
-         <main id="homepage-7">
-         <ElectronicBanner />
-         <ElectronicTopCategories />
-         {
-            categoryData?.length > 0 ?
-            categoryData?.map((item, index) => (
-                    item.promotional_sliders?.length > 0 &&
-                <ElectronicProductGroupWithCarousel
-                    collectionSlug="electronics-best-sellers"
-                    title={item.name}
-                    data={item}
-                    id={item.id}
-                    key={index}
-                />
-
-            )) :
-             <div style={{
-                    display:'flex',
-                    justifyContent:'center',
-                    alignContent:'center'
-                }}><PropagateLoader className='progres-color' /></div>
-         } 
-        
-         <SiteFeatures />
-     </main>
+            <SiteFeatures />
+        </main>
     );
 };
 

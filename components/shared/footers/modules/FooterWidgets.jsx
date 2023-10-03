@@ -3,20 +3,7 @@ import Link from 'next/link';
 import CollectionRepository from '~/repositories/CollectionRepository';
 
 const FooterWidgets = () => {
-    const [categoryList, setCategoryList] = useState([]);
-
-    const getCatgeoryListData = async () => {
-        const response = await CollectionRepository.getCategoryData(
-            `customer/category-list/`
-        );
-        if (response) {
-            setCategoryList(response);
-        }
-    };
-
-    useEffect(() => {
-        getCatgeoryListData();
-    }, []);
+  
     let vaqt = new Date();
     return (
         <div className="row d-flex justify-content-between">

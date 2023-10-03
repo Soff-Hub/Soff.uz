@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import MobileHeaderActions from '../headers/modules/MobileHeaderActions';
 import Link from 'next/link';
-import { stickyHeader } from '~/utilities/common-helpers';
 
 const HeaderMobileProduct = () => {
     const stickyHeader = () => {
@@ -35,7 +34,7 @@ const HeaderMobileProduct = () => {
                         <Link href="/">
                             <a className="ps-logo">
                                 <img
-                                    src="/static/img/alldata_logo.png"
+                                    src="/static/img/soff/soff_green_white.png"
                                     alt="soff"
                                 />
                             </a>
