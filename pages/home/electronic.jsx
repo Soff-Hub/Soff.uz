@@ -8,10 +8,11 @@ import CollectionRepository from '~/repositories/CollectionRepository';
 import { PropagateLoader } from 'react-spinners';
 import useCart from '~/hooks/useCart';
 import { useSelector } from 'react-redux';
+import useWishlist from '~/hooks/useWishlist';
 
 const HomeElectronicsPage = () => {
     const [categoryData, setCategoryData] = useState([]);
-    const cartItems = useSelector((state) => state.ecomerce.cartDataItems);
+
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
@@ -22,12 +23,21 @@ const HomeElectronicsPage = () => {
         }
     }
 
-    const { setAllCartItem } = useCart();
+
+    const { cartItems, wishlist } = useSelector(state => state.ecomerce)
+    const { setAllCartItem } = useCart()
+    const { setAllSaved } = useWishlist()
+
 
     useEffect(() => {
         if (cartItems.length !== JSON.parse(localStorage.getItem('cart'))) {
             setAllCartItem();
         }
+
+        if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
+            setAllSaved();
+        }
+
         getCategoryFunc();
     }, []);
 console.log('categoriya kelishi kerak', categoryData);
@@ -58,6 +68,7 @@ console.log('categoriya kelishi kerak', categoryData);
                     <PropagateLoader className="progres-color" />
                 </div>
             )}
+
 
             <SiteFeatures />
         </main>

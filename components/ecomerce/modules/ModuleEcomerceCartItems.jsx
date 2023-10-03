@@ -1,20 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
-import { Modal, Result } from 'antd';
+import { Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
-import { useCookies } from 'react-cookie';
-import ProductRepository from '~/repositories/ProductRepository';
 import useCart from '~/hooks/useCart';
 
 const ModuleEcomerceCartItems = ({ cartItems }) => {
-    const { removeItem } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
     const { removeCartOneItem } = useCart()
 
     const handleRemoveItem = async (e, item) => {
         e.preventDefault();
-        // removeItem(item, 'cart');
         removeCartOneItem(item.id)
     };
 

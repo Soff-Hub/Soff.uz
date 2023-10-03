@@ -1,5 +1,5 @@
 import { all, put, takeEvery } from 'redux-saga/effects';
-import { actionTypes, setCartDataItemsSuccess, setCartItemDataItemsSuccess } from './action';
+import { actionTypes, setCartDataItemsSuccess, setCartItemDataItemsSuccess, setSavedItemSuccess, setSavedSuccess } from './action';
 
 import {
     setCartItemsSuccess,
@@ -34,7 +34,7 @@ function* getCompareItems({ payload }) {
 
 function* getCartDataItems({ payload }) {
     try {
-        yield put(setCartDataItemsSuccess(payload));
+        yield put(setWishlistTtemsSuccess(payload));
     } catch (err) {
         console.log(err);
     }
@@ -48,6 +48,26 @@ function* getCartItemDataItems({ payload }) {
     }
 }
 
+
+function* getSaved({ payload }) {
+    try {
+        yield put(setSavedSuccess(payload));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+function* getSavedItem({ payload }) {
+    try {
+        yield put(setSavedItemSuccess(payload));
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+
+
+
 export default function* rootSaga() {
     // new
     yield all([takeEvery(actionTypes.SET_WISHLIST_ITEMS, getWishlistItems)]);
@@ -55,4 +75,8 @@ export default function* rootSaga() {
     yield all([takeEvery(actionTypes.SET_COMPARE_ITEMS, getCompareItems)]);
     yield all([takeEvery(actionTypes.SET_CARTDATA, getCartDataItems)]);
     yield all([takeEvery(actionTypes.SET_CARTDATA_ITEM, getCartItemDataItems)]);
+
+    yield all([takeEvery(actionTypes.SET_SAVED, getSaved)]);
+    yield all([takeEvery(actionTypes.SET_SAVED_ITEM, getSavedItem)]);
+
 }

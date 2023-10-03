@@ -11,33 +11,31 @@ export const initalState = {
     compareItems: [],
     cartItems: [],
     cartDataItems: [],
+    wishlist: []
 };
 
 
 function reducer(state = initalState, action) {
-    // console.log('state', state.wishlistItems);
 
     switch (action.type) {
-        // SET_WISHLIST_ITEMS_SUCCESS
         case actionTypes.SET_WISHLIST_ITEMS_SUCCESS:
-            // console.log(action);
-            // localStorage.setItem('wishlist', JSON.stringify(action.payload))
-            if (
-                state.wishlistItems.every(
-                    (el) => el.id !== action.payload[0].id
-                )
-            ) {
-                return {
-                    ...state,
-                    ...{
-                        wishlistItems: [
-                            ...state.wishlistItems,
-                            ...action.payload,
-                        ],
-                    },
-                };
-            } else return state;
-
+            for (let i = 0; i < action.payload.length; i++) {
+                if (
+                    state.wishlistItems.every(
+                        (el) => el.id !== action.payload[i].id
+                    )
+                ) {
+                    return {
+                        ...state,
+                        ...{
+                            wishlistItems: [
+                                ...state.wishlistItems,
+                                ...action.payload[i],
+                            ],
+                        },
+                    };
+                } else return state;
+            }
         case actionTypes.SET_cart_SUCCESS:
             return {
                 ...state,
@@ -61,6 +59,17 @@ function reducer(state = initalState, action) {
             };
         default:
             return state;
+
+        case actionTypes.SET_SAVED_SUCCESS:
+            return {
+                ...state,
+                wishlist: action.payload,
+            };
+        case actionTypes.SET_SAVED_ITEM_SUCCESS:
+            return {
+                ...state,
+                wishlist: [...state.wishlist, ...action.payload],
+            };
     }
 }
 

@@ -1,9 +1,7 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
-import { useCookies } from 'react-cookie';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
   console.log('eco', ecomerce.cartDataItems);

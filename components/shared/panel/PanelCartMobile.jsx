@@ -4,17 +4,19 @@ import Link from 'next/link';
 import useEcomerce from '~/hooks/useEcomerce';
 import useProduct from '~/hooks/useProduct';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import useCart from '~/hooks/useCart';
 
-const PanelCartMobile = ({ ecomerce ,  setMenuDrawer,
+const PanelCartMobile = ({ ecomerce, setMenuDrawer,
     setCartDrawer,
     setCategoriesDrawer,
     setSearchDrawer, }) => {
-    const { products, getProducts, removeItem } = useEcomerce();
+    const { products, getProducts } = useEcomerce();
     const { title, thumbnailImage } = useProduct();
+    const { removeCartOneItem } = useCart()
 
     function handleRemoveCartItem(e, product) {
         e.preventDefault();
-        removeItem(product, ecomerce.cartItems, 'cart');
+        removeCartOneItem(product.id);
     }
 
     const handleDrawerClose = () => {
@@ -29,7 +31,7 @@ const PanelCartMobile = ({ ecomerce ,  setMenuDrawer,
             getProducts(ecomerce.cartItems);
         }
     }, [ecomerce]);
-   
+
 
 
 
@@ -42,12 +44,12 @@ const PanelCartMobile = ({ ecomerce ,  setMenuDrawer,
             <div className="ps-product--cart-mobile" key={item.id}>
                 <div className="ps-product__thumbnail" onClick={handleDrawerClose}>
                     <Link href="/product/[pid]" as={`/product/${item.id}`}>
-                       {
-                        item ?
-                        <a>{thumbnailImage(item)}</a>
-                        :
-                        <>Loading...</>
-                       }
+                        {
+                            item ?
+                                <a>{thumbnailImage(item)}</a>
+                                :
+                                <>Loading...</>
+                        }
                     </Link>
                 </div>
                 <div className="ps-product__content" onClick={handleDrawerClose}>
@@ -72,7 +74,7 @@ const PanelCartMobile = ({ ecomerce ,  setMenuDrawer,
         footerView = (
             <div className="ps-cart__footer">
                 <h3>
-                  Umumiy narx :<strong>{amount} so'm </strong>
+                    Umumiy narx :<strong>{amount} so'm </strong>
                 </h3>
                 <figure onClick={handleDrawerClose}>
                     <Link href="/account/shopping-cart">
