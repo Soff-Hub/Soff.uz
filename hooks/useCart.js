@@ -12,10 +12,13 @@ export default function useCart() {
     return {
         setAllCartItem: async () => {
             const data = JSON.parse(localStorage.getItem('cart'));
-            const resp = await ProductRepository.postCartData(data);
-            if (resp?.data) {
-                dispatch(setCartDataItems(resp.data.data));
+            if (data?.length > 0) {
+                const resp = await ProductRepository.postCartData(data);
+                if (resp?.data) {
+                    dispatch(setCartDataItems(resp.data.data));
+                }
             }
+
         },
 
 
@@ -37,6 +40,6 @@ export default function useCart() {
             dispatch(setCartDataItems([]))
         },
 
-        removeItems: () => {},
+        removeItems: () => { },
     };
 }
