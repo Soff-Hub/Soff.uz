@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
-import useEcomerce from '~/hooks/useEcomerce';
 import useProduct from '~/hooks/useProduct';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import useCart from '~/hooks/useCart';
@@ -10,9 +9,9 @@ const PanelCartMobile = ({ ecomerce, setMenuDrawer,
     setCartDrawer,
     setCategoriesDrawer,
     setSearchDrawer, }) => {
-    const { products, getProducts } = useEcomerce();
-    const { title, thumbnailImage } = useProduct();
+    const { thumbnailImage } = useProduct();
     const { removeCartOneItem } = useCart()
+    const products = useSelector(state => state.ecomerce.cartDataItems)
 
     function handleRemoveCartItem(e, product) {
         e.preventDefault();
@@ -25,12 +24,6 @@ const PanelCartMobile = ({ ecomerce, setMenuDrawer,
         setCategoriesDrawer(false);
         setSearchDrawer(false);
     };
-
-    useEffect(() => {
-        if (ecomerce.cartItems) {
-            getProducts(ecomerce.cartItems);
-        }
-    }, [ecomerce]);
 
 
 
@@ -58,7 +51,7 @@ const PanelCartMobile = ({ ecomerce, setMenuDrawer,
                         onClick={(e) => handleRemoveCartItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
-                    <Link href="/product/[pid]" as={`/product/${item.id}`} >
+                    <Link href="/product/[pid]" as={`/product/${item.slug}`} >
                         <a className="ps-product__title">{item.title}</a>
                     </Link>
                     <p>

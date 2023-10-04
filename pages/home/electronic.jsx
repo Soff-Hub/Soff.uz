@@ -24,13 +24,13 @@ const HomeElectronicsPage = () => {
     }
 
 
-    const { cartItems, wishlist } = useSelector(state => state.ecomerce)
+    const { cartDataItems, wishlist } = useSelector(state => state.ecomerce)
     const { setAllCartItem } = useCart()
     const { setAllSaved } = useWishlist()
 
 
     useEffect(() => {
-        if (cartItems.length !== JSON.parse(localStorage.getItem('cart'))) {
+        if (cartDataItems.length !== JSON.parse(localStorage.getItem('cart'))) {
             setAllCartItem();
         }
 
@@ -40,7 +40,6 @@ const HomeElectronicsPage = () => {
 
         getCategoryFunc();
     }, []);
-console.log('categoriya kelishi kerak', categoryData);
     return (
         <main id="homepage-7">
             <ElectronicBanner />

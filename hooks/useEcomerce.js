@@ -19,40 +19,40 @@ export default function useEcomerce() {
         loading,
         cartItemsOnCookie,
         products,
-        // getProducts: async (payload, group = '') => {
-        //     setLoading(true);
-        //     if (true) {
-        //         // let queries = '';
-        //         // payload?.forEach((item) => {
-        //         //     queries = `${item.id}`;
-        //         // });
+        getProducts: async (payload, group = '') => {
+            setLoading(true);
+            if (true) {
+                // let queries = '';
+                // payload?.forEach((item) => {
+                //     queries = `${item.id}`;
+                // });
 
-        //         if (true) {
-        //             if (group === 'cart' || group === 'wishlist') {
-        //                 let cartItems = payload;
-        //                 cartItems?.forEach((item) => {
-        //                     let existItem = cartItems.find(
-        //                         (val) => val.id === item.id
-        //                     );
-        //                 });
+                if (true) {
+                    if (group === 'cart' || group === 'wishlist') {
+                        let cartItems = payload;
+                        cartItems?.forEach((item) => {
+                            let existItem = cartItems.find(
+                                (val) => val.id === item.id
+                            );
+                        });
 
-        //                 // setProducts(cartItems);
-        //                 setProducts(payload);
-        //             } else {
-        //                 setProducts(payload);
-        //             }
-        //             setTimeout(
-        //                 function () {
-        //                     setLoading(false);
-        //                 }.bind(this),
-        //                 250
-        //             );
-        //         }
-        //     } else {
-        //         setLoading(false);
-        //         setProducts(payload);
-        //     }
-        // },
+                        // setProducts(cartItems);
+                        setProducts(payload);
+                    } else {
+                        setProducts(payload);
+                    }
+                    setTimeout(
+                        function () {
+                            setLoading(false);
+                        }.bind(this),
+                        250
+                    );
+                }
+            } else {
+                setLoading(false);
+                setProducts(payload);
+            }
+        },
 
         addItem: async (newItem, group) => {
             if (group === 'wishlist') {
