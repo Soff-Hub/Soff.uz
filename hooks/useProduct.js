@@ -9,39 +9,35 @@ import Link from 'next/link';
 export default function useProduct() {
     return {
         thumbnailImage: (payload) => {
-            if (payload) {
-                if (payload?.poster_url !== '') {
-                    return (
-                        <>
-                            <LazyLoad>
-                                {payload?.poster_url ? (
-                                   <div style={{overflow:'hidden'}}>
-                                     <div
-                                        style={{
-                                            backgroundImage: `url(${payload?.poster_url})`,
-                                            backgroundSize:'contain',
-                                            backgroundRepeat:'no-repeat',
-                                            backgroundPosition: 'center'
-                                        }}
-                                        className="products-image1"></div>
-                                   </div>
-                                ) : (
-                                  
-                                    <div
+            return (
+                <>
+                    <LazyLoad>
+                        {payload?.poster_url ? (
+                            <div style={{ overflow: 'hidden' }}>
+                                <div
                                     style={{
-                                        backgroundImage: `url(/static/img/docCopy.jpg)`,
-                                        backgroundSize:'contain',
-                                        backgroundRepeat:'no-repeat',
-
+                                        backgroundImage: `url(${payload?.poster_url})`,
+                                        backgroundSize: 'contain',
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundPosition: 'center'
                                     }}
-                                    className='placholder-hujjat products-image1'
-                                    ></div>
-                                )}
-                            </LazyLoad>
-                        </>
-                    );
-                }
-            }
+                                    className="products-image1"></div>
+                            </div>
+                        ) : (
+
+                            <div
+                                style={{
+                                    backgroundImage: `url(/static/img/docCopy.jpg)`,
+                                    backgroundSize: 'contain',
+                                    backgroundRepeat: 'no-repeat',
+
+                                }}
+                                className='placholder-hujjat products-image1'
+                            ></div>
+                        )}
+                    </LazyLoad>
+                </>
+            );
         },
         price: (payload) => {
             let view;

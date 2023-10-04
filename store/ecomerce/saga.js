@@ -34,7 +34,7 @@ function* getCompareItems({ payload }) {
 
 function* getCartDataItems({ payload }) {
     try {
-        yield put(setWishlistTtemsSuccess(payload));
+        yield put(setCartDataItemsSuccess(payload));
     } catch (err) {
         console.log(err);
     }
