@@ -67,7 +67,6 @@ const ProductDefaultPage = (product) => {
     //     productView = <SkeletonProductDetail />;
     // }
 
-    console.log('pro', product.product);
 
     return (
         <>
@@ -85,9 +84,13 @@ const ProductDefaultPage = (product) => {
                         <div className="ps-container">
                             <div className="ps-page__container">
                                 <div className="ps-page__left">
-                                    <ProductDetailFullwidth
-                                        product={product.product}
-                                    />
+                                    {
+                                        product ?
+                                        <ProductDetailFullwidth
+                                            product={product.product}
+                                        /> :
+                                        <SkeletonProductDetail />
+                                    }
                                 </div>
                             </div>
 
