@@ -43,7 +43,7 @@ const PanelCartMobile = ({ ecomerce, setMenuDrawer,
         const items = products.map((item) => (
             <div className="ps-product--cart-mobile" key={item.id}>
                 <div className="ps-product__thumbnail" onClick={handleDrawerClose}>
-                    <Link href="/product/[pid]" as={`/product/${item.id}`}>
+                    <Link href="/product/[pid]" as={`/product/${item.slug}`}>
                         {
                             item ?
                                 <a>{thumbnailImage(item)}</a>

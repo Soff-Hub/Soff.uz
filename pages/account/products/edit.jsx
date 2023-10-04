@@ -10,11 +10,8 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-var parse = require("html-react-parser");
+var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
-
-
-
 
 const PostsProductsEdit = () => {
     const { TabPane } = Tabs;
@@ -39,7 +36,7 @@ const PostsProductsEdit = () => {
             url: '/',
         },
         {
-            text: "Hujjatni tahrirlash",
+            text: 'Hujjatni tahrirlash',
         },
     ];
     const Option = Select.Option;
@@ -52,12 +49,10 @@ const PostsProductsEdit = () => {
                 if (ItemsData?.results[i].parent !== null) {
                     data.push(ItemsData?.results[i]);
                 }
-
             }
             setDataCategory(data);
         }
     }
-
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -66,7 +61,7 @@ const PostsProductsEdit = () => {
         }
     }
     async function GetItemsTagAktivmas() {
-        const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access)
+        const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access);
         if (ItemsData?.results) {
             setTegProdcutsLists(ItemsData.results);
         }
@@ -77,11 +72,13 @@ const PostsProductsEdit = () => {
     const childrenAktivmas = [];
     for (let i = 0; i < tegProductsLists?.length; i++) {
         childrenAktivmas.push(
-            <Option key={tegProductsLists[i].name}>{tegProductsLists[i].name}</Option>
+            <Option key={tegProductsLists[i].name}>
+                {tegProductsLists[i].name}
+            </Option>
         );
     }
 
-    const  children = [];
+    const children = [];
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
@@ -90,16 +87,16 @@ const PostsProductsEdit = () => {
 
     useEffect(() => {
         GetItemsTag();
-       
+
         setEditorLoaded(true);
     }, []);
 
     useEffect(() => {
         GetItemsCategoryLists();
         GetItemsTagAktivmas();
-    }, [user?.access]); 
+    }, [user?.access]);
 
-      useEffect(() => {
+    useEffect(() => {
         GetItemsTagAktivmas();
     }, [user?.access]);
 
@@ -113,7 +110,7 @@ const PostsProductsEdit = () => {
                 }
             }
         }
-    }
+    };
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -133,30 +130,33 @@ const PostsProductsEdit = () => {
         return formattedNumber;
     }
 
-
     async function handleClickPostsEdit(e) {
-        e.preventDefault()
-        const data = {}
+        e.preventDefault();
+        const data = {};
 
         if (title) {
-            Object.assign(data, { "title": title })
+            Object.assign(data, { title: title });
         }
         if (results) {
-            Object.assign(data, { "tags": results })
+            Object.assign(data, { tags: results });
         }
         if (category_id) {
-            Object.assign(data, { "category": category_id })
+            Object.assign(data, { category: category_id });
         }
         if (dataCatStatus) {
-            Object.assign(data, { "status": dataCatStatus })
+            Object.assign(data, { status: dataCatStatus });
         }
         if (Fulldata) {
-            Object.assign(data, { "description": Fulldata })
+            Object.assign(data, { description: Fulldata });
         }
         if (Shortdata) {
-            Object.assign(data, { "short_description": Shortdata })
+            Object.assign(data, { short_description: Shortdata });
         }
-        const patchItems = await PatchRepository.getProductsPatch(data, products?.id, user?.access);
+        const patchItems = await PatchRepository.getProductsPatch(
+            data,
+            products?.id,
+            user?.access
+        );
         Router.push('/account/products');
         if (patchItems?.status === 400) {
             const modal = Modal.error({
@@ -164,31 +164,30 @@ const PostsProductsEdit = () => {
                 title: 'Muvaffaqqiyatli!',
                 content: "Nimadir xato ketidi qaytadan urinib ko'ring",
             });
-            modal.update
-        }
-        else {
+            modal.update;
+        } else {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
             });
-            modal.update
+            modal.update;
         }
     }
     const dataStatus = [
         {
             id: 1,
-            status: "moderation"
+            status: 'moderation',
         },
         {
             id: 2,
-            status: "approved"
+            status: 'approved',
         },
         {
             id: 3,
-            status: "cancelled"
-        }
-    ]
+            status: 'cancelled',
+        },
+    ];
 
     return user?.role === 'admin' ? (
         <PageContainer
@@ -197,21 +196,38 @@ const PostsProductsEdit = () => {
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
-                    <div className='row w-100 gap-3 mt-5 ' style={{ alignItems: "flex-start" }}>
-                        <h4 className="col-md-8 m-0 p-0">Hujjatni tahrirlash</h4>
-                        <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
+                    <div
+                        className="row w-100 gap-3 mt-5 "
+                        style={{ alignItems: 'flex-start' }}>
+                        <h4 className="col-md-8 m-0 p-0">
+                            Hujjatni tahrirlash
+                        </h4>
+                        <div
+                            className="col-md-4 m-0  d-flex justify-content-between p-0 "
+                            style={{ maxWidth: '370px' }}>
                             <h4>Sotuvdagi ko'rinishi : </h4>
-                            <Button className='btn-warning' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
-
+                            <Button
+                                className="btn-warning"
+                                data-bs-target="#staticBackdrop"
+                                data-bs-toggle="modal">
+                                <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>
+                            </Button>
                         </div>
                         <form
                             onSubmit={handleClickPostsEdit}
-                            style={{ position: "relative" }}
+                            style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
                             className="pb-5 col-md-8">
-
-                            <div className='row'>
-                                <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
+                            <div className="row">
+                                <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                    {' '}
+                                    <p>Mahsulot nomi: *</p>
+                                    <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                    </Tooltip>
+                                </div>
 
                                 <input
                                     type="text"
@@ -222,81 +238,151 @@ const PostsProductsEdit = () => {
                                     defaultValue={products?.title}
                                 />
                             </div>
-                            <div className='row'>
-                                <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot holati: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
+                            <div className="row">
+                                <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                    {' '}
+                                    <p>Mahsulot holati: *</p>
+                                    <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                    </Tooltip>
+                                </div>
 
-                                <select className='form-select fs-3 py-3 rounded-3 col-md-8 mb-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
-                                    {
-                                        dataStatus?.map(item => (
-                                            products.status === item.status ?
-                                                <option selected value={item.status} >{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
-                                                :
-                                                <option value={item.status}>{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
-                                        ))
-
-                                    }
+                                <select
+                                    className="form-select fs-3 py-3 rounded-3 col-md-8 mb-3"
+                                    onChange={(e) =>
+                                        setDataCatStatus(e.target.value)
+                                    }>
+                                    {dataStatus?.map((item) =>
+                                        products.status === item.status ? (
+                                            <option
+                                                selected
+                                                value={item.status}>
+                                                {item.status === 'moderation'
+                                                    ? 'Moderatsiya'
+                                                    : item.status ===
+                                                      'cancelled'
+                                                    ? 'Bekor qilingan'
+                                                    : item.status === 'approved'
+                                                    ? 'Tasdiqlangan'
+                                                    : ''}
+                                            </option>
+                                        ) : (
+                                            <option value={item.status}>
+                                                {item.status === 'moderation'
+                                                    ? 'Moderatsiya'
+                                                    : item.status ===
+                                                      'cancelled'
+                                                    ? 'Bekor qilingan'
+                                                    : item.status === 'approved'
+                                                    ? 'Tasdiqlangan'
+                                                    : ''}
+                                            </option>
+                                        )
+                                    )}
                                 </select>
                             </div>
                             <div className="row">
-                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Aktiv teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
+                                    <p>Aktiv teglar:</p>{' '}
+                                    <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
 
                                 <Select
                                     mode="tags"
-                                    onChange={(e)=>(setTagSearchResult(e))}
-                                    defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
-                                    className='col-md-8 p-0 mb-3'
-                                >
+                                    onChange={(e) => setTagSearchResult(e)}
+                                    defaultValue={
+                                        products?.tag &&
+                                        products?.tag?.map((item) => item.name)
+                                    }
+                                    className="col-md-8 p-0 mb-3">
                                     {children}
                                 </Select>
                             </div>
                             <div className="row">
-                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Aktiv emas teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
-                                {
-                                    products?.tag && products?.tag?.some(item => (item.active===false)) ?
-                                <Select
-                                    mode="tags"
-                                    onChange={(e)=>(setTagSearchResult2(e))}
-                                    defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
-                                    className='col-md-8 p-0 mb-3'
-                                >
-                                    {childrenAktivmas}
-                                </Select>
-                                :
-                                <Select
-                                mode="tags"
-                                onChange={(e)=>(setTagSearchResult2(e))}
-                                className='col-md-8 p-0 mb-3'
-                            >
-                                {childrenAktivmas}
-                            </Select>
-                                }
+                                <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
+                                    <p>Aktiv emas teglar:</p>{' '}
+                                    <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
+                                {products?.tag &&
+                                products?.tag?.some(
+                                    (item) => item.active === false
+                                ) ? (
+                                    <Select
+                                        mode="tags"
+                                        onChange={(e) => setTagSearchResult2(e)}
+                                        defaultValue={
+                                            products?.tag &&
+                                            products?.tag?.map(
+                                                (item) => item.name
+                                            )
+                                        }
+                                        className="col-md-8 p-0 mb-3">
+                                        {childrenAktivmas}
+                                    </Select>
+                                ) : (
+                                    <Select
+                                        mode="tags"
+                                        onChange={(e) => setTagSearchResult2(e)}
+                                        className="col-md-8 p-0 mb-3">
+                                        {childrenAktivmas}
+                                    </Select>
+                                )}
                             </div>
 
-
-                            <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                            <div className="row">
+                                <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                    <p>Kategoriya: *</p>{' '}
+                                    <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
 
                                 <select
-                                    style={{ alignItems: "flex-start" }}
+                                    style={{ alignItems: 'flex-start' }}
                                     className="form-select rounded-3 fs-4 py-3 col-md-8 mb-3"
                                     onChange={(e) =>
                                         handleChangeCategory(e.target.value)
                                     }>
                                     {dataCategory?.length > 0 &&
-                                        dataCategory.map((item) => (
-
-                                            products?.category === item.name ?
-                                                <option selected value={item.id}>{item.name}</option>
-                                                :
-                                                <option value={item.id}>{item.name}</option>
-                                        ))}
+                                        dataCategory.map((item) =>
+                                            products?.category === item.name ? (
+                                                <option
+                                                    selected
+                                                    value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                            ) : (
+                                                <option value={item.id}>
+                                                    {item.name}
+                                                </option>
+                                            )
+                                        )}
                                 </select>
                             </div>
 
                             <div className="row">
-                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className="col-md-4 d-flex justify-content-between p-0">
+                                    <p>Mahsulotning qisqacha tavsifi: *</p>{' '}
+                                    <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
 
-                                <div className='col-md-8 p-0 mb-3'>
+                                <div className="col-md-8 p-0 mb-3">
                                     <CKeditor
                                         name="description"
                                         onChange={(data) => {
@@ -304,14 +390,20 @@ const PostsProductsEdit = () => {
                                         }}
                                         editorLoaded={editorLoaded}
                                         value={products?.short_description}
-
                                     />
                                 </div>
                             </div>
                             <div className="row">
-                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className="col-md-4 d-flex justify-content-between p-0">
+                                    <p>Mahsulot to’liq tavsifi: *</p>{' '}
+                                    <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
 
-                                <div className='col-md-8 p-0 mb-3'>
+                                <div className="col-md-8 p-0 mb-3">
                                     <CKeditor
                                         name="description"
                                         onChange={(data) => {
@@ -319,23 +411,25 @@ const PostsProductsEdit = () => {
                                         }}
                                         editorLoaded={editorLoaded}
                                         value={products?.description}
-
                                     />
                                 </div>
                             </div>
 
-                            <div className="d-flex justify-content-end " style={{ transform: "translateX(16px)" }}>
+                            <div
+                                className="d-flex justify-content-end "
+                                style={{ transform: 'translateX(16px)' }}>
                                 <button
-                                    type='submit'
+                                    type="submit"
                                     className="btn btn-success py-3 px-5 ">
                                     <span className="fs-4">
-                                        Saqlash <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
+                                        Saqlash{' '}
+                                        <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
                                     </span>
                                 </button>
                             </div>
-                            <div className="mahsulotingiz" >
+                            <div className="mahsulotingiz">
                                 <span
-                                    className='fixed-btn'
+                                    className="fixed-btn"
                                     type="button"
                                     data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasRight"
@@ -344,53 +438,82 @@ const PostsProductsEdit = () => {
                                 </span>
                             </div>
                         </form>
-                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px" }}>
+                        <div
+                            className="card rounded-3 col-md-4 p-3 cardResponsive "
+                            style={{ maxWidth: '370px' }}>
                             <div className="image rounded ">
                                 <div className="image rounded ">
-                                    {
-                                        (!products.poster ?
-                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
-                                            :
-                                            <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
-                                    }
+                                    {!products.poster ? (
+                                        <img
+                                            src="/static/img/docCopy.jpg"
+                                            alt="doc"
+                                            className="border mb-4"
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                    ) : (
+                                        <img
+                                            src={products.poster}
+                                            alt="doc"
+                                            className="mb-4 border"
+                                            style={{ objectFit: 'cover' }}
+                                        />
+                                    )}
                                 </div>
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
-                                    <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
-                                </p>
-                                <p className="live-card-p">
-                                    <span><strong>Teglari</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            products?.tag?.map(item => (<span>#{item.name} </span>))
-                                        }
+                                    <span>
+                                        <strong>Nomi</strong>:{' '}
+                                    </span>{' '}
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {title ? title : products?.title}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
-                                    <span><strong>Kategoriya</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            categoryName ? categoryName : products?.category?.name
-                                        }
+                                    <span>
+                                        <strong>Teglari</strong>:{' '}
+                                    </span>
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {products?.tag?.map((item) => (
+                                            <span>#{item.name} </span>
+                                        ))}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
-                                    <span><strong>Qisqa tavsif</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
-                                        }
-
+                                    <span>
+                                        <strong>Kategoriya</strong>:{' '}
+                                    </span>
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {categoryName
+                                            ? categoryName
+                                            : products?.category?.name}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
-                                    <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
-                                        }
-
+                                    <span>
+                                        <strong>Qisqa tavsif</strong>:{' '}
+                                    </span>
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {Shortdata
+                                            ? parse(Shortdata)
+                                            : products?.short_description
+                                            ? parse(products?.short_description)
+                                            : ''}
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span>
+                                        <strong>
+                                            Hujjatingiz haqida to'liq ma'umot
+                                        </strong>
+                                        :{' '}
+                                    </span>
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {Fulldata
+                                            ? parse(Fulldata)
+                                            : products?.description
+                                            ? parse(products?.description)
+                                            : ''}
                                     </span>
                                 </p>
                             </div>
@@ -402,7 +525,11 @@ const PostsProductsEdit = () => {
                         id="offcanvasRight"
                         aria-labelledby="offcanvasRightLabel">
                         <div className="offcanvas-header pt-5">
-                            <h3 id="offcanvasRightLabel" className='m-0 elh3'><span >Tahrirlanayotgan  mahsulotingizni ko'rinishi</span> </h3>
+                            <h3 id="offcanvasRightLabel" className="m-0 elh3">
+                                <span>
+                                    Tahrirlanayotgan mahsulotingizni ko'rinishi
+                                </span>{' '}
+                            </h3>
                             <button
                                 type="button"
                                 className="btn-close text-reset"
@@ -411,52 +538,82 @@ const PostsProductsEdit = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card rounded-3 ">
-                                <div className="image rounded" >
-                                      <div className="image rounded ">
-                                    {
-                                        (!products.poster ?
-                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
-                                            :
-                                            <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
-                                    }
-                                </div>
+                                <div className="image rounded">
+                                    <div className="image rounded ">
+                                        {!products.poster ? (
+                                            <img
+                                                src="/static/img/docCopy.jpg"
+                                                alt="doc"
+                                                className="border mb-4"
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        ) : (
+                                            <img
+                                                src={products.poster}
+                                                alt="doc"
+                                                className="mb-4 border"
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        )}
+                                    </div>
                                 </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
-                                        <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span><strong>Teglari</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                products?.tag?.map(item => (<span>#{item.name} </span>))
-                                            }
+                                        <span>
+                                            <strong>Nomi</strong>:{' '}
+                                        </span>{' '}
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {title ? title : products?.title}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
-                                        <span><strong>Kategoriya</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                categoryName ? categoryName : products?.category?.name
-                                            }
+                                        <span>
+                                            <strong>Teglari</strong>:{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {products?.tag?.map((item) => (
+                                                <span>#{item.name} </span>
+                                            ))}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
-                                        <span><strong>Qisqa tavsif</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
-                                            }
-
+                                        <span>
+                                            <strong>Kategoriya</strong>:{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {categoryName
+                                                ? categoryName
+                                                : products?.category?.name}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
-                                        <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
-                                            }
-
+                                        <span>
+                                            <strong>Qisqa tavsif</strong>:{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {Shortdata
+                                                ? parse(Shortdata)
+                                                : products?.short_description
+                                                ? parse(
+                                                      products?.short_description
+                                                  )
+                                                : ''}
+                                        </span>
+                                    </p>
+                                    <p className="live-card-p">
+                                        <span>
+                                            <strong>
+                                                Hujjatingiz haqida to'liq
+                                                ma'umot
+                                            </strong>
+                                            :{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {Fulldata
+                                                ? parse(Fulldata)
+                                                : products?.description
+                                                ? parse(products?.description)
+                                                : ''}
                                         </span>
                                     </p>
                                 </div>
@@ -464,108 +621,185 @@ const PostsProductsEdit = () => {
                         </div>
                     </div>
                 </div>
-                <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                    <div className='modal-dialog container '>
-                        <div className='modal-content'>
-                            <div className='d-flex justify-content-end p-3'>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div
+                    className="modal fade "
+                    id="staticBackdrop"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                    aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                    <div className="modal-dialog container ">
+                        <div className="modal-content">
+                            <div className="d-flex justify-content-end p-3">
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div className="ps-container">
                                 <div className="ps-product--detail ps-product--fullwidth">
                                     <div className="ps-product__header ">
-                                        <div
-                                            className="ps-product__thumbnail"
-                                        >
-
-                                            <figure >
-                                                <div className="ps-wrapper" >
-                                                    {
-                                                        products?.iamges ?
-                                                            products?.iamges?.map(item => (
-                                                                <img src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
-                                                            ))
-
-                                                            :
-                                                            <img src="/static/img/docCopy.jpg" alt="doc" />
-
-
-                                                    }
+                                        <div className="ps-product__thumbnail">
+                                            <figure>
+                                                <div className="ps-wrapper">
+                                                    {products?.iamges ? (
+                                                        products?.iamges?.map(
+                                                            (item) => (
+                                                                <img
+                                                                    src={
+                                                                        item.image_url
+                                                                    }
+                                                                    alt="doc"
+                                                                    className="border mb-3 img-fluid"
+                                                                />
+                                                            )
+                                                        )
+                                                    ) : (
+                                                        <img
+                                                            src="/static/img/docCopy.jpg"
+                                                            alt="doc"
+                                                        />
+                                                    )}
                                                 </div>
                                             </figure>
                                         </div>
                                         <div className="ps-product__info">
                                             <header>
-                                                <h1  >{title ? title : products?.title}</h1>
-                                                <h4 >
-                                                    {products ?
-                                                        addPeriodToThousands(products?.price) : "0"}   so'm
-
-
+                                                <h1>
+                                                    {title
+                                                        ? title
+                                                        : products?.title}
+                                                </h1>
+                                                <h4>
+                                                    {products
+                                                        ? addPeriodToThousands(
+                                                              products?.price
+                                                          )
+                                                        : '0'}{' '}
+                                                    so'm
                                                 </h4>
                                             </header>
                                             <div>
-                                                <h4> Muallif : {products?.seller?.first_name} {products?.seller?.last_name}</h4>
+                                                <h4>
+                                                    {' '}
+                                                    Muallif :{' '}
+                                                    {
+                                                        products?.seller
+                                                            ?.first_name
+                                                    }{' '}
+                                                    {
+                                                        products?.seller
+                                                            ?.last_name
+                                                    }
+                                                </h4>
                                             </div>
                                             <div className="ps-product__desc">
-
-
                                                 <ul className="ps-list--dot">
-                                                    <span >
-                                                        <strong>Qisqa tavsif :</strong>
-                                                        {
-                                                            Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
-                                                        }
-
+                                                    <span>
+                                                        <strong>
+                                                            Qisqa tavsif :
+                                                        </strong>
+                                                        {Shortdata
+                                                            ? parse(Shortdata)
+                                                            : products?.short_description
+                                                            ? parse(
+                                                                  products?.short_description
+                                                              )
+                                                            : ''}
                                                     </span>
                                                 </ul>
                                                 <ul>
                                                     <li>
-                                                        <strong>Kategoriyasi</strong> : {
-                                                            categoryName ? categoryName : products?.category?.name
-                                                        }
-
+                                                        <strong>
+                                                            Kategoriyasi
+                                                        </strong>{' '}
+                                                        :{' '}
+                                                        {categoryName
+                                                            ? categoryName
+                                                            : products?.category
+                                                                  ?.name}
                                                     </li>
                                                 </ul>
                                             </div>
-                                            <div className="ps-product__shopping row-gap-3" >
+                                            <div className="ps-product__shopping row-gap-3">
                                                 <button
                                                     className="ps-btn ps-btn--black"
-                                                    style={{ cursor: "not-allowed" }}
-                                                >
+                                                    style={{
+                                                        cursor: 'not-allowed',
+                                                    }}>
                                                     Savatga qo'shish
                                                 </button>
-                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                <button
+                                                    className="ps-btn"
+                                                    style={{
+                                                        cursor: 'not-allowed',
+                                                    }}>
                                                     Sotib olish
                                                 </button>
                                                 <div className="ps-product__actions">
-                                                    <a style={{ cursor: "not-allowed" }} >
-                                                        <i className={`icon-heart`} ></i>
+                                                    <a
+                                                        style={{
+                                                            cursor: 'not-allowed',
+                                                        }}>
+                                                        <i
+                                                            className={`icon-heart`}></i>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                {
-                                                    products?.active_tag?.length > 0 ?
-                                                        <p> <strong>Aktiv teglar: </strong> {products?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
-                                                        :
-                                                        <></>
-                                                }
-                                                {
-                                                    products?.deactive_tag?.length > 0 ?
-                                                        <p> <strong>Aktiv emas teglar: </strong> {products?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
-                                                        :
-                                                        <></>
-                                                }
+                                                {products?.active_tag?.length >
+                                                0 ? (
+                                                    <p>
+                                                        {' '}
+                                                        <strong>
+                                                            Aktiv teglar:{' '}
+                                                        </strong>{' '}
+                                                        {products?.active_tag?.map(
+                                                            (item) => (
+                                                                <span>
+                                                                    #{item.name}{' '}
+                                                                </span>
+                                                            )
+                                                        )}{' '}
+                                                    </p>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                                {products?.deactive_tag
+                                                    ?.length > 0 ? (
+                                                    <p>
+                                                        {' '}
+                                                        <strong>
+                                                            Aktiv emas teglar:{' '}
+                                                        </strong>{' '}
+                                                        {products?.deactive_tag?.map(
+                                                            (item) => (
+                                                                <span>
+                                                                    #{item.name}{' '}
+                                                                </span>
+                                                            )
+                                                        )}{' '}
+                                                    </p>
+                                                ) : (
+                                                    <></>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="ps-product__content ps-tab-root">
                                         <Tabs defaultActiveKey="1">
-                                            <TabPane tab="Mahsulot to’liq tavsifi" key="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
                                                 <div className="ps-document">
-                                                    {
-                                                        Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
-                                                    }
+                                                    {Fulldata
+                                                        ? parse(Fulldata)
+                                                        : products?.description
+                                                        ? parse(
+                                                              products?.description
+                                                          )
+                                                        : ''}
                                                 </div>
                                             </TabPane>
                                         </Tabs>
