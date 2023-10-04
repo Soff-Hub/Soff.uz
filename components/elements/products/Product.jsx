@@ -4,7 +4,7 @@ import ModuleProductActions from '~/components/elements/products/modules/ModuleP
 import useProduct from '~/hooks/useProduct';
 
 const Product = ({ product }) => {
-    const { thumbnailImage, price, title } = useProduct();
+    const { thumbnailImage, title } = useProduct();
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -30,10 +30,11 @@ const Product = ({ product }) => {
                     margin: '0 auto',
                 }}>
                 <Link href="/product/[pid]" as={`/product/${product.slug}`}>
-                    <a style={{
-                        display:'flex',
-                        justifyContent:'center'
-                    }}>
+                    <a
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}>
                         {product.poster_url ? (
                             thumbnailImage(product)
                         ) : (
@@ -42,14 +43,15 @@ const Product = ({ product }) => {
                     </a>
                 </Link>
 
-
                 <ModuleProductActions product={product} />
             </div>
             <div className="ps-product__container">
                 <div className="ps-product__content card-narx-box">
                     {title(product)}
                     {product?.discount === 0 ? (
-                        <p>{addPeriodToThousands(product.discount_price)} so'm</p>
+                        <p>
+                            {addPeriodToThousands(product.discount_price)} so'm
+                        </p>
                     ) : (
                         <>
                             <del>
