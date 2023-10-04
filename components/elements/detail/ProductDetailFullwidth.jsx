@@ -63,7 +63,12 @@ const ProductDetailFullwidth = ({ product }) => {
                     </div>
                 </div>
             </div>
-            <DefaultDescription product={product} />
+            {
+                product?.description ? 
+                <DefaultDescription product={product} />
+                :
+                ''
+            }
         </div>
         </>
 

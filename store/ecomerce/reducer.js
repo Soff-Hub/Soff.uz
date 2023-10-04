@@ -39,7 +39,7 @@ function reducer(state = initalState, action) {
         case actionTypes.SET_cart_SUCCESS:
             return {
                 ...state,
-                cartItems: action.payload,
+                cartDataItems: action.payload,
             };
         case actionTypes.SET_COMPARE_ITEMS_SUCCESS:
             return {
