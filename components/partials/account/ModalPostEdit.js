@@ -52,7 +52,7 @@ function ModalDeletePostEdit({ children, onSubmited, formID, dataBsTarget }) {
                                 </button>
                                 <button
                                     type="submit"
-                                    // data-bs-dismiss="modal"
+                                    data-bs-dismiss="modal"
                                     className="btn btn-success d-block w-25 py-2">
                                     <span className="fs-3">Saqlash</span>
                                 </button>

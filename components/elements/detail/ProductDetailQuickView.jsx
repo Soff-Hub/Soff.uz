@@ -36,7 +36,7 @@ const ProductDetailQuickView = ({ product }) => {
                                     SellerPage(product?.seller?.id)
                                 }>
                                 {' '}
-                                Muallif : {product?.seller?.first_name}
+                                Muallif : {product?.seller?.first_name}   {product?.seller?.last_name}
                             </h4>
                         )}
                     </div>
