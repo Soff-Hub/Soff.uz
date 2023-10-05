@@ -5,8 +5,7 @@ import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFu
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
 
-import { baseUrl } from '~/repositories/Repository';
-import Axios from 'axios';
+
 import Meta from '~/components/shared/headers/Meta';
 import { useState } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
@@ -45,31 +44,6 @@ const ProductDefaultPage = () => {
             text: product.product ? product.product.title : 'Loading...',
         },
     ];
-
-    // Views
-
-    // let productView, headerView;
-    // if (true) {
-    //     if (product) {
-    //         productView = <ProductDetailFullwidth product={product} />;
-    //         headerView = (
-    //             <>
-    //                 <HeaderElectronic product={product} />
-    //                 <HeaderMobileProduct />
-    //             </>
-    //         );
-    //     } else {
-    //         headerView = (
-    //             <>
-    //                 <HeaderDefault />
-    //                 <HeaderMobileProduct />
-    //             </>
-    //         );
-    //     }
-    // } else {
-    //     productView = <SkeletonProductDetail />;
-    // }
-
 
     return (
         <>
