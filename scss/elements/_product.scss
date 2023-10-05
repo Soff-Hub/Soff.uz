@@ -69,13 +69,11 @@
 
         li {
             margin: 0;
-            margin-right: 6px;
+            // margin-right: 6px;
             max-width: 40px;
 
             a {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                position: relative;
                 width: 34px;
                 height: 34px;
                 border-radius: 50%;
@@ -83,6 +81,12 @@
                 &:hover {
                     background-color: $color-1st;
                     color: #ffffff;
+                }
+                 i{
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
                 }
             }
 

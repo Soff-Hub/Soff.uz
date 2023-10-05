@@ -17,7 +17,7 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
                             />
                         ))
                     ) : (
-                        <img src="/static/img/docCopy.jpg" alt="doc" />
+                        ''
                     )}
                 </div>
             </figure>

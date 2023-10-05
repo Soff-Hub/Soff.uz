@@ -14,9 +14,9 @@ import ShopItems from '~/components/partials/shop/ShopItems';
 const ProductCategoryScreen = () => {
     const Router = useRouter();
     const { slug } = Router.query;
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState(null);
     const [loading, setLoading] = useState(false);
-    const [filteredData, setFilteredData] = useState([]);
+    const [filteredData, setFilteredData] = useState(null);
 
     const [chaildId, setchaildId] = useState(null);
     const [parentId, setParentId] = useState(null);
