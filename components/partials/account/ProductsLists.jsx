@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button, Modal, Table } from 'antd';
+import { Button,  Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -9,14 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MyProductsEdit } from '~/store/auth/action';
 import Link from 'next/link';
 import Axios from 'axios';
-var parse = require("html-react-parser");
-import CalculateTimeDifference from './DateFormatter';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 const { TabPane } = Tabs;
 import { Tabs } from 'antd';
+import CalculateTimeDifference from './DateFormatter';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -179,7 +178,7 @@ function ProductsLists() {
             title: 'Sana',
             dataIndex: 'created_at',
             key: 'created_at',
-            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference     targetDate={created_at} /> </span>
         },
         {
             title: 'Narxi',
@@ -296,9 +295,19 @@ function ProductsLists() {
                                             <div className="ps-product__header ">
                                                 <ThumbnailDefault product={deleteIdView} />
                                                 <div className="ps-product__info">
-                                                    <ModuleDetailTopInformation product={deleteIdView} />
+                                                    <header>
+                                                        <h1>{deleteIdView?.title}</h1>
+                                                        <h4>
+                                                            {addPeriodToThousands(deleteIdView?.price)} so'm{' '}
+                                                        </h4>
+                                                    </header>
                                                     <div>
-                                                        <h4> Muallif : {deleteIdView?.seller?.first_name}</h4>
+                                                        {
+                                                            deleteIdView?.seller ?
+                                                                <h4> Muallif : {deleteIdView?.seller?.first_name}  {deleteIdView?.seller?.last_name}</h4>
+                                                                :
+                                                                <></>
+                                                        }
                                                     </div>
                                                     <ModuleProductDetailDescription product={deleteIdView} />
                                                     <div className="ps-product__shopping row-gap-3" >
@@ -346,14 +355,14 @@ function ProductsLists() {
                                             </div>
                                             <div className='d-flex justify-content-end '>
                                                 {
-                                                        !loading2 ?
+                                                    !loading2 ?
                                                         <button onClick={handleButtonClickViewProducts} className="btn btn-warning p-2 px-5 fs-4 ">
 
                                                             <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
 
                                                         </button>
                                                         :
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning  p-2 px-5 fs-4 " style={{width:"179px"}}>
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning  p-2 px-5 fs-4 " style={{ width: "179px" }}>
 
                                                             <div className="spinner-border " role="status">
                                                                 <span className="visually-hidden">Loading...</span>

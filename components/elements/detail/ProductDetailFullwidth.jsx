@@ -25,7 +25,7 @@ const ProductDetailFullwidth = ({ product }) => {
     console.log('log', product);
     return (
         <>
-        <Meta  title={product?.title} image={product?.iamges[0]?.image_url}/>
+        <Meta  title={product?.title} image={product?.iamges?.map(item=>(item?.image_url))}/>
         <div className="ps-product--detail ps-product--fullwidth">
             <div className="ps-product__header ">
                 <ThumbnailDefault product={product} />

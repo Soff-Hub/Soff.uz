@@ -13,9 +13,11 @@ export default function useWishlist() {
 
         setAllSaved: async () => {
             const data = JSON.parse(localStorage.getItem('wishlist'));
-            const resp = await ProductRepository.postCartData(data);
-            if (resp?.data) {
-                dispatch(setSaved(resp.data.data));
+            if (data?.length > 0) {
+                const resp = await ProductRepository.postCartData(data);
+                if (resp?.data) {
+                    dispatch(setSaved(resp.data.data));
+                }
             }
         },
 

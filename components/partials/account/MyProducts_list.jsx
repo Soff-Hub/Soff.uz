@@ -370,9 +370,19 @@ function MyProductsLists() {
                                             <div className="ps-product__header ">
                                                 <ThumbnailDefault product={View} />
                                                 <div className="ps-product__info">
-                                                    <ModuleDetailTopInformation product={View} />
+                                                    <header>
+                                                        <h1>{View?.title}</h1>
+                                                        <h4>
+                                                            {addPeriodToThousands(View?.price)} so'm{' '}
+                                                        </h4>
+                                                    </header>
                                                     <div>
-                                                        <h4> Muallif : {View?.seller?.first_name}  {View?.seller?.last_name}</h4>
+                                                        {
+                                                            View?.seller ?
+                                                                <h4> Muallif : {View?.seller?.first_name}  {View?.seller?.last_name}</h4>
+                                                                :
+                                                                <></>
+                                                        }
                                                     </div>
                                                     <ModuleProductDetailDescription product={View} />
                                                     <div className="ps-product__shopping row-gap-3" >

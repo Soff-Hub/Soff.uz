@@ -58,7 +58,7 @@ const ModuleDetailTopInformation = ({ product }) => {
     }
     return (
         <header>
-            <h1>{product.title}</h1>
+            <h1>{product?.title}</h1>
             {priceView}
         </header>
     );

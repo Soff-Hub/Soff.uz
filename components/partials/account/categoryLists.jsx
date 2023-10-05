@@ -19,6 +19,7 @@ function CategoryLists() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState(null);
     const [tagName, setTagName] = useState(null);
+    const [tagNameTop, setTagNameTop] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
 
     async function GetItemsProducts(page) {
@@ -73,7 +74,7 @@ function CategoryLists() {
             formData.append('parent', tagName)
         }
         const postsItems = await PostsRepository.PostsCategory(formData, user?.access);
-        if (postsItems?.status===201) {
+        if (postsItems?.status === 201) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -90,14 +91,17 @@ function CategoryLists() {
         if (file) {
             formData.append('image', file)
         }
-        if (values) {
+        if (values?.icon) {
             formData.append('icon', values.icon)
         }
-        if (values) {
+        if (values?.name) {
             formData.append('name', values.name)
         }
         if (tagName) {
             formData.append('parent', tagName)
+        }
+        if (tagNameTop) {
+            formData.append('top', tagNameTop)
         }
 
         const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
@@ -121,11 +125,6 @@ function CategoryLists() {
 
         GetItemsProducts(1)
 
-    }
-
-    async function handleClickChecked(item) {
-        const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id, user?.access)
-        GetItemsProducts(1)
     }
 
     function handleClickPostsImg(e) {
@@ -173,25 +172,34 @@ function CategoryLists() {
                 </div>
             ),
         },
-        {
-            title: 'Top',
-            dataIndex: 'data',
-            key: 'address',
-            render: (datas) => {
-                const isTop = data.some((el) => el.id === datas?.id && el.is_parent === true);
-
-                if (isTop) {
-                    return (
-                        <input
-                            type='checkbox'
-                            defaultChecked={datas?.top}
-                            onChange={() => handleClickChecked(datas)}
-                        />
-                    );
-                }
-                return <></>;
-            },
-        },
+        // {
+        //     title: 'Top',
+        //     dataIndex: 'data',
+        //     key: 'address',
+        //     render: (datas) => {
+        //         if (datas.parent === 'None') {
+        //             if (datas.parent === 'None') {
+        //                 return (
+        //                     <input
+        //                         type='checkbox'
+        //                         defaultChecked={datas.top}
+        //                         onChange={() => handleClickChecked(datas)}
+        //                     />
+        //                 );
+        //             }
+        //             else {
+        //                 return (
+        //                     <input
+        //                         type='checkbox'
+        //                         defaultChecked={false}
+        //                         onChange={() => handleClickChecked(datas)}
+        //                     />
+        //                 );
+        //             }
+        //         }
+        //         return <></>;
+        //     },
+        // },
         {
             title: 'Harakatlar',
             dataIndex: 'id',
@@ -209,7 +217,6 @@ function CategoryLists() {
             </div>
         },
     ];
-
     return (
         <section className="ps-my-account ps-page--account">
             <div className="container">
@@ -224,7 +231,7 @@ function CategoryLists() {
                             <div className="ps-section--account-setting">
                                 <div>
                                     <div className='row row-gap-3 bg-white m-0 gap-5 px-4 mb-3 pb-4 rounded'>
-                                    <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i className="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
+                                        <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i className="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
                                         <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={handleClick} />
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'> <i className="fa-solid fa-plus"></i> Kategoriya qo'shish</span></button>
                                     </div>
@@ -256,6 +263,41 @@ function CategoryLists() {
                                         ))
                                     )
                                 }
+                            </select>
+                            :
+                            <></>
+                    }
+                    {
+                        data.some(el => (el?.id == deleteIdEdit?.id && el.is_parent === true)) ?
+                            <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagNameTop(e.target.value)} >
+                                {
+                                    data.some(el => (el?.id == deleteIdEdit?.id && el.top === true)) ?
+                                        <>
+                                            <option selected value={"true"} >Top </option>
+                                            <option value={"false"} >Top emas</option>
+                                        </>
+                                        :
+                                        <>
+
+                                            <option value={"true"} >Top </option>
+                                            <option value={"false"} >Top emas</option>
+                                        </>
+                                            ||
+                                            data.some(el => (el?.id == deleteIdEdit?.id && el.top === false)) ?
+                                            <>
+                                                <option selected value={"false"} >Top emas</option>
+                                                <option value={"true"} >Top </option>
+                                            </>
+                                            :
+                                            <>
+
+                                                <option value={"true"} >Top </option>
+                                                <option value={"false"} >Top emas</option>
+                                            </>
+
+
+                                }
+
                             </select>
                             :
                             <></>

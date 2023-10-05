@@ -68,7 +68,7 @@ const ModuleDetailShoppingActions = ({
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                        <i className={`icon-heart   ${wishlist?.some(item => Number(item.id) === Number(product.id)) ? 'text-danger' : ''} `} ></i>
+                        <i className={`fa-solid fa-heart    ${wishlist?.some(item => Number(item.id) === Number(product.id)) ? 'text-danger' : ''} `} ></i>
                     </a>
                 </div>
             </div>
