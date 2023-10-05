@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import ProductDetailQuickView from '~/components/elements/detail/ProductDetailQuickView';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { setCartOneItem } = useCart()
     const { addSavedItem, wishlist } = useWishlist()
+    
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -37,10 +39,12 @@ const ModuleProductActions = ({ product, ecomerce }) => {
         setIsQuickView(true);
     };
 
-    const handleHideQuickView = (e) => {
+    const handleHideQuickView = async (e) => {
         e.preventDefault();
+
         setIsQuickView(false);
     };
+
 
     return (
         <ul className="ps-product__actions">
@@ -71,7 +75,7 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                     data-placement="top"
                     title="Tanlanganlarga qo'shish"
                     onClick={handleAddItemToWishlist}>
-                    <i className={`icon-heart   ${wishlist?.some(item => Number(item.id) === Number(product?.id)) ? 'text-danger' : ''} `}></i>
+                    <i className={`${wishlist?.some(item => Number(item.id) === Number(product?.id)) ? 'fa-solid fa-heart  text-danger ' : 'icon-heart'} `}></i>
                 </a>
             </li>
             <Modal

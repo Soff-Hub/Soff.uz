@@ -22,7 +22,6 @@ const ProductDetailFullwidth = ({ product }) => {
     useEffect(() => {
         setTag(product?.tag);
     }, []);
-    console.log('log', product);
     return (
         <>
         <Meta  title={product?.title} image={product?.iamges?.map(item=>(item?.image_url))}/>

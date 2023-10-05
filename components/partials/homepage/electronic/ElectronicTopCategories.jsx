@@ -21,7 +21,7 @@ function ElectronicTopCategories() {
     return (
         <div className="ps-top-categories">
             <div className="container">
-                <h3>Oyning eng yaxshi kategoriyalari</h3>
+                <h3>Kategoriyalar</h3>
                 <div className="yaxshi-categoriyalar">
                     {category ? (
                         category.map((category) => (

@@ -6,7 +6,6 @@ import Link from 'next/link';
 export default function useProduct() {
     return {
         thumbnailImage: (payload) => {
-            console.log('proo', payload);
             return (
                 <>
                     <LazyLoad>

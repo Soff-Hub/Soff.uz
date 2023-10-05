@@ -10,29 +10,47 @@ import Meta from '~/components/shared/headers/Meta';
 import { useState } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useEffect } from 'react';
+import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 
 const ProductDefaultPage = () => {
     const router = useRouter();
     const { pid } = router.query;
     const [product, setProduct] = useState([]);
+    const [similar, setSimilar] = useState([]);
     const [loading, setLoading] = useState(false);
 
-    async function getProduct(pid) {
+    async function getProduct() {
         setLoading(true);
         const responseData = await ProductRepository.getProductsById(pid);
         if (responseData) {
             setProduct(responseData);
-            setTimeout(
-                function () {
-                    setLoading(false);
-                }.bind(this),
-                250
-            );
+            // setTimeout(
+            //     function () {
+            //         setLoading(false);
+            //     }.bind(this),
+            //     250
+            // );
+        }
+    }
+    async function getSimilar() {
+        setLoading(true);
+        const responsSimilar = await ProductRepository.getProductSimilarSlug(pid)
+        if (responsSimilar) {
+            setSimilar(responsSimilar);
+            // setTimeout(
+            //     function () {
+            //         setLoading(false);
+            //     }.bind(this),
+            //     250
+            // );
         }
     }
 
+    
+
     useEffect(() => {
-        getProduct(pid);
+        getProduct();
+        getSimilar()
     }, [pid]);
 
     const breadCrumb = [
@@ -41,9 +59,10 @@ const ProductDefaultPage = () => {
             url: '/',
         },
         {
-            text: product.product ? product.product.title : 'Loading...',
+            text: product?.title ? product?.title : 'Loading...',
         },
     ];
+
 
     return (
         <>
@@ -71,9 +90,9 @@ const ProductDefaultPage = () => {
                                 </div>
                             </div>
 
-                            {product?.similar?.length > 0 ? (
+                            {similar?.length > 0 ? (
                                 <RelatedProduct
-                                    data={product?.similar}
+                                    data={similar}
                                     pid={pid}
                                     collectionSlug="shop-recommend-items"
                                 />
