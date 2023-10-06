@@ -7,7 +7,11 @@ export const actionTypes = {
     ISLOGINNING: 'ISLOGINNING',
     ACCOUNT_LINKS: 'ACCOUNT_LINKS',
     MYPODUCTS_LISTS: 'MYPODUCTS_LISTS',
-    ONESHOPDOC: 'ONESHOPDOC'
+    ONESHOPDOC: 'ONESHOPDOC',
+    CATEGORY_LISTS: 'CATEGORY_LISTS',
+    TOP_CATEGORY_LISTS: 'TOP_CATEGORY_LISTS',
+    CATEGORY: 'CATEGORY',
+    CATEGORY_SLUG:'CATEGORY_SLUG'
 };
 
 export function login({ user, data }) {
@@ -39,6 +43,19 @@ export function MyProductsEdit(payload) {
 }
 export function OneShopDoc(payload) {
     return { type: actionTypes.ONESHOPDOC, payload };
+}
+export function Category_Lists(payload) {
+    return { type: actionTypes.CATEGORY_LISTS, payload };
+}
+
+export function TopCategory_Lists(payload) {
+    return { type: actionTypes.TOP_CATEGORY_LISTS, payload };
+}
+export function Category(payload) {
+    return { type: actionTypes.CATEGORY, payload };
+}
+export function CategorySlug(payload) {
+    return { type: actionTypes.CATEGORY_SLUG, payload };
 }
 
 

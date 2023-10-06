@@ -1,29 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Slider, Checkbox } from 'antd';
+import { Slider } from 'antd';
 import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 
-const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
+const WidgetShopFilterByPriceRange = ({ setFilteredData,parentId ,chaildId}) => {
+
     const Router = useRouter();
     const [min, setMin] = useState(null);
     const [max, setMax] = useState(null);
 
-    const { slug } = Router.query;
-    const [chaildId, setchaildId] = useState(null);
-    const [parentId, setParentId] = useState(null);
 
     const [defVal, setDefVal] = useState(null);
-
-    async function getCategry() {
-        const responseData = await ProductRepository.getTotalRecords();
-        if (responseData?.length > 0) {
-            if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
-                setchaildId(slug);
-            } else {
-                setParentId(slug);
-            }
-        }
-    }
 
     const filterByPrice = async (minPriceVal, maxPriceVal) => {
         if (chaildId !== null) {
@@ -96,7 +83,6 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
         }
-        setParentId(null)
     }
 
 
@@ -117,17 +103,12 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
         }
-        setchaildId(null)
     }
     
 
-    
-    useEffect(() => {
-        getCategry();
-    }, [ slug])
+
 
     useEffect(() => {
-        getCategry();
         if(parentId){
             parentPrice(parentId)
         }

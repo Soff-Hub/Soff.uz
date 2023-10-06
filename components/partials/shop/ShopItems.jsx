@@ -12,6 +12,9 @@ const ShopItems = ({
     data,
     dataCount,
     setDataCount,
+    chaildSlug,
+    parentSlug
+
 }) => {
     const Router = useRouter();
     const { query } = Router;
@@ -25,10 +28,7 @@ const ShopItems = ({
 
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
-    const [chaildSlug, setchaildSlug] = useState('');
-    const [parentSlug, setParentSlug] = useState('');
-    const [draw, setDraw] = useState(false);
-    // const [searchValue, setSearchValue] = useState('')
+
 
     function handleChangeViewMode(e) {
         e.preventDefault();
@@ -55,36 +55,15 @@ const ShopItems = ({
         }
     }
 
-    async function getCategry() {
-        const responseData = await ProductRepository.getTotalRecords();
-        if (responseData?.length > 0) {
-            if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
-                setchaildSlug(slug);
-            } else {
-                setParentSlug(slug);
-            }
-        }
-    }
-
-    useEffect(() => {
-        getCategry();
-    }, [slug]);
 
     useEffect(() => {
         setTimeout(() => {
             setLoad(true);
         }, 2000);
-console.log('data', data);
+
         data !== null  ? setSuccess(false) : setSuccess(true);
 
-        // if (data?.length > 0) {
-        //     setSuccess(false)
-        // }else{
-        //     setSuccess(true)
-        //     setTimeout(() => {
-        //         setDraw(true)
-        //     }, 2000);
-        // }
+  
 
         handleSetColumns();
         if (true) {

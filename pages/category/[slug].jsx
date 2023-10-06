@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import WidgetShopCategories from '~/components/shared/widgets/WidgetShopCategories';
-import WidgetShopBrands from '~/components/shared/widgets/WidgetShopBrands';
 import WidgetShopFilterByPriceRange from '~/components/shared/widgets/WidgetShopFilterByPriceRange';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useRouter } from 'next/router';
-import ProductItems from '~/components/partials/product/ProductItems';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 
@@ -15,7 +13,6 @@ const ProductCategoryScreen = () => {
     const Router = useRouter();
     const { slug } = Router.query;
     const [category, setCategory] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [filteredData, setFilteredData] = useState(null);
 
     const [chaildId, setchaildId] = useState(null);
@@ -79,11 +76,11 @@ const ProductCategoryScreen = () => {
             setFilteredData(responseData?.results);
             setMin(responseData?.min_price);
             setMax(responseData?.max_price);
-            // console.log(responseData);
             setCount(responseData.count);
         }
         setParentId(null);
     }
+
     useEffect(() => {
         getCategry();
     }, [slug]);
@@ -122,20 +119,7 @@ const ProductCategoryScreen = () => {
             text: `${nom}`,
         },
     ];
-    //Views
-    let productItemsViews;
 
-    if (!loading) {
-        if (category && category.length > 0) {
-            productItemsViews = (
-                <ProductItems columns={4} products={category} />
-            );
-        } else {
-            productItemsViews = <p>No Product found</p>;
-        }
-    } else {
-        productItemsViews = <p>Loading...</p>;
-    }
 
     return (
         <PageContainer
@@ -149,11 +133,11 @@ const ProductCategoryScreen = () => {
                         <div className="ps-layout__left">
                             <WidgetShopCategories
                                 data={category}
-                                setchaildId={getChaildData}
-                                setParentId={getParentData}
                             />
                             <WidgetShopFilterByPriceRange
                                 setFilteredData={setFilteredData}
+                                chaildId={chaildId}
+                                parentId={parentId}
                             />
                         </div>
                         <div className="ps-layout__right">
