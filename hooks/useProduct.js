@@ -1,10 +1,7 @@
 import React from 'react';
 import LazyLoad from 'react-lazyload';
-import { baseUrl } from '~/repositories/Repository';
 import { formatCurrency } from '~/utilities/product-helper';
 import Link from 'next/link';
-
-
 
 export default function useProduct() {
     return {
@@ -19,21 +16,18 @@ export default function useProduct() {
                                         backgroundImage: `url(${payload?.poster_url})`,
                                         backgroundSize: 'contain',
                                         backgroundRepeat: 'no-repeat',
-                                        backgroundPosition: 'center'
+                                        backgroundPosition: 'center',
                                     }}
                                     className="products-image1"></div>
                             </div>
                         ) : (
-
                             <div
                                 style={{
                                     backgroundImage: `url(/static/img/docCopy.jpg)`,
                                     backgroundSize: 'contain',
                                     backgroundRepeat: 'no-repeat',
-
                                 }}
-                                className='placholder-hujjat products-image1'
-                            ></div>
+                                className="placholder-hujjat products-image1"></div>
                         )}
                     </LazyLoad>
                 </>

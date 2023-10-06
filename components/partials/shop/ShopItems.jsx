@@ -15,7 +15,7 @@ const ShopItems = ({
 }) => {
     const Router = useRouter();
     const { query } = Router;
-    const {slug} = Router.query
+    const { slug } = Router.query;
     const [listView, setListView] = useState(true);
     const [classes, setClasses] = useState(
         'col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6 '
@@ -25,8 +25,9 @@ const ShopItems = ({
 
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
-    const [chaildSlug, setchaildSlug] = useState('')
-    const [parentSlug, setParentSlug] = useState('')
+    const [chaildSlug, setchaildSlug] = useState('');
+    const [parentSlug, setParentSlug] = useState('');
+    const [draw, setDraw] = useState(false);
     // const [searchValue, setSearchValue] = useState('')
 
     function handleChangeViewMode(e) {
@@ -57,25 +58,33 @@ const ShopItems = ({
     async function getCategry() {
         const responseData = await ProductRepository.getTotalRecords();
         if (responseData?.length > 0) {
-            if (responseData?.every(cat => Number(cat.id) !== Number(slug))) {
-                setchaildSlug(slug)
-            }
-            else {
-                setParentSlug(slug)
+            if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
+                setchaildSlug(slug);
+            } else {
+                setParentSlug(slug);
             }
         }
     }
 
     useEffect(() => {
-        getCategry()
-    }, [slug])
+        getCategry();
+    }, [slug]);
 
     useEffect(() => {
         setTimeout(() => {
             setLoad(true);
         }, 2000);
+console.log('data', data);
+        data !== null  ? setSuccess(false) : setSuccess(true);
 
-        data ? setSuccess(false) : setSuccess(true);
+        // if (data?.length > 0) {
+        //     setSuccess(false)
+        // }else{
+        //     setSuccess(true)
+        //     setTimeout(() => {
+        //         setDraw(true)
+        //     }, 2000);
+        // }
 
         handleSetColumns();
         if (true) {
@@ -84,7 +93,6 @@ const ShopItems = ({
             setLoad(true);
         }
     }, [query, data]);
-    
 
     const handlePagination = async (e) => {
         setPage(e);
@@ -99,7 +107,7 @@ const ShopItems = ({
                 null,
                 null,
                 null
-                );
+            );
             if (respons) {
                 setDataCount(respons.count);
                 setNewData(respons.results);
@@ -124,137 +132,136 @@ const ShopItems = ({
             } else {
                 setLoad(true);
             }
-        } 
-    }
-   
+        }
+    };
 
     async function handleSelect(e) {
         const ID = 'id';
         const PRICE = 'price';
         const DePRICE = '-price';
-      if (chaildSlug) {
-        if (e.target.value === 'all') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                ID,
-                null,
-                null
-            );
-            if (respons) {
+        if (chaildSlug) {
+            if (e.target.value === 'all') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    ID,
+                    null,
+                    null
+                );
+                if (respons) {
+                    setNewData(respons?.results);
+                } else {
+                    setNewData(respons?.results);
+                }
+            } else if (e.target.value === 'mashhur') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    'approved_count'
+                );
                 setNewData(respons?.results);
-            } else {
+            } else if (e.target.value === 'arzondan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    null
+                );
                 setNewData(respons?.results);
-            }
-        } else if (e.target.value === 'mashhur') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                null,
-                PRICE,
-                'approved_count'
-            );
-            setNewData(respons?.results);
-        } else if (e.target.value === 'arzondan') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                null,
-                PRICE,
-                null
-            );
-            setNewData(respons?.results);
-        } else if (e.target.value === 'qimmatdan') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                null,
-                DePRICE,
-                null
-            );
-            setNewData(respons?.results);
-        }
-      }else if(parentSlug){
-        if (e.target.value === 'all') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                null,
-                slug,
-                null,
-                null,
-                null,
-                ID,
-                null,
-                null
-            );
-            if (respons) {
-                setNewData(respons?.results);
-            } else {
+            } else if (e.target.value === 'qimmatdan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DePRICE,
+                    null
+                );
                 setNewData(respons?.results);
             }
-        } else if (e.target.value === 'mashhur') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                null,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                PRICE,
-                'approved_count'
-            );
-            setNewData(respons?.results);
-        } else if (e.target.value === 'arzondan') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                null,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                PRICE,
-                null
-            );
-            setNewData(respons?.results);
-        } else if (e.target.value === 'qimmatdan') {
-            const respons = await ProductRepository.getFilderProduct(
-                1,
-                null,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                DePRICE,
-                null
-            );
-            setNewData(respons?.results);
+        } else if (parentSlug) {
+            if (e.target.value === 'all') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    ID,
+                    null,
+                    null
+                );
+                if (respons) {
+                    setNewData(respons?.results);
+                } else {
+                    setNewData(respons?.results);
+                }
+            } else if (e.target.value === 'mashhur') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    'approved_count'
+                );
+                setNewData(respons?.results);
+            } else if (e.target.value === 'arzondan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    null
+                );
+                setNewData(respons?.results);
+            } else if (e.target.value === 'qimmatdan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DePRICE,
+                    null
+                );
+                setNewData(respons?.results);
+            }
         }
-      }
     }
 
-    async function detailSearch(e){
+    async function detailSearch(e) {
         // setSearchValue(e)
         if (chaildSlug) {
-            const respons = await ProductRepository.getSearchProduct( 
+            const respons = await ProductRepository.getSearchProduct(
                 1,
                 slug,
                 null,
@@ -264,16 +271,16 @@ const ShopItems = ({
                 null,
                 null,
                 null,
-                e)
-                if (respons) {
-                    setDataCount(respons.count);
-                    setNewData(respons.results);
-                } else {
-                    setLoad(true);
-                }
-            
-        }else if (parentSlug) {
-            const respons = await ProductRepository.getSearchProduct( 
+                e
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
+        } else if (parentSlug) {
+            const respons = await ProductRepository.getSearchProduct(
                 1,
                 null,
                 slug,
@@ -283,49 +290,60 @@ const ShopItems = ({
                 null,
                 null,
                 null,
-                e)
-                if (respons) {
-                    setDataCount(respons.count);
-                    setNewData(respons.results);
-                } else {
-                    setLoad(true);
-                }
+                e
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
         }
     }
-
 
     // Views
     let productItemsView;
     if (success) {
-
         const skeletonItems = generateTempArray(4).map((item) => (
             <div className={classes} key={item}>
                 <SkeletonProduct />
             </div>
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
-        
-       
-    } else {
 
+        
+
+    } else {
         if (data?.length > 0) {
             const items =
                 newData?.length > 0 &&
                 newData?.map((item) => (
-                    <div className={classes + ' home-card-category'} key={item.id}  style={{
-                        display:'flex',
-                        justifyContent:'center',
-                        alignContent:'center'
-                    }} >
+                    <div
+                        className={classes + ' home-card-category'}
+                        key={item.id}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                        }}>
                         <Product product={item} />
                     </div>
                 ));
             productItemsView = (
-                <div className="ps-shop-items" >
+                <div className="ps-shop-items">
                     <div className="row">{items}</div>
                 </div>
             );
         } else {
+            const skeletonItems = generateTempArray(4).map((item) => (
+                <div className={classes} key={item}>
+                    <SkeletonProduct />
+                </div>
+            ));
+            productItemsView = <div className="row">{skeletonItems}</div>;
+        }
+
+        if (data?.length <= 0) {
             productItemsView = (
                 <div
                     style={{
@@ -342,8 +360,8 @@ const ShopItems = ({
                     </div>
                 </div>
             );
-
         }
+       
     }
 
     return (
@@ -354,12 +372,16 @@ const ShopItems = ({
                     ta hujjat bor
                 </p>
                 <div className="ps-shopping__actions">
-              
-                   <label className='category-search-label'>
-                   <i className="fa-solid fa-magnifying-glass search-label"></i>
-                   <input className='ps-input' type="text" placeholder='Hujjatingizni izlang...' onChange={(e) => detailSearch(e.target.value)} />
-                   </label>
-              
+                    <label className="category-search-label">
+                        <i className="fa-solid fa-magnifying-glass search-label"></i>
+                        <input
+                            className="ps-input"
+                            type="text"
+                            placeholder="Hujjatingizni izlang..."
+                            onChange={(e) => detailSearch(e.target.value)}
+                        />
+                    </label>
+
                     <select
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
@@ -374,7 +396,6 @@ const ShopItems = ({
                         <option value="qimmatdan">
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
-                        {/* <option value="arzondan">Oldingilari</option> */}
                     </select>
                     <div className="ps-shopping__view">
                         <ul className="ps-tab-list">
@@ -385,14 +406,6 @@ const ShopItems = ({
                                     <i className="icon-grid"></i>
                                 </a>
                             </li>
-                            {/* <li className={listView !== true ? 'active' : ''}>
-
-                                <a
-                                    href="#"
-                                    onClick={(e) => handleChangeViewMode(e)}>
-                                    <i className="icon-list4"></i>
-                                </a>
-                            </li> */}
                         </ul>
                     </div>
                 </div>
@@ -401,21 +414,18 @@ const ShopItems = ({
                 {productItemsView}
             </div>
             <div className="ps-shopping__footer text-center">
-              {
-                data?.length >= 16 && 
-                <div className="ps-pagination">
-                  
-                <Pagination
-                    total={dataCount}
-                    pageSize={pageSize}
-                    responsive={true}
-                    showSizeChanger={false}
-                    current={page}
-                    onChange={(e) => handlePagination(e)}
-                />
-            
-        </div>
-              }
+                {data?.length >= 16 && (
+                    <div className="ps-pagination">
+                        <Pagination
+                            total={dataCount}
+                            pageSize={pageSize}
+                            responsive={true}
+                            showSizeChanger={false}
+                            current={page}
+                            onChange={(e) => handlePagination(e)}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );

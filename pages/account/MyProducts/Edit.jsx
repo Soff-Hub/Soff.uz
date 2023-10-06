@@ -47,7 +47,7 @@ const PostsMyProducts = () => {
 
     async function GetItemsCategoryLists() {
         const data = [];
-        const ItemsData = await GetRepository.getCategoryLists(user?.access);
+        const ItemsData = await GetRepository.getAllCategoryLists();
         if (ItemsData?.results) {
             for (let i = 0; i < ItemsData?.results?.length; i++) {
                 if (ItemsData?.results[i].parent !== null) {
@@ -245,7 +245,7 @@ const PostsMyProducts = () => {
                                     }>
                                     {dataCategory?.length > 0 &&
                                         dataCategory.map((item) => (
-                                            products?.category === item.name ?
+                                            products?.category?.name === item.name ?
                                                 <option selected value={item.id}>{item.name}</option>
                                                 :
                                                 <option value={item.id} >{item.name}</option>

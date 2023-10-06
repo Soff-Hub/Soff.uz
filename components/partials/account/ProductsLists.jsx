@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button, Modal, Table } from 'antd';
+import { Button,  Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -9,14 +9,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { MyProductsEdit } from '~/store/auth/action';
 import Link from 'next/link';
 import Axios from 'axios';
-var parse = require("html-react-parser");
-import CalculateTimeDifference from './DateFormatter';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 const { TabPane } = Tabs;
 import { Tabs } from 'antd';
+import CalculateTimeDifference from './DateFormatter';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -179,7 +178,7 @@ function ProductsLists() {
             title: 'Sana',
             dataIndex: 'created_at',
             key: 'created_at',
-            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference     targetDate={created_at} /> </span>
         },
         {
             title: 'Narxi',
@@ -305,10 +304,10 @@ function ProductsLists() {
                                                     <div>
                                                         {
                                                             deleteIdView?.seller ?
-                                                        <h4> Muallif : {deleteIdView?.seller?.first_name}  {deleteIdView?.seller?.last_name}</h4>
-                                                    :
-                                                    <></>   
-                                                    }
+                                                                <h4> Muallif : {deleteIdView?.seller?.first_name}  {deleteIdView?.seller?.last_name}</h4>
+                                                                :
+                                                                <></>
+                                                        }
                                                     </div>
                                                     <ModuleProductDetailDescription product={deleteIdView} />
                                                     <div className="ps-product__shopping row-gap-3" >

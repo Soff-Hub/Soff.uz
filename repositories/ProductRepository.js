@@ -202,6 +202,26 @@ class ProductRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getProductSimilarSlug(pid) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/similar/${pid}/`
+        )
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getProductImagesSlug(pid) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/promotional-sliders/${pid}`
+        )
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
 
     // async getProductsByCategory(payload) {
     //     const reponse = await Repository.get(

@@ -6,12 +6,11 @@ import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import Product from '~/components/elements/products/Product';
 import useGetProducts from '~/hooks/useGetProducts';
 
-
 const ElectronicProductGroupWithCarousel = ({
     collectionSlug,
     title,
     data,
-    id
+    id,
 }) => {
     const { productItems, loading, getProductsByCollection } = useGetProducts();
     useEffect(() => {
@@ -21,20 +20,20 @@ const ElectronicProductGroupWithCarousel = ({
     }, [collectionSlug]);
 
     // Views
-console.log(data);
     let productItemsView;
     if (!loading) {
         if (data && data?.promotional_sliders.length > 0) {
-            productItemsView = 
-            (
-              <div className='d-flex align-content-center row'>
-               {
-                 data?.promotional_sliders?.slice(0,6).map((item, index) => (
-                  <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6' >   <Product key={item.id} product={item} /> </div>
-                ))
-               }
-              </div>
-            )
+            productItemsView = (
+                <div className="d-flex align-content-center row">
+                    {data?.promotional_sliders
+                        ?.slice(0, 6)
+                        .map((item, index) => (
+                            <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                <Product  product={item} />{' '}
+                            </div>
+                        ))}
+                </div>
+            );
         } else {
             productItemsView = <p>Hujjat topilmadi</p>;
         }
@@ -53,7 +52,6 @@ console.log(data);
                 <div className="ps-section__header">
                     <h3>{title}</h3>
                     <ul className="ps-section__links">
-
                         {/* {linksView} */}
                         <li>
                             <Link href={`/category/${id}`}>

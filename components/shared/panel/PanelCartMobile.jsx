@@ -26,8 +26,6 @@ const PanelCartMobile = ({ ecomerce, setMenuDrawer,
     };
 
 
-
-
     //view
     let cartItemsView, footerView;
 
@@ -38,7 +36,7 @@ const PanelCartMobile = ({ ecomerce, setMenuDrawer,
                 <div className="ps-product__thumbnail" onClick={handleDrawerClose}>
                     <Link href="/product/[pid]" as={`/product/${item.slug}`}>
                         {
-                            item ?
+                            item?.slug ?
                                 <a>{thumbnailImage(item)}</a>
                                 :
                                 <>Loading...</>

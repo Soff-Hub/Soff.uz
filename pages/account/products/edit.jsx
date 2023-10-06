@@ -43,7 +43,7 @@ const PostsProductsEdit = () => {
 
     async function GetItemsCategoryLists() {
         const data = [];
-        const ItemsData = await GetRepository.getCategoryLists(user?.access);
+        const ItemsData = await GetRepository.getAllCategoryLists();
         if (ItemsData?.results) {
             for (let i = 0; i < ItemsData?.results?.length; i++) {
                 if (ItemsData?.results[i].parent !== null) {
@@ -67,7 +67,12 @@ const PostsProductsEdit = () => {
         }
     }
 
+    const resuslts1 = products?.active_tag?.map(item => item.name)
+    const resuslts2 = products?.deactive_tag?.map(item => item.name);
+
     const results = tagSearchResult?.concat(tagSearchResult1);
+    const results3 = resuslts1?.concat(resuslts2);
+  
 
     const childrenAktivmas = [];
     for (let i = 0; i < tegProductsLists?.length; i++) {
@@ -139,6 +144,9 @@ const PostsProductsEdit = () => {
         }
         if (results) {
             Object.assign(data, { tags: results });
+        }
+        else {
+            Object.assign(data, { tags: results3 })
         }
         if (category_id) {
             Object.assign(data, { category: category_id });
@@ -262,22 +270,22 @@ const PostsProductsEdit = () => {
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
                                                     : item.status ===
-                                                      'cancelled'
-                                                    ? 'Bekor qilingan'
-                                                    : item.status === 'approved'
-                                                    ? 'Tasdiqlangan'
-                                                    : ''}
+                                                        'cancelled'
+                                                        ? 'Bekor qilingan'
+                                                        : item.status === 'approved'
+                                                            ? 'Tasdiqlangan'
+                                                            : ''}
                                             </option>
                                         ) : (
                                             <option value={item.status}>
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
                                                     : item.status ===
-                                                      'cancelled'
-                                                    ? 'Bekor qilingan'
-                                                    : item.status === 'approved'
-                                                    ? 'Tasdiqlangan'
-                                                    : ''}
+                                                        'cancelled'
+                                                        ? 'Bekor qilingan'
+                                                        : item.status === 'approved'
+                                                            ? 'Tasdiqlangan'
+                                                            : ''}
                                             </option>
                                         )
                                     )}
@@ -297,8 +305,9 @@ const PostsProductsEdit = () => {
                                     mode="tags"
                                     onChange={(e) => setTagSearchResult(e)}
                                     defaultValue={
-                                        products?.tag &&
-                                        products?.tag?.map((item) => item.name)
+                                        products?.active_tag
+                                        &&
+                                        products?.active_tag?.map((item) => item.name)
                                     }
                                     className="col-md-8 p-0 mb-3">
                                     {children}
@@ -313,30 +322,18 @@ const PostsProductsEdit = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                {products?.tag &&
-                                products?.tag?.some(
-                                    (item) => item.active === false
-                                ) ? (
-                                    <Select
-                                        mode="tags"
-                                        onChange={(e) => setTagSearchResult2(e)}
-                                        defaultValue={
-                                            products?.tag &&
-                                            products?.tag?.map(
-                                                (item) => item.name
-                                            )
-                                        }
-                                        className="col-md-8 p-0 mb-3">
-                                        {childrenAktivmas}
-                                    </Select>
-                                ) : (
-                                    <Select
-                                        mode="tags"
-                                        onChange={(e) => setTagSearchResult2(e)}
-                                        className="col-md-8 p-0 mb-3">
-                                        {childrenAktivmas}
-                                    </Select>
-                                )}
+                                <Select
+                                    mode="tags"
+                                    onChange={(e) => setTagSearchResult2(e)}
+                                    defaultValue={
+                                        products?.deactive_tag
+
+                                        &&
+                                        products?.deactive_tag?.map((item) => item.name)
+                                    }
+                                    className="col-md-8 p-0 mb-3">
+                                    {childrenAktivmas}
+                                </Select>
                             </div>
 
                             <div className="row">
@@ -357,7 +354,7 @@ const PostsProductsEdit = () => {
                                     }>
                                     {dataCategory?.length > 0 &&
                                         dataCategory.map((item) =>
-                                            products?.category === item.name ? (
+                                        item.name === products?.category?.name ? (
                                                 <option
                                                     selected
                                                     value={item.id}>
@@ -497,8 +494,8 @@ const PostsProductsEdit = () => {
                                         {Shortdata
                                             ? parse(Shortdata)
                                             : products?.short_description
-                                            ? parse(products?.short_description)
-                                            : ''}
+                                                ? parse(products?.short_description)
+                                                : ''}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
@@ -512,8 +509,8 @@ const PostsProductsEdit = () => {
                                         {Fulldata
                                             ? parse(Fulldata)
                                             : products?.description
-                                            ? parse(products?.description)
-                                            : ''}
+                                                ? parse(products?.description)
+                                                : ''}
                                     </span>
                                 </p>
                             </div>
@@ -594,10 +591,10 @@ const PostsProductsEdit = () => {
                                             {Shortdata
                                                 ? parse(Shortdata)
                                                 : products?.short_description
-                                                ? parse(
-                                                      products?.short_description
-                                                  )
-                                                : ''}
+                                                    ? parse(
+                                                        products?.short_description
+                                                    )
+                                                    : ''}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
@@ -612,8 +609,8 @@ const PostsProductsEdit = () => {
                                             {Fulldata
                                                 ? parse(Fulldata)
                                                 : products?.description
-                                                ? parse(products?.description)
-                                                : ''}
+                                                    ? parse(products?.description)
+                                                    : ''}
                                         </span>
                                     </p>
                                 </div>
@@ -674,8 +671,8 @@ const PostsProductsEdit = () => {
                                                 <h4>
                                                     {products
                                                         ? addPeriodToThousands(
-                                                              products?.price
-                                                          )
+                                                            products?.price
+                                                        )
                                                         : '0'}{' '}
                                                     so'm
                                                 </h4>
@@ -703,10 +700,10 @@ const PostsProductsEdit = () => {
                                                         {Shortdata
                                                             ? parse(Shortdata)
                                                             : products?.short_description
-                                                            ? parse(
-                                                                  products?.short_description
-                                                              )
-                                                            : ''}
+                                                                ? parse(
+                                                                    products?.short_description
+                                                                )
+                                                                : ''}
                                                     </span>
                                                 </ul>
                                                 <ul>
@@ -718,7 +715,7 @@ const PostsProductsEdit = () => {
                                                         {categoryName
                                                             ? categoryName
                                                             : products?.category
-                                                                  ?.name}
+                                                                ?.name}
                                                     </li>
                                                 </ul>
                                             </div>
@@ -749,7 +746,7 @@ const PostsProductsEdit = () => {
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 {products?.active_tag?.length >
-                                                0 ? (
+                                                    0 ? (
                                                     <p>
                                                         {' '}
                                                         <strong>
@@ -796,10 +793,10 @@ const PostsProductsEdit = () => {
                                                     {Fulldata
                                                         ? parse(Fulldata)
                                                         : products?.description
-                                                        ? parse(
-                                                              products?.description
-                                                          )
-                                                        : ''}
+                                                            ? parse(
+                                                                products?.description
+                                                            )
+                                                            : ''}
                                                 </div>
                                             </TabPane>
                                         </Tabs>

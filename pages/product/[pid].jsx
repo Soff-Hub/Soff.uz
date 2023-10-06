@@ -5,33 +5,53 @@ import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFu
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
 
-import { baseUrl } from '~/repositories/Repository';
-import Axios from 'axios';
-import Meta from '~/components/shared/headers/Meta';
 
-const ProductDefaultPage = (product) => {
+import Meta from '~/components/shared/headers/Meta';
+import { useState } from 'react';
+import ProductRepository from '~/repositories/ProductRepository';
+import { useEffect } from 'react';
+import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
+
+const ProductDefaultPage = () => {
     const router = useRouter();
     const { pid } = router.query;
-    // const [product, setProduct] = useState([]);
-    // const [loading, setLoading] = useState(false);
+    const [product, setProduct] = useState([]);
+    const [similar, setSimilar] = useState([]);
+    const [loading, setLoading] = useState(false);
 
-    // async function getProduct(pid) {
-    //     setLoading(true);
-    //     const responseData = await ProductRepository.getProductsById(pid);
-    //     if (responseData) {
-    //         setProduct(responseData);
-    //         setTimeout(
-    //             function () {
-    //                 setLoading(false);
-    //             }.bind(this),
-    //             250
-    //         );
-    //     }
-    // }
+    async function getProduct() {
+        setLoading(true);
+        const responseData = await ProductRepository.getProductsById(pid);
+        if (responseData) {
+            setProduct(responseData);
+            // setTimeout(
+            //     function () {
+            //         setLoading(false);
+            //     }.bind(this),
+            //     250
+            // );
+        }
+    }
+    async function getSimilar() {
+        setLoading(true);
+        const responsSimilar = await ProductRepository.getProductSimilarSlug(pid)
+        if (responsSimilar) {
+            setSimilar(responsSimilar);
+            // setTimeout(
+            //     function () {
+            //         setLoading(false);
+            //     }.bind(this),
+            //     250
+            // );
+        }
+    }
 
-    // useEffect(() => {
-    //     getProduct(pid);
-    // }, [pid]);
+    
+
+    useEffect(() => {
+        getProduct();
+        getSimilar()
+    }, [pid]);
 
     const breadCrumb = [
         {
@@ -39,43 +59,18 @@ const ProductDefaultPage = (product) => {
             url: '/',
         },
         {
-            text: product.product ? product.product.title : 'Loading...',
+            text: product?.title ? product?.title : 'Loading...',
         },
     ];
 
-    // Views
-
-    // let productView, headerView;
-    // if (true) {
-    //     if (product) {
-    //         productView = <ProductDetailFullwidth product={product} />;
-    //         headerView = (
-    //             <>
-    //                 <HeaderElectronic product={product} />
-    //                 <HeaderMobileProduct />
-    //             </>
-    //         );
-    //     } else {
-    //         headerView = (
-    //             <>
-    //                 <HeaderDefault />
-    //                 <HeaderMobileProduct />
-    //             </>
-    //         );
-    //     }
-    // } else {
-    //     productView = <SkeletonProductDetail />;
-    // }
-
-    console.log('pro', product.product);
 
     return (
         <>
             <PageContainer
-                title={product.product ? product.product.title : 'Loading...'}>
+                title={product ? product?.title : 'Loading...'}>
                 <Meta
-                    title={product?.product?.title}
-                    image={product?.product?.iamges?.[0]?.image_url}
+                    title={product?.title}
+                    image={product?.images?.[0]?.image_url}
                 />
 
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
@@ -85,15 +80,19 @@ const ProductDefaultPage = (product) => {
                         <div className="ps-container">
                             <div className="ps-page__container">
                                 <div className="ps-page__left">
-                                    <ProductDetailFullwidth
-                                        product={product.product}
-                                    />
+                                    {
+                                        product ?
+                                        <ProductDetailFullwidth
+                                            product={product}
+                                        /> :
+                                        <SkeletonProductDetail />
+                                    }
                                 </div>
                             </div>
 
-                            {product.product?.similar?.length > 0 ? (
+                            {similar?.length > 0 ? (
                                 <RelatedProduct
-                                    data={product?.product?.similar}
+                                    data={similar}
                                     pid={pid}
                                     collectionSlug="shop-recommend-items"
                                 />
@@ -108,68 +107,5 @@ const ProductDefaultPage = (product) => {
     );
 };
 
-export async function getStaticPaths() {
-    try {
-        const res = await fetch(baseUrl + 'customer/documents/');
-        const documents = await res.json();
-        const paths = documents.results.map((item) => ({
-            params: { pid: item.slug },
-        }));
-
-        return { paths, fallback: false };
-    } catch (error) {
-        console.error('Error fetching paths:', error);
-        throw error; // Rethrow the error to see it in the console
-    }
-}
-
-// export async function getStaticProps({ params }) {
-//     const resquest = [Axios.get(baseUrl + `customer/documents/${params.pid}`)];
-
-//     const respons = await Promise.all(resquest);
-
-//     const successData = [];
-
-//     for (let i = 0; i < respons.length; i++) {
-//         if (respons[i].status === 200) {
-//             successData.push(respons[i].data);
-//         }
-//     }
-
-//     return {
-//         props: {
-//             product: successData[0] || null,
-//         },
-//         revalidate: 60,
-//     };
-// }
-
-export async function getStaticProps({ params }) {
-    try {
-        const response = await Axios.get(
-            baseUrl + `customer/documents/${params.pid}`
-        );
-
-        if (response.status === 200) {
-            return {
-                props: {
-                    product: response.data || null,
-                },
-                revalidate: 60,
-            };
-        } else {
-            console.error('Error fetching product data:', response.statusText);
-        }
-    } catch (error) {
-        console.error('Error fetching product data:', error);
-    }
-
-    return {
-        props: {
-            product: null,
-        },
-        revalidate: 60,
-    };
-}
 
 export default ProductDefaultPage;
