@@ -92,6 +92,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             null
         );
         if (respons) {
+            setDefVal([respons?.data?.min_price, respons?.data?.max_price])
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
         }
@@ -112,6 +113,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             null
         );
         if (respons) {
+            setDefVal([respons?.data?.min_price, respons?.data?.max_price])
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
         }
@@ -162,6 +164,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                     range
                     value={[defVal?.[0] || 0, defVal?.[1]] || 0}
                     max={max}
+                    min={min}
                     onAfterChange={(e) => handleChangeRange(e)}
                     onChange={(e) => setDefVal(e)}
                 />
