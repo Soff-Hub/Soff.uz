@@ -14,23 +14,13 @@ const ModuleProductWideActions = ({ ecomerce, product }) => {
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz!`,
-        });
-        modal.update;
+       
     }
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
-        });
-        modal.update;
+
     }
 
 

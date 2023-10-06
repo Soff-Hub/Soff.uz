@@ -23,12 +23,7 @@ const ModuleDetailShoppingActions = ({
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product.id);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz`,
-        });
-        modal.update;
+       
     }
 
     const state = useSelector((state) => state.auth.user?.access);
@@ -46,12 +41,7 @@ const ModuleDetailShoppingActions = ({
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
         addSavedItem(product.id);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
-        });
-        modal.update;
+       
     };
 
     if (true) {

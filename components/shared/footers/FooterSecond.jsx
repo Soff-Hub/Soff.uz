@@ -80,7 +80,7 @@ const FooterSecond = ({ classes }) => {
                                         style={{
                                             margin: '0',
                                         }}>
-                                        soff@gmail.uz
+                                       support@soff.uz
                                     </h4>
                                 </div>
                             </div>

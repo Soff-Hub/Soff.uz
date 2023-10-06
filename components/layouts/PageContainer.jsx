@@ -6,6 +6,9 @@ import HeaderMobileElectronic from '../shared/headers/HeaderMobileElectronic';
 import FooterSecond from '../shared/footers/FooterSecond';
 import { useDispatch, useSelector } from 'react-redux';
 import { accountLinksReducers, isLoginning } from '~/store/auth/action';
+import FaqSaidbar from '../partials/faqs/faqSaidbar';
+import { useRouter } from 'next/router';
+import BreadCrumb from '../elements/BreadCrumb';
 
 const initHeaders = (
     <>
@@ -15,11 +18,9 @@ const initHeaders = (
 );
 const initFooters = (
     <>
-
         <FooterSecond />
     </>
 );
-
 
 export let accountAdminLinks = [
     {
@@ -123,7 +124,6 @@ export let cutomerAccountLink = [
     },
 ];
 
-
 const PageContainer = ({
     header = initHeaders,
     footer = initFooters,
@@ -132,37 +132,81 @@ const PageContainer = ({
 }) => {
     let titleView;
 
-
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (user?.role === 'admin') {
-            dispatch(accountLinksReducers(accountAdminLinks))
+            dispatch(accountLinksReducers(accountAdminLinks));
         }
         if (user?.role === 'seller') {
-            dispatch(accountLinksReducers(accountSellerLink))
+            dispatch(accountLinksReducers(accountSellerLink));
         }
         if (user?.role === 'customer') {
-            dispatch(accountLinksReducers(cutomerAccountLink))
+            dispatch(accountLinksReducers(cutomerAccountLink));
         }
     }, [user?.role]);
 
     const defaultRoutePage = () => {
         dispatch(isLoginning());
-    }
+    };
 
     useEffect(() => {
-        defaultRoutePage()
+        defaultRoutePage();
     }, []);
 
+    const Router = useRouter();
+    const query = Router.route;
+
+    // const breadCrumb = [
+    //     {
+    //         text: 'Asosiy sahifa',
+    //         url: '/',
+    //     },
+    //     {
+    //         text: `${
+    //             query === '/page/form'
+    //                 ? 'Aloqa'
+    //                 : query === '/page/questions'
+    //                 ? 'Savollar'
+    //                 : ''
+    //         }`,
+    //     },
+    // ];
+
+    console.log('path', query);
     return (
         <>
             <Head>
                 <title>{titleView}</title>
             </Head>
             {header}
-            {children}
+            <>
+                <div
+                    className={`${
+                        query === '/page/form'
+                            ? ''
+                            : query === '/page/questions'
+                            ? ''
+                            : 'd-none'
+                    }`}>
+                    {' '}
+                    {/* <BreadCrumb breacrumb={breadCrumb} /> */}
+                </div>
+                <div className="container d-flex justify-content-between ">
+                    <div
+                        className={`${
+                            query === '/page/form'
+                                ? ''
+                                : query === '/page/questions'
+                                ? ''
+                                : 'd-none'
+                        }`}>
+                        <FaqSaidbar />
+                    </div>
+                    {children}
+                </div>
+            </>
             {footer}
         </>
     );
