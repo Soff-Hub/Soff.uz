@@ -38,9 +38,7 @@ class ProductRepository {
         return reponse;
     }
     async WishlistDataDelete(id) {
-        // const select = useSelector(state => state.auth.user?.access)
         const select = localStorage.getItem('token');
-        // console.log('select', select);
 
         const reponse = await Repository({
             url: `${baseUrl}customer/wishlist/${id}/`,
@@ -128,7 +126,6 @@ class ProductRepository {
     //         })
 
     //         .catch((error) => {
-    //             // console.log(JSON.stringify(error));
     //             return null;
     //         });
     //     return reponse;
@@ -272,7 +269,6 @@ class ProductRepository {
     //             }
     //         })
     //         .catch((error) => {
-    //             // console.log(JSON.stringify(error));
     //             return null;
     //         });
     //     return reponse;
@@ -289,7 +285,6 @@ class ProductRepository {
                 }
             })
             .catch((error) => {
-                // console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;

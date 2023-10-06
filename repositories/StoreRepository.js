@@ -16,7 +16,6 @@ class StoreRepository {
                 }
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;

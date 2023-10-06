@@ -14,7 +14,6 @@ export default function useEcomerce() {
     const [cookies, setCookie] = useCookies(['cart']);
     const [products, setProducts] = useState(null);
     const { wishlistItems } = useSelector(state => state.ecomerce)
-    console.log('cookie', cookies);
     return {
         loading,
         cartItemsOnCookie,
@@ -71,8 +70,6 @@ export default function useEcomerce() {
                     if (resp?.data) {
                         dispatch(setWishlistTtems(resp?.data.data));
                     }
-                    console.log(resp.data.data);
-                    // console.log(data);
                 }
                 else {
                     localStorage.setItem('wishlist', JSON.stringify([newItem.id]))
@@ -80,7 +77,6 @@ export default function useEcomerce() {
                     if (resp?.data) {
                         dispatch(setWishlistTtems(resp?.data.data));
                     }
-                    console.log(resp.data.data);
                 }
                 // const resp = await ProductRepository.postCartData(data);
                 // if (resp?.data) {
@@ -105,22 +101,16 @@ export default function useEcomerce() {
         },
 
         removeItem: (selectedItem, group) => {
-            console.log("starting cart");
             if (group === 'cart') {
                 let currentItems = cookies?.cart;
-                console.log("strt => ", currentItems);
                 if (currentItems?.length > 0) {
                     const index = currentItems.findIndex(
                         (item) => item.id === selectedItem.id
                     );
                     currentItems.splice(index, 1);
                 }
-                console.log("end => ", currentItems);
 
                 setCookie('cart', currentItems, { path: '/' });
-
-                // dispatch(setCartItems(currentItems));
-
                 return currentItems
             }
 

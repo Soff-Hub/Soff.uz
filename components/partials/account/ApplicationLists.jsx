@@ -61,7 +61,6 @@ function Notifications() {
     async function getItemsSellerPost() {
         const data = { "credit_card": JSON.parse(dataCard), "amount": dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
-        console.log('respons', Items)
         if (Items?.status === 200 || Items?.status === 201) {
             const modal = Modal.success({
                 centered: true,

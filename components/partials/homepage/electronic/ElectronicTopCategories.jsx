@@ -25,9 +25,8 @@ function ElectronicTopCategories() {
                 <div className="yaxshi-categoriyalar">
                     {category ? (
                         category.map((category) => (
-                            <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
+                            <div className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 " key={category.id}>
                                 <Link
-                                    key={category.id}
                                     href={`/category/${category.id}`}
                                     // as={`/category/${category.id}`}
                                     >
@@ -65,7 +64,7 @@ function ElectronicTopCategories() {
                         <div className="yaxshi-categ-placholder-box">
                             {[1, 2, 3, 4, 5, 6].map((item, i) => {
                                 return (
-                                    <div className="card" aria-hidden="true">
+                                    <div className="card" aria-hidden="true" key={i}>
                                         <div
                                             className="card-img-top placeholder"
                                             alt="..."

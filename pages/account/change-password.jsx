@@ -26,7 +26,6 @@ const Xabar = (e) => {
         };
         const { NewVerifyCode } = useAuth();
         const user = await NewVerifyCode(data);
-        console.log(user);
         if (user.status === 200 || user.status === 201) {
             setLoader(false)
             Router.push('/account/new-password');

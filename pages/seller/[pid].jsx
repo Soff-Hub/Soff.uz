@@ -6,8 +6,6 @@ import Product from '~/components/elements/products/Product';
 
 const SellerPage = ({ seller }) => {
  
-
-    console.log('pid', seller.results);
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',

@@ -269,8 +269,6 @@ const Posts = () => {
     useEffect(() => {
         GetItemsCategoryLists();
     }, [user?.access]);
-    console.log('category', dataCategory);
-
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);

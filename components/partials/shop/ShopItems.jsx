@@ -74,7 +74,6 @@ const ShopItems = ({
         setTimeout(() => {
             setLoad(true);
         }, 2000);
-console.log('data', data);
         data !== null  ? setSuccess(false) : setSuccess(true);
 
         // if (data?.length > 0) {

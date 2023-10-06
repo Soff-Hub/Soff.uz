@@ -7,7 +7,6 @@ const SiteFeatures = () => {
     async function getProducts() {
         const responseData = await ProductRepository.getCardData();
         if (responseData) {
-            // console.log( 'sdrfcvghbjnkml333' , responseData);
             setCard(responseData);
            
         }
