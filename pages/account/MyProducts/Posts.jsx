@@ -421,12 +421,13 @@ const Posts = () => {
                                             </span>
                                         ) : (
                                             livePosterFile?.images?.map(
-                                                (item) =>
+                                                (item, i) =>
                                                     item.id ===
                                                     fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
+                                                            key={i}
                                                             style={{
                                                                 display:
                                                                     'block',
@@ -450,6 +451,7 @@ const Posts = () => {
                                                                 item?.image_url
                                                             }
                                                             alt=" "
+                                                            key={i}
                                                             style={{
                                                                 display:
                                                                     'block',
@@ -832,6 +834,7 @@ const Posts = () => {
                                                                         item.image_url
                                                                     }
                                                                     alt="doc"
+                                                                    key={item.id}
                                                                     className="border mb-3 "
                                                                     style={{
                                                                         objectFit:

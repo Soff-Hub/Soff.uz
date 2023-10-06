@@ -20,7 +20,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
                     <div className="d-flex align-content-center row  ">
                         {relatedProduct?.length > 0 &&
                             relatedProduct?.map((item, i) => (
-                                <div className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
+                                <div key={i} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 ">
                                     <Product product={item} key={i} />
                                 </div>
                             ))
@@ -32,9 +32,9 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
                     <>
                         {relatedProduct?.length > 0 &&
                             relatedProduct?.map((item, i) => (
-                                <div className="detail-card ">
+                                <div className="detail-card " key={i}>
                                     {' '}
-                                    <Product product={item} key={i} />
+                                    <Product product={item}  />
                                 </div>
                             ))}
                     </>

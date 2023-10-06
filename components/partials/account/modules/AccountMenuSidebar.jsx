@@ -60,7 +60,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                 <p className='text-truncate' style={{ maxWidth: "280px" }}>{profile?.phone || profile?.email}</p>
                             </>
                             :
-                            <div class="mx-5 mt-3">
+                            <div className="mx-5 mt-3">
                                  <BeatLoader size={10} color="#333" />
                             </div>
                     }

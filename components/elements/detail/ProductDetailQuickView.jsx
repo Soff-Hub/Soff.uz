@@ -40,8 +40,9 @@ const ProductDetailQuickView = ({ product }) => {
             <figure>
                 <div className="ps-wrapper">
                     {img?.length > 0 ? (
-                        img?.map((item) => (
+                        img?.map((item, i) => (
                             <img
+                            key={i}
                                 src={item?.image_url}
                                 alt="document"
                                 className="border mb-3 "
