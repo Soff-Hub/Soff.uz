@@ -46,6 +46,7 @@ const WidgetShopCategories = ({ data}) => {
                                 {item?.children?.map((item, i) => {
                                     return (
                                         <Link
+                                        key={i}
                                             href={`/category/${item.id}`}>
                                             <a
                                             id='acc-li-xl'

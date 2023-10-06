@@ -6,7 +6,6 @@ function* switchDemoPanel({ payload }) {
     try {
         yield put(switchDemoPanelSuccess(payload));
     } catch (err) {
-        console.log(err);
     }
 }
 

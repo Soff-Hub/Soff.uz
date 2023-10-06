@@ -359,7 +359,7 @@ const PostsMyProducts = () => {
                                     <span><strong>Teglari</strong>: </span>
                                     <span style={{ maxWidth: '150px' }} >
                                         {
-                                            products?.tag?.map(item => (<span>#{item.name} </span>))
+                                            products?.tag?.map(item => (<span key={item.name}>#{item.name} </span>))
                                         }
                                     </span>
                                 </p>
@@ -441,7 +441,7 @@ const PostsMyProducts = () => {
                                         <span><strong>Teglari</strong>: </span>
                                         <span style={{ maxWidth: '150px' }} >
                                             {
-                                                products?.tag?.map(item => (<span>#{item.name} </span>))
+                                                products?.tag?.map(item => (<span key={item.name}>#{item.name} </span>))
                                             }
                                         </span>
                                     </p>
@@ -503,7 +503,7 @@ const PostsMyProducts = () => {
                                                     {
                                                         products?.iamges ?
                                                             products?.iamges?.map(item => (
-                                                                <img src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
+                                                                <img key={item.id} src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
                                                             ))
 
                                                             :
@@ -567,7 +567,7 @@ const PostsMyProducts = () => {
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 {
-                                                    products?.tag?.map(item => (<span className='mx-3'>#{item.name} </span>))
+                                                    products?.tag?.map(item => (<span className='mx-3' key={item.name}>#{item.name} </span>))
                                                 }
                                             </div>
                                         </div>

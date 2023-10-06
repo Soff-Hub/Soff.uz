@@ -329,7 +329,7 @@ function ProductsLists() {
                                                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                         {
                                                             deleteIdView?.active_tag?.length > 0 ?
-                                                                <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
+                                                                <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span key={item.id}>#{item.name}  </span>))} </p>
                                                                 :
                                                                 <></>
                                                         }
@@ -339,7 +339,7 @@ function ProductsLists() {
 
                                                         {
                                                             deleteIdView?.deactive_tag?.length > 0 ?
-                                                                <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
+                                                                <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span key={item.id}>#{item.name}  </span>))}   </p>
                                                                 :
                                                                 <></>
                                                         }

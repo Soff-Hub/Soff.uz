@@ -67,7 +67,7 @@ const ProductItems = ({ products, columns = 4 }) => {
                 );
             } else {
                 productItemsView = productItems.map((item) => (
-                    <ProductWide product={item} />
+                    <ProductWide product={item} key={item.id} />
                 ));
             }
         } else {

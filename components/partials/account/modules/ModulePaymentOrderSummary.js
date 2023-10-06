@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
-  console.log('eco', ecomerce.cartDataItems);
     let amount = calculateAmount(ecomerce.cartDataItems);
     function addPeriodToThousands(number) {
         const numStr = String(number);
