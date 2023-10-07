@@ -10,7 +10,7 @@ export default function CKeditor({ onChange, editorLoaded, name, value }) {
                 CKEditor: require('@ckeditor/ckeditor5-react').CKEditor,
                 ClassicEditor: require('@ckeditor/ckeditor5-build-classic'),
             };
-           }, 0)
+           }, 200)
            
         }
     }, [editorRef?.current]);

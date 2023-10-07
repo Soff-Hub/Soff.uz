@@ -155,6 +155,7 @@ function ProductsLists() {
             title: 'Kategoriya',
             dataIndex: 'category',
             key: 'address',
+            width:300,
             render: (category) => (
                 <span> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
             )
@@ -215,7 +216,7 @@ function ProductsLists() {
         },
     ];
     return (
-        <section className="ps-my-account ps-page--account">
+        <section className="ps-my-account ps-page--account p-0">
             <div className="container">
                 <div className="row pb-5" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">
@@ -269,7 +270,7 @@ function ProductsLists() {
                                         <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                         <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                     </div>
-                                    <Table scroll={{ x: 1400 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 1500 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>
