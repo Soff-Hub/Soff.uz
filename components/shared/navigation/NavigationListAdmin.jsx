@@ -24,7 +24,7 @@ function NavigationListAdmin() {
 
     const handleShowTagsDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/myproducts')
+        Router.push('/account/products')
     };
 
     const handleShowApplicationDrawer = () => {
@@ -94,7 +94,7 @@ function NavigationListAdmin() {
                     className={`navigation__item`}
                     onClick={handleShowTagsDrawer}>
                     <i className="fa-solid fa-shop-lock"></i>
-                    <span>Mahsulotlarim</span>
+                    <span>Mahsulotlar</span>
                 </a>
 
                 <a
