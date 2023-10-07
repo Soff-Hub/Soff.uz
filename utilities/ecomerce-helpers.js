@@ -11,7 +11,6 @@ import { getProductsByIds } from '~/repositories/ProductRepository';
 export function getCartItemsFromCookies() {
     const cartItems = cookies.get('cart');
     if (cartItems) {
-        // console.log('cooke', cartItems);
         return JSON.parse(cartItems);
     } else {
         return null;
@@ -25,7 +24,6 @@ export function updateCartToCookies(payload) {
 export function addItemToCartHelper(product) {
     let cart;
     let cookieCart = getCartItemsFromCookies();
-    console.log('Product', product, cookieCart);
     if (cookieCart) {
         cart = cookieCart;
         // const existItem = cart.items.find((item) => item.id === product.id);
@@ -36,14 +34,12 @@ export function addItemToCartHelper(product) {
                 product.quantity = 1;
             }*/
             cart?.items.push(product);
-            console.log('if', cart);
         // }
     } else {
         cart = {
             items: [],
         };
         cart.items.push(product);
-        console.log('else', cart);
     }
     updateCartToCookies(cart);
     return cart;

@@ -30,8 +30,8 @@ const ElectronicProductGroupWithCarousel = ({
             productItemsView = <p>Hujjat topilmadi</p>;
         }
     } else {
-        const skeletons = generateTempArray(6).map((item) => (
-            <div key={item.id} className="col-xl-2 col-lg-3 col-sm-3 col-6">
+        const skeletons = generateTempArray(6).map((item, i) => (
+            <div key={i} className="col-xl-2 col-lg-3 col-sm-3 col-6">
                 <SkeletonProduct />
             </div>
         ));

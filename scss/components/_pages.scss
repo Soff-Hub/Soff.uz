@@ -1,6 +1,7 @@
 #shop-carousel {
     .ps-carouse--nav-inside {
         margin-bottom: 60px;
+
         @include media('<sm') {
             margin-bottom: 40px;
         }
@@ -53,15 +54,19 @@
                 margin-bottom: 30px;
                 max-width: 20%;
                 padding: 30px 10px;
+
                 @include media('<lg') {
                     max-width: 25%;
                 }
+
                 @include media('<md') {
                     max-width: calc(100% / 3);
                 }
+
                 @include media('<sm') {
                     max-width: 50%;
                 }
+
                 @include media('<xs') {
                     max-width: 100%;
                 }
@@ -161,6 +166,7 @@
         h3 {
             font-size: 24px;
         }
+
         p {
             font-size: 14px;
         }
@@ -316,7 +322,7 @@
         flex-flow: row nowrap;
         width: 100%;
 
-        > * {
+        >* {
             width: 100%;
         }
 
@@ -351,6 +357,7 @@
         .ps-page__right {
             display: none;
         }
+
         .ps-page__container {
             flex-flow: column wrap;
 
@@ -393,6 +400,7 @@
             }
         }
     }
+
     @include media('<sm') {
         .ps-page__header {
             padding: 30px 0;
@@ -402,6 +410,7 @@
             }
         }
     }
+
     @include media('<xs') {
         .ps-page__header {
             padding: 25px 0;
@@ -421,6 +430,14 @@
         padding: 30px 20px;
         border-radius: 4px;
         background-color: #fff;
+    }
+
+    @media only screen and (max-width: 990px) {
+        .ps-page__left {
+            height: 0;
+            padding: 0;
+            display: none;
+        }
     }
 
     .ps-page__dashboard {
@@ -455,7 +472,7 @@
 }
 
 .layout--product {
-    .navigation--list{
+    .navigation--list {
         @include hidden;
     }
 }

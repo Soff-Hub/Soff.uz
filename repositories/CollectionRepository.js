@@ -13,7 +13,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -30,7 +29,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -50,7 +48,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -69,7 +66,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;

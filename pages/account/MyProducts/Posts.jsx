@@ -18,7 +18,7 @@ import { BeatLoader, ClipLoader } from 'react-spinners';
 const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [fileImgFile, setFileImgFile] = useState('');
+    const [fileImgFile, setFileImgFile] = useState(null);
     const [fileImgFileID, setFileImgFileID] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
@@ -213,15 +213,18 @@ const Posts = () => {
     }
 
     async function PostFilePoster() {
-        setLoading(true);
         const formData = new FormData();
-        formData.append('file', fileImgFile);
-        const ItemsData = await PostsRepository.PostsMyProductsPoster(
-            formData,
-            user?.access
-        );
-        setLivePosterFile(ItemsData?.data);
-        setLoading(false);
+        if (fileImgFile) {
+            setLoading(true);
+            formData.append('file', fileImgFile);
+            const ItemsData = await PostsRepository.PostsMyProductsPoster(
+                formData,
+                user?.access
+                );
+                setLivePosterFile(ItemsData?.data);
+                setLoading(false);
+        }
+        
     }
 
     function LiveImage(e) {
@@ -269,10 +272,9 @@ const Posts = () => {
     useEffect(() => {
         GetItemsCategoryLists();
     }, [user?.access]);
-    console.log('category', dataCategory);
 
     useEffect(() => {
-        PostFilePoster();
+            PostFilePoster();
     }, [fileImgFile]);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -372,8 +374,7 @@ const Posts = () => {
                                         onChange={(e) =>
                                             setFileImgFile(e.target.files[0])
                                         }
-                                        // accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
-                                        accept=".xlsx,.xls,.doc, .docx,.ppt, .pptx,.pdf"
+                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                                     />
                                 </label>
                             </div>
@@ -423,12 +424,13 @@ const Posts = () => {
                                             </span>
                                         ) : (
                                             livePosterFile?.images?.map(
-                                                (item) =>
+                                                (item, i) =>
                                                     item.id ===
                                                     fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
+                                                            key={i}
                                                             style={{
                                                                 display:
                                                                     'block',
@@ -452,6 +454,7 @@ const Posts = () => {
                                                                 item?.image_url
                                                             }
                                                             alt=" "
+                                                            key={i}
                                                             style={{
                                                                 display:
                                                                     'block',
@@ -834,6 +837,7 @@ const Posts = () => {
                                                                         item.image_url
                                                                     }
                                                                     alt="doc"
+                                                                    key={item.id}
                                                                     className="border mb-3 "
                                                                     style={{
                                                                         objectFit:

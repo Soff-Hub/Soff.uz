@@ -391,7 +391,7 @@ function DashbordList() {
                         </div>
                 }
                 <div className="row pb-5 mt-5" style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4 pb-5">
+                    <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
                         </div>

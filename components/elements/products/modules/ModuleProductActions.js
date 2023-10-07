@@ -9,29 +9,20 @@ import ProductRepository from '~/repositories/ProductRepository';
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { setCartOneItem } = useCart()
-    const { addSavedItem, wishlist } = useWishlist()
+    const { addSavedItem, wishlist, removeSavedItem } = useWishlist()
     
 
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product.id)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz`,
-        });
-        modal.update;
     }
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
-        });
-        modal.update;
+        if (wishlist?.find((item) => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
     }
 
     const handleShowQuickView = (e) => {

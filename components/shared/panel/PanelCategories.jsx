@@ -99,6 +99,7 @@ function PanelCategories({
                                             return (
                                                 <div
                                                 className='acc-li'
+                                                key={i}
                                                     onClick={handleDrawerClose}>
                                                     <Link
                                                         href={`/category/${item.id}`}>

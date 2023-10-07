@@ -262,10 +262,11 @@ const PostsProductsEdit = () => {
                                     onChange={(e) =>
                                         setDataCatStatus(e.target.value)
                                     }>
-                                    {dataStatus?.map((item) =>
+                                    {dataStatus?.map((item, i) =>
                                         products.status === item.status ? (
                                             <option
                                                 selected
+                                                key={i}
                                                 value={item.status}>
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
@@ -357,11 +358,12 @@ const PostsProductsEdit = () => {
                                         item.name === products?.category?.name ? (
                                                 <option
                                                     selected
+                                                    key={item.id}
                                                     value={item.id}>
                                                     {item.name}
                                                 </option>
                                             ) : (
-                                                <option value={item.id}>
+                                                <option value={item.id} key={item.id}>
                                                     {item.name}
                                                 </option>
                                             )
@@ -472,7 +474,7 @@ const PostsProductsEdit = () => {
                                     </span>
                                     <span style={{ maxWidth: '150px' }}>
                                         {products?.tag?.map((item) => (
-                                            <span>#{item.name} </span>
+                                            <span key={item.id}>#{item.name} </span>
                                         ))}
                                     </span>
                                 </p>
@@ -569,7 +571,7 @@ const PostsProductsEdit = () => {
                                         </span>
                                         <span style={{ maxWidth: '150px' }}>
                                             {products?.tag?.map((item) => (
-                                                <span>#{item.name} </span>
+                                                <span key={item.id}>#{item.name} </span>
                                             ))}
                                         </span>
                                     </p>
@@ -647,6 +649,7 @@ const PostsProductsEdit = () => {
                                                                     src={
                                                                         item.image_url
                                                                     }
+                                                                    key={item.id}
                                                                     alt="doc"
                                                                     className="border mb-3 img-fluid"
                                                                 />
@@ -754,7 +757,7 @@ const PostsProductsEdit = () => {
                                                         </strong>{' '}
                                                         {products?.active_tag?.map(
                                                             (item) => (
-                                                                <span>
+                                                                <span key={item.id}>
                                                                     #{item.name}{' '}
                                                                 </span>
                                                             )
@@ -772,7 +775,7 @@ const PostsProductsEdit = () => {
                                                         </strong>{' '}
                                                         {products?.deactive_tag?.map(
                                                             (item) => (
-                                                                <span>
+                                                                <span key={item.id}>
                                                                     #{item.name}{' '}
                                                                 </span>
                                                             )

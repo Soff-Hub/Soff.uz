@@ -57,11 +57,8 @@ function MyProductsLists() {
             }
         }
     }
-    async function GetItemsCategory(page) {
-        if (page === 1) {
-            setDataCategory([])
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsCategory() {
+        const ItemsData = await GetRepository.getAllCategoryLists();
         setDataCategory(ItemsData.results);
     }
     async function GetItemsTag() {
@@ -144,7 +141,7 @@ function MyProductsLists() {
 
 
     useEffect(() => {
-        GetItemsCategory(1)
+        GetItemsCategory()
         GetItemsTag()
     }, [])
     useEffect(() => {
@@ -160,9 +157,9 @@ function MyProductsLists() {
                 <div >
                     {
                         poster_url ?
-                            <img className='rounded-3' src={poster_url} width={54} height={54} />
+                            <img key={poster_url} className='rounded-3' src={poster_url} width={54} height={54} />
                             :
-                            <i className="fa-solid fa-image fa-2x"></i>
+                            <i key={poster_url} className="fa-solid fa-image fa-2x"></i>
                     }
                 </div>
             ),
@@ -173,7 +170,7 @@ function MyProductsLists() {
             key: 'age',
             width: 300,
             render: (title) => (
-                <span className="truncate whitespace-nowrap"> {title}</span>
+                <span key={title} className="truncate whitespace-nowrap"> {title}</span>
 
             ),
         },
@@ -182,7 +179,7 @@ function MyProductsLists() {
             dataIndex: 'category',
             key: 'address',
             render: (category) => (
-                <span> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
+                <span key={category.id}> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
             )
         },
         {
@@ -190,14 +187,14 @@ function MyProductsLists() {
             dataIndex: 'price',
             key: 'address',
             render: (price) => (
-                <span> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
+                <span key={price}> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
         {
             title: 'Sana',
             dataIndex: 'created_at',
             key: 'created_at',
-            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         user?.role === "seller" ? {
             title: 'Holat',
@@ -253,7 +250,7 @@ function MyProductsLists() {
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 <div className="row " style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4 pb-5">
+                    <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
                         </div>
@@ -297,10 +294,9 @@ function MyProductsLists() {
                                                             {
                                                                 dataCategory?.length > 0 && (
                                                                     dataCategory?.map(item => (
-                                                                        item.is_child === true ?
+                                                                        
                                                                             <option key={item.id} value={item.id}>{item.name} </option>
-                                                                            :
-                                                                            <></>
+                                                                           
                                                                     ))
                                                                 )
                                                             }
@@ -403,7 +399,7 @@ function MyProductsLists() {
                                                     </div>
                                                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                         <p>{View?.tag?.map(item => (
-                                                            <span className='mx-2'> #{item?.name} </span>
+                                                            <span className='mx-2' key={item.id}> #{item?.name} </span>
                                                         ))}</p>
                                                     </div>
                                                 </div>

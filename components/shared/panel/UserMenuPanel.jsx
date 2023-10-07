@@ -3,16 +3,19 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Button, Tooltip } from 'antd';
 import { BeatLoader } from 'react-spinners';
 
 
 
 
-const AccountMenuSidebar = ({ data, renderProfile }) => {
+const UserMenuPanel = ({
+    setMenuDrawer,
+    setCategoriesDrawer
+}) => {
     const { user } = useSelector(state => state.auth);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { accountLinks } = useSelector(state => state.auth)
 
     async function ProfileUsers() {
         setLoading(true)
@@ -21,10 +24,15 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         setLoading(false)
     }
 
+    const handleDrawerClose = () => {
+        setMenuDrawer(false);
+        setCategoriesDrawer(false);
+    };
+
 
     useEffect(() => (
         ProfileUsers()
-    ), [renderProfile])
+    ), [])
 
 
     function addPeriodToThousands(number) {
@@ -50,7 +58,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     return (
         <aside className="ps-widget--account-dashboard">
-            <div className="ps-widget__header  p-2 pb-4">
+            <div className="ps-widget__header  p-2 pb-4 py-4">
                 <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
                 <figure>
                     {
@@ -61,7 +69,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                             </>
                             :
                             <div className="mx-5 mt-3">
-                                 <BeatLoader size={10} color="#333" />
+                                <BeatLoader size={10} color="#333" />
                             </div>
                     }
 
@@ -80,8 +88,8 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             }
             <div className="ps-widget__content">
                 <ul>
-                    {data.map(link => (
-                        <li key={link.text} className={link.url === asPath ? 'active' : ''}>
+                    {accountLinks?.map(link => (
+                        <li onClick={handleDrawerClose} key={link.text} className={link.url === asPath ? 'active' : ''}>
                             <Link href={link.url}>
                                 <a>
                                     <i className={link.icon}></i>
@@ -97,4 +105,4 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 }
 
 
-export default AccountMenuSidebar;
+export default UserMenuPanel;

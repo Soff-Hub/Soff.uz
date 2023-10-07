@@ -8,8 +8,9 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
             <figure>
                 <div className="ps-wrapper">
                     {product?.iamges?.length > 0 ? (
-                        product?.iamges?.map((item) => (
+                        product?.iamges?.map((item,i) => (
                             <img
+                            key={i}
                                 src={item?.image_url}
                                 alt="document"
                                 className="border mb-3 "
