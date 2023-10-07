@@ -158,21 +158,21 @@ const PageContainer = ({
     const Router = useRouter();
     const query = Router.route;
 
-    // const breadCrumb = [
-    //     {
-    //         text: 'Asosiy sahifa',
-    //         url: '/',
-    //     },
-    //     {
-    //         text: `${
-    //             query === '/page/form'
-    //                 ? 'Aloqa'
-    //                 : query === '/page/questions'
-    //                 ? 'Savollar'
-    //                 : ''
-    //         }`,
-    //     },
-    // ];
+    const breadCrumb = [
+        {
+            text: 'Asosiy sahifa',
+            url: '/',
+        },
+        {
+            text: `${
+                query === '/page/form'
+                    ? 'Aloqa'
+                    : query === '/page/questions'
+                    ? 'Savollar'
+                    : ''
+            }`,
+        },
+    ];
 
     console.log('path', query);
     return (
@@ -181,7 +181,14 @@ const PageContainer = ({
                 <title>{titleView}</title>
             </Head>
             {header}
-            <>
+            <div
+                className={`${
+                    query === '/page/form'
+                        ? ''
+                        : query === '/page/questions'
+                        ? ''
+                        : 'd-none'
+                }`}>
                 <div
                     className={`${
                         query === '/page/form'
@@ -191,7 +198,7 @@ const PageContainer = ({
                             : 'd-none'
                     }`}>
                     {' '}
-                    {/* <BreadCrumb breacrumb={breadCrumb} /> */}
+                    <BreadCrumb breacrumb={breadCrumb} />
                 </div>
                 <div className="container d-flex justify-content-between ">
                     <div
@@ -206,7 +213,18 @@ const PageContainer = ({
                     </div>
                     {children}
                 </div>
-            </>
+            </div>
+            <div
+             className={`${
+                query === '/page/form'
+                    ? 'd-none'
+                    : query === '/page/questions'
+                    ? 'd-none'
+                    : ''
+            }`}
+            >
+            {children}
+            </div>
             {footer}
         </>
     );
