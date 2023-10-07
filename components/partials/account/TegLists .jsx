@@ -113,7 +113,7 @@ function TegLists() {
         <section className="ps-my-account ps-page--account">
             <div className="container">
                 <div className="row " style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4 pb-5">
+                    <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
                         </div>
