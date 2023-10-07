@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { DatePicker, Modal, Table } from 'antd';
 import { useState } from 'react';
@@ -12,15 +12,12 @@ import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
 import { MyProductsEdit } from '~/store/auth/action';
 import ModalDeletePostEdit from './ModalPostEdit';
-var parse = require("html-react-parser");
 import axios from 'axios';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import { Tabs } from 'antd';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 const { TabPane } = Tabs;
-
 
 function MyProductsLists() {
 
@@ -213,14 +210,14 @@ function MyProductsLists() {
         } : <></>,
 
         user?.role === "seller" ? {
-            title: 'File',
+            title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
                 <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
                 {
                     data.some(el => el.id == id && el.status === 'moderation') ?
-                        <Link href={"/account/MyProducts/Edit"}>
+                        <Link href={"/account/myproducts/edit"}>
                             <a>
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(data.find(item => item.id === id))}></i>
                             </a>
@@ -273,7 +270,7 @@ function MyProductsLists() {
                                         <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-6' : "form-control rounded col-md-9"} placeholder="Qidiruv" onInput={handleClick} />
                                         {
                                             user?.role === "seller" ?
-                                                <Link href={"/account/MyProducts/Posts"}>
+                                                <Link href={"/account/myproducts/posts"}>
                                                     <button className="  btn btn-success col-md-3 py-3 "  ><span className='fs-4'><i className="fa-solid fa-circle-plus"></i> Yangi mahsulot</span></button>
                                                 </Link>
                                                 :

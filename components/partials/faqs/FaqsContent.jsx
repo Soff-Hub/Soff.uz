@@ -1,17 +1,12 @@
-import React, { useState } from 'react';
-import FaqsAccardion from './FaqsAccardion';
-import ProductRepository from '~/repositories/ProductRepository';
+import React from 'react';
 
 const FaqsContent = () => {
-    const [data, setData] = useState(null)
 
     const handleClick = () => {
         console.log('ishladi');
     }
 
-    const getFAQCategorys = async () =>{
-        const respons = await ProductRepository.getFAQCategorys()
-    }
+ 
 
     return (
         <div>
@@ -60,7 +55,6 @@ const FaqsContent = () => {
                     </div>
                 </div>
             </div>
-            <FaqsAccardion  />
         </div>
     );
 };

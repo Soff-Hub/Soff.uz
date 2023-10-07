@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import LoginPage from './login';
 
-const RecentViewedProductsPage = () => {
+const MyProducts = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -33,4 +33,4 @@ const RecentViewedProductsPage = () => {
     );
 };
 
-export default RecentViewedProductsPage;
+export default MyProducts;

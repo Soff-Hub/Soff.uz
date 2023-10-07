@@ -60,7 +60,7 @@ export let accountAdminLinks = [
     },
     {
         text: "Ariza bo'limi",
-        url: '/account/Application',
+        url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
     {
@@ -82,17 +82,17 @@ export let accountSellerLink = [
     },
     {
         text: 'Mening mahsulotlarim',
-        url: '/account/MyProducts',
+        url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
     },
     {
         text: 'Sotib olingan',
-        url: '/account/MyProductsSeller',
+        url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
     {
         text: 'Yangi mahsulot',
-        url: '/account/MyProducts/Posts',
+        url: '/account/myproducts/posts',
         icon: 'fa-solid fa-circle-plus',
     },
     {
@@ -102,7 +102,7 @@ export let accountSellerLink = [
     },
     {
         text: "Ariza bo'limi",
-        url: '/account/Application',
+        url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
     {
@@ -114,7 +114,7 @@ export let accountSellerLink = [
 export let cutomerAccountLink = [
     {
         text: 'Mening mahsulotlarim',
-        url: '/account/MyProducts',
+        url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
     },
     {
@@ -155,77 +155,16 @@ const PageContainer = ({
         defaultRoutePage();
     }, []);
 
-    const Router = useRouter();
-    const query = Router.route;
+ 
 
-    const breadCrumb = [
-        {
-            text: 'Asosiy sahifa',
-            url: '/',
-        },
-        {
-            text: `${
-                query === '/page/form'
-                    ? 'Aloqa'
-                    : query === '/page/questions'
-                    ? 'Savollar'
-                    : ''
-            }`,
-        },
-    ];
-
-    console.log('path', query);
     return (
         <>
             <Head>
                 <title>{titleView}</title>
             </Head>
             {header}
-            <div
-                className={`${
-                    query === '/page/form'
-                        ? ''
-                        : query === '/page/questions'
-                        ? ''
-                        : 'd-none'
-                }`}>
-                <div
-                    // className={`${
-                    //     query === '/page/form'
-                    //         ? ''
-                    //         : query === '/page/questions'
-                    //         ? ''
-                    //         : 'd-none'
-                    // }`}
-                    >
-                    <BreadCrumb breacrumb={breadCrumb} />
-                </div>
-                <div className="container faq-page-container ">
-                    <div
-                        // className={`${
-                        //     query === '/page/form'
-                        //         ? ''
-                        //         : query === '/page/questions'
-                        //         ? ''
-                        //         : 'd-none'
-                        // }`}
-                        >
-                        <FaqSaidbar />
-                    </div>
-                    {children}
-                </div>
-            </div>
-            <div
-             className={`${
-                query === '/page/form'
-                    ? 'd-none'
-                    : query === '/page/questions'
-                    ? 'd-none'
-                    : ''
-            }`}
-            >
+   
             {children}
-            </div>
             {footer}
         </>
     );
