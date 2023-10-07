@@ -1,6 +1,9 @@
 .faq-page-container{
     display: flex;
-    justify-content: space-between;
+}
+
+.ps-page--singlee{
+    width: 100%;
 }
 
 .accardion-faq{
@@ -24,7 +27,9 @@
     border: 2px solid transparent;
     display: flex;
     transition: all .7s;
+    box-sizing: border-box;
     &:hover{
+        box-sizing: border-box;
         cursor: pointer;
         border: 1px solid $color-1st;
     }

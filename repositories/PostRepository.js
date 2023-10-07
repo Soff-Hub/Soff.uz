@@ -73,7 +73,17 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
-    async getFAQDescription(id) {
+    async getFAQDescriptionAll() {
+
+        const endPoint = `customer/faq/`;
+        const response = await Repository.get(baseUrl + endPoint)
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
+    }
+    async getFAQDescriptionItem(id) {
 
         const endPoint = `customer/faq/?category=${id}`;
         const response = await Repository.get(baseUrl + endPoint)
