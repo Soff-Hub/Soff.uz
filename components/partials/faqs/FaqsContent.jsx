@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import FaqsAccardion from './FaqsAccardion';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const FaqsContent = () => {
     const [data, setData] = useState(null)
 
     const handleClick = () => {
         console.log('ishladi');
+    }
+
+    const getFAQCategorys = async () =>{
+        const respons = await ProductRepository.getFAQCategorys()
     }
 
     return (
@@ -55,7 +60,7 @@ const FaqsContent = () => {
                     </div>
                 </div>
             </div>
-            <FaqsAccardion />
+            <FaqsAccardion  />
         </div>
     );
 };

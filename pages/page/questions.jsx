@@ -5,6 +5,8 @@ import FaqsContent from '~/components/partials/faqs/FaqsContent';
 
 const QuestionsPage = () => {
 
+    
+
     return (
         <PageContainer footer={<FooterDefault />} title="FAQ page">
             <div className="ps-page--single">
