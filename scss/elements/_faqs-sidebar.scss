@@ -30,3 +30,17 @@
     }
   }
 }
+
+@media screen and (max-width: 992px) {
+    .faqs-sidebar {
+        max-width: 200px !important;
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .faqs-sidebar {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}

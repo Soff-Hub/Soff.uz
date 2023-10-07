@@ -73,7 +73,7 @@ const ProductDefaultPage = () => {
                     image={product?.images?.[0]?.image_url}
                 />
 
-                {/* <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" /> */}
+                <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
 
                 <div className="container">
                     <div className="ps-page--product">

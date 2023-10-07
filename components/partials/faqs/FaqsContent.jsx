@@ -13,7 +13,7 @@ const FaqsContent = () => {
             <div className="faqs-category">
                 <h3>Kategoriyalar bo'yicha savollar</h3>
                 <div className="row ">
-                    <div className="col-4 my-3" onClick={() => handleClick()}>
+                    <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 my-3" onClick={() => handleClick()}>
                         <div className="faqs-category__card">
                             <i class="fa-regular fa-address-book faq-icon"></i>
                             <span className="faq-category-name">
@@ -21,7 +21,7 @@ const FaqsContent = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="col-4 my-3">
+                    <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 my-3">
                         <div className="faqs-category__card">
                             <i class="fa-regular fa-address-book faq-icon"></i>
                             <span className="faq-category-name">
@@ -29,7 +29,7 @@ const FaqsContent = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="col-4 my-3">
+                    <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 my-3">
                         <div className="faqs-category__card">
                             <i class="fa-regular fa-address-book faq-icon"></i>
                             <span className="faq-category-name">
@@ -37,7 +37,7 @@ const FaqsContent = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="col-4 my-3">
+                    <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 my-3">
                         <div className="faqs-category__card">
                             <i class="fa-regular fa-address-book faq-icon"></i>
                             <span className="faq-category-name">
@@ -45,7 +45,7 @@ const FaqsContent = () => {
                             </span>
                         </div>
                     </div>
-                    <div className="col-4 my-3">
+                    <div className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 my-3">
                         <div className="faqs-category__card">
                             <i class="fa-regular fa-address-book faq-icon"></i>
                             <span className="faq-category-name">
