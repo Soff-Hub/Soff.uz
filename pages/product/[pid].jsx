@@ -15,7 +15,7 @@ import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProdu
 const ProductDefaultPage = () => {
     const router = useRouter();
     const { pid } = router.query;
-    const [product, setProduct] = useState([]);
+    const [product, setProduct] = useState(null);
     const [similar, setSimilar] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -73,7 +73,7 @@ const ProductDefaultPage = () => {
                     image={product?.images?.[0]?.image_url}
                 />
 
-                <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+                {/* <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" /> */}
 
                 <div className="container">
                     <div className="ps-page--product">

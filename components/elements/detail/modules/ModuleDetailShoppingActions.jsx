@@ -14,21 +14,14 @@ const ModuleDetailShoppingActions = ({
     extended = false,
 }) => {
     const { setCartOneItem } = useCart();
-    const { addSavedItem, wishlist } = useWishlist();
+    const { addSavedItem, wishlist , removeSavedItem} = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
-    const { pid } = Router.query
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product.id);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz`,
-        });
-        modal.update;
+       
     }
 
     const state = useSelector((state) => state.auth.user?.access);
@@ -46,12 +39,10 @@ const ModuleDetailShoppingActions = ({
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
         addSavedItem(product.id);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
-        });
-        modal.update;
+        if (wishlist?.find((item) => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
+       
     };
 
     if (true) {
