@@ -57,11 +57,8 @@ function MyProductsLists() {
             }
         }
     }
-    async function GetItemsCategory(page) {
-        if (page === 1) {
-            setDataCategory([])
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsCategory() {
+        const ItemsData = await GetRepository.getAllCategoryLists();
         setDataCategory(ItemsData.results);
     }
     async function GetItemsTag() {
@@ -144,7 +141,7 @@ function MyProductsLists() {
 
 
     useEffect(() => {
-        GetItemsCategory(1)
+        GetItemsCategory()
         GetItemsTag()
     }, [])
     useEffect(() => {
@@ -297,10 +294,9 @@ function MyProductsLists() {
                                                             {
                                                                 dataCategory?.length > 0 && (
                                                                     dataCategory?.map(item => (
-                                                                        item.is_child === true ?
+                                                                        
                                                                             <option key={item.id} value={item.id}>{item.name} </option>
-                                                                            :
-                                                                            <></>
+                                                                           
                                                                     ))
                                                                 )
                                                             }
