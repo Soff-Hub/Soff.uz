@@ -9,7 +9,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { setCartOneItem } = useCart()
-    const { addSavedItem, wishlist } = useWishlist()
+    const { addSavedItem, wishlist, removeSavedItem } = useWishlist()
     
 
     function handleAddItemToCart(e) {
@@ -20,6 +20,9 @@ const ModuleProductActions = ({ product, ecomerce }) => {
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id)
+        if (wishlist?.find((item) => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
     }
 
     const handleShowQuickView = (e) => {

@@ -14,11 +14,9 @@ const ModuleDetailShoppingActions = ({
     extended = false,
 }) => {
     const { setCartOneItem } = useCart();
-    const { addSavedItem, wishlist } = useWishlist();
+    const { addSavedItem, wishlist , removeSavedItem} = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
-    const { pid } = Router.query
-    const [cookies, setCookie] = useCookies(['cart', 'wishlist']);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -41,6 +39,9 @@ const ModuleDetailShoppingActions = ({
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
         addSavedItem(product.id);
+        if (wishlist?.find((item) => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
        
     };
 

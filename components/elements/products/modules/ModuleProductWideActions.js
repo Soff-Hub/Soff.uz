@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Modal } from 'antd';
+import { connect, useSelector } from 'react-redux';
 import useProduct from '~/hooks/useProduct';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
@@ -8,7 +7,8 @@ import useWishlist from '~/hooks/useWishlist';
 const ModuleProductWideActions = ({ ecomerce, product }) => {
     const { price } = useProduct();
     const { setCartOneItem } = useCart()
-    const { addSavedItem } = useWishlist()
+    const { addSavedItem, removeSavedItem } = useWishlist()
+    const { wishlist } = useSelector((state) => state.ecomerce);
 
 
     function handleAddItemToCart(e) {
@@ -20,6 +20,9 @@ const ModuleProductWideActions = ({ ecomerce, product }) => {
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
+        if (wishlist?.find((item) => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
 
     }
 
