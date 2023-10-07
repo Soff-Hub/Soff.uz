@@ -19,17 +19,17 @@ function NavigationListSeller() {
 
     const handleShowSettingsDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/settings')
+        Router.push('/account/dashbord')
     };
 
     const handleShowOrderDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/orders')
+        Router.push('/account/MyProducts/Posts')
     };
 
     const handleShowApplicationDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/Application')
+        Router.push('/account/orders')
     };
 
     const handleShowCategoriesDrawer = () => {
@@ -85,29 +85,29 @@ function NavigationListSeller() {
             <div className="navigation__content">
                 <a
                     className={`navigation__item`}
-                    onClick={handleShowCategoriesDrawer}>
-                    <i className="icon-list4"></i>
-                    <span>Menu</span>
-                </a>
-                <a
-                    className={`navigation__item`}
                     onClick={handleShowSettingsDrawer}>
-                    <i className="fa-solid fa-gear"></i>
-                    <span>Sozlamalar</span>
+                    <i className="fa-solid fa-house-user"></i>
+                    <span>Asosiy</span>
                 </a>
 
                 <a
                     className={`navigation__item`}
                     onClick={handleShowOrderDrawer}>
-                    <i className="fa-solid fa-truck"></i>
-                    <span>Buyurtmalar</span>
+                    <i className="fa-solid fa-circle-plus"></i>
+                    <span>Yangi mahsulot</span>
                 </a>
 
                 <a
                     className={`navigation__item`}
                     onClick={handleShowApplicationDrawer}>
-                    <i className="fa-solid fa-file-signature"></i>
-                    <span>Arizalar</span>
+                    <i className="fa-solid fa-truck"></i>
+                    <span>Buyurtmalar</span>
+                </a>
+                <a
+                    className={`navigation__item`}
+                    onClick={handleShowCategoriesDrawer}>
+                    <i className="icon-list4"></i>
+                    <span>Menu</span>
                 </a>
             </div>
         </div>
