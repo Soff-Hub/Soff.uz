@@ -62,7 +62,9 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
+
     async getFAQCategorys() {
+        
         const endPoint = 'customer/question-category/';
         const response = await Repository.get(baseUrl + endPoint)
             .then((response) => {
@@ -71,6 +73,16 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
+    // async getFAQDescription(id) {
+
+    //     const endPoint = `customer/faq/?category=${id}`;
+    //     const response = await Repository.get(baseUrl + endPoint)
+    //         .then((response) => {
+    //             return response.data;
+    //         })
+    //         .catch((error) => ({ error: JSON.stringify(error) }));
+    //     return response;
+    // }
 }
 
 export default new PostRepository();

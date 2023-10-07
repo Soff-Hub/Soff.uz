@@ -81,12 +81,6 @@ function NavigationListCustomer() {
             <div className="navigation__content">
                 <a
                     className={`navigation__item`}
-                    onClick={handleShowCategoriesDrawer}>
-                    <i className="icon-list4"></i>
-                    <span>Menu</span>
-                </a>
-                <a
-                    className={`navigation__item`}
                     onClick={handleShowTagsDrawer}>
                     <i className="fa-solid fa-shop-lock"></i>
                     <span>Mahsulotlarim</span>
@@ -96,6 +90,12 @@ function NavigationListCustomer() {
                     onClick={handleShowSettingsDrawer}>
                     <i className="fa-solid fa-gear"></i>
                     <span>Sozlamalar</span>
+                </a>
+                <a
+                    className={`navigation__item`}
+                    onClick={handleShowCategoriesDrawer}>
+                    <i className="icon-list4"></i>
+                    <span>Menu</span>
                 </a>
             </div>
         </div>

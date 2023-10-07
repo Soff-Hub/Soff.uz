@@ -157,14 +157,15 @@ const PageContainer = ({
 
  
 
+
     return (
         <>
             <Head>
                 <title>{titleView}</title>
             </Head>
             {header}
-   
             {children}
+
             {footer}
         </>
     );
