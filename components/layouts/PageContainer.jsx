@@ -167,20 +167,20 @@ const PageContainer = ({
             </Head>
             {header}
             <div>
-                <div className={`container faq-page-container`}>
+                <div className={`${query === '/page/form' ? 'container faq-page-container' : query === '/page/questions' ? 'container faq-page-container' : ''}  `}>
                     <div
-    className={` ${query === '/page/form'
-    ? ''
-    : query === '/page/questions'
-        ? ''
-        : 'd-none'
-    }`}
+                        className={` ${query === '/page/form'
+                            ? ''
+                            : query === '/page/questions'
+                                ? ''
+                                : 'd-none'
+                            }`}
 
                     >
                         <FaqSaidbar />
                     </div>
 
-                {children}
+                    {children}
                 </div>
             </div>
 

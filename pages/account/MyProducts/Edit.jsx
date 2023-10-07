@@ -74,7 +74,6 @@ const PostsMyProducts = () => {
     }
 
 
-    const tegdata = products?.tag && products?.tag?.map(item => (item.name))
 
     async function handleClickPostsEdit(e) {
         e.preventDefault()
@@ -107,7 +106,7 @@ const PostsMyProducts = () => {
             formData.append("discount", discount);
         }
         const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
-        Router.push('/account/MyProducts');
+        Router.push('/account/myproducts');
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
@@ -159,7 +158,7 @@ const PostsMyProducts = () => {
         GetItemsCategoryLists();
     }, [user?.access]);
 
-  
+  console.log(products);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer

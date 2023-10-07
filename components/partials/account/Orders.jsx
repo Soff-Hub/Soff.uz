@@ -173,7 +173,7 @@ function OrdersLists() {
         },
     ];
     return (
-        <section className="ps-my-account ps-page--account">
+        <section className="ps-my-account ps-page--account p-0">
             <div className="container">
                 <div className="row pb-5 " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">

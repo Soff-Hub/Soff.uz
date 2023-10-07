@@ -197,6 +197,7 @@ const PostsProductsEdit = () => {
         },
     ];
 
+
     return user?.role === 'admin' ? (
         <PageContainer
             footer={<FooterDefault />}

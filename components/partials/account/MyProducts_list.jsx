@@ -175,6 +175,7 @@ function MyProductsLists() {
             title: 'Kategoriya',
             dataIndex: 'category',
             key: 'address',
+            width:300,
             render: (category) => (
                 <span key={category.id}> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
             )
@@ -244,7 +245,7 @@ function MyProductsLists() {
 
     ];
     return (
-        <section className="ps-my-account ps-page--account">
+        <section className="ps-my-account ps-page--account p-0">
             <div className="container">
                 <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">
@@ -338,9 +339,9 @@ function MyProductsLists() {
                                     </div>
                                     {
                                         user?.role === "seller" ?
-                                            <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} />
+                                            <Table dataSource={data} scroll={{ x: 1300 }} columns={columns} />
                                             :
-                                            <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} />
+                                            <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} />
 
                                     }
                                 </div>
