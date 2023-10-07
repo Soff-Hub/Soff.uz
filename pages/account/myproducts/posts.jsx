@@ -479,7 +479,6 @@ const Posts = () => {
                                         ))
                                     }
                                 </select>
-
                                 </div>
                             </div>
                             <div className="row   mt-3">
