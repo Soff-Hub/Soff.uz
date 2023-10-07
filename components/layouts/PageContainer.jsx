@@ -174,7 +174,6 @@ const PageContainer = ({
         },
     ];
 
-    console.log('path', query);
     return (
         <>
             <Head>
@@ -189,42 +188,25 @@ const PageContainer = ({
                         ? ''
                         : 'd-none'
                 }`}>
-                <div
-                    // className={`${
-                    //     query === '/page/form'
-                    //         ? ''
-                    //         : query === '/page/questions'
-                    //         ? ''
-                    //         : 'd-none'
-                    // }`}
-                    >
+                <div>
                     <BreadCrumb breacrumb={breadCrumb} />
                 </div>
                 <div className="container faq-page-container ">
-                    <div
-                        // className={`${
-                        //     query === '/page/form'
-                        //         ? ''
-                        //         : query === '/page/questions'
-                        //         ? ''
-                        //         : 'd-none'
-                        // }`}
-                        >
+                    <div>
                         <FaqSaidbar />
                     </div>
                     {children}
                 </div>
             </div>
             <div
-             className={`${
-                query === '/page/form'
-                    ? 'd-none'
-                    : query === '/page/questions'
-                    ? 'd-none'
-                    : ''
-            }`}
-            >
-            {children}
+                className={`${
+                    query === '/page/form'
+                        ? 'd-none'
+                        : query === '/page/questions'
+                        ? 'd-none'
+                        : ''
+                }`}>
+                {children}
             </div>
             {footer}
         </>
