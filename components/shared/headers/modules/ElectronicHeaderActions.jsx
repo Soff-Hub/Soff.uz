@@ -13,11 +13,11 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
 
     return (
         <div className="header__actions">
-            <Link href="/page/questions">
+            {/* <Link href="/page/questions">
                 <a className="header__extra">
                 <i class="fa-regular fa-circle-question" ></i>
                 </a>
-            </Link>
+            </Link> */}
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>

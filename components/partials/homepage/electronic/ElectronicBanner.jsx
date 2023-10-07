@@ -24,8 +24,8 @@ function ElectronicBanner() {
                 <div className="ps-section__left">
                     <div className="item banner-left-one">
                         {bannerItem?.[0]?.image ? (
-                            <Link target="_blank" href={`${bannerItem?.[0].url}`}>
-                                <a target="_blank">
+                            <Link  href={`${bannerItem?.[0].url}`}>
+                                <a>
                                     <img
                                         style={{
                                             width: '100%',
@@ -66,8 +66,8 @@ function ElectronicBanner() {
                 <div className="ps-section__right">
                     {bannerItem?.[1] ? (
                         <div className="banner-right">
-                            <Link href={`${bannerItem?.[1].url}`} target="_blank">
-                                <a className="ps-collection" target="_blank">
+                            <Link href={`${bannerItem?.[1].url}`}>
+                                <a className="ps-collection">
                                     <div
                                         style={{
                                             height: '170px',
@@ -78,8 +78,8 @@ function ElectronicBanner() {
                                         }}></div>
                                 </a>
                             </Link>
-                            <Link href={`${bannerItem?.[2].url}`} target="_blank">
-                                <a className="ps-collection" target="_blank">
+                            <Link href={`${bannerItem?.[2].url}`}>
+                                <a className="ps-collection">
                                     <div
                                         style={{
                                             height: '170px',
