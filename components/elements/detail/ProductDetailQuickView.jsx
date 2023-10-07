@@ -10,7 +10,6 @@ import { useEffect } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 
 const ProductDetailQuickView = ({ product }) => {
-    console.log('==> ', product);
     const [tag, setTag] = useState([]);
     const [img, setImage] = useState(null)
 
@@ -35,15 +34,15 @@ const ProductDetailQuickView = ({ product }) => {
 
 
 
-console.log('image', img);
     return (
         <div className="ps-product--detail ps-product--quickview">
             <div className="ps-product__header">
             <figure>
                 <div className="ps-wrapper">
                     {img?.length > 0 ? (
-                        img?.map((item) => (
+                        img?.map((item, i) => (
                             <img
+                            key={i}
                                 src={item?.image_url}
                                 alt="document"
                                 className="border mb-3 "

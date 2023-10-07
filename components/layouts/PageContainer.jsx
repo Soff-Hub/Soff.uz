@@ -60,7 +60,7 @@ export let accountAdminLinks = [
     },
     {
         text: "Ariza bo'limi",
-        url: '/account/Application',
+        url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
     {
@@ -102,7 +102,7 @@ export let accountSellerLink = [
     },
     {
         text: "Ariza bo'limi",
-        url: '/account/Application',
+        url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
     {

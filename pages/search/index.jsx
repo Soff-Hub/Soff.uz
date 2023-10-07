@@ -37,8 +37,6 @@ const SearchPage = () => {
 
     useEffect(() => {
         getSearchData();
-        console.log(query.keyword);
-
         handleSetKeyword();
         // if (query && query.keyword) {
         //     const queries = {

@@ -48,13 +48,10 @@ function ProductsLists() {
             }
         }
     }
-    async function GetItemsCategory(page) {
-        if (page === 1) {
-            setDataVal([])
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsCategory() {
+      const ItemsData = await GetRepository.getAllCategoryLists();
         if (ItemsData.results) {
-            setDataVal((prev) => [...prev, ...ItemsData.results]);
+            setDataVal(ItemsData.results);
         }
     }
     async function handleClickView(item) {
@@ -121,13 +118,12 @@ function ProductsLists() {
         }
     };
     useEffect(() => {
-        GetItemsCategory(1)
+        GetItemsCategory()
     }, [])
 
     useEffect(() => {
         GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
     }, [dataValCat, dataValStatus, dataFormat, dateArxiv,])
-
 
     const columns = [
         {
@@ -249,10 +245,7 @@ function ProductsLists() {
                                                             {
                                                                 dataVal.length > 0 && (
                                                                     dataVal.map(item => (
-                                                                        item.is_child === true ?
                                                                             <option key={item.id} value={item.id}>{item.name} </option>
-                                                                            :
-                                                                            <></>
                                                                     ))
                                                                 )
                                                             }
@@ -329,7 +322,7 @@ function ProductsLists() {
                                                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                         {
                                                             deleteIdView?.active_tag?.length > 0 ?
-                                                                <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span>#{item.name}  </span>))} </p>
+                                                                <p> <strong>Aktiv teglar: </strong> {deleteIdView?.active_tag?.map(item => (<span key={item.id}>#{item.name}  </span>))} </p>
                                                                 :
                                                                 <></>
                                                         }
@@ -339,7 +332,7 @@ function ProductsLists() {
 
                                                         {
                                                             deleteIdView?.deactive_tag?.length > 0 ?
-                                                                <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span>#{item.name}  </span>))}   </p>
+                                                                <p> <strong>Aktiv emas teglar: </strong> {deleteIdView?.deactive_tag?.map(item => (<span key={item.id}>#{item.name}  </span>))}   </p>
                                                                 :
                                                                 <></>
                                                         }

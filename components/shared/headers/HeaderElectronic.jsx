@@ -9,42 +9,43 @@ import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
 
 import MenuCategory from '~/components/elements/menu/MenuCategory';
+import { useDispatch, useSelector } from 'react-redux';
+import { Category_Lists, TopCategory_Lists } from '~/store/auth/action';
 
 
 const HeaderElectronic = () => {
-    useEffect(() => {
-        if (process.browser) {
-            window.addEventListener('scroll', stickyHeader);
-        }
-    }, []);
-
-    const [categoryData, setCategoryData] = useState([])
-    const [topCategoryData, setTopCategoryData] = useState([])
-    const [count, setCount] = useState('')
+    const { category_lists: categoryData, top_category_lists: topCategoryData } = useSelector(state => (state.auth))
+    const dispatch = useDispatch();
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
             `seller/admin/category-parent/`
         );
-        if (responseData ) {
-            setCount(responseData.data.count)
-            setCategoryData(responseData.data.results)
-     
+        if (responseData) {
+            dispatch(Category_Lists(responseData.data.results))
         }
     }
 
 
-    async function getTopCategory(){
+    async function getTopCategory() {
         const responsData = await ProductRepository.getTopCategories()
         if (responsData) {
-            setTopCategoryData(responsData)
+            dispatch(TopCategory_Lists(responsData))
         }
     }
 
-    useEffect (() => {
-        getCategoryFunc()
-        getTopCategory()
-    }, [])
+    useEffect(() => {
+        if (process.browser) {
+            window.addEventListener('scroll', stickyHeader);
+        }
+        if (categoryData?.length === 0) {
+            getCategoryFunc()
+        }
+        if (topCategoryData?.length === 0) {
+            getTopCategory()
+        }
+       
+    }, []);
 
     return (
         <header
@@ -69,8 +70,8 @@ const HeaderElectronic = () => {
                             </div>
                             <div className="menu__content">
                                 <MenuCategory
-                                  source={categoryData}
-                                  className="menu--dropdown"
+                                    source={categoryData}
+                                    className="menu--dropdown"
                                 />
                             </div>
                         </div>

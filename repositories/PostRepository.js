@@ -1,4 +1,4 @@
-import Repository, { basePostUrl, baseUrl, serializeQuery } from './Repository';
+import Repository, { basePostUrl, baseUrl } from './Repository';
 
 class PostRepository {
     constructor(callback) {

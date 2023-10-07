@@ -92,8 +92,8 @@ const ProductGroupGridItems = ({
             productItemsView = <p>No product(s) found.</p>;
         }
     } else {
-        const skeletonItems = generateTempArray(columns * 2).map((item) => (
-            <div className={classes} key={item}>
+        const skeletonItems = generateTempArray(columns * 2).map((item, i) => (
+            <div className={classes} key={i}>
                 <SkeletonProduct />
             </div>
         ));

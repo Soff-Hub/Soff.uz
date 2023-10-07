@@ -25,7 +25,6 @@ export const actionTypes = {
 
 // new
 export function setWishlistTtems(payload) {
-    console.log(payload);
     return { type: actionTypes.SET_WISHLIST_ITEMS, payload };
 }
 
@@ -35,7 +34,6 @@ export function setWishlistTtemsSuccess(payload) {
 
 export function setCartItems(payload) {
     localStorage.setItem('cart', JSON.stringify(payload))
-    // console.log(payload);
     return { type: actionTypes.SET_cart, payload };
 }
 

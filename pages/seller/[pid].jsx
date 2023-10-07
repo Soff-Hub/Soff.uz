@@ -6,8 +6,6 @@ import Product from '~/components/elements/products/Product';
 
 const SellerPage = ({ seller }) => {
  
-
-    console.log('pid', seller.results);
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -33,7 +31,7 @@ const SellerPage = ({ seller }) => {
 
                     <div className="row">
                         {seller?.results?.map((item, index) => (
-                             <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6' >   <Product key={item.id} product={item} /> </div>
+                             <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6' key={item.id}>   <Product product={item} /> </div>
                         ))}
                     </div>
                 </div>

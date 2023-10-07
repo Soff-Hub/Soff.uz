@@ -3,7 +3,7 @@ import Link from 'next/link';
 import CollectionRepository from '~/repositories/CollectionRepository';
 
 const FooterSecond = ({ classes }) => {
-   
+
 
     let vaqt = new Date();
 
@@ -92,7 +92,7 @@ const FooterSecond = ({ classes }) => {
                             <h4>Soff.uz</h4>
                         </aside>
                         <p>
-                        Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. {' '}
+                            Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. {' '}
                         </p>
                         <aside className="widget widget_footer widget_contact-us">
                             <ul
@@ -160,13 +160,11 @@ const FooterSecond = ({ classes }) => {
                     <p>
                         &copy; {vaqt.getFullYear()} soff.uz | Barcha huquqlar himoyalangan.
                     </p>
-                    <p>
-                        <aside className="widget widget_footer widget_contact-us d-flex align-items-center" >
-                                <p style={{
-                                    marginBottom:'0'
-                                }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'><img className='footer-company-logo d-block ps-2' src="/static/img/soffhub.jpeg" alt="soff hub logo" /></a>
-                        </aside>
-                    </p>
+                    <aside className="widget widget_footer widget_contact-us d-flex align-items-center" >
+                        <p style={{
+                            marginBottom: '0'
+                        }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'><img className='footer-company-logo d-block ps-2' src="/static/img/soffhub.jpeg" alt="soff hub logo" /></a>
+                    </aside>
                 </div>
             </div>
         </footer>

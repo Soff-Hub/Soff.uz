@@ -13,11 +13,11 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
     }
+    
     async getCategoryDataCount(slug) {
         const reponse = await Repository.get(`${baseUrl}${slug}` )
             .then((response) => {
@@ -29,7 +29,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -49,7 +48,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -68,7 +66,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;

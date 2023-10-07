@@ -24,7 +24,6 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
         return formattedNumber;
     }
     const hisob = addPeriodToThousands(state?.price);
-console.log('state', state);
 
     // view
     let listItemsView, shippingView, totalView;

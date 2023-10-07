@@ -4,7 +4,6 @@ import useProduct from '~/hooks/useProduct';
 
 const ProductCart = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
-    // console.log(product?.slug);
     return (
         <div className="ps-product--cart">
             <div className="ps-product__thumbnail">

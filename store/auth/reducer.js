@@ -8,7 +8,11 @@ export const initState = {
     accountLinks: [],
     data: {},
     products:{},
-    shop: []
+    shop: [],
+    category_lists:[],
+    top_category_lists:[],
+    category:[],
+    categorySlug:[],
 };
 
 function reducer(state = initState, actions) {
@@ -61,7 +65,18 @@ function reducer(state = initState, actions) {
                 ...{ isLoggedIn: true },
                 ...{ shop: actions.payload },
             };
-       
+  
+            case actionTypes.CATEGORY_LISTS:
+                return { ...state, ...{ category_lists: actions.payload } };
+
+                case actionTypes.TOP_CATEGORY_LISTS:
+                    return { ...state, ...{ top_category_lists: actions.payload } };
+                    
+                    case actionTypes.CATEGORY:
+                        return { ...state, ...{category: actions.payload } };
+                        
+                        case actionTypes.CATEGORY_SLUG:
+                            return { ...state, ...{categorySlug: actions.payload } };
             default:
             return state;
     }
