@@ -9,7 +9,7 @@ const QuestionsPage = () => {
 
     return (
         <PageContainer footer={<FooterDefault />} title="FAQ page">
-            <div className="ps-page--single">
+            <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <FaqsContent/>
                 </div>

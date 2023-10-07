@@ -8,8 +8,6 @@ const FaqsContent = () => {
     const [categoryData, setCategoryData] = useState(null);
     const [descriptionData, setDescriptionData] = useState(null);
 
-    const handleClick = () => {};
-
 
     const getFAQCategorysData = async () => {
         const respons = await PostRepository.getFAQCategorys();
@@ -18,17 +16,25 @@ const FaqsContent = () => {
         }
     };
 
-    const getFAQDescriptionData = async (id) => {
-        const respons = await PostRepository.getFAQDescription(id);
+    const getFAQDescriptionData = async () => {
+        const respons = await PostRepository.getFAQDescriptionAll();
         if (respons) {
-            setDescriptionData(respons);
+            setDescriptionData(respons.results);
         }
     };
+    const handleClick = async () => {
+        const respons = await PostRepository.getFAQDescriptionItem(id);
+        if (respons) {
+            setDescriptionData(respons.results);
+        }
+    };
+
 
     useEffect(() => {
         getFAQCategorysData();
         getFAQDescriptionData()
     }, []);
+    console.log(descriptionData);
     return (
         <div>
             <div className="faqs-category">

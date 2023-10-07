@@ -42,7 +42,7 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
     borderTop: '1px solid rgba(0, 0, 0, .125)',
 }));
 
-export default function FaqsAccardion() {
+export default function FaqsAccardion({data}) {
     const [expanded, setExpanded] = React.useState('panel1');
 
     const handleChange = (panel) => (event, newExpanded) => {
@@ -50,8 +50,8 @@ export default function FaqsAccardion() {
     };
     return (
         <div>
-            {/* {data &&
-                data.map((item) => {
+            {data &&
+                data?.map((item) => {
                     return (
                         <Accordion
                         key={item}
@@ -76,7 +76,7 @@ export default function FaqsAccardion() {
                             </AccordionDetails>
                         </Accordion>
                     );
-                })} */}
+                })}
         </div>
     );
 }
