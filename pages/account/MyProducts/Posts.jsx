@@ -197,7 +197,7 @@ const Posts = () => {
             user?.access
         );
         if (patchItems?.status === 201) {
-            Router.push('/account/MyProducts');
+            Router.push('/account/myproducts');
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',

@@ -24,7 +24,7 @@ function NavigationListSeller() {
 
     const handleShowOrderDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/MyProducts/Posts')
+        Router.push('/account/myproducts/posts')
     };
 
     const handleShowApplicationDrawer = () => {

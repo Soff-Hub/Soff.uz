@@ -69,7 +69,8 @@ function CategoryLists() {
         if (values.icon) {
             formData.append('icon', values.icon)
         }
-        formData.append('name', values.name)
+        formData.append('name', values?.name)
+
         if (tagName) {
             formData.append('parent', tagName)
         }
@@ -218,9 +219,9 @@ function CategoryLists() {
         },
     ];
     return (
-        <section className="ps-my-account ps-page--account">
+        <section className="ps-my-account ps-page--account p-0">
             <div className="container">
-                <div className="row ">
+                <div className="row " style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
@@ -352,7 +353,7 @@ function CategoryLists() {
                         type='text'
                         placeholder="Nomi"
                         className="form-control rounded-3"
-                        name='`name`'
+                        name='name'
                     />
                 </ModalDeletePostEdit>
             </div>
