@@ -18,8 +18,9 @@ const PostsProductsEdit = () => {
     const Router = useRouter();
     const [tagSearchResult, setTagSearchResult] = useState(null);
     const [tagSearchResult1, setTagSearchResult2] = useState(null);
+    const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { products, user, category_lists: dataCategory } = useSelector((state) => state.auth);
+    const { products, user } = useSelector((state) => state.auth);
     const [category_id, setCategory_id] = useState(null);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -40,6 +41,19 @@ const PostsProductsEdit = () => {
     ];
     const Option = Select.Option;
 
+    async function GetItemsCategoryLists() {
+        const data = [];
+        const ItemsData = await GetRepository.getAllCategoryLists2();
+        if (ItemsData?.results) {
+            for (let i = 0; i < ItemsData?.results?.length; i++) {
+                if (ItemsData?.results[i].parent !== null) {
+                    data.push(ItemsData?.results[i]);
+                }
+            }
+            setDataCategory(data);
+        }
+    }
+
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
         if (ItemsData?.results) {
@@ -58,7 +72,7 @@ const PostsProductsEdit = () => {
 
     const results = tagSearchResult?.concat(tagSearchResult1);
     const results3 = resuslts1?.concat(resuslts2);
-  
+
 
     const childrenAktivmas = [];
     for (let i = 0; i < tegProductsLists?.length; i++) {
@@ -75,23 +89,8 @@ const PostsProductsEdit = () => {
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
-
-    useEffect(() => {
-        GetItemsTag();
-
-        setEditorLoaded(true);
-    }, []);
-
-    useEffect(() => {
-        GetItemsTagAktivmas();
-    }, [user?.access]);
-
-    useEffect(() => {
-        GetItemsTagAktivmas();
-    }, [user?.access]);
-
-    const handleChangeCategory = async (e) => {
-        setCategory_id(e);
+    const onChange = async (e) => {
+        setCategory_id(e.toString());
 
         if (e) {
             for (let i = 0; i < dataCategory.length; i++) {
@@ -100,7 +99,39 @@ const PostsProductsEdit = () => {
                 }
             }
         }
+
     };
+
+    const onSearch = async (value) => {
+        const ItemsData = await GetRepository.getAllCategoryLists(value);
+        if (ItemsData?.results) {
+            setDataCategory(ItemsData?.results);
+        }
+    };
+    const options = [];
+
+    for (const item of dataCategory) {
+        options.push(
+            <Option key={item.name} value={item.id}>
+                {item.name}
+            </Option>
+        );
+    }
+
+    useEffect(() => {
+        GetItemsTag();
+
+        setEditorLoaded(true);
+    }, []);
+
+    useEffect(() => {
+        GetItemsCategoryLists();
+        GetItemsTagAktivmas();
+    }, [user?.access]);
+
+    useEffect(() => {
+        GetItemsTagAktivmas();
+    }, [user?.access]);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -333,28 +364,19 @@ const PostsProductsEdit = () => {
                                     </Tooltip>
                                 </div>
 
-                                <select
-                                    style={{ alignItems: 'flex-start' }}
-                                    className="form-select rounded-3 fs-4 py-3 col-md-8 mb-3"
-                                    onChange={(e) =>
-                                        handleChangeCategory(e.target.value)
-                                    }>
-                                    {dataCategory?.length > 0 &&
-                                        dataCategory.map((item) =>
-                                        item.name === products?.category?.name ? (
-                                                <option
-                                                    selected
-                                                    key={item.id}
-                                                    value={item.id}>
-                                                    {item.name}
-                                                </option>
-                                            ) : (
-                                                <option value={item.id} key={item.id}>
-                                                    {item.name}
-                                                </option>
-                                            )
-                                        )}
-                                </select>
+                                <div className="rounded-3  mb-3 p-0 m-0 d-flex flex-column col-md-8">
+                                    <Select
+                                        mode='select'
+                                        showSearch
+                                        style={{ width: '100%' }}
+                                        onChange={onChange}
+                                        onSearch={onSearch}
+                                        defaultValue={products?.category?.name}
+                                    >
+                                        {options}
+
+                                    </Select>
+                                </div>
                             </div>
 
                             <div className="row">

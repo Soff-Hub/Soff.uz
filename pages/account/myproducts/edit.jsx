@@ -6,6 +6,7 @@ import Page404 from '~/pages/page/page-404';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -20,8 +21,9 @@ const PostsMyProducts = () => {
     // const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState(null);
+    const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { products, user, category_lists: dataCategory } = useSelector((state) => state.auth);
+    const { products, user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [category_id, setCategory_id] = useState(null);
     const [discount, setDiscount] = useState(null);
@@ -43,6 +45,18 @@ const PostsMyProducts = () => {
 
     const Option = Select.Option;
 
+    async function GetItemsCategoryLists() {
+        const data = [];
+        const ItemsData = await GetRepository.getAllCategoryLists2();
+        if (ItemsData?.results) {
+            for (let i = 0; i < ItemsData?.results?.length; i++) {
+                if (ItemsData?.results[i].parent !== null) {
+                    data.push(ItemsData?.results[i]);
+                }
+            }
+            setDataCategory(data);
+        }
+    }
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -86,7 +100,7 @@ const PostsMyProducts = () => {
             formData.append('category', category_id);
         }
         if (tagSearchResult) {
-            formData.append('tags', tagSearchResult )
+            formData.append('tags', tagSearchResult)
         }
         if (discount) {
             formData.append("discount", discount);
@@ -106,17 +120,7 @@ const PostsMyProducts = () => {
         setLivePoster(img);
     }
 
-    const handleChangeCategory = async (e) => {
-        setCategory_id(e);
 
-        if (e) {
-            for (let i = 0; i < dataCategory.length; i++) {
-                if (dataCategory[i].id == e) {
-                    setCategoryName(dataCategory[i].name);
-                }
-            }
-        }
-    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -135,13 +139,48 @@ const PostsMyProducts = () => {
 
         return formattedNumber;
     }
+
+
+    const onChange = async (e) => {
+        setCategory_id(e.toString());
+
+        if (e) {
+            for (let i = 0; i < dataCategory.length; i++) {
+                if (dataCategory[i].id == e) {
+                    setCategoryName(dataCategory[i].name);
+                }
+            }
+        }
+
+    };
+
+    const onSearch = async (value) => {
+        const ItemsData = await GetRepository.getAllCategoryLists(value);
+        if (ItemsData?.results) {
+            setDataCategory(ItemsData?.results);
+        }
+    };
+    const options = [];
+
+    for (const item of dataCategory) {
+        options.push(
+            <Option  key={item.name} value={item.id}>
+                {item.name}
+            </Option>
+        );
+    }
+
+
     useEffect(() => {
         GetItemsTag();
         setEditorLoaded(true);
     }, []);
 
+    useEffect(() => {
+        GetItemsCategoryLists();
+    }, [user?.access]);
 
-
+    console.log(products);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -210,7 +249,7 @@ const PostsMyProducts = () => {
                                     className=" p-0 col-md-8 mb-3"
                                     mode="tags"
                                     style={{ width: '100%' }}
-                                    onChange={(e)=>setTagSearchResult(e)}
+                                    onChange={(e) => setTagSearchResult(e)}
                                     defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
                                 >
                                     {children}
@@ -219,21 +258,20 @@ const PostsMyProducts = () => {
                             <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
-                                <select
-                                    style={{ alignItems: "flex-start" }}
-                                    className="form-select rounded-3 py-3 fs-4 col-md-8 mb-3"
-                                    onChange={(e) =>
-                                        handleChangeCategory(e.target.value)
-                                    }>
-                                    {dataCategory?.length > 0 &&
-                                        dataCategory.map((item) => (
-                                            products?.category?.name === item.name ?
-                                                <option selected value={item.id}>{item.name}</option>
-                                                :
-                                                <option value={item.id} >{item.name}</option>
+                                <div className="rounded-3  mb-3 p-0 m-0 d-flex flex-column col-md-8">
+                                    <Select
+                                        mode='select'
+                                        showSearch
+                                        style={{ width: '100%' }}
+                                        onChange={onChange}
+                                        onSearch={onSearch}
+                                        defaultValue={products?.category?.name}
+                                    >
+                                        {options}
 
-                                        ))}
-                                </select>
+                                    </Select>
+                                </div>
+
                             </div>
                             <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
