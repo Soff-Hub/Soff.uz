@@ -6,9 +6,9 @@ import PanelCartMobile from '../panel/PanelCartMobile';
 import PanelSearch from '../panel/PanelSearch';
 import PanelCategories from '../panel/PanelCategories';
 import { useState } from 'react';
+import Link from 'next/link';
 
 function NavigationList() {
-
     const [menuDrawer, setMenuDrawer] = useState(false);
     const [cartDrawer, setCartDrawer] = useState(false);
     const [searchDrawer, setSearchDrawer] = useState(false);
@@ -20,7 +20,6 @@ function NavigationList() {
         setSearchDrawer(false);
         setCategoriesDrawer(false);
     };
-
 
     const handleShowCartDrawer = () => {
         setMenuDrawer(false);
@@ -164,6 +163,14 @@ function NavigationList() {
                     <i className="icon-bag2"></i>
                     <span> Savat</span>
                 </a>
+                <Link href="/page/questions">
+                    <a   className={`navigation__item ${
+                        searchDrawer === true ? 'active' : ''
+                    }`}>
+                        <i class="fa-regular fa-circle-question"></i>
+                        <span>FAQ</span>
+                    </a>
+                </Link>
             </div>
         </div>
     );

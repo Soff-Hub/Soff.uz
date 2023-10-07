@@ -190,25 +190,26 @@ const PageContainer = ({
                         : 'd-none'
                 }`}>
                 <div
-                    className={`${
-                        query === '/page/form'
-                            ? ''
-                            : query === '/page/questions'
-                            ? ''
-                            : 'd-none'
-                    }`}>
-                    {' '}
+                    // className={`${
+                    //     query === '/page/form'
+                    //         ? ''
+                    //         : query === '/page/questions'
+                    //         ? ''
+                    //         : 'd-none'
+                    // }`}
+                    >
                     <BreadCrumb breacrumb={breadCrumb} />
                 </div>
-                <div className="container d-flex justify-content-between ">
+                <div className="container faq-page-container ">
                     <div
-                        className={`${
-                            query === '/page/form'
-                                ? ''
-                                : query === '/page/questions'
-                                ? ''
-                                : 'd-none'
-                        }`}>
+                        // className={`${
+                        //     query === '/page/form'
+                        //         ? ''
+                        //         : query === '/page/questions'
+                        //         ? ''
+                        //         : 'd-none'
+                        // }`}
+                        >
                         <FaqSaidbar />
                     </div>
                     {children}
