@@ -496,7 +496,7 @@ const Posts = () => {
                                 </div>
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
                                     <Select
-                                    mode='tags'
+                                    mode='select'
                                         showSearch
                                         style={{ width: '100%' }}
                                         onChange={onChange}
