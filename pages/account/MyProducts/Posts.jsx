@@ -7,7 +7,6 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
@@ -21,9 +20,8 @@ const Posts = () => {
     const [fileImgFile, setFileImgFile] = useState(null);
     const [fileImgFileID, setFileImgFileID] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
-    const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { user } = useSelector((state) => state.auth);
+    const { user, category_lists: dataCategory } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [category_id, setCategory_id] = useState(null);
     const [narxNomi, setNarxNomi] = useState(true);
@@ -49,16 +47,9 @@ const Posts = () => {
         },
     ];
 
-    async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
-        if (ItemsData?.results) {
-            setDataCategory(ItemsData?.results);
-        }
-    }
     const Option = Select.Option;
 
     const onChange = async (e) => {
-        setCategory_id(e.toString());
 
         if (e) {
             for (let i = 0; i < dataCategory.length; i++) {
@@ -103,12 +94,7 @@ const Posts = () => {
         }
     };
 
-    const onSearch = async (value) => {
-        const ItemsData = await GetRepository.getAllCategoryLists(value);
-        if (ItemsData?.results) {
-            setDataCategory(ItemsData?.results);
-        }
-    };
+
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -118,20 +104,13 @@ const Posts = () => {
     }
 
     const children = [];
-    const options = [];
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
             <Option key={tagItems[i].name}   >{tagItems[i].name}</Option>
         );
     }
 
-    for (const item of dataCategory) {
-        options.push(
-            <Option key={item.name} value={item.id}>
-                {item.name}
-            </Option>
-        );
-    }
+
 
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
@@ -269,9 +248,7 @@ const Posts = () => {
         chegirma();
     }, []);
 
-    useEffect(() => {
-        GetItemsCategoryLists();
-    }, [user?.access]);
+
 
     useEffect(() => {
             PostFilePoster();
@@ -495,16 +472,13 @@ const Posts = () => {
                                     </Tooltip>
                                 </div>
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
-                                    <Select
-                                    mode='tags'
-                                        showSearch
-                                        style={{ width: '100%' }}
-                                        onChange={onChange}
-                                        onSearch={onSearch}
-                                        >
-                                        {options}
-                                        
-                                    </Select>
+                                <select onChange={(e)=> (onChange, setCategory_id(e.target.value)) } className='form-select py-3 fs-3'>
+                                    {
+                                        dataCategory?.map(item=>(
+                                            <option className='fs-3' value={item.id} >{item.name}</option>
+                                        ))
+                                    }
+                                </select>
                                 </div>
                             </div>
                             <div className="row   mt-3">

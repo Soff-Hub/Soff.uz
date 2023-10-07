@@ -18,9 +18,8 @@ const PostsProductsEdit = () => {
     const Router = useRouter();
     const [tagSearchResult, setTagSearchResult] = useState(null);
     const [tagSearchResult1, setTagSearchResult2] = useState(null);
-    const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { products, user } = useSelector((state) => state.auth);
+    const { products, user, category_lists: dataCategory } = useSelector((state) => state.auth);
     const [category_id, setCategory_id] = useState(null);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -40,19 +39,6 @@ const PostsProductsEdit = () => {
         },
     ];
     const Option = Select.Option;
-
-    async function GetItemsCategoryLists() {
-        const data = [];
-        const ItemsData = await GetRepository.getAllCategoryLists();
-        if (ItemsData?.results) {
-            for (let i = 0; i < ItemsData?.results?.length; i++) {
-                if (ItemsData?.results[i].parent !== null) {
-                    data.push(ItemsData?.results[i]);
-                }
-            }
-            setDataCategory(data);
-        }
-    }
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -97,7 +83,6 @@ const PostsProductsEdit = () => {
     }, []);
 
     useEffect(() => {
-        GetItemsCategoryLists();
         GetItemsTagAktivmas();
     }, [user?.access]);
 

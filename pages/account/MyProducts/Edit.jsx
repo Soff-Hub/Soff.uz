@@ -6,7 +6,6 @@ import Page404 from '~/pages/page/page-404';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -21,9 +20,8 @@ const PostsMyProducts = () => {
     // const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState(null);
-    const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { products, user } = useSelector((state) => state.auth);
+    const { products, user, category_lists: dataCategory } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [category_id, setCategory_id] = useState(null);
     const [discount, setDiscount] = useState(null);
@@ -45,18 +43,6 @@ const PostsMyProducts = () => {
 
     const Option = Select.Option;
 
-    async function GetItemsCategoryLists() {
-        const data = [];
-        const ItemsData = await GetRepository.getAllCategoryLists();
-        if (ItemsData?.results) {
-            for (let i = 0; i < ItemsData?.results?.length; i++) {
-                if (ItemsData?.results[i].parent !== null) {
-                    data.push(ItemsData?.results[i]);
-                }
-            }
-            setDataCategory(data);
-        }
-    }
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmes();
@@ -154,11 +140,8 @@ const PostsMyProducts = () => {
         setEditorLoaded(true);
     }, []);
 
-    useEffect(() => {
-        GetItemsCategoryLists();
-    }, [user?.access]);
 
-  console.log(products);
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
