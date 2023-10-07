@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import React from 'react';
 
-const FaqsContent = () => {
-=======
 import React, { useState } from 'react';
 import FaqsAccardion from './FaqsAccardion';
 import { useEffect } from 'react';
@@ -11,20 +7,16 @@ import PostRepository from '~/repositories/PostRepository';
 const FaqsContent = () => {
     const [categoryData, setCategoryData] = useState(null);
     const [descriptionData, setDescriptionData] = useState(null);
->>>>>>> dd22480eb5ebc9745f93b3621e789f3afdbccdb1
 
     const handleClick = () => {};
 
-<<<<<<< HEAD
- 
-=======
+
     const getFAQCategorysData = async () => {
         const respons = await PostRepository.getFAQCategorys();
         if (respons) {
             setCategoryData(respons?.results);
         }
     };
->>>>>>> dd22480eb5ebc9745f93b3621e789f3afdbccdb1
 
     const getFAQDescriptionData = async (id) => {
         const respons = await PostRepository.getFAQDescription(id);
@@ -35,7 +27,7 @@ const FaqsContent = () => {
 
     useEffect(() => {
         getFAQCategorysData();
-        // getFAQDescriptionData()
+        getFAQDescriptionData()
     }, []);
     return (
         <div>
@@ -60,10 +52,8 @@ const FaqsContent = () => {
                         })}
                 </div>
             </div>
-<<<<<<< HEAD
-=======
+
             <FaqsAccardion data={descriptionData} />
->>>>>>> dd22480eb5ebc9745f93b3621e789f3afdbccdb1
         </div>
     );
 };

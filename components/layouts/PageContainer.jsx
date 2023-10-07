@@ -11,6 +11,7 @@ import { useRouter } from 'next/router';
 import BreadCrumb from '../elements/BreadCrumb';
 
 const initHeaders = (
+
     <>
         <HeaderElectronic />
         <HeaderMobileElectronic />
@@ -134,6 +135,8 @@ const PageContainer = ({
 
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const Router = useRouter();
+
 
     useEffect(() => {
         if (user?.role === 'admin') {
@@ -155,8 +158,7 @@ const PageContainer = ({
         defaultRoutePage();
     }, []);
 
- 
-
+    const query = Router.route;
 
     return (
         <>
@@ -164,7 +166,23 @@ const PageContainer = ({
                 <title>{titleView}</title>
             </Head>
             {header}
-            {children}
+            <div>
+                <div className={`container faq-page-container`}>
+                    <div
+    className={` ${query === '/page/form'
+    ? ''
+    : query === '/page/questions'
+        ? ''
+        : 'd-none'
+    }`}
+
+                    >
+                        <FaqSaidbar />
+                    </div>
+
+                {children}
+                </div>
+            </div>
 
             {footer}
         </>

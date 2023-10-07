@@ -12,6 +12,10 @@
         "compile": "npm run clean && antd-tools"
     },
     "dependencies": {
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@mui/icons-material": "^5.14.12",
+        "@mui/material": "^5.14.12",
         "ant-design": "^1.0.0",
         "antd": "^5.8.4",
         "antd-tools": "^7.7.1",
