@@ -7,19 +7,20 @@ import SiteFeatures from '~/components/partials/homepage/autopart/SiteFeatures';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import { PropagateLoader } from 'react-spinners';
 import useCart from '~/hooks/useCart';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import useWishlist from '~/hooks/useWishlist';
+import { CategorySlug } from '~/store/auth/action';
 
 const HomeElectronicsPage = () => {
-    const [categoryData, setCategoryData] = useState([]);
-
+    const { categorySlug: categoryData } = useSelector(state => (state.auth));
+    const dispatch = useDispatch();
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
             `customer/category-list/`
         );
         if (responseData?.data.results.length > 0) {
-            setCategoryData(responseData.data.results);
+            dispatch(CategorySlug(responseData.data.results));
         }
     }
 
@@ -37,9 +38,13 @@ const HomeElectronicsPage = () => {
         if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
             setAllSaved();
         }
-
-        getCategoryFunc();
+      
+        if (categoryData?.length===0) {
+            getCategoryFunc();
+        }
+        
     }, []);
+
     return (
         <main id="homepage-7">
             <ElectronicBanner />

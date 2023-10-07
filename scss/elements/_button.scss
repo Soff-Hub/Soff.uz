@@ -3,6 +3,12 @@ button {
     @include transition(all 0.4s ease);
 }
 
+.ps-block__right{
+    a{
+        font-size: 13px;
+    }
+}
+
 .menu-toggle,
 .ps-btn--hamburger {
     position: relative;

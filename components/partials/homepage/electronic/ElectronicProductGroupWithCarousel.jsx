@@ -1,26 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import Product from '~/components/elements/products/Product';
-import useGetProducts from '~/hooks/useGetProducts';
 
 const ElectronicProductGroupWithCarousel = ({
-    collectionSlug,
     title,
     data,
     id,
 }) => {
-    const { productItems, loading, getProductsByCollection } = useGetProducts();
-    useEffect(() => {
-        if (collectionSlug) {
-            getProductsByCollection(collectionSlug);
-        }
-    }, [collectionSlug]);
+
 
     // Views
     let productItemsView;
-    if (!loading) {
+    if (true) {
         if (data && data?.promotional_sliders.length > 0) {
             productItemsView = (
                 <div className="d-flex align-content-center row">

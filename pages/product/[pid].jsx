@@ -5,53 +5,40 @@ import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFu
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
 
-
 import Meta from '~/components/shared/headers/Meta';
 import { useState } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useEffect } from 'react';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
+import { baseUrl } from '~/repositories/Repository';
+import Axios from 'axios';
 
-const ProductDefaultPage = () => {
-    const router = useRouter();
-    const { pid } = router.query;
-    const [product, setProduct] = useState([]);
-    const [similar, setSimilar] = useState([]);
-    const [loading, setLoading] = useState(false);
+const ProductDefaultPage = ({ product, similar }) => {
+    // const router = useRouter();
+    // const { pid } = router.query;
+    // const [product, setProduct] = useState(null);
+    // const [similar, setSimilar] = useState([]);
+    // const [loading, setLoading] = useState(false);
 
-    async function getProduct() {
-        setLoading(true);
-        const responseData = await ProductRepository.getProductsById(pid);
-        if (responseData) {
-            setProduct(responseData);
-            // setTimeout(
-            //     function () {
-            //         setLoading(false);
-            //     }.bind(this),
-            //     250
-            // );
-        }
-    }
-    async function getSimilar() {
-        setLoading(true);
-        const responsSimilar = await ProductRepository.getProductSimilarSlug(pid)
-        if (responsSimilar) {
-            setSimilar(responsSimilar);
-            // setTimeout(
-            //     function () {
-            //         setLoading(false);
-            //     }.bind(this),
-            //     250
-            // );
-        }
-    }
+    // async function getProduct() {
+    //     setLoading(true);
+    //     const responseData = await ProductRepository.getProductsById(pid);
+    //     if (responseData) {
+    //         setProduct(responseData);
+    //     }
+    // }
+    // async function getSimilar() {
+    //     setLoading(true);
+    //     const responsSimilar = await ProductRepository.getProductSimilarSlug(pid)
+    //     if (responsSimilar) {
+    //         setSimilar(responsSimilar);
+    //     }
+    // }
 
-    
-
-    useEffect(() => {
-        getProduct();
-        getSimilar()
-    }, [pid]);
+    // useEffect(() => {
+    //     getProduct();
+    //     getSimilar()
+    // }, [pid]);
 
     const breadCrumb = [
         {
@@ -59,18 +46,20 @@ const ProductDefaultPage = () => {
             url: '/',
         },
         {
-            text: product?.title ? product?.title : 'Loading...',
+            text: product.title
+                ? product.title
+                : 'Loading...',
         },
     ];
-
+    
+    console.log('product => ', product);
 
     return (
         <>
-            <PageContainer
-                title={product ? product?.title : 'Loading...'}>
+            <PageContainer title={product ? product.title : 'Loading...'}>
                 <Meta
-                    title={product?.title}
-                    image={product?.images?.[0]?.image_url}
+                    title={product.title}
+                    image={product.iamges[0].image_url}
                 />
 
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
@@ -80,20 +69,19 @@ const ProductDefaultPage = () => {
                         <div className="ps-container">
                             <div className="ps-page__container">
                                 <div className="ps-page__left">
-                                    {
-                                        product ?
+                                    {product ? (
                                         <ProductDetailFullwidth
                                             product={product}
-                                        /> :
+                                        />
+                                    ) : (
                                         <SkeletonProductDetail />
-                                    }
+                                    )}
                                 </div>
                             </div>
 
                             {similar?.length > 0 ? (
                                 <RelatedProduct
                                     data={similar}
-                                    pid={pid}
                                     collectionSlug="shop-recommend-items"
                                 />
                             ) : (
@@ -107,5 +95,32 @@ const ProductDefaultPage = () => {
     );
 };
 
+// export async function getStaticPaths() {
+//     const res = await fetch(baseUrl + 'customer/documents/');
+//     const documentSlug = await res.json();
+//     console.log('doc slug', documentSlug);
+//     const path = documentSlug.results.map((item) => ({
+//         params: { pid: item.slug },
+//     }));
+//     return { path, fallback: false };
+// }
+
+
+export async function getServerSideProps( context ) {
+    const request = await fetch(baseUrl + `customer/documents/${context.query.pid}/`)
+    const product = await request.json()
+
+    const SimilarRes = await fetch(baseUrl + `customer/similar/${context.query.pid}/`)
+    const similar = await SimilarRes.json()
+
+
+
+    return {
+        props: {
+            product,
+            similar
+        },
+    };
+}
 
 export default ProductDefaultPage;

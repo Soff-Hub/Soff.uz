@@ -6,6 +6,9 @@ import HeaderMobileElectronic from '../shared/headers/HeaderMobileElectronic';
 import FooterSecond from '../shared/footers/FooterSecond';
 import { useDispatch, useSelector } from 'react-redux';
 import { accountLinksReducers, isLoginning } from '~/store/auth/action';
+import FaqSaidbar from '../partials/faqs/faqSaidbar';
+import { useRouter } from 'next/router';
+import BreadCrumb from '../elements/BreadCrumb';
 
 const initHeaders = (
     <>
@@ -15,11 +18,9 @@ const initHeaders = (
 );
 const initFooters = (
     <>
-
         <FooterSecond />
     </>
 );
-
 
 export let accountAdminLinks = [
     {
@@ -59,7 +60,7 @@ export let accountAdminLinks = [
     },
     {
         text: "Ariza bo'limi",
-        url: '/account/Application',
+        url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
     {
@@ -81,17 +82,17 @@ export let accountSellerLink = [
     },
     {
         text: 'Mening mahsulotlarim',
-        url: '/account/MyProducts',
+        url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
     },
     {
         text: 'Sotib olingan',
-        url: '/account/MyProductsSeller',
+        url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
     {
         text: 'Yangi mahsulot',
-        url: '/account/MyProducts/Posts',
+        url: '/account/myproducts/posts',
         icon: 'fa-solid fa-circle-plus',
     },
     {
@@ -101,7 +102,7 @@ export let accountSellerLink = [
     },
     {
         text: "Ariza bo'limi",
-        url: '/account/Application',
+        url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
     {
@@ -113,7 +114,7 @@ export let accountSellerLink = [
 export let cutomerAccountLink = [
     {
         text: 'Mening mahsulotlarim',
-        url: '/account/MyProducts',
+        url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
     },
     {
@@ -123,7 +124,6 @@ export let cutomerAccountLink = [
     },
 ];
 
-
 const PageContainer = ({
     header = initHeaders,
     footer = initFooters,
@@ -132,29 +132,31 @@ const PageContainer = ({
 }) => {
     let titleView;
 
-
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (user?.role === 'admin') {
-            dispatch(accountLinksReducers(accountAdminLinks))
+            dispatch(accountLinksReducers(accountAdminLinks));
         }
         if (user?.role === 'seller') {
-            dispatch(accountLinksReducers(accountSellerLink))
+            dispatch(accountLinksReducers(accountSellerLink));
         }
         if (user?.role === 'customer') {
-            dispatch(accountLinksReducers(cutomerAccountLink))
+            dispatch(accountLinksReducers(cutomerAccountLink));
         }
     }, [user?.role]);
 
     const defaultRoutePage = () => {
         dispatch(isLoginning());
-    }
+    };
 
     useEffect(() => {
-        defaultRoutePage()
+        defaultRoutePage();
     }, []);
+
+ 
+
 
     return (
         <>
@@ -163,6 +165,7 @@ const PageContainer = ({
             </Head>
             {header}
             {children}
+
             {footer}
         </>
     );

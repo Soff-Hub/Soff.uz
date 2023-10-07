@@ -17,6 +17,7 @@ class CollectionRepository {
             });
         return reponse;
     }
+    
     async getCategoryDataCount(slug) {
         const reponse = await Repository.get(`${baseUrl}${slug}` )
             .then((response) => {

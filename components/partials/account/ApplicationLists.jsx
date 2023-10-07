@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -8,7 +8,7 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 
 
-function Notifications() {
+function ApplicationLists() {
     const { accountLinks, user } = useSelector(state => state.auth)
     const [data, setData] = useState([]);
     const [dataCat, setDataCat] = useState(null);
@@ -369,4 +369,4 @@ function Notifications() {
         </section>
     );
 }
-export default Notifications;
+export default ApplicationLists;

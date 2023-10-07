@@ -1,6 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Modal } from 'antd';
+import { connect, useSelector } from 'react-redux';
 import useProduct from '~/hooks/useProduct';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
@@ -8,29 +7,23 @@ import useWishlist from '~/hooks/useWishlist';
 const ModuleProductWideActions = ({ ecomerce, product }) => {
     const { price } = useProduct();
     const { setCartOneItem } = useCart()
-    const { addSavedItem } = useWishlist()
+    const { addSavedItem, removeSavedItem } = useWishlist()
+    const { wishlist } = useSelector((state) => state.ecomerce);
 
 
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz!`,
-        });
-        modal.update;
+       
     }
 
     function handleAddItemToWishlist(e) {
         e.preventDefault();
         addSavedItem(product.id);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
-        });
-        modal.update;
+        if (wishlist?.find((item) => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
+
     }
 
 

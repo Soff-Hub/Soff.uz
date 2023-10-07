@@ -48,13 +48,10 @@ function ProductsLists() {
             }
         }
     }
-    async function GetItemsCategory(page) {
-        if (page === 1) {
-            setDataVal([])
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsCategory() {
+      const ItemsData = await GetRepository.getAllCategoryLists();
         if (ItemsData.results) {
-            setDataVal((prev) => [...prev, ...ItemsData.results]);
+            setDataVal(ItemsData.results);
         }
     }
     async function handleClickView(item) {
@@ -121,13 +118,12 @@ function ProductsLists() {
         }
     };
     useEffect(() => {
-        GetItemsCategory(1)
+        GetItemsCategory()
     }, [])
 
     useEffect(() => {
         GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
     }, [dataValCat, dataValStatus, dataFormat, dateArxiv,])
-
 
     const columns = [
         {
@@ -249,10 +245,7 @@ function ProductsLists() {
                                                             {
                                                                 dataVal.length > 0 && (
                                                                     dataVal.map(item => (
-                                                                        item.is_child === true ?
                                                                             <option key={item.id} value={item.id}>{item.name} </option>
-                                                                            :
-                                                                            <></>
                                                                     ))
                                                                 )
                                                             }

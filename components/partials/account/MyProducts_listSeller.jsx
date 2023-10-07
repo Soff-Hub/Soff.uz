@@ -1,25 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Modal, Table } from 'antd';
+import { DatePicker, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import MediaRepository from '~/repositories/MediaRepository';
-import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector, useDispatch } from 'react-redux';
-import ModalDelete from './Modal';
-import Link from 'next/link';
+import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
-import { MyProductsEdit } from '~/store/auth/action';
-import ModalDeletePostEdit from './ModalPostEdit';
-var parse = require("html-react-parser");
 import axios from 'axios';
-import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
-import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
-import { Tabs } from 'antd';
-import PartialDescription from '~/components/elements/detail/description/PartialDescription';
-const { TabPane } = Tabs;
 
 
 function MyProductsListsSeller() {
@@ -49,11 +36,8 @@ function MyProductsListsSeller() {
             }
         }
     }
-    async function GetItemsCategory(page) {
-        if (page === 1) {
-            setDataCategory([])
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsCategory() {
+        const ItemsData = await GetRepository.getAllCategoryLists();
         setDataCategory(ItemsData.results);
     }
 
@@ -104,7 +88,7 @@ function MyProductsListsSeller() {
     };
 
     useEffect(() => {
-        GetItemsCategory(1)
+        GetItemsCategory()
     }, [])
     useEffect(() => {
         GetItemsProducts(1, dataValCat,  dataFormat)
@@ -198,10 +182,8 @@ function MyProductsListsSeller() {
                                                             {
                                                                 dataCategory?.length > 0 && (
                                                                     dataCategory?.map(item => (
-                                                                        item.is_child === true ?
                                                                             <option key={item.id} value={item.id}>{item.name} </option>
-                                                                            :
-                                                                            <></>
+                                                                         
                                                                     ))
                                                                 )
                                                             }
