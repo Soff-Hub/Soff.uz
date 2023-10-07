@@ -16,6 +16,7 @@
 
 .faqs-category{
     margin: 20px 0;
+
     h3{
         padding-bottom: 10px;
         font-weight: 500;
@@ -28,10 +29,11 @@
     display: flex;
     transition: all .7s;
     box-sizing: border-box;
+    margin:  1px;
     &:hover{
         box-sizing: border-box;
         cursor: pointer;
-        border: 1px solid $color-1st;
+        // border: 1px solid $color-1st;
     }
 }
 

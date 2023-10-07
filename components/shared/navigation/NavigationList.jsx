@@ -163,14 +163,14 @@ function NavigationList() {
                     <i className="icon-bag2"></i>
                     <span> Savat</span>
                 </a>
-                <Link href="/page/questions">
+                {/* <Link href="/page/questions">
                     <a   className={`navigation__item ${
                         searchDrawer === true ? 'active' : ''
                     }`}>
                         <i class="fa-regular fa-circle-question"></i>
                         <span>FAQ</span>
                     </a>
-                </Link>
+                </Link> */}
             </div>
         </div>
     );
