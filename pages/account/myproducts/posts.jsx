@@ -50,7 +50,7 @@ const Posts = () => {
     ];
 
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryLists2();
         if (ItemsData?.results) {
             setDataCategory(ItemsData?.results);
         }
@@ -190,7 +190,7 @@ const Posts = () => {
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
             formData.append('category', category_id);
-            formData.append('document', livePosterFile?.id)
+        formData.append('document', livePosterFile?.id)
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
@@ -220,11 +220,11 @@ const Posts = () => {
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
                 formData,
                 user?.access
-                );
-                setLivePosterFile(ItemsData?.data);
-                setLoading(false);
+            );
+            setLivePosterFile(ItemsData?.data);
+            setLoading(false);
         }
-        
+
     }
 
     function LiveImage(e) {
@@ -274,7 +274,7 @@ const Posts = () => {
     }, [user?.access]);
 
     useEffect(() => {
-            PostFilePoster();
+        PostFilePoster();
     }, [fileImgFile]);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -426,7 +426,7 @@ const Posts = () => {
                                             livePosterFile?.images?.map(
                                                 (item, i) =>
                                                     item.id ===
-                                                    fileImgFileID ? (
+                                                        fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
@@ -496,14 +496,14 @@ const Posts = () => {
                                 </div>
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
                                     <Select
-                                    mode='tags'
+                                        mode='select'
                                         showSearch
                                         style={{ width: '100%' }}
                                         onChange={onChange}
                                         onSearch={onSearch}
-                                        >
+                                    >
                                         {options}
-                                        
+
                                     </Select>
                                 </div>
                             </div>
@@ -642,8 +642,8 @@ const Posts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                      removePrefix(taxminiyNarx)
-                                                  ) + "so'm"
+                                                    removePrefix(taxminiyNarx)
+                                                ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -670,10 +670,10 @@ const Posts = () => {
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                              return (
-                                                  <span key={i}>#{item} </span>
-                                              );
-                                          })
+                                            return (
+                                                <span key={i}>#{item} </span>
+                                            );
+                                        })
                                         : "To'ldirilmadi"}
                                 </p>
                                 <p className="live-card-p">
@@ -746,10 +746,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -776,14 +776,14 @@ const Posts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              #{item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            #{item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -867,10 +867,10 @@ const Posts = () => {
                                                     {' '}
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                              removePrefix(
-                                                                  taxminiyNarx
-                                                              )
-                                                          ) + "so'm"
+                                                            removePrefix(
+                                                                taxminiyNarx
+                                                            )
+                                                        ) + "so'm"
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>

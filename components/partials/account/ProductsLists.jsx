@@ -270,7 +270,7 @@ function ProductsLists() {
                                         <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                         <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                     </div>
-                                    <Table scroll={{ x: 1500 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 1600 }} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>
