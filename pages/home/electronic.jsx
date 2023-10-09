@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicProductGroupWithCarousel';
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
 import ElectronicTopCategories from '~/components/partials/homepage/electronic/ElectronicTopCategories';
@@ -17,7 +17,7 @@ const HomeElectronicsPage = ({ category }) => {
         const responseData = await CollectionRepository.getCategoryData(
             `customer/category-list/`
         );
-        if (responseData?.data.results.length > 0) {
+        if (responseData?.data?.results) {
             dispatch(CategorySlug(responseData.data.results));
         }
     }
@@ -29,11 +29,11 @@ const HomeElectronicsPage = ({ category }) => {
     const { setAllSaved } = useWishlist()
 
     useEffect(() => {
-        if (cartDataItems.length !== JSON.parse(localStorage.getItem('cart'))) {
+        if (cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))) {
             setAllCartItem();
         }
 
-        if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
+        if (wishlist?.length !== JSON.parse(localStorage.getItem('wishlist'))) {
             setAllSaved();
         }
 
@@ -42,6 +42,7 @@ const HomeElectronicsPage = ({ category }) => {
         }
 
     }, []);
+
 
     return (
         <main id="homepage-7">
