@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Modal, Table } from 'antd';
+import { DatePicker, Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -33,6 +33,8 @@ function MyProductsLists() {
     const [date, setDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState("");
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(null)
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
@@ -42,16 +44,10 @@ function MyProductsLists() {
 
 
     async function GetItemsProducts(page, category, tagName, dataFormat, status) {
-        if (page === 1) {
-            setData([])
-        }
         const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, status, user?.access);
         if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProducts(page + 1, category, tagName, dataFormat, status)
-            }
+            setData([...ItemsData.results]);
+            setSerach([...ItemsData.results]);
         }
     }
     async function GetItemsCategory() {
@@ -137,6 +133,13 @@ function MyProductsLists() {
     };
 
 
+
+    const handlePagination = (pageNum) => {
+        setCurrPage(pageNum)
+        GetItemsProducts(pageNum, dataValCat, tagName, dataFormat, selectValStatus)
+    }
+
+
     useEffect(() => {
         GetItemsCategory()
         GetItemsTag()
@@ -175,7 +178,7 @@ function MyProductsLists() {
             title: 'Kategoriya',
             dataIndex: 'category',
             key: 'address',
-            width:300,
+            width: 300,
             render: (category) => (
                 <span key={category.id}> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
             )
@@ -280,7 +283,7 @@ function MyProductsLists() {
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
-                                                    <button style={{ padding: "17px", backgroundColor:"#F1F1F2" }} className="accordion-button collapsed  responsiveCardButton   text-success " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    <button style={{ padding: "17px", backgroundColor: "#F1F1F2" }} className="accordion-button collapsed  responsiveCardButton   text-success " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                                         <strong> Filter</strong>
                                                     </button>
                                                 </h2>
@@ -292,9 +295,9 @@ function MyProductsLists() {
                                                             {
                                                                 dataCategory?.length > 0 && (
                                                                     dataCategory?.map(item => (
-                                                                        
-                                                                            <option key={item.id} value={item.id}>{item.name} </option>
-                                                                           
+
+                                                                        <option key={item.id} value={item.id}>{item.name} </option>
+
                                                                     ))
                                                                 )
                                                             }
@@ -339,9 +342,15 @@ function MyProductsLists() {
                                     </div>
                                     {
                                         user?.role === "seller" ?
-                                            <Table dataSource={data} scroll={{ x: 1300 }} columns={columns} />
+                                            <>
+                                                <Table dataSource={data} scroll={{ x: 1300 }} columns={columns} pagination={false} />
+                                                <Pagination total={pageCount} defaultCurrent={currPage} onChange={handlePagination} />
+                                            </>
                                             :
-                                            <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} />
+                                            <>
+                                                <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} pagination={false} />
+                                                <Pagination total={pageCount} defaultCurrent={currPage} onChange={handlePagination} />
+                                            </>
 
                                     }
                                 </div>
@@ -431,7 +440,7 @@ function MyProductsLists() {
                     </label>
                 </ModalDeletePostEdit >
             </div>
-        </section>
+        </section >
     );
 
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 
-import {  DatePicker, Table } from 'antd';
+import { DatePicker, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -17,33 +17,26 @@ function OrdersLists() {
     const [search, setSerach] = useState([]);
     const [date, setDate] = useState(null);
     const [selector, setSelector] = useState(null);
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(null)
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProducts(page,  status, date) {
-        if (page === 1) {
-            setData([])
-        }
+    async function GetItemsProducts(page, status, date) {
         const ItemsData = await GetRepository.getOrdersLists(page, status, date, user?.access);
-       if (ItemsData?.results) {
-        setData((prev) => [...prev, ...ItemsData.results]);
-        setSerach((prev) => [...prev, ...ItemsData.results]);
-        if (ItemsData.next) {
-            GetItemsProducts(page + 1, status, date)
+        if (ItemsData?.results) {
+            setData([...ItemsData.results]);
+            setSerach([...ItemsData.results]);
         }
-    }
-
-
-
     }
     function handleClick(e) {
         const text = e.target.value;
         const filterSearch = search.filter(item => (
             item?.user_name.toLowerCase().includes(text.toLowerCase()) ||
-            item?.title.toLowerCase().includes(text.toLowerCase()) 
+            item?.title.toLowerCase().includes(text.toLowerCase())
 
 
         ))
@@ -66,9 +59,16 @@ function OrdersLists() {
 
         return formattedNumber;
     }
+
+    const handlePagination = (pageNum) => {
+        setCurrPage(pageNum)
+        GetItemsProducts(pageNum, selector, dataFormat)
+    }
+
+
     useEffect(() => {
 
-        GetItemsProducts(1, selector , dataFormat)
+        GetItemsProducts(1, selector, dataFormat)
     }, [1, selector, dataFormat])
 
     const columns = [
@@ -84,18 +84,18 @@ function OrdersLists() {
             title: 'Telefon raqam yoki email',
             dataIndex: 'data',
             key: 'age',
-            width:300,
+            width: 300,
             render: (data) => (
                 <div className='d-flex flex-column'>
                     {
-                        data.phone==="None" ?
-                        <></> :
-                        <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                        data.phone === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
                     }
                     {
-                          data.email==="None" ?
-                          <></> :
-                    <span className="truncate whitespace-nowrap"> {data.email}</span>
+                        data.email === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.email}</span>
                     }
 
                 </div>
@@ -120,7 +120,7 @@ function OrdersLists() {
             title: 'Buyurtma nomi',
             dataIndex: 'title',
             key: 'address',
-            width:350,
+            width: 350,
         },
         {
             title: 'Holat',
@@ -128,12 +128,12 @@ function OrdersLists() {
             key: 'address',
             render: (status) => (
 
-                status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
-                status === "cancelled" ?
-                 (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
-                 status === "pending" ?
-                 (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
-                   <></>
+                status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
+                    status === "cancelled" ?
+                        (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                        status === "pending" ?
+                            (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
+                            <></>
             ),
 
         },
@@ -162,12 +162,12 @@ function OrdersLists() {
             key: 'status',
             render: (status) => (
 
-                status==='approved'? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
-                status === "cancelled" ?
-                 (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
-                 status === "pending" ?
-                 (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
-                   <></>
+                status === 'approved' ? (<span><i className="fa-solid text-success fa-circle-check"></i> tasdiqlangan</span>) :
+                    status === "cancelled" ?
+                        (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                        status === "pending" ?
+                            (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
+                            <></>
             ),
 
         },
@@ -186,13 +186,13 @@ function OrdersLists() {
                             <div className="ps-section--account-setting">
                                 <div className='ps-section__content'>
 
-                                <div className='d-flex flex-column gap-2'>
-                                   <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
-                                <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
-                                <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
-                                   </div>
-                                   <div className='py-4 row gap-5 mx-auto row-gap-3 pb-5' >
-                                   <select className='form-select fs-3 py-3 rounded-3 col-md-6' onChange={(e)=>setSelector(e.target.value)}  >
+                                    <div className='d-flex flex-column gap-2'>
+                                        <span className='fs-4'><i className="text-primary-emphasis fa-solid fa-circle-info"></i> <strong>Moderatsiya</strong> <em>malumotlar ko'rib chiqilmoqda...</em></span>
+                                        <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
+                                        <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
+                                    </div>
+                                    <div className='py-4 row gap-5 mx-auto row-gap-3 pb-5' >
+                                        <select className='form-select fs-3 py-3 rounded-3 col-md-6' onChange={(e) => setSelector(e.target.value)}  >
 
                                             <option className='fs-3' selected value="">Barcha holatlar</option>
                                             <option className='fs-3' value="pending">Moderatsiya</option>
@@ -200,18 +200,23 @@ function OrdersLists() {
                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                         </select>
 
-                                   <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e)=>setDate(e)} />
-                                   <input type='search' className='form-control rounded col-md-12 ' placeholder="Qidiruv" onInput={handleClick} />
-                                   </div>
-                                   {
-                                    user?.role==="admin" ?
-                                    <Table scroll={{ x:1350 }}  dataSource={ data} columns={columns} />
-                                    :
-                                    <Table scroll={{ x:850 }}  dataSource={data} columns={columnSellers} />
-
-                                   }
-
-
+                                        <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e) => setDate(e)} />
+                                        <input type='search' className='form-control rounded col-md-12 ' placeholder="Qidiruv" onInput={handleClick} />
+                                    </div>
+                                    {
+                                        user?.role === "admin" ?
+                                            <>
+                                                <Table scroll={{ x: 1350 }} dataSource={data} columns={columns} pagination={false}
+                                                />
+                                                <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
+                                            </>
+                                            :
+                                            <>
+                                                <Table scroll={{ x: 850 }} dataSource={data} columns={columnSellers} pagination={false}
+                                                />
+                                                <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
+                                            </>
+                                    }
                                 </div>
                             </div>
                         </div>
