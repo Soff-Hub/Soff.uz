@@ -2,21 +2,29 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { PropagateLoader } from 'react-spinners';
+import ProductRepository from '~/repositories/ProductRepository';
 
-const WidgetShopCategories = ({ data}) => {
+const WidgetShopCategories = ({ data }) => {
     const Router = useRouter();
     const { slug } = Router.query;
-    const category = data
+    const category = data;
+    const [chaildData, setChaildData] = useState(null);
 
-    let items
+    const handleClickGetChaildData = async (Slug) => {
+        const respons = await ProductRepository.getChaildCategory(Slug);
+        if (respons) {
+            setChaildData(respons);
+        }
+    };
+    
+
+    let items;
     if (category?.length > 0) {
-        items = category.map((item, i) => (
+        items = category.map((item, index) => (
             <li
                 key={item.id}
-                className={
-                    item.id === Number(slug) ? 'active' : ''
-                }>
-                {item.children !== null ? (
+                className={item.id === Number(slug) ? 'active' : ''}>
+                {item.is_childe ? (
                     <div
                         className="accordion accordion-flush"
                         id="accordionFlushExample">
@@ -32,27 +40,31 @@ const WidgetShopCategories = ({ data}) => {
                                     className="accordion-button collapsed"
                                     type="button"
                                     data-bs-toggle="collapse"
-                                    data-bs-target={`#flush-collapseOne-${i}`}
+                                    data-bs-target={`#flush-collapseOne-${index}`}
                                     aria-expanded="false"
-                                    aria-controls={`flush-collapseOne-${i}`}>
+                                    aria-controls={`flush-collapseOne-${index}`}
+                                    onClick={() =>
+                                        handleClickGetChaildData(item.slug)
+                                    }>
                                     {item.name}
                                 </button>
                             </h2>
                             <div
-                                id={`flush-collapseOne-${i}`}
+                                id={`flush-collapseOne-${index}`}
                                 className="accordion-collapse collapse"
-                                aria-labelledby="flush-headingOne"
-                                data-bs-parent="#accordionFlushExample">
-                                {item?.children?.map((item, i) => {
+                                data-bs-parent="#accordionFlushExample"
+                                aria-labelledby="flush-headingOne" 
+                                >
+                               <div className='accordion-body' >
+                               {chaildData?.map((item, i) => {
                                     return (
                                         <Link
-                                        key={i}
+                                            key={i}
                                             href={`/category/${item.id}`}>
                                             <a
-                                            id='acc-li-xl'
+                                                id="acc-li-xl"
                                                 className={
-                                                    item.id ===
-                                                    Number(slug)
+                                                    item.id === Number(slug)
                                                         ? 'active'
                                                         : ''
                                                 }>
@@ -61,27 +73,23 @@ const WidgetShopCategories = ({ data}) => {
                                         </Link>
                                     );
                                 })}
+                               </div>
                             </div>
                         </div>
                     </div>
                 ) : (
                     <Link href={`/category/${item.id}`}>
-                        <a
-                            className="category-list-item"
-                        >
-                            {item.name}
-                        </a>
+                        <a className="category-list-item">{item.name}</a>
                     </Link>
                 )}
             </li>
         ));
-        
     }
 
     return (
         <aside className="widget widget_shop">
             <h4 className="widget-title">Kategoriyalar</h4>
-            {items?.length ? (
+            {category?.length ? (
                 <ul className="ps-list--categories">{items}</ul>
             ) : (
                 <div

@@ -167,7 +167,7 @@ function NavigationList() {
                     <a   className={`navigation__item ${
                         searchDrawer === true ? 'active' : ''
                     }`}>
-                        <i class="fa-regular fa-circle-question"></i>
+                        <i className="fa-regular fa-circle-question"></i>
                         <span>FAQ</span>
                     </a>
                 </Link> */}

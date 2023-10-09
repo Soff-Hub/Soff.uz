@@ -8,10 +8,8 @@ import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import { useState } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
-import { useEffect } from 'react';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import { baseUrl } from '~/repositories/Repository';
-import Axios from 'axios';
 
 const ProductDefaultPage = ({ product, similar }) => {
     // const router = useRouter();
@@ -52,7 +50,6 @@ const ProductDefaultPage = ({ product, similar }) => {
         },
     ];
     
-    console.log('product => ', product);
 
     return (
         <>

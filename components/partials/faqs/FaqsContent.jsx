@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import FaqsAccardion from './FaqsAccardion';
 import { useEffect } from 'react';
@@ -7,7 +6,6 @@ import PostRepository from '~/repositories/PostRepository';
 const FaqsContent = () => {
     const [categoryData, setCategoryData] = useState(null);
     const [descriptionData, setDescriptionData] = useState(null);
-
 
     const getFAQCategorysData = async () => {
         const respons = await PostRepository.getFAQCategorys();
@@ -22,19 +20,17 @@ const FaqsContent = () => {
             setDescriptionData(respons.results);
         }
     };
-    const handleClick = async () => {
+    const handleClick = async (id) => {
         const respons = await PostRepository.getFAQDescriptionItem(id);
         if (respons) {
             setDescriptionData(respons.results);
         }
     };
 
-
     useEffect(() => {
         getFAQCategorysData();
-        getFAQDescriptionData()
+        getFAQDescriptionData();
     }, []);
-    console.log(descriptionData);
     return (
         <div>
             <div className="faqs-category">
@@ -48,7 +44,8 @@ const FaqsContent = () => {
                                     className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 my-3"
                                     onClick={() => handleClick(item.id)}>
                                     <div className="faqs-category__card">
-                                        <i class={`${item.icon} faq-icon`}></i>
+                                        <i
+                                            className={`${item.icon} faq-icon`}></i>
                                         <span className="faq-category-name">
                                             {item.name}
                                         </span>

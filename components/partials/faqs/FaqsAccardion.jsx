@@ -54,24 +54,19 @@ export default function FaqsAccardion({data}) {
                 data?.map((item) => {
                     return (
                         <Accordion
-                        key={item}
-                            expanded={expanded === 'panel2'}
-                            onChange={handleChange('panel2')}>
+                        key={item.id}
+                            expanded={expanded === `panel2 ${item.title}`}
+                            onChange={handleChange(`panel2 ${item.title}`)}>
                             <AccordionSummary
-                                aria-controls="panel2d-content"
-                                id="panel2d-header">
+                                aria-controls={`panel2d-content`}
+                                id={`panel2d-header `}>
                                 <Typography className="acc-title">
-                                    Collapsible Group Item #2
+                                   {item.title}
                                 </Typography>
                             </AccordionSummary>
                             <AccordionDetails>
                                 <Typography className="acc-desc">
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Suspendisse malesuada lacus
-                                    ex, sit amet blandit leo lobortis eget.
-                                    Lorem ipsum dolor sit amet, consectetur
-                                    adipiscing elit. Suspendisse malesuada lacus
-                                    ex, sit amet blandit leo lobortis eget.
+                                   {item.description}
                                 </Typography>
                             </AccordionDetails>
                         </Accordion>

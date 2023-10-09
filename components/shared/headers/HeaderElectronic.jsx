@@ -12,9 +12,11 @@ import MenuCategory from '~/components/elements/menu/MenuCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { Category_Lists, TopCategory_Lists } from '~/store/auth/action';
 
-
 const HeaderElectronic = () => {
-    const { category_lists: categoryData, top_category_lists: topCategoryData } = useSelector(state => (state.auth))
+    const {
+        category_lists: categoryData,
+        top_category_lists: topCategoryData,
+    } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
 
     async function getCategoryFunc() {
@@ -22,15 +24,14 @@ const HeaderElectronic = () => {
             `seller/admin/category-parent/`
         );
         if (responseData) {
-            dispatch(Category_Lists(responseData.data.results))
+            dispatch(Category_Lists(responseData.data.results));
         }
     }
 
-
     async function getTopCategory() {
-        const responsData = await ProductRepository.getTopCategories()
+        const responsData = await ProductRepository.getTopCategories();
         if (responsData) {
-            dispatch(TopCategory_Lists(responsData))
+            dispatch(TopCategory_Lists(responsData));
         }
     }
 
@@ -39,12 +40,11 @@ const HeaderElectronic = () => {
             window.addEventListener('scroll', stickyHeader);
         }
         if (categoryData?.length === 0) {
-            getCategoryFunc()
+            getCategoryFunc();
         }
         if (topCategoryData?.length === 0) {
-            getTopCategory()
+            getTopCategory();
         }
-       
     }, []);
 
     return (

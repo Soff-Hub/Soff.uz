@@ -25,14 +25,13 @@ const ProductCategoryScreen = () => {
     const [max, setMax] = useState(null);
 
     async function getCategry() {
-        const responseData = await ProductRepository.getTotalRecords();
+        const responseData = await ProductRepository.getCategoryParent();
         if (responseData?.length > 0) {
-            if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
+            if (responseData?.every((cat) => cat.slug !== slug)) {
                 setchaildId(slug);
             } else {
                 setParentId(slug);
             }
-
             setCategory(responseData);
         }
     }
@@ -120,20 +119,17 @@ const ProductCategoryScreen = () => {
         },
     ];
 
-
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={category ? category.name : 'Category'}
+            title={category ? category.name : 'Kategoriya'}
             boxed={true}>
             <div className="ps-page--shop">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories
-                                data={category}
-                            />
+                            <WidgetShopCategories data={category} />
                             <WidgetShopFilterByPriceRange
                                 setFilteredData={setFilteredData}
                                 chaildId={chaildId}
