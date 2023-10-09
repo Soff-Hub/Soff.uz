@@ -3,54 +3,48 @@ import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/e
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
 import ElectronicTopCategories from '~/components/partials/homepage/electronic/ElectronicTopCategories';
 import SiteFeatures from '~/components/partials/homepage/autopart/SiteFeatures';
-
-import CollectionRepository from '~/repositories/CollectionRepository';
 import { PropagateLoader } from 'react-spinners';
-import useCart from '~/hooks/useCart';
-import { useDispatch, useSelector } from 'react-redux';
-import useWishlist from '~/hooks/useWishlist';
-import { CategorySlug } from '~/store/auth/action';
 
-const HomeElectronicsPage = () => {
-    const { categorySlug: categoryData } = useSelector(state => (state.auth));
-    const dispatch = useDispatch();
+// import CollectionRepository from '~/repositories/CollectionRepository';
+// import useCart from '~/hooks/useCart';
+// import { useDispatch, useSelector } from 'react-redux';
+// import useWishlist from '~/hooks/useWishlist';
 
-    async function getCategoryFunc() {
-        const responseData = await CollectionRepository.getCategoryData(
-            `customer/category-list/`
-        );
-        if (responseData?.data.results.length > 0) {
-            dispatch(CategorySlug(responseData.data.results));
-        }
-    }
+const HomeElectronicsPage = ({ category }) => {
+    // async function getCategoryFunc() {
+    //     const responseData = await CollectionRepository.getCategoryData(
+    //         `customer/category-list/`
+    //     );
+    //     if (responseData?.data.results.length > 0) {
+    //         dispatch(CategorySlug(responseData.data.results));
+    //     }
+    // }
 
+    // const { cartDataItems, wishlist } = useSelector(state => state.ecomerce)
+    // const { setAllCartItem } = useCart()
+    // const { setAllSaved } = useWishlist()
 
-    const { cartDataItems, wishlist } = useSelector(state => state.ecomerce)
-    const { setAllCartItem } = useCart()
-    const { setAllSaved } = useWishlist()
+    // useEffect(() => {
+    //     if (cartDataItems.length !== JSON.parse(localStorage.getItem('cart'))) {
+    //         setAllCartItem();
+    //     }
 
+    //     if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
+    //         setAllSaved();
+    //     }
 
-    useEffect(() => {
-        if (cartDataItems.length !== JSON.parse(localStorage.getItem('cart'))) {
-            setAllCartItem();
-        }
+    //     if (categoryData?.length===0) {
+    //         getCategoryFunc();
+    //     }
 
-        if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
-            setAllSaved();
-        }
-      
-        if (categoryData?.length===0) {
-            getCategoryFunc();
-        }
-        
-    }, []);
+    // }, []);
 
     return (
         <main id="homepage-7">
             <ElectronicBanner />
             <ElectronicTopCategories />
-            {categoryData?.length > 0 ? (
-                categoryData?.map(
+            {category.length > 0 ? (
+                category.map(
                     (item, index) =>
                         item.promotional_sliders?.length > 0 && (
                             <ElectronicProductGroupWithCarousel
@@ -72,7 +66,6 @@ const HomeElectronicsPage = () => {
                     <PropagateLoader className="progres-color" />
                 </div>
             )}
-
 
             <SiteFeatures />
         </main>

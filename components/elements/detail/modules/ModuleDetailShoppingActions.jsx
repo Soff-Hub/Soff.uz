@@ -1,10 +1,7 @@
 import React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import { Modal } from 'antd';
-
 import { OneShopDoc } from '~/store/auth/action';
-import { useCookies } from 'react-cookie';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 

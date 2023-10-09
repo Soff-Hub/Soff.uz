@@ -13,8 +13,6 @@ const SearchPage = () => {
     const { productItems, loading, getProducts } = useGetProducts();
     const Router = useRouter();
     const { query } = Router;
-
-    const [data, setData] = useState(null);
     const [resultdata, setresultData] = useState([]);
 
     async function getSearchData() {
@@ -38,15 +36,7 @@ const SearchPage = () => {
     useEffect(() => {
         getSearchData();
         handleSetKeyword();
-        // if (query && query.keyword) {
-        //     const queries = {
-        //         _limit: pageSize,
-        //         title_contains: query.keyword,
-        //     };
-        //     getProducts(queries);
-        // }
     }, [query.keyword, query]);
-
 
 
     const breadcrumb = [
@@ -59,7 +49,7 @@ const SearchPage = () => {
         },
     ];
     let shopItemsView, statusView;
-    if (loading) {
+    if (true) {
         if (resultdata) {
             shopItemsView = (
                 <ProductGroupGridItems
