@@ -8,72 +8,67 @@ const WidgetShopCategories = ({ data }) => {
     const Router = useRouter();
     const { slug } = Router.query;
     const category = data;
-    const [chaildData, setChaildData] = useState(null);
+    const [activeAccordionIndex, setActiveAccordionIndex] = useState(null);
+    const [childData, setChildData] = useState({});
 
-    const handleClickGetChaildData = async (Slug) => {
-        const respons = await ProductRepository.getChaildCategory(Slug);
-        if (respons) {
-            setChaildData(respons);
+    const handleClickGetChildData = async (slug) => {
+        const response = await ProductRepository.getChaildCategory(slug);
+        if (response) {
+            setChildData((prevData) => ({
+                ...prevData,
+                [slug]: response,
+            }));
         }
     };
-    
 
-    let items;
-    if (category?.length > 0) {
-        items = category.map((item, index) => (
-            <li
-                key={item.id}
-                className={item.id === Number(slug) ? 'active' : ''}>
+    const handleAccordionClick = (index, slug) => {
+        if (activeAccordionIndex === index) {
+            setActiveAccordionIndex(null);
+        } else {
+            setActiveAccordionIndex(index);
+            handleClickGetChildData(slug);
+        }
+    };
+
+    const renderChildLinks = (children, parentSlug) => {
+        return children?.map((item, i) => (
+            <Link key={i} href={`/category/${item.id}`}>
+                <a className={item.id === Number(slug) ? 'active' : ''}>
+                    {item.name}
+                </a>
+            </Link>
+        ));
+    };
+
+    const renderAccordionItems = () => {
+        return category?.map((item, i) => (
+            <li key={item.id} className={item.id === Number(slug) ? 'active' : ''}>
                 {item.is_childe ? (
-                    <div
-                        className="accordion accordion-flush"
-                        id="accordionFlushExample">
+                    <div className="accordion accordion-flush" id={`accordion-${i}`}>
                         <div
                             className="accordion-item"
-                            style={{
-                                backgroundColor: '#fffcfced',
-                            }}>
-                            <h2
-                                className="accordion-header"
-                                id="flush-headingOne">
+                            style={{ backgroundColor: '#fffcfced' }}
+                        >
+                            <h2 className="accordion-header" id={`heading-${i}`}>
                                 <button
-                                    className="accordion-button collapsed"
+                                    className={`accordion-button ${activeAccordionIndex === i ? '' : 'collapsed'
+                                        }`}
                                     type="button"
-                                    data-bs-toggle="collapse"
-                                    data-bs-target={`#flush-collapseOne-${index}`}
-                                    aria-expanded="false"
-                                    aria-controls={`flush-collapseOne-${index}`}
-                                    onClick={() =>
-                                        handleClickGetChaildData(item.slug)
-                                    }>
+                                    onClick={() => handleAccordionClick(i, item.slug)}
+                                >
                                     {item.name}
                                 </button>
                             </h2>
                             <div
-                                id={`flush-collapseOne-${index}`}
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample"
-                                aria-labelledby="flush-headingOne" 
-                                >
-                               <div className='accordion-body' >
-                               {chaildData?.map((item, i) => {
-                                    return (
-                                        <Link
-                                            key={i}
-                                            href={`/category/${item.id}`}>
-                                            <a
-                                                id="acc-li-xl"
-                                                className={
-                                                    item.id === Number(slug)
-                                                        ? 'active'
-                                                        : ''
-                                                }>
-                                                {item.name}
-                                            </a>
-                                        </Link>
-                                    );
-                                })}
-                               </div>
+                                id={`collapse-${i}`}
+                                className={`accordion-collapse collapse ${activeAccordionIndex === i ? 'show' : ''
+                                    }`}
+                                aria-labelledby={`heading-${i}`}
+                                data-bs-parent={`#accordion-${i}`}
+                            >
+                                <div className="accordion-body">
+                                    {renderChildLinks(childData[item.slug], item.slug)}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -84,20 +79,21 @@ const WidgetShopCategories = ({ data }) => {
                 )}
             </li>
         ));
-    }
+    };
 
     return (
         <aside className="widget widget_shop">
             <h4 className="widget-title">Kategoriyalar</h4>
             {category?.length ? (
-                <ul className="ps-list--categories">{items}</ul>
+                <ul className="ps-list--categories">{renderAccordionItems()}</ul>
             ) : (
                 <div
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
                         alignContent: 'center',
-                    }}>
+                    }}
+                >
                     <PropagateLoader color="#C9C9C9" />
                 </div>
             )}
