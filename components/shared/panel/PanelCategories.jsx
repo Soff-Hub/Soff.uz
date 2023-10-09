@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { PropagateLoader } from 'react-spinners';
 import ProductRepository from '~/repositories/ProductRepository';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import Router from 'next/router';
 
 
 function PanelCategories({
@@ -13,30 +12,7 @@ function PanelCategories({
     setSearchDrawer,
 }) {
     const [data, setData] = useState([]);
-    const { slug } = Router.query;
-    const [openkey, setOpenKey] = useState({
-        openKeys: ['sub1'],
-    });
 
-    const getCategiries = async () => {
-        const respons = await ProductRepository.getRecords();
-        setData(respons?.results);
-    };
-
-    let rootSubmenuKeys = ['sub1', 'sub2', 'sub4'];
-
-    const onOpenChange = (openKeys) => {
-        const latestOpenKey = openKeys.find((key) =>
-            setOpenKey(openKeys.indexOf(key) === -1)
-        );
-        if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-            setOpenKey({ openKeys });
-        } else {
-            setOpenKey({
-                openKeys: latestOpenKey ? [latestOpenKey] : [],
-            });
-        }
-    };
 
     const handleDrawerClose = () => {
         setMenuDrawer(false);
@@ -45,93 +21,114 @@ function PanelCategories({
         setSearchDrawer(false);
     };
 
+
+
+    const Router = useRouter();
+    const { slug } = Router.query;
+    const category = data;
+    const [activeAccordionIndex, setActiveAccordionIndex] = useState(null);
+    const [childData, setChildData] = useState({});
+
+
+    async function getCategry() {
+        const responseData = await ProductRepository.getCategoryParent();
+        if (responseData?.length > 0) {
+            setData(responseData);
+        }
+    }
+
+
+    const handleClickGetChildData = async (slug) => {
+        const response = await ProductRepository.getChaildCategory(slug);
+        if (response) {
+            setChildData((prevData) => ({
+                ...prevData,
+                [slug]: response,
+            }));
+        }
+       
+    };
+
+    const handleAccordionClick = (index, slug) => {
+        if (activeAccordionIndex === index) {
+            setActiveAccordionIndex(null);
+        } else {
+            setActiveAccordionIndex(index);
+            handleClickGetChildData(slug);
+        }
+    };
+
+    const renderChildLinks = (children, parentSlug) => {
+        return children?.map((item, i) => (
+            <Link key={i}  href={`/category/${item.id}`} >
+                <a  onClick={ handleDrawerClose} className={item.id === Number(slug) ? 'active' : ''}>
+                    {item.name}
+                </a>
+            </Link>
+        ));
+    }
+
+    const renderAccordionItems = () => {
+        return category?.map((item, i) => (
+            <li key={item.id} className={item.id === Number(slug) ? 'active' : ''}>
+                {item.is_childe ? (
+                    <div className="accordion accordion-flush" id={`accordion-${i}`}>
+                        <div
+                            className="accordion-item"
+                            style={{ backgroundColor: '#fffcfced' }}
+                        >
+                            <h2 className="accordion-header" id={`heading-${i}`}>
+                                <button
+                                    className={`accordion-button ${activeAccordionIndex === i ? '' : 'collapsed'
+                                        }`}
+                                    type="button"
+                                    onClick={() => handleAccordionClick(i, item.slug)}
+                                >
+                                    {item.name}
+                                </button>
+                            </h2>
+                            <div
+                                id={`collapse-${i}`}
+                                className={`accordion-collapse collapse ${activeAccordionIndex === i ? 'show' : ''
+                                    }`}
+                                aria-labelledby={`heading-${i}`}
+                                data-bs-parent={`#accordion-${i}`}
+                            >
+                                <div className="accordion-body">
+                                    {renderChildLinks(childData[item.slug], item.slug)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <Link href={`/category/${item.id}`}>
+                        <a className="category-list-item">{item.name}</a>
+                    </Link>
+                )}
+            </li>
+        ));
+    };
+
     useEffect(() => {
-        getCategiries();
+        getCategry();
     }, []);
 
     return (
-        <div>
-            <ul
-                style={{
-                    listStyle: 'none',
-                    margin: '12px 0',
-                    padding: 'none',
-                }}
-                mode="inline"
-                openKeys={() => setOpenKey(openkey)}
-                onOpenChange={onOpenChange}>
-                {data.map((item, i) => (
-                    <li
-                        style={{
-                            border: '1px solid #ccc',
-                            padding: '7px 5px',
-                        }}
-                        key={item.id}
-                        className={item.id === Number(slug) ? 'active' : ''}>
-                        {item.children !== null ? (
-                            <div
-                                className="accordion accordion-flush"
-                                id="accordionFlushExample">
-                                <div
-                                    className="accordion-item"
-                                    style={{
-                                        backgroundColor: '#fffcfced',
-                                    }}>
-                                    <h2
-                                        className="accordion-header"
-                                        id="flush-headingOne">
-                                        <button
-                                            className="accordion-button collapsed"
-                                            type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target={`#flush-collapseOne-${i}`}
-                                            aria-expanded="false"
-                                            aria-controls={`flush-collapseOne-${i}`}>
-                                            {item.name}
-                                        </button>
-                                    </h2>
-                                    <div
-                                        id={`flush-collapseOne-${i}`}
-                                        className="accordion-collapse collapse"
-                                        aria-labelledby="flush-headingOne"
-                                        data-bs-parent="#accordionFlushExample">
-                                        {item?.children?.map((item, i) => {
-                                            return (
-                                                <div
-                                                className='acc-li'
-                                                key={i}
-                                                    onClick={handleDrawerClose}>
-                                                    <Link
-                                                        href={`/category/${item.id}`}>
-                                                        <a
-                                                            className={
-                                                                item.id ===
-                                                                Number(slug)
-                                                                    ? 'active'
-                                                                    : ''
-                                                            }>
-                                                            {item.name}
-                                                        </a>
-                                                    </Link>
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div onClick={handleDrawerClose}>
-                                <Link href={`/category/${item.id}`}>
-                                    <a className="category-list-item">
-                                        {item.name}
-                                    </a>
-                                </Link>
-                            </div>
-                        )}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <aside className="widget  widget_shop">
+            {category?.length ? (
+                <ul className="ps-list--categories">{renderAccordionItems()}</ul>
+            ) : (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}
+                >
+                    <PropagateLoader color="#C9C9C9" />
+                </div>
+            )}
+        </aside>
     );
 }
 
