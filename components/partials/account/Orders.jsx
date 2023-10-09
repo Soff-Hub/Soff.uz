@@ -14,34 +14,26 @@ function OrdersLists() {
 
 
     const [data, setData] = useState([]);
-    const [search, setSerach] = useState([]);
+    const [search, setSerach] = useState('');
     const [date, setDate] = useState(null);
     const [selector, setSelector] = useState(null);
     const [pageCount, setPageCount] = useState(0)
-    const [currPage, setCurrPage] = useState(null)
+    const [currPage, setCurrPage] = useState(1)
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProducts(page, status, date) {
-        const ItemsData = await GetRepository.getOrdersLists(page, status, date, user?.access);
+    async function GetItemsProducts(page, status, date, searchVal) {
+        const ItemsData = await GetRepository.getOrdersLists(page, status, date, searchVal, user?.access);
         if (ItemsData?.results) {
+            setPageCount(ItemsData.count)
             setData([...ItemsData.results]);
-            setSerach([...ItemsData.results]);
         }
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item?.user_name.toLowerCase().includes(text.toLowerCase()) ||
-            item?.title.toLowerCase().includes(text.toLowerCase())
 
 
-        ))
-        setData(filterSearch)
-    }
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -62,14 +54,14 @@ function OrdersLists() {
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
-        GetItemsProducts(pageNum, selector, dataFormat)
+        GetItemsProducts(pageNum, selector, dataFormat, search)
     }
 
 
     useEffect(() => {
 
-        GetItemsProducts(1, selector, dataFormat)
-    }, [1, selector, dataFormat])
+        GetItemsProducts(currPage, selector, dataFormat, search)
+    }, [currPage, selector, dataFormat, search])
 
     const columns = [
         {
@@ -201,7 +193,7 @@ function OrdersLists() {
                                         </select>
 
                                         <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e) => setDate(e)} />
-                                        <input type='search' className='form-control rounded col-md-12 ' placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className='form-control rounded col-md-12 ' placeholder="Qidiruv" onInput={(e) => setSerach(e.target.value)} />
                                     </div>
                                     {
                                         user?.role === "admin" ?

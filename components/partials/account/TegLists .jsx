@@ -15,32 +15,24 @@ function TegLists() {
     const { accountLinks, user } = useSelector(state => state.auth)
 
     const [data, setData] = useState([]);
-    const [search, setSerach] = useState([]);
+    const [search, setSerach] = useState('');
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [selectVal, setSelectVal] = useState({});
     const [pageCount, setPageCount] = useState(0)
-    const [currPage, setCurrPage] = useState(null)
+    const [currPage, setCurrPage] = useState(1)
 
 
     async function GetItemsUsers(page) {
         setCurrPage(page)
-        const ItemsData = await GetRepository.getTagLists(page, user?.access);
+        const ItemsData = await GetRepository.getTagLists(page, search, user?.access);
         setPageCount(ItemsData.count)
         if (ItemsData?.results) {
             setData([...ItemsData.results]);
-            setSerach([...ItemsData.results]);
         }
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.first_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.data?.email?.toLowerCase().includes(text.toLowerCase()) ||
-            item.data?.phone.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
+
+
     async function deleteItemsId() {
         const userDelete = await DeleteRepository.getTagListsDelete(deleteId, user?.access);
         const modal = Modal.error({
@@ -49,7 +41,7 @@ function TegLists() {
             content: `Siz  tegni o'chirdingiz`,
         });
         modal.update
-        GetItemsUsers(1)
+        GetItemsUsers(currPage)
     }
 
     async function handleItemsPost() {
@@ -59,7 +51,7 @@ function TegLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  yangi teg qo'shdingiz`,
         });
-        GetItemsUsers(1)
+        GetItemsUsers(currPage)
     }
     async function handleItemsEdit() {
         const patchItems = await PatchRepository.PatchTegs(selectVal, deleteIdEdit?.id, user?.access)
@@ -68,12 +60,12 @@ function TegLists() {
             title: 'Muvaffaqqiyatli!',
             content: "Siz  teglarni o'zgartirdingiz ",
         });
-        GetItemsUsers(1)
+        GetItemsUsers(currPage)
     }
 
     useEffect(() => {
-        GetItemsUsers(1)
-    }, [])
+        GetItemsUsers(currPage)
+    }, [search])
     const columns = [
         {
             title: 'Teg nomi',
@@ -121,7 +113,7 @@ function TegLists() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                        <input type='search' className='form-control rounded col-md-8' placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className='form-control rounded col-md-8' placeholder="Qidiruv" onInput={(e) => setSerach(e.target.value)} />
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Teg qo'shish</span></button>
                                     </div>
 
