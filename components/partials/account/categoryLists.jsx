@@ -74,7 +74,7 @@ function CategoryLists() {
             });
 
         }
-        GetItemsProducts(1, search)
+        GetItemsProducts(currPage, search)
     }
 
 
@@ -232,7 +232,8 @@ function CategoryLists() {
                                     </div>
                                     <Table scroll={{ x: 750 }} dataSource={data} columns={columns} pagination={false}
                                     />
-                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsProducts} />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                    onChange={page => GetItemsProducts(page, search)} />
                                 </div>
                             </div>
                         </div>
