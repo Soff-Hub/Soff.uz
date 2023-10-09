@@ -34,7 +34,7 @@ function MyProductsLists() {
     const [loading, setLoading] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState("");
     const [pageCount, setPageCount] = useState(0)
-    const [currPage, setCurrPage] = useState(null)
+    const [currPage, setCurrPage] = useState(1)
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
@@ -43,11 +43,12 @@ function MyProductsLists() {
     const { accountLinks, user, products } = useSelector(state => state.auth)
 
 
-    async function GetItemsProducts(page, category, tagName, dataFormat, status) {
-        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, status, user?.access);
+    async function GetItemsProducts(page, category, tagName, dataFormat, status, search) {
+        const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, status,search, user?.access);
         if (ItemsData?.results) {
-            setData([...ItemsData.results]);
-            setSerach([...ItemsData.results]);
+            setData(ItemsData?.results)
+            setPageCount(ItemsData?.count);
+            setCurrPage(page);
         }
     }
     async function GetItemsCategory() {
@@ -59,14 +60,6 @@ function MyProductsLists() {
         if (ItemsData?.results) {
             setTagItems(ItemsData.results);
         }
-    }
-
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.title.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
     }
 
     async function handleClickView(item) {
@@ -83,7 +76,7 @@ function MyProductsLists() {
             content: `Siz malumotlarni o'chirdingiz`,
         });
         modal.update
-        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
+        GetItemsProducts(currPage, dataValCat, tagName, dataFormat, selectValStatus, search)
 
     }
     function handleClickIdEdit(productsItems) {
@@ -92,7 +85,7 @@ function MyProductsLists() {
 
     async function handleItemsEditProductsPosts() {
         const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
-        GetItemsProducts(1, dataValCat, tagName, dataFormat, status)
+        GetItemsProducts(currPage, dataValCat, tagName, dataFormat, status, search)
     }
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -136,7 +129,7 @@ function MyProductsLists() {
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
-        GetItemsProducts(pageNum, dataValCat, tagName, dataFormat, selectValStatus)
+        GetItemsProducts(pageNum, dataValCat, tagName, dataFormat, selectValStatus, search)
     }
 
 
@@ -145,8 +138,8 @@ function MyProductsLists() {
         GetItemsTag()
     }, [])
     useEffect(() => {
-        GetItemsProducts(1, dataValCat, tagName, dataFormat, selectValStatus)
-    }, [dataValCat, tagName, dataFormat, selectValStatus])
+        GetItemsProducts(currPage, dataValCat, tagName, dataFormat, selectValStatus, search)
+    }, [dataValCat, tagName, dataFormat, selectValStatus, search])
 
     const columns = [
         {
@@ -271,7 +264,7 @@ function MyProductsLists() {
                                             <></>
                                     }
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-6' : "form-control rounded col-md-9"} placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-6' : "form-control rounded col-md-9"} placeholder="Qidiruv" onInput={e=>setSerach(e.target.value)} />
                                         {
                                             user?.role === "seller" ?
                                                 <Link href={"/account/myproducts/posts"}>

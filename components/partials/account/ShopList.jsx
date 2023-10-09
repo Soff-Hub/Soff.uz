@@ -14,13 +14,12 @@ function Notifications() {
     const [search, setSerach] = useState([]);
     const [deleteIdEditSellers, setDeleteIdEditSellers] = useState(null);
     const [pageCount, setPageCount] = useState(0)
-    const [currPage, setCurrPage] = useState(null)
+    const [currPage, setCurrPage] = useState(1)
 
     const [selectValSellers, setSelectValSellers] = useState({});;
     async function GetItems(page) {
-        const ItemsData = await GetRepository.getShops(page, user?.access);
+        const ItemsData = await GetRepository.getShops(page,search,  user?.access);
         setData([...ItemsData.results]);
-        setSerach([...ItemsData.results]);
         setPageCount(ItemsData.count)
     }
 
@@ -28,31 +27,24 @@ function Notifications() {
     async function handleItemsEditSellers() {
         const patchItemsSellers = await PatchRepository.getShopsPatch({ auth_status: selectValSellers }, deleteIdEditSellers?.id, user?.access)
         setData([])
-        GetItems(1)
+        GetItems(1,search)
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
             content: `Siz malumotlarni o'zgartirdingiz`,
         });
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.first_name.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
 
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
-        GetItems(pageNum)
+        GetItems(pageNum, search)
     }
 
 
     useEffect(() => {
-        GetItems(1)
-    }, [])
+        GetItems(currPage, search)
+    }, [search])
     const columns = [
         {
             title: 'Avatar',
@@ -152,7 +144,7 @@ function Notifications() {
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
                                     <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{ backgroundColor: "GrayText" }} >Sotuvchilar soni: {data.length} ta</span>
-                                    <input type='search' className='form-control rounded bg-white mb-3 ' style={{ backgroundColor: "#F1F1F1" }} placeholder="Qidiruv" onInput={handleClick} />
+                                    <input type='search' className='form-control rounded bg-white mb-3 ' style={{ backgroundColor: "#F1F1F1" }} placeholder="Qidiruv" onInput={e=>setSerach(e.target.value)} />
                                     <Table scroll={{ x: 1050 }} dataSource={data} columns={columns} pagination={false}
                                     />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />

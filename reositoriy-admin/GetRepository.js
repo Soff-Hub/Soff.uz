@@ -1,6 +1,5 @@
 import Repository, {
     baseUrl,
-    baseUrlCustomer,
     baseUrlProfie,
 } from './Repository';
 
@@ -62,8 +61,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShops(page, token) {
-        const endPoint = `admin/seller-list/?page=${page}`;
+    async getShops(page,search,  token) {
+        const endPoint = `admin/seller-list/?page=${page}&search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -88,13 +87,14 @@ class GetRepository {
         date,
         id,
         arxiv,
+        search,
         token
     ) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
         }?page=${page}&category=${category || ''}&start_date=${
             date || ''
-        }&status=${dataValStatus || ''}&arxiv=${arxiv || ''}`;
+        }&status=${dataValStatus || ''}&arxiv=${arxiv || ''}&search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -112,12 +112,12 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getMyProducts(page, category, tagItems, date, status, token) {
+    async getMyProducts(page, category, tagItems, date, status,search, token) {
         const endPoint = `product-list/?page=${page}&category=${
             category || ''
         }${tagItems ? `&tag=${tagItems}` : ``}&start_date=${
             date || ''
-        }&status=${status || ''}`;
+        }&status=${status || ''}&search=${search}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -177,8 +177,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getCategory(page, token) {
-        const endPoint = `admin/category-list/?page=${page}`;
+    async getCategory(page,search, token) {
+        const endPoint = `admin/category-list/?page=${page}&search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -292,8 +292,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getUsersLists(page, status, token) {
-        const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}`;
+    async getUsersLists(page, status,search, token) {
+        const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}&search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

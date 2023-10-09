@@ -38,11 +38,10 @@ function ProductsLists() {
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
-    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv,) {
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv, user?.access);
+    async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv, search) {
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv,search, user?.access);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
-        setSerach([...ItemsData.results]);
     }
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryLists();
@@ -52,7 +51,7 @@ function ProductsLists() {
     }
     async function handleClickView(item) {
         setLoading(true);
-        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, search, user?.access);
         setDeleteIdView(ItemsData);
         setLoading(false)
     }
@@ -60,16 +59,7 @@ function ProductsLists() {
     function handleClickIdEditProducts(productsItems) {
         dispatch(MyProductsEdit(productsItems))
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.title.toLowerCase().includes(text.toLowerCase()) ||
-            item.seller?.last_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.seller?.first_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.seller?.phone?.includes(text)
-        ))
-        setData(filterSearch)
-    }
+
     function handleCLickArxiv() {
         setDateArxiv(!dateArxiv);
     }
@@ -117,7 +107,7 @@ function ProductsLists() {
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
-        GetItemsProductsLists(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
+        GetItemsProductsLists(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,search)
     }
 
 
@@ -126,8 +116,8 @@ function ProductsLists() {
     }, [])
 
     useEffect(() => {
-        GetItemsProductsLists(1, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
-    }, [dataValCat, dataValStatus, dataFormat, dateArxiv,])
+        GetItemsProductsLists(currPage, dataValCat, dataValStatus, dataFormat, null, dateArxiv,search)
+    }, [dataValCat, dataValStatus, dataFormat, dateArxiv,search ])
 
     const columns = [
         {
@@ -235,7 +225,7 @@ function ProductsLists() {
                                     <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
                                     <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
 
-                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={handleClick} />
+                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={e=>(setSerach(e.target.value))} />
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
