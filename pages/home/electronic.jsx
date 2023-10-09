@@ -48,8 +48,8 @@ const HomeElectronicsPage = ({ category }) => {
         <main id="homepage-7">
             <ElectronicBanner />
             <ElectronicTopCategories />
-            {category.length > 0 ? (
-                category.map(
+            {category?.length > 0 ? (
+                category?.map(
                     (item, index) =>
                         item?.promotional_sliders?.length > 0 && (
                             <ElectronicProductGroupWithCarousel
