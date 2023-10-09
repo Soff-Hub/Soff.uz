@@ -55,7 +55,7 @@ const ProductDetailFullwidth = ({ product }) => {
                                                 searchTag(item?.name)
                                             }>
                                             {' '}
-                                            # {item.name}{' '}
+                                            #{item.name}{' '}
                                         </a>
                                     </Link>
                                 </div>

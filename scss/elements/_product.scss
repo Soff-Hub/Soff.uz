@@ -173,7 +173,7 @@
 
     .ps-product__thumbnail {
 
-        min-height: 120px;
+        // min-height: 120px;
         max-width: 170px;
         width: 100%;
         position: relative;
@@ -2372,8 +2372,7 @@
     .ps-product__thumbnail {
         max-width: 100px;
         min-width: 100px;
-
-        height: 30px;
+        height: 70px;
     }
 
     .ps-product__content {
