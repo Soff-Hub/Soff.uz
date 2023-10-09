@@ -238,7 +238,7 @@ function ProductsLists() {
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
-                                                    <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-success" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                                         <strong> Filter</strong>
                                                     </button>
                                                 </h2>
@@ -273,7 +273,7 @@ function ProductsLists() {
                                         <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                         <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                     </div>
-                                    <Table scroll={{ x: 1600 }} dataSource={data} columns={columns} pagination={false}
+                                    <Table scroll={{ x: 1700 }} dataSource={data} columns={columns} pagination={false}
                                     />
                                     <Pagination defaultCurrent={currPage} total={pageCount} onChange={handlePagination} />
                                 </div>

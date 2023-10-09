@@ -232,24 +232,6 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
-    async getAllCategoryLists2(search) {
-        const endPoint = `admin/category-children/?limit=659&offset=0&search=${search || ''}`;
-        const reponse = await Repository({
-            url: baseUrl + endPoint,
-            method: 'GET',
-        })
-            .then((response) => {
-                if (response.status === 200) {
-                    return response.data;
-                } else {
-                    return null;
-                }
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }));
-        return reponse;
-    }
-
     async getCategoryParentLists(token) {
         const endPoint = `admin/category-parent/`;
         const reponse = await Repository({

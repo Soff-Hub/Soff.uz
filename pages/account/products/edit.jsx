@@ -12,6 +12,7 @@ import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
+const category_id = []
 
 const PostsProductsEdit = () => {
     const { TabPane } = Tabs;
@@ -21,7 +22,6 @@ const PostsProductsEdit = () => {
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { products, user } = useSelector((state) => state.auth);
-    const [category_id, setCategory_id] = useState(null);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Shortdata, setShortData] = useState('');
@@ -42,15 +42,9 @@ const PostsProductsEdit = () => {
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
-        const data = [];
-        const ItemsData = await GetRepository.getAllCategoryLists2();
-        if (ItemsData?.results) {
-            for (let i = 0; i < ItemsData?.results?.length; i++) {
-                if (ItemsData?.results[i].parent !== null) {
-                    data.push(ItemsData?.results[i]);
-                }
-            }
-            setDataCategory(data);
+        const ItemsData = await GetRepository.getAllCategoryLists();
+        if (ItemsData) {
+            setDataCategory(ItemsData);
         }
     }
 
@@ -90,13 +84,11 @@ const PostsProductsEdit = () => {
         );
     }
     const onChange = async (e) => {
-        setCategory_id(e.toString());
-
-        if (e) {
-            for (let i = 0; i < dataCategory.length; i++) {
-                if (dataCategory[i].id == e) {
-                    setCategoryName(dataCategory[i].name);
-                }
+        category_id.length = 0
+        setCategoryName(e)
+        for (let j = 0; j < dataCategory.length; j++) {
+            if (dataCategory[j].name === e) {
+                category_id.push(dataCategory[j].id);
             }
         }
 
@@ -104,15 +96,15 @@ const PostsProductsEdit = () => {
 
     const onSearch = async (value) => {
         const ItemsData = await GetRepository.getAllCategoryLists(value);
-        if (ItemsData?.results) {
-            setDataCategory(ItemsData?.results);
+        if (ItemsData) {
+            setDataCategory(ItemsData);
         }
     };
     const options = [];
 
     for (const item of dataCategory) {
         options.push(
-            <Option key={item.name} value={item.id}>
+            <Option key={item.name} >
                 {item.name}
             </Option>
         );
@@ -127,11 +119,9 @@ const PostsProductsEdit = () => {
     useEffect(() => {
         GetItemsCategoryLists();
         GetItemsTagAktivmas();
-    }, [user?.access]);
-
-    useEffect(() => {
         GetItemsTagAktivmas();
     }, [user?.access]);
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -164,8 +154,8 @@ const PostsProductsEdit = () => {
         else {
             Object.assign(data, { tags: results3 })
         }
-        if (category_id) {
-            Object.assign(data, { category: category_id });
+        if (category_id[0]) {
+            Object.assign(data, { category: category_id[0] });
         }
         if (dataCatStatus) {
             Object.assign(data, { status: dataCatStatus });
@@ -232,7 +222,7 @@ const PostsProductsEdit = () => {
                             style={{ maxWidth: '370px' }}>
                             <h4>Sotuvdagi ko'rinishi : </h4>
                             <Button
-                                className="btn-warning"
+                                className="btn-success "
                                 data-bs-target="#staticBackdrop"
                                 data-bs-toggle="modal">
                                 <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>

@@ -8,11 +8,11 @@ export default function MenuCategory({ source, className }) {
                 {source &&
                     source?.map((item, i) => (
                         <li key={i}>
-                            <Link
+                            <Link className='d-flex align-items-center'
                                 href={`/category/${item.id}`}
                                 as={`/category/${item.id}`}>
                                 <a>
-                                    {item.icon && <i className={item.icon}></i>}
+                                    {item.icon && <i className={`fs-4 ${item.icon }`}></i>}
                                     {item.name}
                                 </a>
                             </Link>

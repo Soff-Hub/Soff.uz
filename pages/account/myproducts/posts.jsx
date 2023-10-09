@@ -13,7 +13,9 @@ import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { BeatLoader, ClipLoader } from 'react-spinners';
+import { ClipLoader } from 'react-spinners';
+const category_id = []
+
 
 const Posts = () => {
     const { TabPane } = Tabs;
@@ -25,7 +27,6 @@ const Posts = () => {
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
-    const [category_id, setCategory_id] = useState(null);
     const [narxNomi, setNarxNomi] = useState(true);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -50,23 +51,22 @@ const Posts = () => {
     ];
 
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists2();
-        if (ItemsData?.results) {
-            setDataCategory(ItemsData?.results);
+        const ItemsData = await GetRepository.getAllCategoryLists();
+        if (ItemsData) {
+            setDataCategory(ItemsData);
         }
     }
     const Option = Select.Option;
 
     const onChange = async (e) => {
-        setCategory_id(e.toString());
-
-        if (e) {
-            for (let i = 0; i < dataCategory.length; i++) {
-                if (dataCategory[i].id == e) {
-                    setCategoryName(dataCategory[i].name);
-                }
+        category_id.length = 0
+        setCategoryName(e)
+        for (let j = 0; j < dataCategory.length; j++) {
+            if (dataCategory[j].name === e) {
+                category_id.push(dataCategory[j].id);
             }
         }
+
 
         let arr = [];
         if (tagSearchResult?.length > 0) {
@@ -78,9 +78,8 @@ const Posts = () => {
                 }
             }
         }
-
         const data = {
-            category_id: e,
+            category_id: category_id[0],
             tag_id: arr,
         };
 
@@ -105,8 +104,8 @@ const Posts = () => {
 
     const onSearch = async (value) => {
         const ItemsData = await GetRepository.getAllCategoryLists(value);
-        if (ItemsData?.results) {
-            setDataCategory(ItemsData?.results);
+        if (ItemsData) {
+            setDataCategory(ItemsData);
         }
     };
 
@@ -121,17 +120,16 @@ const Posts = () => {
     const options = [];
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
-            <Option key={tagItems[i].name}   >{tagItems[i].name}</Option>
+            <Option key={tagItems[i].name} >{tagItems[i].name}</Option>
+        );
+    }
+    for (let i = 0; i < dataCategory?.length; i++) {
+        options.push(
+            <Option key={dataCategory[i].name}  >{dataCategory[i].name}</Option>
         );
     }
 
-    for (const item of dataCategory) {
-        options.push(
-            <Option key={item.name} value={item.id}>
-                {item.name}
-            </Option>
-        );
-    }
+
 
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
@@ -143,6 +141,7 @@ const Posts = () => {
 
     async function handleChange(value) {
         setTagSearchResult(value);
+
         let arr = [];
         if (value?.length > 0) {
             for (let i = 0; i < tagItems.length; i++) {
@@ -154,12 +153,14 @@ const Posts = () => {
             }
         }
 
+
         const data = {
-            category_id: category_id,
+            category_id: category_id[0],
             tag_id: arr,
         };
 
-        if (value?.length > 0 && category_id !== null) {
+        
+        if (value?.length > 0 && category_id[0] !==undefined) {
             const respons = await PostsRepository.TaxminiyNarxOlish(
                 data,
                 user?.access
@@ -189,7 +190,7 @@ const Posts = () => {
             formData.append('tags', tagSearchResult),
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
-            formData.append('category', category_id);
+            formData.append('category', category_id[0]);
         formData.append('document', livePosterFile?.id)
 
         const patchItems = await PatchRepository.getPatchPoster(
@@ -267,11 +268,9 @@ const Posts = () => {
         GetItemsTag();
         setEditorLoaded(true);
         chegirma();
+        GetItemsCategoryLists();
     }, []);
 
-    useEffect(() => {
-        GetItemsCategoryLists();
-    }, [user?.access]);
 
     useEffect(() => {
         PostFilePoster();
@@ -294,10 +293,10 @@ const Posts = () => {
                             style={{ maxWidth: '370px' }}>
                             <h4> Sotuvdagi ko'rinishi : </h4>
                             <Button
-                                className="btn-success"
+                                className="btn-success "
                                 data-bs-target="#staticBackdrop"
                                 data-bs-toggle="modal">
-                                <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>
+                                <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
                             </Button>
                         </div>
 
