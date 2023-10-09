@@ -13,11 +13,11 @@ function MyProductsListsSeller() {
 
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
-    const [search, setSerach] = useState([]);
+    const [search, setSerach] = useState('');
     const [dataValCat, setDataCat] = useState(null);
     const [date, setDate] = useState(null);
     const [pageCount, setPageCount] = useState(0)
-    const [currPage, setCurrPage] = useState(null)
+    const [currPage, setCurrPage] = useState(1)
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
@@ -26,8 +26,10 @@ function MyProductsListsSeller() {
 
 
     async function GetItemsProducts(page, category, dataFormat) {
-        const ItemsData = await GetRepository.getMyProductsSeller(page, category, dataFormat, user?.access);
+        const ItemsData = await GetRepository.getMyProductsSeller(page, category, dataFormat, search, user?.access);
         if (ItemsData?.results) {
+            setCurrPage(page)
+            setPageCount(ItemsData.count)
             setData([...ItemsData.results]);
         }
     }
@@ -36,13 +38,6 @@ function MyProductsListsSeller() {
         setDataCategory(ItemsData.results);
     }
 
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.title.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -86,8 +81,8 @@ function MyProductsListsSeller() {
         GetItemsCategory()
     }, [])
     useEffect(() => {
-        GetItemsProducts(1, dataValCat, dataFormat)
-    }, [dataValCat, dataFormat])
+        GetItemsProducts(currPage, dataValCat, dataFormat)
+    }, [dataValCat, dataFormat, search])
 
     const columns = [
         {
@@ -162,7 +157,7 @@ function MyProductsListsSeller() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <input type='search' className={"form-control rounded col-md-9"} placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className={"form-control rounded col-md-9"} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
