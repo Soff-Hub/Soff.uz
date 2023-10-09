@@ -154,7 +154,7 @@ function Notifications() {
                                     <input type='search' className='form-control rounded bg-white mb-3 ' style={{ backgroundColor: "#F1F1F1" }} placeholder="Qidiruv" onInput={handleClick} />
                                     <Table scroll={{ x: 1050 }} dataSource={data} columns={columns} pagination={false}
                                     />
-                                    <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                                 </div>
                             </div>
                         </div>

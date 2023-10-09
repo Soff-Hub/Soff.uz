@@ -314,7 +314,7 @@ function ApplicationLists() {
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
                                                 <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} pagination={false} />
-                                                <Pagination defaultCurrent={currPage || 1} total={pageCount}
+                                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                     onChange={handlePagination} />
                                             </>
                                             ) :
@@ -334,7 +334,7 @@ function ApplicationLists() {
                                                 </div>
                                                 <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin}
                                                     pagination={false} />
-                                                <Pagination defaultCurrent={currPage || 1} total={pageCount}
+                                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                     onChange={getItemsSellerAdmin} />
                                             </>) :
                                             <></>

@@ -208,13 +208,13 @@ function OrdersLists() {
                                             <>
                                                 <Table scroll={{ x: 1350 }} dataSource={data} columns={columns} pagination={false}
                                                 />
-                                                <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
+                                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                                             </>
                                             :
                                             <>
                                                 <Table scroll={{ x: 850 }} dataSource={data} columns={columnSellers} pagination={false}
                                                 />
-                                                <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
+                                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                                             </>
                                     }
                                 </div>

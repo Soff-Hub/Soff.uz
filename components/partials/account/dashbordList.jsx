@@ -413,13 +413,13 @@ function DashbordList() {
                                     <>
                                         <Table scroll={{ x: 1350 }} dataSource={dataOrders} columns={columnsOrders}
                                             pagination={false} />
-                                        <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination2} />
+                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination2} />
                                     </>
                                     :
                                     <>
                                         <Table scroll={{ x: 1150 }} dataSource={dataOrders} columns={columnsOrdersSeller}
                                             pagination={false} />
-                                        <Pagination defaultCurrent={currPage || 1} total={pageCount}
+                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                             onChange={GetItemsProductsOrders} />
                                     </>
                             }
@@ -432,7 +432,7 @@ function DashbordList() {
                             <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
                             <Table scroll={{ x: 1250 }} dataSource={dataProducts} columns={columns} className='pb-5' pagination={false}
                             />
-                            <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
+                            <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                         </div>
                         :
                         <></>

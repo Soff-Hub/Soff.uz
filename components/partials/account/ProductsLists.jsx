@@ -275,7 +275,7 @@ function ProductsLists() {
                                     </div>
                                     <Table scroll={{ x: 1700 }} dataSource={data} columns={columns} pagination={false}
                                     />
-                                    <Pagination defaultCurrent={currPage} total={pageCount} onChange={handlePagination} />
+                                    <Pagination className="mt-3" defaultCurrent={currPage} total={pageCount} onChange={handlePagination} />
                                 </div>
                             </div>
                         </div>

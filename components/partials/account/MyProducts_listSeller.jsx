@@ -193,7 +193,7 @@ function MyProductsListsSeller() {
                                     </div>
                                     <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} pagination={false}
                                     />
-                                    <Pagination defaultCurrent={currPage || 1} total={pageCount}
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                         onChange={(page) => GetItemsProducts(page, dataValCat, dataFormat)} />
                                 </div>
                             </div>

@@ -236,7 +236,7 @@ function CategoryLists() {
                                     </div>
                                     <Table scroll={{ x: 750 }} dataSource={data} columns={columns} pagination={false}
                                     />
-                                    <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsProducts} />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsProducts} />
                                 </div>
                             </div>
                         </div>

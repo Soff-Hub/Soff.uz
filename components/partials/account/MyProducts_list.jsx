@@ -344,12 +344,12 @@ function MyProductsLists() {
                                         user?.role === "seller" ?
                                             <>
                                                 <Table dataSource={data} scroll={{ x: 1300 }} columns={columns} pagination={false} />
-                                                <Pagination total={pageCount} defaultCurrent={currPage} onChange={handlePagination} />
+                                                <Pagination className="mt-3" total={pageCount} defaultCurrent={currPage} onChange={handlePagination} />
                                             </>
                                             :
                                             <>
                                                 <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} pagination={false} />
-                                                <Pagination total={pageCount} defaultCurrent={currPage} onChange={handlePagination} />
+                                                <Pagination className="mt-3" total={pageCount} defaultCurrent={currPage} onChange={handlePagination} />
                                             </>
 
                                     }

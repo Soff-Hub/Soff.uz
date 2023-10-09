@@ -127,7 +127,7 @@ function TegLists() {
 
                                     <Table dataSource={data} scroll={{ x: 740 }} columns={columns} pagination={false}
                                     />
-                                    <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsUsers} />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsUsers} />
                                 </div>
                             </div>
                         </div>
