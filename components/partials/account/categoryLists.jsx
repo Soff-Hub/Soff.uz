@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Table } from 'antd';
+import { Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -21,18 +21,16 @@ function CategoryLists() {
     const [tagName, setTagName] = useState(null);
     const [tagNameTop, setTagNameTop] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(null)
 
     async function GetItemsProducts(page) {
-        if (page === 1) {
-            setData([])
-        }
+        setCurrPage(page)
         const ItemsData = await GetRepository.getCategory(page, user?.access);
         if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProducts(page + 1)
-            }
+            setPageCount(ItemsData.count)
+            setData([...ItemsData.results]);
+            setSerach([...ItemsData.results]);
         }
     }
 
@@ -236,7 +234,9 @@ function CategoryLists() {
                                         <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={handleClick} />
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'> <i className="fa-solid fa-plus"></i> Kategoriya qo'shish</span></button>
                                     </div>
-                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns} pagination={false}
+                                    />
+                                    <Pagination defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsProducts} />
                                 </div>
                             </div>
                         </div>

@@ -1,8 +1,8 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Button, Modal, Table } from 'antd';
+import { Button, Modal, Pagination, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -21,6 +21,8 @@ function ApplicationLists() {
     const [dataCardModalDes, setDataCardModalDes] = useState(null);
     const [profile, setProfile] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(null)
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -28,15 +30,9 @@ function ApplicationLists() {
     }
 
     async function getItemsSeller(page) {
-        if (page === 1) {
-            setData([])
-        }
         const Items = await GetRepository.getProfileAriza(page, user?.access);
         if (Items?.results) {
-            setData((prev) => [...prev, ...Items.results]);
-            if (Items?.next) {
-                getItemsSeller(page + 1)
-            }
+            setData([...Items.results]);
         }
     }
     async function getItemsSellerCardList() {
@@ -46,15 +42,9 @@ function ApplicationLists() {
         }
     }
     async function getItemsSellerAdmin(page) {
-        if (page === 1) {
-            setDataAdmin([])
-        }
         const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access);
         if (Items?.results) {
-            setDataAdmin((prev) => [...prev, ...Items.results]);
-            if (Items?.next) {
-                getItemsSellerAdmin(page + 1, dataCat)
-            }
+            setDataAdmin([...Items.results]);
         }
     }
 
@@ -70,7 +60,7 @@ function ApplicationLists() {
             modal.update
             getItemsSeller(1, dataCat);
             setProfile(null)
-        }else if(Items?.status >= 400){
+        } else if (Items?.status >= 400) {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
@@ -113,6 +103,14 @@ function ApplicationLists() {
 
         return formattedNumber;
     }
+
+
+    const handlePagination = (pageNum) => {
+        setCurrPage(pageNum)
+        getItemsSeller(pageNum, dataCat)
+    }
+
+
     useEffect(() => {
         getItemsSeller(1);
         getItemsSellerAdmin(1, dataCat);
@@ -263,8 +261,8 @@ function ApplicationLists() {
             status: "cancelled"
         }
     ]
-    
-    
+
+
     return (
         <section className="ps-my-account ps-page--account pb-5 p-0">
             <div className="container">
@@ -282,9 +280,9 @@ function ApplicationLists() {
                                         user?.role === "seller" ?
                                             (<>
                                                 <form className='row row-gap-3 gap-4 mx-auto'>
-                                                    <label className='h4 ' style={{color:"orange"}} >
+                                                    <label className='h4 ' style={{ color: "orange" }} >
                                                         Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
-                                                       <strong>!Eslatma: Xisobingizda kamida 10 000 so’m bo’lishi kerak.</strong>
+                                                        <strong>!Eslatma: Xisobingizda kamida 10 000 so’m bo’lishi kerak.</strong>
                                                     </label>
                                                     <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
                                                     <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
@@ -315,8 +313,9 @@ function ApplicationLists() {
 
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                                <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} />
-
+                                                <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} pagination={false} />
+                                                <Pagination defaultCurrent={currPage || 1} total={pageCount}
+                                                    onChange={handlePagination} />
                                             </>
                                             ) :
                                             <></>
@@ -333,8 +332,10 @@ function ApplicationLists() {
                                                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                                     </select>
                                                 </div>
-                                                <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin} />
-
+                                                <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin}
+                                                    pagination={false} />
+                                                <Pagination defaultCurrent={currPage || 1} total={pageCount}
+                                                    onChange={getItemsSellerAdmin} />
                                             </>) :
                                             <></>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button,  Table } from 'antd';
+import { Button, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -30,26 +30,21 @@ function ProductsLists() {
     const [dateArxiv, setDateArxiv] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(1)
+
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
     async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv,) {
-        if (page === 1) {
-            setData([])
-        }
         const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv, user?.access);
-        if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProductsLists(page + 1, category, dataValStatus, dataFormat, id, arxiv,)
-            }
-        }
+        setPageCount(ItemsData.count)
+        setData([...ItemsData.results]);
     }
     async function GetItemsCategory() {
-      const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryLists();
         if (ItemsData.results) {
             setDataVal(ItemsData.results);
         }
@@ -117,6 +112,14 @@ function ProductsLists() {
             setLoading2(false)
         }
     };
+
+
+    const handlePagination = (pageNum) => {
+        setCurrPage(pageNum)
+        GetItemsProductsLists(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
+    }
+
+
     useEffect(() => {
         GetItemsCategory()
     }, [])
@@ -155,7 +158,7 @@ function ProductsLists() {
             title: 'Kategoriya',
             dataIndex: 'category',
             key: 'address',
-            width:300,
+            width: 300,
             render: (category) => (
                 <span> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
             )
@@ -175,7 +178,7 @@ function ProductsLists() {
             title: 'Sana',
             dataIndex: 'created_at',
             key: 'created_at',
-            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference     targetDate={created_at} /> </span>
+            render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /> </span>
         },
         {
             title: 'Narxi',
@@ -246,7 +249,7 @@ function ProductsLists() {
                                                             {
                                                                 dataVal.length > 0 && (
                                                                     dataVal.map(item => (
-                                                                            <option key={item.id} value={item.id}>{item.name} </option>
+                                                                        <option key={item.id} value={item.id}>{item.name} </option>
                                                                     ))
                                                                 )
                                                             }
@@ -270,7 +273,9 @@ function ProductsLists() {
                                         <span className='fs-4'><i className="fa-solid text-success fa-circle-check"></i> <strong>Tasdiqlangan </strong> <em>malumotlaringiz muvaffaqqiyatli tasdiqlandi!</em></span>
                                         <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                     </div>
-                                    <Table scroll={{ x: 1600 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 1600 }} dataSource={data} columns={columns} pagination={false}
+                                    />
+                                    <Pagination defaultCurrent={currPage} total={pageCount} onChange={handlePagination} />
                                 </div>
                             </div>
                         </div>

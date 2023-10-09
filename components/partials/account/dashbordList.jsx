@@ -12,6 +12,8 @@ function DashbordList() {
     const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
     const [View, setView] = useState({});
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(null)
 
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -48,15 +50,9 @@ function DashbordList() {
     }
 
     async function GetItemsProductsOrders(page) {
-        if (page === 1) {
-            setDataOrders([])
-        }
         const ItemsData = await GetRepository.getOrdersListsDashbord(page, user?.access);
         if (ItemsData?.results) {
-            setDataOrders((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData?.next) {
-                GetItemsProductsOrders(page + 1)
-            }
+            setDataOrders([...ItemsData.results]);
         }
     }
     async function handleClickView(item) {
