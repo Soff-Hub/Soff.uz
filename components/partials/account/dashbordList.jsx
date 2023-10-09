@@ -45,6 +45,7 @@ function DashbordList() {
     async function GetItemsProductsPopular() {
         const ItemsData = await GetRepository.getPopularProducts(user?.access);
         if (ItemsData?.info) {
+            setPageCount(ItemsData.count)
             setDataProducts(ItemsData?.info);
         }
     }
@@ -53,6 +54,7 @@ function DashbordList() {
         setCurrPage(page)
         const ItemsData = await GetRepository.getOrdersListsDashbord(page, user?.access);
         if (ItemsData?.results) {
+            setPageCount(ItemsData.count)
             setDataOrders([...ItemsData.results]);
         }
     }

@@ -42,6 +42,7 @@ function ProductsLists() {
         const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv, user?.access);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
+        setSerach([...ItemsData.results]);
     }
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryLists();
