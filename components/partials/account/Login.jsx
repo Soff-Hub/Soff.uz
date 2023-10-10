@@ -47,6 +47,7 @@ class Login extends Component {
         const { loginUser } = useAuth();
         
         const user = await loginUser(e);
+        console.log(user);
         if (user) {
             if (user.status >= 400) {
                 notification.open({
@@ -55,20 +56,19 @@ class Login extends Component {
                     type: 'error',
                 });
             } else {
+                this.props.dispatch(login({ user: user.data, data: e }));
                 this.setState({ report: !this.state.report });
                 notification.open({
                     message: `${user?.data?.msg}`,
                     description: 'Siz saytga muvaffaqqiyatli kirdingiz!',
                     type: 'success',
                 });
-                this.props.dispatch(login({ user: user.data, data: e }));
-                if (user.roli === 'seller' || user.roli === 'admin') {
-                    Router.push('/account/dashbord');     
-                }else{
-                    Router.push('/account/myproducts');     
-    
-                }
-                
+                Router.push('/');   
+                // if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
+                //     Router.push('/account/dashbord');     
+                // }else if (user?.data?.role === 'customer'){
+                //     Router.push('/account/myproducts');     
+                // }
             }
         }
     };
@@ -80,6 +80,7 @@ class Login extends Component {
         });
     }
     
+
     handleEnterKeyPress = (e) => {
         if (e.key === 'Enter') {
             e.preventDefault();
