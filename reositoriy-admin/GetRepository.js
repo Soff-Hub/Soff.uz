@@ -310,8 +310,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getTagLists(page, search, token) {
-        const endPoint = `admin/tag-list/?page=${page}&search=${search}`;
+    async getTagLists(page, search,active , token) {
+        const endPoint = `admin/tag-list/?page=${page}&search=${search || ''}&active=${active}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

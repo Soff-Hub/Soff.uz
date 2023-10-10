@@ -159,8 +159,8 @@ const Posts = () => {
             tag_id: arr,
         };
 
-        
-        if (value?.length > 0 && category_id[0] !==undefined) {
+
+        if (value?.length > 0 && category_id[0] !== undefined) {
             const respons = await PostsRepository.TaxminiyNarxOlish(
                 data,
                 user?.access
@@ -214,6 +214,8 @@ const Posts = () => {
     }
 
     async function PostFilePoster() {
+        setLiveFile('')
+        setLivePosterFile('')
         const formData = new FormData();
         if (fileImgFile) {
             setLoading(true);
@@ -222,7 +224,21 @@ const Posts = () => {
                 formData,
                 user?.access
             );
-            setLivePosterFile(ItemsData?.data);
+
+            if (ItemsData?.status === 201 && ItemsData?.data?.images?.length > 0) {
+                setLivePosterFile(ItemsData?.data);
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content: "Yangi file qo'shdingiz ",
+                });
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: "File mahsulot qo'sha olmadingiz ",
+                });
+            }
             setLoading(false);
         }
 
@@ -337,36 +353,42 @@ const Posts = () => {
                                         backgroundColor: '#F1F1F1',
                                         border: '1px dashed green',
                                     }}>
-                                    {fileImgFile ? (
-                                        !loading ? (
+                                    {
+                                        livePosterFile === '' ? (
                                             <span
                                                 className="d-flex flex-column align-items-center"
                                                 style={{ cursor: 'pointer' }}>
-                                                <span>
-                                                    {' '}
-                                                    Siz mahsulot yukladingiz{' '}
-                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                </span>
+                                                {
+                                                    loading ?
+                                                        <span className="d-flex justify-content-center">
+                                                            <ClipLoader
+                                                                size={25}
+                                                                color="#36d7b7"
+                                                            />
+                                                        </span>
+                                                        :
+                                                        <span
+                                                            className="d-flex flex-column align-items-center "
+                                                            style={{ cursor: 'pointer' }}>
+                                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                            <span>
+                                                                Yuklash uchun faylni ushbu
+                                                                hududga bosing.
+                                                            </span>
+                                                        </span>
+                                                }
                                             </span>
                                         ) : (
-                                            <span className="d-flex justify-content-center">
-                                                <ClipLoader
-                                                    size={25}
-                                                    color="#36d7b7"
-                                                />
+                                            <span className="d-flex flex-column align-items-center"
+                                                style={{ cursor: 'pointer' }}>
+                                                <span>
+                                                    {' '}
+                                                    Siz mahsulot yukladingiz  <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                    
+                                                </span>
                                             </span>
                                         )
-                                    ) : (
-                                        <span
-                                            className="d-flex flex-column align-items-center "
-                                            style={{ cursor: 'pointer' }}>
-                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                            <span>
-                                                Yuklash uchun faylni ushbu
-                                                hududga bosing.
-                                            </span>
-                                        </span>
-                                    )}
+                                    }
                                     <input
                                         required
                                         type="file"
@@ -497,7 +519,7 @@ const Posts = () => {
                                     <Select
                                         mode='select'
                                         showSearch
-                                        style={{ width: '100%' }}
+                                        style={{ width: '100%', height: "47px" }}
                                         onChange={onChange}
                                         onSearch={onSearch}
                                     >
@@ -612,7 +634,7 @@ const Posts = () => {
                             <div className="image rounded mb-3">
                                 {!liveFile ? (
                                     <img
-                                        src="/static/img/docCopy.jpg"
+                                        src={livePosterFile?.images?.[0]?.image_url || "/static/img/docCopy.jpg"}
                                         alt="doc"
                                         className="border mb-4"
                                         style={{ objectFit: 'cover' }}
@@ -716,7 +738,7 @@ const Posts = () => {
                                 <div className="image rounded mb-3">
                                     {!liveFile ? (
                                         <img
-                                            src="/static/img/docCopy.jpg"
+                                            src={livePosterFile?.images?.[0]?.image_url || "/static/img/docCopy.jpg"}
                                             alt="doc"
                                             className="border mb-4"
                                             style={{ objectFit: 'cover' }}

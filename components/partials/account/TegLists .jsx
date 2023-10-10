@@ -21,11 +21,12 @@ function TegLists() {
     const [selectVal, setSelectVal] = useState({});
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const [dataVal, setDataVal] = useState("")
 
 
     async function GetItemsUsers(page) {
         setCurrPage(page)
-        const ItemsData = await GetRepository.getTagLists(page, search, user?.access);
+        const ItemsData = await GetRepository.getTagLists(page, search, dataVal, user?.access);
         setPageCount(ItemsData.count)
         if (ItemsData?.results) {
             setData([...ItemsData.results]);
@@ -41,7 +42,7 @@ function TegLists() {
             content: `Siz  tegni o'chirdingiz`,
         });
         modal.update
-        GetItemsUsers(currPage)
+        GetItemsUsers(currPage, search, dataVal)
     }
 
     async function handleItemsPost() {
@@ -51,7 +52,7 @@ function TegLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  yangi teg qo'shdingiz`,
         });
-        GetItemsUsers(currPage)
+        GetItemsUsers(currPage, search, dataVal)
     }
     async function handleItemsEdit() {
         const patchItems = await PatchRepository.PatchTegs(selectVal, deleteIdEdit?.id, user?.access)
@@ -60,12 +61,13 @@ function TegLists() {
             title: 'Muvaffaqqiyatli!',
             content: "Siz  teglarni o'zgartirdingiz ",
         });
-        GetItemsUsers(currPage)
+        GetItemsUsers(currPage, search, dataVal)
     }
 
     useEffect(() => {
-        GetItemsUsers(currPage)
-    }, [search])
+        GetItemsUsers(currPage, search, dataVal)
+    }, [search, dataVal])
+
     const columns = [
         {
             title: 'Teg nomi',
@@ -113,7 +115,12 @@ function TegLists() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                        <input type='search' className='form-control rounded col-md-8' placeholder="Qidiruv" onInput={(e) => setSerach(e.target.value)} />
+                                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={(e) => setSerach(e.target.value)} />
+                                        <select className='form-select fs-3 py-3 col-md-3' onChange={(e) => setDataVal(e.target.value)}>
+                                            <option className='fs-3'  value="">Holatni tanlang</option>
+                                            <option className='fs-3' value="true">Aktiv holat</option>
+                                            <option className='fs-3' value="false">Aktiv emas</option>
+                                        </select>
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Teg qo'shish</span></button>
                                     </div>
 

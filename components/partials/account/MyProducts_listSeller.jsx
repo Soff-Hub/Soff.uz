@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Pagination, Table } from 'antd';
+import { DatePicker, Pagination, Select, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -23,6 +23,7 @@ function MyProductsListsSeller() {
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
     const { accountLinks, user } = useSelector(state => state.auth)
+    const Option = Select.Option;
 
 
     async function GetItemsProducts(page, category, dataFormat) {
@@ -35,7 +36,33 @@ function MyProductsListsSeller() {
     }
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryLists();
-        setDataCategory(ItemsData.results);
+        if (ItemsData) {
+            setDataCategory(ItemsData);
+        }
+    }
+
+    const onChange = async (name) => {
+        if (name !== 'all') {
+            for (let j = 0; j < dataCategory.length; j++) {
+                if (dataCategory[j].name === name) {
+                    setDataCat(dataCategory[j].id);
+                }
+            }
+        }
+        else {
+            setDataCat("")
+        }
+    };
+
+
+
+
+    const options = [];
+
+    for (let i = 0; i < dataCategory?.length; i++) {
+        options.push(
+            <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
+        );
     }
 
 
@@ -158,7 +185,7 @@ function MyProductsListsSeller() {
                                 <div className="ps-section__content">
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
                                         <input type='search' className={"form-control rounded col-md-9"} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
-                                        <div className="accordion accordion-flush" id="accordionFlushExample">
+                                        <div className="accordion accordion-flush p-0" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
                                                     <button style={{ padding: "17px", backgroundColor: "#F1F1F2" }} className="accordion-button collapsed  responsiveCardButton   text-success " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
@@ -167,18 +194,21 @@ function MyProductsListsSeller() {
                                                 </h2>
                                                 <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
-                                                        <select className='form-select rounded-3 col-md-5 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                                            <option className='fs-3' value=''>Kategoriyalar</option>
+                                                        <Select
+                                                            className='col-md-6 p-0'
+                                                            mode='select'
+                                                            showSearch
+                                                            style={{ width: '100%', height: "47px" }}
+                                                            onChange={onChange}
+                                                            placeholder="Barcha kategoriyalar"
+                                                        >
+                                                            <Option value="all" >
+                                                                Barcha kategoriyalar
+                                                            </Option>
 
-                                                            {
-                                                                dataCategory?.length > 0 && (
-                                                                    dataCategory?.map(item => (
-                                                                        <option key={item.id} value={item.id}>{item.name} </option>
+                                                            {options}
 
-                                                                    ))
-                                                                )
-                                                            }
-                                                        </select>
+                                                        </Select>
                                                         <RangePicker className='col-md-5 py-3   rounded-3' onChange={(e) => setDate(e)} />
                                                     </div>
                                                 </div>

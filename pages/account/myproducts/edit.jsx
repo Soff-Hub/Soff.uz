@@ -248,7 +248,7 @@ const PostsMyProducts = () => {
                                     <Select
                                         mode='select'
                                         showSearch
-                                        style={{ width: '100%' }}
+                                        style={{ width: '100%',  height:"47px" }}
                                         onChange={onChange}
                                         onSearch={onSearch}
                                         defaultValue={products?.category?.name}

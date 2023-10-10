@@ -18,7 +18,7 @@ export default function useProduct() {
                                         backgroundRepeat: 'no-repeat',
                                         backgroundPosition: 'center',
                                     }}
-                                    className="products-image1"></div>
+                                    className="products-image1 m-0"></div>
                             </div>
                         ) : (
                             <div
