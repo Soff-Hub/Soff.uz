@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Table } from 'antd';
+import { Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -21,18 +21,15 @@ function CategoryLists() {
     const [tagName, setTagName] = useState(null);
     const [tagNameTop, setTagNameTop] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(1)
 
-    async function GetItemsProducts(page) {
-        if (page === 1) {
-            setData([])
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsProducts(page, search) {
+        setCurrPage(page)
+        const ItemsData = await GetRepository.getCategory(page,search, user?.access);
         if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProducts(page + 1)
-            }
+            setPageCount(ItemsData.count)
+            setData([...ItemsData.results]);
         }
     }
 
@@ -43,13 +40,7 @@ function CategoryLists() {
         }
     }
 
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.name.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
+   
 
     async function deleteItemsId() {
         const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId, user?.access)
@@ -58,7 +49,7 @@ function CategoryLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsProducts(1)
+        GetItemsProducts(currPage, search)
     }
 
     async function handleItemsPost(values) {
@@ -83,7 +74,7 @@ function CategoryLists() {
             });
 
         }
-        GetItemsProducts(1)
+        GetItemsProducts(currPage, search)
     }
 
 
@@ -124,7 +115,7 @@ function CategoryLists() {
 
         }
 
-        GetItemsProducts(1)
+        GetItemsProducts(currPage)
 
     }
 
@@ -132,9 +123,12 @@ function CategoryLists() {
         setFile(e.target.files[0])
     }
     useEffect(() => {
-        GetItemsProducts(1)
         getParentLists()
     }, []);
+
+    useEffect(() => {
+        GetItemsProducts(currPage, search)
+    }, [search]);
 
     const columns = [
         {
@@ -233,10 +227,13 @@ function CategoryLists() {
                                 <div>
                                     <div className='row row-gap-3 bg-white m-0 gap-5 px-4 mb-3 pb-4 rounded'>
                                         <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i className="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
-                                        <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={e=>setSerach(e.target.value)} />
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'> <i className="fa-solid fa-plus"></i> Kategoriya qo'shish</span></button>
                                     </div>
-                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns} pagination={false}
+                                    />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                    onChange={page => GetItemsProducts(page, search)} />
                                 </div>
                             </div>
                         </div>

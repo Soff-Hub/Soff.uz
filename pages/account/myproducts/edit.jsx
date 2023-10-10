@@ -12,20 +12,19 @@ import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
+const category_id = []
 
 
 
 const PostsMyProducts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    // const [fileImgFile, setFileImgFile] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { products, user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
-    const [category_id, setCategory_id] = useState(null);
     const [discount, setDiscount] = useState(null);
     const [categoryName, setCategoryName] = useState('');
     const [title, setTitle] = useState('');
@@ -46,15 +45,9 @@ const PostsMyProducts = () => {
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
-        const data = [];
-        const ItemsData = await GetRepository.getAllCategoryLists2();
-        if (ItemsData?.results) {
-            for (let i = 0; i < ItemsData?.results?.length; i++) {
-                if (ItemsData?.results[i].parent !== null) {
-                    data.push(ItemsData?.results[i]);
-                }
-            }
-            setDataCategory(data);
+        const ItemsData = await GetRepository.getAllCategoryLists();
+        if (ItemsData) {
+            setDataCategory(ItemsData);
         }
     }
 
@@ -96,8 +89,8 @@ const PostsMyProducts = () => {
         if (Fulldata) {
             formData.append('description', Fulldata);
         }
-        if (category_id) {
-            formData.append('category', category_id);
+        if (category_id[0]) {
+            formData.append('category', category_id[0]);
         }
         if (tagSearchResult) {
             formData.append('tags', tagSearchResult)
@@ -142,13 +135,11 @@ const PostsMyProducts = () => {
 
 
     const onChange = async (e) => {
-        setCategory_id(e.toString());
-
-        if (e) {
-            for (let i = 0; i < dataCategory.length; i++) {
-                if (dataCategory[i].id == e) {
-                    setCategoryName(dataCategory[i].name);
-                }
+        category_id.length = 0
+        setCategoryName(e)
+        for (let j = 0; j < dataCategory.length; j++) {
+            if (dataCategory[j].name === e) {
+                category_id.push(dataCategory[j].id);
             }
         }
 
@@ -156,17 +147,15 @@ const PostsMyProducts = () => {
 
     const onSearch = async (value) => {
         const ItemsData = await GetRepository.getAllCategoryLists(value);
-        if (ItemsData?.results) {
-            setDataCategory(ItemsData?.results);
+        if (ItemsData) {
+            setDataCategory(ItemsData);
         }
     };
     const options = [];
 
-    for (const item of dataCategory) {
+    for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
-            <Option  key={item.name} value={item.id}>
-                {item.name}
-            </Option>
+            <Option key={dataCategory[i].name}   >{dataCategory[i].name}</Option>
         );
     }
 
@@ -174,13 +163,10 @@ const PostsMyProducts = () => {
     useEffect(() => {
         GetItemsTag();
         setEditorLoaded(true);
+        GetItemsCategoryLists();
     }, []);
 
-    useEffect(() => {
-        GetItemsCategoryLists();
-    }, [user?.access]);
 
-    console.log(products);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -193,7 +179,7 @@ const PostsMyProducts = () => {
                         <h4 className="col-md-8 m-0 p-0">Hujjatni tahrirlash</h4>
                         <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
                             <h4>Sotuvdagi ko'rinishi : </h4>
-                            <Button className='btn-warning' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
+                            <Button className='btn-success ' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
 
                         </div>
                         <form

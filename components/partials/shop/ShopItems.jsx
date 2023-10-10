@@ -395,7 +395,7 @@ const ShopItems = ({
             <div className="ps-shopping__footer text-center">
                 {data?.length >= 16 && (
                     <div className="ps-pagination">
-                        <Pagination
+                        <Pagination className="mt-3"
                             total={dataCount}
                             pageSize={pageSize}
                             responsive={true}

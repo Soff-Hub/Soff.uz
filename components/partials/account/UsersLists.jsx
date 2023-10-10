@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Table } from 'antd';
+import { Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -21,29 +21,17 @@ function AccountUserPages() {
     const [selectVal, setSelectVal] = useState({});
     const [selectValStatus, setSelectValStatus] = useState("");
 
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(1)
 
-    async function GetItemsUsers(page, status) {
-        if (page === 1) {
-            setData([])
-        }
-        const ItemsData = await GetRepository.getUsersLists(page, status, user?.access);
-        if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsUsers(page + 1, status)
-            }
-        }
+
+    async function GetItemsUsers(page, status, search) {
+        setCurrPage(page)
+        const ItemsData = await GetRepository.getUsersLists(page, status, search,user?.access);
+        setPageCount(ItemsData.count)
+        setData([...ItemsData.results]);
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.first_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.data?.email?.toLowerCase().includes(text.toLowerCase()) ||
-            item.data?.phone.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
+
     async function deleteItemsId() {
         const userDelete = await DeleteRepository.getUsersListsDelete(deleteId, user?.access);
         const modal = Modal.error({
@@ -51,7 +39,7 @@ function AccountUserPages() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsUsers(1, selectValStatus)
+        GetItemsUsers(currPage, selectValStatus, search)
     }
     async function handleItemsPost() {
         const postsItems = await PostsRepository.PostsUsers(selectVal, user?.access);
@@ -60,7 +48,7 @@ function AccountUserPages() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  yangi malumot qo'shdingiz`,
         });
-        GetItemsUsers(1, selectValStatus)
+        GetItemsUsers(currPage, selectValStatus, search)
     }
     async function handleItemsEdit() {
         const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
@@ -69,12 +57,12 @@ function AccountUserPages() {
             title: 'Muvaffaqqiyatli!',
             content: "Siz  malumotlarni o'zgartirdingiz ",
         });
-        GetItemsUsers(1, selectValStatus)
+        GetItemsUsers(currPage, selectValStatus, search)
     }
 
     useEffect(() => {
-        GetItemsUsers(1, selectValStatus)
-    }, [selectValStatus])
+        GetItemsUsers(currPage, selectValStatus, search)
+    }, [selectValStatus, search])
     const columns = [
         {
             title: 'Ism',
@@ -92,14 +80,14 @@ function AccountUserPages() {
             render: (data) => (
                 <div className='d-flex flex-column'>
                     {
-                        data.phone==="None" ?
-                        <></> :
-                        <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                        data.phone === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
                     }
                     {
-                          data.email==="None" ?
-                          <></> :
-                    <span className="truncate whitespace-nowrap"> {data.email}</span>
+                        data.email === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.email}</span>
                     }
 
                 </div>
@@ -139,7 +127,7 @@ function AccountUserPages() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={e=>setSerach(e.target.value)} />
                                         <select className='form-select fs-3 py-3   col-md-4' onChange={(e) => setSelectValStatus(e.target.value)}>
                                             <option className='fs-3' value="" >Barcha holat</option>
                                             <option className='fs-3' value="new">Faol emas</option>
@@ -148,7 +136,9 @@ function AccountUserPages() {
                                         <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
                                     </div>
 
-                                    <Table dataSource={data} scroll={{ x: 740 }} columns={columns} />
+                                    <Table dataSource={data} scroll={{ x: 740 }} columns={columns} pagination={false} />
+                                    <Pagination total={pageCount} defaultCurrent={currPage}
+                                        onChange={(val) => GetItemsUsers(val, selectValStatus)} />
                                 </div>
                             </div>
                         </div>

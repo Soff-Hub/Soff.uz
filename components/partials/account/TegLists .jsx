@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Table } from 'antd';
+import { Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -15,34 +15,24 @@ function TegLists() {
     const { accountLinks, user } = useSelector(state => state.auth)
 
     const [data, setData] = useState([]);
-    const [search, setSerach] = useState([]);
+    const [search, setSerach] = useState('');
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [selectVal, setSelectVal] = useState({});
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(1)
 
 
     async function GetItemsUsers(page) {
-        if (page === 1) {
-            setData([])
-        }
-        const ItemsData = await GetRepository.getTagLists(page, user?.access);
+        setCurrPage(page)
+        const ItemsData = await GetRepository.getTagLists(page, search, user?.access);
+        setPageCount(ItemsData.count)
         if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsUsers(page + 1, )
-            }
+            setData([...ItemsData.results]);
         }
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.first_name.toLowerCase().includes(text.toLowerCase()) ||
-            item.data?.email?.toLowerCase().includes(text.toLowerCase()) ||
-            item.data?.phone.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
+
+
     async function deleteItemsId() {
         const userDelete = await DeleteRepository.getTagListsDelete(deleteId, user?.access);
         const modal = Modal.error({
@@ -51,7 +41,7 @@ function TegLists() {
             content: `Siz  tegni o'chirdingiz`,
         });
         modal.update
-        GetItemsUsers(1)
+        GetItemsUsers(currPage)
     }
 
     async function handleItemsPost() {
@@ -61,7 +51,7 @@ function TegLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  yangi teg qo'shdingiz`,
         });
-        GetItemsUsers(1)
+        GetItemsUsers(currPage)
     }
     async function handleItemsEdit() {
         const patchItems = await PatchRepository.PatchTegs(selectVal, deleteIdEdit?.id, user?.access)
@@ -70,12 +60,12 @@ function TegLists() {
             title: 'Muvaffaqqiyatli!',
             content: "Siz  teglarni o'zgartirdingiz ",
         });
-        GetItemsUsers(1)
+        GetItemsUsers(currPage)
     }
 
     useEffect(() => {
-        GetItemsUsers(1)
-    }, [])
+        GetItemsUsers(currPage)
+    }, [search])
     const columns = [
         {
             title: 'Teg nomi',
@@ -102,9 +92,9 @@ function TegLists() {
                 <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
                 {
                     data.some(el => el.id == id && el.delete_tag === true) ?
-                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
-                    :
-                    <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger" ></i></a>
+                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
+                        :
+                        <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger" ></i></a>
                 }
             </div>
         },
@@ -123,11 +113,13 @@ function TegLists() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                        <input type='search' className='form-control rounded col-md-8' placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className='form-control rounded col-md-8' placeholder="Qidiruv" onInput={(e) => setSerach(e.target.value)} />
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Teg qo'shish</span></button>
                                     </div>
 
-                                    <Table dataSource={data} scroll={{ x: 740 }} columns={columns} />
+                                    <Table dataSource={data} scroll={{ x: 740 }} columns={columns} pagination={false}
+                                    />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsUsers} />
                                 </div>
                             </div>
                         </div>

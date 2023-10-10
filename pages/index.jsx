@@ -5,10 +5,10 @@ import PageContainer from '~/components/layouts/PageContainer';
 import HomeElectronicsPage from './home/electronic'
 import { baseUrl } from '~/repositories/Repository';
 
-const HomepageDefaultPage = ({category}) => {
+const HomepageDefaultPage = ({ category }) => {
     return (
         <PageContainer title="Soff - barcha ma'lumotlar bazasi">
-           <HomeElectronicsPage category={category.results} />
+            <HomeElectronicsPage category={category?.results} />
         </PageContainer>
     );
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Table } from 'antd';
+import { DatePicker, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -13,9 +13,11 @@ function MyProductsListsSeller() {
 
     const [data, setData] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
-    const [search, setSerach] = useState([]);
+    const [search, setSerach] = useState('');
     const [dataValCat, setDataCat] = useState(null);
     const [date, setDate] = useState(null);
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(1)
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
@@ -24,16 +26,11 @@ function MyProductsListsSeller() {
 
 
     async function GetItemsProducts(page, category, dataFormat) {
-        if (page === 1) {
-            setData([])
-        }
-        const ItemsData = await GetRepository.getMyProductsSeller(page, category,  dataFormat, user?.access);
+        const ItemsData = await GetRepository.getMyProductsSeller(page, category, dataFormat, search, user?.access);
         if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProducts(page + 1, category,  dataFormat)
-            }
+            setCurrPage(page)
+            setPageCount(ItemsData.count)
+            setData([...ItemsData.results]);
         }
     }
     async function GetItemsCategory() {
@@ -41,13 +38,6 @@ function MyProductsListsSeller() {
         setDataCategory(ItemsData.results);
     }
 
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.title.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -91,8 +81,8 @@ function MyProductsListsSeller() {
         GetItemsCategory()
     }, [])
     useEffect(() => {
-        GetItemsProducts(1, dataValCat,  dataFormat)
-    }, [dataValCat,  dataFormat])
+        GetItemsProducts(currPage, dataValCat, dataFormat)
+    }, [dataValCat, dataFormat, search])
 
     const columns = [
         {
@@ -124,7 +114,7 @@ function MyProductsListsSeller() {
             title: 'Kategoriya',
             dataIndex: 'category',
             key: 'address',
-            width:300,
+            width: 300,
             render: (category) => (
                 <span> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
             )
@@ -167,11 +157,11 @@ function MyProductsListsSeller() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <input type='search' className={"form-control rounded col-md-9"} placeholder="Qidiruv" onInput={handleClick} />
+                                        <input type='search' className={"form-control rounded col-md-9"} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                         <div className="accordion accordion-flush" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">
-                                                    <button style={{ padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-warning admin-filter-color" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                    <button style={{ padding: "17px", backgroundColor: "#F1F1F2" }} className="accordion-button collapsed  responsiveCardButton   text-success " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                                         <strong> Filter</strong>
                                                     </button>
                                                 </h2>
@@ -183,8 +173,8 @@ function MyProductsListsSeller() {
                                                             {
                                                                 dataCategory?.length > 0 && (
                                                                     dataCategory?.map(item => (
-                                                                            <option key={item.id} value={item.id}>{item.name} </option>
-                                                                         
+                                                                        <option key={item.id} value={item.id}>{item.name} </option>
+
                                                                     ))
                                                                 )
                                                             }
@@ -196,8 +186,10 @@ function MyProductsListsSeller() {
 
                                         </div>
                                     </div>
-                                    <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} />
-
+                                    <Table dataSource={data} scroll={{ x: 1200 }} columns={columns} pagination={false}
+                                    />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                        onChange={(page) => GetItemsProducts(page, dataValCat, dataFormat)} />
                                 </div>
                             </div>
                         </div>

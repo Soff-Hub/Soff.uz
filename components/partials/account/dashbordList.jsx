@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Table } from 'antd';
+import { Pagination, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 // import Example from './Chart';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,8 @@ function DashbordList() {
     const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
     const [View, setView] = useState({});
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(null)
 
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -43,26 +45,34 @@ function DashbordList() {
     async function GetItemsProductsPopular() {
         const ItemsData = await GetRepository.getPopularProducts(user?.access);
         if (ItemsData?.info) {
+            setPageCount(ItemsData.count)
             setDataProducts(ItemsData?.info);
         }
     }
 
     async function GetItemsProductsOrders(page) {
-        if (page === 1) {
-            setDataOrders([])
-        }
+        setCurrPage(page)
         const ItemsData = await GetRepository.getOrdersListsDashbord(page, user?.access);
         if (ItemsData?.results) {
-            setDataOrders((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData?.next) {
-                GetItemsProductsOrders(page + 1)
-            }
+            setPageCount(ItemsData.count)
+            setDataOrders([...ItemsData.results]);
         }
     }
     async function handleClickView(item) {
         const ItemsData = await GetRepository.getPopularProductsView(item.id, user?.access);
         setView(ItemsData);
     }
+
+    const handlePagination = (pageNum) => {
+        setCurrPage(pageNum)
+        GetItems(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
+    }
+
+    const handlePagination2 = (pageNum) => {
+        setCurrPage(pageNum)
+        GetItemsProductsOrders(pageNum)
+    }
+
     useEffect(() => {
         GetItemsProducts()
         GetItemsProductsOrders(1)
@@ -123,14 +133,14 @@ function DashbordList() {
             render: (data) => (
                 <div className='d-flex flex-column'>
                     {
-                        data.phone==="None" ?
-                        <></> :
-                        <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                        data.phone === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
                     }
                     {
-                          data.email==="None" ?
-                          <></> :
-                    <span className="truncate whitespace-nowrap"> {data.email}</span>
+                        data.email === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.email}</span>
                     }
 
                 </div>
@@ -176,7 +186,7 @@ function DashbordList() {
             dataIndex: 'user_name',
             key: 'age',
         },
-          {
+        {
             title: 'Buyurtma nomi',
             dataIndex: 'title',
             key: 'age',
@@ -401,10 +411,19 @@ function DashbordList() {
                         <div className='pb-5'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                             {
-                                user?.role=="admin"  ?
-                                <Table scroll={{ x: 1350 }} dataSource={dataOrders} columns={columnsOrders} />
-                                :
-                                <Table scroll={{ x: 1150 }} dataSource={dataOrders} columns={columnsOrdersSeller} />
+                                user?.role == "admin" ?
+                                    <>
+                                        <Table scroll={{ x: 1350 }} dataSource={dataOrders} columns={columnsOrders}
+                                            pagination={false} />
+                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination2} />
+                                    </>
+                                    :
+                                    <>
+                                        <Table scroll={{ x: 1150 }} dataSource={dataOrders} columns={columnsOrdersSeller}
+                                            pagination={false} />
+                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                            onChange={GetItemsProductsOrders} />
+                                    </>
                             }
                         </div>
                     </div>
@@ -413,7 +432,9 @@ function DashbordList() {
                     user?.role === "admin" ?
                         <div>
                             <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
-                            <Table scroll={{ x: 1250 }} dataSource={dataProducts} columns={columns} className='pb-5' />
+                            <Table scroll={{ x: 1250 }} dataSource={dataProducts} columns={columns} className='pb-5' pagination={false}
+                            />
+                            <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                         </div>
                         :
                         <></>
