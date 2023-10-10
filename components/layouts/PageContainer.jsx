@@ -10,7 +10,6 @@ import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
 
 const initHeaders = (
-
     <>
         <HeaderElectronic />
         <HeaderMobileElectronic />
@@ -136,7 +135,6 @@ const PageContainer = ({
     const dispatch = useDispatch();
     const Router = useRouter();
 
-
     useEffect(() => {
         if (user?.role === 'admin') {
             dispatch(accountLinksReducers(accountAdminLinks));
@@ -166,16 +164,26 @@ const PageContainer = ({
             </Head>
             {header}
             <div>
-                <div className={`${query === '/page/form' ? 'container faq-page-container' : query === '/page/questions' ? 'container faq-page-container' : ''}  `}>
-                    <div
-                        className={` ${query === '/page/form'
-                            ? ''
+                <div
+                    className={`${
+                        query === '/page/form'
+                            ? 'container faq-page-container'
                             : query === '/page/questions'
+                            ? 'container faq-page-container'
+                            : query === '/page/about-us'
+                            ? 'container faq-page-container'
+                            : ''
+                    }  `}>
+                    <div
+                        className={` ${
+                            query === '/page/form'
                                 ? ''
+                                : query === '/page/questions'
+                                ? ''
+                                    : query === '/page/about-us'
+                                    ? ''
                                 : 'd-none'
-                            }`}
-
-                    >
+                        }`}>
                         <FaqSaidbar />
                     </div>
 

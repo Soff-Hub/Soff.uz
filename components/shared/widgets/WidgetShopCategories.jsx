@@ -33,7 +33,7 @@ const WidgetShopCategories = ({ data }) => {
     const renderChildLinks = (children, parentSlug) => {
         return children?.map((item, i) => (
             <Link key={i} href={`/category/${item.id}`}>
-                <a className={item.id === Number(slug) ? 'active' : ''}>
+                <a  className={ `acc-body-child-a ${item.id === Number(slug) ? 'active' : ''}`}>
                     {item.name}
                 </a>
             </Link>
@@ -49,16 +49,20 @@ const WidgetShopCategories = ({ data }) => {
                             className="accordion-item"
                             style={{ backgroundColor: '#fffcfced' }}
                         >
-                            <h2 className="accordion-header" id={`heading-${i}`}>
+                          <Link href={`/category/${item.id}`}>
+                          <a>
+                          <h2 className="accordion-header active" id={`heading-${i}`}>
                                 <button
                                     className={`accordion-button ${activeAccordionIndex === i ? '' : 'collapsed'
                                         }`}
                                     type="button"
                                     onClick={() => handleAccordionClick(i, item.slug)}
                                 >
-                                    {item.name}
+                                {item.name}
                                 </button>
                             </h2>
+                          </a>
+                          </Link>
                             <div
                                 id={`collapse-${i}`}
                                 className={`accordion-collapse collapse ${activeAccordionIndex === i ? 'show' : ''

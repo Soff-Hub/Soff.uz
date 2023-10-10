@@ -18,6 +18,7 @@ const Xabar = (e) => {
     const Router = useRouter();
     const { query } = Router;
     const dispatch = useDispatch()
+    const {user} = useSelector((state => state.auth))
 
     const handleSubmitKod = async () => {
         setLoader(true);
@@ -30,7 +31,12 @@ const Xabar = (e) => {
         const user = await verifyCode(data);
         if (user.status === 200 || user.status === 201) {
             setLoader(false);
-            Router.push('/');
+            if (user.roli === 'seller' || user.roli === 'admin') {
+                Router.push('/account/dashbord');     
+            }else{
+                Router.push('/account/myproducts');     
+
+            }
             dispatch(login({ user: user.data, data: e }));
         } else {
             setLoader(false);

@@ -6,6 +6,7 @@ import PostRepository from '~/repositories/PostRepository';
 const FaqsContent = () => {
     const [categoryData, setCategoryData] = useState(null);
     const [descriptionData, setDescriptionData] = useState(null);
+    const [active, setActive] = useState(false)
 
     const getFAQCategorysData = async () => {
         const respons = await PostRepository.getFAQCategorys();
@@ -42,8 +43,10 @@ const FaqsContent = () => {
                                 <div
                                     key={item.id}
                                     className="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-xs-4 my-3"
-                                    onClick={() => handleClick(item.id)}>
-                                    <div className="faqs-category__card">
+                                    onClick={() => (handleClick(item.id), setActive(item.id))}
+                                   
+                                    >
+                                    <div className={`faqs-category__card ${active === item.id ? 'active-FAQ' : ''}`}>
                                         <i
                                             className={`${item.icon} faq-icon`}></i>
                                         <span className="faq-category-name">
@@ -56,7 +59,7 @@ const FaqsContent = () => {
                 </div>
             </div>
 
-            <FaqsAccardion data={descriptionData} />
+            <FaqsAccardion data={descriptionData}  />
         </div>
     );
 };

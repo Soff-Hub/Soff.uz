@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { PropagateLoader } from 'react-spinners';
 import ProductRepository from '~/repositories/ProductRepository';
 
-
 function PanelCategories({
     setMenuDrawer,
     setCartDrawer,
@@ -13,7 +12,6 @@ function PanelCategories({
 }) {
     const [data, setData] = useState([]);
 
-
     const handleDrawerClose = () => {
         setMenuDrawer(false);
         setCartDrawer(false);
@@ -21,14 +19,11 @@ function PanelCategories({
         setSearchDrawer(false);
     };
 
-
-
     const Router = useRouter();
     const { slug } = Router.query;
     const category = data;
     const [activeAccordionIndex, setActiveAccordionIndex] = useState(null);
     const [childData, setChildData] = useState({});
-
 
     async function getCategry() {
         const responseData = await ProductRepository.getCategoryParent();
@@ -36,7 +31,6 @@ function PanelCategories({
             setData(responseData);
         }
     }
-
 
     const handleClickGetChildData = async (slug) => {
         const response = await ProductRepository.getChaildCategory(slug);
@@ -46,7 +40,6 @@ function PanelCategories({
                 [slug]: response,
             }));
         }
-       
     };
 
     const handleAccordionClick = (index, slug) => {
@@ -60,49 +53,77 @@ function PanelCategories({
 
     const renderChildLinks = (children, parentSlug) => {
         return children?.map((item, i) => (
-            <Link key={i}  href={`/category/${item.id}`} >
-                <a  onClick={ handleDrawerClose} className={item.id === Number(slug) ? 'active' : ''}>
+            <Link key={i} href={`/category/${item.id}`}>
+                <a
+                    onClick={handleDrawerClose}
+                    className={` acc-body-child-a  ${
+                        item.id === Number(slug) ? 'active' : ''
+                    }`}>
                     {item.name}
                 </a>
             </Link>
         ));
-    }
+    };
 
     const renderAccordionItems = () => {
         return category?.map((item, i) => (
-            <li key={item.id} className={item.id === Number(slug) ? 'active' : ''}>
+            <li
+                key={item.id}
+                className={item.id === Number(slug) ? 'active' : ''}>
                 {item.is_childe ? (
-                    <div className="accordion accordion-flush" id={`accordion-${i}`}>
+                    <div
+                        className="accordion accordion-flush"
+                        id={`accordion-${i}`}>
                         <div
                             className="accordion-item"
-                            style={{ backgroundColor: '#fffcfced' }}
-                        >
-                            <h2 className="accordion-header" id={`heading-${i}`}>
-                                <button
-                                    className={`accordion-button ${activeAccordionIndex === i ? '' : 'collapsed'
-                                        }`}
-                                    type="button"
-                                    onClick={() => handleAccordionClick(i, item.slug)}
-                                >
-                                    {item.name}
-                                </button>
-                            </h2>
+                            style={{ backgroundColor: '#fffcfced' }}>
+                            <Link href={`/category/${item.id}`}>
+                                <a>
+                                    <h2
+                                        className="accordion-header"
+                                        id={`heading-${i}`}>
+                                        <button
+                                            className={`accordion-button acc-mobile-padding ${
+                                                activeAccordionIndex === i
+                                                    ? ''
+                                                    : 'collapsed'
+                                            }`}
+                                            type="button"
+                                            onClick={() => (
+                                                handleAccordionClick(
+                                                    i,
+                                                    item.slug
+                                                ),
+                                                handleDrawerClose()
+                                            )}>
+                                            {item.name}
+                                        </button>
+                                    </h2>
+                                </a>
+                            </Link>
                             <div
                                 id={`collapse-${i}`}
-                                className={`accordion-collapse collapse ${activeAccordionIndex === i ? 'show' : ''
-                                    }`}
+                                className={`accordion-collapse collapse ${
+                                    activeAccordionIndex === i ? 'show' : ''
+                                }`}
                                 aria-labelledby={`heading-${i}`}
-                                data-bs-parent={`#accordion-${i}`}
-                            >
+                                data-bs-parent={`#accordion-${i}`}>
                                 <div className="accordion-body">
-                                    {renderChildLinks(childData[item.slug], item.slug)}
+                                    {renderChildLinks(
+                                        childData[item.slug],
+                                        item.slug
+                                    )}
                                 </div>
                             </div>
                         </div>
                     </div>
                 ) : (
                     <Link href={`/category/${item.id}`}>
-                        <a className="category-list-item">{item.name}</a>
+                        <a
+                            onClick={() => handleDrawerClose()}
+                            className="category-list-item">
+                            {item.name}
+                        </a>
                     </Link>
                 )}
             </li>
@@ -116,15 +137,16 @@ function PanelCategories({
     return (
         <aside className="widget  widget_shop">
             {category?.length ? (
-                <ul className="ps-list--categories">{renderAccordionItems()}</ul>
+                <ul className="ps-list--categories">
+                    {renderAccordionItems()}
+                </ul>
             ) : (
                 <div
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
                         alignContent: 'center',
-                    }}
-                >
+                    }}>
                     <PropagateLoader color="#C9C9C9" />
                 </div>
             )}

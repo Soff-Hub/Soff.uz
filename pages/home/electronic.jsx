@@ -4,45 +4,27 @@ import ElectronicBanner from '~/components/partials/homepage/electronic/Electron
 import ElectronicTopCategories from '~/components/partials/homepage/electronic/ElectronicTopCategories';
 import SiteFeatures from '~/components/partials/homepage/autopart/SiteFeatures';
 import { PropagateLoader } from 'react-spinners';
-
-import CollectionRepository from '~/repositories/CollectionRepository';
 import useCart from '~/hooks/useCart';
-import { useDispatch, useSelector } from 'react-redux';
 import useWishlist from '~/hooks/useWishlist';
-import { CategorySlug } from '~/store/auth/action';
+import { useSelector } from 'react-redux';
 
 const HomeElectronicsPage = ({ category }) => {
-    const dispatch = useDispatch()
-    async function getCategoryFunc() {
-        const responseData = await CollectionRepository.getCategoryData(
-            `customer/category-list/`
-        );
-        if (responseData?.data?.results) {
-            dispatch(CategorySlug(responseData.data.results));
-        }
-    }
+    const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
 
-    const { cartDataItems, wishlist } = useSelector(state => state.ecomerce)
-    const { category_lists: categoryData } = useSelector(state => state.auth)
-
-    const { setAllCartItem } = useCart()
-    const { setAllSaved } = useWishlist()
+    const { setAllCartItem } = useCart();
+    const { setAllSaved } = useWishlist();
 
     useEffect(() => {
-        if (cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))) {
+        if (
+            cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))
+        ) {
             setAllCartItem();
         }
 
         if (wishlist?.length !== JSON.parse(localStorage.getItem('wishlist'))) {
             setAllSaved();
         }
-
-        if (categoryData?.length === 0) {
-            getCategoryFunc();
-        }
-
     }, []);
-
 
     return (
         <main id="homepage-7">

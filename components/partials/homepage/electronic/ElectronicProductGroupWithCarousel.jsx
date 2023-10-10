@@ -10,7 +10,7 @@ const ElectronicProductGroupWithCarousel = ({
     id,
 }) => {
 
-
+console.log(data);
     // Views
     let productItemsView;
     if (true) {
@@ -44,7 +44,6 @@ const ElectronicProductGroupWithCarousel = ({
                 <div className="ps-section__header">
                     <h3>{title}</h3>
                     <ul className="ps-section__links">
-                        {/* {linksView} */}
                         <li>
                             <Link href={`/category/${id}`}>
                                 <a>Barchasini ko'rish</a>
