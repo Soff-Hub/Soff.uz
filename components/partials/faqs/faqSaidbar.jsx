@@ -29,6 +29,16 @@ export default function FaqSaidbar() {
                     </a>
                 </Link>
             </li>
+            <li>
+                <Link href="/page/about-us" as="/page/about-us">
+                    <a
+                        className={`${
+                            query === '/page/about-us' ? 'active-faq' : ''
+                        }`}>
+                        Biz haqimizda
+                    </a>
+                </Link>
+            </li>
         </ul>
       </div>
     );

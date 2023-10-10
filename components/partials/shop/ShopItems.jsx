@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
+import { useDispatch, useSelector } from 'react-redux';
+import { CategorySlug } from '~/store/auth/action';
 
 const ShopItems = ({
     columns = 4,
@@ -26,13 +28,24 @@ const ShopItems = ({
     const [load, setLoad] = useState(false);
     const [success, setSuccess] = useState(true);
 
+    const [chaildId, setchaildId] = useState(null);
+    const [parentId, setParentId] = useState(null);
+
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
-
+    const dispatch = useDispatch()
+    const { category_lists: categoryData } = useSelector(state => state.auth)
 
     function handleChangeViewMode(e) {
         e.preventDefault();
         setListView(!listView);
+    }
+
+    async function getCategry() {
+        const responseData = await ProductRepository.getCategoryParent();
+        if (responseData?.length > 0) {
+            dispatch(CategorySlug(responseData?.data?.results));
+        }
     }
 
     function handleSetColumns() {
@@ -72,6 +85,21 @@ const ShopItems = ({
             setLoad(true);
         }
     }, [query, data]);
+
+    useEffect(() => {
+        if (categoryData?.length === 0) {
+            getCategry();
+        }
+
+        if (categoryData?.every((cat) => Number(cat.id) !== Number(slug))) {
+            setchaildId(slug);
+            setParentId(null)
+        } else {
+            setParentId(slug);
+            setchaildId(null)
+        }
+
+    }, [slug])
 
     const handlePagination = async (e) => {
         setPage(e);
@@ -118,7 +146,7 @@ const ShopItems = ({
         const ID = 'id';
         const PRICE = 'price';
         const DePRICE = '-price';
-        if (chaildSlug) {
+        if (chaildId) {
             if (e.target.value === 'all') {
                 const respons = await ProductRepository.getFilderProduct(
                     1,
@@ -176,7 +204,7 @@ const ShopItems = ({
                 );
                 setNewData(respons?.results);
             }
-        } else if (parentSlug) {
+        } else if (parentId) {
             if (e.target.value === 'all') {
                 const respons = await ProductRepository.getFilderProduct(
                     1,
@@ -238,8 +266,7 @@ const ShopItems = ({
     }
 
     async function detailSearch(e) {
-        // setSearchValue(e)
-        if (chaildSlug) {
+        if (chaildId) {
             const respons = await ProductRepository.getSearchProduct(
                 1,
                 slug,
@@ -258,7 +285,7 @@ const ShopItems = ({
             } else {
                 setLoad(true);
             }
-        } else if (parentSlug) {
+        } else if (parentId) {
             const respons = await ProductRepository.getSearchProduct(
                 1,
                 null,

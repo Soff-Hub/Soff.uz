@@ -6,7 +6,6 @@ const FormPage = () => {
     return (
         <PageContainer  title="FAQ">
             <div className='container-faqs mt-4'>
-
                    <FormContent/>
             </div>
         </PageContainer>

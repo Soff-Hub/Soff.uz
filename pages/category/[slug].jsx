@@ -20,17 +20,17 @@ const ProductCategoryScreen = () => {
 
     const [count, setCount] = useState(null);
     const [nom, setNom] = useState('Kategoriyalar');
-
-    const [min, setMin] = useState(null);
-    const [max, setMax] = useState(null);
+    // const [breadCrumbName, setBreadCrumb] = useState(null)
 
     async function getCategry() {
         const responseData = await ProductRepository.getCategoryParent();
         if (responseData?.length > 0) {
-            if (responseData?.every((cat) => cat.slug !== slug)) {
+            if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
                 setchaildId(slug);
+                setParentId(null)
             } else {
                 setParentId(slug);
+                setchaildId(null)
             }
             setCategory(responseData);
         }
@@ -73,8 +73,6 @@ const ProductCategoryScreen = () => {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
-            setMin(responseData?.min_price);
-            setMax(responseData?.max_price);
             setCount(responseData.count);
         }
         setParentId(null);
@@ -93,11 +91,11 @@ const ProductCategoryScreen = () => {
             getParentData(slug);
         }
 
-        if (category?.length) {
+        if (category?.length > 0) {
             for (let i = 0; i < category.length; i++) {
                 if (category[i].id === Number(slug)) {
                     setNom(category[i].name);
-                } else if (category[i]?.children?.length > 0) {
+                } else {
                     for (let j = 0; j < category[i]?.children?.length; j++) {
                         if (category[i]?.children[j].id === Number(slug)) {
                             setNom(category[i]?.children[j].name);
@@ -115,10 +113,9 @@ const ProductCategoryScreen = () => {
         },
 
         {
-            text: `${nom}`,
+            text: nom,
         },
     ];
-
     return (
         <PageContainer
             footer={<FooterDefault />}
@@ -129,7 +126,7 @@ const ProductCategoryScreen = () => {
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories data={category} />
+                            <WidgetShopCategories data={category}  />
                             <WidgetShopFilterByPriceRange
                                 setFilteredData={setFilteredData}
                                 chaildId={chaildId}

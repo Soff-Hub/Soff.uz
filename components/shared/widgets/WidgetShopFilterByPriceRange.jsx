@@ -143,11 +143,11 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData,parentId ,chaildId}) => 
                 <h4 className="widget-title">Narx </h4>
                 <Slider
                     range
-                    value={[defVal?.[0] || 0, defVal?.[1]] || 0}
+                    value={max || 0}
                     max={max}
-                    min={min}
+                    // min={min}
                     onAfterChange={(e) => handleChangeRange(e)}
-                    onChange={(e) => setDefVal(e)}
+                    // onChange={(e) => setDefVal(e)}
                 />
                 <p>
                     Narx: { min === undefined || min === null ? 0 : addPeriodToThousands(min)} so'm - { max === undefined || max === null ? 0 : addPeriodToThousands(max)} so'm

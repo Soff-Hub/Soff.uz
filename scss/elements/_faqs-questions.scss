@@ -68,6 +68,10 @@
     font-weight: 400 !important;
 }
 
+.active-FAQ{
+    border: 1px solid $color-1st !important;
+}
+
 @media screen and (max-width: 1200px) {
     .faq-category-name{
         font-size: 15px;
