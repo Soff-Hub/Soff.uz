@@ -6,7 +6,7 @@ const ModuleProductDetailDescription = ({ product }) => (
         <ul className="ps-list--dot" style={{ listStyleType: 'revert' }}>
             <li>
                 {' '}
-                <strong>Betlar soni : </strong> {product?.document?.page_count}
+                <strong>Betlar soni : </strong> {product?.document?.page_count} ta
             </li>
             <li>
                 {' '}
