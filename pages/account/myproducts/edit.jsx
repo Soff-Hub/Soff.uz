@@ -285,23 +285,6 @@ const PostsMyProducts = () => {
                                     )}
                                 />
                             </div> */}
-
-                            <div className="row">
-                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulotning qisqacha tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
-
-
-                                <div className='col-md-8 p-0 mb-3 '>
-                                    <CKeditor
-                                        name="short_description"
-                                        onChange={(data) => {
-                                            setShortData(data);
-                                        }}
-                                        editorLoaded={editorLoaded}
-                                        value={products?.short_description}
-
-                                    />
-                                </div>
-                            </div>
                             <div className="row">
                                 <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
