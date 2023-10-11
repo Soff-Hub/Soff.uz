@@ -63,12 +63,11 @@ class Login extends Component {
                     description: 'Siz saytga muvaffaqqiyatli kirdingiz!',
                     type: 'success',
                 });
-                Router.push('/');   
-                // if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
-                //     Router.push('/account/dashbord');     
-                // }else if (user?.data?.role === 'customer'){
-                //     Router.push('/account/myproducts');     
-                // }
+                if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
+                    Router.push('/account/dashbord');     
+                }else if (user?.data?.role === 'customer'){
+                    Router.push('/account/myproducts');     
+                }
             }
         }
     };

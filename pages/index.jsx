@@ -13,17 +13,31 @@ const HomepageDefaultPage = ({ category }) => {
     );
 };
 
+
 export async function getServerSideProps() {
-    const request = await fetch(baseUrl + `customer/category-list/`)
-    const category = await request.json()
+    try {
+        const request = await fetch(baseUrl + 'customer/category-list/');
+        if (!request.ok) {
+            throw new Error('Request to the API failed with status ' + request.status);
+        }
 
+        const categoryResponse = await request.json();
 
-    return {
-        props: {
-            category
-        },
-    };
+        return {
+            props: {
+                category: categoryResponse,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return {
+            props: {
+                category: null,
+            },
+        };
+    }
 }
+
 
 
 export default HomepageDefaultPage;

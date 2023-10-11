@@ -10,7 +10,6 @@ const ElectronicProductGroupWithCarousel = ({
     id,
 }) => {
 
-console.log(data);
     // Views
     let productItemsView;
     if (true) {

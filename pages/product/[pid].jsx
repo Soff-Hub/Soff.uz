@@ -56,7 +56,7 @@ const ProductDefaultPage = ({ product, similar }) => {
             <PageContainer title={product ? product.title : 'Loading...'}>
                 <Meta
                     title={product.title}
-                    image={product.iamges[0].image_url}
+                    image={product.document.images[0].image_url}
                 />
 
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />

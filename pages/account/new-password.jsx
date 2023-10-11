@@ -9,10 +9,10 @@ export default function NewPassword() {
     const [parol1, setParol1] = useState('');
     const [parol2, setParol2] = useState('');
     const [passwordInput, setPasswordInput] = useState('');
-    const [report, setReport] = useState(true)
+    const [report, setReport] = useState(true);
 
     const QaytaParolJonatish = async (e) => {
-        setReport(false)
+        setReport(false);
         e.preventDefault();
         const data = {
             password: parol1,
@@ -21,16 +21,21 @@ export default function NewPassword() {
         const { qaytaParolYuborishAuth } = useAuth();
         const user = await qaytaParolYuborishAuth(data);
         if (user.status === 200 || user.status === 201) {
-            setReport(true)
-            Router.push('/account/login');
-            setParol1('')
-            setParol2('')
+            setReport(true);
+
+            if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
+                Router.push('/account/dashbord');
+            } else if (user?.data?.role === 'customer') {
+                Router.push('/account/myproducts');
+            }
+            setParol1('');
+            setParol2('');
         } else {
-            setReport(true)
+            setReport(true);
             const modal = Modal.error({
                 centered: true,
-                title: "Xatolik!",
-                content:  user?.data?.msg,
+                title: 'Xatolik!',
+                content: user?.data?.msg,
             });
             modal.update;
         }
@@ -57,7 +62,7 @@ export default function NewPassword() {
                                 Parolni kiriting{' '}
                             </label>
                             <input
-                            required
+                                required
                                 type="number"
                                 className="raqam-input-parol"
                                 onChange={(e) => setParol1(e.target.value)}
@@ -71,7 +76,7 @@ export default function NewPassword() {
                                 Parolni qayta kiriting{' '}
                             </label>
                             <input
-                            required
+                                required
                                 type="number"
                                 className="raqam-input-parol"
                                 onChange={(e) => setParol2(e.target.value)}
@@ -80,20 +85,19 @@ export default function NewPassword() {
                         </div>
 
                         <div className="form-group submit">
-                           {
-                            report ? 
-                            <button
-                            type="submit"
-                            className="ps-btn ps-btn--fullwidth">
-                            Yuborish
-                        </button>
-                        :
-                        <button
-                            type="submit"
-                            className="ps-btn ps-btn--fullwidth mb-5">
-                            <BeatLoader color="#fff" />
-                        </button>
-                           }
+                            {report ? (
+                                <button
+                                    type="submit"
+                                    className="ps-btn ps-btn--fullwidth">
+                                    Yuborish
+                                </button>
+                            ) : (
+                                <button
+                                    type="submit"
+                                    className="ps-btn ps-btn--fullwidth mb-5">
+                                    <BeatLoader color="#fff" />
+                                </button>
+                            )}
                         </div>
                     </form>
                 </div>
