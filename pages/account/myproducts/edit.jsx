@@ -81,7 +81,7 @@ const PostsMyProducts = () => {
             formData.append('title', title);
         }
         if (taxminiyNarx) {
-            formData.append('price', taxminiyNarx);
+            formData.append('discount_price', taxminiyNarx);
         }
         if (Shortdata) {
             formData.append('short_description', Shortdata);
