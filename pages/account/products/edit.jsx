@@ -163,9 +163,6 @@ const PostsProductsEdit = () => {
         if (Fulldata) {
             Object.assign(data, { description: Fulldata });
         }
-        if (Shortdata) {
-            Object.assign(data, { short_description: Shortdata });
-        }
         const patchItems = await PatchRepository.getProductsPatch(
             data,
             products?.id,
@@ -358,7 +355,7 @@ const PostsProductsEdit = () => {
                                     <Select
                                         mode='select'
                                         showSearch
-                                        style={{ width: '100%',  height:"47px" }}
+                                        style={{ width: '100%', height: "47px" }}
                                         onChange={onChange}
                                         onSearch={onSearch}
                                         defaultValue={products?.category?.name}
@@ -366,28 +363,6 @@ const PostsProductsEdit = () => {
                                         {options}
 
                                     </Select>
-                                </div>
-                            </div>
-
-                            <div className="row">
-                                <div className="col-md-4 d-flex justify-content-between p-0">
-                                    <p>Mahsulotning qisqacha tavsifi: *</p>{' '}
-                                    <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
-
-                                <div className="col-md-8 p-0 mb-3">
-                                    <CKeditor
-                                        name="description"
-                                        onChange={(data) => {
-                                            setShortData(data);
-                                        }}
-                                        editorLoaded={editorLoaded}
-                                        value={products?.short_description}
-                                    />
                                 </div>
                             </div>
                             <div className="row">
@@ -488,15 +463,13 @@ const PostsProductsEdit = () => {
                                 </p>
                                 <p className="live-card-p">
                                     <span>
-                                        <strong>Qisqa tavsif</strong>:{' '}
+                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                     </span>
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {Shortdata
-                                            ? parse(Shortdata)
-                                            : products?.short_description
-                                                ? parse(products?.short_description)
-                                                : ''}
-                                    </span>
+                                    <ul style={{ maxWidth: '150px' }} className=''>
+                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
+                                        <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
+                                        <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                    </ul>
                                 </p>
                                 <p className="live-card-p">
                                     <span>
@@ -585,17 +558,13 @@ const PostsProductsEdit = () => {
                                     </p>
                                     <p className="live-card-p">
                                         <span>
-                                            <strong>Qisqa tavsif</strong>:{' '}
+                                            <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                         </span>
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {Shortdata
-                                                ? parse(Shortdata)
-                                                : products?.short_description
-                                                    ? parse(
-                                                        products?.short_description
-                                                    )
-                                                    : ''}
-                                        </span>
+                                        <ul style={{ maxWidth: '150px' }} className=''>
+                                            <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
+                                            <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
+                                            <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                        </ul>
                                     </p>
                                     <p className="live-card-p">
                                         <span>
@@ -640,8 +609,8 @@ const PostsProductsEdit = () => {
                                         <div className="ps-product__thumbnail">
                                             <figure>
                                                 <div className="ps-wrapper">
-                                                    {products?.iamges ? (
-                                                        products?.iamges?.map(
+                                                    {products?.document?.images ? (
+                                                        products?.document?.images.map(
                                                             (item) => (
                                                                 <img
                                                                     src={
@@ -693,31 +662,29 @@ const PostsProductsEdit = () => {
                                                 </h4>
                                             </div>
                                             <div className="ps-product__desc">
-                                                <ul className="ps-list--dot">
+                                                <strong>
                                                     <span>
-                                                        <strong>
-                                                            Qisqa tavsif :
-                                                        </strong>
-                                                        {Shortdata
-                                                            ? parse(Shortdata)
-                                                            : products?.short_description
-                                                                ? parse(
-                                                                    products?.short_description
-                                                                )
-                                                                : ''}
+                                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                                     </span>
-                                                </ul>
+                                                    <ul style={{  listStyleType:"revert" }}>
+                                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
+                                                        <li> <strong className='fs-4'>Hajmi: </strong>{products?.document?.file_size}</li>
+                                                        <li> <strong className='fs-4'>Turi: </strong>{products?.document?.file_type}</li>
+                                                        <li>
+                                                            <strong>
+                                                                Kategoriyasi
+                                                            </strong>{' '}
+                                                            :{' '}
+                                                            {categoryName
+                                                                ? categoryName
+                                                                : products?.category
+                                                                    ?.name}
+                                                        </li>
+                                                    </ul>
+
+                                                </strong>
                                                 <ul>
-                                                    <li>
-                                                        <strong>
-                                                            Kategoriyasi
-                                                        </strong>{' '}
-                                                        :{' '}
-                                                        {categoryName
-                                                            ? categoryName
-                                                            : products?.category
-                                                                ?.name}
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                             <div className="ps-product__shopping row-gap-3">

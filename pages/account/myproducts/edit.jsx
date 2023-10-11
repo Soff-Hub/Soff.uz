@@ -223,7 +223,7 @@ const PostsMyProducts = () => {
                                         livePoster ? livePoster :
                                             "blob:http://localhost:3000/1ba7f287-c435-4e10-9080-6c01990d7f21"
                                     }
-                                    <input type="file" onChange={(e) => LiveImage(e)}  accept="image/*" />
+                                    <input type="file" onChange={(e) => LiveImage(e)} accept="image/*" />
                                 </label>
                             </div>
 
@@ -248,7 +248,7 @@ const PostsMyProducts = () => {
                                     <Select
                                         mode='select'
                                         showSearch
-                                        style={{ width: '100%',  height:"47px" }}
+                                        style={{ width: '100%', height: "47px" }}
                                         onChange={onChange}
                                         onSearch={onSearch}
                                         defaultValue={products?.category?.name}
@@ -387,13 +387,14 @@ const PostsMyProducts = () => {
                                     </span>
                                 </p> */}
                                 <p className="live-card-p">
-                                    <span><strong>Qisqa tavsif</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
-                                        }
-
+                                    <span>
+                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                     </span>
+                                    <ul style={{ maxWidth: '150px' }} className=''>
+                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
+                                        <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
+                                        <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                    </ul>
                                 </p>
                                 <p className="live-card-p">
                                     <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
@@ -469,13 +470,14 @@ const PostsMyProducts = () => {
                                         </span>
                                     </p> */}
                                     <p className="live-card-p">
-                                        <span><strong>Qisqa tavsif</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
-                                            }
-
+                                        <span>
+                                            <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                         </span>
+                                        <ul style={{ maxWidth: '150px' }} className=''>
+                                            <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
+                                            <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
+                                            <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                        </ul>
                                     </p>
                                     <p className="live-card-p">
                                         <span><strong>Hujjatingiz haqida to'liq ma'umot</strong>: </span>
@@ -507,8 +509,8 @@ const PostsMyProducts = () => {
                                             <figure >
                                                 <div className="ps-wrapper" >
                                                     {
-                                                        products?.iamges ?
-                                                            products?.iamges?.map(item => (
+                                                        products?.document?.images ?
+                                                            products?.document?.images?.map(item => (
                                                                 <img key={item.id} src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
                                                             ))
 
@@ -535,24 +537,29 @@ const PostsMyProducts = () => {
                                                 <h4> Muallif : {products?.seller?.first_name} {products?.seller?.last_name}</h4>
                                             </div>
                                             <div className="ps-product__desc">
-
-
-                                                <ul className="ps-list--dot">
-                                                    <span  >
-                                                        <strong>Qisqa tavsif : </strong>
-                                                        {
-                                                            Shortdata ? parse(Shortdata) : products?.short_description ? parse(products?.short_description) : ""
-                                                        }
-
+                                                <strong>
+                                                    <span>
+                                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                                     </span>
-                                                </ul>
-                                                <ul>
-                                                    <li>
-                                                        <strong>Kategoriyasi</strong> : {
-                                                            categoryName ? categoryName : products?.category?.name
-                                                        }
+                                                    <ul style={{ listStyleType: "revert" }}>
+                                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
+                                                        <li> <strong className='fs-4'>Hajmi: </strong>{products?.document?.file_size}</li>
+                                                        <li> <strong className='fs-4'>Turi: </strong>{products?.document?.file_type}</li>
+                                                        <li>
+                                                            <strong>
+                                                                Kategoriyasi
+                                                            </strong>{' '}
+                                                            :{' '}
+                                                            {categoryName
+                                                                ? categoryName
+                                                                : products?.category
+                                                                    ?.name}
+                                                        </li>
+                                                    </ul>
 
-                                                    </li>
+                                                </strong>
+                                                <ul>
+
                                                 </ul>
                                             </div>
                                             <div className="ps-product__shopping row-gap-3" >
