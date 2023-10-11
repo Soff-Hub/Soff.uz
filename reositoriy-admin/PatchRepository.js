@@ -22,7 +22,7 @@ class PatchRepository {
         return reponse;
     }
     async PatchUsers(data, id, token) {
-        const endPoint = `admin/customer-update/${id}`;
+        const endPoint = `admin/customer-list/${id}/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'PATCH',
@@ -33,7 +33,7 @@ class PatchRepository {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }

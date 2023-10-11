@@ -15,7 +15,7 @@ function AccountUserPages() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
-    const [selectVal, setSelectVal] = useState({});
+    const [selectVal, setSelectVal] = useState(null);
     const [selectValStatus, setSelectValStatus] = useState("");
 
     const [pageCount, setPageCount] = useState(0)
@@ -47,21 +47,24 @@ function AccountUserPages() {
         GetItemsUsers(currPage, selectValStatus, search)
     }
     async function handleItemsEdit() {
-        const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
-        if (patchItems?.status === 202) {
-            const modal = Modal.success({
+        if (selectVal) {
+            const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content: "Siz  malumotlarni o'zgartirdingiz ",
+                });
+      
+            GetItemsUsers(currPage, selectValStatus, search)
+            setSelectVal(null)
+        }
+        else {
+            const modal = Modal.info({
                 centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
-        } else {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: patchItems?.data?.msg,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirirish uchun malumot kiritilmadi ",
             });
         }
-        GetItemsUsers(currPage, selectValStatus, search)
     }
 
     useEffect(() => {
@@ -153,8 +156,8 @@ function AccountUserPages() {
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalTogglEdit" onSubmited={handleItemsEdit} formID={'edit-form-users'}>
                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
-                         <option className='fs-3' selected value="new">Faol emas</option>
-                         <option className='fs-3' value="code_verified">Faol</option>
+                        <option className='fs-3' selected value="new">Faol emas</option>
+                        <option className='fs-3' value="code_verified">Faol</option>
                     </select>
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>

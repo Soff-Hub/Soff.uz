@@ -116,8 +116,8 @@ function DashbordList() {
             title: 'Narx',
             dataIndex: 'discount_price',
             key: 'age',
-            render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
+            render: (discount_price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(discount_price)}</span>
             ),
         },
         {
