@@ -108,7 +108,11 @@ function AccountUserPages() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                {
+                    data.some(el => el.id == id && el.auth_status === 'new') ?
+                    <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                :    <a style={{cursor:"not-allowed"}}><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
             </div>
         },
@@ -146,32 +150,6 @@ function AccountUserPages() {
                 </div>
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalTogglEdit" onSubmited={handleItemsEdit} formID={'edit-form-users'}>
-                    <input
-                        type='text'
-                        placeholder="Ism"
-                        className="form-control rounded-3"
-                        name='first_name'
-                        defaultValue={deleteIdEdit?.first_name}
-                        onChange={(e) => setSelectVal((prev) => ({ ...prev, first_name: e.target.value }))}
-                    />
-                    <input
-                        type='tel'
-                        placeholder="Telefon raqam"
-                        className="form-control rounded-3"
-                        name='phone'
-                        defaultValue={deleteIdEdit?.data?.phone}
-                        onChange={(e) => setSelectVal((prev) => ({ ...prev, phone: e.target.value }))}
-                        maxLength={13}
-                    />
-                    <input
-                        type='email'
-                        placeholder="Elektron pochta"
-                        className="form-control rounded-3"
-                        name='email'
-                        defaultValue={deleteIdEdit?.data?.email}
-                        onChange={(e) => setSelectVal((prev) => ({ ...prev, email: e.target.value }))}
-                    />
-
                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
                         <option className='fs-3' selected disabled >Holatni tanlang</option>
                         {
@@ -195,7 +173,6 @@ function AccountUserPages() {
                         placeholder="Ism"
                         className="form-control rounded-3"
                         name='first_name'
-                        required
                         onChange={(e) => setSelectVal((prev) => ({ ...prev, first_name: e.target.value }))}
 
                     />
@@ -205,7 +182,6 @@ function AccountUserPages() {
                         className="form-control rounded-3"
                         name='phone'
                         defaultValue="+998"
-                        required
                         onChange={(e) => setSelectVal((prev) => ({ ...prev, phone: e.target.value }))}
                         maxLength={13}
 
