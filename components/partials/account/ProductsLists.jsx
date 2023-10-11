@@ -111,19 +111,18 @@ function ProductsLists() {
         return formattedNumber;
     }
     const handleButtonClickViewProducts = async () => {
-
         try {
             setLoading2(true)
-            const fileContent = deleteIdView
+            const fileContent = deleteIdView?.document
             const response = await Axios.get(
-                fileContent.file,
+             fileContent?.file_url,
                 { responseType: 'blob' }
             );
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            a.download = deleteIdView.title + "." + fileContent.file_url.split('.')[fileContent.file_url?.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);

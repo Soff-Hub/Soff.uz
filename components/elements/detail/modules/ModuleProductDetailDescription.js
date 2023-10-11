@@ -3,7 +3,7 @@ import React from 'react';
 const ModuleProductDetailDescription = ({ product }) => (
     <div className="ps-product__desc">
         <strong className="fs-3"> Qisqa tavsif </strong>
-        <ul className="ps-list--dot" style={{ listStyleType: 'revert' }}>
+        <ul style={{ listStyleType: 'revert' }}>
             <li>
                 {' '}
                 <strong>Betlar soni : </strong> {product?.document?.page_count}

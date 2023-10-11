@@ -21,7 +21,6 @@ function DashbordList() {
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(null)
     const [loading, setLoading] = useState(false);
-    const [loading2, setLoading2] = useState(false);
 
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -82,30 +81,6 @@ function DashbordList() {
         setCurrPage(pageNum)
         GetItemsProductsOrders(pageNum)
     }
-
-    const handleButtonClickViewProducts = async () => {
-
-        try {
-            setLoading2(true)
-            const fileContent = View
-            const response = await Axios.get(
-                fileContent.file,
-                { responseType: 'blob' }
-            );
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            setLoading2(false)
-        } catch (error) {
-            console.error('Error downloading file: ', error);
-            setLoading2(false)
-        }
-    };
 
 
     useEffect(() => {
@@ -473,7 +448,7 @@ function DashbordList() {
                             <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                         </div>
                         :
-                    <></>
+                        <></>
                 }
                 <div className="modal fade " id="staticBackdropViewPopular" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog container '>
@@ -545,24 +520,6 @@ function DashbordList() {
                                                         <PartialDescription product={View} />
                                                     </TabPane>
                                                 </Tabs>
-                                            </div>
-                                            <div className='d-flex justify-content-end '>
-                                                {
-                                                    !loading2 ?
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
-
-                                                            <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
-
-                                                        </button>
-                                                        :
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px" }}>
-
-                                                            <div className="spinner-border " role="status">
-                                                                <span className="visually-hidden">Loading...</span>
-                                                            </div>
-
-                                                        </button>
-                                                }
                                             </div>
                                         </div>
                                         :

@@ -135,7 +135,7 @@ function MyProductsLists() {
         GetItemsProducts(currPage, dataValCat, tagName, dataFormat, selectValStatus, search)
 
     }
-  async  function handleClickIdEdit(productsItems) {
+    async function handleClickIdEdit(productsItems) {
         const ItemsData = await GetRepository.getMyProductsView(productsItems, user?.access);
         dispatch(MyProductsEdit(ItemsData))
     }
@@ -188,19 +188,18 @@ function MyProductsLists() {
     }
 
     const handleButtonClickViewProducts = async () => {
-
         try {
             setLoading2(true)
-            const fileContent = View
+            const fileContent = View?.document
             const response = await Axios.get(
-                fileContent.file,
+                fileContent?.file_url,
                 { responseType: 'blob' }
             );
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            a.download =View.title + "." + fileContent.file_url.split('.')[fileContent.file_url?.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);

@@ -287,6 +287,7 @@ const Posts = () => {
         GetItemsCategoryLists();
     }, []);
 
+    console.log(livePosterFile);
 
     useEffect(() => {
         PostFilePoster();
