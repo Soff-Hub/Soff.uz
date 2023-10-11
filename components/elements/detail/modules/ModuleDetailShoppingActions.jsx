@@ -6,9 +6,7 @@ import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 
 const ModuleDetailShoppingActions = ({
-    ecomerce,
-    product,
-    extended = false,
+    product
 }) => {
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist , removeSavedItem} = useWishlist();

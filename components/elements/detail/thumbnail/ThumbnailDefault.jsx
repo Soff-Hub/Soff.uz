@@ -7,8 +7,8 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
             data-vertical={vertical ? 'true' : 'false'}>
             <figure>
                 <div className="ps-wrapper">
-                    {product?.iamges?.length > 0 ? (
-                        product?.iamges?.map((item,i) => (
+                    {product?.document?.images?.length > 0 ? (
+                        product?.document?.images?.map((item,i) => (
                             <img
                             key={i}
                                 src={item?.image_url}

@@ -5,13 +5,13 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 import DefaultDescription from './description/DefaultDescription';
 import { useState } from 'react';
-import  Router  from 'next/router';
+import Router from 'next/router';
 import { useEffect } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 
 const ProductDetailQuickView = ({ product }) => {
     const [tag, setTag] = useState([]);
-    const [img, setImage] = useState(null)
+    const [img, setImage] = useState(null);
 
     const searchTag = (e) => {
         Router.push(`/search?keyword=${e}`);
@@ -21,40 +21,39 @@ const ProductDetailQuickView = ({ product }) => {
         Router.push(`/seller/${e}`);
     };
 
-   const getImage = async () => {
-    const responsImage = await ProductRepository.getProductImagesSlug(product?.slug)
-    if (responsImage) {
-        setImage(responsImage?.[0]?.image)
-    }
-   }
+    const getImage = async () => {
+        const responsImage = await ProductRepository.getProductImagesSlug(
+            product?.slug
+        );
+        if (responsImage) {
+            console.log(responsImage);
+            setImage(responsImage);
+        }
+    };
 
-   useEffect(() => {
-        getImage()
-   }, [])
-
-
+    useEffect(() => {
+        getImage();
+    }, []);
 
     return (
         <div className="ps-product--detail ps-product--quickview">
             <div className="ps-product__header">
-            <figure>
-                <div className="ps-wrapper">
-                    {img?.length > 0 ? (
-                        img?.map((item, i) => (
-                            <img
-                            key={i}
-                                src={item?.image_url}
-                                alt="document"
-                                className="border mb-3 "
-                                style={{ objectFit: 'contain' }}
-                            />
-                        ))
-                    ) : (
-                        ''
-                    )}
-                </div>
-            </figure>
-                
+                <figure>
+                    <div className="ps-wrapper">
+                        {img?.length > 0
+                            ? img?.map((item, i) => (
+                                  <img
+                                      key={i}
+                                      src={item?.image_url}
+                                      alt="document"
+                                      className="border mb-3 "
+                                      style={{ objectFit: 'contain' }}
+                                  />
+                              ))
+                            : ''}
+                    </div>
+                </figure>
+
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
                     <div>
@@ -63,11 +62,10 @@ const ProductDetailQuickView = ({ product }) => {
                                 style={{
                                     cursor: 'pointer',
                                 }}
-                                onClick={() =>
-                                    SellerPage(product?.seller?.id)
-                                }>
+                                onClick={() => SellerPage(product?.seller?.id)}>
                                 {' '}
-                                Muallif : {product?.seller?.first_name}   {product?.seller?.last_name}
+                                Muallif : {product?.seller?.first_name}{' '}
+                                {product?.seller?.last_name}
                             </h4>
                         )}
                     </div>
@@ -76,7 +74,7 @@ const ProductDetailQuickView = ({ product }) => {
                         product={product}
                         extended={true}
                     />
-                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
                         {tag?.length > 0 &&
                             tag.map((item, i) => (
                                 <div key={i} className="mx-2">
@@ -94,11 +92,11 @@ const ProductDetailQuickView = ({ product }) => {
                     </div>
                 </div>
             </div>
-            {
-                product?.description ?
-                <DefaultDescription product={product} /> :
+            {product?.description ? (
+                <DefaultDescription product={product} />
+            ) : (
                 ''
-            }
+            )}
         </div>
     );
 };

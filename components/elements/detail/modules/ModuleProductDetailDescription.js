@@ -1,24 +1,27 @@
 import React from 'react';
-var parse = require('html-react-parser');
 
 const ModuleProductDetailDescription = ({ product }) => (
     <div className="ps-product__desc">
-        <ul className="ps-list--dot" >
-            {
-                <li>
-                    {product?.short_description
-                        ? parse(product?.short_description)
-                        : ''}
-                </li>
-            }
-        </ul>
-        {product?.category?.name && (
-            <ul style={{padding:'0', margin:'0'}}>
+        <strong className="fs-3"> Qisqa tavsif </strong>
+        <ul className="ps-list--dot" style={{ listStyleType: 'revert' }}>
+            <li>
+                {' '}
+                <strong>Betlar soni : </strong> {product?.document?.page_count}
+            </li>
+            <li>
+                {' '}
+                <strong>Hajmi : </strong> {product?.document?.file_size}
+            </li>
+            <li>
+                {' '}
+                <strong>Turi : </strong> {product?.document?.file_type}
+            </li>
+            {product?.category?.name && (
                 <li>
                     <strong> Kategoriyasi</strong> : {product?.category?.name}
                 </li>
-            </ul>
-        )}
+            )}
+        </ul>
     </div>
 );
 
