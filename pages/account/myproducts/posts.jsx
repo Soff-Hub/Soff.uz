@@ -912,28 +912,19 @@ const Posts = () => {
 
                                                 </ul>
                                             </div>
-                                            <div className="ps-product__shopping row-gap-3">
+                                            <div className="ps-product__shopping row-gap-3" >
                                                 <button
                                                     className="ps-btn ps-btn--black"
-                                                    style={{
-                                                        cursor: 'not-allowed',
-                                                    }}>
+                                                    style={{ cursor: "not-allowed" }}
+                                                >
                                                     Savatga qo'shish
                                                 </button>
-                                                <button
-                                                    className="ps-btn"
-                                                    style={{
-                                                        cursor: 'not-allowed',
-                                                    }}>
+                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
                                                     Sotib olish
                                                 </button>
                                                 <div className="ps-product__actions">
-                                                    <a
-                                                        style={{
-                                                            cursor: 'not-allowed',
-                                                        }}>
-                                                        <i
-                                                            className={`icon-heart`}></i>
+                                                    <a style={{ cursor: "not-allowed" }} >
+                                                        <i className={`icon-heart`} ></i>
                                                     </a>
                                                 </div>
                                             </div>

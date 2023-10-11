@@ -84,8 +84,8 @@ function ProductsLists() {
         setLoading(false)
     }
 
-   async function handleClickIdEditProducts(productsItems) {
-      console.log(productsItems);
+    async function handleClickIdEditProducts(productsItems) {
+        console.log(productsItems);
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, productsItems, null, search, user?.access);
         dispatch(MyProductsEdit(ItemsData))
     }
@@ -115,7 +115,7 @@ function ProductsLists() {
             setLoading2(true)
             const fileContent = deleteIdView?.document
             const response = await Axios.get(
-             fileContent?.file_url,
+                fileContent?.file_url,
                 { responseType: 'blob' }
             );
 
@@ -133,7 +133,7 @@ function ProductsLists() {
         }
     };
 
-    
+
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
         GetItemsProductsLists(pageNum, category_id[0], dataValStatus, dataFormat, null, dateArxiv, search)
@@ -266,10 +266,10 @@ function ProductsLists() {
                                                 <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
                                                         <Select
-                                                        className='col-md-6 p-0'
+                                                            className='col-md-6 p-0'
                                                             mode='select'
                                                             showSearch
-                                                            style={{ width: '100%' , height:"47px"}}
+                                                            style={{ width: '100%', height: "47px" }}
                                                             onChange={onChange}
                                                             placeholder="Barcha kategoriyalar"
                                                         >
