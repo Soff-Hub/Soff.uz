@@ -3,7 +3,6 @@ import Repository, { baseUrlAuth } from '~/repositories/Repository';
 
 export default function useAuth() {
     const registerUser = (url, e) => {
-
         let user = Repository.post(baseUrlAuth + url, e)
             .then((ress) => {
                 return ress;
@@ -24,7 +23,7 @@ export default function useAuth() {
 
     const loginUser = (e) => {
         let endPoint = 'auth/login/';
-       
+
         let user = Repository.post(baseUrlAuth + endPoint, e)
             .then((ress) => {
                 return ress;
@@ -48,8 +47,7 @@ export default function useAuth() {
 
     const verifyCode = (e) => {
         const endPoint = 'auth/verify/';
-       
-        
+
         let config = {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('token')} `,
@@ -103,14 +101,13 @@ export default function useAuth() {
     const qaytaKodYuborish = (data) => {
         let endPoint = 'auth/get-new-code/';
         let config = {
-          
-                Authorization: `Bearer ${localStorage.getItem('token')} `,
-        }
+            Authorization: `Bearer ${localStorage.getItem('token')} `,
+        };
         let user = Repository({
             url: baseUrlAuth + endPoint,
-            method:'POST',
+            method: 'POST',
             headers: config,
-            data: data
+            data: data,
         })
             .then((ress) => {
                 return ress;
@@ -132,14 +129,13 @@ export default function useAuth() {
     const qaytaKodYuborishParol = (data) => {
         let endPoint = 'auth/get-new-code/';
         let config = {
-          
-                Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
-        }
+            Authorization: `Bearer ${localStorage.getItem('qayta_token')} `,
+        };
         let user = Repository({
             url: baseUrlAuth + endPoint,
-            method:'POST',
+            method: 'POST',
             headers: config,
-            data: data
+            data: data,
         })
             .then((ress) => {
                 return ress;
@@ -241,6 +237,6 @@ export default function useAuth() {
         NewVerifyCode,
         qaytaParolYuborishAuth,
         logOutAuth,
-        qaytaKodYuborishParol
+        qaytaKodYuborishParol,
     };
 }
