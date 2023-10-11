@@ -139,7 +139,7 @@ function DashbordList() {
         },
         {
             title: 'Narx',
-            dataIndex: 'price',
+            dataIndex: 'discount_price',
             key: 'age',
             render: (price) => (
                 <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
@@ -192,7 +192,7 @@ function DashbordList() {
         user.role === "admin" ?
             {
                 title: 'Narx',
-                dataIndex: 'price',
+                dataIndex: 'discount_price',
                 key: 'address',
                 render: (total_price) => (
                     <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
@@ -244,7 +244,7 @@ function DashbordList() {
         },
     ];
 
-    console.log(View);
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">

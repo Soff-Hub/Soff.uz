@@ -203,7 +203,7 @@ function ProductsLists() {
         },
         {
             title: 'Narxi',
-            dataIndex: 'price',
+            dataIndex: 'discount_price',
             key: 'address',
             render: (price) => (
                 <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>

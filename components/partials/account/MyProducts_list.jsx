@@ -45,6 +45,7 @@ function MyProductsLists() {
     const { accountLinks, user, products } = useSelector(state => state.auth)
     const Option = Select.Option;
 
+    console.log(products);
 
     async function GetItemsProducts(page, category, tagName, dataFormat, status, search) {
         const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, status, search, user?.access);
@@ -134,8 +135,9 @@ function MyProductsLists() {
         GetItemsProducts(currPage, dataValCat, tagName, dataFormat, selectValStatus, search)
 
     }
-    function handleClickIdEdit(productsItems) {
-        dispatch(MyProductsEdit(productsItems))
+  async  function handleClickIdEdit(productsItems) {
+        const ItemsData = await GetRepository.getMyProductsView(productsItems, user?.access);
+        dispatch(MyProductsEdit(ItemsData))
     }
 
     async function handleItemsEditProductsPosts() {
@@ -179,8 +181,6 @@ function MyProductsLists() {
             console.error('Error downloading file: ', error);
         }
     };
-
-
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
@@ -257,7 +257,7 @@ function MyProductsLists() {
         },
         {
             title: 'Narxi',
-            dataIndex: 'price',
+            dataIndex: 'discount_price',
             key: 'address',
             render: (price) => (
                 <span key={price}> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
@@ -295,12 +295,12 @@ function MyProductsLists() {
                     data.some(el => el.id == id && el.status === 'moderation') ?
                         <Link href={"/account/myproducts/edit"}>
                             <a>
-                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(data.find(item => item.id === id))}></i>
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
                             </a>
                         </Link> :
                         data.some(el => el.id == id && el.status === 'approved') ?
                             <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal">
-                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(data.find(item => item.id === id))}></i>
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
                             </a>
                             :
                             <i style={{ opacity: 0.7, cursor: "not-allowed" }} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
