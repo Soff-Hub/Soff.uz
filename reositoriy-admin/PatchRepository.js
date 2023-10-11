@@ -38,7 +38,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return reponse;
     }
     async PatchTegs(data, id, token) {

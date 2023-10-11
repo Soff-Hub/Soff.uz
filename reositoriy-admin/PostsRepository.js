@@ -39,7 +39,7 @@ class PostRepository {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return response;
     }
     async TegUsers(data, token) {

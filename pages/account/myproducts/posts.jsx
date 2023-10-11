@@ -214,10 +214,10 @@ const Posts = () => {
     }
 
     async function PostFilePoster() {
-        setLiveFile('')
-        setLivePosterFile('')
-        const formData = new FormData();
         if (fileImgFile) {
+            setLiveFile('')
+            setLivePosterFile('')
+            const formData = new FormData();
             setLoading(true);
             formData.append('file', fileImgFile);
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
@@ -287,7 +287,6 @@ const Posts = () => {
         GetItemsCategoryLists();
     }, []);
 
-    console.log(livePosterFile);
 
     useEffect(() => {
         PostFilePoster();

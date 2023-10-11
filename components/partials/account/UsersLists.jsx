@@ -4,8 +4,6 @@ import { Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import DeleteRepository from '~/reositoriy-admin/DeleteRepository';
-import ModalDelete from './Modal';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -16,7 +14,6 @@ function AccountUserPages() {
 
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
-    const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [selectVal, setSelectVal] = useState({});
     const [selectValStatus, setSelectValStatus] = useState("");
@@ -32,31 +29,38 @@ function AccountUserPages() {
         setData([...ItemsData.results]);
     }
 
-    async function deleteItemsId() {
-        const userDelete = await DeleteRepository.getUsersListsDelete(deleteId, user?.access);
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  malumotlarni o'chirdingiz`,
-        });
-        GetItemsUsers(currPage, selectValStatus, search)
-    }
     async function handleItemsPost() {
         const postsItems = await PostsRepository.PostsUsers(selectVal, user?.access);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  yangi malumot qo'shdingiz`,
-        });
+        if (postsItems?.status === 201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: postsItems?.data?.msg,
+            });
+        }
         GetItemsUsers(currPage, selectValStatus, search)
     }
     async function handleItemsEdit() {
         const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: "Siz  malumotlarni o'zgartirdingiz ",
-        });
+        if (patchItems?.status === 202) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: patchItems?.data?.msg,
+            });
+        }
         GetItemsUsers(currPage, selectValStatus, search)
     }
 
@@ -110,10 +114,9 @@ function AccountUserPages() {
             render: (id) => <div >
                 {
                     data.some(el => el.id == id && el.auth_status === 'new') ?
-                    <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-                :    <a style={{cursor:"not-allowed"}}><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                        <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                        : <a style={{ cursor: "not-allowed" }}><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
                 }
-                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
             </div>
         },
     ];
@@ -140,7 +143,7 @@ function AccountUserPages() {
                                         <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
                                     </div>
 
-                                    <Table dataSource={data} scroll={{ x: 740 }} columns={columns} pagination={false} />
+                                    <Table dataSource={data} scroll={{ x: 800 }} columns={columns} pagination={false} />
                                     <Pagination total={pageCount} defaultCurrent={currPage}
                                         onChange={(val) => GetItemsUsers(val, selectValStatus)} />
                                 </div>
@@ -148,23 +151,10 @@ function AccountUserPages() {
                         </div>
                     </div>
                 </div>
-                <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalTogglEdit" onSubmited={handleItemsEdit} formID={'edit-form-users'}>
                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
-                        <option className='fs-3' selected disabled >Holatni tanlang</option>
-                        {
-                            deleteIdEdit?.auth_status === "code_verified" ?
-                                <>
-                                    <option className='fs-3' selected value="code_verified">Faol</option>
-                                    <option className='fs-3' value="new">Faol emas</option>
-                                </> :
-                                <>
-                                    <option className='fs-3' value="code_verified">Faol</option>
-                                    <option className='fs-3' selected value="new">Faol emas</option>
-                                </>
-
-
-                        }
+                         <option className='fs-3' selected value="new">Faol emas</option>
+                         <option className='fs-3' value="code_verified">Faol</option>
                     </select>
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>
@@ -194,11 +184,6 @@ function AccountUserPages() {
                         defaultValue={deleteIdEdit?.data?.email}
                         onChange={(e) => setSelectVal((prev) => ({ ...prev, email: e.target.value }))}
                     />
-                    <select required className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
-                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
-                        <option className='fs-3' value="new">Faol emas</option>
-                        <option className='fs-3' value="code_verified">Faol</option>
-                    </select>
                 </ModalDeletePostEdit>
             </div>
         </section>
