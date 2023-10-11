@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button, Pagination, Table } from 'antd';
+import { Button, Pagination, Select, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -24,7 +24,6 @@ function ProductsLists() {
     const [search, setSerach] = useState([]);
     const [deleteIdView, setDeleteIdView] = useState({});
     const [dataVal, setDataVal] = useState([]);
-    const [dataValCat, setDataCat] = useState(null);
     const [dataValStatus, setDataCatStatus] = useState(null);
     const [date, setDate] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
@@ -32,6 +31,8 @@ function ProductsLists() {
     const [loading2, setLoading2] = useState(false);
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const [category_id, setCategoryID] = useState(null)
+    const Option = Select.Option;
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
@@ -39,16 +40,43 @@ function ProductsLists() {
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
     async function GetItemsProductsLists(page, category, dataValStatus, dataFormat, id, arxiv, search) {
-        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv,search, user?.access);
+        const ItemsData = await GetRepository.getShopsProducts(page, category, dataValStatus, dataFormat, id, arxiv, search, user?.access);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
     }
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryLists();
-        if (ItemsData.results) {
-            setDataVal(ItemsData.results);
+        if (ItemsData) {
+            setDataVal(ItemsData);
         }
     }
+
+
+    const onChange = async (name) => {
+        if (name !== 'all') {
+            for (let j = 0; j < dataVal.length; j++) {
+                if (dataVal[j].name === name) {
+                    setCategoryID(dataVal[j].id);
+                }
+            }
+        }
+        else {
+            setCategoryID("")
+        }
+    };
+
+
+
+
+    const options = [];
+
+    for (let i = 0; i < dataVal?.length; i++) {
+        options.push(
+            <Option key={dataVal[i].name}>{dataVal[i].name}</Option>
+        );
+    }
+
+
     async function handleClickView(item) {
         setLoading(true);
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item.id, null, search, user?.access);
@@ -56,8 +84,9 @@ function ProductsLists() {
         setLoading(false)
     }
 
-    function handleClickIdEditProducts(productsItems) {
-        dispatch(MyProductsEdit(productsItems))
+   async function handleClickIdEditProducts(productsItems) {
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, productsItems?.id, null, search, user?.access);
+        dispatch(MyProductsEdit(ItemsData))
     }
 
     function handleCLickArxiv() {
@@ -104,10 +133,10 @@ function ProductsLists() {
         }
     };
 
-
+    
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
-        GetItemsProductsLists(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,search)
+        GetItemsProductsLists(pageNum, category_id[0], dataValStatus, dataFormat, null, dateArxiv, search)
     }
 
 
@@ -116,8 +145,9 @@ function ProductsLists() {
     }, [])
 
     useEffect(() => {
-        GetItemsProductsLists(currPage, dataValCat, dataValStatus, dataFormat, null, dateArxiv,search)
-    }, [dataValCat, dataValStatus, dataFormat, dateArxiv,search ])
+        GetItemsProductsLists(currPage, category_id, dataValStatus, dataFormat, null, dateArxiv, search)
+    }, [category_id, dataValStatus, dataFormat, dateArxiv, search])
+
 
     const columns = [
         {
@@ -149,7 +179,7 @@ function ProductsLists() {
             title: 'Kategoriya',
             dataIndex: 'category',
             key: 'address',
-            width: 300,
+            width: 350,
             render: (category) => (
                 <span> <i className=" text-primary-emphasis fa-solid fa-layer-group"></i> {category?.name}</span>
             )
@@ -173,7 +203,7 @@ function ProductsLists() {
         },
         {
             title: 'Narxi',
-            dataIndex: 'price',
+            dataIndex: 'discount_price',
             key: 'address',
             render: (price) => (
                 <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
@@ -202,7 +232,7 @@ function ProductsLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(id)}></i></a>
                 <Link href={"/account/products/edit"}>
                     <a><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => handleClickIdEditProducts(data.find(item => item.id === id))}></i></a>
                 </Link>
@@ -225,26 +255,31 @@ function ProductsLists() {
                                     <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
                                     <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
 
-                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={e=>(setSerach(e.target.value))} />
-                                        <div className="accordion accordion-flush" id="accordionFlushExample">
+                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={e => (setSerach(e.target.value))} />
+                                        <div className="accordion accordion-flush p-0" id="accordionFlushExample">
                                             <div className="accordion-item">
-                                                <h2 className="accordion-header m-0">
+                                                <h2 className="accordion-header m-0 ">
                                                     <button style={{ backgroundColor: "#F1F1F1", padding: "17px" }} className="accordion-button collapsed  responsiveCardButton   text-success" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
                                                         <strong> Filter</strong>
                                                     </button>
                                                 </h2>
                                                 <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
-                                                        <select className='form-select rounded-3 col-md-6 fs-3 py-3' onChange={(e) => setDataCat(e.target.value)} >
-                                                            <option className='fs-3' value=''> Barcha Kategoriyalar</option>
-                                                            {
-                                                                dataVal.length > 0 && (
-                                                                    dataVal.map(item => (
-                                                                        <option key={item.id} value={item.id}>{item.name} </option>
-                                                                    ))
-                                                                )
-                                                            }
-                                                        </select>
+                                                        <Select
+                                                        className='col-md-6 p-0'
+                                                            mode='select'
+                                                            showSearch
+                                                            style={{ width: '100%' , height:"47px"}}
+                                                            onChange={onChange}
+                                                            placeholder="Barcha kategoriyalar"
+                                                        >
+                                                            <Option value="all" selected>
+                                                                Barcha kategoriyalar
+                                                            </Option>
+
+                                                            {options}
+
+                                                        </Select>
                                                         <select className='form-select col-md-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCatStatus(e.target.value)}  >
                                                             <option className='fs-3' selected value="">Barcha holatlar</option>
                                                             <option className='fs-3' value="moderation">Moderatsiya</option>
@@ -346,13 +381,13 @@ function ProductsLists() {
                                             <div className='d-flex justify-content-end '>
                                                 {
                                                     !loading2 ?
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning p-2 px-5 fs-4 ">
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
 
                                                             <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
 
                                                         </button>
                                                         :
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-warning  p-2 px-5 fs-4 " style={{ width: "179px" }}>
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px" }}>
 
                                                             <div className="spinner-border " role="status">
                                                                 <span className="visually-hidden">Loading...</span>

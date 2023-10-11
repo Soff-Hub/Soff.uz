@@ -96,7 +96,7 @@ function OrdersLists() {
         },
         {
             title: 'Narx',
-            dataIndex: 'price',
+            dataIndex: 'discount_price',
             key: 'address',
             render: (price) => (
                 <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
@@ -140,6 +140,7 @@ function OrdersLists() {
             title: 'Buyurtma kategoriya',
             dataIndex: 'title',
             key: 'title',
+            width:350
         },
         {
             title: 'Buyurtma sanasi',
@@ -198,13 +199,13 @@ function OrdersLists() {
                                     {
                                         user?.role === "admin" ?
                                             <>
-                                                <Table scroll={{ x: 1350 }} dataSource={data} columns={columns} pagination={false}
+                                                <Table scroll={{ x: 1550 }} dataSource={data} columns={columns} pagination={false}
                                                 />
                                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                                             </>
                                             :
                                             <>
-                                                <Table scroll={{ x: 850 }} dataSource={data} columns={columnSellers} pagination={false}
+                                                <Table scroll={{ x: 1250 }} dataSource={data} columns={columnSellers} pagination={false}
                                                 />
                                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                                             </>
