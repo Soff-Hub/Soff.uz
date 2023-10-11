@@ -34,7 +34,6 @@ const ProductDetailQuickView = ({ product }) => {
     useEffect(() => {
         getImage();
     }, []);
-console.log('quek wiew', product);
     return (
         <div className="ps-product--detail ps-product--quickview">
             <div className="ps-product__header">

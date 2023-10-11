@@ -102,22 +102,31 @@ const ProductDefaultPage = ({ product, similar }) => {
 //     return { path, fallback: false };
 // }
 
+export async function getServerSideProps(context) {
+    try {
+        const request = await fetch(baseUrl + `customer/documents/${context.query.pid}/`);
+        const product = await request.json();
 
-export async function getServerSideProps( context ) {
-    const request = await fetch(baseUrl + `customer/documents/${context.query.pid}/`)
-    const product = await request.json()
+        const SimilarRes = await fetch(baseUrl + `customer/similar/${context.query.pid}/`);
+        const similar = await SimilarRes.json();
 
-    const SimilarRes = await fetch(baseUrl + `customer/similar/${context.query.pid}/`)
-    const similar = await SimilarRes.json()
+        return {
+            props: {
+                product,
+                similar
+            }
+        };
+    } catch (error) {
+        console.error("Error fetching data:", error);
 
-
-
-    return {
-        props: {
-            product,
-            similar
-        },
-    };
+        return {
+            props: {
+                product: null,
+                similar: null
+            }
+        };
+    }
 }
+
 
 export default ProductDefaultPage;
