@@ -45,7 +45,6 @@ function MyProductsLists() {
     const { accountLinks, user, products } = useSelector(state => state.auth)
     const Option = Select.Option;
 
-    console.log(products);
 
     async function GetItemsProducts(page, category, tagName, dataFormat, status, search) {
         const ItemsData = await GetRepository.getMyProducts(page, category, tagName, dataFormat, status, search, user?.access);

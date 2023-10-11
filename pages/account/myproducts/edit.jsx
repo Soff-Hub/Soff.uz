@@ -29,7 +29,6 @@ const PostsMyProducts = () => {
     const [categoryName, setCategoryName] = useState('');
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
-    const [Shortdata, setShortData] = useState('');
     const [Fulldata, setFullData] = useState('');
     const [livePoster, setLivePoster] = useState('');
     const breadCrumb = [
@@ -74,17 +73,14 @@ const PostsMyProducts = () => {
         // if (fileImgFile) {
         //     formData.append('file', fileImgFile);
         // }
-        if (fileImgPoster) {
-            formData.append('poster', fileImgPoster);
-        }
+        // if (fileImgPoster) {
+        //     formData.append('poster', fileImgPoster);
+        // }
         if (title) {
             formData.append('title', title);
         }
         if (taxminiyNarx) {
             formData.append('discount_price', taxminiyNarx);
-        }
-        if (Shortdata) {
-            formData.append('short_description', Shortdata);
         }
         if (Fulldata) {
             formData.append('description', Fulldata);
@@ -197,26 +193,8 @@ const PostsMyProducts = () => {
                                     defaultValue={products?.title}
                                 />
                             </div>
+            
                             {/* <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot: *</p> <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
-
-                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{backgroundColor:"#F1F1F1", border:"1px dashed green"}}>
-
-                                    {
-                                        fileImgFile ? "http://localhost:3000/b30b856b-606c-4001-8bee-4839557c" :
-                                            products.file
-                                    }
-                                    <input
-                                        type="file"
-                                        onChange={(e) =>
-                                            setFileImgFile(e.target.files[0])
-
-                                        }
-                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
-                                    />
-                                </label>
-                            </div> */}
-                            <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip> </div>
                                 <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{ backgroundColor: "#F1F1F1", border: "1px dashed green" }}>
                                     {
@@ -225,7 +203,7 @@ const PostsMyProducts = () => {
                                     }
                                     <input type="file" onChange={(e) => LiveImage(e)} accept="image/*" />
                                 </label>
-                            </div>
+                            </div> */}
 
                             <div className="row">
                                 <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
@@ -266,7 +244,7 @@ const PostsMyProducts = () => {
                                     type='number'
                                     className="form-control  rounded-3 col-md-8 mb-3 "
                                     name="price"
-                                    defaultValue={products?.price}
+                                    defaultValue={products?.discount_price}
                                     onChange={(e) => (
                                         setTaxminiyNarx(e.target.value)
                                     )}
@@ -325,7 +303,7 @@ const PostsMyProducts = () => {
                             <div className="image rounded mb-3" >
                                 {
                                     (livePoster ?
-                                        <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
+                                        <img src={livePoster} alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
                                         :
                                         <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
                                 }
@@ -339,7 +317,7 @@ const PostsMyProducts = () => {
                                     <span style={{ maxWidth: '150px' }} >
                                         {taxminiyNarx
                                             ? addPeriodToThousands(taxminiyNarx)
-                                            : addPeriodToThousands(products?.price)}
+                                            : addPeriodToThousands(products?.discount_price)}
                                         so'm
                                     </span>
                                 </p>
@@ -409,7 +387,7 @@ const PostsMyProducts = () => {
                                 <div className="image rounded mb-3">
                                     {
                                         (livePoster ?
-                                            <img src="/static/img/docCopy.jpg" alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
+                                            <img src={livePoster} alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
                                             :
                                             <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
                                     }
@@ -478,7 +456,7 @@ const PostsMyProducts = () => {
                 </div>
                 <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
                     <div className='modal-dialog container '>
-                        <div className='modal-content'>
+                        <div className='modal-content  mahsulotingizElh3'>
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
@@ -511,7 +489,7 @@ const PostsMyProducts = () => {
                                                 <h4 >
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(taxminiyNarx)
-                                                        : addPeriodToThousands(products?.price)}   so'm
+                                                        : addPeriodToThousands(products?.discount_price)}   so'm
 
 
                                                 </h4>

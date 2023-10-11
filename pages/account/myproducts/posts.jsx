@@ -30,12 +30,12 @@ const Posts = () => {
     const [narxNomi, setNarxNomi] = useState(true);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
-    const [Shortdata, setShortData] = useState('');
     const [Fulldata, setFullData] = useState('');
     const [livePosterFile, setLivePosterFile] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [liveFile, setLiveFile] = useState('');
+    const [liveFile2, setLiveFile2] = useState('');
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -185,9 +185,9 @@ const Posts = () => {
         const formData = new FormData();
         formData.append('title', title),
             formData.append('price', narx),
-            formData.append('short_description', Shortdata),
             formData.append('description', Fulldata),
             formData.append('tags', tagSearchResult),
+            liveFile2?.images?.[0]?.id ? formData.append('poster_id', liveFile2?.images?.[0]?.id) : "None",
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
             formData.append('category', category_id[0]);
@@ -227,6 +227,7 @@ const Posts = () => {
 
             if (ItemsData?.status === 201 && ItemsData?.data?.images?.length > 0) {
                 setLivePosterFile(ItemsData?.data);
+                setLiveFile2(ItemsData?.data)
                 const modal = Modal.success({
                     centered: true,
                     title: 'Muvaffaqqiyatli!',
@@ -244,12 +245,14 @@ const Posts = () => {
 
     }
 
+
     function LiveImage(e) {
         setFileImgFileID('');
         setFileImgPoster(e.target.files[0]);
         const img = window.URL.createObjectURL(e.target.files[0]);
         setLiveFile(img);
     }
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -291,6 +294,8 @@ const Posts = () => {
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);
+
+    console.log(livePosterFile);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -384,7 +389,7 @@ const Posts = () => {
                                                 <span>
                                                     {' '}
                                                     Siz mahsulot yukladingiz  <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                    
+
                                                 </span>
                                             </span>
                                         )
@@ -609,7 +614,6 @@ const Posts = () => {
                                 </span>
                             </div>
                         </form>
-
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
@@ -680,12 +684,14 @@ const Posts = () => {
                                         : "To'ldirilmadi"}
                                 </p>
                                 <p className="live-card-p">
-                                    <strong>Qisqa tavsif : </strong>{' '}
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {Shortdata
-                                            ? parse(Shortdata)
-                                            : "To'ldirilmadi"}
+                                    <span>
+                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                     </span>
+                                    <ul style={{ maxWidth: '150px' }} className=''>
+                                        <li> <strong className='fs-4'>Betlar soni: </strong> {livePosterFile?.page_count ? livePosterFile?.page_count + " " + "ta" : ""} </li>
+                                        <li> <strong className='fs-4'>Hajmi: </strong> {livePosterFile?.file_size}</li>
+                                        <li> <strong className='fs-4'>Turi: </strong> {livePosterFile?.file_type}</li>
+                                    </ul>
                                 </p>
                                 <p className="live-card-p ">
                                     <strong> To'liq ma'lumot : </strong>{' '}
@@ -790,12 +796,14 @@ const Posts = () => {
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
-                                        <strong>Qisqa tavsif : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {Shortdata
-                                                ? parse(Shortdata)
-                                                : "To'ldirilmadi"}
+                                        <span>
+                                            <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                         </span>
+                                        <ul style={{ maxWidth: '150px' }} className=''>
+                                            <li> <strong className='fs-4'>Betlar soni: </strong> {livePosterFile?.page_count ? livePosterFile?.page_count + " " + "ta" : ""} </li>
+                                            <li> <strong className='fs-4'>Hajmi: </strong> {livePosterFile?.file_size}</li>
+                                            <li> <strong className='fs-4'>Turi: </strong> {livePosterFile?.file_type}</li>
+                                        </ul>
                                     </p>
                                     <p className="live-card-p">
                                         <strong> To'liq ma'lumot : </strong>{' '}
@@ -818,7 +826,7 @@ const Posts = () => {
                     aria-labelledby="staticBackdropLabel"
                     aria-hidden="true">
                     <div className="modal-dialog container ">
-                        <div className="modal-content">
+                        <div className="modal-content mahsulotingizElh3 ">
                             <div className="d-flex justify-content-end p-3">
                                 <button
                                     type="button"
@@ -877,28 +885,31 @@ const Posts = () => {
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>
-                                            <div></div>
+
                                             <div className="ps-product__desc">
-                                                <ul className="ps-list--dot">
+                                                <strong>
                                                     <span>
-                                                        <strong>
-                                                            Qisqa tavsif :{' '}
-                                                        </strong>
-                                                        {Shortdata
-                                                            ? parse(Shortdata)
-                                                            : "To'ldirilmadi"}
+                                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                                     </span>
-                                                </ul>
+                                                    <ul style={{ listStyleType: "revert" }}>
+                                                        <li> <strong className='fs-4'>Betlar soni: </strong> {livePosterFile?.page_count ? livePosterFile?.page_count + " " + "ta" : ""} </li>
+                                                        <li> <strong className='fs-4'>Hajmi: </strong>{livePosterFile?.file_size}</li>
+                                                        <li> <strong className='fs-4'>Turi: </strong>{livePosterFile?.file_type}</li>
+                                                        <li>
+                                                            <strong>
+                                                                Kategoriyasi
+                                                            </strong>{' '}
+                                                            :{' '}
+                                                            {categoryName
+                                                                ? categoryName
+                                                                : livePosterFile?.category
+                                                                    ?.name}
+                                                        </li>
+                                                    </ul>
+
+                                                </strong>
                                                 <ul>
-                                                    <li>
-                                                        <strong>
-                                                            Kategoriyasi
-                                                        </strong>{' '}
-                                                        :{' '}
-                                                        {categoryName
-                                                            ? categoryName
-                                                            : "To'ldirilmadi"}{' '}
-                                                    </li>
+
                                                 </ul>
                                             </div>
                                             <div className="ps-product__shopping row-gap-3">
