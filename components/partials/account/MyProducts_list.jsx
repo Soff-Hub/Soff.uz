@@ -198,7 +198,7 @@ function MyProductsLists() {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download =View.title + "." + fileContent.file_url.split('.')[fileContent.file_url?.split('.').length - 1];
+            a.download = View.title + "." + fileContent.file_url.split('.')[fileContent.file_url?.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
