@@ -214,10 +214,10 @@ const Posts = () => {
     }
 
     async function PostFilePoster() {
-        setLiveFile('')
-        setLivePosterFile('')
-        const formData = new FormData();
         if (fileImgFile) {
+            setLiveFile('')
+            setLivePosterFile('')
+            const formData = new FormData();
             setLoading(true);
             formData.append('file', fileImgFile);
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
@@ -564,25 +564,7 @@ const Posts = () => {
                                     )}
                                 />
                             </div> */}
-                            <div className="row   mt-3">
-                                <div className="col-md-4 d-flex justify-content-between p-0">
-                                    <p>Mahsulotning qisqacha tavsifi: </p>{' '}
-                                    <Tooltip title="Mijozlarga mahsulotingizga qiziqishini ortirish uchun mahsulot haqidagi qisqacha eng muhim bo’lgan tafsiflarni ko’rsatib o’ting.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
-                                <div className=" p-0 rounded-3 col-md-8">
-                                    <CKeditor
-                                        name="description"
-                                        onChange={(data) => {
-                                            setShortData(data);
-                                        }}
-                                        editorLoaded={editorLoaded}
-                                    />
-                                </div>
-                            </div>
+
 
                             <div className="  row mt-3">
                                 <div className="col-md-4 d-flex justify-content-between p-0">

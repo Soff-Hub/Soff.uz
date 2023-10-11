@@ -34,12 +34,12 @@ class PostRepository {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return response;
     }
     async TegUsers(data, token) {
