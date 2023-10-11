@@ -223,7 +223,7 @@ const PostsMyProducts = () => {
                                         livePoster ? livePoster :
                                             "blob:http://localhost:3000/1ba7f287-c435-4e10-9080-6c01990d7f21"
                                     }
-                                    <input type="file" onChange={(e) => LiveImage(e)} />
+                                    <input type="file" onChange={(e) => LiveImage(e)}  accept="image/*" />
                                 </label>
                             </div>
 

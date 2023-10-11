@@ -84,8 +84,9 @@ function ProductsLists() {
         setLoading(false)
     }
 
-    function handleClickIdEditProducts(productsItems) {
-        dispatch(MyProductsEdit(productsItems))
+   async function handleClickIdEditProducts(productsItems) {
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, productsItems?.id, null, search, user?.access);
+        dispatch(MyProductsEdit(ItemsData))
     }
 
     function handleCLickArxiv() {
@@ -231,7 +232,7 @@ function ProductsLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(id)}></i></a>
                 <Link href={"/account/products/edit"}>
                     <a><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => handleClickIdEditProducts(data.find(item => item.id === id))}></i></a>
                 </Link>

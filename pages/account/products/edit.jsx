@@ -112,7 +112,6 @@ const PostsProductsEdit = () => {
 
     useEffect(() => {
         GetItemsTag();
-
         setEditorLoaded(true);
     }, []);
 
@@ -121,6 +120,7 @@ const PostsProductsEdit = () => {
         GetItemsTagAktivmas();
         GetItemsTagAktivmas();
     }, [user?.access]);
+
 
 
     function addPeriodToThousands(number) {
@@ -471,7 +471,7 @@ const PostsProductsEdit = () => {
                                         <strong>Teglari</strong>:{' '}
                                     </span>
                                     <span style={{ maxWidth: '150px' }}>
-                                        {products?.tag?.map((item) => (
+                                        {products?.active_tag?.map((item) => (
                                             <span key={item.id}>#{item.name} </span>
                                         ))}
                                     </span>

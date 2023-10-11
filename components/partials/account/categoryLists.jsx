@@ -24,12 +24,20 @@ function CategoryLists() {
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
 
-    async function GetItemsProducts(page, search) {
+    async function GetItemsProducts(page, search, id) {
         setCurrPage(page)
-        const ItemsData = await GetRepository.getCategory(page,search, user?.access);
+        const ItemsData = await GetRepository.getCategory(page,search,id, user?.access);
         if (ItemsData?.results) {
             setPageCount(ItemsData.count)
             setData([...ItemsData.results]);
+        }
+    }
+
+
+    async function GetItemsProductsEdit(id) {
+        const ItemsData = await GetRepository.getCategory(currPage,search,id, user?.access);
+        if (ItemsData) {
+            setDeleteIdEdit(ItemsData)
         }
     }
 
@@ -49,7 +57,7 @@ function CategoryLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsProducts(currPage, search)
+        GetItemsProducts(currPage, search, null)
     }
 
     async function handleItemsPost(values) {
@@ -74,7 +82,7 @@ function CategoryLists() {
             });
 
         }
-        GetItemsProducts(currPage, search)
+        GetItemsProducts(currPage, search, null)
     }
 
 
@@ -115,7 +123,7 @@ function CategoryLists() {
 
         }
 
-        GetItemsProducts(currPage)
+        GetItemsProducts(currPage, search, null)
 
     }
 
@@ -127,7 +135,7 @@ function CategoryLists() {
     }, []);
 
     useEffect(() => {
-        GetItemsProducts(currPage, search)
+        GetItemsProducts(currPage, search, null)
     }, [search]);
 
     const columns = [
@@ -167,40 +175,12 @@ function CategoryLists() {
                 </div>
             ),
         },
-        // {
-        //     title: 'Top',
-        //     dataIndex: 'data',
-        //     key: 'address',
-        //     render: (datas) => {
-        //         if (datas.parent === 'None') {
-        //             if (datas.parent === 'None') {
-        //                 return (
-        //                     <input
-        //                         type='checkbox'
-        //                         defaultChecked={datas.top}
-        //                         onChange={() => handleClickChecked(datas)}
-        //                     />
-        //                 );
-        //             }
-        //             else {
-        //                 return (
-        //                     <input
-        //                         type='checkbox'
-        //                         defaultChecked={false}
-        //                         onChange={() => handleClickChecked(datas)}
-        //                     />
-        //                 );
-        //             }
-        //         }
-        //         return <></>;
-        //     },
-        // },
         {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => GetItemsProductsEdit(id)}></i></a>
                 {
 
                     data.some(el => el.id == id && el.is_delete === true) ?
@@ -247,7 +227,7 @@ function CategoryLists() {
                             deleteIdEdit?.image ? deleteIdEdit?.image :
                                 <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
                         }
-                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                        <input type="file" name='file' id='file' style={{ display: "none" }}  className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} accept="image/*"  />
                     </label>
                     <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
                     {

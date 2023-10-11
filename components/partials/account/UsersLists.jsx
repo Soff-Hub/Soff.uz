@@ -27,7 +27,7 @@ function AccountUserPages() {
 
     async function GetItemsUsers(page, status, search) {
         setCurrPage(page)
-        const ItemsData = await GetRepository.getUsersLists(page, status, search,user?.access);
+        const ItemsData = await GetRepository.getUsersLists(page, status, search, user?.access);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
     }
@@ -127,7 +127,7 @@ function AccountUserPages() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={e=>setSerach(e.target.value)} />
+                                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                         <select className='form-select fs-3 py-3   col-md-4' onChange={(e) => setSelectValStatus(e.target.value)}>
                                             <option className='fs-3' value="" >Barcha holat</option>
                                             <option className='fs-3' value="new">Faol emas</option>
@@ -173,9 +173,20 @@ function AccountUserPages() {
                     />
 
                     <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
-                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
-                        <option className='fs-3' value="new">Faol emas</option>
-                        <option className='fs-3' value="code_verified">Faol</option>
+                        <option className='fs-3' selected disabled >Holatni tanlang</option>
+                        {
+                            deleteIdEdit?.auth_status === "code_verified" ?
+                                <>
+                                    <option className='fs-3' selected value="code_verified">Faol</option>
+                                    <option className='fs-3' value="new">Faol emas</option>
+                                </> :
+                                <>
+                                    <option className='fs-3' value="code_verified">Faol</option>
+                                    <option className='fs-3' selected value="new">Faol emas</option>
+                                </>
+
+
+                        }
                     </select>
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>

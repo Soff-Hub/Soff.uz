@@ -5,6 +5,12 @@ import { Pagination, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 // import Example from './Chart';
 import { useSelector } from 'react-redux';
+import PartialDescription from '~/components/elements/detail/description/PartialDescription';
+import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
+const { TabPane } = Tabs;
+import { Tabs } from 'antd';
+import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
+import Axios from 'axios';
 
 
 function DashbordList() {
@@ -14,6 +20,8 @@ function DashbordList() {
     const [View, setView] = useState({});
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(null)
+    const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
 
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -59,8 +67,10 @@ function DashbordList() {
         }
     }
     async function handleClickView(item) {
+        setLoading(true)
         const ItemsData = await GetRepository.getPopularProductsView(item.id, user?.access);
         setView(ItemsData);
+        setLoading(false)
     }
 
     const handlePagination = (pageNum) => {
@@ -72,6 +82,31 @@ function DashbordList() {
         setCurrPage(pageNum)
         GetItemsProductsOrders(pageNum)
     }
+
+    const handleButtonClickViewProducts = async () => {
+
+        try {
+            setLoading2(true)
+            const fileContent = View
+            const response = await Axios.get(
+                fileContent.file,
+                { responseType: 'blob' }
+            );
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = fileContent.title + "." + fileContent.file.split('.')[fileContent.file.split('.').length - 1];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            setLoading2(false)
+        } catch (error) {
+            console.error('Error downloading file: ', error);
+            setLoading2(false)
+        }
+    };
+
 
     useEffect(() => {
         GetItemsProducts()
@@ -209,6 +244,7 @@ function DashbordList() {
         },
     ];
 
+    console.log(View);
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -437,40 +473,106 @@ function DashbordList() {
                             <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                         </div>
                         :
-                        <></>
+                    <></>
                 }
                 <div className="modal fade " id="staticBackdropViewPopular" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                    <div className='modal-dialog modal-dialog-centered modal-lg'>
+                    <div className='modal-dialog container '>
                         <div className='modal-content'>
                             <div className='d-flex justify-content-end p-3'>
                                 <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                            <div className="card  " style={{ maxWidth: "840px" }}>
-                                <div className="row g-0 px-3 modal-body m-0">
-                                    <div className="col-md-4 mt-4 ">
-                                        <img src={View?.poster_url} className="img-fluid rounded-start" alt="..." />
-                                    </div>
-                                    <div className="col-md-8">
-                                        <div className="card-body pt-5">
-                                            <p className="card-text"> <strong>Nomi:</strong> {View?.category?.name}</p>
-                                            <p className="card-text"><strong>Narxi:</strong>  ${View?.price} </p>
-                                            <p className="card-text"><strong>Chegirma: </strong> {View?.discount}%</p>
-                                            <p className="card-text"><strong>Sotuvchi Ismi:</strong> {View?.seller?.first_name}</p>
-                                            <p className="card-text"><strong>Sotuvchi Familiyasi:</strong> {View?.seller?.last_name}</p>
-                                            <p className="card-text"><strong>Sotuvchi Raqami:</strong> {View?.seller?.phone}</p>
-                                            <p><strong>Teg:</strong> {View?.tag?.name}</p>
+                            <div className="ps-container">
+                                {
+                                    !loading ?
+                                        <div className="ps-product--detail ps-product--fullwidth">
+                                            <div className="ps-product__header ">
+                                                <ThumbnailDefault product={View} />
+                                                <div className="ps-product__info">
+                                                    <header>
+                                                        <h1>{View?.title}</h1>
+                                                        <h4>
+                                                            {addPeriodToThousands(View?.price)} so'm{' '}
+                                                        </h4>
+                                                    </header>
+                                                    <div>
+                                                        {
+                                                            View?.seller ?
+                                                                <h4> Muallif : {View?.seller?.first_name}  {View?.seller?.last_name}</h4>
+                                                                :
+                                                                <></>
+                                                        }
+                                                    </div>
+                                                    <ModuleProductDetailDescription product={View} />
+                                                    <div className="ps-product__shopping row-gap-3" >
+                                                        <button
+                                                            className="ps-btn ps-btn--black"
+                                                            style={{ cursor: "not-allowed" }}
+                                                        >
+                                                            Savatga qo'shish
+                                                        </button>
+                                                        <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                            Sotib olish
+                                                        </button>
+                                                        <div className="ps-product__actions">
+                                                            <a style={{ cursor: "not-allowed" }} >
+                                                                <i className={`icon-heart`} ></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                        {
+                                                            View?.tag?.length > 0 ?
+                                                                <p>  {View?.tag?.map(item => (<span key={item.id}>#{item.name}  </span>))} </p>
+                                                                :
+                                                                <></>
+                                                        }
 
-                                        </div>
-                                    </div>
-                                    <div className='col-md-12 pt-3'>
-                                        <p className="card-text"><strong>Qisqa tasvir:</strong> {View?.short_description}</p>
-                                        <p className="card-text m-0"><strong>Tavsifi:</strong> {View?.description}</p>
-                                        <div className='d-flex justify-content-end py-3'>
-                                            <a href={View?.file} className='btn btn-outline-warning w-25 py-2  fs-5' target='_blank' download> <i className="fa-solid fa-download mx-2"></i> File yuklash</a>
+                                                    </div>
+                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
 
+                                                        {
+                                                            View?.deactive_tag?.length > 0 ?
+                                                                <p> <strong>Aktiv emas teglar: </strong> {View?.deactive_tag?.map(item => (<span key={item.id}>#{item.name}  </span>))}   </p>
+                                                                :
+                                                                <></>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="ps-product__content ps-tab-root">
+                                                <Tabs defaultActiveKey="1">
+                                                    <TabPane tab="Izoh" key="1">
+                                                        <PartialDescription product={View} />
+                                                    </TabPane>
+                                                </Tabs>
+                                            </div>
+                                            <div className='d-flex justify-content-end '>
+                                                {
+                                                    !loading2 ?
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
+
+                                                            <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
+
+                                                        </button>
+                                                        :
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px" }}>
+
+                                                            <div className="spinner-border " role="status">
+                                                                <span className="visually-hidden">Loading...</span>
+                                                            </div>
+
+                                                        </button>
+                                                }
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                        :
+                                        <div className='ps-product--detail ps-product--fullwidth' style={{ height: "690px", display: "grid", placeContent: "center" }}>
+                                            <div className="spinner-border " role="status" style={{ width: "150px", height: "150px" }} >
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                        </div>
+                                }
+
                             </div>
                         </div>
                     </div>
