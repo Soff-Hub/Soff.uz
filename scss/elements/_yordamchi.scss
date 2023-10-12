@@ -1357,22 +1357,213 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0,0.8);
+    background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 99999;
+    animation: modalOpenOrqafon 0.5s ease-in-out forwards;
+    animation-delay: 1s;
+    opacity: 0;
 }
 
-
-.imgModal {
-    width: 100%;
-    height: auto;
-}
-.bannerModal2{
+.modalBanner2 {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     z-index: 99999;
+    animation: modalCloseOrqaFon 0.5s ease-in-out forwards;
+}
+
+.bannerModal2 {
+    position: fixed;
+    top: 20%;
+    left: 25%;
+    z-index: 99999;
+    opacity: 0;
+    height: 100%;
+    animation: modalOpen 0.5s ease-in-out both;
+    animation-delay: 1s;
+    padding-bottom:100%;
+}
+
+.bannerModal3 {
+    animation: modalClose 0.5s ease-in-out forwards;
+    position: fixed;
+    top: 20%;
+    left: 25%;
+    z-index: 99999;
+    height: 100%;
+    padding-bottom:100%;
+  }
+
+
+  .iframe-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes modalClose {
+    from {
+      transform: translateY(0); 
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-220px); 
+      opacity: 0; 
+    }
+  }
+
+  @keyframes modalCloseOrqaFon {
+    from {
+      opacity: 1;
+    }
+    to {
+      opacity: 0; 
+    }
+  }
+
+  @keyframes modalOpen {
+    from {
+      transform: translateY(-220px); 
+      opacity: 0; 
+    }
+    to {
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+  }
+
+  @keyframes modalOpenOrqafon {
+    from {
+      opacity: 0; 
+    }
+    to {
+      opacity: 1; 
+    }
+  }
+  
+  @media (max-width: 860px) {
+    .bannerModal2 {
+        padding-bottom: 100%;
+        position: fixed;
+        top: 30%;
+
+    }
+    .bannerModal3{
+        padding-bottom: 100%;
+        position: fixed;
+        top: 30%;
+    }
+}
+
+@media (min-width: 860px) {
+    .bannerModal2 {
+        padding-bottom: 100%;
+        position: fixed;
+        top: 30%;
+        left: 12%;
+        width: 75%;
+        max-width: 860px;
+
+    }
+    .bannerModal3{
+        padding-bottom: 100%;
+        position: fixed;
+        top: 30%;
+        left: 12%;
+        width: 75%;
+        max-width: 860px;
+    }
+}
+
+@include media('<lg') {
+    .bannerModal2 {
+        padding-bottom: 100%;
+        /* Mobil responsive uchun moslashuvchan qilamiz */
+        position: fixed;
+        top: 30%;
+        left: 15%;
+        width: 75%;
+        max-width: 860px;
+    }
+    .bannerModal3{
+        padding-bottom: 100%;
+        /* Mobil responsive uchun moslashuvchan qilamiz */
+        position: fixed;
+        top: 30%;
+        left: 15%;
+        width: 75%;
+        max-width: 860px;
+    }
+}
+@include media('>lg') {
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 22%;
+     
+    }
+
+    .bannerModal3 {
+        position: fixed;
+        z-index: 99999;
+        position: fixed;
+        top: 20%;
+        height: 0;
+        overflow: hidden;
+        width: 100%;
+        left: 22%;
+        max-width: 860px;
+    
+    }
+}
+@media (max-width: 400px) {
+
+    .bannerModal2 {
+        padding-bottom: 100%;
+        position: fixed;
+        left: 0;
+
+    }
+    .bannerModal3{
+        padding-bottom: 100%;
+        position: fixed;
+        left: 0;
+    }
+
+    .iframe-container {
+        position: relative;
+        padding-bottom: 75%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+        height: 300px;
+        overflow: hidden;
+        width: 390px;
+      }
+      
+      .iframe-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .closeButton{
+        transform: translate(30px, -33px);
+      }
 }
