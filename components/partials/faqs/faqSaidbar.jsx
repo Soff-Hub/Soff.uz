@@ -15,7 +15,7 @@ export default function FaqSaidbar() {
                         className={`${
                             query === '/page/form' ? 'active-faq' : ''
                         }`}>
-                        Aloqa
+                       Xabar jo'natish
                     </a>
                 </Link>
             </li>

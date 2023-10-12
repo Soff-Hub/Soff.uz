@@ -2,15 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { Slider } from 'antd';
 import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
+import { useDispatch, useSelector } from 'react-redux';
+import { CategorySlug } from '~/store/auth/action';
 
-const WidgetShopFilterByPriceRange = ({ setFilteredData,parentId ,chaildId}) => {
-
+const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     const Router = useRouter();
     const [min, setMin] = useState(null);
     const [max, setMax] = useState(null);
-
-
+    const [chaildId, setchaildId] = useState(null);
+    const [parentId, setParentId] = useState(null);
     const [defVal, setDefVal] = useState(null);
+    const { slug } = Router.query;
+
+    const dispatch = useDispatch();
+    const { category_lists: categoryData } = useSelector((state) => state.auth);
+
+    async function getCategry() {
+        const responseData = await ProductRepository.getCategoryParent();
+        if (responseData?.length > 0) {
+            dispatch(CategorySlug(responseData?.data?.results));
+        }
+    }
 
     const filterByPrice = async (minPriceVal, maxPriceVal) => {
         if (chaildId !== null) {
@@ -63,7 +75,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData,parentId ,chaildId}) => 
 
     function handleChangeRange(value) {
         filterByPrice(value[0], value[1]);
-        setDefVal(value)
+        setDefVal(value);
+        console.log(value);
     }
 
     const chaildPrice = async (id) => {
@@ -79,12 +92,11 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData,parentId ,chaildId}) => 
             null
         );
         if (respons) {
-            setDefVal([respons?.data?.min_price, respons?.data?.max_price])
+            setDefVal([respons?.data?.min_price, respons?.data?.max_price]);
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
         }
-    }
-
+    };
 
     const parentPrice = async (id) => {
         const respons = await ProductRepository.getFilderPrice(
@@ -99,25 +111,40 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData,parentId ,chaildId}) => 
             null
         );
         if (respons) {
-            setDefVal([respons?.data?.min_price, respons?.data?.max_price])
+            setDefVal([respons?.data?.min_price, respons?.data?.max_price]);
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
         }
-    }
-    
-
-
+    };
 
     useEffect(() => {
-        if(parentId){
-            parentPrice(parentId)
+        if (categoryData?.length === 0) {
+            getCategry();
+        }
+
+        if (categoryData?.every((cat) => Number(cat.id) !== Number(slug))) {
+            setchaildId(slug);
+            setParentId(null);
+        } else {
+            setParentId(slug);
+            setchaildId(null);
+        }
+    }, [slug]);
+
+    useEffect(() => {
+        if (parentId) {
+            parentPrice(parentId);
         }
         if (chaildId) {
-            chaildPrice(chaildId)
+            chaildPrice(chaildId);
         }
-    }, [parentId, chaildId])
+    }, [parentId, chaildId]);
 
-    
+    useEffect(() => {
+        if (min !== null && max !== null) {
+            setDefVal([min, max]);
+        }
+    }, [min, max]);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -143,14 +170,24 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData,parentId ,chaildId}) => 
                 <h4 className="widget-title">Narx </h4>
                 <Slider
                     range
-                    value={max || 0}
+                    draggableTrack={true}
+                    defaultValue={defVal}
+                    value={defVal}
                     max={max}
-                    // min={min}
+                    min={min}
                     onAfterChange={(e) => handleChangeRange(e)}
                     // onChange={(e) => setDefVal(e)}
                 />
                 <p>
-                    Narx: { min === undefined || min === null ? 0 : addPeriodToThousands(min)} so'm - { max === undefined || max === null ? 0 : addPeriodToThousands(max)} so'm
+                    Narx:{' '}
+                    {min === undefined || min === null
+                        ? 0
+                        : addPeriodToThousands(min)}{' '}
+                    so'm -{' '}
+                    {max === undefined || max === null
+                        ? 0
+                        : addPeriodToThousands(max)}{' '}
+                    so'm
                 </p>
             </figure>
         </aside>
