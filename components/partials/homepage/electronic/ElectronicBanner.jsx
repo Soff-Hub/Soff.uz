@@ -124,21 +124,25 @@ function ElectronicBanner() {
             </section>
             {
                 !category ?
-                    <div>
-                        <div onClick={() => setModalClose(false)} className={modalClose ? "modalBanner d-block" : "d-none"} >
+                    <>
+                        <div onClick={() => setModalClose(false)} className={modalClose ? "modalBanner  d-block" : "modalBanner2"} >
                         </div>
-                        <div className={modalClose ? " w-50 mx-auto bannerModal2 " : "d-none"} >
-                            <div className='modal-content rounded-4'>
-                                <div className='p-0'>
-                                    <div style={{ position: "absolute", right: 0 }}>
-                                        <span style={{ cursor: "pointer" }}><i onClick={() => setModalClose(false)} className="fa-solid fs-1 p-3 text-white fa-circle-xmark"></i> </span>
-                                    </div>
-                                    <iframe width="550" height="425" src="https://www.youtube.com/embed/WHTAeJWy_hE?si=U_0_h7tLDdyoHvWV"></iframe>
-                                    
-                                </div>
+                        <div className={modalClose ? " bannerModal2  " : "bannerModal3  "} > 
+                            <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
+                                <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={() => setModalClose(false)} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
                             </div>
+                            <div class="iframe-container">
+                                {
+                                    modalClose ?
+                                    <iframe  src="https://www.youtube.com/embed/JVpf96T2NrI?si=i8yLqDQWsHGPonvX" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                 :
+                                 <></>
+                                }
+                            </div>
+
+
                         </div>
-                    </div>
+                    </>
                     :
                     <></>
             }
