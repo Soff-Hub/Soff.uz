@@ -125,7 +125,7 @@ function ElectronicBanner() {
             {
                 !category ?
                     <>
-                        <div onClick={() => setModalClose(false)} className={modalClose ? "modalBanner  d-block" : "modalBanner2"} >
+                        <div onClick={() => setModalClose(false)} className={modalClose ? "modalBanner " : "modalBanner2 "} >
                         </div>
                         <div className={modalClose ? " bannerModal2  " : "bannerModal3  "} > 
                             <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
