@@ -1567,3 +1567,54 @@
         transform: translate(30px, -33px);
       }
 }
+
+@media (min-width:1200px) and (max-width:1300px) {
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 15%;
+     
+    }
+
+    .bannerModal3 {
+        position: fixed;
+        top: 20%;
+        left: 15%;
+       
+    
+    }
+}
+@media (min-width:1300px) and (max-width:1500px) {
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 18%;
+     
+    }
+
+    .bannerModal3 {
+        position: fixed;
+        top: 20%;
+        left: 18%;
+       
+    
+    }
+}
+
+
+@media (min-width:1000px) and (max-width:1200px) {
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 11%;
+     
+    }
+
+    .bannerModal3 {
+        position: fixed;
+        top: 20%;
+        left: 11%;
+       
+    
+    }
+}
