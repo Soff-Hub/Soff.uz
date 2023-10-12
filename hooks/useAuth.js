@@ -1,5 +1,5 @@
 import React from 'react';
-import Repository, { baseUrlAuth } from '~/repositories/Repository';
+import Repository, { baseUrl, baseUrlAuth } from '~/repositories/Repository';
 
 export default function useAuth() {
     const registerUser = (url, e) => {
@@ -228,6 +228,28 @@ export default function useAuth() {
         return user;
     };
 
+    const feedbackPost = (e) => {
+        let endPoint = 'customer/feedback-create/';
+       
+        let user = Repository.post(baseUrl + endPoint, e)
+            .then((ress) => {
+                return ress;
+            })
+            .catch((error) => {
+                console.log(error.response);
+                if (error.response) {
+                    return error.response;
+                } else if (error.request) {
+                    console.log(error.request);
+                } else {
+                    console.log('Error', error.message);
+                }
+                console.log(error.config);
+            });
+
+        return user;
+    };
+
     return {
         registerUser,
         loginUser,
@@ -238,5 +260,6 @@ export default function useAuth() {
         qaytaParolYuborishAuth,
         logOutAuth,
         qaytaKodYuborishParol,
+        feedbackPost
     };
 }

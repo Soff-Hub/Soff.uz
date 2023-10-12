@@ -36,10 +36,6 @@ const ShopItems = ({
     const dispatch = useDispatch()
     const { category_lists: categoryData } = useSelector(state => state.auth)
 
-    function handleChangeViewMode(e) {
-        e.preventDefault();
-        setListView(!listView);
-    }
 
     async function getCategry() {
         const responseData = await ProductRepository.getCategoryParent();
@@ -48,6 +44,13 @@ const ShopItems = ({
         }
     }
 
+
+    function handleChangeViewMode(e) {
+        e.preventDefault();
+        setListView(!listView);
+    }
+
+   
     function handleSetColumns() {
         switch (columns) {
             case 2:

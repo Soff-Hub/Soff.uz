@@ -5,7 +5,7 @@ import FormContent from '~/components/partials/faqs/FormContent';
 const FormPage = () => {
     return (
         <PageContainer  title="FAQ">
-            <div className='container-faqs mt-4'>
+            <div className='container-faqs ms-lg-5 ms-md-3' style={{margin:'0 auto'}}>
                    <FormContent/>
             </div>
         </PageContainer>
