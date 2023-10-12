@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 const App = () => {
     const [form] = Form.useForm();
@@ -8,6 +8,21 @@ const App = () => {
         console.log('Received values of form: ', values);
         const respons = await feedbackPost(values)
         console.log(respons);
+        if (respons.status === 201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `${respons?.data?.msg ? respons?.data?.msg : 'Xabaringiz muvaffaqqiyatli qabul qilindi'}`,
+            });
+            modal.update
+        }else if(respons.status === 404){
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: `${respons?.data?.msg ? respons?.data?.msg : 'Xabaringiz muvaffaqqiyatli qabul qilindi'}`,
+            });
+            modal.update
+        }
         form.resetFields();
     };
 
@@ -52,7 +67,7 @@ const App = () => {
                                         'Email yoki telefon raqamingizni kiriting',
                                 },
                                 {
-                                    required: false,
+                                    required: true,
                                     message:
                                         'Email yoki telefon raqamingizni kiriting',
                                 },
