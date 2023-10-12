@@ -54,7 +54,7 @@
         "sass": "^1.45.2"
     },
     "devDependencies": {
-        "@ckeditor/ckeditor5-build-classic": "^39.0.2",
+        "@ckeditor/ckeditor5-build-classic": "^40.0.0",
         "@ckeditor/ckeditor5-react": "^6.1.0"
     }
 }
