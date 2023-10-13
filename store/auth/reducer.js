@@ -11,7 +11,7 @@ export const initState = {
     shop: [],
     category_lists:[],
     top_category_lists:[],
-    category:false,
+    category:true,
     categorySlug:[],
 };
 

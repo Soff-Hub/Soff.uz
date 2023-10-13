@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Category } from '~/store/auth/action';
 
 function ElectronicBanner() {
 
     const [bannerItem, setBannerItems] = useState([]);
     const [modalClose, setModalClose] = useState(true)
     const { category } = useSelector(state => (state?.auth))
+    const dispatch = useDispatch();
 
     async function getBannerItems() {
         const responseData = await MediaRepository.getBannersBySlug();
@@ -15,10 +17,15 @@ function ElectronicBanner() {
             setBannerItems(responseData);
         }
     }
+    function CloseButton() {
+        dispatch(Category(false));
+        setModalClose(false)
+    }
 
     useEffect(() => {
-        getBannerItems();
+        getBannerItems(true);
     }, []);
+
 
 
     return (
@@ -123,13 +130,13 @@ function ElectronicBanner() {
                 </div>
             </section>
             {
-                !category ?
+                category ?
                     <>
-                        <div onClick={() => setModalClose(false)} className={modalClose ? "modalBanner " : "modalBanner2 "} >
+                        <div onClick={CloseButton} className={modalClose ? "modalBanner " : "modalBanner2 "} >
                         </div>
                         <div className={modalClose ? " bannerModal2  " : "bannerModal3  "} > 
                             <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
-                                <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={() => setModalClose(false)} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
+                                <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={CloseButton} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
                             </div>
                             <div class="iframe-container">
                                 {

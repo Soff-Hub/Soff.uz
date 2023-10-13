@@ -1372,13 +1372,13 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 0;
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 99999;
-    animation: modalCloseOrqaFon 0.5s ease-in-out forwards;
+    animation: modalCloseOrqaFon 1s ease-in-out forwards;
 }
 
 .bannerModal2 {
@@ -1394,13 +1394,12 @@
 }
 
 .bannerModal3 {
-    animation: modalClose 0.5s ease-in-out forwards;
+    animation: modalClose 1s ease-in-out forwards;
     position: fixed;
     top: 20%;
     left: 25%;
     z-index: 99999;
     height: 100%;
-    padding-bottom:100%;
   }
 
 
@@ -1425,17 +1424,17 @@
       opacity: 1;
     }
     to {
-      transform: translateY(0px); 
-     display: none;
+      transform: translateY(-620px); 
+      opacity: 0;
     }
   }
 
   @keyframes modalCloseOrqaFon {
-    from {
+    from {  
       opacity: 1;
     }
     to {
-      display: none;
+        opacity: 0;
     }
   }
 
@@ -1467,7 +1466,6 @@
 
     }
     .bannerModal3{
-        padding-bottom: 100%;
         position: fixed;
         top: 30%;
     }
@@ -1484,7 +1482,6 @@
 
     }
     .bannerModal3{
-        padding-bottom: 100%;
         position: fixed;
         top: 30%;
         left: 12%;
@@ -1504,8 +1501,7 @@
         max-width: 860px;
     }
     .bannerModal3{
-        padding-bottom: 100%;
-        /* Mobil responsive uchun moslashuvchan qilamiz */
+
         position: fixed;
         top: 30%;
         left: 15%;
@@ -1543,7 +1539,6 @@
 
     }
     .bannerModal3{
-        padding-bottom: 100%;
         position: fixed;
         left: 0;
     }
@@ -1554,6 +1549,39 @@
         height: 300px;
         overflow: hidden;
         width: 390px;
+      }
+      
+      .iframe-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .closeButton{
+        transform: translate(30px, -33px);
+      }
+}
+
+@media (min-width: 400px) and (max-width:500px) {
+
+    .bannerModal2 {
+        padding-bottom: 100%;
+        position: fixed;
+        left: 0;
+
+    }
+    .bannerModal3{
+        position: fixed;
+        left: 0;
+    }
+
+    .iframe-container {
+        position: relative;
+        padding-bottom: 75%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+        height: 300px;
+        overflow: hidden;
+        width: 450px;
       }
       
       .iframe-container iframe {
