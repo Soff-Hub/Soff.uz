@@ -140,8 +140,26 @@ function MyProductsLists() {
     }
 
     async function handleItemsEditProductsPosts() {
-        const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
-        GetItemsProducts(currPage, dataValCat, tagName, dataFormat, status, search)
+        if (ViewPriceDiscount) {
+            const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
+           
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+
+            GetItemsProducts(currPage, dataValCat, tagName, dataFormat, status, search)
+            setViewPriceDiscount(null)
+        }
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
+        }
+
     }
     function addPeriodToThousands(number) {
         const numStr = String(number);

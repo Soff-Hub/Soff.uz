@@ -87,8 +87,8 @@ useEffect(() => {
 }, [])
 
   return (
-<div className="row g-3  overflow-x-auto" >
-  <div className="col-md-5 border p-4 rounded" >
+<div className="row g-3 gap-5 mx-auto overflow-x-auto" >
+  <div className=" border p-4 rounded" style={{width:"330px"}} >
     <h4>Yangi karta qo'shish</h4>
     <div id="Card" className={numberCard === 9860 ? "BackImg" : numberCard === 8600 ? "BackImg2" : numberCard===5614 ? "BackImg2" : numberCard===5555 ? "BackImg4 " : numberCard===6262 ? "BackImg2" : numberCard===4545 ? "BackImg3" : numberCard===6565 ? "BackImg3" : "BackImg1" }>
       <div className="colCard px-5">
@@ -99,12 +99,12 @@ useEffect(() => {
       <button onClick={handleClickCardPosts} className="btn btn-success py-3 " style={{ width: "300px" }}><span className="fs-4">Saqlash</span></button>
  
   </div>
-  <div className="col-md-6 mx-auto d-flex flex-column row-gap-3 rounded border " >
+  <div className=" d-flex flex-column row-gap-3 rounded border pb-3 px-3" style={{width:"389px"}} >
     <h4 className="m-0 mt-3">Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-2 text-primary m-0"></i></h4>
     {
       profileCard?.length > 0 ? profileCard?.map((item, index)=>(
        <div className="d-flex gap-4" key={index} >
-        <h4 className=" text-warning  fs-2  p-3 px-5 m-0 rounded-3 bg-white form-control" style={{width:"330px", fontWeight:"bold", fontFamily:"monospace"}} >{item.credit_card}</h4>
+        <h4 className=" text-warning  fs-2  p-3 px-5 m-0 rounded-3  bg-white form-control" style={{width:"330px", fontWeight:"bold", fontFamily:"monospace"}} >{item.credit_card}</h4>
         <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"  style={{cursor:"pointer"}} onClick={() => setDeleteId(item.id)} ><i className="fa-solid fa-trash-can fa-2x mt-2  text-danger" ></i></a>
        </div>
       ))

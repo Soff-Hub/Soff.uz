@@ -96,7 +96,7 @@ function TegLists() {
                     data.some(el => el.id == id && el.delete_tag === true) ?
                         <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
                         :
-                        <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger" ></i></a>
+                        <></>
                 }
             </div>
         },

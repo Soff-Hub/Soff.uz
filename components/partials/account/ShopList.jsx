@@ -2,38 +2,24 @@ import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Modal, Table } from 'antd';
-import ModalDeletePostEdit from './ModalPostEdit';
-import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
+import CalculateTimeDifference from './DateFormatter';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
 
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
-    const [deleteIdEditSellers, setDeleteIdEditSellers] = useState(null);
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
 
-    const [selectValSellers, setSelectValSellers] = useState({});;
     async function GetItems(page) {
-        const ItemsData = await GetRepository.getShops(page,search,  user?.access);
+        const ItemsData = await GetRepository.getShops(page, search, user?.access);
         setData([...ItemsData.results]);
         setPageCount(ItemsData.count)
     }
 
-
-    async function handleItemsEditSellers() {
-        const patchItemsSellers = await PatchRepository.getShopsPatch({ auth_status: selectValSellers }, deleteIdEditSellers?.id, user?.access)
-        setData([])
-        GetItems(1,search)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni o'zgartirdingiz`,
-        });
-    }
 
 
     const handlePagination = (pageNum) => {
@@ -45,6 +31,7 @@ function Notifications() {
     useEffect(() => {
         GetItems(currPage, search)
     }, [search])
+
     const columns = [
         {
             title: 'Avatar',
@@ -109,6 +96,12 @@ function Notifications() {
             ),
         },
         {
+            title: "Ro'yxatdan o'tgan sana",
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
             title: 'Holat',
             dataIndex: 'auth_status',
             key: 'address',
@@ -117,18 +110,6 @@ function Notifications() {
             )
 
         },
-        {
-            title: 'Harakatlar',
-            dataIndex: 'id',
-            key: 'address',
-            render: (id) => <>
-                {
-                    data.some(el => el.id == id && el.auth_status === 'new') ? <a data-bs-target="#exampleModalToggleEditSellers" data-bs-toggle="modal" ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEditSellers(data.find(item => item.id === id))} ></i></a>
-
-                        : <a style={{ opacity: 0.6, cursor: "not-allowed" }} ><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" ></i></a>
-                }
-            </>
-        }
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -144,8 +125,8 @@ function Notifications() {
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
                                     <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{ backgroundColor: "GrayText" }} >Sotuvchilar soni: {data.length} ta</span>
-                                    <input type='search' className='form-control rounded bg-white mb-3 ' style={{ backgroundColor: "#F1F1F1" }} placeholder="Qidiruv" onInput={e=>setSerach(e.target.value)} />
-                                    <Table scroll={{ x: 1050 }} dataSource={data} columns={columns} pagination={false}
+                                    <input type='search' className='form-control rounded bg-white mb-3 ' style={{ backgroundColor: "#F1F1F1" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                    <Table scroll={{ x: 1150 }} dataSource={data} columns={columns} pagination={false}
                                     />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
                                 </div>
@@ -153,13 +134,6 @@ function Notifications() {
                         </div>
                     </div>
                 </div>
-                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditSellers" onSubmited={handleItemsEditSellers} formID="sellers-edit" >
-                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectValSellers(e.target.value)}>
-                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
-                        <option className='fs-3' value="new">Faol emas</option>
-                        <option className='fs-3' value="code_verified">Faol</option>
-                    </select>
-                </ModalDeletePostEdit >
             </div>
         </section>
     );
