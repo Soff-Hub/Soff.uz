@@ -18,6 +18,7 @@ import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDe
 import { Tabs } from 'antd';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 import Axios from 'axios';
+import Router from 'next/router';
 const { TabPane } = Tabs;
 
 function MyProductsLists() {
@@ -136,7 +137,17 @@ function MyProductsLists() {
     }
     async function handleClickIdEdit(productsItems) {
         const ItemsData = await GetRepository.getMyProductsView(productsItems, user?.access);
-        dispatch(MyProductsEdit(ItemsData))
+        if (ItemsData) {
+            dispatch(MyProductsEdit(ItemsData))
+            Router.push("/account/myproducts/edit")
+            
+        }
+    }
+    async function handleClickIdEditModal(productsItems) {
+        const ItemsData = await GetRepository.getMyProductsView(productsItems, user?.access);
+        if (ItemsData) {
+            dispatch(MyProductsEdit(ItemsData))            
+        }
     }
 
     async function handleItemsEditProductsPosts() {
@@ -309,14 +320,14 @@ function MyProductsLists() {
                 <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
                 {
                     data.some(el => el.id == id && el.status === 'moderation') ?
-                        <Link href={"/account/myproducts/edit"}>
+                        <Link href={"#"}>
                             <a>
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
                             </a>
                         </Link> :
                         data.some(el => el.id == id && el.status === 'approved') ?
                             <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal">
-                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEditModal(id)}></i>
                             </a>
                             :
                             <i style={{ opacity: 0.7, cursor: "not-allowed" }} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
@@ -466,7 +477,7 @@ function MyProductsLists() {
                                                     <header>
                                                         <h1>{View?.title}</h1>
                                                         <h4>
-                                                            {addPeriodToThousands(View?.price)} so'm{' '}
+                                                            {addPeriodToThousands(View?.discount_price)} so'm{' '}
                                                         </h4>
                                                     </header>
                                                     <div>
@@ -544,7 +555,7 @@ function MyProductsLists() {
                         <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products?.discount} type="number" className='form-control rounded-3' placeholder='Hujjatingizni chegirmasi' />
                     </label>
                     <label htmlFor="discount" className='form-label'>Hujjatingizni narxi
-                        <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, price: e.target.value }))} defaultValue={products?.price} type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
+                        <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount_price: e.target.value }))} defaultValue={products?.discount_price} type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
                     </label>
                 </ModalDeletePostEdit >
             </div>

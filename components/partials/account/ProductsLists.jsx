@@ -16,6 +16,7 @@ import PartialDescription from '~/components/elements/detail/description/Partial
 const { TabPane } = Tabs;
 import { Tabs } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
+import Router from 'next/router';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -26,6 +27,7 @@ function ProductsLists() {
     const [dataVal, setDataVal] = useState([]);
     const [dataValStatus, setDataCatStatus] = useState(null);
     const [date, setDate] = useState(null);
+    const [date2, setDate2] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
@@ -67,7 +69,6 @@ function ProductsLists() {
 
 
 
-
     const options = [];
 
     for (let i = 0; i < dataVal?.length; i++) {
@@ -86,7 +87,10 @@ function ProductsLists() {
 
     async function handleClickIdEditProducts(productsItems) {
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, productsItems, null, search, user?.access);
-        dispatch(MyProductsEdit(ItemsData))
+        if (ItemsData) {
+            dispatch(MyProductsEdit(ItemsData))
+            Router.push("/account/products/edit")
+        }
     }
 
     function handleCLickArxiv() {
@@ -134,8 +138,9 @@ function ProductsLists() {
 
 
     const handlePagination = (pageNum) => {
+        console.log(pageNum);
         setCurrPage(pageNum)
-        GetItemsProductsLists(pageNum, category_id[0], dataValStatus, dataFormat, null, dateArxiv, search)
+        GetItemsProductsLists(pageNum, category_id, dataValStatus, dataFormat, null, dateArxiv, search)
     }
 
 
@@ -232,7 +237,7 @@ function ProductsLists() {
             key: 'address',
             render: (id) => <div >
                 <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(id)}></i></a>
-                <Link href={"/account/products/edit"}>
+                <Link href={"#"}>
                     <a><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => handleClickIdEditProducts(id)}></i></a>
                 </Link>
             </div>
@@ -251,7 +256,7 @@ function ProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
-                                    <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {data.length} ta</span>
+                                    <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {pageCount} ta</span>
                                     <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
 
                                         <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={e => (setSerach(e.target.value))} />
@@ -322,7 +327,7 @@ function ProductsLists() {
                                                     <header>
                                                         <h1>{deleteIdView?.title}</h1>
                                                         <h4>
-                                                            {addPeriodToThousands(deleteIdView?.price)} so'm{' '}
+                                                            {addPeriodToThousands(deleteIdView?.discount_price)} so'm{' '}
                                                         </h4>
                                                     </header>
                                                     <div>

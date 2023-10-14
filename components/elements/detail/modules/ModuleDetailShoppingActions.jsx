@@ -5,18 +5,15 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 
-const ModuleDetailShoppingActions = ({
-    product
-}) => {
+const ModuleDetailShoppingActions = ({ product }) => {
     const { setCartOneItem } = useCart();
-    const { addSavedItem, wishlist , removeSavedItem} = useWishlist();
+    const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
 
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product.id);
-       
     }
 
     const state = useSelector((state) => state.auth.user?.access);
@@ -37,7 +34,6 @@ const ModuleDetailShoppingActions = ({
         if (wishlist?.find((item) => item.id === product?.id)) {
             removeSavedItem(product.id);
         }
-       
     };
 
     if (true) {
@@ -50,11 +46,19 @@ const ModuleDetailShoppingActions = ({
                     Savatga qo'shish
                 </a>
                 <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
-                    Sotib olish
+                 1 klikda sotib oling
                 </a>
                 <div className="ps-product__actions">
                     <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                        <i className={`${wishlist?.some(item => Number(item.id) === Number(product.id)) ? 'fa-solid fa-heart text-danger' : 'icon-heart'} `} ></i>
+                        <i
+                            className={`${
+                                wishlist?.some(
+                                    (item) =>
+                                        Number(item.id) === Number(product.id)
+                                )
+                                    ? 'fa-solid fa-heart text-danger'
+                                    : 'icon-heart'
+                            } `}></i>
                     </a>
                 </div>
             </div>

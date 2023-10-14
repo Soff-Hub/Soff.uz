@@ -357,7 +357,7 @@ const PostsMyProducts = () => {
                                         <span style={{ maxWidth: '150px' }} >
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(taxminiyNarx)
-                                                : addPeriodToThousands(products?.price)}
+                                                : addPeriodToThousands(products?.discount_price)}
                                             so'm
                                         </span>
                                     </p>

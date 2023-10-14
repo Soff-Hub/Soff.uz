@@ -20,22 +20,22 @@ function App({ Component, pageProps }) {
             e.preventDefault();
         });
 
-        // document.onkeydown = function (e) {
-        //     if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86)) {
-        //         e.preventDefault();
-        //     }
-        // };
+        document.onkeydown = function (e) {
+            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86)) {
+                e.preventDefault();
+            }
+        };
 
-        // document.addEventListener('selectstart', function (e) {
-        //     e.preventDefault();
-        // });
+        document.addEventListener('selectstart', function (e) {
+            e.preventDefault();
+        });
 
-        // document.onkeydown = function (e) {
-        //     if (e.keyCode == 123) {
-        //         e.preventDefault();
-        //         return false;
-        //     }
-        // };
+        document.onkeydown = function (e) {
+            if (e.keyCode == 123) {
+                e.preventDefault();
+                return false;
+            }
+        };
     });
 
 
@@ -61,7 +61,12 @@ function App({ Component, pageProps }) {
                     content="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling."
                 />
             </Head>
-            <NextProgress delay={300} className="progres-color" options={{ showSpinner: false }} />
+
+            <NextProgress
+                delay={300}
+                options={{ showSpinner: false }}
+                color='#00A44F'
+            />
             <CookiesProvider>
                 <MasterLayout>
                     <Component {...pageProps} />
