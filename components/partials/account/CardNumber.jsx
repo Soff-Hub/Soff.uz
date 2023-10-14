@@ -21,7 +21,7 @@ const CreditCardInput = ({ onChange }) => {
         setFormattedCardNumber(formattedValue);
     };
     return (
-        <div className=' pt-3 pb-3' style={{maxWidth:"300px"}} >
+        <div className=' pt-3 pb-3 mt-5 pt-5' style={{maxWidth:"300px"}} >
             <label  htmlFor="ccn">Karta raqam</label>
             <input
                 id="ccn"
