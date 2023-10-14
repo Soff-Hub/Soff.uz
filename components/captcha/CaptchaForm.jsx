@@ -9,19 +9,21 @@ const CaptchaForm = () => {
   async function handleCaptchaSubmission(token) {
     // Server function to verify captcha
     await verifyCaptcha(token)
+    console.log('token', token)
       .then(() => setIsverified(true))
       .catch(() => setIsverified(false))
   }
 
 
   useEffect(() => {
-    console.log(isVerified);
+    console.log('captcha ishladi', isVerified);
   }, [isVerified])
 
   return (
         <div>
           <ReCAPTCHA
-            sitekey="6LeDdJooAAAAABNp0snlQFYPgPnuFLo4LWRc9GUD"
+            // sitekey="6LeDdJooAAAAABNp0snlQFYPgPnuFLo4LWRc9GUD"
+            sitekey="6LcSmp4oAAAAAAMfGMAwdUB5kQXrRlPLkrVKBp-zI"
             ref={recaptchaRef}
             onChange={handleCaptchaSubmission}
           />
