@@ -23,7 +23,7 @@ const CaptchaForm = () => {
         <div>
           <ReCAPTCHA
             // sitekey="6LeDdJooAAAAABNp0snlQFYPgPnuFLo4LWRc9GUD"
-            sitekey="6LcSmp4oAAAAAAMfGMAwdUB5kQXrRlPLkrVKBp-zI"
+            sitekey="6LcSmp4oAAAAAMfGMAwdUB5kQXrRlPLkrVKBp-zI"
             ref={recaptchaRef}
             onChange={handleCaptchaSubmission}
           />

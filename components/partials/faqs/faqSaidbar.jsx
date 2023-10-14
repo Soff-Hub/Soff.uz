@@ -9,7 +9,7 @@ export default function FaqSaidbar() {
     return (
       <div className="faqs-sidebar ">
           <ul >
-            <li>
+            <li >
                 <Link href="/page/form" as="/page/form">
                     <a
                         className={`${
