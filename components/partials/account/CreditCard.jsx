@@ -87,12 +87,12 @@ useEffect(() => {
 }, [])
 
   return (
-<div className="row g-3 gap-5  mx-auto overflow-x-auto" >
+<div className="row g-3 gap-5  mx-auto overflow-x-auto m-0" >
   <div className=" border p-4 rounded" style={{width:"330px"}} >
     <h4>Yangi karta qo'shish</h4>
     <div id="Card" className={numberCard === 9860 ? "BackImg" : numberCard === 8600 ? "BackImg2" : numberCard===5614 ? "BackImg2" : numberCard===5555 ? "BackImg4 " : numberCard===6262 ? "BackImg2" : numberCard===4545 ? "BackImg3" : numberCard===6565 ? "BackImg3" : "BackImg1" }>
-      <div className="colCard px-5">
-        <h5 className="cardText cardColorHumo"  >{number}</h5>
+      <div className=" px-5">
+        <h5 className="cardText cardColorHumo  colCard"  >{number}</h5>
       </div>
     </div>
   <CreditCardInput onChange={value => numberTyper(value)} />

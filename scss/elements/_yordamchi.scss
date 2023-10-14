@@ -1291,10 +1291,6 @@
     width: 300px;
 }
 
-.colCard {
-    position: absolute;
-    top: 51%;
-}
 
 
 
@@ -1469,9 +1465,17 @@
         position: fixed;
         top: 30%;
     }
+    .colCard {
+        position: absolute;
+        top: 44%;
+    }
 }
 
 @media (min-width: 860px) {
+    .colCard {
+        position: absolute;
+        top: 44%;
+    }
     .bannerModal2 {
         padding-bottom: 100%;
         position: fixed;
@@ -1532,6 +1536,12 @@
 }
 @media (max-width: 400px) {
 
+    .colCard {
+        position: absolute;
+        top: 44%;
+    }
+    
+
     .bannerModal2 {
         padding-bottom: 100%;
         position: fixed;
@@ -1564,7 +1574,10 @@
 }
 
 @media (min-width: 400px) and (max-width:500px) {
-
+    .colCard {
+        position: absolute;
+        top: 44%;
+    }
     .bannerModal2 {
         padding-bottom: 100%;
         position: fixed;
@@ -1597,6 +1610,10 @@
 }
 
 @media (min-width:1200px) and (max-width:1300px) {
+    .colCard {
+        position: absolute;
+        top: 56%;
+    }
     .bannerModal2 {
         position: fixed;
         top: 20%;
@@ -1613,6 +1630,10 @@
     }
 }
 @media (min-width:1300px) and (max-width:1500px) {
+    .colCard {
+        position: absolute;
+        top: 56%;
+    }
     .bannerModal2 {
         position: fixed;
         top: 20%;
@@ -1644,5 +1665,12 @@
         left: 11%;
        
     
+    }
+}
+
+@media (min-width:1500px) and (max-width:2000px) {
+    .colCard {
+        position: absolute;
+        top: 56%;
     }
 }

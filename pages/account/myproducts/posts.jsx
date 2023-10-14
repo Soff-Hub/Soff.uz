@@ -199,10 +199,10 @@ const Posts = () => {
         );
         if (patchItems?.status === 201) {
             Router.push('/account/myproducts');
-            const modal = Modal.success({
+            const modal = Modal.warning({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: "Yangi mahsulot qo'shdingiz ",
+                content:  "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             });
         } else {
             const modal = Modal.error({
@@ -295,7 +295,6 @@ const Posts = () => {
         PostFilePoster();
     }, [fileImgFile]);
 
-    console.log(livePosterFile);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
