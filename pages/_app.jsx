@@ -36,6 +36,17 @@ function App({ Component, pageProps }) {
                 return false;
             }
         };
+  
+        document.onkeydown = function(e) {
+            // Agar boshqa xususiyatlar (Shift, Ctrl, Alt, Meta) tugmalarini bosgan bo'lsangiz:
+            if (e.shiftKey || e.ctrlKey || e.altKey || e.metaKey) {
+                e.preventDefault();
+            }
+        };
+        
+
+        
+
     });
 
 

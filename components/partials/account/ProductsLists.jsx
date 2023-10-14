@@ -16,6 +16,7 @@ import PartialDescription from '~/components/elements/detail/description/Partial
 const { TabPane } = Tabs;
 import { Tabs } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
+import Router from 'next/router';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -86,7 +87,10 @@ function ProductsLists() {
 
     async function handleClickIdEditProducts(productsItems) {
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, productsItems, null, search, user?.access);
-        dispatch(MyProductsEdit(ItemsData))
+        if (ItemsData) {
+            dispatch(MyProductsEdit(ItemsData))
+            Router.push("/account/products/edit")
+        }
     }
 
     function handleCLickArxiv() {
@@ -232,7 +236,7 @@ function ProductsLists() {
             key: 'address',
             render: (id) => <div >
                 <a data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-3" onClick={() => handleClickView(id)}></i></a>
-                <Link href={"/account/products/edit"}>
+                <Link href={"#"}>
                     <a><i className="fa-solid fa-pen-to-square mx-4  text-success-emphasis" onClick={() => handleClickIdEditProducts(id)}></i></a>
                 </Link>
             </div>
@@ -322,7 +326,7 @@ function ProductsLists() {
                                                     <header>
                                                         <h1>{deleteIdView?.title}</h1>
                                                         <h4>
-                                                            {addPeriodToThousands(deleteIdView?.price)} so'm{' '}
+                                                            {addPeriodToThousands(deleteIdView?.discount_price)} so'm{' '}
                                                         </h4>
                                                     </header>
                                                     <div>
