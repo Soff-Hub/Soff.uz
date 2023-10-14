@@ -94,7 +94,7 @@ const Wishlist = ({ ecomerce }) => {
                                     </td>
                                     <td>
                                         <span>
-                                            {product.discount === 0 ? (
+                                            {Number(product?.price) === Number(product?.discount_price) ? (
                                                 <p>
                                                     {addPeriodToThousands(
                                                         product.discount_price
@@ -110,9 +110,9 @@ const Wishlist = ({ ecomerce }) => {
                                                         so'm
                                                     </del>
                                                     <p>
-                                                        {addPeriodToThousands(
+                                                        { addPeriodToThousands(
                                                             product.discount_price
-                                                        )}
+                                                        )  }
                                                         so'm
                                                     </p>
                                                 </>

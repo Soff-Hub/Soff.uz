@@ -34,7 +34,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                         {i + 1}. {item.title}
                     </strong>
                     <small>
-                        {item.discount === 0 ? (
+                        {Number(item?.price) === Number(item?.discount_price) ? (
                            <p>{ addPeriodToThousands(item.discount_price)} so'm</p>
                         ) : (
                             <>
@@ -42,7 +42,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                                     {addPeriodToThousands(item.price)} so'm
                                 </del>
                                 <p>
-                                    {addPeriodToThousands(item.discount_price)}{' '}
+                                    {addPeriodToThousands(item.discount_price) }{' '}
                                     so'm
                                 </p>
                             </>

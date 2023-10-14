@@ -1,31 +1,39 @@
 import React from 'react';
 import { Button, Form, Input, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
+import CaptchaForm from '~/components/captcha/CaptchaForm';
 const App = () => {
     const [form] = Form.useForm();
-    const {feedbackPost} = useAuth()
+    const { feedbackPost } = useAuth();
     const onFinish = async (values) => {
         console.log('Received values of form: ', values);
-        const respons = await feedbackPost(values)
+        const respons = await feedbackPost(values);
         console.log(respons);
         if (respons.status === 201) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: `${respons?.data?.msg ? respons?.data?.msg : 'Xabaringiz muvaffaqqiyatli qabul qilindi'}`,
+                content: `${
+                    respons?.data?.msg
+                        ? respons?.data?.msg
+                        : 'Xabaringiz muvaffaqqiyatli qabul qilindi'
+                }`,
             });
-            modal.update
-        }else if(respons.status === 404){
+            modal.update;
+        } else if (respons.status === 404) {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: `${respons?.data?.msg ? respons?.data?.msg : 'Xabaringiz muvaffaqqiyatli qabul qilindi'}`,
+                content: `${
+                    respons?.data?.msg
+                        ? respons?.data?.msg
+                        : 'Xabaringiz muvaffaqqiyatli qabul qilindi'
+                }`,
             });
-            modal.update
+            modal.update;
         }
         form.resetFields();
     };
-
 
     return (
         <Form
@@ -35,7 +43,8 @@ const App = () => {
             style={{
                 maxWidth: 800,
                 minHeight: '52px',
-            }} scrollToFirstError>
+            }}
+            scrollToFirstError>
             <h3 className="my-xl-5 text-center">Xabar jo'natish</h3>
             <div className="row">
                 <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
@@ -118,6 +127,7 @@ const App = () => {
                             Yuborish
                         </Button>
                     </Form.Item>
+                    <CaptchaForm/>
                 </div>
             </div>
         </Form>
