@@ -16,11 +16,32 @@ function App({ Component, pageProps }) {
         setTimeout(function () {
             document.getElementById('__next').classList.add('loaded');
         }, 100);
+        window.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        document.onkeydown = function (e) {
+            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86)) {
+                e.preventDefault();
+            }
+        };
+
+        document.addEventListener('selectstart', function (e) {
+            e.preventDefault();
+        });
+
+        document.onkeydown = function (e) {
+            if (e.keyCode == 123) {
+                e.preventDefault();
+                return false;
+            }
+        };
     });
+
 
     return (
         <>
-             <Head>
+            <Head>
 
                 <title>Soff</title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -39,7 +60,7 @@ function App({ Component, pageProps }) {
                     name="description"
                     content="Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. "
                 />
-            </Head> 
+            </Head>
             <NextProgress delay={300} className="progres-color" options={{ showSpinner: false }} />
             <CookiesProvider>
                 <MasterLayout>
