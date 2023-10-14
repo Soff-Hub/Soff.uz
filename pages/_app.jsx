@@ -20,22 +20,22 @@ function App({ Component, pageProps }) {
             e.preventDefault();
         });
 
-        document.onkeydown = function (e) {
-            if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86)) {
-                e.preventDefault();
-            }
-        };
+        // document.onkeydown = function (e) {
+        //     if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86)) {
+        //         e.preventDefault();
+        //     }
+        // };
 
-        document.addEventListener('selectstart', function (e) {
-            e.preventDefault();
-        });
+        // document.addEventListener('selectstart', function (e) {
+        //     e.preventDefault();
+        // });
 
-        document.onkeydown = function (e) {
-            if (e.keyCode == 123) {
-                e.preventDefault();
-                return false;
-            }
-        };
+        // document.onkeydown = function (e) {
+        //     if (e.keyCode == 123) {
+        //         e.preventDefault();
+        //         return false;
+        //     }
+        // };
     });
 
 
@@ -58,7 +58,7 @@ function App({ Component, pageProps }) {
                 />
                 <meta
                     name="description"
-                    content="Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. "
+                    content="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling."
                 />
             </Head>
             <NextProgress delay={300} className="progres-color" options={{ showSpinner: false }} />
