@@ -40,7 +40,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                 </td>
                 <td data-label="narxi" className="price pe-5">
                     <span>
-                        {item.discount === 0 ? (
+                        {Number(item.price) === Number(item.discount_price) ? (
                             <p>
                                 {addPeriodToThousands(item.discount_price)}
                                 so'm
