@@ -7,7 +7,7 @@ const nextSettings = {
     // Change your site title here
     env: {
         title: 'Soff',
-        titleDescription: '',
+        titleDescription: 'Soff.uz - online hujjatlar bazasi',
     },
     experimental: {
         serverActions: true,

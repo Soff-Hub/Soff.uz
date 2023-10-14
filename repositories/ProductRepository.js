@@ -278,24 +278,6 @@ class ProductRepository {
         return reponse;
     }
 
-    // async getProductsByBrand(payload) {
-    //     const reponse = await Repository.get(
-    //         `${baseUrl}/brands?slug=${payload}`
-    //     )
-    //         .then((response) => {
-    //             if (response.data) {
-    //                 if (response.data.length > 0) {
-    //                     return response.data[0];
-    //                 }
-    //             } else {
-    //                 return null;
-    //             }
-    //         })
-    //         .catch(() => {
-    //             return null;
-    //         });
-    //     return reponse;
-    // }
 
     async getSellerProduct(payload) {
         const endPoint = `${baseUrl}customer/documents/?id=&category=&created_at=&category__parent=&seller__phone=&seller__email=&seller__id=${payload}12&min_price=&max_price=&min_id=&max_id=&order_by_id=&order_by_price=&approved_count=`;
@@ -318,6 +300,21 @@ class ProductRepository {
             .then((response) => {
                 if (response.data) {
                     return response.data.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return null;
+            });
+        return reponse;
+    }
+    async getMoreTopCategorys() {
+        const endPoint = `customer/four-child`
+        const reponse = await Repository.get(baseUrl+endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response.data
                 } else {
                     return null;
                 }

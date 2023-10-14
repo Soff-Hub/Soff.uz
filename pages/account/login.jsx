@@ -26,7 +26,7 @@ const LoginPage = () => {
                 justifyContent: 'center',
                 marginTop: '20%',
             }}>
-            <PacmanLoader color="#36d7b7" />
+            <PacmanLoader  color='#00A44F' />
         </div>
     ) : 
     user?.access ?

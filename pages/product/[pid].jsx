@@ -1,13 +1,10 @@
 import React from 'react';
-import { useRouter } from 'next/router';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
 
 import Meta from '~/components/shared/headers/Meta';
-import { useState } from 'react';
-import ProductRepository from '~/repositories/ProductRepository';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import { baseUrl } from '~/repositories/Repository';
 
