@@ -19,18 +19,15 @@ const category_id = []
 const PostsMyProducts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [fileImgPoster, setFileImgPoster] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { products, user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
-    const [discount, setDiscount] = useState(null);
     const [categoryName, setCategoryName] = useState('');
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
-    const [livePoster, setLivePoster] = useState('');
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
@@ -69,45 +66,47 @@ const PostsMyProducts = () => {
 
     async function handleClickPostsEdit(e) {
         e.preventDefault()
-        const formData = new FormData();
-        // if (fileImgFile) {
-        //     formData.append('file', fileImgFile);
-        // }
-        // if (fileImgPoster) {
-        //     formData.append('poster', fileImgPoster);
-        // }
-        if (title) {
-            formData.append('title', title);
+
+        if (title || taxminiyNarx  || tagSearchResult || category_id[0]) {
+            const formData = new FormData();
+            if (title) {
+                formData.append('title', title);
+            }
+            if (taxminiyNarx) {
+                formData.append('discount_price', taxminiyNarx);
+            }
+            if (Fulldata) {
+                formData.append('description', Fulldata);
+            }
+            if (category_id[0]) {
+                formData.append('category', category_id[0]);
+            }
+            if (tagSearchResult) {
+                formData.append('tags', tagSearchResult)
+            }
+            const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+            setTagSearchResult(null)
+            setTitle(null)
+            setTaxminiyNarx(null)
+
         }
-        if (taxminiyNarx) {
-            formData.append('discount_price', taxminiyNarx);
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
         }
-        if (Fulldata) {
-            formData.append('description', Fulldata);
-        }
-        if (category_id[0]) {
-            formData.append('category', category_id[0]);
-        }
-        if (tagSearchResult) {
-            formData.append('tags', tagSearchResult)
-        }
-        if (discount) {
-            formData.append("discount", discount);
-        }
-        const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
+
         Router.push('/account/myproducts');
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni yangiladingiz`,
-        });
+
     }
 
-    function LiveImage(e) {
-        setFileImgPoster(e.target.files[0]);
-        const img = window.URL.createObjectURL(e.target.files[0]);
-        setLivePoster(img);
-    }
 
 
 
@@ -193,17 +192,6 @@ const PostsMyProducts = () => {
                                     defaultValue={products?.title}
                                 />
                             </div>
-            
-                            {/* <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot rasmi:</p> <Tooltip title="Mahsulot rasmini ko’rsatib o’tish juda muhimdir. Mijolaringizni diqqatini tortishda va sizning mahsulotingizga qiziqib kirishlarida katta ro’l o’ynaydi. Kiritmagan holatingizda esa mahsulotingiz turiga qarab tizim sizga variantlar beradi va shu variantlardan birini tanlashingiz mumkin. Lekin mahsulotingiz uchun alohida ishlanga rasm qo’yishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip> </div>
-                                <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate" style={{ backgroundColor: "#F1F1F1", border: "1px dashed green" }}>
-                                    {
-                                        livePoster ? livePoster :
-                                            "blob:http://localhost:3000/1ba7f287-c435-4e10-9080-6c01990d7f21"
-                                    }
-                                    <input type="file" onChange={(e) => LiveImage(e)} accept="image/*" />
-                                </label>
-                            </div> */}
 
                             <div className="row">
                                 <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
@@ -250,19 +238,6 @@ const PostsMyProducts = () => {
                                     )}
                                 />
                             </div>
-                            {/* <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4  mt-2"></i></Tooltip></div>
-
-                                <input
-                                    type='number'
-                                    className="form-control  rounded-3 col-md-8 mb-3"
-                                    name="price"
-                                    defaultValue={products?.discount}
-                                    onChange={(e) => (
-                                        setDiscount(e.target.value)
-                                    )}
-                                />
-                            </div> */}
                             <div className="row">
                                 <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
 
@@ -301,12 +276,7 @@ const PostsMyProducts = () => {
                         </form>
                         <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", }}>
                             <div className="image rounded mb-3" >
-                                {
-                                    (livePoster ?
-                                        <img src={livePoster} alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
-                                        :
-                                        <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
-                                }
+                                <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
@@ -338,15 +308,6 @@ const PostsMyProducts = () => {
                                         }
                                     </span>
                                 </p>
-                                {/* <p className="live-card-p">
-                                    <span><strong>Chegirma</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            discount ? discount : products?.discount
-                                        }
-                                        %
-                                    </span>
-                                </p> */}
                                 <p className="live-card-p">
                                     <span>
                                         <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
@@ -385,12 +346,7 @@ const PostsMyProducts = () => {
                         <div className="offcanvas-body">
                             <div className="card rounded-3 ">
                                 <div className="image rounded mb-3">
-                                    {
-                                        (livePoster ?
-                                            <img src={livePoster} alt="doc" className='border mb-4' style={{ objectFit: "cover" }} />
-                                            :
-                                            <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />)
-                                    }
+                                    <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />
                                 </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
@@ -421,15 +377,7 @@ const PostsMyProducts = () => {
                                             }
                                         </span>
                                     </p>
-                                    {/* <p className="live-card-p">
-                                        <span><strong>Chegirma</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                discount ? discount : products?.discount
-                                            }
-                                            %
-                                        </span>
-                                    </p> */}
+
                                     <p className="live-card-p">
                                         <span>
                                             <strong className='fs-4'>Qisqa tavsif</strong>:{' '}

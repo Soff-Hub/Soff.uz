@@ -19,6 +19,8 @@ function CategoryLists() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState(null);
     const [tagName, setTagName] = useState(null);
+    const [tagNameIcon, setTagNameIcon] = useState(null);
+    const [tagNameUser, setTagNameUsers] = useState(null);
     const [tagNameTop, setTagNameTop] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
     const [pageCount, setPageCount] = useState(0)
@@ -26,7 +28,7 @@ function CategoryLists() {
 
     async function GetItemsProducts(page, search, id) {
         setCurrPage(page)
-        const ItemsData = await GetRepository.getCategory(page,search,id, user?.access);
+        const ItemsData = await GetRepository.getCategory(page, search, id, user?.access);
         if (ItemsData?.results) {
             setPageCount(ItemsData.count)
             setData([...ItemsData.results]);
@@ -35,7 +37,7 @@ function CategoryLists() {
 
 
     async function GetItemsProductsEdit(id) {
-        const ItemsData = await GetRepository.getCategory(currPage,search,id, user?.access);
+        const ItemsData = await GetRepository.getCategory(currPage, search, id, user?.access);
         if (ItemsData) {
             setDeleteIdEdit(ItemsData)
         }
@@ -48,7 +50,7 @@ function CategoryLists() {
         }
     }
 
-   
+
 
     async function deleteItemsId() {
         const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId, user?.access)
@@ -86,44 +88,49 @@ function CategoryLists() {
     }
 
 
-    async function handleItemsEdit(values) {
-        const formData = new FormData()
-        if (file) {
-            formData.append('image', file)
-        }
-        if (values?.icon) {
-            formData.append('icon', values.icon)
-        }
-        if (values?.name) {
-            formData.append('name', values.name)
-        }
-        if (tagName) {
-            formData.append('parent', tagName)
-        }
-        if (tagNameTop) {
-            formData.append('top', tagNameTop)
-        }
+    async function handleItemsEdit() {
 
-        const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
-        if (patchItems?.status === 400) {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Nimadir xato ketidi qaytadan urinib ko'ring",
-            });
-            modal.update
-        }
-        else {
+        if (tagNameUser || tagNameIcon || tagName || tagNameTop || file) {
+
+            const formData = new FormData()
+            if (file) {
+                formData.append('image', file)
+            }
+            if (tagNameIcon) {
+                formData.append('icon', tagNameIcon)
+            }
+            if (tagNameUser) {
+                formData.append('name', tagNameUser)
+            }
+            if (tagName) {
+                formData.append('parent', tagName)
+            }
+            if (tagNameTop) {
+                formData.append('top', tagNameTop)
+            }
+
+            const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
             });
-            modal.update
+            GetItemsProducts(currPage, search, null)
+            setTagNameTop(null)
+            setTagName(null)
+            setFile(null)
+            setTagNameIcon(null)
+            setTagNameUsers(null)
 
         }
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
+        }
 
-        GetItemsProducts(currPage, search, null)
 
     }
 
@@ -186,7 +193,7 @@ function CategoryLists() {
                     data.some(el => el.id == id && el.is_delete === true) ?
                         <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
                         :
-                        <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
+                        <></>
 
                 }
             </div>
@@ -207,13 +214,13 @@ function CategoryLists() {
                                 <div>
                                     <div className='row row-gap-3 bg-white m-0 gap-5 px-4 mb-3 pb-4 rounded'>
                                         <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i className="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
-                                        <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={e=>setSerach(e.target.value)} />
+                                        <input type='search' className='form-control rounded col-md-8 ' placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                         <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'> <i className="fa-solid fa-plus"></i> Kategoriya qo'shish</span></button>
                                     </div>
                                     <Table scroll={{ x: 750 }} dataSource={data} columns={columns} pagination={false}
                                     />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
-                                    onChange={page => GetItemsProducts(page, search)} />
+                                        onChange={page => GetItemsProducts(page, search)} />
                                 </div>
                             </div>
                         </div>
@@ -227,7 +234,7 @@ function CategoryLists() {
                             deleteIdEdit?.image ? deleteIdEdit?.image :
                                 <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
                         }
-                        <input type="file" name='file' id='file' style={{ display: "none" }}  className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} accept="image/*"  />
+                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} accept="image/*" />
                     </label>
                     <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
                     {
@@ -256,24 +263,9 @@ function CategoryLists() {
                                         </>
                                         :
                                         <>
-
+                                            <option selected value={"false"} >Top emas</option>
                                             <option value={"true"} >Top </option>
-                                            <option value={"false"} >Top emas</option>
                                         </>
-                                            ||
-                                            data.some(el => (el?.id == deleteIdEdit?.id && el.top === false)) ?
-                                            <>
-                                                <option selected value={"false"} >Top emas</option>
-                                                <option value={"true"} >Top </option>
-                                            </>
-                                            :
-                                            <>
-
-                                                <option value={"true"} >Top </option>
-                                                <option value={"false"} >Top emas</option>
-                                            </>
-
-
                                 }
 
                             </select>
@@ -286,6 +278,7 @@ function CategoryLists() {
                         className="form-control rounded-3"
                         name='icon'
                         defaultValue={deleteIdEdit?.icon}
+                        onChange={(e) => setTagNameIcon(e.target.value)}
                     />
                     <input
                         type='text'
@@ -293,6 +286,7 @@ function CategoryLists() {
                         className="form-control rounded-3"
                         name='name'
                         defaultValue={deleteIdEdit?.name}
+                        onChange={(e) => setTagNameUsers(e.target.value)}
                     />
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>

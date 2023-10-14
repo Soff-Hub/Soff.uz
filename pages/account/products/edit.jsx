@@ -24,9 +24,8 @@ const PostsProductsEdit = () => {
     const { products, user } = useSelector((state) => state.auth);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
-    const [Shortdata, setShortData] = useState('');
     const [dataCatStatus, setDataCatStatus] = useState(null);
-    const [Fulldata, setFullData] = useState('');
+    const [Fulldata, setFullData] = useState(null);
     const [categoryName, setCategoryName] = useState('');
     const [tegProductsLists, setTegProdcutsLists] = useState([]);
 
@@ -143,47 +142,47 @@ const PostsProductsEdit = () => {
 
     async function handleClickPostsEdit(e) {
         e.preventDefault();
-        const data = {};
-
-        if (title) {
-            Object.assign(data, { title: title });
-        }
-        if (results) {
-            Object.assign(data, { tags: results });
-        }
-        else {
-            Object.assign(data, { tags: results3 })
-        }
-        if (category_id[0]) {
-            Object.assign(data, { category: category_id[0] });
-        }
-        if (dataCatStatus) {
-            Object.assign(data, { status: dataCatStatus });
-        }
-        if (Fulldata) {
-            Object.assign(data, { description: Fulldata });
-        }
-        const patchItems = await PatchRepository.getProductsPatch(
-            data,
-            products?.id,
-            user?.access
-        );
-        Router.push('/account/products');
-        if (patchItems?.status === 400) {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Nimadir xato ketidi qaytadan urinib ko'ring",
-            });
-            modal.update;
-        } else {
+        if (title  || category_id[0] || dataCatStatus || Fulldata  ) {
+            const data = {};
+            if (title) {
+                Object.assign(data, { title: title });
+            }
+            if (results) {
+                Object.assign(data, { tags: results });
+            }
+             if (results3) {
+                Object.assign(data, { tags: results3 })
+             }
+            if (category_id[0]) {
+                Object.assign(data, { category: category_id[0] });
+            }
+            if (dataCatStatus) {
+                Object.assign(data, { status: dataCatStatus });
+            }
+            if (Fulldata) {
+                Object.assign(data, { description: Fulldata });
+            }
+            const patchItems = await PatchRepository.getProductsPatch(
+                data,
+                products?.id,
+                user?.access
+            );
+            setFullData(null)
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
-            modal.update;
+            }); 
         }
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
+        }
+        Router.push('/account/products');
+
     }
     const dataStatus = [
         {
@@ -666,7 +665,7 @@ const PostsProductsEdit = () => {
                                                     <span>
                                                         <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
                                                     </span>
-                                                    <ul style={{  listStyleType:"revert" }}>
+                                                    <ul style={{ listStyleType: "revert" }}>
                                                         <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
                                                         <li> <strong className='fs-4'>Hajmi: </strong>{products?.document?.file_size}</li>
                                                         <li> <strong className='fs-4'>Turi: </strong>{products?.document?.file_type}</li>

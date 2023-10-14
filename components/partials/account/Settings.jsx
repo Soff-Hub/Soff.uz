@@ -123,8 +123,8 @@ function Notifications() {
                                             <div className="accordion accordion-flush " id="accordionFlushExample">
                                                 <div className="accordion-item">
                                                     <h2 className="accordion-header">
-                                                        <button className="accordion-button collapsed border " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                            <h4 >Malumotlaringiz</h4>
+                                                        <button className="accordion-button collapsed border px-4 " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                            <h4 className='m-0 py-2'>Malumotlaringiz</h4>
                                                         </button>
                                                     </h2>
                                                     <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">

@@ -6,6 +6,7 @@ import { Button, Modal, Pagination, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import CalculateTimeDifference from './DateFormatter';
 
 
 function ApplicationLists() {
@@ -22,7 +23,7 @@ function ApplicationLists() {
     const [profile, setProfile] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
     const [pageCount, setPageCount] = useState(0)
-    const [currPage, setCurrPage] = useState(null)
+    const [currPage, setCurrPage] = useState(1)
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -72,18 +73,37 @@ function ApplicationLists() {
     }
 
     async function handleClickAriza() {
-        const formData = new FormData();
-        if (dataCardModalImg) {
-            formData.append("receipt", dataCardModalImg)
+        if (dataCardModalImg || dataCardModalStatus || dataCardModalDes) {
+            const formData = new FormData();
+            if (dataCardModalImg) {
+                formData.append("receipt", dataCardModalImg)
+            }
+            if (dataCardModalStatus) {
+                formData.append("status", dataCardModalStatus)
+            }
+            if (dataCardModalDes) {
+                formData.append("description", dataCardModalDes)
+            }
+
+            const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+
+            getItemsSellerAdmin(1, dataCat);
+            setDataCardModalStatus(null)
+            setDataCardModalDes(null)
+            setDataCardModalImg(null)
         }
-        if (dataCardModalStatus) {
-            formData.append("status", dataCardModalStatus)
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
         }
-        if (dataCardModalDes) {
-            formData.append("description", dataCardModalDes)
-        }
-        const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
-        getItemsSellerAdmin(1, dataCat);
 
     }
     function addPeriodToThousands(number) {
@@ -112,11 +132,11 @@ function ApplicationLists() {
 
 
     useEffect(() => {
-        getItemsSeller(1);
-        getItemsSellerAdmin(1, dataCat);
+        getItemsSellerAdmin(currPage, dataCat);
+        getItemsSeller(currPage);
         ProfileUsers();
         getItemsSellerCardList()
-    }, [1, dataCat])
+    }, [currPage, dataCat])
 
 
     const columns = [
@@ -157,6 +177,12 @@ function ApplicationLists() {
             ),
         },
         {
+            title: ' Yuborilgan sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',
@@ -189,12 +215,25 @@ function ApplicationLists() {
             )
         },
         {
-            title: 'Telefon raqam',
-            dataIndex: 'user',
+            title: 'Telefon raqam yoki email',
+            dataIndex: 'data',
             key: 'address',
-            render: (user) => (
-                <span>{user?.phone}</span>
-            )
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    {
+                        data.phone === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    }
+                    {
+                        data.email === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.email}</span>
+                    }
+
+                </div>
+
+            ),
         },
         {
             title: 'Tavsif',
@@ -221,6 +260,12 @@ function ApplicationLists() {
             ),
         },
         {
+            title: ' Ariza sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',
@@ -242,7 +287,7 @@ function ApplicationLists() {
                 dataAdmin.some(el => el.id == id && el.is_answer === true) ?
                     <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
                     :
-                    <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" ></i></a>
+                    <></>
 
             )
         },
@@ -313,7 +358,7 @@ function ApplicationLists() {
 
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                                <Table scroll={{ x: 1000 }} dataSource={data} columns={columns} pagination={false} />
+                                                <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} />
                                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                     onChange={handlePagination} />
                                             </>
@@ -332,7 +377,7 @@ function ApplicationLists() {
                                                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                                     </select>
                                                 </div>
-                                                <Table scroll={{ x: 1200 }} dataSource={dataAdmin} columns={columnsAdmin}
+                                                <Table scroll={{ x: 1450 }} dataSource={dataAdmin} columns={columnsAdmin}
                                                     pagination={false} />
                                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                     onChange={getItemsSellerAdmin} />

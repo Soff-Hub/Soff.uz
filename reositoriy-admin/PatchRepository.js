@@ -13,12 +13,12 @@ class PatchRepository {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error?.response));
         return reponse;
     }
     async PatchUsers(data, id, token) {
@@ -93,12 +93,12 @@ class PatchRepository {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return reponse;
     }
     async getMyProductsPatch(data, id, token) {
@@ -136,12 +136,12 @@ class PatchRepository {
 
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return reponse;
     }
     async getMyProductsDelete(id, token) {
@@ -200,12 +200,12 @@ class PatchRepository {
 
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return reponse;
     }
     async getPatchPoster(data,token) {

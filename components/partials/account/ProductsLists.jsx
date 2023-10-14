@@ -85,7 +85,6 @@ function ProductsLists() {
     }
 
     async function handleClickIdEditProducts(productsItems) {
-        console.log(productsItems);
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, productsItems, null, search, user?.access);
         dispatch(MyProductsEdit(ItemsData))
     }

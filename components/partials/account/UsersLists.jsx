@@ -8,6 +8,7 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
+import CalculateTimeDifference from './DateFormatter';
 
 function AccountUserPages() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -49,12 +50,12 @@ function AccountUserPages() {
     async function handleItemsEdit() {
         if (selectVal) {
             const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
-                const modal = Modal.success({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: "Siz  malumotlarni o'zgartirdingiz ",
-                });
-      
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+
             GetItemsUsers(currPage, selectValStatus, search)
             setSelectVal(null)
         }
@@ -62,7 +63,7 @@ function AccountUserPages() {
             const modal = Modal.info({
                 centered: true,
                 title: "Qayta urinib ko'ring",
-                content: "O'zgartirirish uchun malumot kiritilmadi ",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
     }
@@ -102,6 +103,12 @@ function AccountUserPages() {
             ),
         },
         {
+            title:  "Ro'yxatdan o'tgan sana",
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
             title: 'Holat',
             dataIndex: 'auth_status',
             key: 'address',
@@ -118,7 +125,7 @@ function AccountUserPages() {
                 {
                     data.some(el => el.id == id && el.auth_status === 'new') ?
                         <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-                        : <a style={{ cursor: "not-allowed" }}><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                        : <></>
                 }
             </div>
         },
@@ -146,7 +153,7 @@ function AccountUserPages() {
                                         <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
                                     </div>
 
-                                    <Table dataSource={data} scroll={{ x: 800 }} columns={columns} pagination={false} />
+                                    <Table dataSource={data} scroll={{ x: 900 }} columns={columns} pagination={false} />
                                     <Pagination total={pageCount} defaultCurrent={currPage}
                                         onChange={(val) => GetItemsUsers(val, selectValStatus)} />
                                 </div>
