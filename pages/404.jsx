@@ -11,13 +11,10 @@ function Error() {
                     <div className="ps-section__content">
                         <figure>
                             <img src="/static/img/404.jpg" alt="" />
-                            <h3>Oh! sahifa topilmadi</h3>
+                            <h3>Afsuski sahifa topilmadi</h3>
                             <p>
-                            Siz qidirayotgan narsani topa olmadik.{' '}
-                                <br />
-                                ga qayting
                                 <Link href="/">
-                                    <a> Bosh sahifa</a>
+                                    <a> Bosh sahifaga qayting</a>
                                 </Link>
                             </p>
                         </figure>
