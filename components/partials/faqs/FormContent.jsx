@@ -127,7 +127,7 @@ const App = () => {
                             Yuborish
                         </Button>
                     </Form.Item>
-                    <CaptchaForm/>
+                    {/* <CaptchaForm/> */}
                 </div>
             </div>
         </Form>

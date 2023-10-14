@@ -1502,6 +1502,12 @@
     }
 }
 
+.inputt{
+    &::placeholder{
+        color: #000 !important;
+    }
+}
+
 .ps-block--categories-grid {
     display: flex;
     flex-flow: row wrap;
