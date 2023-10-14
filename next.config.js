@@ -9,6 +9,9 @@ const nextSettings = {
         title: 'Soff',
         titleDescription: '',
     },
+    experimental: {
+        serverActions: true,
+      },
 };
 
 module.exports = nextSettings;
