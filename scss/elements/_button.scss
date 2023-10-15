@@ -3,10 +3,16 @@ button {
     @include transition(all 0.4s ease);
 }
 
-.ps-block__right{
-    a{
-        font-size: 13px;
+
+
+.ant-btn-default{
+    &:hover{
+        color: #fff !important;
     }
+}
+
+:where(.css-dev-only-do-not-override-pr0fja).ant-btn >span{
+    font-weight: 600;
 }
 
 .menu-toggle,
