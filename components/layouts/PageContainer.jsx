@@ -172,6 +172,8 @@ const PageContainer = ({
                             ? 'container faq-page-container'
                             : query === '/page/about-us'
                             ? 'container faq-page-container'
+                            : query === '/page/become-a-seller'
+                            ? 'container faq-page-container'
                             : ''
                     }  `}>
                     <div
@@ -180,8 +182,10 @@ const PageContainer = ({
                                 ? ''
                                 : query === '/page/questions'
                                 ? ''
-                                    : query === '/page/about-us'
-                                    ? ''
+                                : query === '/page/about-us'
+                                ? ''
+                                : query === '/page/become-a-seller'
+                                ? ''
                                 : 'd-none'
                         }`}>
                         <FaqSaidbar />

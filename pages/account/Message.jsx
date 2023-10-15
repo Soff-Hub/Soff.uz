@@ -34,7 +34,7 @@ const Xabar = (e) => {
             if (user.roli === 'seller' || user.roli === 'admin') {
                 Router.push('/account/dashbord');     
             }else{
-                Router.push('/account/myproducts');     
+                Router.push('/account/dashbord');     
 
             }
             dispatch(login({ user: user.data, data: e }));

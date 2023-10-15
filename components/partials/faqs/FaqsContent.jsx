@@ -33,9 +33,9 @@ const FaqsContent = () => {
         getFAQDescriptionData();
     }, []);
     return (
-        <div>
+        <div className='mt-4'>
+            <h3>Savol-javoblar</h3>
             <div className="faqs-category">
-                <h3>Kategoriyalar bo'yicha savollar</h3>
                 <div className="row ">
                     {categoryData?.length > 0 &&
                         categoryData?.map((item) => {

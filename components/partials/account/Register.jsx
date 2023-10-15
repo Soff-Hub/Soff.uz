@@ -181,8 +181,7 @@ class Register extends Component {
                                                 data-bs-target="#exampleModalToggleEditCategory2"
                                                 data-bs-toggle="modal"
                                                 className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
-                                                Tanishib chiqdim , shartlariga
-                                                roziman!
+                                                Tanishib chiqdim, shartlariga roziman!
                                             </a>
                                         </Link>
                                     </div>
