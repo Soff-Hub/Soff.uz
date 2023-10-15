@@ -37,18 +37,28 @@ const App = () => {
 
     return (
         <>
-            <div className='mt-4'>
+            <div className="mt-4">
                 <h3>Savollaringiz bormi?</h3>
-                <p>Agar qo’shimcha savollaringiz bo’lsa, bizning ishonch telefon raqam <a href='tell:+998910086789' className='text-success text-decoration-underline'>+998910086789</a> orqali yo’llang, biz qo’ng’iroqlarni 9:00 dan kech 22:00 ga qadar qabul qilamiz, xizmat qiymati - bepul!</p>
-                <p>Bizning Pochta manzilimiz <a href='mailto:support@soff.uz' className='text-success text-decoration-underline'>support@soff.uz</a> ga yozing, biz murojaatlarni 24/7 qabul qilamiz!</p>
-                <div className="form-group submit">
-                    <Form.Item>
-                        <Button htmlType="submit" className="ps-btn">
-                            Yuborish
-                        </Button>
-                    </Form.Item>
-                    {/* <CaptchaForm/> */}
-                </div>
+                <p>
+                    Agar qo’shimcha savollaringiz bo’lsa, bizning ishonch
+                    telefon raqam{' '}
+                    <a
+                        href="tell:+998910086789"
+                        className="text-success text-decoration-underline">
+                        +998910086789
+                    </a>{' '}
+                    orqali yo’llang, biz qo’ng’iroqlarni 9:00 dan kech 22:00 ga
+                    qadar qabul qilamiz, xizmat qiymati - bepul!
+                </p>
+                <p>
+                    Bizning Pochta manzilimiz{' '}
+                    <a
+                        href="mailto:support@soff.uz"
+                        className="text-success text-decoration-underline">
+                        support@soff.uz
+                    </a>{' '}
+                    ga yozing, biz murojaatlarni 24/7 qabul qilamiz!
+                </p>
             </div>
             <Form
                 className="ps-form--contact-us "
@@ -59,7 +69,6 @@ const App = () => {
                     minHeight: '52px',
                 }}
                 scrollToFirstError>
-
                 <h3 className="mt-xl-5">Xabar yuborish</h3>
                 <div className="row">
                     <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 ">
@@ -142,12 +151,11 @@ const App = () => {
                                 Yuborish
                             </Button>
                         </Form.Item>
-                        <CaptchaForm/>
+                        {/* <CaptchaForm/> */}
                     </div>
                 </div>
             </Form>
         </>
-
     );
 };
 export default App;

@@ -59,20 +59,21 @@ function FormCheckoutInformation() {
             },
         };
         const respons = await ClickRepository.postClick(data, token);
-        if (respons?.status === 200 || respons?.status === 201) {
+        if (respons) {
             window.open(`${respons?.data?.url}`, '_blank');
             setMessage(true);
-        }else {
-            Router.push('/account/register-user');
-            setMessage(true);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: 'Siz sotuvchisiz , foydalanuvchi bo\'lib ro\'yxatdan o\'tishingiz zarur' ,
-            });
-            modal.update;
-        
         }
+        // else {
+        //     Router.push('/account/register-user');
+        //     setMessage(true);
+        //     const modal = Modal.error({
+        //         centered: true,
+        //         title: 'Xatolik!',
+        //         content: 'Siz sotuvchisiz , foydalanuvchi bo\'lib ro\'yxatdan o\'tishingiz zarur' ,
+        //     });
+        //     modal.update;
+        
+        // }
        
         // const responsClick = await ClickRepository.postClick( token)
     };

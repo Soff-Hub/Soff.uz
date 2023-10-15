@@ -7,7 +7,7 @@ import CheckoutOne from '~/components/partials/account/Chekout-one';
 const CheckoutOnePage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {
