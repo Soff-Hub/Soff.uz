@@ -386,6 +386,13 @@
 }
 
 @include media('<lg') {
+
+    .responsive-image-card{
+        display: flex;
+        justify-content: center;
+    }
+
+
     .ant-float-btn-default {
         bottom: 90px;
     }

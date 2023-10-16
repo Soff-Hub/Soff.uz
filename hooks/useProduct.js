@@ -10,7 +10,7 @@ export default function useProduct() {
                 <>
                     <LazyLoad>
                         {payload?.poster_url ? (
-                            <div style={{ overflow: 'hidden' }}>
+                            <div style={{ overflow: 'hidden' }} className='responsive-image-card'>
                                 <div
                                     style={{
                                         backgroundImage: `url(${payload?.poster_url})`,
