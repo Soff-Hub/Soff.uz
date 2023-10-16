@@ -13,7 +13,6 @@ function ElectronicTopCategories() {
             getCategory(responsData.data.results);
         }
     }
-
     useEffect(() => {
         getCategoryData();
     }, []);

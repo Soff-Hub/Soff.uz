@@ -26,7 +26,7 @@ const ElectronicProductGroupWithCarousel = ({
                 </div>
             );
         } else {
-            productItemsView = <p>Hujjat topilmadi</p>;
+            productItemsView = <p>Mahsulot topilmadi</p>;
         }
     } else {
         const skeletons = generateTempArray(6).map((item, i) => (

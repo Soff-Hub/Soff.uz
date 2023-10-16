@@ -8,7 +8,7 @@ import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 import useCart from '~/hooks/useCart';
 
-const ShoppingCartScreen = ({ ecomerce }) => {
+const ShoppingCartScreen = () => {
     const state = useSelector((state) => state.auth.user);
     const cartItems = useSelector(state => state.ecomerce.cartDataItems)
 

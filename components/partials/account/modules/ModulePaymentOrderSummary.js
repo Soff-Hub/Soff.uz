@@ -4,7 +4,10 @@ import { connect } from 'react-redux';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
+    
     let amount = calculateAmount(ecomerce.cartDataItems);
+
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -34,8 +37,8 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                         {i + 1}. {item.title}
                     </strong>
                     <small>
-                        {Number(item?.price) === Number(item?.discount_price) ? (
-                           <p>{ addPeriodToThousands(item.discount_price)} so'm</p>
+                        {item?.discount === 0 ? (
+                           <p>{ addPeriodToThousands(item.price)} so'm</p>
                         ) : (
                             <>
                                 <del>
@@ -52,7 +55,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
             </Link>
         ));
     } else {
-        listItemsView = <p>Hujjat yo'q.</p>;
+        listItemsView = <p>Mahsulot yo'q.</p>;
     }
   
         totalView = (
@@ -68,7 +71,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
             <div className="ps-block__content">
                 <figure>
                     <figcaption>
-                        <strong>Hujjat</strong>
+                        <strong>Mahsulot</strong>
                         <strong>narx</strong>
                     </figcaption>
                 </figure>

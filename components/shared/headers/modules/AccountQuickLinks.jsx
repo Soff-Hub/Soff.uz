@@ -46,7 +46,7 @@ const AccountQuickLinks = (props) => {
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account">
-                <Link  href={ user?.role==="admin" || user?.role==="seller" ? "/account/dashbord" : "/account/MyProducts"}><a> <i className="icon-user"></i> </a></Link>
+                <Link  href={ user?.role==="admin" || user?.role==="seller" ? "/account/dashbord" : "/account/myproducts"}><a> <i className="icon-user"></i> </a></Link>
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow">
                         {linksView}
@@ -70,7 +70,7 @@ const AccountQuickLinks = (props) => {
                         <a>Kirish</a>
                     </Link>
 
-                    <Link href="/account/foydalanuvchi">
+                    <Link href="/account/selection">
                         <a>Ro'yxatdan o'tish</a>
                     </Link>
                 </div>

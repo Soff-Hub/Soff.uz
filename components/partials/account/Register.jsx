@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { Form, Input, Modal } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 import ModalTanishuv from './modules/Modal-tanishuv';
+import { withRouter } from 'next/router';
 
 class Register extends Component {
     constructor(props) {
@@ -15,7 +16,7 @@ class Register extends Component {
             chekked: false,
             passwordFocused: false,
             inputType: 'text',
-            inputLength: ''
+            inputLength: '',
         };
     }
 
@@ -28,7 +29,7 @@ class Register extends Component {
                 let message = '';
                 const modal = Modal.error({
                     centered: true,
-                    title: "Xatolik",
+                    title: 'Xatolik',
                     content: user?.data?.msg[0],
                 });
                 modal.update;
@@ -38,10 +39,13 @@ class Register extends Component {
                 localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
 
+                if (this.props.router.query.id) {
+                    Router.push(`/account/Message?id=${this.props.router.query.id}`);
+                }else{
+                    Router.push(`/account/Message?via=${user.data.via_}`);
+                }
 
-                Router.push(`/account/Message?via=${user.data.via_}`);
             }
-
         }
     };
 
@@ -57,21 +61,20 @@ class Register extends Component {
     };
 
     handleChangeType = (e) => {
-        if (e.target.value === "") {
-            this.setState({ inputType: 'text' })
-            this.setState({ inputLength: '' })
+        if (e.target.value === '') {
+            this.setState({ inputType: 'text' });
+            this.setState({ inputLength: '' });
             return;
         }
-        const value = e.target.value.split('')
-        if (value[0] === "+") {
-            this.setState({ inputType: 'tel' })
-            this.setState({ inputLength: '13'})
+        const value = e.target.value.split('');
+        if (value[0] === '+') {
+            this.setState({ inputType: 'tel' });
+            this.setState({ inputLength: '13' });
+        } else {
+            this.setState({ inputType: 'text' });
+            this.setState({ inputLength: '' });
         }
-        else {
-            this.setState({ inputType: 'text' })
-            this.setState({inputLength: ''})
-        }
-    }
+    };
 
     handleEnterKeyPress2 = (e) => {
         if (e.key === 'Enter') {
@@ -81,6 +84,8 @@ class Register extends Component {
     };
 
     render() {
+        const { router } = this.props;
+        const { id } = router.query;
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -89,9 +94,15 @@ class Register extends Component {
                         onFinish={this.handleSubmit}>
                         <ul className="ps-tab-list">
                             <li>
-                                <Link href="/account/login">
-                                    <a>Kirish</a>
-                                </Link>
+                                {id ? (
+                                    <Link href={`/account/login?id=${id}`}>
+                                        <a>Kirish</a>
+                                    </Link>
+                                ) : (
+                                    <Link href="/account/login">
+                                        <a>Kirish</a>
+                                    </Link>
+                                )}
                             </li>
                             <li className="active">
                                 <Link href="/account/register">
@@ -108,7 +119,7 @@ class Register extends Component {
                                         name="phone_or_email"
                                         rules={[
                                             {
-                                                required:'true',
+                                                required: 'true',
                                                 message:
                                                     'Iltimos telefon raqam yoki emailingizni  kiriting!',
                                             },
@@ -181,7 +192,8 @@ class Register extends Component {
                                                 data-bs-target="#exampleModalToggleEditCategory2"
                                                 data-bs-toggle="modal"
                                                 className=" p-0 ms-lg-2 m-0 tanishuv-sharti-title">
-                                                Tanishib chiqdim, shartlariga roziman!
+                                                Tanishib chiqdim, shartlariga
+                                                roziman!
                                             </a>
                                         </Link>
                                     </div>
@@ -235,4 +247,4 @@ class Register extends Component {
 const mapStateToProps = (state) => {
     return state.auth;
 };
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps)(withRouter(Register));

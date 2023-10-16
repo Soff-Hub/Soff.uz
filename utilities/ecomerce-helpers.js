@@ -30,10 +30,10 @@ export function addItemToCartHelper(product) {
         // if (existItem) {
         //     existItem.quantity += product.quantity;
         // } else {
-            /* if (!product.quantity) {
+        /* if (!product.quantity) {
                 product.quantity = 1;
             }*/
-            cart?.items.push(product);
+        cart?.items.push(product);
         // }
     } else {
         cart = {
@@ -90,7 +90,36 @@ export function removeCartItemHelper(product) {
 // new
 
 export function calculateAmount(obj) {
-    return Object.values(obj)
-        .reduce((acc, { price }) => acc + Number(price), 0)
-        // .toFixed(2);
+//     let price = [];
+//     let discount_Price = [];
+//     obj?.map((item) => {
+//         if (item.discount > 0) {
+//             discount_Price.push(item);
+//         } else {
+//             price.push(item);
+//         }
+//     });
+//     console.log('hisob', price, discount_Price);
+
+//     let PriceSum = Object.values(price).reduce(
+//         (acc, { price }) => acc + Number(price),
+//         0
+//     );
+
+//     let DiscountPriceSum = Object.values(discount_Price).reduce(
+//         (acc, { discount_price }) => acc + Number(discount_price),
+//         0
+//     );
+// console.log('price = ', PriceSum, 'discount-price = ', DiscountPriceSum);
+//     return PriceSum + DiscountPriceSum
+
+
+    return  Object.values(obj).reduce(
+        (acc, { discount_price }) => acc + Number(discount_price),
+        0
+    );
+
+
+
+    // .toFixed(2);
 }

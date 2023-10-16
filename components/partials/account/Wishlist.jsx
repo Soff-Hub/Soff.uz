@@ -1,4 +1,4 @@
-import React, {useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
 import ProductCart from '~/components/elements/products/ProductCart';
 
@@ -7,13 +7,11 @@ import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
 
 const Wishlist = ({ ecomerce }) => {
-
-    const { removeSavedItem } = useWishlist()
-    const { setCartOneItem } = useCart()
+    const { removeSavedItem } = useWishlist();
+    const { setCartOneItem } = useCart();
 
     const { wishlist } = useSelector((state) => state.ecomerce);
-    const { setAllSaved } = useWishlist()
-
+    const { setAllSaved } = useWishlist();
 
     useEffect(() => {
         if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
@@ -46,7 +44,7 @@ const Wishlist = ({ ecomerce }) => {
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz`,
+            content: `Siz mahsulotni savatga qo'shdingiz`,
         });
         modal.update;
     }
@@ -55,7 +53,6 @@ const Wishlist = ({ ecomerce }) => {
         e.preventDefault();
         removeSavedItem(item.id);
     }
-
 
     // views
     let wishlistItemsView;
@@ -66,7 +63,7 @@ const Wishlist = ({ ecomerce }) => {
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Hujjat nomi</th>
+                            <th>Mahsulot nomi</th>
                             <th>Narxi</th>
                             <th className="d-flex justify-content-center ">
                                 Qo'shish
@@ -94,11 +91,11 @@ const Wishlist = ({ ecomerce }) => {
                                     </td>
                                     <td>
                                         <span>
-                                            {Number(product?.price) === Number(product?.discount_price) ? (
+                                            {product?.discount === 0 ? (
                                                 <p>
                                                     {addPeriodToThousands(
-                                                        product.discount_price
-                                                    )}
+                                                        product.price
+                                                     ) }
                                                     so'm
                                                 </p>
                                             ) : (
@@ -106,13 +103,13 @@ const Wishlist = ({ ecomerce }) => {
                                                     <del>
                                                         {addPeriodToThousands(
                                                             product.price
-                                                        )}
+                                                         )}
                                                         so'm
                                                     </del>
                                                     <p>
-                                                        { addPeriodToThousands(
+                                                        {addPeriodToThousands(
                                                             product.discount_price
-                                                        )  }
+                                                         ) }
                                                         so'm
                                                     </p>
                                                 </>

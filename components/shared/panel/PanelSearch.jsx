@@ -34,7 +34,7 @@ const PanelSearch = ({
                     <input
                         className="form-control"
                         type="text"
-                        placeholder="Hujjatlarni izlang..."
+                        placeholder="Mahsulotlarni izlang..."
                         onChange={(e) => setKeyword(e.target.value)}
                     />
                     <button onClick={handleDrawerClose}>

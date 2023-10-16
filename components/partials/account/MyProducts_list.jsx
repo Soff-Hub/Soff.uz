@@ -337,7 +337,7 @@ function MyProductsLists() {
 
             </div>
         } : {
-            title: 'Hujjat',
+            title: 'Mahsulot',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
@@ -551,11 +551,11 @@ function MyProductsLists() {
                     </div>
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalMyProductsPrice" onSubmited={handleItemsEditProductsPosts} formID="products-edit_price" >
-                    <label htmlFor="priceCount" className='form-label'>Hujjatingizni chegirmasi
-                        <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products?.discount} type="number" className='form-control rounded-3' placeholder='Hujjatingizni chegirmasi' />
+                    <label htmlFor="priceCount" className='form-label'>Mhsulotingizni chegirmasi
+                        <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products?.discount} type="number" className='form-control rounded-3' placeholder='Mahsulotingizni chegirmasi' />
                     </label>
-                    <label htmlFor="discount" className='form-label'>Hujjatingizni narxi
-                        <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount_price: e.target.value }))} defaultValue={products?.discount_price} type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
+                    <label htmlFor="discount" className='form-label'>Mhsulotingizni narxi
+                        <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount_price: e.target.value }))} defaultValue={products?.discount_price} type="number" className='form-control rounded-3' placeholder='Mahsulotingizni narxi' />
                     </label>
                 </ModalDeletePostEdit >
             </div>

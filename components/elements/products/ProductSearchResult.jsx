@@ -12,7 +12,7 @@ const ProductSearchResult = ({ product }) => {
                     <a>
                         <LazyLoad>
                             {product?.poster_url ? (
-                                <div  style={{ overflow: 'hidden' }}>
+                                <div  style={{ overflow: 'hidden', display:'flex', justifyContent:'center' }}>
                                     <div
                                         style={{
                                             backgroundImage: `url(${product?.poster_url})`,

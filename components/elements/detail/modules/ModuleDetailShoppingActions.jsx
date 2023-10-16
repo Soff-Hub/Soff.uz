@@ -10,6 +10,8 @@ const ModuleDetailShoppingActions = ({ product }) => {
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
+    const statee = useSelector((state) => state.auth);
+    console.log('redux' , statee);
 
     function handleAddItemToCart(e) {
         e.preventDefault();
@@ -22,11 +24,12 @@ const ModuleDetailShoppingActions = ({ product }) => {
         e.preventDefault();
         if (state) {
             dispatch(OneShopDoc(product));
-            Router.push('/account/checkout-one');
+            Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
-            Router.push('/account/register-user');
+            Router.push(`/account/register-user?id=${product?.id}`);
         }
     }
+
 
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
@@ -35,6 +38,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
             removeSavedItem(product.id);
         }
     };
+
 
     if (true) {
         return (

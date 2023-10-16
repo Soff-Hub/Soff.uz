@@ -93,7 +93,7 @@ const SearchHeader = () => {
                 <ProductSearchResult product={product} key={product.id} />
             ));
         } else {
-            productItemsView = <p>Hujjat topilmadi</p>;
+            productItemsView = <p>Mahsulot topilmadi</p>;
         }
         if (keyword !== '') {
             clearTextView = (

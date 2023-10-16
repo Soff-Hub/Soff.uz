@@ -15,7 +15,7 @@ const MyProducts = () => {
             url: '/',
         },
         {
-            text: 'Mening hujjatlarim',
+            text: 'Mening mahsulotlarim',
         },
     ];
     const { user } = useSelector(state => state.auth)

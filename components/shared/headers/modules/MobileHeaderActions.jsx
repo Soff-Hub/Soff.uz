@@ -14,7 +14,7 @@ const state = useSelector((state => state.ecomerce.cartDataItems))
                     <a>Kirish</a>
                 </Link>
 
-                <Link href="/account/foydalanuvchi">
+                <Link href="/account/selection">
                     <a>Ro'yxatdan o'tish</a>
                 </Link>
             </div>      
