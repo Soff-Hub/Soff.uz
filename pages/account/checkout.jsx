@@ -8,7 +8,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 const CheckoutPage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {

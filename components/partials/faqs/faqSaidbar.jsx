@@ -9,13 +9,23 @@ export default function FaqSaidbar() {
     return (
       <div className="faqs-sidebar ">
           <ul >
-            <li >
-                <Link href="/page/form" as="/page/form">
+            <li>
+                <Link href="/page/about-us" as="/page/about-us">
                     <a
                         className={`${
-                            query === '/page/form' ? 'active-faq' : ''
+                            query === '/page/about-us' ? 'active-faq' : ''
                         }`}>
-                       Xabar jo'natish
+                       Soff.uz nima?
+                    </a>
+                </Link>
+            </li>
+            <li>
+                <Link href="/page/become-a-seller" as="/page/become-a-seller">
+                    <a
+                        className={`${
+                            query === '/page/become-a-seller' ? 'active-faq' : ''
+                        }`}>
+                       Sotuvchiga aylaning
                     </a>
                 </Link>
             </li>
@@ -25,17 +35,17 @@ export default function FaqSaidbar() {
                         className={`${
                             query === '/page/questions' ? 'active-faq' : ''
                         }`}>
-                        Savollar
+                        Savol-javoblar
                     </a>
                 </Link>
             </li>
             <li>
-                <Link href="/page/about-us" as="/page/about-us">
+                <Link href="/page/form" as="/page/form">
                     <a
                         className={`${
-                            query === '/page/about-us' ? 'active-faq' : ''
+                            query === '/page/form' ? 'active-faq' : ''
                         }`}>
-                        Biz haqimizda
+                       Savollaringiz bormi?
                     </a>
                 </Link>
             </li>

@@ -92,9 +92,9 @@ const FooterSecond = ({ classes }) => {
                             <h4>Soff.uz</h4>
                         </aside>
                         <p>
-                            Soff.uz platformasi orqali har qanday soha egasi o'z ishlab chiqgan yoki yig'gan materialarini turli xil formatda yuklash orqali katta daromad topishlari mumkin. Foydalanuvchilar esa har qanday yo'nalishda o'zlariga kerak bo'lgan materiallarga ega bo'ladi. {' '}
+                            Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.
                         </p>
-                        <aside className="widget widget_footer widget_contact-us">
+                        {/* <aside className="widget widget_footer widget_contact-us">
                             <ul
                                 style={{
                                     margin: '0',
@@ -141,7 +141,7 @@ const FooterSecond = ({ classes }) => {
                                     </Link>
                                 </li>
                             </ul>
-                        </aside>
+                        </aside> */}
                         <aside className="widget widget_footer widget_contact-us">
                             <img
                                 src="/static/img/payment-method/click_logo.png"
@@ -163,7 +163,7 @@ const FooterSecond = ({ classes }) => {
                     <aside className="widget widget_footer widget_contact-us d-flex align-items-center" >
                         <p style={{
                             marginBottom: '0'
-                        }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'><img className='footer-company-logo d-block ps-2' src="/static/img/soffhub.jpeg" alt="soff hub logo" /></a>
+                        }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'><img className='footer-company-logo d-block ps-2 rounded' src="/static/img/soffhub.png" alt="soff hub logo" /></a>
                     </aside>
                 </div>
             </div>

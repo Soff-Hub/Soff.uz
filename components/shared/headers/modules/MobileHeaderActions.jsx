@@ -22,6 +22,11 @@ const state = useSelector((state => state.ecomerce.cartDataItems))
     );
     return (
         <div className="navigation__right">
+            <Link href="/page/about-us">
+                <a className="header__extra">
+                <i className="fa-regular fa-circle-question" ></i>
+                </a>
+            </Link>
             <Link href="/account/shopping-cart">
                 <a className="header__extra" href="#">
                     <i className="icon-bag2"></i>

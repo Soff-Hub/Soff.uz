@@ -1053,6 +1053,10 @@
                 min-width: 107px;
                 object-fit: cover;
             }
+            
+            div {
+                height: 93px!important;
+            }
         }
     }
 
@@ -1062,7 +1066,7 @@
         a {
             img {
                 width: 100%;
-                max-height: 200px;
+                max-height: 164px;
             }
         }
     }

@@ -7,7 +7,7 @@ const nextSettings = {
     // Change your site title here
     env: {
         title: 'Soff',
-        titleDescription: 'Soff.uz - online hujjatlar bazasi',
+        titleDescription: 'Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.',
     },
     experimental: {
         serverActions: true,
