@@ -87,7 +87,7 @@ const MiniCart = () => {
             ) : (
                 <div className="ps-cart__content">
                     <div className="ps-cart__items">
-                        <span>Savatda hujjat yo'q</span>
+                        <span>Savatda mahsulot yo'q</span>
                     </div>
                 </div>
             )}

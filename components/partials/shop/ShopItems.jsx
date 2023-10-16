@@ -365,7 +365,7 @@ const ShopItems = ({
                             src="/static/img/no-document.jpg"
                             alt="no documnt"
                         />
-                        <p className="text-center">Hujjat yo'q</p>
+                        <p className="text-center">Mahsulot yo'q</p>
                     </div>
                 </div>
             );
@@ -378,7 +378,7 @@ const ShopItems = ({
             <div className="ps-shopping__header">
                 <p>
                     <strong className="mr-2">{dataCount}</strong>
-                    ta hujjat bor
+                    ta mahsulot bor
                 </p>
                 <div className="ps-shopping__actions">
                     <label className="category-search-label">
@@ -386,7 +386,7 @@ const ShopItems = ({
                         <input
                             className="ps-input"
                             type="text"
-                            placeholder="Hujjatingizni izlang..."
+                            placeholder="Mahsulotingizni izlang..."
                             onChange={(e) => detailSearch(e.target.value)}
                         />
                     </label>
@@ -406,7 +406,7 @@ const ShopItems = ({
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
                     </select>
-                    <div className="ps-shopping__view">
+                    {/* <div className="ps-shopping__view">
                         <ul className="ps-tab-list">
                             <li className={!listView === true ? 'active' : ''}>
                                 <a
@@ -416,7 +416,7 @@ const ShopItems = ({
                                 </a>
                             </li>
                         </ul>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             <div className="ps-shopping__content pagination-product-box">

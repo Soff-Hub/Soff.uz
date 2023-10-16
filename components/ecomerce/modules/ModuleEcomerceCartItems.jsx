@@ -40,18 +40,17 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                 </td>
                 <td data-label="narxi" className="price pe-5">
                     <span>
-                        {Number(item.price) === Number(item.discount_price) ? (
+                        {item.discount === 0 ? (
                             <p>
-                                {addPeriodToThousands(item.discount_price)}
-                                so'm
+                                {addPeriodToThousands(item.price )}  so'm
                             </p>
                         ) : (
                             <>
                                 <del>
-                                    {addPeriodToThousands(item.price)} so'm
+                                    {addPeriodToThousands(item.price )} so'm
                                 </del>
                                 <p>
-                                    {addPeriodToThousands(item.discount_price)}
+                                    {addPeriodToThousands(item.discount_price )}
                                     so'm
                                 </p>
                             </>
@@ -72,7 +71,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                 <table className="table  ps-table--shopping-cart ps-table--responsive">
                     <thead>
                         <tr>
-                            <th>Hujjat</th>
+                            <th>Mahsulot</th>
                             <th>Narx</th>
                             <th></th>
                             <th>O'chirish</th>

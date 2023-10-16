@@ -356,7 +356,7 @@ function MyProductsLists() {
 
             </div>
         } : {
-            title: 'Hujjat',
+            title: 'Mahsulot',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
@@ -588,6 +588,7 @@ function MyProductsLists() {
                                 </label>
                             </>
                     }
+
                 </ModalDeletePostEdit >
             </div>
         </section >

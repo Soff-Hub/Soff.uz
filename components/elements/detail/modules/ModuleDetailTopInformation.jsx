@@ -26,13 +26,13 @@ const ModuleDetailTopInformation = ({ product }) => {
     if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
-                {Number(product.price) === Number(product.discount_price) ? (
-                    <p> {addPeriodToThousands(product.discount_price)} so'm </p>
+                {product.discount === 0 ? (
+                    <p> {addPeriodToThousands(product.price )} so'm </p>
                 ) : (
                     <>
-                        <del>{addPeriodToThousands(product.price)} so'm</del>
+                        <del>{addPeriodToThousands(product.price )} so'm</del>
                         <p>
-                            {addPeriodToThousands(product.discount_price)} so'm
+                            {addPeriodToThousands(product.discount_price )} so'm
                         </p>
                     </>
                 )}
@@ -41,15 +41,15 @@ const ModuleDetailTopInformation = ({ product }) => {
     } else {
         priceView = (
             <h4 className="ps-product__price">
-                {Number(product.price) === Number(product.discount_price) ? (
+                {product.discount === 0  ? (
                     <h4>
-                        {addPeriodToThousands(product?.discount_price)} so'm{' '}
+                        {addPeriodToThousands(product?.price )} so'm{' '}
                     </h4>
                 ) : (
                     <>
-                        <del>{addPeriodToThousands(product?.price)} so'm</del>
+                        <del>{addPeriodToThousands(product?.price )} so'm</del>
                         <h4>
-                            {addPeriodToThousands(product?.discount_price)} so'm
+                            {addPeriodToThousands(product?.discount_price )} so'm
                         </h4>
                     </>
                 )}

@@ -16,12 +16,13 @@ const Xabar = (e) => {
     const [countdown, setCoutdown] = useState(120);
     const [kod, setKod] = useState(null);
     const Router = useRouter();
-    const { query } = Router;
+    const { id } = Router.query;
     const dispatch = useDispatch()
     const {user} = useSelector((state => state.auth))
 
     const handleSubmitKod = async () => {
         setLoader(true);
+       
 
         let data = {
             code: `${kod}`,
@@ -31,11 +32,17 @@ const Xabar = (e) => {
         const user = await verifyCode(data);
         if (user.status === 200 || user.status === 201) {
             setLoader(false);
-            if (user.roli === 'seller' || user.roli === 'admin') {
-                Router.push('/account/dashbord');     
-            }else{
-                Router.push('/account/dashbord');     
-
+            if (id) {
+                Router.push(
+                    `/account/checkout-one?id=${id}`
+                );
+            } else {
+                if (user.roli === 'seller' || user.roli === 'admin') {
+                    Router.push('/account/dashbord');     
+                }else{
+                    Router.push('/account/dashbord');     
+    
+                }
             }
             dispatch(login({ user: user.data, data: e }));
         } else {
@@ -116,7 +123,6 @@ const Xabar = (e) => {
         }
         setCoutdown(120);
     }, [tokenn]);
-
     return (
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">

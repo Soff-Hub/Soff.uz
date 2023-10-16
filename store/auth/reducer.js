@@ -7,16 +7,15 @@ export const initState = {
     user: null,
     accountLinks: [],
     data: {},
-    products:{},
+    products: {},
     shop: [],
-    category_lists:[],
-    top_category_lists:[],
-    category:true,
-    categorySlug:[],
+    category_lists: [],
+    top_category_lists: [],
+    category: true,
+    categorySlug: [],
 };
 
 function reducer(state = initState, actions) {
-  
     switch (actions.type) {
         case actionTypes.LOGIN_REQUEST:
             localStorage.setItem('user', JSON.stringify(actions.user));
@@ -25,13 +24,13 @@ function reducer(state = initState, actions) {
                 ...state,
                 ...{ isLoggedIn: true },
                 ...{ user: actions.user },
-                ...{data : actions.data}
+                ...{ data: actions.data },
             };
         case actionTypes.LOGOUT_SUCCESS:
             localStorage.removeItem('user');
             localStorage.removeItem('token');
-            localStorage.removeItem('data')
-            localStorage.removeItem('qayta_token')
+            localStorage.removeItem('data');
+            localStorage.removeItem('qayta_token');
             localStorage.removeItem('via_');
             localStorage.removeItem('qayta_');
             return {
@@ -49,8 +48,8 @@ function reducer(state = initState, actions) {
         case actionTypes.ACCOUNT_LINKS:
             return { ...state, ...{ accountLinks: actions.payload } };
 
-            case actionTypes.MYPODUCTS_LISTS:
-                return { ...state, ...{ products: actions.payload } };
+        case actionTypes.MYPODUCTS_LISTS:
+            return { ...state, ...{ products: actions.payload } };
 
         case actionTypes.DATA:
             localStorage.setItem('data', JSON.stringify(actions.data));
@@ -65,19 +64,19 @@ function reducer(state = initState, actions) {
                 ...{ isLoggedIn: true },
                 ...{ shop: actions.payload },
             };
-  
-            case actionTypes.CATEGORY_LISTS:
-                return { ...state, ...{ category_lists: actions.payload } };
 
-                case actionTypes.TOP_CATEGORY_LISTS:
-                    return { ...state, ...{ top_category_lists: actions.payload } };
-                    
-                    case actionTypes.CATEGORY:
-                        return { ...state, ...{category: actions.payload } };
-                        
-                        case actionTypes.CATEGORY_SLUG:
-                            return { ...state, ...{categorySlug: actions.payload } };
-            default:
+        case actionTypes.CATEGORY_LISTS:
+            return { ...state, ...{ category_lists: actions.payload } };
+
+        case actionTypes.TOP_CATEGORY_LISTS:
+            return { ...state, ...{ top_category_lists: actions.payload } };
+
+        case actionTypes.CATEGORY:
+            return { ...state, ...{ category: actions.payload } };
+
+        case actionTypes.CATEGORY_SLUG:
+            return { ...state, ...{ categorySlug: actions.payload } };
+        default:
             return state;
     }
 }

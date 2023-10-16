@@ -11,7 +11,7 @@ export const actionTypes = {
     CATEGORY_LISTS: 'CATEGORY_LISTS',
     TOP_CATEGORY_LISTS: 'TOP_CATEGORY_LISTS',
     CATEGORY: 'CATEGORY',
-    CATEGORY_SLUG:'CATEGORY_SLUG'
+    CATEGORY_SLUG:'CATEGORY_SLUG',
 };
 
 export function login({ user, data }) {
@@ -57,5 +57,6 @@ export function Category(payload) {
 export function CategorySlug(payload) {
     return { type: actionTypes.CATEGORY_SLUG, payload };
 }
+
 
 

@@ -35,7 +35,7 @@ const PostsProductsEdit = () => {
             url: '/',
         },
         {
-            text: 'Hujjatni tahrirlash',
+            text: 'Mahsulotni tahrirlash',
         },
     ];
     const Option = Select.Option;
@@ -211,7 +211,7 @@ const PostsProductsEdit = () => {
                         className="row w-100 gap-3 mt-5 "
                         style={{ alignItems: 'flex-start' }}>
                         <h4 className="col-md-8 m-0 p-0">
-                            Hujjatni tahrirlash
+                            Mahsulotni tahrirlash
                         </h4>
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
@@ -243,7 +243,7 @@ const PostsProductsEdit = () => {
                                 <input
                                     type="text"
                                     className="form-control  rounded-3 col-md-8 mb-3 "
-                                    placeholder="Hujjat nomi"
+                                    placeholder="Mahsulot nomi"
                                     name="title"
                                     onChange={(e) => setTitle(e.target.value)}
                                     defaultValue={products?.title}
@@ -473,7 +473,7 @@ const PostsProductsEdit = () => {
                                 <p className="live-card-p">
                                     <span>
                                         <strong>
-                                            Hujjatingiz haqida to'liq ma'umot
+                                            Mahsulotingiz haqida to'liq ma'umot
                                         </strong>
                                         :{' '}
                                     </span>
@@ -568,7 +568,7 @@ const PostsProductsEdit = () => {
                                     <p className="live-card-p">
                                         <span>
                                             <strong>
-                                                Hujjatingiz haqida to'liq
+                                                Mahsulotingiz haqida to'liq
                                                 ma'umot
                                             </strong>
                                             :{' '}

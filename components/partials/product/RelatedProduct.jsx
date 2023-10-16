@@ -41,7 +41,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
                 );
             }
         } else {
-            carouselView = <p>Hujjat topilmadi</p>;
+            carouselView = <p>Mahsulot topilmadi</p>;
         }
     } else {
         carouselView = <p>Loading...</p>;
@@ -55,7 +55,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
                         boxed === true ? 'boxed' : ''
                     }`}>
                     <div className="ps-section__header">
-                        <h3>O'xshash hujjatlar</h3>
+                        <h3>O'xshash mahsulotlar</h3>
                     </div>
                     <div className="ps-section__content">{carouselView}</div>
                 </div>

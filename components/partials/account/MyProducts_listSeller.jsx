@@ -161,7 +161,7 @@ function MyProductsListsSeller() {
             render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
-            title: 'Hujjat',
+            title: 'Mahsulot',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >

@@ -1,24 +1,30 @@
 import React, { useState } from 'react';
-import { Modal } from 'antd';
 import { useSelector } from 'react-redux';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
-import  Router  from 'next/router';
+import { useRouter } from 'next/router';
 
 
 function FormCheckoutInformationOne() {
-
     const select = useSelector((state) => state.auth.user?.access);
     const [selectedValue, setSelectedValue] = useState('click');
     const [message, setMessage] = useState(true);
-
+    const Router = useRouter()
+    const {id} =  Router.query
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
     };
   
+
+    console.log('log', id);
+
     const state = useSelector(state => state?.auth?.shop)
-   let arr = []
-   arr.push(state?.id)
+    let arr = []
+    arr.push(id)
+//   if (state.id) {
+//     arr.push(state?.id)
+//   }else{
+//   }
    
 
     const ProductToApi = async () => {

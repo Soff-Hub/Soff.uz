@@ -74,14 +74,14 @@ const SearchPage = () => {
                         <strong style={{ color: '#000' }}>
                             {resultdata?.length}
                         </strong> ta
-                        hujjat(lar) topildi.
+                        mahsulot(lar) topildi.
                     </p>
                 );
             } else {
-                shopItemsView = <p>Hujjat(lar) topilmadi.</p>;
+                shopItemsView = <p>Mahsulot(lar) topilmadi.</p>;
             }
         } else {
-            shopItemsView = <p>Hujjat(lar) topilmadi.</p>;
+            shopItemsView = <p>Mahsulot(lar) topilmadi.</p>;
         }
     } else {
         statusView = <p>Qidiruv...</p>;

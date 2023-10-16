@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-
 import { isLoginning, login } from '../../../store/auth/action';
-
 import { Form, Input, notification } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
+import { withRouter } from 'next/router';
 
 class Login extends Component {
     constructor(props) {
@@ -23,13 +22,13 @@ class Login extends Component {
             description: 'Siz muvaffaqqiyatli kirdingiz!',
         });
     };
-    
+
     static getDerivedStateFromProps(props) {
         if (props.isLoggedIn === true) {
         }
         return false;
     }
-    
+
     handleFeatureWillUpdate(e) {
         e.preventDefault();
         notification.open({
@@ -38,14 +37,14 @@ class Login extends Component {
             duration: 500,
         });
     }
-    
+
     defaultRoutePage = async () => {
         await this.props.dispatch(isLoginning());
     };
 
     handleLoginSubmit = async (e) => {
         const { loginUser } = useAuth();
-        
+
         const user = await loginUser(e);
         console.log(user);
         if (user) {
@@ -63,22 +62,30 @@ class Login extends Component {
                     description: 'Siz saytga muvaffaqqiyatli kirdingiz!',
                     type: 'success',
                 });
-                if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
-                    Router.push('/account/dashbord');     
-                }else if (user?.data?.role === 'customer'){
-                    Router.push('/account/myproducts');     
+
+                if (this.props.router.query.id) {
+                    Router.push(
+                        `/account/checkout-one?id=${this.props.router.query.id}`
+                    );
+                } else {
+                    if (
+                        user?.data?.role === 'seller' ||
+                        user?.data?.role === 'admin'
+                    ) {
+                        Router.push('/account/dashbord');
+                    } else if (user?.data?.role === 'customer') {
+                        Router.push('/account/myproducts');
+                    }
                 }
             }
         }
     };
-
     componentDidMount() {
         this.defaultRoutePage();
         this.setState({
             value: JSON.parse(localStorage.getItem('data'))?.phone_or_email,
         });
     }
-    
 
     handleEnterKeyPress = (e) => {
         if (e.key === 'Enter') {
@@ -86,8 +93,10 @@ class Login extends Component {
             this.passwordInput.focus();
         }
     };
-    
+
     render() {
+        const { router } = this.props;
+        const { id } = router.query;
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -101,7 +110,7 @@ class Login extends Component {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="/account/foydalanuvchi">
+                                <Link href="/account/selection">
                                     <a>Ro'yxatdan o'tish</a>
                                 </Link>
                             </li>
@@ -182,4 +191,4 @@ class Login extends Component {
 const mapStateToProps = (state) => {
     return state.auth;
 };
-export default connect(mapStateToProps)(Login);
+export default connect(mapStateToProps)(withRouter(Login));

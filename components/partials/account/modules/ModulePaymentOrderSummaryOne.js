@@ -1,10 +1,25 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { connect, useSelector } from 'react-redux';
+import ProductRepository from '~/repositories/ProductRepository';
+import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
-const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
-    const state = useSelector(state => state?.auth?.shop)
+const ModulePaymentOrderSummaryOne = ({  shipping }) => {
+    const Router = useRouter()
+    const {id} =  Router.query
+    const [data, setData] = useState(null)
 
+    const getOneProductData = async () => {
+        const res = await ProductRepository.postCartData([id])
+        setData(res?.data?.data?.[0])
+    }
+
+    console.log('logg', id);
+
+    useEffect(() => {
+        getOneProductData()
+    }, [id])
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -23,40 +38,31 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
 
         return formattedNumber;
     }
-    const hisob = addPeriodToThousands(state?.price);
+    const hisob = addPeriodToThousands(data?.discount_price);
 
     // view
-    let listItemsView, shippingView, totalView;
-    if (state ) {
+    let listItemsView, shippingView;
+    if (data ) {
         
         listItemsView = 
-            <Link href={`/product/${state?.slug}`} >
+            <Link href={`/product/${data?.slug}`} >
                 <a>
                     <strong>
-                      {1}.  {state.title}
+                      {1}.  {data.title}
                     </strong>
                     <small>{hisob} so'm </small>
                 </a>
             </Link>
         
     } else {
-        listItemsView = <p>Hujjat yo'q.</p>;
+        listItemsView = <p>Mahsulot yo'q.</p>;
     }
-    if (shipping === true) {
-        totalView = (
+    if (true) {
+        shippingView = (
             <figure className="ps-block__total">
                 <h3>
                 Umumiy hisob: 
-                    <strong>{hisob}.00</strong>
-                </h3>
-            </figure>
-        );
-    } else {
-        totalView = (
-            <figure className="ps-block__total">
-                <h3>
-                    Umumiy hisob: 
-                    <strong>{hisob}.00 so'm </strong>
+                    <strong>{hisob}.00 so'm</strong>
                 </h3>
             </figure>
         );
@@ -66,7 +72,7 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
             <div className="ps-block__content">
                 <figure>
                     <figcaption>
-                        <strong>Hujjat</strong>
+                        <strong>Mahsulot</strong>
                         <strong>narx</strong>
                     </figcaption>
                 </figure>
@@ -78,7 +84,6 @@ const ModulePaymentOrderSummaryOne = ({ ecomerce, shipping }) => {
                     </figcaption>
                 </figure>
                 {shippingView}
-                {/* {totalView} */}
             </div>
         </div>
     );
