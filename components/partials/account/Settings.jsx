@@ -120,52 +120,62 @@ function Notifications() {
                                                 </div>
                                             </>
                                             :
-                                            <div className="accordion accordion-flush " id="accordionFlushExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button className="accordion-button collapsed border px-4 " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
-                                                            <h4 className='m-0 py-2'>Malumotlaringiz</h4>
-                                                        </button>
-                                                    </h2>
-                                                    <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
-                                                        <div className="accordion-body">
+                                            <>
+                                                <div className="accordion accordion-flush " id="accordionFlushExample">
+                                                    <div className="accordion-item">
+                                                        <h2 className="accordion-header">
+                                                            <button className="accordion-button collapsed border px-4 " type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                                                <h4 className='m-0 py-2'>Malumotlaringiz</h4>
+                                                            </button>
+                                                        </h2>
+                                                        <div id="flush-collapseOne" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                                                            <div className="accordion-body">
 
-                                                            <div className='p-4 border rounded'>
-                                                                <h4>F.I.O ni o'zgartirish</h4>
-                                                                <form className='row gap-4 row-gap-3 mx-auto ' onSubmit={handleClickEdit} >
-                                                                    <input type="text" defaultValue={profile?.first_name} required placeholder='Ismingiz' className='form-control rounded-3 col-md-4' onChange={(e) => setProfileData((prev) => ({ ...prev, first_name: e.target.value }))} />
-                                                                    <input type="text" required defaultValue={profile?.last_name} placeholder='Familiyangiz' className='form-control rounded-3 col-md-4' onChange={(e) => setProfileData((prev) => ({ ...prev, last_name: e.target.value }))} />
+                                                                <div className='p-4 border rounded'>
+                                                                    <h4>F.I.O ni o'zgartirish</h4>
+                                                                    <form className='row gap-4 row-gap-3 mx-auto ' onSubmit={handleClickEdit} >
+                                                                        <input type="text" defaultValue={profile?.first_name} required placeholder='Ismingiz' className='form-control rounded-3 col-md-4' onChange={(e) => setProfileData((prev) => ({ ...prev, first_name: e.target.value }))} />
+                                                                        <input type="text" required defaultValue={profile?.last_name} placeholder='Familiyangiz' className='form-control rounded-3 col-md-4' onChange={(e) => setProfileData((prev) => ({ ...prev, last_name: e.target.value }))} />
 
-                                                                    <button type='submit' className='btn btn-success py-3 col-md-2  ' >
-                                                                        {
-                                                                            loading ?
-                                                                                <BeatLoader size={10} color="#fff" /> :
-                                                                                <span className='fs-3'>Saqlash</span>
+                                                                        <button type='submit' className='btn btn-success py-3 col-md-2  ' >
+                                                                            {
+                                                                                loading ?
+                                                                                    <BeatLoader size={10} color="#fff" /> :
+                                                                                    <span className='fs-3'>Saqlash</span>
 
-                                                                        }
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                            <div className='border p-4 rounded mt-4'>
-                                                                <h4>Parolni o'zgartirish</h4>
-                                                                <form className='row gap-4 row-gap-3 mx-auto ' onSubmit={handleClickEditChangePassword} >
-                                                                    <input type="text" required placeholder='Eski parolni kiriting' className='form-control rounded-3 col-md-4' onChange={(e) => setProfilePassword(e.target.value)} />
-                                                                    <input type="text" required placeholder='Yangi parol kiriting' className='form-control rounded-3 col-md-4' onChange={(e) => setProfilePassword2(e.target.value)} />
+                                                                            }
+                                                                        </button>
+                                                                    </form>
+                                                                </div>
+                                                                <div className='border p-4 rounded mt-4'>
+                                                                    <h4>Parolni o'zgartirish</h4>
+                                                                    <form className='row gap-4 row-gap-3 mx-auto ' onSubmit={handleClickEditChangePassword} >
+                                                                        <input type="text" required placeholder='Eski parolni kiriting' className='form-control rounded-3 col-md-4' onChange={(e) => setProfilePassword(e.target.value)} />
+                                                                        <input type="text" required placeholder='Yangi parol kiriting' className='form-control rounded-3 col-md-4' onChange={(e) => setProfilePassword2(e.target.value)} />
 
-                                                                    <button type='submit' className='btn btn-success py-3 col-md-2  ' >
-                                                                        {
-                                                                            loading1 ?
-                                                                                <BeatLoader size={10} color="#fff" /> :
-                                                                                <span className='fs-3'>O'zgartirish</span>
+                                                                        <button type='submit' className='btn btn-success py-3 col-md-2  ' >
+                                                                            {
+                                                                                loading1 ?
+                                                                                    <BeatLoader size={10} color="#fff" /> :
+                                                                                    <span className='fs-3'>O'zgartirish</span>
 
-                                                                        }
-                                                                    </button>
-                                                                </form>
-                                                            </div></div>
+                                                                            }
+                                                                        </button>
+                                                                    </form>
+                                                                </div></div>
+                                                        </div>
                                                     </div>
+
+                                                </div>
+                                                <div className='border p-3 mt-3'>
+                                                    <h5 className='fs-3'>Do'stingizni taklif qilish uchun havola</h5>
+                                                    <label className='form-label d-flex  mt-3'>
+                                                        <input type="text" className='form-control' id="myInput" defaultValue={`https://soff.uz/account/register/${profile?.code}`} />
+                                                        <button className='border-none btn-success w-25' style={{ border: "none" }} ><span>Copy URL</span></button>
+                                                    </label>
                                                 </div>
 
-                                            </div>
+                                            </>
                                     }
                                     <div className='py-5'>
                                         {

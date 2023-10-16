@@ -143,6 +143,14 @@ function OrdersLists() {
             width:350
         },
         {
+            title: 'Narx',
+            dataIndex: 'discount_price',
+            key: 'address',
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
+            ),
+        },
+        {
             title: 'Buyurtma sanasi',
             dataIndex: 'created_at',
             key: 'created_at',

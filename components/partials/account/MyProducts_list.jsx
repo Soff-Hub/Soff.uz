@@ -24,6 +24,7 @@ const { TabPane } = Tabs;
 function MyProductsLists() {
 
     const [data, setData] = useState([]);
+    const [products2, setProducts2] = useState({});
     const [dataCategory, setDataCategory] = useState([]);
     const [search, setSerach] = useState([]);
     const [tagName, setTagName] = useState(null);
@@ -35,6 +36,7 @@ function MyProductsLists() {
     const [date, setDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
+    const [loading3, setLoading3] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState("");
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
@@ -72,6 +74,14 @@ function MyProductsLists() {
             setDataCat("")
         }
     };
+
+    const finalPrice =
+        ViewPriceDiscount?.price && ViewPriceDiscount?.discount
+            ? ViewPriceDiscount.price - (ViewPriceDiscount.discount * ViewPriceDiscount.price) / 100
+            : (
+                (products?.price - ((products?.price) * (ViewPriceDiscount?.discount) / 100)) ||
+                (ViewPriceDiscount?.price - ((products?.discount) * (ViewPriceDiscount?.price) / 100))
+            );
 
 
 
@@ -140,26 +150,34 @@ function MyProductsLists() {
         if (ItemsData) {
             dispatch(MyProductsEdit(ItemsData))
             Router.push("/account/myproducts/edit")
-            
+
         }
     }
     async function handleClickIdEditModal(productsItems) {
+        setLoading3(true)
         const ItemsData = await GetRepository.getMyProductsView(productsItems, user?.access);
         if (ItemsData) {
-            dispatch(MyProductsEdit(ItemsData))            
+            setProducts2(ItemsData)
+            setLoading3(false)
         }
     }
 
     async function handleItemsEditProductsPosts() {
         if (ViewPriceDiscount) {
-            const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products?.id, user?.access);
-           
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
-
+            const patchItems = await PatchRepository.getMyProductsPatch(ViewPriceDiscount, products2?.id, user?.access);
+            if (patchItems?.status === 202) {
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content: "Mahsulotingiz narxi yangilandi",
+                });
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: patchItems?.data?.msg,
+                });
+            }
             GetItemsProducts(currPage, dataValCat, tagName, dataFormat, status, search)
             setViewPriceDiscount(null)
         }
@@ -172,6 +190,7 @@ function MyProductsLists() {
         }
 
     }
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -326,8 +345,8 @@ function MyProductsLists() {
                             </a>
                         </Link> :
                         data.some(el => el.id == id && el.status === 'approved') ?
-                            <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal">
-                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEditModal(id)}></i>
+                            <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal" onClick={() => handleClickIdEditModal(id)} >
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                             </a>
                             :
                             <i style={{ opacity: 0.7, cursor: "not-allowed" }} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
@@ -551,12 +570,24 @@ function MyProductsLists() {
                     </div>
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalMyProductsPrice" onSubmited={handleItemsEditProductsPosts} formID="products-edit_price" >
-                    <label htmlFor="priceCount" className='form-label'>Hujjatingizni chegirmasi
-                        <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products?.discount} type="number" className='form-control rounded-3' placeholder='Hujjatingizni chegirmasi' />
-                    </label>
-                    <label htmlFor="discount" className='form-label'>Hujjatingizni narxi
-                        <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount_price: e.target.value }))} defaultValue={products?.discount_price} type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
-                    </label>
+                    {
+                        loading3 ?
+                            <div className=' ' style={{ height: "200px", display: "grid", placeContent: "center" }}>
+                                <div className="spinner-border " role="status" style={{ width: "150px", height: "150px" }} >
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div> :
+                            <>
+                                <label htmlFor="priceCount" className='form-label'>Hujjatingizni chegirmasi
+                                    <input id='priceCount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, discount: e.target.value }))} defaultValue={products2?.discount} type="number" className='form-control rounded-3' placeholder='Hujjatingizni chegirmasi' />
+                                </label>
+                                <label htmlFor="discount" className='form-label'>Hujjatingizni narxi
+                                    <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, price: e.target.value }))} defaultValue={products2?.price} type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
+                                </label>
+                                <label htmlFor="discount" className='form-label'>Sotuvdagi narxi:  <span className={finalPrice < 1000 || products2?.discount_pric < 1000 ? "text-danger" : "text-primary"}> {finalPrice || products2?.discount_price}</span>
+                                </label>
+                            </>
+                    }
                 </ModalDeletePostEdit >
             </div>
         </section >

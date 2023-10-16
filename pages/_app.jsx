@@ -26,9 +26,7 @@ function App({ Component, pageProps }) {
             }
         };
 
-        document.addEventListener('selectstart', function (e) {
-            e.preventDefault();
-        });
+  
 
         document.onkeydown = function (e) {
             if (e.keyCode == 123) {

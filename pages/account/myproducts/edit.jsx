@@ -73,7 +73,7 @@ const PostsMyProducts = () => {
                 formData.append('title', title);
             }
             if (taxminiyNarx) {
-                formData.append('discount_price', taxminiyNarx);
+                formData.append('price', taxminiyNarx);
             }
             if (Fulldata) {
                 formData.append('description', Fulldata);
@@ -232,7 +232,7 @@ const PostsMyProducts = () => {
                                     type='number'
                                     className="form-control  rounded-3 col-md-8 mb-3 "
                                     name="price"
-                                    defaultValue={products?.discount_price}
+                                    defaultValue={products?.price}
                                     onChange={(e) => (
                                         setTaxminiyNarx(e.target.value)
                                     )}
