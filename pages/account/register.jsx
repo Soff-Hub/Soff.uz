@@ -21,9 +21,9 @@ const RegisterPage = () => {
     const sallerEndPoint = 'auth/seller-register/';
 
     return (
-          user?.access ?
-          <Page404/>
-          :
+        //   user?.access ?
+        //   <Page404/>
+        //   :
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
                     <BreadCrumb breacrumb={breadCrumb} />
