@@ -23,7 +23,7 @@ const Selection = () => {
                         </Link>
                         <Link
                             className="ps-btn ps-btn--fullwidth register-choose-button"
-                            href="/account/register">
+                            href={`/account/register`}>
                             <a className="register-choose-button">
                                 <i className="fa-solid fa-user-plus me-3"></i>{' '}
                                 <span>Sotuvchi</span>

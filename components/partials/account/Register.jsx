@@ -38,7 +38,6 @@ class Register extends Component {
                 localStorage.setItem('token', user.data.access);
                 localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
-
                 if (this.props.router.query.id) {
                     Router.push(`/account/Message?id=${this.props.router.query.id}`);
                 }else{

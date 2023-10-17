@@ -47,7 +47,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
 
     const { asPath } = useRouter();
-
     return (
         <aside className="ps-widget--account-dashboard">
             <div className="ps-widget__header  p-2 pb-4">
