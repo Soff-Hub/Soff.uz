@@ -287,7 +287,7 @@ function ApplicationLists() {
                 dataAdmin.some(el => el.id == id && el.is_answer === true) ?
                     <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
                     :
-                    <></>
+                    <a style={{cursor:"not-allowed", opacity:"0.6"}}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" ></i></a>
 
             )
         },

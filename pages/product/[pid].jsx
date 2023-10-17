@@ -7,6 +7,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import { baseUrl } from '~/repositories/Repository';
+import { useEffect } from 'react';
 
 const ProductDefaultPage = ({ product, similar }) => {
     // const router = useRouter();
@@ -35,6 +36,7 @@ const ProductDefaultPage = ({ product, similar }) => {
     //     getSimilar()
     // }, [pid]);
 
+
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -47,6 +49,12 @@ const ProductDefaultPage = ({ product, similar }) => {
         },
     ];
     
+    useEffect(()=>{
+        document.addEventListener('selectstart', function (e) {
+            e.preventDefault();
+        });
+    
+    },[])
 
     return (
         <>

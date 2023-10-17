@@ -209,6 +209,14 @@ function DashbordList() {
             render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
+            title: 'Narx',
+            dataIndex: 'discount_price',
+            key: 'address',
+            render: (total_price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
+            ),
+        },
+        {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',

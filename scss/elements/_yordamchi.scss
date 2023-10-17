@@ -279,12 +279,12 @@
     border: 1px solid red !important;
 }
 
-.ps-product:hover {
-    height: 150px;
-    // text-align: center;
-}
+// .ps-product:hover {
+//     height: 150px;
+//     // text-align: center;
+// }
 
-#homepage-7 .ps-product-list {
+#homepage-7 .ps-product-list {  
     margin-bottom: 80px
 }
 
@@ -1235,12 +1235,6 @@
     }
 }
 
-// @media screen and (max-width: 350px){
-//     .home-card{
-//         max-width: 130px;
-//         min-width: 130px;
-//     }
-// }
 
 @media screen and (max-width: 330px) {
     .ps-product__thumbnail {
@@ -1287,7 +1281,7 @@
 *::-webkit-scrollbar {
     display: flex;
     width: 5px;
-    height: 5px;
+    height: 10px;
 }
 
 *::-webkit-scrollbar-thumb {
@@ -1479,14 +1473,14 @@
     }
     .colCard {
         position: absolute;
-        top: 44%;
+        top: 52%;
     }
 }
 
 @media (min-width: 860px) {
     .colCard {
         position: absolute;
-        top: 44%;
+        top: 52%;
     }
     .bannerModal2 {
         padding-bottom: 100%;
@@ -1550,7 +1544,7 @@
 
     .colCard {
         position: absolute;
-        top: 44%;
+        top: 52%;
     }
     
 
@@ -1588,7 +1582,7 @@
 @media (min-width: 400px) and (max-width:500px) {
     .colCard {
         position: absolute;
-        top: 44%;
+        top: 52%;
     }
     .bannerModal2 {
         padding-bottom: 100%;
@@ -1624,7 +1618,7 @@
 @media (min-width:1200px) and (max-width:1300px) {
     .colCard {
         position: absolute;
-        top: 56%;
+        top: 64%;
     }
     .bannerModal2 {
         position: fixed;
@@ -1644,7 +1638,7 @@
 @media (min-width:1300px) and (max-width:1500px) {
     .colCard {
         position: absolute;
-        top: 56%;
+        top: 64%;
     }
     .bannerModal2 {
         position: fixed;
@@ -1683,6 +1677,6 @@
 @media (min-width:1500px) and (max-width:2000px) {
     .colCard {
         position: absolute;
-        top: 56%;
+        top: 64%;
     }
 }

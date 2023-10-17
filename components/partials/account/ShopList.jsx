@@ -16,11 +16,11 @@ function Notifications() {
 
     async function GetItems(page) {
         const ItemsData = await GetRepository.getShops(page, search, user?.access);
-        setData([...ItemsData.results]);
-        setPageCount(ItemsData.count)
+        if (ItemsData?.results) {
+            setData([...ItemsData?.results]);
+            setPageCount(ItemsData.count)
+        }
     }
-
-
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
