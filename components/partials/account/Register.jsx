@@ -21,12 +21,13 @@ class Register extends Component {
     }
 
     handleSubmit = async (e) => {
+        this.setState({ report: false });
         const url = this.props.url;
         const { registerUser } = useAuth();
         const user = await registerUser(url, e);
         if (user) {
-            if (user.status >= 400) {
-                let message = '';
+            if (user.status >= 400 && user.status !== 500) {
+                this.setState({ report: true });
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik',
@@ -34,16 +35,17 @@ class Register extends Component {
                 });
                 modal.update;
             } else if (user.status == 200 || user.status == 201) {
-                this.setState({ report: !this.state.report });
                 localStorage.setItem('token', user.data.access);
                 localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
                 if (this.props.router.query.id) {
-                    Router.push(`/account/Message?id=${this.props.router.query.id}`);
-                }else{
+                    Router.push(
+                        `/account/Message?id=${this.props.router.query.id}`
+                    );
+                } else {
                     Router.push(`/account/Message?via=${user.data.via_}`);
                 }
-
+                this.setState({ report: true });
             }
         }
     };

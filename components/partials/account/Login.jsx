@@ -43,12 +43,13 @@ class Login extends Component {
     };
 
     handleLoginSubmit = async (e) => {
+        this.setState({ report: false });
         const { loginUser } = useAuth();
-
         const user = await loginUser(e);
         console.log(user);
         if (user) {
             if (user.status >= 400) {
+                this.setState({ report: true });
                 notification.open({
                     message: `${user?.data?.msg}`,
                     duration: 500,
@@ -56,7 +57,7 @@ class Login extends Component {
                 });
             } else {
                 this.props.dispatch(login({ user: user.data, data: e }));
-                this.setState({ report: !this.state.report });
+                this.setState({ report: true });
                 notification.open({
                     message: `${user?.data?.msg}`,
                     description: 'Siz saytga muvaffaqqiyatli kirdingiz!',

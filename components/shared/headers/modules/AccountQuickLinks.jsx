@@ -2,7 +2,7 @@ import React from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
-import Router from 'next/router';
+// import Router from 'next/router';
 import { Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 
@@ -30,7 +30,7 @@ const AccountQuickLinks = (props) => {
             dispatch(logOut());
         }
 
-        Router.push('/');
+        // Router.push('/');
     };
     const { isLoggedIn } = props;
 

@@ -24,6 +24,7 @@ export default function QaytaNomerKiritish() {
     }
 
     const QaytaRaqamJonatish = async (e) => {
+        setReport(false)
         localStorage.setItem('qayta_', number, e)
         e.preventDefault();
         const data = {
@@ -33,10 +34,10 @@ export default function QaytaNomerKiritish() {
         const response = await qaytaRaqamYuborishAuth(data);
         if (response.status === 200 || response.status === 201) {
             const { access } = response.data;
-            setReport(false)
             localStorage.setItem('qayta_token', access);
             Router.push(`/account/change-password?via=${response.data.via_}`);
         } else {
+            setReport(true)
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik',
