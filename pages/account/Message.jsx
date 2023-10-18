@@ -15,51 +15,59 @@ const Xabar = (e) => {
     const [firstSendCode, setFirstSendCode] = useState(true);
     const [countdown, setCoutdown] = useState(120);
     const [kod, setKod] = useState(null);
+    const [kodLength, setkodLength] = useState(null)
     const Router = useRouter();
     const { id } = Router.query;
-    const dispatch = useDispatch()
-    const {user} = useSelector((state => state.auth))
+    const dispatch = useDispatch();
+    const { user } = useSelector((state) => state.auth);
+
+    
 
     const handleSubmitKod = async () => {
-        setLoader(true);
-       
+
+        if (kod) {
+          let code =  kod.toString().split('').length
+          setkodLength(code)
+        }
 
         let data = {
             code: `${kod}`,
         };
 
-        const { verifyCode } = useAuth();
-        const user = await verifyCode(data);
-        if (user.status === 200 || user.status === 201) {
-            setLoader(false);
-            if (id) {
-                Router.push(
-                    `/account/checkout-one?id=${id}`
-                );
-            } else {
-                if (user.roli === 'seller' || user.roli === 'admin') {
-                    Router.push('/account/dashbord');     
-                }else{
-                    Router.push('/account/dashbord');     
-    
+
+        if (kodLength >= 4) {
+            setLoader(true);
+            const { verifyCode } = useAuth();
+            const user = await verifyCode(data);
+
+            if (user.status === 200 || user.status === 201) {
+                setLoader(false);
+                if (id) {
+                    Router.push(`/account/checkout-one?id=${id}`);
+                } else {
+                    if (user.roli === 'seller' || user.roli === 'admin') {
+                        Router.push('/account/dashbord');
+                    } else {
+                        Router.push('/account/dashbord');
+                    }
                 }
+                dispatch(login({ user: user.data, data: e }));
+            } else {
+                setLoader(false);
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik',
+                    content: `${user?.data?.msg}`,
+                });
+                modal.update;
             }
-            dispatch(login({ user: user.data, data: e }));
-        } else {
-            setLoader(false);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik',
-                content: `${user?.data?.msg}`,
-            });
-            modal.update;
         }
 
         setKod('');
     };
 
     const qaytaKodOlish = async () => {
-        setCoutdown(120)
+        setCoutdown(120);
         setLoader(true);
         const data = {
             phone_or_email: JSON.parse(localStorage.getItem('data'))
@@ -67,6 +75,7 @@ const Xabar = (e) => {
         };
         const { qaytaKodYuborish } = useAuth();
         const qaytaUser = await qaytaKodYuborish(data);
+
         if (qaytaUser?.status === 200 || qaytaUser?.status === 201) {
             const modal = Modal.success({
                 centered: true,
@@ -76,11 +85,11 @@ const Xabar = (e) => {
             modal.update;
             setLoader(false);
         } else {
-            setReport(true)
+            setReport(true);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik',
-                content:  qaytaUser?.data?.msg
+                content: qaytaUser?.data?.msg,
             });
             modal.update;
             setLoader(false);
@@ -90,18 +99,16 @@ const Xabar = (e) => {
     };
 
     useEffect(() => {
-
         const interval = setInterval(() => {
             setCoutdown((prevCountdown) => {
-              if (prevCountdown === 0) {
-                clearInterval(interval); 
-                return 0;
-              } else {
-                return prevCountdown - 1;
-              }
+                if (prevCountdown === 0) {
+                    clearInterval(interval);
+                    return 0;
+                } else {
+                    return prevCountdown - 1;
+                }
             });
-          }, 1000);
-
+        }, 1000);
 
         if (countdown <= 0) {
             setFirstSendCode(false);
@@ -109,12 +116,10 @@ const Xabar = (e) => {
         } else {
             setReport(false);
         }
-        
-        return () => {
-            clearInterval(interval); 
-          };
 
-      
+        return () => {
+            clearInterval(interval);
+        };
     }, [countdown]);
 
     useEffect(() => {
@@ -131,22 +136,24 @@ const Xabar = (e) => {
                         <div className="ps-tab active" id="register">
                             <div className="ps-form__content">
                                 <h5>
-                                    Tasdiqlash SMS - kodi quyidagiga
-                                    yuborildi:
+                                    Tasdiqlash SMS - kodi quyidagiga yuborildi:
                                 </h5>
                                 <h4 style={{ marginBottom: '20px' }}>
                                     {nomer}
                                 </h4>
                                 <div className="kod-input">
                                     <Input
+                                        required
                                         className="form-control mb-4 "
                                         type="number"
                                         placeholder="Kodni kiriting..."
                                         onChange={(e) => setKod(e.target.value)}
-                                        min="0"
-                                        maxLength="4"
                                     />
-                                    <h4>{` 0 ${Math.floor(countdown / 60 ) } : ${countdown >=  10 ?  countdown % 60 : "0 " + countdown}`}</h4>
+                                    <h4>{` 0 ${Math.floor(countdown / 60)} : ${
+                                        countdown >= 10
+                                            ? countdown % 60
+                                            : '0 ' + countdown
+                                    }`}</h4>
                                 </div>
                                 <div className="form-group submit">
                                     {firstSendCode ? (

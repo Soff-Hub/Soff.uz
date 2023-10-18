@@ -1,7 +1,5 @@
 import { actionTypes } from './action';
 
-// const accessToken = localStorage.getItem('ss')
-
 export const initState = {
     isLoggedIn: false,
     user: null,

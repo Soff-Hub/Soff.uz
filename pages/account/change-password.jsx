@@ -31,11 +31,11 @@ const Xabar = (e) => {
             Router.push('/account/new-password');
         } else {
             setLoader(false)
-            let message = '';
+            let message = 'Xatolik';
             const modal = Modal.error({
                 centered: true,
-                title: user.data.msg,
-                content: message,
+                title: message,
+                content: user.data.msg,
             });
             modal.update;
         }
