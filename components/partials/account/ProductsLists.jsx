@@ -291,7 +291,7 @@ function ProductsLists() {
                                                             <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                                         </select>
                                                         <RangePicker className='w-100 py-3 col-md-6 rounded-3' onChange={(e) => setDate(e)} />
-                                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3'>Arxivlangan holatlar</span></Button>
+                                                        <Button onClick={handleCLickArxiv} className='col-md-5 input py-3' style={{ height: "48px" }}><span className='fs-3 text-dark'>Arxivlangan holatlar</span></Button>
                                                     </div>
                                                 </div>
                                             </div>

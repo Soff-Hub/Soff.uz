@@ -214,6 +214,7 @@ const PostsMyProducts = () => {
                                     <Select
                                         mode='select'
                                         showSearch
+                                        allowClear
                                         style={{ width: '100%', height: "47px" }}
                                         onChange={onChange}
                                         onSearch={onSearch}

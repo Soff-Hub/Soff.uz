@@ -294,6 +294,7 @@ const Posts = () => {
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);
+    
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -451,7 +452,7 @@ const Posts = () => {
                                             livePosterFile?.images?.map(
                                                 (item, i) =>
                                                     item.id ===
-                                                        fileImgFileID ? (
+                                                        fileImgFileID  ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
@@ -523,6 +524,7 @@ const Posts = () => {
                                     <Select
                                         mode='select'
                                         showSearch
+                                        allowClear
                                         style={{ width: '100%', height: "47px" }}
                                         onChange={onChange}
                                         onSearch={onSearch}
@@ -554,20 +556,7 @@ const Posts = () => {
                                     )}
                                 />
                             </div>
-                            {/* <div className='row   mt-3'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot uchun chegirma:</p> <Tooltip title="Mahsulotingizga vaqtinchalik chegirma qo’yib sotishingiz mumkin. Uning uchun chegirma foizini kiriting. Bu chegirmani hohlagan paytingiz o’chirib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4  mt-2"></i></Tooltip></div>
-                                <input
-                                    type="number"
-                                    className={`form-control col-md-8 rounded-3 ${chegirmaTek ? '' : 'chegirma-xato'
-                                        } `}
-                                   
-                                    name="price"
-                                    onChange={(e) => (
-                                        setDiscount(e.target.value),
-                                        chegirma(e.target.value)
-                                    )}
-                                />
-                            </div> */}
+ 
 
 
                             <div className="  row mt-3">

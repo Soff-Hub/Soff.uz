@@ -198,6 +198,7 @@ function MyProductsListsSeller() {
                                                             className='col-md-6 p-0'
                                                             mode='select'
                                                             showSearch
+                                                            allowClear
                                                             style={{ width: '100%', height: "47px" }}
                                                             onChange={onChange}
                                                             placeholder="Barcha kategoriyalar"
