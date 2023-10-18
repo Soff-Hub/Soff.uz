@@ -386,7 +386,7 @@ function Notifications() {
                                                     className='link'
                                                         ref={
                                                             divRef
-                                                        }>{`localhost:3000/account/register/${
+                                                        }>{`https://soff.uz/account/register/${
                                                         profile !== null
                                                             ? profile?.code
                                                             : ''
