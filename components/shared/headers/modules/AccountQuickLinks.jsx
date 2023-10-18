@@ -14,7 +14,7 @@ const AccountQuickLinks = (props) => {
 
     const handleLogout = (e) => {
         e.preventDefault();
-
+        
         const data = {
             'refresh': refresh
         }
@@ -30,7 +30,7 @@ const AccountQuickLinks = (props) => {
             dispatch(logOut());
         }
 
-        // Router.push('/');
+
     };
     const { isLoggedIn } = props;
 

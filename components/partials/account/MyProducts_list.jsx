@@ -411,6 +411,7 @@ function MyProductsLists() {
                                                             className='col-md-6 p-0'
                                                             mode='select'
                                                             showSearch
+                                                            allowClear
                                                             style={{ width: '100%', height: "47px" }}
                                                             onChange={onChange}
                                                             placeholder="Barcha kategoriyalar"
@@ -427,6 +428,8 @@ function MyProductsLists() {
                                                                 <Select
                                                                     className='col-md-5 p-0'
                                                                     mode='select'
+                                                                    showSearch
+                                                                    allowClear
                                                                     style={{ width: '100%', height: "47px" }}
                                                                     onChange={handleChange}
                                                                     placeholder="Barcha teglar"
