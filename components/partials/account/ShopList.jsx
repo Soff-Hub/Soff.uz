@@ -124,7 +124,7 @@ function Notifications() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
-                                    <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{ backgroundColor: "GrayText" }} >Sotuvchilar soni: {data.length} ta</span>
+                                    <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{ backgroundColor: "GrayText" }} >Sotuvchilar soni: {pageCount} ta</span>
                                     <input type='search' className='form-control rounded bg-white mb-3 ' style={{ backgroundColor: "#F1F1F1" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                     <Table scroll={{ x: 1150 }} dataSource={data} columns={columns} pagination={false}
                                     />
