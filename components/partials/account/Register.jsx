@@ -220,6 +220,7 @@ class Register extends Component {
                                         )
                                     ) : (
                                         <button
+                                        disabled={true}
                                             type="submit"
                                             className="ps-btn ps-btn--fullwidth mb-5">
                                             <BeatLoader color="#fff" />

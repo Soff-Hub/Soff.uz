@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import Register from '~/components/partials/account/Register';
@@ -6,7 +6,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
-import Page404 from '~/pages/page/page-404';
+import Mistake from '../mistake';
 
 const RegisterPage = () => {
     const Router = useRouter()
@@ -23,9 +23,13 @@ const RegisterPage = () => {
     const { user } = useSelector(state => state.auth)
     const sallerEndPoint = `auth/seller-register/${pid}/`;
 
+    useEffect(() => {
+
+    },[])
+
     return (
           user?.access ?
-          <Page404/>
+          <Mistake/>
           :
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">

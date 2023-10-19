@@ -15,25 +15,21 @@ const Xabar = (e) => {
     const [firstSendCode, setFirstSendCode] = useState(true);
     const [countdown, setCoutdown] = useState(120);
     const [kod, setKod] = useState(null);
-    const [kodLength, setkodLength] = useState(null)
+    const [kodLength, setkodLength] = useState(null);
     const Router = useRouter();
     const { id } = Router.query;
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
 
-    
-
     const handleSubmitKod = async () => {
-
         if (kod) {
-          let code =  kod.toString().split('').length
-          setkodLength(code)
+            let code = kod.toString().split('').length;
+            setkodLength(code);
         }
 
         let data = {
             code: `${kod}`,
         };
-
 
         if (kodLength >= 4) {
             setLoader(true);
@@ -159,6 +155,7 @@ const Xabar = (e) => {
                                     {firstSendCode ? (
                                         loader ? (
                                             <button
+                                                disabled={true}
                                                 type="submit"
                                                 className="ps-btn ps-btn--fullwidth mb-5">
                                                 <BeatLoader color="#fff" />
@@ -176,6 +173,7 @@ const Xabar = (e) => {
                                     ) : report ? (
                                         loader ? (
                                             <button
+                                                disabled={true}
                                                 type="submit"
                                                 className="ps-btn ps-btn--fullwidth mb-5">
                                                 <BeatLoader color="#fff" />
