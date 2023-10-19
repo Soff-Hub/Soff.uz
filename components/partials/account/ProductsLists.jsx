@@ -384,20 +384,21 @@ function ProductsLists() {
                                             </div>
                                             <div className='d-flex justify-content-end '>
                                                 {
-                                                    !loading2 ?
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
+                                                    loading2 ?
 
-                                                            <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
-
-                                                        </button>
-                                                        :
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px" }}>
+                                                        <button  className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px", cursor:"not-allowed" }}>
 
                                                             <div className="spinner-border " role="status">
                                                                 <span className="visually-hidden">Loading...</span>
                                                             </div>
 
                                                         </button>
+                                                        :
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
+
+                                                        <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
+
+                                                    </button>
                                                 }
                                             </div>
                                         </div>

@@ -18,6 +18,7 @@ function MyProductsListsSeller() {
     const [date, setDate] = useState(null);
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const [loading2, setLoading2] = useState(false);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
@@ -86,6 +87,7 @@ function MyProductsListsSeller() {
     const handleButtonClick = async (ID) => {
 
         try {
+            setLoading2(true)
             const fileContent = data?.find(item => (item.id == ID))
             const response = await axios.get(
                 fileContent.file,
@@ -99,8 +101,10 @@ function MyProductsListsSeller() {
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
+            setLoading2(false)
         } catch (error) {
             console.error('Error downloading file: ', error);
+            setLoading2(false)
         }
     };
 
@@ -164,9 +168,15 @@ function MyProductsListsSeller() {
             title: 'Mahsulot',
             dataIndex: 'id',
             key: 'address',
-            render: (id) => <div >
+            render: (id) => <>
+                 {
+                    loading2 ?
+                    <div className="spinner-border mx-2 " role="status" style={{cursor:"not-allowed"}}>
+                    <span className="visually-hidden">Loading...</span>
+                </div> :
                 <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
-            </div>
+                 }
+            </>
         }
 
     ];

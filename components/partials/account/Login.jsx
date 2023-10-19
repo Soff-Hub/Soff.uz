@@ -99,7 +99,7 @@ class Login extends Component {
         const { router } = this.props;
         const { id } = router.query;
         return (
-            <div className="ps-my-account">
+            <div className=" pb-5 " style={{backgroundColor:"#f1f1f1"}}>
                 <div className="container">
                     <Form
                         className="ps-form--account"
