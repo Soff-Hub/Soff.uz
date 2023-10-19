@@ -3,7 +3,7 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CreditCard from './CreditCard';
-import { Modal } from 'antd';
+import { Modal, Tooltip } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { BeatLoader } from 'react-spinners';
@@ -18,7 +18,7 @@ function Notifications() {
     const [profilePassword, setProfilePassword] = useState(null);
     const [profilePassword1, setProfilePassword2] = useState(null);
     const divRef = useRef(null);
-    const [copyIcon, setCopyIcon] = useState('fa-regular fa-copy')
+    const [copyIcon, setCopyIcon] = useState('fa-regular fa-copy');
     const handleCopyClick = () => {
         if (divRef.current) {
             const textToCopy = divRef.current.innerText;
@@ -29,7 +29,7 @@ function Notifications() {
             document.execCommand('copy');
             document.body.removeChild(tempInput);
             if (document.execCommand('copy')) {
-                setCopyIcon("fa-solid fa-check fa-beat")
+                setCopyIcon('fa-solid fa-check fa-beat');
             }
         }
     };
@@ -378,12 +378,21 @@ function Notifications() {
                                                 </div>
                                             </div>
                                             <div className="border p-3 mt-3">
-                                                <h5 className="fs-3">
+                                               <div className='d-flex'>
+                                               <h5 className="fs-3">
                                                     Taklif uchun xavola
                                                 </h5>
+                                                <Tooltip title="Do'stlaringizni taklif qiling">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                                </Tooltip>
+                                               </div>
                                                 <div className=" mt-3 taklif-div">
                                                     <div
-                                                    className='link'
+                                                        className="link"
                                                         ref={
                                                             divRef
                                                         }>{`https://soff.uz/account/register/${
@@ -399,7 +408,8 @@ function Notifications() {
                                                         onClick={
                                                             handleCopyClick
                                                         }>
-                                                        <i class={`${copyIcon}`}></i>
+                                                        <i
+                                                            class={`${copyIcon}`}></i>
                                                     </button>
                                                 </div>
                                             </div>

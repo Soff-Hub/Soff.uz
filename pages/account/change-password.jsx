@@ -17,20 +17,20 @@ const Xabar = (e) => {
     const [kod, setKod] = useState(null);
     const Router = useRouter();
     const { query } = Router;
-    const { user } = useSelector(state => state.auth)
+    const { user } = useSelector((state) => state.auth);
 
     const handleSubmitKod = async () => {
-        setLoader(true)
+        setLoader(true);
         let data = {
             code: `${kod}`,
         };
         const { NewVerifyCode } = useAuth();
         const user = await NewVerifyCode(data);
         if (user.status === 200 || user.status === 201) {
-            setLoader(false)
+            setLoader(false);
             Router.push('/account/new-password');
         } else {
-            setLoader(false)
+            setLoader(false);
             let message = 'Xatolik';
             const modal = Modal.error({
                 centered: true,
@@ -42,9 +42,9 @@ const Xabar = (e) => {
     };
 
     const qaytaKodOlish = async () => {
-        setLoader(true)
-        setCoutdown(120)
-        setButtonTrue(true)
+        setLoader(true);
+        setCoutdown(120);
+        setButtonTrue(true);
         const data = {
             phone_or_email: localStorage.getItem('qayta_'),
         };
@@ -52,7 +52,7 @@ const Xabar = (e) => {
         const qaytaUser = await qaytaKodYuborishParol(data);
         if (qaytaUser.status === 200 || qaytaUser.status === 201) {
             setReport(true);
-            setLoader(false)
+            setLoader(false);
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -60,7 +60,7 @@ const Xabar = (e) => {
             });
             modal.update;
         } else {
-            setLoader(false)
+            setLoader(false);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
@@ -71,30 +71,27 @@ const Xabar = (e) => {
     };
 
     useEffect(() => {
-       
-
         const interval = setInterval(() => {
             setCoutdown((prevCountdown) => {
-              if (prevCountdown === 0) {
-                clearInterval(interval); // Stop the countdown when it reaches 0
-                return 0;
-              } else {
-                return prevCountdown - 1;
-              }
+                if (prevCountdown === 0) {
+                    clearInterval(interval); // Stop the countdown when it reaches 0
+                    return 0;
+                } else {
+                    return prevCountdown - 1;
+                }
             });
-          }, 1000);
+        }, 1000);
 
-
-          if (countdown <= 0) {
-            setButtonTrue(false)
-            setReport( true);
+        if (countdown <= 0) {
+            setButtonTrue(false);
+            setReport(true);
         } else {
             setReport(false);
         }
-        
+
         return () => {
             clearInterval(interval); // Clean up the interval when the component unmounts
-          };
+        };
     }, [countdown]);
 
     useEffect(() => {
@@ -104,9 +101,9 @@ const Xabar = (e) => {
         }
     }, [tokenn]);
 
-    return (
-        user?.access ?
-        <Page404/> :
+    return user?.access ? (
+        <Page404 />
+    ) : (
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
@@ -131,12 +128,17 @@ const Xabar = (e) => {
                                         min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                    <h4>{` 0 ${Math.floor(countdown / 60 ) } : ${countdown >=  10 ?  countdown % 60 : "0 " + countdown}`}</h4>
+                                    <h4>{` 0 ${Math.floor(countdown / 60)} : ${
+                                        countdown >= 10
+                                            ? countdown % 60
+                                            : '0 ' + countdown
+                                    }`}</h4>
                                 </div>
                                 <div className="form-group submit">
                                     {buttonTrue ? (
                                         loader ? (
                                             <button
+                                                disabled={true}
                                                 type="submit"
                                                 className="ps-btn ps-btn--fullwidth mb-5">
                                                 <BeatLoader color="#fff" />
@@ -151,6 +153,7 @@ const Xabar = (e) => {
                                     ) : report ? (
                                         loader ? (
                                             <button
+                                                disabled={true}
                                                 type="submit"
                                                 className="ps-btn ps-btn--fullwidth mb-5">
                                                 <BeatLoader color="#fff" />
