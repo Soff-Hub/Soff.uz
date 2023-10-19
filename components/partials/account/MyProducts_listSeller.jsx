@@ -169,13 +169,13 @@ function MyProductsListsSeller() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <>
-                 {
+                {
                     loading2 ?
-                    <div className="spinner-border mx-2 " role="status" style={{cursor:"not-allowed"}}>
-                    <span className="visually-hidden">Loading...</span>
-                </div> :
-                <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
-                 }
+                        <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
+                            <span className="visually-hidden">Loading...</span>
+                        </div> :
+                        <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
+                }
             </>
         }
 
@@ -194,7 +194,10 @@ function MyProductsListsSeller() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <input type='search' className={"form-control rounded col-md-9"} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                        <label className='form-label border col-md-9 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+                                        </label>
                                         <div className="accordion accordion-flush p-0" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0">

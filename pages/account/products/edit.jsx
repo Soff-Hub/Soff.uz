@@ -26,6 +26,7 @@ const PostsProductsEdit = () => {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [dataCatStatus, setDataCatStatus] = useState(null);
     const [Fulldata, setFullData] = useState(null);
+    const [textAreaItems, setTextAreaItmes] = useState(null);
     const [categoryName, setCategoryName] = useState('');
     const [tegProductsLists, setTegProdcutsLists] = useState([]);
 
@@ -142,7 +143,7 @@ const PostsProductsEdit = () => {
 
     async function handleClickPostsEdit(e) {
         e.preventDefault();
-        if (title  || category_id[0] || dataCatStatus || Fulldata  ) {
+        if (title || category_id[0] || dataCatStatus || Fulldata || textAreaItems) {
             const data = {};
             if (title) {
                 Object.assign(data, { title: title });
@@ -150,14 +151,17 @@ const PostsProductsEdit = () => {
             if (results) {
                 Object.assign(data, { tags: results });
             }
-             if (results3) {
+            if (results3) {
                 Object.assign(data, { tags: results3 })
-             }
+            }
             if (category_id[0]) {
                 Object.assign(data, { category: category_id[0] });
             }
             if (dataCatStatus) {
                 Object.assign(data, { status: dataCatStatus });
+            }
+            if (textAreaItems) {
+                Object.assign(data, { reason: textAreaItems });
             }
             if (Fulldata) {
                 Object.assign(data, { description: Fulldata });
@@ -172,7 +176,7 @@ const PostsProductsEdit = () => {
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
-            }); 
+            });
         }
         else {
             const modal = Modal.info({
@@ -295,6 +299,26 @@ const PostsProductsEdit = () => {
                                     )}
                                 </select>
                             </div>
+                            { (dataCatStatus==="cancelled" ||  products.status==="cancelled") ?
+                            <div className="row">
+                                <div className="col-md-4 d-flex justify-content-between p-0">
+                                    <p>Holat to'g'risida sabab: *</p>{' '}
+                                    <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
+
+                                <div className="col-md-8 p-0 mb-3">
+                                    <textarea  defaultValue={products?.reason} onChange={(e)=>setTextAreaItmes(e.target.value)} required rows={4}   className='rounded w-100 border p-3 border-danger'>
+
+                                    </textarea>
+                                </div>
+                            </div>
+                             :
+                             <></>
+                            } 
                             <div className="row">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                     <p>Aktiv teglar:</p>{' '}

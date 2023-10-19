@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Modal, Pagination, Select, Table } from 'antd';
+import { DatePicker, Modal, Pagination, Select, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -321,15 +321,19 @@ function MyProductsLists() {
         },
         user?.role === "seller" ? {
             title: 'Holat',
-            dataIndex: 'status',
+            dataIndex: 'data_status',
             key: 'address',
-            render: (status) => (
-                status === "moderation" ?
+            render: (datastatus) => (
+                datastatus?.status === "moderation" ?
                     (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
-                    status === 'approved' ?
+                    datastatus?.status === 'approved' ?
                         (<span><i className="fa-solid text-success fa-circle-check"></i> Tasdiqlangan</span>) :
-                        status === 'cancelled' ?
-                            (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                        datastatus?.status === 'cancelled' ?
+                            (
+                                <Tooltip title={datastatus?.reason}>
+                                    <span style={{cursor:"pointer"}}><i className="fa-solid fa-circle-question text-danger"></i> Bekor qilingan </span>
+                                </Tooltip>
+                            ) :
                             <></>
             ),
 
@@ -364,13 +368,13 @@ function MyProductsLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <>
-                   {
+                {
                     loading4 ?
-                    <div className="spinner-border mx-2 " role="status" style={{cursor:"not-allowed"}}>
-                    <span className="visually-hidden">Loading...</span>
-                </div> :
-                <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
-                 }
+                        <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
+                            <span className="visually-hidden">Loading...</span>
+                        </div> :
+                        <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
+                }
             </>
         }
 
@@ -400,7 +404,10 @@ function MyProductsLists() {
                                             <></>
                                     }
                                     <div className='row mx-auto gap-4  pb-4 pt-5'>
-                                        <input type='search' className={user?.role === "seller" ? 'form-control rounded col-md-6' : "form-control rounded col-md-9"} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                        <label className={user?.role === "seller" ? 'rounded col-md-6   form-label border  m-0 p-0 d-flex justify-content-between align-items-center' : "form-label border col-md-9 eounded  m-0 p-0 d-flex justify-content-between align-items-center"} style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+                                        </label>
                                         {
                                             user?.role === "seller" ?
                                                 <Link href={"/account/myproducts/posts"}>
@@ -504,9 +511,13 @@ function MyProductsLists() {
                                 {
                                     !loading ?
                                         <div className="ps-product--detail ps-product--fullwidth">
+                                            
                                             <div className="ps-product__header ">
                                                 <ThumbnailDefault product={View} />
                                                 <div className="ps-product__info">
+                                                <div className='mb-4'>
+                                                <strong className='text-danger pb-5'>{View?.reason}</strong>
+                                                </div>
                                                     <header>
                                                         <h1>{View?.title}</h1>
                                                         <h4>
@@ -543,6 +554,7 @@ function MyProductsLists() {
                                                             <span className='mx-2' key={item.id}> #{item?.name} </span>
                                                         ))}</p>
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div className="ps-product__content ps-tab-root">
@@ -555,8 +567,8 @@ function MyProductsLists() {
                                             <div className='d-flex justify-content-end '>
                                                 {
                                                     loading2 ?
-                                                       
-                                                        <button className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px", cursor:"not-allowed" }}>
+
+                                                        <button className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px", cursor: "not-allowed" }}>
 
                                                             <div className="spinner-border " role="status">
                                                                 <span className="visually-hidden">Loading...</span>
@@ -566,9 +578,9 @@ function MyProductsLists() {
                                                         :
                                                         <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
 
-                                                        <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
+                                                            <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
 
-                                                    </button>
+                                                        </button>
                                                 }
                                             </div>
                                         </div>
