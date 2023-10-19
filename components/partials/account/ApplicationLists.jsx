@@ -7,6 +7,9 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CalculateTimeDifference from './DateFormatter';
+import ModalDelete from './Modal';
+import DeleteRepository from '~/reositoriy-admin/DeleteRepository';
+
 
 
 function ApplicationLists() {
@@ -27,7 +30,18 @@ function ApplicationLists() {
     const [currPage, setCurrPage] = useState(1)
     const [textItems, setTextItems] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [deleteId, setDeleteId] = useState(null);
+    const [selectedRowKeys, setSelectedRowKeys] = useState([]);
+    
+   const onSelectChange = (selectedRowKeys) => {
+      console.log('selectedRowKeys', selectedRowKeys);
+      setSelectedRowKeys(selectedRowKeys);
+    };
 
+    const   = {
+        selectedRowKeys,
+        onChange: onSelectChange,
+    }; 
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -145,6 +159,10 @@ function ApplicationLists() {
         setLoading(true)
         e.target.reset()
 
+    }
+    async function handleClickDeleteText() {
+        const Items = await DeleteRepository.getCategoryDeleteTextArea(deleteId, user?.access);
+        ProfileUsersTextItems(currPage)
     }
 
 
@@ -343,20 +361,20 @@ function ApplicationLists() {
             title: 'Taklif',
             dataIndex: 'offer',
             key: 'address',
-            width: 600,
+            width: 400,
         },
         {
-            title: ' Yuborilgan sana',
+            title: ' Taklif sana',
             dataIndex: 'created_at',
             key: 'created_at',
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
-            title: 'Harakatlar',
+            title: "O'chirish",
             dataIndex: 'id',
             key: 'address',
             render: (id) => (
-                <span><i className='fa-solid fa-trash'></i></span>
+                <span><a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-5" onClick={() => setDeleteId(id)}></i></a></span>
             ),
         },
     ];
@@ -428,7 +446,7 @@ function ApplicationLists() {
                                                 </form>
                                                 <form className='border mt-3 rounded p-3' onSubmit={getItemsTextItmes} >
                                                     <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
-                                                    <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={4}></textarea>
+                                                    <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={1} placeholder="Bu qismga kategoriya bo'yicha takliflaringizni yuboring"></textarea>
                                                     <div className='w-100 d-flex justify-content-end'>
                                                         <button className="btn-success btn " type='submit' style={{ height: "40px", width: "120px" }}><span className='fs-4'>
                                                             {
@@ -474,12 +492,16 @@ function ApplicationLists() {
                             </div>
                         </div>
                     </div>
-                    <div className='my-5 bg-white mx-auto p-5 container'>
-                    <Table scroll={{ x: 1350 }} dataSource={data1} columns={columnsTextArea}
-                        pagination={false} />
-                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
-                        onChange={ProfileUsersTextItems} />
+                    <div className='px-4'>
+                        <div className='my-5 bg-white mx-auto p-4 container'>
+                            <h4 className='text-center mb-4'>Kelib tushgan takliflar</h4>
+                            <Table scroll={{ x: 1150 }} dataSource={data1}  rowSelection={rowSelection} columns={columnsTextArea}
+                                pagination={false} />
+                            <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                onChange={ProfileUsersTextItems} />
+                        </div>
                     </div>
+                    <ModalDelete onSuccess={handleClickDeleteText} />
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
                     <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
