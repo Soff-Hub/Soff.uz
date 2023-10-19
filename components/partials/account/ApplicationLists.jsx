@@ -38,7 +38,7 @@ function ApplicationLists() {
       setSelectedRowKeys(selectedRowKeys);
     };
 
-    const   = {
+    const  rowSelection = {
         selectedRowKeys,
         onChange: onSelectChange,
     }; 
