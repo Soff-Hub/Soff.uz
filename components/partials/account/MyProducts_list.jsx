@@ -37,6 +37,7 @@ function MyProductsLists() {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [loading3, setLoading3] = useState(false);
+    const [loading4, setLoading4] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState("");
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
@@ -211,6 +212,7 @@ function MyProductsLists() {
     const handleButtonClick = async (ID) => {
 
         try {
+            setLoading4(true)
             const fileContent = data?.find(item => (item.id == ID))
             const response = await axios.get(
                 fileContent.file,
@@ -224,8 +226,10 @@ function MyProductsLists() {
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
+            setLoading4(false)
         } catch (error) {
             console.error('Error downloading file: ', error);
+            setLoading4(false)
         }
     };
 
@@ -359,10 +363,17 @@ function MyProductsLists() {
             title: 'Mahsulot',
             dataIndex: 'id',
             key: 'address',
-            render: (id) => <div >
+            render: (id) => <>
+                   {
+                    loading4 ?
+                    <div className="spinner-border mx-2 " role="status" style={{cursor:"not-allowed"}}>
+                    <span className="visually-hidden">Loading...</span>
+                </div> :
                 <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
-            </div>
-        },
+                 }
+            </>
+        }
+
 
     ];
     return (
@@ -543,20 +554,21 @@ function MyProductsLists() {
                                             </div>
                                             <div className='d-flex justify-content-end '>
                                                 {
-                                                    !loading2 ?
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
-
-                                                            <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
-
-                                                        </button>
-                                                        :
-                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px" }}>
+                                                    loading2 ?
+                                                       
+                                                        <button className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px", cursor:"not-allowed" }}>
 
                                                             <div className="spinner-border " role="status">
                                                                 <span className="visually-hidden">Loading...</span>
                                                             </div>
 
                                                         </button>
+                                                        :
+                                                        <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
+
+                                                        <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
+
+                                                    </button>
                                                 }
                                             </div>
                                         </div>
