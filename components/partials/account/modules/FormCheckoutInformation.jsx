@@ -6,6 +6,7 @@ import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
 import  Router  from 'next/router';
 import useCart from '~/hooks/useCart';
+import Image from 'next/image';
 
 
 function FormCheckoutInformation() {
@@ -90,7 +91,7 @@ function FormCheckoutInformation() {
                             onChange={handleRadioChange}
                         />
                     </label>
-                    <img
+                    <Image
                         src="/static/img/click.png"
                         alt="payme"
                         width="100%"

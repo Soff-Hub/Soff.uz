@@ -23,41 +23,43 @@ const Xabar = (e) => {
 
     const handleSubmitKod = async () => {
         if (kod) {
-            let code = kod.toString().split('').length;
-            setkodLength(code);
-        }
-
-        let data = {
-            code: `${kod}`,
-        };
-
-        if (kodLength >= 4) {
-            setLoader(true);
-            const { verifyCode } = useAuth();
-            const user = await verifyCode(data);
-
-            if (user.status === 200 || user.status === 201) {
-                setLoader(false);
-                if (id) {
-                    Router.push(`/account/checkout-one?id=${id}`);
-                } else {
-                    if (user.roli === 'seller' || user.roli === 'admin') {
-                        Router.push('/account/dashbord');
+            // let code = kod.toString().split('').length;
+            // setkodLength(code);
+            if (kod.toString().split('').length >= 4) {
+                setLoader(true);
+                let data = {
+                    code: `${kod}`,
+                };
+                console.log('kod', kod);
+                const { verifyCode } = useAuth();
+                const user = await verifyCode(data);
+    
+                if (user.status === 200 || user.status === 201) {
+                    setLoader(false);
+                    if (id) {
+                        Router.push(`/account/checkout-one?id=${id}`);
                     } else {
-                        Router.push('/account/dashbord');
+                        if (user.roli === 'seller' || user.roli === 'admin') {
+                            Router.push('/account/dashbord');
+                        } else {
+                            Router.push('/account/dashbord');
+                        }
                     }
+                    dispatch(login({ user: user.data, data: e }));
+                } else {
+                    setLoader(false);
+                    const modal = Modal.error({
+                        centered: true,
+                        title: 'Xatolik',
+                        content: `${user?.data?.msg}`,
+                    });
+                    modal.update;
                 }
-                dispatch(login({ user: user.data, data: e }));
-            } else {
-                setLoader(false);
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik',
-                    content: `${user?.data?.msg}`,
-                });
-                modal.update;
             }
         }
+
+        
+     
 
         setKod('');
     };
