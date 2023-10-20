@@ -202,7 +202,7 @@ const Posts = () => {
             const modal = Modal.warning({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content:  "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                content: "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             });
         } else {
             const modal = Modal.error({
@@ -294,7 +294,7 @@ const Posts = () => {
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);
-    
+
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -307,7 +307,12 @@ const Posts = () => {
                     <div
                         className="row  w-100 gap-3 pt-5"
                         style={{ alignItems: 'flex-start' }}>
-                        <h4 className="col-md-8 m-0 p-0">Yangi mahsulot : </h4>
+                       <div className='col-md-8 d-flex'>
+                        <h4 className="m-0 p-0">Yangi mahsulot </h4>
+                       <h5 className="p-0 col-md-9 fs-4 mx-auto  pb-4 text-warning fw-semibold lh-base"> <i className="fa-solid fa-triangle-exclamation"></i> Hurmatli Sotuvchi mahsulot yuklayotganingizda mahsulot o'zingizni shaxsiy mulkingiz ekanligiga ishonch hosil qiling. Aks holda o'sha mahsulotingizni 
+                        so'mmasi tashab berilmasligi va profilingiz o'chirilib yuborilishi mumkin. E'tiborli bo'ling!
+                        </h5>
+                       </div>
 
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
@@ -452,7 +457,7 @@ const Posts = () => {
                                             livePosterFile?.images?.map(
                                                 (item, i) =>
                                                     item.id ===
-                                                        fileImgFileID  ? (
+                                                        fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
@@ -556,7 +561,7 @@ const Posts = () => {
                                     )}
                                 />
                             </div>
- 
+
 
 
                             <div className="  row mt-3">
