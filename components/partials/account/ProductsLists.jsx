@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button, Pagination, Select, Table } from 'antd';
+import { Button, Pagination, Select, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -215,16 +215,18 @@ function ProductsLists() {
         },
         {
             title: 'Holat',
-            dataIndex: 'status',
+            dataIndex: 'data_status',
             key: 'address',
-            render: (status) => (
-                status === "moderation" ?
+            render: (datastatus) => (
+                datastatus?.status === "moderation" ?
                     (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
-                    status === 'approved' ?
+                    datastatus?.status === 'approved' ?
                         (<span><i className="fa-solid text-success fa-circle-check"></i> Tasdiqlangan</span>) :
-                        status === 'cancelled' ?
-                            (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
-                            status === 'Arxivlangan' ?
+                        datastatus?.status === 'cancelled' ?
+                            (<Tooltip title={datastatus?.reason}>
+                                <span style={{ cursor: "pointer" }}><i className="fa-solid fa-circle-question text-danger"></i> Bekor qilingan </span>
+                            </Tooltip>) :
+                            datastatus?.status === 'Arxivlangan' ?
                                 (<span><i className="fa-solid fa-inbox text-danger"></i> Arxivlangan</span>) :
                                 <></>
             ),
@@ -257,9 +259,12 @@ function ProductsLists() {
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
                                     <span className='m-0 py-3 border d-flex justify-content-center h4'>Mahsulotlar soni: {pageCount} ta</span>
-                                    <div className='row border mt-3 pb-2 gap-4 mx-auto w-100   p-4'>
+                                    <div className='row border mt-3 gap-4 mx-auto w-100   px-4 pt-4'>
+                                        <label className='form-label border col-md-9 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+                                        </label>
 
-                                        <input style={{ backgroundColor: "#F2F3F4F6" }} type='' className='form-control rounded  col-md-9' placeholder="Qidiruv" onInput={e => (setSerach(e.target.value))} />
                                         <div className="accordion accordion-flush p-0" id="accordionFlushExample">
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0 ">
@@ -324,6 +329,9 @@ function ProductsLists() {
                                             <div className="ps-product__header ">
                                                 <ThumbnailDefault product={deleteIdView} />
                                                 <div className="ps-product__info">
+                                                    <div className='mb-4'>
+                                                        <strong className='text-danger pb-5'>{deleteIdView?.reason}</strong>
+                                                    </div>
                                                     <header>
                                                         <h1>{deleteIdView?.title}</h1>
                                                         <h4>
@@ -386,7 +394,7 @@ function ProductsLists() {
                                                 {
                                                     loading2 ?
 
-                                                        <button  className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px", cursor:"not-allowed" }}>
+                                                        <button className="btn btn-success  p-2 px-5 fs-4 " style={{ width: "179px", cursor: "not-allowed" }}>
 
                                                             <div className="spinner-border " role="status">
                                                                 <span className="visually-hidden">Loading...</span>
@@ -396,9 +404,9 @@ function ProductsLists() {
                                                         :
                                                         <button onClick={handleButtonClickViewProducts} className="btn btn-success p-2 px-5 fs-4 ">
 
-                                                        <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
+                                                            <i className='fa-solid fa-download mx-1'></i> <span className='fs-3'>File ochish</span>
 
-                                                    </button>
+                                                        </button>
                                                 }
                                             </div>
                                         </div>

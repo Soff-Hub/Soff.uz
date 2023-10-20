@@ -9,9 +9,11 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CalculateTimeDifference from './DateFormatter';
 
 
+
 function ApplicationLists() {
     const { accountLinks, user } = useSelector(state => state.auth)
     const [data, setData] = useState([]);
+    const [data1, setData2] = useState([]);
     const [dataCat, setDataCat] = useState(null);
     const [dataAdmin, setDataAdmin] = useState([]);
     const [dataPrice, setDataPrice] = useState(null);
@@ -24,18 +26,32 @@ function ApplicationLists() {
     const [profileCard, setProfileCard] = useState([]);
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const [textItems, setTextItems] = useState(null)
+    const [loading, setLoading] = useState(true)
+    
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
-        setProfile(ItemsData)
+        if (ItemsData) {
+            setProfile(ItemsData)
+        }
+    }
+    async function ProfileUsersTextItems(page) {
+        const ItemsData = await GetRepository.getTagTaklifLists(page, user?.access);
+        if (ItemsData?.results) {
+            setData2([...ItemsData.results]);
+            setPageCount([ItemsData?.count]);
+        }
     }
 
     async function getItemsSeller(page) {
         const Items = await GetRepository.getProfileAriza(page, user?.access);
         if (Items?.results) {
             setData([...Items.results]);
+            setPageCount([Items?.count]);
         }
     }
+
     async function getItemsSellerCardList() {
         const Items = await GetRepository.getProfileArizaCardLists(user?.access);
         if (Items?.results) {
@@ -123,8 +139,20 @@ function ApplicationLists() {
 
         return formattedNumber;
     }
+    async function getItemsTextItmes(e) {
+        e.preventDefault()
+        setLoading(false)
+        const Items = await PostsRepository.PostsMyProductsTextItmes({ offer: textItems }, user?.access);
+        const modal = Modal.success({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Sizning taklifingiz yuborildi`,
+        });
+        modal.update
+        setLoading(true)
+        e.target.reset()
 
-
+    }
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
         getItemsSeller(pageNum, dataCat)
@@ -136,6 +164,7 @@ function ApplicationLists() {
         getItemsSeller(currPage);
         ProfileUsers();
         getItemsSellerCardList()
+        ProfileUsersTextItems(currPage)
     }, [currPage, dataCat])
 
 
@@ -287,11 +316,48 @@ function ApplicationLists() {
                 dataAdmin.some(el => el.id == id && el.is_answer === true) ?
                     <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
                     :
-                    <a style={{cursor:"not-allowed", opacity:"0.6"}}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" ></i></a>
+                    <a style={{ cursor: "not-allowed", opacity: "0.6" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" ></i></a>
 
             )
         },
     ];
+    const columnsTextArea = [
+        {
+            title: 'Telefon raqam yoki email',
+            dataIndex: 'data',
+            key: 'address',
+            width: 300,
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    {
+                        data.phone === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    }
+                    {
+                        data.email === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.email}</span>
+                    }
+
+                </div>
+
+            ),
+        },
+        {
+            title: 'Taklif',
+            dataIndex: 'offer',
+            key: 'address',
+            width: 600,
+        },
+        {
+            title: ' Taklif sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+    ];
+
     const dataStatus = [
         {
             id: 1,
@@ -324,7 +390,7 @@ function ApplicationLists() {
                                     {
                                         user?.role === "seller" ?
                                             (<>
-                                                <form className='row row-gap-3 gap-4 mx-auto'>
+                                                <form className='row row-gap-3 border p-3 gap-4 mx-auto'>
                                                     <label className='h4 ' style={{ color: "orange" }} >
                                                         Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
                                                         <strong>!Eslatma: Xisobingizda kamida 10 000 so’m bo’lishi kerak.</strong>
@@ -356,6 +422,22 @@ function ApplicationLists() {
                                                             </Button>
                                                     }
 
+                                                </form>
+                                                <form className='border mt-3 rounded p-3' onSubmit={getItemsTextItmes} >
+                                                    <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
+                                                    <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflaringizni yuboring"></textarea>
+                                                    <div className='w-100 d-flex justify-content-end'>
+                                                        <button className="btn-success btn mt-3" type='submit' style={{ height: "40px", width: "120px" }}><span className='fs-4'>
+                                                            {
+                                                                loading ?
+                                                                    "Yuborish"
+                                                                    :
+                                                                    <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
+                                                                        <span className="visually-hidden">Loading...</span>
+                                                                    </div>
+                                                            }
+                                                        </span></button>
+                                                    </div>
                                                 </form>
                                                 <h4 className='py-4'>Yuborilgan Arizalar</h4>
                                                 <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} />
@@ -389,6 +471,19 @@ function ApplicationLists() {
                             </div>
                         </div>
                     </div>
+                    {
+                        user?.access==="admin" ?
+                        <div className='px-4'>
+                        <div className='my-5 bg-white mx-auto p-4 container'>
+                            <h4 className='text-center mb-4'>Kelib tushgan takliflar</h4>
+                            <Table scroll={{ x: 1150 }} dataSource={data1}   columns={columnsTextArea}
+                                pagination={false} />
+                            <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                onChange={ProfileUsersTextItems} />
+                        </div>
+                    </div>
+                    :<></>
+                    }
                 </div>
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
                     <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>

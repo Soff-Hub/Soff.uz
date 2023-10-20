@@ -6,6 +6,7 @@ import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
 import  Router  from 'next/router';
 import useCart from '~/hooks/useCart';
+import Image from 'next/image';
 
 
 function FormCheckoutInformation() {

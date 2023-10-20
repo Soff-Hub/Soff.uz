@@ -140,7 +140,7 @@ function OrdersLists() {
             title: 'Buyurtma kategoriya',
             dataIndex: 'title',
             key: 'title',
-            width:350
+            width: 350
         },
         {
             title: 'Narx',
@@ -202,7 +202,11 @@ function OrdersLists() {
                                         </select>
 
                                         <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e) => setDate(e)} />
-                                        <input type='search' className='form-control rounded col-md-12 ' placeholder="Qidiruv" onInput={(e) => setSerach(e.target.value)} />
+                                        <label className='form-label border w-100 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+
+                                        </label>
                                     </div>
                                     {
                                         user?.role === "admin" ?

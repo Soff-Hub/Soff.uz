@@ -5,6 +5,7 @@ import { Modal, Table } from 'antd';
 import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
+import Image from 'next/image';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -125,7 +126,11 @@ function Notifications() {
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
                                     <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{ backgroundColor: "GrayText" }} >Sotuvchilar soni: {pageCount} ta</span>
-                                    <input type='search' className='form-control rounded bg-white mb-3 ' style={{ backgroundColor: "#F1F1F1" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                    <label className='form-label border w-100 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                    <input type='search' className='form-control' style={{border:"none"}}   placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                    <span className='px-4'><i className='fa-solid fa-search '></i></span>
+
+                                    </label>
                                     <Table scroll={{ x: 1150 }} dataSource={data} columns={columns} pagination={false}
                                     />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />

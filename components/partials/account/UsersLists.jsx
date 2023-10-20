@@ -144,7 +144,11 @@ function AccountUserPages() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                    <label className='form-label border col-md-5 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+
+                                        </label>
                                         <select className='form-select fs-3 py-3   col-md-4' onChange={(e) => setSelectValStatus(e.target.value)}>
                                             <option className='fs-3' value="" >Barcha holat</option>
                                             <option className='fs-3' value="new">Faol emas</option>
