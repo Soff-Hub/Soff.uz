@@ -91,7 +91,7 @@ function FormCheckoutInformation() {
                             onChange={handleRadioChange}
                         />
                     </label>
-                    <Image
+                    <img
                         src="/static/img/click.png"
                         alt="payme"
                         width="100%"

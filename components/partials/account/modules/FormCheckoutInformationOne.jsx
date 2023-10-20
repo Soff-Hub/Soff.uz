@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
 import { useRouter } from 'next/router';
-import Image from 'next/image';
 
 
 function FormCheckoutInformationOne() {
@@ -69,7 +68,7 @@ function FormCheckoutInformationOne() {
                             onChange={handleRadioChange}
                         />
                     </label>
-                    <Image
+                    <img
                         src="/static/img/click.png"
                         alt="payme"
                         width="100%"

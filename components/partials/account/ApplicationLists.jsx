@@ -197,7 +197,7 @@ function ApplicationLists() {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                <Image src={image} width={74} height={46} className='rounded-3 mb-2' />
+                                <img src={image} width={74} height={46} className='rounded-3 mb-2' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
@@ -280,7 +280,7 @@ function ApplicationLists() {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                <Image src={image} width={74} height={46} className='rounded-3 mb-2' />
+                                <img src={image} width={74} height={46} className='rounded-3 mb-2' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>

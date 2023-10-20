@@ -42,7 +42,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                            <Image src={image} width={54} height={54} />
+                            <img src={image} width={54} height={54} />
                             :
                             <span className='fs-4'><i className="  fa-2x fa-solid fa-circle-user"></i></span>
                     }

@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { Modal, Table } from 'antd';
-import Image from 'next/image';
 
 
 
@@ -70,7 +69,7 @@ const columns = [
             <div>
                 {
                     image ?
-                        <Image src={image} width={74} height={46} className='rounded-3 mb-2' />
+                        <img src={image} width={74} height={46} className='rounded-3 mb-2' />
                         :
                         <i className="fa-solid fa-image fa-2x"></i>
                 }

@@ -10,7 +10,7 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
                 <div className="ps-wrapper">
                     {product?.document?.images?.length > 0 ? (
                         product?.document?.images?.map((item,i) => (
-                            <Image
+                            <img
                             key={i}
                                 src={item?.image_url}
                                 alt="document"

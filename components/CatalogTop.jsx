@@ -37,13 +37,13 @@ const CatalogTop = () => {
                                             className="ps-block__thumbnail"
                                             style={{ overflow: 'hidden' }}>
                                             {category?.image ? (
-                                                <Image
+                                                <img
                                                     className="category-image"
                                                     src={category.image}
                                                     alt="soff category image"
                                                 />
                                             ) : (
-                                                <Image src="/static/img/faq-folder-5557635-4639344.webp" />
+                                                <img src="/static/img/faq-folder-5557635-4639344.webp" />
                                             )}
                                         </div>
                                         <div className="ps-block__content">

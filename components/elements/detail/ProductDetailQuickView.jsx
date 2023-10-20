@@ -41,7 +41,7 @@ const ProductDetailQuickView = ({ product }) => {
                     <div className="ps-wrapper">
                         {img?.length > 0
                             ? img?.map((item, i) => (
-                                  <Image
+                                  <img
                                       key={i}
                                       src={item?.image_url}
                                       alt="document"
