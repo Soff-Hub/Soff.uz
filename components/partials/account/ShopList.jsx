@@ -5,6 +5,7 @@ import { Modal, Table } from 'antd';
 import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
+import Image from 'next/image';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -41,7 +42,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                            <img src={image} width={54} height={54} />
+                            <Image src={image} width={54} height={54} />
                             :
                             <span className='fs-4'><i className="  fa-2x fa-solid fa-circle-user"></i></span>
                     }

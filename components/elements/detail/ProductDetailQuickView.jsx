@@ -1,5 +1,4 @@
 import React from 'react';
-import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
@@ -8,6 +7,7 @@ import { useState } from 'react';
 import Router from 'next/router';
 import { useEffect } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
+import Image from 'next/image';
 
 const ProductDetailQuickView = ({ product }) => {
     const [tag, setTag] = useState([]);
@@ -41,7 +41,7 @@ const ProductDetailQuickView = ({ product }) => {
                     <div className="ps-wrapper">
                         {img?.length > 0
                             ? img?.map((item, i) => (
-                                  <img
+                                  <Image
                                       key={i}
                                       src={item?.image_url}
                                       alt="document"
