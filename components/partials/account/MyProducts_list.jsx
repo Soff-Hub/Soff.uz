@@ -19,7 +19,6 @@ import { Tabs } from 'antd';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 import Axios from 'axios';
 import Router from 'next/router';
-import Image from 'next/image';
 const { TabPane } = Tabs;
 
 function MyProductsLists() {
@@ -280,7 +279,7 @@ function MyProductsLists() {
                 <div >
                     {
                         poster_url ?
-                            <Image key={poster_url} className='rounded-3' src={poster_url} width={54} height={54} />
+                            <img key={poster_url} className='rounded-3' src={poster_url} width={54} height={54} />
                             :
                             <i key={poster_url} className="fa-solid fa-image fa-2x"></i>
                     }
