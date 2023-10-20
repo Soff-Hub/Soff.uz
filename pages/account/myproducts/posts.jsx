@@ -307,12 +307,10 @@ const Posts = () => {
                     <div
                         className="row  w-100 gap-3 pt-5"
                         style={{ alignItems: 'flex-start' }}>
-                       <div className='col-md-8 d-flex'>
-                        <h4 className="m-0 p-0">Yangi mahsulot </h4>
-                       <h5 className="p-0 col-md-9 fs-4 mx-auto  pb-4 text-warning fw-semibold lh-base"> <i className="fa-solid fa-triangle-exclamation"></i> Hurmatli Sotuvchi mahsulot yuklayotganingizda mahsulot o'zingizni shaxsiy mulkingiz ekanligiga ishonch hosil qiling. Aks holda o'sha mahsulotingizni 
+                        
+                       <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base"> <i className="fa-solid fa-triangle-exclamation"></i> Hurmatli Sotuvchi mahsulot yuklayotganingizda mahsulot o'zingizni shaxsiy mulkingiz ekanligiga ishonch hosil qiling. Aks holda o'sha mahsulotingizni 
                         so'mmasi tashab berilmasligi va profilingiz o'chirilib yuborilishi mumkin. E'tiborli bo'ling!
                         </h5>
-                       </div>
 
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
@@ -331,6 +329,11 @@ const Posts = () => {
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
                             className=" col-md-8 pb-5">
+                                  <div className="row   mt-3">
+                                <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                <h4 className=" p-0">Yangi mahsulot </h4>
+                            </div>
+                            </div>
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     <p>Mahsulot nomi: *</p>
@@ -580,6 +583,7 @@ const Posts = () => {
                                             setFullData(data);
                                         }}
                                         editorLoaded={editorLoaded}
+                                        
                                     />
                                 </div>
                             </div>
