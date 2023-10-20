@@ -346,7 +346,7 @@ function MyProductsLists() {
             render: (id) => <div >
                 <a data-bs-target="#staticBackdropView" data-bs-toggle="modal"><i className="fa-solid fa-eye text-success-emphasis mx-2" onClick={() => handleClickView(data.find(item => item.id === id))}></i></a>
                 {
-                    data.some(el => el.id == id && el.status === 'moderation') ?
+                    data.some(el => el.id == id && el.data_status?.status === 'moderation') ?
                         <Link href={"#"}>
                             <a>
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
