@@ -352,7 +352,7 @@ function MyProductsLists() {
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
                             </a>
                         </Link> :
-                        data.some(el => el.id == id && el.status === 'approved') ?
+                        data.some(el => el.id == id && el.data_status?.status === 'approved') ?
                             <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal" onClick={() => handleClickIdEditModal(id)} >
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                             </a>
