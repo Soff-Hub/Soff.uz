@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React, { useEffect, useRef, useState } from 'react';
 
 const ThumbnailDefault = ({ product, vertical = true }) => {
@@ -9,7 +10,7 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
                 <div className="ps-wrapper">
                     {product?.document?.images?.length > 0 ? (
                         product?.document?.images?.map((item,i) => (
-                            <img
+                            <Image
                             key={i}
                                 src={item?.image_url}
                                 alt="document"
