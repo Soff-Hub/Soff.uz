@@ -563,6 +563,24 @@
     }
 }
 
+@media screen and (max-width: 2592px) {
+    .max-class{
+        padding: 15px !important;
+    }
+    .ps-product--detail{
+        .ps-product__shopping {
+            .ps-btn {
+                font-weight: 600;
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+                vertical-align: top;
+                max-height: 50px;
+                font-size: 18px;
+            }
+        }
+    }
+}
+
 .ps-product--detail {
     margin-bottom: 5rem;
 
@@ -871,7 +889,7 @@
         border-bottom: 1px solid #e1e1e1;
 
         > * {
-            margin-right: 30px;
+            margin-right: 18px;
         }
 
         figure {
