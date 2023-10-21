@@ -472,7 +472,7 @@ function ApplicationLists() {
                         </div>
                     </div>
                     {
-                        user?.access==="admin" ?
+                        user?.role==="admin" ?
                         <div className='px-4'>
                         <div className='my-5 bg-white mx-auto p-4 container'>
                             <h4 className='text-center mb-4'>Kelib tushgan takliflar</h4>
