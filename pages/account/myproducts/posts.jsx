@@ -308,8 +308,8 @@ const Posts = () => {
                         className="row  w-100 gap-3 pt-5"
                         style={{ alignItems: 'flex-start' }}>
                         
-                       <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base"> <i className="fa-solid fa-triangle-exclamation"></i> Hurmatli Sotuvchi mahsulot yuklayotganingizda mahsulot o'zingizni shaxsiy mulkingiz ekanligiga ishonch hosil qiling. Aks holda o'sha mahsulotingizni 
-                        summasi tashab berilmasligi va profilingiz bloklab qo'yilishi  mumkin. E'tiborli bo'ling!
+                       <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base"> <i className="fa-solid fa-triangle-exclamation"></i> Hurmatli Sotuvchi mahsulot yuklayotganingizda mahsulot o'zingizni shaxsiy mahsulotingiz ekanligiga ishonch hosil qiling. Aks holda o'sha mahsulotingizni 
+                        sotuvda ko'rinmasligi va profilingiz bloklab qo'yilishi  mumkin. E'tiborli bo'ling!
                         </h5>
 
                         <div
