@@ -309,7 +309,7 @@ const Posts = () => {
                         style={{ alignItems: 'flex-start' }}>
                         
                        <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base"> <i className="fa-solid fa-triangle-exclamation"></i> Hurmatli Sotuvchi mahsulot yuklayotganingizda mahsulot o'zingizni shaxsiy mulkingiz ekanligiga ishonch hosil qiling. Aks holda o'sha mahsulotingizni 
-                        so'mmasi tashab berilmasligi va profilingiz o'chirilib yuborilishi mumkin. E'tiborli bo'ling!
+                        summasi tashab berilmasligi va profilingiz bloklab qo'yilishi  mumkin. E'tiborli bo'ling!
                         </h5>
 
                         <div
