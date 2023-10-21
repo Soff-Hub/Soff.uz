@@ -1,3 +1,4 @@
+// @type {import('next').NextConfig}
 const nextSettings = {
     optimizeFonts: false,
     // disable eslint
@@ -7,11 +8,22 @@ const nextSettings = {
     // Change your site title here
     env: {
         title: 'Soff',
-        titleDescription: 'Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.',
+        titleDescription:
+            'Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.',
     },
     experimental: {
         serverActions: true,
-      },
+    },
+    images: {
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'api.soff.uz',
+                port: '',
+                pathname: '/media/banner',
+            },
+        ],
+    },
 };
 
 module.exports = nextSettings;

@@ -101,7 +101,7 @@ function ElectronicTopCategories() {
                                 <a>
                                     Ko'proq
                                     <i
-                                        class="fa-solid fa-angles-right fa-beat-fade"
+                                        className="fa-solid fa-angles-right fa-beat-fade"
                                         style={{
                                             fontSize: '13px',
                                             paddingTop: '1px',

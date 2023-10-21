@@ -22,7 +22,7 @@ const CaptchaForm = () => {
     return (
         <div>
             <form action="?" method="POST">
-                <div class="g-recaptcha" data-sitekey="6LdCLZ8oAAAAAMLPzS3Fwm2FBvOHBTXSTXbQq4xt"></div>
+                <div className="g-recaptcha" data-sitekey="6LdCLZ8oAAAAAMLPzS3Fwm2FBvOHBTXSTXbQq4xt"></div>
                 <br />
                 <input type="submit" value="Submit" />
             </form>

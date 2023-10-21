@@ -6,7 +6,6 @@ import HomeElectronicsPage from './home/electronic'
 import { baseUrl } from '~/repositories/Repository';
 
 const HomepageDefaultPage = ({ category }) => {
-    console.log('category-list', category);
     return (
         <PageContainer title="Soff - barcha ma'lumotlar bazasi">
             <HomeElectronicsPage category={category?.results} />

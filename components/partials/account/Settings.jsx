@@ -409,7 +409,7 @@ function Notifications() {
                                                             handleCopyClick
                                                         }>
                                                         <i
-                                                            class={`${copyIcon}`}></i>
+                                                            className={`${copyIcon}`}></i>
                                                     </button>
                                                 </div>
                                             </div>
