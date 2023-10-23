@@ -1,4 +1,4 @@
-import Repository, { baseUrl, baseUrlProfie } from './Repository';
+import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from './Repository';
 
 class GetRepository {
     async getSellerDashbord(token) {
@@ -477,6 +477,25 @@ class GetRepository {
         }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getProfileArizaTaklif(page, token) {
+        const endPoint = `seller/offer-list/?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
