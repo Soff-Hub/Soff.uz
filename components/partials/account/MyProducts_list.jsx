@@ -331,7 +331,7 @@ function MyProductsLists() {
                         datastatus?.status === 'cancelled' ?
                             (
                                 <Tooltip title={datastatus?.reason}>
-                                    <span style={{cursor:"pointer"}}><i className="fa-solid fa-circle-question text-danger"></i> Bekor qilingan </span>
+                                    <span style={{ cursor: "pointer" }}><i className="fa-solid fa-circle-question text-danger"></i> Bekor qilingan </span>
                                 </Tooltip>
                             ) :
                             <></>
@@ -357,7 +357,14 @@ function MyProductsLists() {
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                             </a>
                             :
-                            <i style={{ opacity: 0.7, cursor: "not-allowed" }} className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
+                            data.some(el => el.id == id && el.data_status?.status === 'cancelled') ?
+                                <Link href={"#"}>
+                                    <a>
+                                        <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
+                                    </a>
+                                </Link>
+                                :
+                                <></>
 
                 }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
@@ -512,13 +519,13 @@ function MyProductsLists() {
                                 {
                                     !loading ?
                                         <div className="ps-product--detail ps-product--fullwidth">
-                                            
+
                                             <div className="ps-product__header ">
                                                 <ThumbnailDefault product={View} />
                                                 <div className="ps-product__info">
-                                                <div className='mb-4'>
-                                                <strong className='text-danger pb-5'>{View?.reason}</strong>
-                                                </div>
+                                                    <div className='mb-4'>
+                                                        <strong className='text-danger pb-5'>{View?.reason}</strong>
+                                                    </div>
                                                     <header>
                                                         <h1>{View?.title}</h1>
                                                         <h4>
@@ -555,7 +562,7 @@ function MyProductsLists() {
                                                             <span className='mx-2' key={item.id}> #{item?.name} </span>
                                                         ))}</p>
                                                     </div>
-                                                    
+
                                                 </div>
                                             </div>
                                             <div className="ps-product__content ps-tab-root">
