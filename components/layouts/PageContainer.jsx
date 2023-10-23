@@ -160,7 +160,9 @@ const PageContainer = ({
     return (
         <>
             <Head>
-                <title>{titleView}</title>
+                <title>Soff - barcha ma'lumotlar bazasi
+                    
+                </title>
             </Head>
             {header}
             <div>

@@ -77,7 +77,7 @@ function PanelCategories({
                         <div
                             className="accordion-item"
                             style={{ backgroundColor: '#fffcfced' }}>
-                            <Link href={`/category/${item.id}`}>
+                            {/* <Link href={`/category/${item.id}`}> */}
                                 <a>
                                     <h2
                                         className="accordion-header"
@@ -93,14 +93,14 @@ function PanelCategories({
                                                 handleAccordionClick(
                                                     i,
                                                     item.slug
-                                                ),
-                                                handleDrawerClose()
+                                                )
+                                                // handleDrawerClose()
                                             )}>
                                             {item.name}
                                         </button>
                                     </h2>
                                 </a>
-                            </Link>
+                            {/* </Link> */}
                             <div
                                 id={`collapse-${i}`}
                                 className={`accordion-collapse collapse ${
