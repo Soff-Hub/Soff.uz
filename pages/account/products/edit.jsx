@@ -49,15 +49,15 @@ const PostsProductsEdit = () => {
     }
 
     async function GetItemsTag() {
-        const ItemsData = await MediaRepository.getTagItmes();
-        if (ItemsData?.results) {
-            setTagItems(ItemsData.results);
+        const ItemsData = await MediaRepository.getTagItmesAktive();
+        if (ItemsData) {
+            setTagItems(ItemsData);
         }
     }
     async function GetItemsTagAktivmas() {
         const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access);
-        if (ItemsData?.results) {
-            setTegProdcutsLists(ItemsData.results);
+        if (ItemsData) {
+            setTegProdcutsLists(ItemsData);
         }
     }
 
@@ -117,7 +117,6 @@ const PostsProductsEdit = () => {
 
     useEffect(() => {
         GetItemsCategoryLists();
-        GetItemsTagAktivmas();
         GetItemsTagAktivmas();
     }, [user?.access]);
 

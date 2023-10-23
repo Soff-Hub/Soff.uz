@@ -48,9 +48,9 @@ const PostsMyProducts = () => {
     }
 
     async function GetItemsTag() {
-        const ItemsData = await MediaRepository.getTagItmes();
-        if (ItemsData?.results) {
-            setTagItems(ItemsData.results);
+        const ItemsData = await MediaRepository.getTagItmesAktive();
+        if (ItemsData) {
+            setTagItems(ItemsData);
         }
     }
 
