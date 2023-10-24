@@ -11,6 +11,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import MenuCategory from '~/components/elements/menu/MenuCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { Category_Lists, TopCategory_Lists } from '~/store/auth/action';
+import NextImageCard from '~/components/nextImagecard';
 
 const HeaderElectronic = () => {
     const {
@@ -56,10 +57,13 @@ const HeaderElectronic = () => {
                     <div className="header__content-left">
                         <Link href="/">
                             <a className="ps-logo">
-                                <img
+                                {/* <img
                                     src="/static/img/soff/soff_green_white.png"
                                     alt="soff"
-                                />
+                                /> */}
+                            <NextImageCard
+                             url="/static/img/soff/soff_green_white.png" clasS='logoo' width='200px' height='60px' />
+
                             </a>
                         </Link>
                         <div className="menu--product-categories">

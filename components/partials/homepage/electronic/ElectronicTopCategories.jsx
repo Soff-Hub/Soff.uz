@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import CollectionRepository from '~/repositories/CollectionRepository';
+import NextImage from '~/components/nextImage';
+import NextImageCard from '~/components/nextImagecard';
 
 function ElectronicTopCategories() {
     const [category, getCategory] = useState([]);
@@ -47,7 +49,7 @@ function ElectronicTopCategories() {
                                                     justifyContent: 'center',
                                                     overflow: 'hidden',
                                                 }}>
-                                                <div
+                                                {/* <div
                                                     style={{
                                                         backgroundImage: `url(${category.image})`,
                                                         backgroundRepeat:
@@ -57,7 +59,8 @@ function ElectronicTopCategories() {
                                                         backgroundPosition:
                                                             'center',
                                                     }}
-                                                    className="yaxshi-categoriyalar-image"></div>
+                                                    className="yaxshi-categoriyalar-image"></div> */}
+                                                    <NextImageCard url={category.image} clasS='yaxshi-categoriyalar-image' width='200px' height='170px' />
                                             </div>
                                             <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
                                                 <h4 className="text-truncate text-uppercase">

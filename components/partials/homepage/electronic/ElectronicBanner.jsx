@@ -4,6 +4,7 @@ import MediaRepository from '~/repositories/MediaRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { Category } from '~/store/auth/action';
 import Image from 'next/image';
+import NextImage from '~/components/nextImage';
 
 function ElectronicBanner() {
 
@@ -37,7 +38,7 @@ function ElectronicBanner() {
                             { bannerItem?.[0]?.image ? (
                                 <Link href={`${bannerItem?.[0]?.url}`}>
                                     <a>
-                                        <img
+                                        {/* <img
                                             style={{
                                                 width: '100%',
                                                 height: '370px',
@@ -46,13 +47,8 @@ function ElectronicBanner() {
                                                 backgroundRepeat: 'no-repeat',
                                                 backgroundSize: 'cover',
                                             }}
-                                        />
-                                         {/* <Image
-                                            src={`/${bannerItem[0]?.image}`}
-                                            width={500}
-                                            height={500}
-                                            alt="Soff.uz banner"
                                         /> */}
+                                        <NextImage url={bannerItem[0]?.image} width='800px' height='370px' />
                                     </a>
                                 </Link>
                             ) : (
@@ -85,19 +81,20 @@ function ElectronicBanner() {
                             <div className="banner-right">
                                 <Link href={`${bannerItem?.[1].url}`}>
                                     <a className="ps-collection">
-                                        <div
+                                        {/* <div
                                             style={{
                                                 height: '170px',
                                                 backgroundImage: `url(${bannerItem?.[1]?.image})`,
                                                 backgroundPosition: 'center',
                                                 backgroundRepeat: 'no-repeat',
                                                 backgroundSize: 'cover',
-                                            }}></div>
+                                            }}></div> */}
+                                            <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' />
                                     </a>
                                 </Link>
                                 <Link href={`${bannerItem?.[2].url}`}>
                                     <a className="ps-collection">
-                                        <div
+                                        {/* <div
                                             style={{
                                                 height: '170px',
                                                 backgroundImage: `url(${bannerItem?.[2]?.image})`,
@@ -106,7 +103,8 @@ function ElectronicBanner() {
                                                 backgroundSize: 'cover',
                                             }}>
                                             {' '}
-                                        </div>
+                                        </div> */}
+                                        <NextImage url={bannerItem?.[2]?.image} width='400px' height='170px' />
                                     </a>
                                 </Link>
                             </div>
