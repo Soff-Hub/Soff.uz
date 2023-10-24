@@ -302,7 +302,7 @@ const PostsProductsEdit = () => {
                             <div className="row">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
                                     <p>Holat to'g'risida sabab: *</p>{' '}
-                                    <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                    <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
                                         <i
                                             style={{ cursor: 'pointer' }}
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
