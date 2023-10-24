@@ -140,8 +140,6 @@ const ProductCategoryScreen = () => {
                                 pageSize={16}
                                 dataCount={count}
                                 setDataCount={setCount}
-                                chaildId={chaildId}
-                                parentId={parentId}
                             />
                         </div>
                     </div>

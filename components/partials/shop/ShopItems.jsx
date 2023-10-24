@@ -13,10 +13,7 @@ const ShopItems = ({
     pageSize,
     data,
     dataCount,
-    setDataCount,
-    chaildSlug,
-    parentSlug
-
+    setDataCount
 }) => {
     const Router = useRouter();
     const { query } = Router;
@@ -105,8 +102,9 @@ const ShopItems = ({
     }, [slug])
 
     const handlePagination = async (e) => {
+        console.log('pagination', e);
         setPage(e);
-        if (chaildSlug) {
+        if (chaildId) {
             const respons = await ProductRepository.getFilderProduct(
                 e,
                 slug,
@@ -124,7 +122,7 @@ const ShopItems = ({
             } else {
                 setLoad(true);
             }
-        } else if (parentSlug) {
+        } else if (parentId) {
             const respons = await ProductRepository.getFilderProduct(
                 e,
                 null,

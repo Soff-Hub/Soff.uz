@@ -2,6 +2,7 @@ import React from 'react';
 import LazyLoad from 'react-lazyload';
 import { formatCurrency } from '~/utilities/product-helper';
 import Link from 'next/link';
+import NextImageCard from '~/components/nextImagecard';
 
 export default function useProduct() {
     return {
@@ -10,15 +11,16 @@ export default function useProduct() {
                 <>
                     <LazyLoad>
                         {payload?.poster_url ? (
-                            <div style={{ overflow: 'hidden' }} className='responsive-image-card'>
-                                <div
+                            <div style={{ overflow: 'hidden' }} className='responsive-image-card text-center'>
+                                {/* <div
                                     style={{
                                         backgroundImage: `url(${payload?.poster_url})`,
                                         backgroundSize: 'contain',
                                         backgroundRepeat: 'no-repeat',
                                         backgroundPosition: 'center',
                                     }}
-                                    className="products-image1 m-0"></div>
+                                    className="products-image1 m-0"></div> */}
+                                    <NextImageCard url={payload?.poster_url} clasS='products-image1 m-0' width='250px' height='170px' />
                             </div>
                         ) : (
                             <div

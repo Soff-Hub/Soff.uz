@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import CollectionRepository from '~/repositories/CollectionRepository';
+import NextImageCard from '~/components/nextImagecard';
 
 const FooterSecond = ({ classes }) => {
 
@@ -94,76 +95,36 @@ const FooterSecond = ({ classes }) => {
                         <p>
                             Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.
                         </p>
-                        {/* <aside className="widget widget_footer widget_contact-us">
-                            <ul
-                                style={{
-                                    margin: '0',
-                                    padding: '0',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '10px',
-                                }}
-                                className="footer-right-ul-social">
-                                <li>
-                                    <Link href="#">
-                                        <a
-                                            target="_blank"
-                                            className="footer-left-a">
-                                            <i className="fa-brands fa-facebook fs-1"></i>
-                                        </a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#">
-                                        <a
-                                            target="_blank"
-                                            className="footer-left-a">
-                                            <i className="fa-brands fa-square-instagram fs-1"></i>
-                                        </a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#">
-                                        <a
-                                            target="_blank"
-                                            className="footer-left-a">
-                                            <i className="fa-brands fa-telegram fs-1"></i>
-                                        </a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href="#">
-                                        <a
-                                            target="_blank"
-                                            className="footer-left-a">
-                                            <i className="fa-brands fa-square-x-twitter fs-1"></i>
-                                        </a>
-                                    </Link>
-                                </li>
-                            </ul>
-                        </aside> */}
+                     
                         <aside className="widget widget_footer widget_contact-us">
-                            <img
+                            {/* <img
                                 src="/static/img/payment-method/click_logo.png"
                                 alt="martfury"
                                 style={{ height: '35px', marginRight: '20px' }}
-                            />
-                            <img
+                            /> */}
+                            <NextImageCard  url="/static/img/payment-method/click_logo.png" clasS='category-image mt-1' width='75rem' height='35px' />
+                            <NextImageCard  url="/static/img/payment-method/payme_logo.png" clasS='category-image ms-2' width='75rem' height='25px' />
+
+                            {/* <img
                                 src="/static/img/payment-method/payme_logo.png"
                                 alt="martfury"
                                 style={{ height: '25px' }}
-                            />
+                            /> */}
                         </aside>
                     </div>
                 </div>
                 <div className="ps-footer__copyright">
                     <p>
-                        &copy; {vaqt.getFullYear()} soff.uz | Barcha huquqlar himoyalangan.
+                        &copy; 2023 soff.uz | Barcha huquqlar himoyalangan.
                     </p>
                     <aside className="widget widget_footer widget_contact-us d-flex align-items-center" >
                         <p style={{
                             marginBottom: '0'
-                        }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'><img className='footer-company-logo d-block ps-2 rounded' src="/static/img/soffhub.png" alt="soff hub logo" /></a>
+                        }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'>
+                            {/* <img className='footer-company-logo d-block ps-2 rounded' src="/static/img/soffhub.png" alt="soff hub logo" /> */}
+                            <NextImageCard url="/static/img/soffhub.png" clasS='footer-company-logo d-block ps-2 rounded' width='80px' height='60px' />
+                            
+                            </a>
                     </aside>
                 </div>
             </div>

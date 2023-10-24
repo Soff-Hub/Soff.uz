@@ -3,6 +3,7 @@ import Link from 'next/link';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import NextImageCard from './nextImagecard';
 
 const CatalogTop = () => {
     const [data, setData] = useState(null);
@@ -37,11 +38,13 @@ const CatalogTop = () => {
                                             className="ps-block__thumbnail"
                                             style={{ overflow: 'hidden' }}>
                                             {category?.image ? (
-                                                <img
-                                                    className="category-image"
-                                                    src={category.image}
-                                                    alt="soff category image"
-                                                />
+                                                // <img
+                                                //     className="category-image"
+                                                //     src={category.image}
+                                                //     alt="soff category image"
+                                                // />
+                            <NextImageCard url={category.image} clasS='category-image' width='280px' height='280px' />
+
                                             ) : (
                                                 <img src="/static/img/faq-folder-5557635-4639344.webp" />
                                             )}
