@@ -17,6 +17,7 @@ const { TabPane } = Tabs;
 import { Tabs } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import Router from 'next/router';
+import NextImageCard from '~/components/nextImagecard';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -162,7 +163,7 @@ function ProductsLists() {
                 <div>
                     {
                         poster_url ?
-                            <img src={poster_url} width={54} className='rounded' height={54} />
+                            <NextImageCard url={poster_url} clasS='rounded-3 mb-2' width='54px' height='54px' />
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }
