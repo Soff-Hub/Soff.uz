@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Button, Tooltip } from 'antd';
 import { BeatLoader } from 'react-spinners';
 
 

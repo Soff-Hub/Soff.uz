@@ -10,6 +10,7 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
+import NextImageCard from '~/components/nextImagecard';
 
 function CategoryLists() {
     const [data, setData] = useState([]);
@@ -175,7 +176,7 @@ function CategoryLists() {
                 <div>
                     {
                         poster_url ?
-                            <a href={poster_url} target='blank'><img src={poster_url} width={54} height={54} className='rounded-3' /></a>
+                            <a href={poster_url} target='blank'> <NextImageCard url={poster_url} clasS='rounded-3 mb-2' width='54px' height='54px' /></a>
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }

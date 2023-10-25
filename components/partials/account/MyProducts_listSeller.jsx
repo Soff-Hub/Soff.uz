@@ -7,6 +7,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
 import axios from 'axios';
+import NextImageCard from '~/components/nextImagecard';
 
 
 function MyProductsListsSeller() {
@@ -124,7 +125,7 @@ function MyProductsListsSeller() {
                 <div >
                     {
                         poster_url ?
-                            <img className='rounded-3' src={poster_url} width={54} height={54} />
+                            <NextImageCard url={poster_url} clasS='rounded-3 mb-2' width='54px' height='54px' />
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }

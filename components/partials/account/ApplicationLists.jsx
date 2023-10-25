@@ -7,6 +7,7 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CalculateTimeDifference from './DateFormatter';
+import NextImageCard from '~/components/nextImagecard';
 
 
 
@@ -16,19 +17,24 @@ function ApplicationLists() {
     const [data1, setData2] = useState([]);
     const [dataCat, setDataCat] = useState(null);
     const [dataAdmin, setDataAdmin] = useState([]);
+    const [dataAdmintaklif, setDataAdminTaklif] = useState([]);
     const [dataPrice, setDataPrice] = useState(null);
     const [dataCard, setDataCard] = useState(null);
     const [dataCardModal, setDataCardModal] = useState(null);
     const [dataCardModalStatus, setDataCardModalStatus] = useState(null);
     const [dataCardModalImg, setDataCardModalImg] = useState(null);
     const [dataCardModalDes, setDataCardModalDes] = useState(null);
+    const [dataCardModalDesID, setDataCardModalDesID] = useState(null);
     const [profile, setProfile] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
     const [pageCount, setPageCount] = useState(0)
+    const [pageCount1, setPageCount1] = useState(0)
+    const [pageCount2, setPageCount2] = useState(0)
     const [currPage, setCurrPage] = useState(1)
     const [textItems, setTextItems] = useState(null)
+    const [textItemsId, setTextItemsId] = useState(null)
     const [loading, setLoading] = useState(true)
-    
+
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -40,15 +46,38 @@ function ApplicationLists() {
         const ItemsData = await GetRepository.getTagTaklifLists(page, user?.access);
         if (ItemsData?.results) {
             setData2([...ItemsData.results]);
-            setPageCount([ItemsData?.count]);
+            setPageCount1(ItemsData?.count);
         }
+        getItemsSellerTaklif(currPage)
+    }
+    async function ProfileUsersTextItem() {
+        if (dataCardModalDesID) {
+            const ItemsData = await PatchRepository.getTextItemsUpdate({ description: dataCardModalDesID }, textItemsId, user?.access);
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+            getItemsSellerTaklif(currPage)
+            ProfileUsersTextItems(currPage)
+            setDataCardModalDesID(null)
+        }
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
+        }
+
+
     }
 
     async function getItemsSeller(page) {
         const Items = await GetRepository.getProfileAriza(page, user?.access);
         if (Items?.results) {
             setData([...Items.results]);
-            setPageCount([Items?.count]);
+            setPageCount(Items?.count);
         }
     }
 
@@ -62,6 +91,14 @@ function ApplicationLists() {
         const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access);
         if (Items?.results) {
             setDataAdmin([...Items.results]);
+        }
+    }
+
+    async function getItemsSellerTaklif(page) {
+        const Items = await GetRepository.getProfileArizaTaklif(page, user?.access);
+        if (Items?.results) {
+            setDataAdminTaklif([...Items.results]);
+            setPageCount2(Items?.count);
         }
     }
 
@@ -149,6 +186,7 @@ function ApplicationLists() {
             content: `Sizning taklifingiz yuborildi`,
         });
         modal.update
+        ProfileUsersTextItems(currPage)
         setLoading(true)
         e.target.reset()
 
@@ -158,14 +196,11 @@ function ApplicationLists() {
         getItemsSeller(pageNum, dataCat)
     }
 
+    const dataDescripton = data1.find(item => (item?.id == textItemsId && item))
 
-    useEffect(() => {
-        getItemsSellerAdmin(currPage, dataCat);
-        getItemsSeller(currPage);
-        ProfileUsers();
-        getItemsSellerCardList()
-        ProfileUsersTextItems(currPage)
-    }, [currPage, dataCat])
+
+
+
 
 
     const columns = [
@@ -197,7 +232,7 @@ function ApplicationLists() {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                <img src={image} width={74} height={46} className='rounded-3 mb-2' />
+                                <NextImageCard url={image} clasS=' rounded-3 mb-2' width='74px' height='46px' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
@@ -280,7 +315,7 @@ function ApplicationLists() {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                <img src={image} width={74} height={46} className='rounded-3 mb-2' />
+                                 <NextImageCard url={image} clasS='rounded-3 mb-2' width='74px' height='46px' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
@@ -348,12 +383,58 @@ function ApplicationLists() {
             title: 'Taklif',
             dataIndex: 'offer',
             key: 'address',
-            width: 600,
+            width: 550,
+        },
+        {
+            title: 'Yuborilgan javobi',
+            dataIndex: 'description',
+            key: 'address',
+            width: 350,
+            render: (data) => (
+                data ? <span>{data}</span> :
+                    <span>Ko'rib chiqilmoqda...</span>
+            )
         },
         {
             title: ' Taklif sana',
             dataIndex: 'created_at',
             key: 'created_at',
+            width: 350,
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Taklif javobi',
+            dataIndex: 'id',
+            key: 'address',
+            width: 150,
+            render: (id) => (
+                <span style={{ cursor: "pointer" }} data-bs-target="#exampleModalToggleEditAdminSellerID" data-bs-toggle="modal" ><i className='fa-solid fa-edit mx-5' onClick={() => setTextItemsId(id)}></i></span>
+            )
+        },
+    ];
+    const columnsTextAreaseller = [
+
+        {
+            title: 'Taklif',
+            dataIndex: 'offer',
+            key: 'address',
+            width: 600,
+        },
+        {
+            title: 'Taklif javobi',
+            dataIndex: 'description',
+            key: 'address',
+            width: 350,
+            render: (data) => (
+                data ? <span>{data}</span> :
+                    <span>Ko'rib chiqilmoqda...</span>
+            )
+        },
+        {
+            title: ' Taklif sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            width: 500,
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
     ];
@@ -373,6 +454,18 @@ function ApplicationLists() {
         }
     ]
 
+    useEffect(() => {
+        getItemsSellerAdmin(currPage, dataCat);
+    }, [dataCat])
+
+    useEffect(() => {
+        getItemsSeller(currPage);
+        ProfileUsers();
+        getItemsSellerCardList()
+        ProfileUsersTextItems(currPage)
+        getItemsSellerTaklif(currPage)
+    }, [])
+
 
     return (
         <section className="ps-my-account ps-page--account pb-5 p-0">
@@ -380,7 +473,7 @@ function ApplicationLists() {
                 <div className="row" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">
                         <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
+                            <AccountMenuSidebar data={accountLinks} data1={data1} />
                         </div>
                     </div>
                     <div className="col-lg-8">
@@ -390,40 +483,47 @@ function ApplicationLists() {
                                     {
                                         user?.role === "seller" ?
                                             (<>
-                                                <form className='row row-gap-3 border p-3 gap-4 mx-auto'>
-                                                    <label className='h4 ' style={{ color: "orange" }} >
-                                                        Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
-                                                        <strong>!Eslatma: Xisobingizda kamida 10 000 so’m bo’lishi kerak.</strong>
-                                                    </label>
-                                                    <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
-                                                    <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
-                                                        <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
+                                                <div className='border py-4 rounded'>
+                                                    <form className='row row-gap-3 px-4 gap-4 mx-auto'>
+                                                        <label className='h4 p-0 ' style={{ color: "orange" }} >
+                                                            Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
+                                                            <strong>!Eslatma: Xisobingizda kamida 10 000 so’m bo’lishi kerak.</strong>
+                                                        </label>
+                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                        <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
+                                                            <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
 
+                                                            {
+                                                                profileCard?.length > 0 && (
+                                                                    profileCard?.map(item => (
+                                                                        <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
+                                                                    ))
+                                                                )
+                                                            }
+
+                                                        </select>
                                                         {
-                                                            profileCard?.length > 0 && (
-                                                                profileCard?.map(item => (
-                                                                    <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
-                                                                ))
-                                                            )
+                                                            profile?.is_application === true && profile?.is_payment === true ?
+                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
+                                                                    height: "50px",
+                                                                }}><span className='fs-4'>Yuborish</span></Button>
+                                                                :
+                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
+                                                                    height: "50px",
+                                                                }}>
+
+                                                                    <span className='fs-4'>Yuborish</span>
+                                                                </Button>
                                                         }
 
-                                                    </select>
-                                                    {
-                                                        profile?.is_application === true && profile?.is_payment === true ?
-                                                            <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
-                                                                height: "50px",
-                                                            }}><span className='fs-4'>Yuborish</span></Button>
-                                                            :
-                                                            <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
-                                                                height: "50px",
-                                                            }}>
+                                                    </form>
+                                                    <h4 className='py-4 px-4'>Yuborilgan Arizalar</h4>
+                                                    <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} />
+                                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                                        onChange={handlePagination} />
+                                                </div>
 
-                                                                <span className='fs-4'>Yuborish</span>
-                                                            </Button>
-                                                    }
-
-                                                </form>
-                                                <form className='border mt-3 rounded p-3' onSubmit={getItemsTextItmes} >
+                                                <form className='border mt-5 rounded p-3' onSubmit={getItemsTextItmes} >
                                                     <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
                                                     <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflaringizni yuboring"></textarea>
                                                     <div className='w-100 d-flex justify-content-end'>
@@ -439,10 +539,6 @@ function ApplicationLists() {
                                                         </span></button>
                                                     </div>
                                                 </form>
-                                                <h4 className='py-4'>Yuborilgan Arizalar</h4>
-                                                <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} />
-                                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
-                                                    onChange={handlePagination} />
                                             </>
                                             ) :
                                             <></>
@@ -472,19 +568,32 @@ function ApplicationLists() {
                         </div>
                     </div>
                     {
-                        user?.role==="admin" ?
-                        <div className='px-4'>
-                        <div className='my-5 bg-white mx-auto p-4 container'>
-                            <h4 className='text-center mb-4'>Kelib tushgan takliflar</h4>
-                            <Table scroll={{ x: 1150 }} dataSource={data1}   columns={columnsTextArea}
-                                pagination={false} />
-                            <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
-                                onChange={ProfileUsersTextItems} />
-                        </div>
-                    </div>
-                    :<></>
+                        user?.role === "admin" ?
+                            <div className='px-4'>
+                                <div className='my-5 bg-white mx-auto p-4 container'>
+                                    <h4 className='text-center mb-4'>Kelib tushgan takliflar</h4>
+                                    <Table scroll={{ x: 1500 }} dataSource={data1} columns={columnsTextArea}
+                                        pagination={false} />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount1}
+                                        onChange={ProfileUsersTextItems} />
+                                </div>
+                            </div>
+                            : <></>
                     }
                 </div>
+                {
+                    user?.role === "seller" ?
+                        <div className='p-0'>
+                            <div className='my-5 bg-white  p-4 '>
+                                <h4 className='text-center mb-4'>Yuborilgan takliflar </h4>
+                                <Table scroll={{ x: 800 }} dataSource={dataAdmintaklif} columns={columnsTextAreaseller}
+                                    pagination={false} />
+                                <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2}
+                                    onChange={getItemsSellerTaklif} />
+                            </div>
+                        </div>
+                        : <></>
+                }
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
                     <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         {
@@ -506,6 +615,9 @@ function ApplicationLists() {
                         }
                     </select>
                     <input type="text" defaultValue={dataCardModal?.description} className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
+                </ModalDeletePostEdit>
+                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSellerID" formID={"edit-phone-adminID"} onSubmited={ProfileUsersTextItem}  >
+                    <input type="text" defaultValue={data1 ? dataDescripton?.description : ""} className='form-control rounded-3' placeholder='Taklif javobi' onChange={(e) => (setDataCardModalDesID(e.target.value))} />
                 </ModalDeletePostEdit>
             </div>
         </section>
