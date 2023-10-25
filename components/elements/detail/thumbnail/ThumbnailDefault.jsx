@@ -18,7 +18,7 @@ const ThumbnailDefault = ({ product, vertical = true }) => {
                             //     className="border mb-3 "
                             //     style={{ objectFit: 'contain' }}
                             // />
-                            <NextImageCard url={item?.image_url} clasS='border mb-3' width='300px' height='350px' style={{objectFit:'contain'}} />
+                            <NextImageCard url={item?.image_url} clasS='border mb-3' width='270px' height='350px' style={{objectFit:'contain'}} />
                         ))
                     ) : (
                         ''

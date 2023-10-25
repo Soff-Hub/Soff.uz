@@ -60,7 +60,7 @@ function ElectronicTopCategories() {
                                                             'center',
                                                     }}
                                                     className="yaxshi-categoriyalar-image"></div> */}
-                                                    <NextImageCard url={category.image} clasS='yaxshi-categoriyalar-image' width='200px' height='170px' />
+                                                    <NextImageCard url={category.image} clasS='yaxshi-categoriyalar-image' width='100%' height='100%' />
                                             </div>
                                             <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
                                                 <h4 className="text-truncate text-uppercase">
