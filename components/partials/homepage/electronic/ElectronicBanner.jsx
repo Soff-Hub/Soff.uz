@@ -3,6 +3,8 @@ import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { Category } from '~/store/auth/action';
+import Image from 'next/image';
+import NextImage from '~/components/nextImage';
 
 function ElectronicBanner() {
 
@@ -23,9 +25,8 @@ function ElectronicBanner() {
     }
 
     useEffect(() => {
-        getBannerItems(true);
+        getBannerItems();
     }, []);
-
 
 
     return (
@@ -34,10 +35,10 @@ function ElectronicBanner() {
                 <div className="container">
                     <div className="ps-section__left">
                         <div className="item banner-left-one">
-                            {bannerItem?.[0]?.image ? (
-                                <Link href={`${bannerItem?.[0].url}`}>
+                            { bannerItem?.[0]?.image ? (
+                                <Link href={`${bannerItem?.[0]?.url}`}>
                                     <a>
-                                        <img
+                                        {/* <img
                                             style={{
                                                 width: '100%',
                                                 height: '370px',
@@ -46,7 +47,8 @@ function ElectronicBanner() {
                                                 backgroundRepeat: 'no-repeat',
                                                 backgroundSize: 'cover',
                                             }}
-                                        />
+                                        /> */}
+                                        <NextImage url={bannerItem[0]?.image} width='800px' height='370px' />
                                     </a>
                                 </Link>
                             ) : (
@@ -79,19 +81,20 @@ function ElectronicBanner() {
                             <div className="banner-right">
                                 <Link href={`${bannerItem?.[1].url}`}>
                                     <a className="ps-collection">
-                                        <div
+                                        {/* <div
                                             style={{
                                                 height: '170px',
                                                 backgroundImage: `url(${bannerItem?.[1]?.image})`,
                                                 backgroundPosition: 'center',
                                                 backgroundRepeat: 'no-repeat',
                                                 backgroundSize: 'cover',
-                                            }}></div>
+                                            }}></div> */}
+                                            <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' />
                                     </a>
                                 </Link>
                                 <Link href={`${bannerItem?.[2].url}`}>
                                     <a className="ps-collection">
-                                        <div
+                                        {/* <div
                                             style={{
                                                 height: '170px',
                                                 backgroundImage: `url(${bannerItem?.[2]?.image})`,
@@ -100,7 +103,8 @@ function ElectronicBanner() {
                                                 backgroundSize: 'cover',
                                             }}>
                                             {' '}
-                                        </div>
+                                        </div> */}
+                                        <NextImage url={bannerItem?.[2]?.image} width='400px' height='170px' />
                                     </a>
                                 </Link>
                             </div>
@@ -138,7 +142,7 @@ function ElectronicBanner() {
                             <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
                                 <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={CloseButton} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
                             </div>
-                            <div class="iframe-container">
+                            <div className="iframe-container">
                                 {
                                     modalClose ?
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/SF5MuRFg-0I?si=G3Z1ZqUBSvAfUPJU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

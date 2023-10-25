@@ -382,7 +382,7 @@ function Notifications() {
                                                <h5 className="fs-3">
                                                     Taklif uchun xavola
                                                 </h5>
-                                                <Tooltip title="Do'stlaringizni taklif qiling">
+                                                <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -409,7 +409,7 @@ function Notifications() {
                                                             handleCopyClick
                                                         }>
                                                         <i
-                                                            class={`${copyIcon}`}></i>
+                                                            className={`${copyIcon}`}></i>
                                                     </button>
                                                 </div>
                                             </div>

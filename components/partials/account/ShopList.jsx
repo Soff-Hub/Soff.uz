@@ -5,6 +5,7 @@ import { Modal, Table } from 'antd';
 import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
+import Image from 'next/image';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)

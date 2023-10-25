@@ -336,7 +336,7 @@ class GetRepository {
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
-    }
+    }z
     async getTagTaklifLists(page,  token) {
         const endPoint = `admin/offer-list/?page=${page}`;
         const reponse = await Repository({

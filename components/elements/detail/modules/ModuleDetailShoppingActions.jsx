@@ -44,12 +44,12 @@ const ModuleDetailShoppingActions = ({ product }) => {
         return (
             <div className="ps-product__shopping">
                 <a
-                    className="ps-btn ps-btn--black"
+                    className="ps-btn ps-btn--black max-class"
                     href="#"
                     onClick={(e) => handleAddItemToCart(e)}>
                     Savatga qo'shish
                 </a>
-                <a className="ps-btn" href="#" onClick={(e) => handleBuynow(e)}>
+                <a className="ps-btn max-class" href="#" onClick={(e) => handleBuynow(e)}>
                  1 klikda sotib oling
                 </a>
                 <div className="ps-product__actions">
