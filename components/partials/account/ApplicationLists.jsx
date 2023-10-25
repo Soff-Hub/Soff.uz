@@ -434,6 +434,7 @@ function ApplicationLists() {
             title: ' Taklif sana',
             dataIndex: 'created_at',
             key: 'created_at',
+            width: 500,
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
     ];
