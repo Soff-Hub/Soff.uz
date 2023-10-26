@@ -1,4 +1,3 @@
-// @type {import('next').NextConfig}
 const nextSettings = {
     optimizeFonts: false,
     // disable eslint
@@ -14,20 +13,17 @@ const nextSettings = {
     experimental: {
         serverActions: true,
     },
-    images: {
-      formats: ['image/avif', 'image/webp','image/png'],
-      remotePatterns: [
-        {
-          protocol: 'https',
-          hostname: 'api.soff.uz',
-          port: '',
-          pathname: '/image/upload/**',
-        },
-      ],
-    },
+    // images: {
+    //     remotePatterns: [
+    //         {
+    //             protocol: 'https',
+    //             hostname: 'api.soff.uz',
+    //             port: '',
+    //             pathname: '/media/banner',
+    //         },
+    //     ],
+    // },
 };
-const nextConfig = {
-    reactStrictMode: true,
-};
+
 
 module.exports = nextSettings;
