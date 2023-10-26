@@ -8,6 +8,7 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CalculateTimeDifference from './DateFormatter';
 import NextImageCard from '~/components/nextImagecard';
+import { DatePicker } from 'antd';
 
 
 
@@ -34,6 +35,11 @@ function ApplicationLists() {
     const [textItems, setTextItems] = useState(null)
     const [textItemsId, setTextItemsId] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [date, setDate] = useState(null);
+    const { RangePicker } = DatePicker;
+    const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
+    const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
+    const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
 
 
     async function ProfileUsers() {
@@ -42,15 +48,17 @@ function ApplicationLists() {
             setProfile(ItemsData)
         }
     }
-    async function ProfileUsersTextItems(page) {
-        const ItemsData = await GetRepository.getTagTaklifLists(page, user?.access);
+    async function ProfileUsersTextItems(page, dataFormat) {
+        const ItemsData = await GetRepository.getTagTaklifLists(page,dataFormat, user?.access);
         if (ItemsData?.results) {
             setData2([...ItemsData.results]);
             setPageCount1(ItemsData?.count);
         }
         getItemsSellerTaklif(currPage)
     }
-    async function ProfileUsersTextItem() {
+
+    async function ProfileUsersTextItem(e) {
+        e.preventDefault();
         if (dataCardModalDesID) {
             const ItemsData = await PatchRepository.getTextItemsUpdate({ description: dataCardModalDesID }, textItemsId, user?.access);
             const modal = Modal.success({
@@ -69,7 +77,7 @@ function ApplicationLists() {
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
-
+      e.target.reset()
 
     }
 
@@ -315,7 +323,7 @@ function ApplicationLists() {
                     {
                         image ?
                             <a href={image} download target='_blank'>
-                                 <NextImageCard url={image} clasS='rounded-3 mb-2' width='74px' height='46px' />
+                                <NextImageCard url={image} clasS='rounded-3 mb-2' width='74px' height='46px' />
                             </a>
                             :
                             <i className="fa-solid fa-file fa-2x"></i>
@@ -392,7 +400,7 @@ function ApplicationLists() {
             width: 350,
             render: (data) => (
                 data ? <span>{data}</span> :
-                    <span>Ko'rib chiqilmoqda...</span>
+                    <span><i className='fa-solid fa-xmark text-danger'></i> Javob berilmadi</span>
             )
         },
         {
@@ -462,9 +470,12 @@ function ApplicationLists() {
         getItemsSeller(currPage);
         ProfileUsers();
         getItemsSellerCardList()
-        ProfileUsersTextItems(currPage)
         getItemsSellerTaklif(currPage)
     }, [])
+
+    useEffect(() => {
+        ProfileUsersTextItems(currPage, dataFormat)
+    }, [dataFormat])
 
 
     return (
@@ -571,7 +582,8 @@ function ApplicationLists() {
                         user?.role === "admin" ?
                             <div className='px-4'>
                                 <div className='my-5 bg-white mx-auto p-4 container'>
-                                    <h4 className='text-center mb-4'>Kelib tushgan takliflar</h4>
+                                    <h4 className='text-center mb-4'>Kelib tushgan takliflar   </h4>
+                                    <RangePicker className='py-3 col-md-4 mb-4 shadow-sm rounded-3' onChange={(e) => setDate(e)} />
                                     <Table scroll={{ x: 1500 }} dataSource={data1} columns={columnsTextArea}
                                         pagination={false} />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount1}
@@ -616,9 +628,41 @@ function ApplicationLists() {
                     </select>
                     <input type="text" defaultValue={dataCardModal?.description} className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
                 </ModalDeletePostEdit>
-                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSellerID" formID={"edit-phone-adminID"} onSubmited={ProfileUsersTextItem}  >
-                    <input type="text" defaultValue={data1 ? dataDescripton?.description : ""} className='form-control rounded-3' placeholder='Taklif javobi' onChange={(e) => (setDataCardModalDesID(e.target.value))} />
-                </ModalDeletePostEdit>
+                <div
+                    className="modal fade modalPost"
+                    id="exampleModalToggleEditAdminSellerID"
+                    aria-hidden="true"
+                    aria-labelledby="staticBackdropLabel"
+                    data-bs-backdrop="static">
+                    <div className="modal-dialog modal-lg  modal-dialog-centered ">
+                        <div className="modal-content ">
+                            <div
+                                className="d-flex justify-content-end p-4"
+                                style={{ border: 'none !important' }}>
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <form
+                                onSubmit={ProfileUsersTextItem}
+                                className="w-100 px-4 py-4 d-flex row-gap-3 flex-column"
+                                id="edit-phone-adminID">
+                                     <textarea onChange={(e) => (setDataCardModalDesID(e.target.value))} defaultValue={data1 ? dataDescripton?.description : ""}  className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflarga  yuboring"></textarea>
+                                <div className="d-flex justify-content-end  py-3">
+                                    <button
+                                        type="submit"
+                                        data-bs-dismiss="modal"
+                                        className="btn btn-success d-block w-25 py-2">
+                                        <span className="fs-3">Saqlash</span>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
     );

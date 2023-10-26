@@ -28,7 +28,6 @@ function ProductsLists() {
     const [dataVal, setDataVal] = useState([]);
     const [dataValStatus, setDataCatStatus] = useState(null);
     const [date, setDate] = useState(null);
-    const [date2, setDate2] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
