@@ -14,22 +14,6 @@ const nextSettings = {
     experimental: {
         serverActions: true,
     },
-    // images: {
-    //     remotePatterns: [
-    //         {
-    //             protocol: 'https',
-    //             hostname: 'api.soff.uz',
-    //             port: '',
-    //             pathname: '/media/banner',
-    //         },
-    //     ],
-    // },
-};
-const nextConfig = {
-    reactStrictMode: true,
-};
-
-module.exports = {
     images: {
       formats: ['image/avif', 'image/webp','image/png'],
       remotePatterns: [
@@ -41,7 +25,9 @@ module.exports = {
         },
       ],
     },
-  }
+};
+const nextConfig = {
+    reactStrictMode: true,
+};
 
-// module.exports = nextConfig;
 module.exports = nextSettings;
