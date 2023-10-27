@@ -20,7 +20,7 @@ export default function useProduct() {
                                         backgroundPosition: 'center',
                                     }}
                                     className="products-image1 m-0"></div> */}
-                                    <NextImageCard url={payload?.poster_url} clasS='products-image1 m-0 ' width='150px' height='150px' />
+                                    <NextImageCard url={payload?.poster_url} clasS='products-image1 m-0 ' width='70px' height='70px'/>
                             </div>
                         ) : (
                             <div

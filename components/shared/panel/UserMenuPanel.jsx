@@ -15,6 +15,8 @@ const UserMenuPanel = ({
     const { user } = useSelector(state => state.auth);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [webdata, setWebData] = useState(null);
+    const [socket, setSocket] = useState(null);
     const { accountLinks } = useSelector(state => state.auth)
 
     async function ProfileUsers() {
@@ -28,6 +30,17 @@ const UserMenuPanel = ({
         setMenuDrawer(false);
         setCategoriesDrawer(false);
     };
+    useEffect(() => {
+        if (socket) {
+            socket.addEventListener("message", (event) => {
+                setWebData(JSON.parse(event.data))
+            });
+        }
+    }, [socket])
+
+    useEffect(() => {
+        setSocket(new WebSocket("wss://api.soff.uz/ws/offer-status/"));
+    }, [])
 
 
     useEffect(() => (
@@ -93,7 +106,7 @@ const UserMenuPanel = ({
                             <Link href={link.url}>
                                 <a>
                                     <i className={link.icon}></i>
-                                    {link.text}
+                                    {link.text} {user?.role==="admin" ? (link?.url==="/account/application" && webdata?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"19rem"}}>{webdata?.count}</strong> : "" ) : ""} 
                                 </a>
                             </Link>
                         </li>

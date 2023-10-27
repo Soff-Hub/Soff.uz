@@ -11,6 +11,8 @@ import { BeatLoader } from 'react-spinners';
 const AccountMenuSidebar = ({ data, renderProfile }) => {
     const { user } = useSelector(state => state.auth);
     const [profile, setProfile] = useState(null);
+    const [webdata, setWebData] = useState(null);
+    const [socket, setSocket] = useState(null);
     const [loading, setLoading] = useState(false);
 
     async function ProfileUsers() {
@@ -20,10 +22,22 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         setLoading(false)
     }
 
+    useEffect(() => {
+        if (socket) {
+            socket.addEventListener("message", (event) => {
+                setWebData(JSON.parse(event.data))
+            });
+        }
+    }, [socket])
+
+    useEffect(() => {
+        setSocket(new WebSocket("wss://api.soff.uz/ws/offer-status/"));
+    }, [])
 
     useEffect(() => (
         ProfileUsers()
     ), [renderProfile])
+
 
 
     function addPeriodToThousands(number) {
@@ -59,7 +73,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                             </>
                             :
                             <div className="mx-5 mt-3">
-                                 <BeatLoader size={10} color="#333" />
+                                <BeatLoader size={10} color="#333" />
                             </div>
                     }
 
@@ -83,7 +97,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                             <Link href={link.url}>
                                 <a>
                                     <i className={link.icon}></i>
-                                    {link.text}
+                                    {link.text} {user?.role==="admin" ? (link?.url==="/account/application" && webdata?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"14rem"}}>{webdata?.count}</strong> : "" ) : ""}
                                 </a>
                             </Link>
                         </li>

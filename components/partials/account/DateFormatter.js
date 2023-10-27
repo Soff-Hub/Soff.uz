@@ -8,6 +8,7 @@ function CalculateTimeDifference({ targetDate }) {
     const kun = sanangiz.getDate().toString().padStart(2, '0');
     const soat = sanangiz.getHours().toString().padStart(2, '0');
     const minut = sanangiz.getMinutes().toString().padStart(2, '0');
+    
     const getMonthOy = (() => {
         switch (oy) {
             case '01':

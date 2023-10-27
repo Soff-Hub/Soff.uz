@@ -13,7 +13,8 @@ export default function NextImageCard({url, width, height, clasS}) {
     alt={url}
     loader={loaderProp}
     className={clasS}
-    style={{objectFit:'contain'}}
+    objectFit='contain'
+    
   />
   )
 }
