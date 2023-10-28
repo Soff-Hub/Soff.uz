@@ -43,7 +43,7 @@ const CatalogTop = () => {
                                                 //     src={category.image}
                                                 //     alt="soff category image"
                                                 // />
-                            <NextImageCard url={category.image} clasS='category-image' width='280px' height='280px' />
+                                                <NextImageCard url={category.image} clasS='category-image' width='280px' height='280px' />
 
                                             ) : (
                                                 <img src="/static/img/faq-folder-5557635-4639344.webp" />
@@ -82,14 +82,23 @@ const CatalogTop = () => {
                                                         })}
                                                 {category?.child?.length >
                                                     0 && (
-                                                    <li>
-                                                        <Link
-                                                            href={`/category/${category.id}`}
-                                                            as={`/category/${category.id}`}>
-                                                            <a>...</a>
-                                                        </Link>
-                                                    </li>
-                                                )}
+                                                        <li>
+                                                            <Link
+                                                                href={`/category/${category.id}`}
+                                                                as={`/category/${category.id}`}>
+                                                                <a className='pt-2 text-success'>
+                                                                    Ko'proq
+                                                                    <i
+                                                                        className="fa-solid fa-angles-right fa-beat-fade"
+                                                                        style={{
+                                                                            fontSize: '13px',
+                                                                            paddingTop: '1px',
+                                                                            paddingLeft: '5px',
+                                                                        }}></i>
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    )}
                                             </ul>
                                         </div>
                                     </div>
