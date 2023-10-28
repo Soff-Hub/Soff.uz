@@ -392,7 +392,7 @@ function Notifications() {
                                                </div>
                                                 <div className=" mt-3 taklif-div">
                                                     <div
-                                                        className="link"
+                                                        className="link text-truncate"
                                                         ref={
                                                             divRef
                                                         }>{`https://soff.uz/account/register/${

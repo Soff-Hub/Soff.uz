@@ -24,7 +24,7 @@ const CatalogTop = () => {
         <div className="ps-top-categories">
             <div className=" container row">
                 <h3 className="mb-5">Kategoriyalar</h3>
-                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                <div className="col-md-12 ">
                     <div
                         className="ps-block--categories-grid row"
                         data-mh="catalog-top">
@@ -33,7 +33,7 @@ const CatalogTop = () => {
                                 return (
                                     <div
                                         key={index}
-                                        className=" ps-block--category-2 col-xl-3 ">
+                                        className=" ps-block--category-2 col-xl-3  ">
                                         <div
                                             className="ps-block__thumbnail"
                                             style={{ overflow: 'hidden' }}>
