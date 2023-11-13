@@ -13,8 +13,7 @@ function AccountQuickLinks() {
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const dispatch = useDispatch();
 
-    const handleLogout = (e) => {
-        e.preventDefault();
+    const handleLogout = () => {
 
         const data = {
             refresh: refresh,
@@ -63,7 +62,7 @@ function AccountQuickLinks() {
                 </Menu.Item>
             ))}
             <Menu.Item>
-                <a href="#" onClick={(e) => handleLogout(e)}>
+                <a href="#" onClick={() => handleLogout()}>
                     <i className="fa-solid fa-right-from-bracket me-3 mx-1 text-dark fs-4"></i>{' '}
                     Chiqish
                 </a>
