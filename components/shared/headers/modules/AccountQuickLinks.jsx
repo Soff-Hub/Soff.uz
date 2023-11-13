@@ -30,11 +30,25 @@ const AccountQuickLinks = (props) => {
 
     };
 
+    const handleLogoutToken = () => {
+
+        const data = {
+            'refresh': refresh
+        }
+        const { logOutAuth } = useAuth();
+        const res = logOutAuth(data)
+
+        if (res) {
+            dispatch(logOut());
+        }
+
+    };
+
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfileToken(user?.access);
         console.log(ItemsData.status);
         if (Number(ItemsData?.status)==403) {
-            handleLogout()
+            handleLogoutToken()
         }
     }
 

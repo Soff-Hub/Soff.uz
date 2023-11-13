@@ -9,7 +9,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useEffect } from 'react';
 
 function AccountQuickLinks() {
-    const { accountLinks , user} = useSelector((state) => state.auth);
+    const { accountLinks, user } = useSelector((state) => state.auth);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const dispatch = useDispatch();
 
@@ -32,18 +32,31 @@ function AccountQuickLinks() {
         }
     };
 
+    const handleLogoutToken = () => {
+
+        const data = {
+            refresh: refresh,
+        };
+        const { logOutAuth } = useAuth();
+        const res = logOutAuth(data);
+
+        if (res) {
+            Router.push('/');
+            dispatch(logOut());
+        }
+    };
+
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfileToken(user?.access);
         console.log(ItemsData.status);
-        if (Number(ItemsData?.status)==403) {
-            handleLogout()
+        if (Number(ItemsData?.status) == 403) {
+            handleLogoutToken()
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         ProfileUsers()
-    },[])
-
+    }, [])
 
     const menu = (
         <Menu>
