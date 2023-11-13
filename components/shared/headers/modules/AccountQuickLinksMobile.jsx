@@ -9,7 +9,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useEffect } from 'react';
 
 function AccountQuickLinks() {
-    const { accountLinks } = useSelector((state) => state.auth);
+    const { accountLinks , user} = useSelector((state) => state.auth);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const dispatch = useDispatch();
 
