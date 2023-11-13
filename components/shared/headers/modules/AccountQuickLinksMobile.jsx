@@ -5,6 +5,7 @@ import { Dropdown, Menu, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import Router from 'next/router';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 function AccountQuickLinks() {
     const { accountLinks } = useSelector((state) => state.auth);
@@ -30,6 +31,19 @@ function AccountQuickLinks() {
             dispatch(logOut());
         }
     };
+
+    async function ProfileUsers() {
+        const ItemsData = await GetRepository.getProfileToken(user?.access);
+        console.log(ItemsData.status);
+        if (Number(ItemsData?.status)==403) {
+            handleLogout()
+        }
+    }
+
+    useEffect(()=>{
+        ProfileUsers()
+    },[])
+
 
     const menu = (
         <Menu>

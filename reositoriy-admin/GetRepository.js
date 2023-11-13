@@ -435,6 +435,26 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getProfileToken(token) {
+        const endPoint = 'auth/profile/';
+        const reponse = await Repository({
+            url: baseUrlProfie + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => (error.response));
+        return reponse;
+    }
+
     async getProfileAriza(page, token) {
         const endPoint = `application-list/?page=${page}`;
         const reponse = await Repository({
