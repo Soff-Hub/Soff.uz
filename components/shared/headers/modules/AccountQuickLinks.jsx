@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
 import { Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 
 const AccountQuickLinks = (props) => {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -30,31 +29,7 @@ const AccountQuickLinks = (props) => {
 
     };
 
-    const handleLogoutToken = () => {
 
-        const data = {
-            'refresh': refresh
-        }
-        const { logOutAuth } = useAuth();
-        const res = logOutAuth(data)
-
-        if (res) {
-            dispatch(logOut());
-        }
-
-    };
-
-    async function ProfileUsers() {
-        const ItemsData = await GetRepository.getProfileToken(user?.access);
-        console.log(ItemsData.status);
-        if (Number(ItemsData?.status)==403) {
-            handleLogoutToken()
-        }
-    }
-
-    useEffect(()=>{
-        ProfileUsers()
-    },[])
 
     const { isLoggedIn } = props;
 

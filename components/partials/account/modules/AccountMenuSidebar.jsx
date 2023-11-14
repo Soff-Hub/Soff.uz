@@ -1,14 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { BeatLoader } from 'react-spinners';
+import useAuth from '~/hooks/useAuth';
+import { logOut } from '~/store/auth/action';
 
 
 
 
 const AccountMenuSidebar = ({ data, renderProfile }) => {
+
+    const dispatch = useDispatch();
+    const refresh = useSelector(state => state.auth?.user?.refresh)
+
     const { user } = useSelector(state => state.auth);
     const [profile, setProfile] = useState(null);
     const [webdata, setWebData] = useState(null);
@@ -19,6 +25,28 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     const [socket2, setSocket2] = useState(null);
     const [loading, setLoading] = useState(false);
     
+
+    const handleLogoutToken = () => {
+
+        const data = {
+            'refresh': refresh
+        }
+        const { logOutAuth } = useAuth();
+        const res = logOutAuth(data)
+
+        if (res) {
+            dispatch(logOut());
+        }
+
+    };
+
+    async function ProfileUsersToken() {
+        const ItemsData = await GetRepository.getProfileToken(user?.access);
+        console.log(ItemsData.status);
+        if (Number(ItemsData?.status)==403) {
+            handleLogoutToken()
+        }
+    }
 
     async function ProfileUsers() {
         setLoading(true)
@@ -68,6 +96,10 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     useEffect(() => (
         ProfileUsers()
     ), [renderProfile])
+
+    useEffect(()=>{
+        ProfileUsersToken()
+    },[])
 
 
 
