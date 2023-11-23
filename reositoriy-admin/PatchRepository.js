@@ -121,6 +121,26 @@ class PatchRepository {
             .catch((error) => (error?.response));
         return reponse;
     }
+    async getTextItemsUpdate(data, id, token) {
+        const endPoint = `admin/offer-update/${id}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'PATCH',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response.status === 202) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => (error?.response));
+        return reponse;
+    }
     async getBannersPatch(data, id, token) {
         const endPoint = `admin/banner-update/${id}`;
         const reponse = await Repository({

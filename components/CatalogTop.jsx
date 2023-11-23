@@ -24,7 +24,7 @@ const CatalogTop = () => {
         <div className="ps-top-categories">
             <div className=" container row">
                 <h3 className="mb-5">Kategoriyalar</h3>
-                <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                <div className="col-md-12 ">
                     <div
                         className="ps-block--categories-grid row"
                         data-mh="catalog-top">
@@ -33,7 +33,7 @@ const CatalogTop = () => {
                                 return (
                                     <div
                                         key={index}
-                                        className=" ps-block--category-2 col-xl-3 ">
+                                        className=" ps-block--category-2 col-xl-3  ">
                                         <div
                                             className="ps-block__thumbnail"
                                             style={{ overflow: 'hidden' }}>
@@ -43,7 +43,7 @@ const CatalogTop = () => {
                                                 //     src={category.image}
                                                 //     alt="soff category image"
                                                 // />
-                            <NextImageCard url={category.image} clasS='category-image' width='280px' height='280px' />
+                                                <NextImageCard url={category.image} clasS='category-image' width='280px' height='280px' />
 
                                             ) : (
                                                 <img src="/static/img/faq-folder-5557635-4639344.webp" />
@@ -82,14 +82,23 @@ const CatalogTop = () => {
                                                         })}
                                                 {category?.child?.length >
                                                     0 && (
-                                                    <li>
-                                                        <Link
-                                                            href={`/category/${category.id}`}
-                                                            as={`/category/${category.id}`}>
-                                                            <a>...</a>
-                                                        </Link>
-                                                    </li>
-                                                )}
+                                                        <li>
+                                                            <Link
+                                                                href={`/category/${category.id}`}
+                                                                as={`/category/${category.id}`}>
+                                                                <a className='pt-2 text-success'>
+                                                                    Ko'proq
+                                                                    <i
+                                                                        className="fa-solid fa-angles-right fa-beat-fade"
+                                                                        style={{
+                                                                            fontSize: '13px',
+                                                                            paddingTop: '1px',
+                                                                            paddingLeft: '5px',
+                                                                        }}></i>
+                                                                </a>
+                                                            </Link>
+                                                        </li>
+                                                    )}
                                             </ul>
                                         </div>
                                     </div>

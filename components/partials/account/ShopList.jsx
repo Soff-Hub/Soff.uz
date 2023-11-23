@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import Image from 'next/image';
+import NextImageCard from '~/components/nextImagecard';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -42,7 +43,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                            <img src={image} width={54} height={54} />
+                             <NextImageCard url={image} clasS='rounded-3 ' width='54px' height='54px' />
                             :
                             <span className='fs-4'><i className="  fa-2x fa-solid fa-circle-user"></i></span>
                     }

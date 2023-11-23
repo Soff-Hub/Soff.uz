@@ -1,4 +1,4 @@
-import Repository, { baseUrl, baseUrlProfie } from './Repository';
+import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from './Repository';
 
 class GetRepository {
     async getSellerDashbord(token) {
@@ -337,8 +337,10 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }z
-    async getTagTaklifLists(page,  token) {
-        const endPoint = `admin/offer-list/?page=${page}`;
+    async getTagTaklifLists(page, date , token) {
+        const endPoint = `admin/offer-list/?page=${page}&start_date=${
+            date || ''
+        }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -433,6 +435,26 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getProfileToken(token) {
+        const endPoint = 'auth/profile/';
+        const reponse = await Repository({
+            url: baseUrlProfie + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => (error.response));
+        return reponse;
+    }
+
     async getProfileAriza(page, token) {
         const endPoint = `application-list/?page=${page}`;
         const reponse = await Repository({
@@ -492,6 +514,26 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getProfileArizaTaklif(page, token) {
+        const endPoint = `seller/offer-list/?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    
 }
 
 export default new GetRepository();

@@ -1,20 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
-// import Router from 'next/router';
 import { Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 
 const AccountQuickLinks = (props) => {
-    const { accountLinks , user } = useSelector((state) => state.auth);
-
+    const { accountLinks, user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const refresh = useSelector(state => state.auth?.user?.refresh)
 
-    const handleLogout = (e) => {
-        e.preventDefault();
-        
+    const handleLogout = () => {
+
         const data = {
             'refresh': refresh
         }
@@ -30,8 +27,10 @@ const AccountQuickLinks = (props) => {
             dispatch(logOut());
         }
 
-
     };
+
+
+
     const { isLoggedIn } = props;
 
     // View
@@ -46,12 +45,12 @@ const AccountQuickLinks = (props) => {
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account">
-                <Link  href={ user?.role==="admin" || user?.role==="seller" ? "/account/dashbord" : "/account/myproducts"}><a> <i className="icon-user"></i> </a></Link>
+                <Link href={user?.role === "admin" || user?.role === "seller" ? "/account/dashbord" : "/account/myproducts"}><a> <i className="icon-user"></i> </a></Link>
                 <div className="ps-block__content">
                     <ul className="ps-list--arrow">
                         {linksView}
                         <li className="ps-block__footer">
-                            <a href="#" onClick={(e) => handleLogout(e)}>
+                            <a href="#" onClick={() => handleLogout()}>
                                 <i className="fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4"></i>    Chiqish
                             </a>
                         </li>

@@ -81,20 +81,20 @@ function ElectronicBanner() {
                             <div className="banner-right">
                                 <Link href={`${bannerItem?.[1].url}`}>
                                     <a className="ps-collection">
-                                        {/* <div
+                                        <div
                                             style={{
                                                 height: '170px',
                                                 backgroundImage: `url(${bannerItem?.[1]?.image})`,
                                                 backgroundPosition: 'center',
                                                 backgroundRepeat: 'no-repeat',
                                                 backgroundSize: 'cover',
-                                            }}></div> */}
-                                            <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' />
+                                            }}></div>
+                                            {/* <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' /> */}
                                     </a>
                                 </Link>
                                 <Link href={`${bannerItem?.[2].url}`}>
                                     <a className="ps-collection">
-                                        {/* <div
+                                        <div
                                             style={{
                                                 height: '170px',
                                                 backgroundImage: `url(${bannerItem?.[2]?.image})`,
@@ -103,8 +103,8 @@ function ElectronicBanner() {
                                                 backgroundSize: 'cover',
                                             }}>
                                             {' '}
-                                        </div> */}
-                                        <NextImage url={bannerItem?.[2]?.image} width='400px' height='170px' />
+                                        </div>
+                                        {/* <NextImage url={bannerItem?.[2]?.image} width='400px' height='170px' /> */}
                                     </a>
                                 </Link>
                             </div>

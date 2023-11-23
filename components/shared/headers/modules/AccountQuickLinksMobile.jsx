@@ -6,13 +6,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import Router from 'next/router';
 
+
 function AccountQuickLinks() {
     const { accountLinks } = useSelector((state) => state.auth);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const dispatch = useDispatch();
 
-    const handleLogout = (e) => {
-        e.preventDefault();
+    const handleLogout = () => {
 
         const data = {
             refresh: refresh,
@@ -31,6 +31,8 @@ function AccountQuickLinks() {
         }
     };
 
+
+
     const menu = (
         <Menu>
             {accountLinks.map((link) => (
@@ -48,7 +50,7 @@ function AccountQuickLinks() {
                 </Menu.Item>
             ))}
             <Menu.Item>
-                <a href="#" onClick={(e) => handleLogout(e)}>
+                <a href="#" onClick={() => handleLogout()}>
                     <i className="fa-solid fa-right-from-bracket me-3 mx-1 text-dark fs-4"></i>{' '}
                     Chiqish
                 </a>

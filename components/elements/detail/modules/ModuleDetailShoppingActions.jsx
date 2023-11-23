@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
+import { Modal } from 'antd';
 
 const ModuleDetailShoppingActions = ({ product }) => {
     const { setCartOneItem } = useCart();
@@ -12,10 +13,22 @@ const ModuleDetailShoppingActions = ({ product }) => {
     const Router = useRouter();
     const statee = useSelector((state) => state.auth);
     console.log('redux' , statee);
+    const [open, setOpen] = useState(false);
+    const showModal = () => {
+        setOpen(true);
+    };
+    const hideModal = () => {
+        setOpen(false);
+    };
+    const hideModalOk = () => {
+        setOpen(false);
+        Router.push('/account/shopping-cart')
+    };
 
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product.id);
+        showModal()
     }
 
     const state = useSelector((state) => state.auth.user?.access);
@@ -42,6 +55,18 @@ const ModuleDetailShoppingActions = ({ product }) => {
 
     if (true) {
         return (
+            <>
+             <Modal
+                title="Muvaffaqqiyatli"
+                open={open}
+                onOk={hideModalOk}
+                onCancel={hideModal}
+                okText="Savatga o'tish"
+                cancelText="Xaridlarni davom etirish">
+                <p></p>
+                <p>Mahsulotingizni savatga qo'shdingiz!</p>
+                <p></p>
+            </Modal>
             <div className="ps-product__shopping">
                 <a
                     className="ps-btn ps-btn--black max-class"
@@ -66,6 +91,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     </a>
                 </div>
             </div>
+            </>
         );
     }
 };

@@ -15,6 +15,13 @@ const UserMenuPanel = ({
     const { user } = useSelector(state => state.auth);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [webdata, setWebData] = useState(null);
+    const [socket, setSocket] = useState(null);
+    const [webdata1, setWebData1] = useState(null);
+    const [socket1, setSocket1] = useState(null);
+    const [webdata2, setWebData2] = useState(null);
+    const [socket2, setSocket2] = useState(null);
+
     const { accountLinks } = useSelector(state => state.auth)
 
     async function ProfileUsers() {
@@ -28,6 +35,41 @@ const UserMenuPanel = ({
         setMenuDrawer(false);
         setCategoriesDrawer(false);
     };
+    useEffect(() => {
+        if (socket) {
+            socket.addEventListener("message", (event) => {
+                setWebData(JSON.parse(event.data))
+            });
+        }
+    }, [socket])
+
+    useEffect(() => {
+        setSocket(new WebSocket("wss://api.soff.uz/ws/offer-status/"));
+    }, [])
+
+    useEffect(() => {
+        if (socket1) {
+            socket1.addEventListener("message", (event) => {
+                setWebData1(JSON.parse(event.data))
+            });
+        }
+    }, [socket1])
+
+    useEffect(() => {
+        setSocket1(new WebSocket("wss://api.soff.uz/ws/admin-document/"));
+    }, [])
+
+    useEffect(() => {
+        if (socket2) {
+            socket2.addEventListener("message", (event) => {
+                setWebData2(JSON.parse(event.data))
+            });
+        }
+    }, [socket2])
+
+    useEffect(() => {
+        setSocket2(new WebSocket("wss://api.soff.uz/ws/seller-document/"));
+    }, [])
 
 
     useEffect(() => (
@@ -93,7 +135,9 @@ const UserMenuPanel = ({
                             <Link href={link.url}>
                                 <a>
                                     <i className={link.icon}></i>
-                                    {link.text}
+                                    {link.text} {user?.role==="admin" ? (link?.url==="/account/application" && webdata?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"15rem"}}>{webdata?.count}</strong> : "" ) : ""}
+                                    {user?.role==="admin" ? (link?.url==="/account/products" && webdata1?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"15rem"}}>{webdata1?.count}</strong> : "" ) : ""} 
+                                    {user?.role==="seller" ? (link?.url==="/account/myproducts" && webdata2?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"5rem"}}>{webdata2?.count}</strong> : "" ) : ""}
                                 </a>
                             </Link>
                         </li>

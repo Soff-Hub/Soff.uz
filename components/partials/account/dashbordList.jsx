@@ -19,6 +19,7 @@ function DashbordList() {
     const [dataProducts, setDataProducts] = useState([]);
     const [View, setView] = useState({});
     const [pageCount, setPageCount] = useState(0)
+    const [pageCount2, setPageCount2] = useState(0)
     const [currPage, setCurrPage] = useState(null)
     const [loading, setLoading] = useState(false);
 
@@ -61,7 +62,7 @@ function DashbordList() {
         setCurrPage(page)
         const ItemsData = await GetRepository.getOrdersListsDashbord(page, user?.access);
         if (ItemsData?.results) {
-            setPageCount(ItemsData.count)
+            setPageCount2(ItemsData.count)
             setDataOrders([...ItemsData.results]);
         }
     }
@@ -434,14 +435,14 @@ function DashbordList() {
                                     <>
                                         <Table scroll={{ x: 1350 }} dataSource={dataOrders} columns={columnsOrders}
                                             pagination={false} />
-                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination2} />
+                                        {/* <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2} onChange={handlePagination2} /> */}
                                     </>
                                     :
                                     <>
                                         <Table scroll={{ x: 1150 }} dataSource={dataOrders} columns={columnsOrdersSeller}
                                             pagination={false} />
-                                        <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
-                                            onChange={GetItemsProductsOrders} />
+                                        {/* <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2}
+                                            onChange={GetItemsProductsOrders} /> */}
                                     </>
                             }
                         </div>
@@ -453,7 +454,7 @@ function DashbordList() {
                             <h4 className='bg-white m-0 text-center py-4'>Ommabop mahsulotlar</h4>
                             <Table scroll={{ x: 1250 }} dataSource={dataProducts} columns={columns} className='pb-5' pagination={false}
                             />
-                            <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
+                            {/* <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} /> */}
                         </div>
                         :
                         <></>
