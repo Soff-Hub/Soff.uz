@@ -193,15 +193,8 @@ function OrdersLists() {
                                         <span className='fs-4'><i className="fa-solid fa-circle-xmark text-danger"></i> <strong>Bekor qilingan</strong> <em>malumotlaringiz bekor qilindi</em></span>
                                     </div>
                                     <div className='py-4 row gap-5 mx-auto row-gap-3 pb-5' >
-                                        <select className='form-select fs-3 py-3 rounded-3 col-md-6' onChange={(e) => setSelector(e.target.value)}  >
 
-                                            <option className='fs-3' selected value="">Barcha holatlar</option>
-                                            <option className='fs-3' value="pending">Moderatsiya</option>
-                                            <option className='fs-3' value="approved">Tasdiqlangan</option>
-                                            <option className='fs-3' value="cancelled">Bekor qilingan</option>
-                                        </select>
-
-                                        <RangePicker className='col-md-5 rounded-3 py-3' onChange={(e) => setDate(e)} />
+                                        <RangePicker className='col-md-12 rounded-3 py-3' onChange={(e) => setDate(e)} />
                                         <label className='form-label border w-100 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
                                             <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                             <span className='px-4'><i className='fa-solid fa-search '></i></span>
