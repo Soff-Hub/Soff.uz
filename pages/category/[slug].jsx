@@ -25,7 +25,7 @@ const ProductCategoryScreen = () => {
     async function getCategry() {
         const responseData = await ProductRepository.getCategoryParent();
         if (responseData?.length > 0) {
-            if (responseData?.every((cat) => Number(cat.id) !== Number(slug))) {
+            if (responseData?.every((cat) => cat.slug !== slug)) {
                 setchaildId(slug);
                 setParentId(null)
             } else {
@@ -52,6 +52,7 @@ const ProductCategoryScreen = () => {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
+            console.log("-->", responseData);
             setCount(responseData.count);
         }
         setchaildId(null);

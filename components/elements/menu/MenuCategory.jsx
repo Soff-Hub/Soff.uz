@@ -9,8 +9,8 @@ export default function MenuCategory({ source, className }) {
                     source?.map((item, i) => (
                         <li key={i}>
                             <Link className='d-flex gap-2'
-                                href={`/category/${item.id}`}
-                                as={`/category/${item.id}`}>
+                                href={`/category/${item.slug}`}
+                                as={`/category/${item.slug}`}>
                                 <a>
                                     {item.icon && <i className={`fs-4  ${item.icon }`} style={{width:"20px"}}></i>}
                                     <span className='w-75'>{item.name}</span>

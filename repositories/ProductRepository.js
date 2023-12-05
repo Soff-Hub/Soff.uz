@@ -68,7 +68,7 @@ class ProductRepository {
         const reponse = await Repository.get(
             `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
                 chaildID || ''
-            }&created_at=&category__parent=${parentID || ''}&min_price=${
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
                 min || ''
             }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
                 approved_count || ''
@@ -77,6 +77,7 @@ class ProductRepository {
             }&approved_count=${mashhur || ''}`
         )
             .then((response) => {
+                console.log("responsss", response);
                 return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
@@ -97,7 +98,7 @@ class ProductRepository {
         const reponse = await Repository.get(
             `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
                 chaildID || ''
-            }&created_at=&category__parent=${parentID || ''}&min_price=${
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
                 min || ''
             }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
                 approved_count || ''
@@ -127,7 +128,7 @@ class ProductRepository {
         const reponse = await Repository.get(
             `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
                 chaildID || ''
-            }&created_at=&category__parent=${parentID || ''}&min_price=${
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
                 min || ''
             }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
                 approved_count || ''
