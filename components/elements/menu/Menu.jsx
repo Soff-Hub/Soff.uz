@@ -12,8 +12,8 @@ const Menu = ({ source, className }) => {
                     return (
                         <li key={item.id}>
                             <Link
-                                href={`/category/${item.id}`}
-                                as={`/category/${item.id}`}>
+                                href={`/category/${item.slug}`}
+                                as={`/category/${item.slug}`}>
                                 <a>
                                     {item.icon && <i className={item.icon}></i>}
                                     {item.name}

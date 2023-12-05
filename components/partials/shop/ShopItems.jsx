@@ -76,6 +76,7 @@ const ShopItems = ({
 
         data !== null  ? setSuccess(false) : setSuccess(true);
 
+        console.log("=>", data);
   
 
         handleSetColumns();
@@ -91,7 +92,8 @@ const ShopItems = ({
             getCategry();
         }
 
-        if (categoryData?.every((cat) => Number(cat.id) !== Number(slug))) {
+        if (categoryData?.every((cat) => cat.slug !== slug)) {
+            console.log(slug);
             setchaildId(slug);
             setParentId(null)
         } else {
@@ -404,17 +406,6 @@ const ShopItems = ({
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
                     </select>
-                    {/* <div className="ps-shopping__view">
-                        <ul className="ps-tab-list">
-                            <li className={!listView === true ? 'active' : ''}>
-                                <a
-                                    href="#"
-                                    onClick={(e) => handleChangeViewMode(e)}>
-                                    <i className="icon-grid"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div> */}
                 </div>
             </div>
             <div className="ps-shopping__content pagination-product-box">

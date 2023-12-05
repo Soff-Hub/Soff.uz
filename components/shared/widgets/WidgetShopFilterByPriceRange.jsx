@@ -122,7 +122,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             getCategry();
         }
 
-        if (categoryData?.every((cat) => Number(cat.id) !== Number(slug))) {
+        if (categoryData?.every((cat) => cat.slug !== slug)) {
             setchaildId(slug);
             setParentId(null);
         } else {

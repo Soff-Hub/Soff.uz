@@ -36,8 +36,8 @@ function ElectronicTopCategories() {
                                 className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 "
                                 key={category.id}>
                                 <Link
-                                    href={`/category/${category.id}`}
-                                    as={`/category/${category.id}`}>
+                                    href={`/category/${category.slug}`}
+                                    as={`/category/${category.slug}`}>
                                     <a>
                                         <div
                                             className="ps-block--category-2 top-category-items p-3 rounded "
@@ -49,17 +49,6 @@ function ElectronicTopCategories() {
                                                     justifyContent: 'center',
                                                     overflow: 'hidden',
                                                 }}>
-                                                {/* <div
-                                                    style={{
-                                                        backgroundImage: `url(${category.image})`,
-                                                        backgroundRepeat:
-                                                            'no-repeat',
-                                                        backgroundSize:
-                                                            'contain',
-                                                        backgroundPosition:
-                                                            'center',
-                                                    }}
-                                                    className="yaxshi-categoriyalar-image"></div> */}
                                                     <NextImageCard url={category.image} clasS='yaxshi-categoriyalar-image' width='100px' height='70px' />
                                             </div>
                                             <div className="ps-block__content d-flex justify-content-center align-items-center my-1">

@@ -38,13 +38,12 @@ const CatalogTop = () => {
                                             className="ps-block__thumbnail"
                                             style={{ overflow: 'hidden' }}>
                                             {category?.image ? (
-                                                // <img
-                                                //     className="category-image"
-                                                //     src={category.image}
-                                                //     alt="soff category image"
-                                                // />
-                                                <NextImageCard url={category.image} clasS='category-image' width='280px' height='280px' />
-
+                                                <NextImageCard
+                                                    url={category.image}
+                                                    clasS="category-image"
+                                                    width="280px"
+                                                    height="280px"
+                                                />
                                             ) : (
                                                 <img src="/static/img/faq-folder-5557635-4639344.webp" />
                                             )}
@@ -52,7 +51,7 @@ const CatalogTop = () => {
                                         <div className="ps-block__content">
                                             <h4>
                                                 <Link
-                                                    href={`/category/${category.id}`}>
+                                                    href={`/category/${category.slug}`}>
                                                     <a>{category.name}</a>
                                                 </Link>
                                             </h4>
@@ -68,8 +67,8 @@ const CatalogTop = () => {
                                                                             link
                                                                         }>
                                                                         <Link
-                                                                            href={`/category/${link.id}`}
-                                                                            as={`/category/${link.id}`}>
+                                                                            href={`/category/${link.slug}`}
+                                                                            as={`/category/${link.slug}`}>
                                                                             <a>
                                                                                 {
                                                                                     link.name
@@ -82,23 +81,26 @@ const CatalogTop = () => {
                                                         })}
                                                 {category?.child?.length >
                                                     0 && (
-                                                        <li>
-                                                            <Link
-                                                                href={`/category/${category.id}`}
-                                                                as={`/category/${category.id}`}>
-                                                                <a className='pt-2 text-success'>
-                                                                    Ko'proq
-                                                                    <i
-                                                                        className="fa-solid fa-angles-right fa-beat-fade"
-                                                                        style={{
-                                                                            fontSize: '13px',
-                                                                            paddingTop: '1px',
-                                                                            paddingLeft: '5px',
-                                                                        }}></i>
-                                                                </a>
-                                                            </Link>
-                                                        </li>
-                                                    )}
+                                                    <li>
+                                                        <Link
+                                                            href={`/category/${category.slug}`}
+                                                            as={`/category/${category.slug}`}>
+                                                            <a className="pt-2 text-success">
+                                                                Ko'proq
+                                                                <i
+                                                                    className="fa-solid fa-angles-right fa-beat-fade"
+                                                                    style={{
+                                                                        fontSize:
+                                                                            '13px',
+                                                                        paddingTop:
+                                                                            '1px',
+                                                                        paddingLeft:
+                                                                            '5px',
+                                                                    }}></i>
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                )}
                                             </ul>
                                         </div>
                                     </div>

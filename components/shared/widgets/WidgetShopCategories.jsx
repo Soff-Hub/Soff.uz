@@ -32,8 +32,8 @@ const WidgetShopCategories = ({ data }) => {
 
     const renderChildLinks = (children, parentSlug) => {
         return children?.map((item, i) => (
-            <Link key={i} href={`/category/${item.id}`}>
-                <a  className={ `acc-body-child-a ${item.id === Number(slug) ? 'active' : ''}`}>
+            <Link key={i} href={`/category/${item.slug}`}>
+                <a  className={ `acc-body-child-a ${item.slug === slug ? 'active' : ''}`}>
                     {item.name}
                 </a>
             </Link>
@@ -42,14 +42,14 @@ const WidgetShopCategories = ({ data }) => {
 
     const renderAccordionItems = () => {
         return category?.map((item, i) => (
-            <li key={item.id} className={item.id === Number(slug) ? 'active' : ''}>
+            <li key={item.id} className={item.slug === slug ? 'active' : ''}>
                 {item.is_childe ? (
                     <div className="accordion accordion-flush" id={`accordion-${i}`}>
                         <div
                             className="accordion-item"
                             style={{ backgroundColor: '#fffcfced' }}
                         >
-                          <Link href={`/category/${item.id}`}>
+                          <Link href={`/category/${item.slug}`}>
                           <a>
                           <h2 className="accordion-header active" id={`heading-${i}`}>
                                 <button
@@ -77,7 +77,7 @@ const WidgetShopCategories = ({ data }) => {
                         </div>
                     </div>
                 ) : (
-                    <Link href={`/category/${item.id}`}>
+                    <Link href={`/category/${item.slug}`}>
                         <a className="category-list-item">{item.name}</a>
                     </Link>
                 )}
