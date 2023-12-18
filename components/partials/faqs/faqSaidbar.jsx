@@ -25,7 +25,7 @@ export default function FaqSaidbar() {
                         className={`${
                             query === '/page/vedio-list' ? 'active-faq' : ''
                         }`}>
-                            Vedio qo'llanma
+                            Video qo'llanma
                     </a>
                 </Link>
             </li>

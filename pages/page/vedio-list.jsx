@@ -17,7 +17,7 @@ const VedioList = () => {
         <PageContainer footer={<FooterDefault />} title="FAQ page">
             <div className="ps-page--singlee">
                 <div className="container-faqs mt-4">
-                    <h3>Vedio qo'llanma</h3>
+                    <h3>Video qo'llanma</h3>
                     <div className="row">
                         {data?.map((el) => (
                             <div className="col-6 col-lg-4 col-md-6 col-sm-6 mt-2" key={el.id}>
