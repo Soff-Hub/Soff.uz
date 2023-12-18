@@ -8,6 +8,7 @@ const ElectronicProductGroupWithCarousel = ({
     title,
     data,
     id,
+    slug
 }) => {
 
     // Views
@@ -44,7 +45,7 @@ const ElectronicProductGroupWithCarousel = ({
                     <h3>{title}</h3>
                     <ul className="ps-section__links">
                         <li>
-                            <Link href={`/category/${id}`}>
+                            <Link href={`/category/${slug}`}>
                                 <a>Barchasini ko'rish</a>
                             </Link>
                         </li>

@@ -40,6 +40,7 @@ const HomeElectronicsPage = ({ category }) => {
                                 data={item}
                                 id={item.id}
                                 key={index}
+                                slug={item.slug}
                             />
                         )
                 )

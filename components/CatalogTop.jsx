@@ -19,7 +19,7 @@ const CatalogTop = () => {
     useEffect(() => {
         getCategoryData();
     }, []);
-
+console.log('category', data);
     return (
         <div className="ps-top-categories">
             <div className=" container row">
