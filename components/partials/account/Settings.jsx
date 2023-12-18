@@ -7,6 +7,7 @@ import { Modal, Tooltip } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { BeatLoader } from 'react-spinners';
+import Link from 'next/link';
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -380,7 +381,7 @@ function Notifications() {
                                             <div className="border p-3 mt-3">
                                                <div className='d-flex'>
                                                <h5 className="fs-3">
-                                                    Taklif uchun xavola
+                                                    Taklif uchun xavola olish
                                                 </h5>
                                                 <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
                                                     <i
@@ -389,6 +390,11 @@ function Notifications() {
                                                         }}
                                                         className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                                 </Tooltip>
+                                                {/* <Link href="" >
+                                                <a>
+                                                <i class="fa-brands fa-telegram fa-xl" style="color: #759ee6;"></i>
+                                                </a>
+                                                </Link> */}
                                                </div>
                                                 <div className=" mt-3 taklif-div">
                                                     <div

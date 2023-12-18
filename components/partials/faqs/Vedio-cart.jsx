@@ -24,6 +24,8 @@ export default function VedioCart({ title, url, vedioUrl }) {
                             position: 'relative',
                             borderTopRightRadius: '5px',
                             borderTopLeftRadius: '5px',
+                            backgroundPosition:'center',
+                            backgroundSize:'contain'
                         }}>
                         <div className="image-color"></div>
                         <div className="play">

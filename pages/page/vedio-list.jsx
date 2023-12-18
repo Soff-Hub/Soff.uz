@@ -20,7 +20,7 @@ const VedioList = () => {
                     <h3>Vedio qo'llanma</h3>
                     <div className="row">
                         {data?.map((el) => (
-                            <div className="col-4" key={el.id}>
+                            <div className="col-6 col-lg-4 col-md-6 col-sm-6 mt-2" key={el.id}>
                                 <VedioCart
                                     title={el.title}
                                     url={el.image}
