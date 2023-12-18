@@ -74,6 +74,56 @@
     border: 1px solid $color-1st !important;
 }
 
+.vedio-cart-container{
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    max-width: 300px;
+    width: 100%;
+}
+
+.vedio-cart-content{
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+   display: flex;
+   flex-direction: column;
+   border-radius: 5px;
+   border: 1px solid #ccc;
+   transition: all .5s;
+   &:hover{
+    transform: scale(1.01);
+    box-shadow: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    cursor: pointer;
+}
+}
+
+.vedio-cart-footer{
+    padding: 10px 15px;
+    p{
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 18px;
+    }
+}
+
+.image-color{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: black;
+    opacity: .6;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.play{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
 @media screen and (max-width: 1200px) {
     .faq-category-name{
         font-size: 15px;

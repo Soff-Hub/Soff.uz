@@ -176,7 +176,9 @@ const PageContainer = ({
                             ? 'container faq-page-container'
                             : query === '/page/become-a-seller'
                             ? 'container faq-page-container'
-                            : ''
+                            : query === '/page/vedio-list'
+                            ? 'container faq-page-container' :
+                             ''
                     }  `}>
                     <div
                         className={` ${
@@ -188,7 +190,8 @@ const PageContainer = ({
                                 ? ''
                                 : query === '/page/become-a-seller'
                                 ? ''
-                                : 'd-none'
+                                : query === '/page/vedio-list'
+                                ? '' : 'd-none'
                         }`}>
                         <FaqSaidbar />
                     </div>

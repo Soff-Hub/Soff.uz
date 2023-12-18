@@ -20,6 +20,16 @@ export default function FaqSaidbar() {
                 </Link>
             </li>
             <li>
+                <Link href="/page/vedio-list" as="/page/vedio-list">
+                    <a
+                        className={`${
+                            query === '/page/vedio-list' ? 'active-faq' : ''
+                        }`}>
+                            Vedio qo'llanma
+                    </a>
+                </Link>
+            </li>
+            <li>
                 <Link href="/page/become-a-seller" as="/page/become-a-seller">
                     <a
                         className={`${

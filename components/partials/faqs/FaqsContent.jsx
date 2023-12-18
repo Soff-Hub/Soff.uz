@@ -21,6 +21,7 @@ const FaqsContent = () => {
             setDescriptionData(respons.results);
         }
     };
+    
     const handleClick = async (id) => {
         const respons = await PostRepository.getFAQDescriptionItem(id);
         if (respons) {
