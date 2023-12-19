@@ -25,6 +25,7 @@ const VedioList = () => {
                                     title={el.title}
                                     url={el.image}
                                     vedioUrl={el.vedioUrl}
+                                    id={el.id}
                                 />
                             </div>
                         ))}

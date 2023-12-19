@@ -1,5 +1,11 @@
 const vedioLinks = [
     {
+        id: 1,
+        title: 'Soff.uz - bu qanday startup loyiha?',
+        vedioUrl: 'https://www.youtube.com/embed/R65_8d6ETnA',
+        image: '/static/img/vedio-rasm-1.jpg',
+    },
+    {
         id: 2,
         title: "Soff.uz platformasidan qanday qilib sotuvchi bo'lib ro'yxatdan o'tish mumkin?",
         vedioUrl: 'https://www.youtube.com/embed/rwqluwYKEPw',
@@ -17,12 +23,7 @@ const vedioLinks = [
         vedioUrl: 'https://www.youtube.com/embed/eIq-wUHWP_0',
         image: '/static/img/vedio-rasm-4.jpg',
     },
-    {
-        id: 1,
-        title: 'Soff.uz - bu qanday startup loyiha?',
-        vedioUrl: 'https://www.youtube.com/embed/R65_8d6ETnA',
-        image: '/static/img/vedio-rasm-1.jpg',
-    },
+  
 ];
 
 export default vedioLinks;

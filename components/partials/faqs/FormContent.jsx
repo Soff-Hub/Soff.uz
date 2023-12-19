@@ -113,7 +113,7 @@ const App = () => {
                         <div className="form-group">
                             <Form.Item
                                 name="subject"
-                                tooltip="What do you want others to call you?"
+                                tooltip="Yuborayotgan xabaringizga mavzu yozing"
                                 rules={[
                                     {
                                         required: true,
