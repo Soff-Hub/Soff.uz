@@ -12,7 +12,7 @@ const VedioList = () => {
     useEffect(() => {
         setData(vedioLinks);
     }, []);
-    console.log(data);
+
     return (
         <PageContainer footer={<FooterDefault />} title="FAQ page">
             <div className="ps-page--singlee">

@@ -378,25 +378,27 @@ function Notifications() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div className="border p-3 mt-3">
-                                               <div className='d-flex'>
+                                            <div className="border pt-3 pl-2 mt-3">
+                                              
+                                               <Link className='d-block' href="https://t.me/kanalingiz"  >
+                                                <a target='_blank'>
+                                                <div className='d-flex gap-2 gap-lg-3'>
                                                <h5 className="fs-3">
-                                                    Taklif uchun xavola olish
+                                                    Taklif xavolasini olish uchun telegram botga o'ting
                                                 </h5>
-                                                <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
+                                                {/* <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}
                                                         className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                                                </Tooltip>
-                                                {/* <Link href="" >
-                                                <a>
-                                                <i class="fa-brands fa-telegram fa-xl" style="color: #759ee6;"></i>
-                                                </a>
-                                                </Link> */}
+                                                </Tooltip> */}
+                                              
+                                                    <i class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3" style={{color:'#6492e3'}}></i>
                                                </div>
-                                                <div className=" mt-3 taklif-div">
+                                                </a>
+                                                </Link>
+                                                {/* <div className=" mt-3 taklif-div">
                                                     <div
                                                         className="link text-truncate"
                                                         ref={
@@ -417,7 +419,7 @@ function Notifications() {
                                                         <i
                                                             className={`${copyIcon}`}></i>
                                                     </button>
-                                                </div>
+                                                </div> */}
                                             </div>
                                         </>
                                     )}

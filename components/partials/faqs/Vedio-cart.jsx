@@ -17,15 +17,14 @@ export default function VedioCart({ title, url, vedioUrl }) {
                 <div className="vedio-cart-content" onClick={haldleModalOpen}>
                     <div
                         style={{
-                            backgroundImage:
-                                `url(${url})`,
+                            backgroundImage: `url(${url})`,
                             width: '100%',
                             height: '200px',
                             position: 'relative',
                             borderTopRightRadius: '5px',
                             borderTopLeftRadius: '5px',
-                            backgroundPosition:'center',
-                            backgroundSize:'contain'
+                            backgroundPosition: 'center',
+                            backgroundSize: 'contain',
                         }}>
                         <div className="image-color"></div>
                         <div className="play">
@@ -68,8 +67,9 @@ export default function VedioCart({ title, url, vedioUrl }) {
                             src={`${vedioUrl}`}
                             title="YouTube video player"
                             frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowfullscreen></iframe>
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                            allowfullscreen
+                            ></iframe>
                     ) : (
                         <></>
                     )}
