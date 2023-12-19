@@ -20,10 +20,10 @@ export default function FaqSaidbar() {
                 </Link>
             </li>
             <li>
-                <Link href="/page/vedio-list" as="/page/vedio-list">
+                <Link href="/page/video-list" as="/page/video-list">
                     <a
                         className={`${
-                            query === '/page/vedio-list' ? 'active-faq' : ''
+                            query === '/page/video-list' ? 'active-faq' : ''
                         }`}>
                             Video qo'llanma
                     </a>

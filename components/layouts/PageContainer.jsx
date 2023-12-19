@@ -176,7 +176,7 @@ const PageContainer = ({
                             ? 'container faq-page-container'
                             : query === '/page/become-a-seller'
                             ? 'container faq-page-container'
-                            : query === '/page/vedio-list'
+                            : query === '/page/video-list'
                             ? 'container faq-page-container' :
                              ''
                     }  `}>
@@ -190,7 +190,7 @@ const PageContainer = ({
                                 ? ''
                                 : query === '/page/become-a-seller'
                                 ? ''
-                                : query === '/page/vedio-list'
+                                : query === '/page/video-list'
                                 ? '' : 'd-none'
                         }`}>
                         <FaqSaidbar />
