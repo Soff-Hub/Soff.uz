@@ -11,7 +11,10 @@ import '~/scss/home-default.scss';
 import '~/scss/electronic.scss';
 import Head from 'next/head';
 import NextProgress from 'next-progress';
+
 function App({ Component, pageProps }) {
+    
+      
     useEffect(() => {
         setTimeout(function () {
             document.getElementById('__next').classList.add('loaded');
@@ -25,7 +28,6 @@ function App({ Component, pageProps }) {
                 e.preventDefault();
             }
         };
-
   
 
         document.onkeydown = function (e) {

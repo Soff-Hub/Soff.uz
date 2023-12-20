@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import React from 'react';
 import { useState } from 'react';
 
@@ -13,6 +14,15 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
 
     return (
         <div>
+            <Head>
+                <title>{title}</title>
+                <meta name="description" content={`Watch ${title} video`} />
+                <meta name="keywords" content="video, watch, entertainment, soff.uz , soff" />
+                <meta name="author" content="Soff.uz soff" />
+                <meta name="robots" content="index, follow" />
+                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+               
+            </Head>
             <div className="vedio-cart-container">
                 <div className="vedio-cart-content" onClick={haldleModalOpen}>
                     <div
@@ -37,7 +47,10 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                         </div>
                     </div>
                     <div className="vedio-cart-footer">
-                      <p>  <span>{id}.</span>  {title} </p>
+                        <p>
+                            {' '}
+                            <span>{id}.</span> {title}{' '}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -68,8 +81,7 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                             title="YouTube video player"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-                            allowfullscreen
-                            ></iframe>
+                            allowfullscreen></iframe>
                     ) : (
                         <></>
                     )}

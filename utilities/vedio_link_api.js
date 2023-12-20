@@ -1,4 +1,4 @@
-const vedioLinks = [
+export const VideoLinks = [
     {
         id: 1,
         title: 'Soff.uz - bu qanday startup loyiha?',
@@ -25,5 +25,3 @@ const vedioLinks = [
     },
   
 ];
-
-export default vedioLinks;

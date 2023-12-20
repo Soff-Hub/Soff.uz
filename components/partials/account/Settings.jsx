@@ -380,7 +380,7 @@ function Notifications() {
                                             </div>
                                             <div className="border pt-3 pl-2 mt-3">
                                               
-                                               <Link className='d-block' href="https://t.me/kanalingiz"  >
+                                               <Link className='d-block' href="https://t.me/soff_uz_bot"  >
                                                 <a target='_blank'>
                                                 <div className='d-flex gap-2 gap-lg-3'>
                                                <h5 className="fs-3">
