@@ -21,7 +21,7 @@ export default function NewPassword() {
         const { qaytaParolYuborishAuth } = useAuth();
         const user = await qaytaParolYuborishAuth(data);
         if (user.status === 200 || user.status === 201) {
-            setReport(true);
+            
 
             if (user?.data?.role === 'seller' || user?.data?.role === 'admin') {
                 Router.push('/account/dashbord');
@@ -30,14 +30,16 @@ export default function NewPassword() {
             }
             setParol1('');
             setParol2('');
-        } else {
             setReport(true);
+        } else {
+           
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
                 content: user?.data?.msg,
             });
             modal.update;
+            setReport(true);
         }
     };
 
@@ -63,7 +65,7 @@ export default function NewPassword() {
                             </label>
                             <input
                                 required
-                                type="number"
+                                type="text"
                                 className="raqam-input-parol"
                                 onChange={(e) => setParol1(e.target.value)}
                                 onKeyDown={handleEnterKeyPress}
@@ -77,7 +79,7 @@ export default function NewPassword() {
                             </label>
                             <input
                                 required
-                                type="number"
+                                type="text"
                                 className="raqam-input-parol"
                                 onChange={(e) => setParol2(e.target.value)}
                                 ref={(input) => setPasswordInput(input)}
