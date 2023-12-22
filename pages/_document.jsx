@@ -28,6 +28,20 @@ export default function Document() {
 
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
                 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" />
+                <script
+                    async
+                    src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"
+                ></script>
+                <script
+                    dangerouslySetInnerHTML={{
+                    __html: `
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-H60GJQ0WF2');
+                    `,
+                    }}
+                ></script>
             </Head>
             <body>
                 <Main />
