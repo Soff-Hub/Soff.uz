@@ -23,9 +23,6 @@ const RegisterPage = () => {
     const { user } = useSelector(state => state.auth)
     const sallerEndPoint = `auth/seller-register/${pid}/`;
 
-    useEffect(() => {
-
-    },[])
 
     return (
           user?.access ?
@@ -34,7 +31,7 @@ const RegisterPage = () => {
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <Register url={sallerEndPoint} />
+                    <Register url={sallerEndPoint}  />
                 </div>
             </PageContainer>
     );

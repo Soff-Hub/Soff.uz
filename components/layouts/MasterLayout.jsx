@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import NavigationListSeller from '../shared/navigation/NavigationListSeller';
 import NavigationListCustomer from '../shared/navigation/NavigationListCustomer';
 
+
 const MasterLayout = ({ children }) => {
     const dispatch = useDispatch();
     const [cookies] = useCookies(['cart', 'compare', 'wishlist']);

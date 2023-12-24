@@ -1,0 +1,176 @@
+import { useRouter } from 'next/router';
+import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { PacmanLoader } from 'react-spinners';
+import { accountLinksReducers, login } from '~/store/auth/action';
+
+export let accountAdminLinks = [
+    {
+        text: 'Boshqaruv paneli',
+        url: '/account/dashbord',
+        icon: 'fa-solid fa-house-user',
+    },
+    {
+        text: 'Sotuvchilar',
+        url: '/account/shops',
+        icon: 'fa-solid fa-shop',
+    },
+    {
+        text: 'Mahsulotlar',
+        url: '/account/products',
+        icon: 'fa-solid fa-cube',
+    },
+    {
+        text: 'Kategoriyalar',
+        url: '/account/category',
+        icon: 'fa-solid fa-layer-group',
+    },
+    {
+        text: 'Buyurtmalar',
+        url: '/account/orders',
+        icon: 'fa-solid fa-truck',
+    },
+    {
+        text: 'Xaridorlar',
+        url: '/account/users',
+        icon: 'fa-solid fa-users',
+    },
+    {
+        text: 'Taglar',
+        url: '/account/tegs',
+        icon: 'fa-solid fa-tags',
+    },
+    {
+        text: "Ariza bo'limi",
+        url: '/account/application',
+        icon: 'fa-solid fa-file-signature',
+    },
+    {
+        text: 'Context',
+        url: '/account/context',
+        icon: 'fa-solid fa-sliders',
+    },
+    {
+        text: 'Sozlamalar',
+        url: '/account/settings',
+        icon: 'fa-solid fa-gear',
+    },
+];
+export let accountSellerLink = [
+    {
+        text: 'Boshqaruv paneli',
+        url: '/account/dashbord',
+        icon: 'fa-solid fa-house-user',
+    },
+    {
+        text: 'Mening mahsulotlarim',
+        url: '/account/myproducts',
+        icon: 'fa-solid fa-shop-lock',
+    },
+    {
+        text: 'Sotib olingan',
+        url: '/account/sellerproducts',
+        icon: 'fa-solid fa-bag-shopping',
+    },
+    {
+        text: 'Yangi mahsulot',
+        url: '/account/myproducts/posts',
+        icon: 'fa-solid fa-circle-plus',
+    },
+    {
+        text: 'Buyurtmalar',
+        url: '/account/orders',
+        icon: 'fa-solid fa-truck',
+    },
+    {
+        text: "Ariza bo'limi",
+        url: '/account/application',
+        icon: 'fa-solid fa-file-signature',
+    },
+    {
+        text: 'Profil',
+        url: '/account/settings',
+        icon: 'fa-solid fa-gear',
+    },
+];
+export let cutomerAccountLink = [
+    {
+        text: 'Mening mahsulotlarim',
+        url: '/account/myproducts',
+        icon: 'fa-solid fa-shop-lock',
+    },
+    {
+        text: 'Profil',
+        url: '/account/settings',
+        icon: 'fa-solid fa-gear',
+    },
+];
+
+
+
+ const Loader = () => {
+    const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch();
+    const Router = useRouter();
+    const query = Router.route;
+    const { asPath } = Router;
+
+    useEffect(() => {
+        if (asPath.split('').length > 10) {
+            const role = asPath.slice(-12);
+            console.log(role, typeof(role));
+            const tokenArr = asPath.split('token=');
+            const token = tokenArr[1]?.split('');
+            const list = token?.reverse()?.splice(0, 12);
+            const tokenText = token?.reverse()?.join('');
+            console.log('++++', tokenText);
+            localStorage.setItem('token', tokenText);
+            if (role === '38a443b1144e') {
+                const data = {
+                    access: tokenText,
+                    role : 'seller'
+                }
+                dispatch(login({ user: data, data: data})); 
+            }else if (role === '3a373fb190f8'){
+                const data = {
+                    access: tokenText,
+                    role : 'customer'
+                }
+                dispatch(login({ user: data, data: data})); 
+            }
+        }
+
+        if (user?.role === 'admin') {
+            dispatch(accountLinksReducers(accountAdminLinks));
+        }
+        if (user?.role === 'seller') {
+            dispatch(accountLinksReducers(accountSellerLink));
+        }
+        if (user?.role === 'customer') {
+            dispatch(accountLinksReducers(cutomerAccountLink));
+        }
+
+        if (
+            user?.role === 'seller' ||
+            user?.role === 'admin'
+        ) {
+            Router.push('/account/dashbord');
+        } else if (user?.role === 'customer') {
+            Router.push('/account/myproducts');
+        }
+
+    }, [user?.role]);
+    return (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginTop: '20%',
+            }}>
+            <PacmanLoader color="#00A44F" />
+        </div>
+    );
+};
+
+export default Loader

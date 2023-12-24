@@ -148,3 +148,37 @@
         }
     }
 }
+
+// register
+
+.or_google{
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+        & span:first-child{
+            width: 160px;
+            border: 1px solid $color-1st;
+            margin-top: 10px;
+            height: 0;
+        }
+        & span:last-child{
+            width: 160px;
+            border: 1px solid $color-1st;
+            margin-top: 10px;
+            height: 0;
+        }
+}
+
+.google_account{
+    width: 100%;
+    background-color: #fff;
+    padding: 20px 15px 15px 15px;
+    & div{
+        height: 50px !important;
+        padding: 0 !important;
+        padding-bottom: 15px !important;
+        background-color: #ffffff;
+        border: 1px solid $color-1st;
+        color: $color-1st;
+    }
+}

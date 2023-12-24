@@ -22,7 +22,7 @@ const VedioList = () => {
                 <title>Soff.uz video qo'llanmasi</title>
                 <meta
                     name="description"
-                    content={`Soff.uz vedio yo'riqnomasini ko'rish`}
+                    content="Soff.uz vedio yo'riqnomasini ko'rish"
                 />
                 <meta
                     name="keywords"

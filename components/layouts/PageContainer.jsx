@@ -127,15 +127,38 @@ const PageContainer = ({
     header = initHeaders,
     footer = initFooters,
     children,
-    title = 'Page',
 }) => {
-    let titleView;
-
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const Router = useRouter();
+    const query = Router.route;
+    // const { asPath } = Router;
+
 
     useEffect(() => {
+        // if (asPath.split('').length > 10) {
+        //     const role = asPath.slice(-12);
+        //     const tokenArr = asPath.split('token=');
+        //     const token = tokenArr[1]?.split('');
+        //     const list = token?.reverse()?.splice(0, 12);
+        //     const tokenText = token?.reverse()?.join('');
+        //     localStorage.setItem('token', tokenText);
+        //     if (role === '38a443b1144e') {
+        //         console.log('jhjhgjhgjgj');
+        //         const data = {
+        //             access: tokenText,
+        //             role : 'seller'
+        //         }
+        //         dispatch(login({ user: data, data: data}));
+        //     }else if (role === '3a373fb190f8'){
+        //         const data = {
+        //             access: tokenText,
+        //             role : 'customer'
+        //         }
+        //         dispatch(login({ user: user.data, data:data}));
+        //     }
+        // }
+
         if (user?.role === 'admin') {
             dispatch(accountLinksReducers(accountAdminLinks));
         }
@@ -155,14 +178,10 @@ const PageContainer = ({
         defaultRoutePage();
     }, []);
 
-    const query = Router.route;
-
     return (
         <>
             <Head>
-                <title>Soff - barcha ma'lumotlar bazasi
-                    
-                </title>
+                <title>Soff - barcha ma'lumotlar bazasi </title>
             </Head>
             {header}
             <div>
@@ -177,8 +196,8 @@ const PageContainer = ({
                             : query === '/page/become-a-seller'
                             ? 'container faq-page-container'
                             : query === '/page/video-list'
-                            ? 'container faq-page-container' :
-                             ''
+                            ? 'container faq-page-container'
+                            : ''
                     }  `}>
                     <div
                         className={` ${
@@ -191,7 +210,8 @@ const PageContainer = ({
                                 : query === '/page/become-a-seller'
                                 ? ''
                                 : query === '/page/video-list'
-                                ? '' : 'd-none'
+                                ? ''
+                                : 'd-none'
                         }`}>
                         <FaqSaidbar />
                     </div>
