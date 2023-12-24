@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Category } from '~/store/auth/action';
 import Image from 'next/image';
 import NextImage from '~/components/nextImage';
+import HotTopic from '~/components/HotTopic';
 
 function ElectronicBanner() {
 
@@ -136,13 +137,13 @@ function ElectronicBanner() {
             {/* {
                 category ?
                     <>
-                        <div onClick={CloseButton} className={modalClose ? "modalBanner " : "modalBanner2 "} >
+                        <div    onClick={CloseButton} className={modalClose ? "modalBanner " : "modalBanner2 "} >
                         </div>
                         <div className={modalClose ? " bannerModal2  " : "bannerModal3  "} > 
                             <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
                                 <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={CloseButton} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
                             </div>
-                            <div className="iframe-container">
+                            <div className="iframe-container" style={{border:'1px solid red'}}>
                                 {
                                     modalClose ?
                                     <iframe width="560" height="315" src="https://www.youtube.com/embed/SF5MuRFg-0I?si=G3Z1ZqUBSvAfUPJU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

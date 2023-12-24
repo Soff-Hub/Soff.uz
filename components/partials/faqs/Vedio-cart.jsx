@@ -81,7 +81,8 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                             title="YouTube video player"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-                            allowfullscreen></iframe>
+                            allowfullscreen
+                            ></iframe>
                     ) : (
                         <></>
                     )}

@@ -7,6 +7,7 @@ import { PropagateLoader } from 'react-spinners';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { useSelector } from 'react-redux';
+import VedioPage from '~/components/VedioPage';
 
 const HomeElectronicsPage = ({ category }) => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
@@ -29,6 +30,7 @@ const HomeElectronicsPage = ({ category }) => {
     return (
         <main id="homepage-7">
             <ElectronicBanner />
+            <VedioPage/>
             <ElectronicTopCategories />
             {category?.length > 0 ? (
                 category?.map(
