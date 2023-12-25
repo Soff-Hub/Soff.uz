@@ -40,6 +40,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     };
 
+
     async function ProfileUsersToken() {
         const ItemsData = await GetRepository.getProfileToken(user?.access);
         console.log(ItemsData.status);
@@ -47,6 +48,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             handleLogoutToken()
         }
     }
+
 
     async function ProfileUsers() {
         setLoading(true)
@@ -96,6 +98,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     useEffect(() => (
         ProfileUsers()
     ), [renderProfile])
+
 
     useEffect(()=>{
         ProfileUsersToken()

@@ -4,8 +4,8 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
-import LoginPage from './login';
 import TegLists from '~/components/partials/account/TegLists ';
+import Selection from './selection';
 
 const AccountTegPage = () => {
     const breadCrumb = [
@@ -26,7 +26,7 @@ const AccountTegPage = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <TegLists/>
                 </div>
-            </PageContainer> :  user?.access ? <Page404/> : <LoginPage /> 
+            </PageContainer> :  user?.access ? <Page404/> : <Selection /> 
       
     );
 };

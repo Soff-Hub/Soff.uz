@@ -5,7 +5,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
-import LoginPage from './login';
+import Selection from './selection';
 
 const MyAccountPage = () => {
     const breadCrumb = [
@@ -25,7 +25,7 @@ const MyAccountPage = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CategoryLists />
             </div>
-        </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
+        </PageContainer> : user?.access ? <Page404/> : <Selection /> 
     );
 };
 

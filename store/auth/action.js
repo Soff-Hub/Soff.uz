@@ -15,7 +15,9 @@ export const actionTypes = {
 };
 
 export function login({ user, data }) {
+    console.log('action', user, data);
     return { type: actionTypes.LOGIN_REQUEST, user, data };
+    
 }
 
 export function loginSuccess({ user }) {

@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import CollectionRepository from '~/repositories/CollectionRepository';
 import NextImageCard from '~/components/nextImagecard';
 
 const FooterSecond = ({ classes }) => {
 
-
-    let vaqt = new Date();
 
     return (
         <footer className={`ps-footer ps-footer--2 ${classes}`}>
@@ -97,19 +94,8 @@ const FooterSecond = ({ classes }) => {
                         </p>
                      
                         <aside className="widget widget_footer widget_contact-us">
-                            {/* <img
-                                src="/static/img/payment-method/click_logo.png"
-                                alt="martfury"
-                                style={{ height: '35px', marginRight: '20px' }}
-                            /> */}
                             <NextImageCard  url="/static/img/payment-method/click_logo.png" clasS='category-image mt-1' width='75rem' height='35px' />
                             <NextImageCard  url="/static/img/payment-method/payme_logo.png" clasS='category-image ms-2' width='75rem' height='25px' />
-
-                            {/* <img
-                                src="/static/img/payment-method/payme_logo.png"
-                                alt="martfury"
-                                style={{ height: '25px' }}
-                            /> */}
                         </aside>
                     </div>
                 </div>
@@ -121,9 +107,7 @@ const FooterSecond = ({ classes }) => {
                         <p style={{
                             marginBottom: '0'
                         }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'>
-                            {/* <img className='footer-company-logo d-block ps-2 rounded' src="/static/img/soffhub.png" alt="soff hub logo" /> */}
-                            <NextImageCard url="/static/img/soffhub.png" clasS='footer-company-logo d-block ps-2 rounded' width='80px' height='60px' />
-                            
+                            <NextImageCard url="/static/img/soffhub.png" clasS='footer-company-logo d-block ps-2 rounded' width='80px' height='60px'  />
                             </a>
                     </aside>
                 </div>

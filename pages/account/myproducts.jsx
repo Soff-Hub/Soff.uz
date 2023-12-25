@@ -6,7 +6,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
-import LoginPage from './login';
+import Selection from './selection';
 
 const MyProducts = () => {
     const breadCrumb = [
@@ -19,6 +19,7 @@ const MyProducts = () => {
         },
     ];
     const { user } = useSelector(state => state.auth)
+    console.log('==>', user);
     return (
          user?.role === 'seller' || user?.role === 'customer'  ?
             <PageContainer
@@ -28,7 +29,7 @@ const MyProducts = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <MyProducts_list />
                 </div>
-            </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
+            </PageContainer> : user?.access ? <Page404/> : <Selection /> 
     
     );
 };
