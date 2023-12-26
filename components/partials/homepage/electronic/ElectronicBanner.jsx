@@ -8,10 +8,10 @@ import NextImage from '~/components/nextImage';
 import HotTopic from '~/components/HotTopic';
 
 function ElectronicBanner() {
-
     const [bannerItem, setBannerItems] = useState([]);
-    const [modalClose, setModalClose] = useState(true)
-    const { category } = useSelector(state => (state?.auth))
+    const [modalClose, setModalClose] = useState(true);
+    const { category } = useSelector((state) => state?.auth);
+    const [modal, setModal] = useState(true);
     const dispatch = useDispatch();
 
     async function getBannerItems() {
@@ -22,13 +22,55 @@ function ElectronicBanner() {
     }
     function CloseButton() {
         dispatch(Category(false));
-        setModalClose(false)
+        setModalClose(false);
+        localStorage.setItem('soat', date.getHours());
     }
-
+    const date = new Date();
     useEffect(() => {
         getBannerItems();
+        // console.log('==>', date.getHours());
+        if (localStorage.getItem('soat')) {
+            const expr = localStorage.getItem('soat');
+            switch (expr) {
+                case expr === 20:
+                    if (date.getHours() === 1) {
+                        setModal(true);
+                        localStorage.removeItem('modal');
+                    }
+                    break;
+                case expr === 21:
+                    if (date.getHours() === 2) {
+                        setModal(true);
+                        localStorage.removeItem('modal');
+                    }
+                    break;
+                case expr === 22:
+                    if (date.getHours() === 2) {
+                        setModal(true);
+                        localStorage.removeItem('modal');
+                    }
+                    break;
+                case expr === 23:
+                    if (date.getHours() === 2) {
+                        setModal(true);
+                        localStorage.removeItem('modal');
+                    }
+                    break;
+                case expr === 24:
+                    if (date.getHours() === 2) {
+                        setModal(true);
+                    }
+                    break;
+                default:
+                    if (expr + 5 === date.getHours()) {
+                        setModal(true);
+                        localStorage.removeItem('modal');
+                    } else {
+                        setModal(false);
+                    }
+            }
+        }
     }, []);
-
 
     return (
         <>
@@ -36,7 +78,7 @@ function ElectronicBanner() {
                 <div className="container">
                     <div className="ps-section__left">
                         <div className="item banner-left-one">
-                            { bannerItem?.[0]?.image ? (
+                            {bannerItem?.[0]?.image ? (
                                 <Link href={`${bannerItem?.[0]?.url}`}>
                                     <a>
                                         {/* <img
@@ -49,7 +91,11 @@ function ElectronicBanner() {
                                                 backgroundSize: 'cover',
                                             }}
                                         /> */}
-                                        <NextImage url={bannerItem[0]?.image} width='800px' height='370px' />
+                                        <NextImage
+                                            url={bannerItem[0]?.image}
+                                            width="800px"
+                                            height="370px"
+                                        />
                                     </a>
                                 </Link>
                             ) : (
@@ -90,7 +136,7 @@ function ElectronicBanner() {
                                                 backgroundRepeat: 'no-repeat',
                                                 backgroundSize: 'cover',
                                             }}></div>
-                                            {/* <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' /> */}
+                                        {/* <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' /> */}
                                     </a>
                                 </Link>
                                 <Link href={`${bannerItem?.[2].url}`}>
@@ -134,6 +180,59 @@ function ElectronicBanner() {
                     </div>
                 </div>
             </section>
+
+            {modal ? (
+                <>
+                    <div
+                        onClick={CloseButton}
+                        className={
+                            modalClose
+                                ? 'modalBannerCarousel '
+                                : 'modalBanner2Carousel '
+                        }></div>
+                    <div
+                        className={
+                            modalClose
+                                ? ' bannerModal2Carousel  '
+                                : 'bannerModal3Carousel  '
+                        }>
+                        <div
+                            className="closeButton"
+                            style={{
+                                position: 'absolute',
+                                right: '-50px',
+                                top: '-10px',
+                            }}>
+                            <span
+                                className="fs-3"
+                                style={{ cursor: 'pointer' }}>
+                                <i
+                                    onClick={CloseButton}
+                                    className="fa-solid  fa-2x p-3 text-white fa-xmark"></i>{' '}
+                            </span>
+                        </div>
+                        <div className="iframe-containerCarousel">
+                            {modalClose ? (
+                                <>
+                                    <div className="modal-carousel-header">
+                                        <h3>Xush kelibsiz! 😊</h3>
+                                        {/* <p>Qani boshladik unda</p> */}
+                                        <p>
+                                            Platformada qanday qilib daromad
+                                            topish mumkin ?
+                                        </p>
+                                    </div>
+                                    <HotTopic />
+                                </>
+                            ) : (
+                                <></>
+                            )}
+                        </div>
+                    </div>
+                </>
+            ) : (
+                <></>
+            )}
             {/* {
                 category ?
                     <>
