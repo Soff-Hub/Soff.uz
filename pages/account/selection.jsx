@@ -3,9 +3,14 @@ import Link from 'next/link';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
+import { useRouter } from 'next/router';
 
 const Selection = () => {
     const { user } = useSelector((state) => state.auth);
+    const router = useRouter()
+    const {select} = router.query
+    console.log(select);
+
     return user?.access ? (
         <Page404 />
     ) : (
@@ -16,7 +21,8 @@ const Selection = () => {
                         <div className='register-choose-button-parent_div' >
                             <Link
                                 // className="ps-btn ps-btn--fullwidth "
-                                href="/account/register-user">
+                                // /account/login?role=customer
+                                href={`${select ?  `/account/login?role=customer` : `/account/register-user`}`}>
                                 <a className="register-choose-button">
                                     <div>
                                     <i class="fa-solid fa-user-tie fa-2xl"></i>
@@ -28,7 +34,7 @@ const Selection = () => {
                         <div className='register-choose-button-parent_div' >
                             <Link
                                 // className="ps-btn ps-btn--fullwidth "
-                                href="/account/register">
+                                href={`${select ? `/account/login?role=seller` : '/account/register'}`}>
                                 <a className="register-choose-button">
                                     <div>
                                     <i class="fa-solid fa-user-pen fa-2xl"></i>

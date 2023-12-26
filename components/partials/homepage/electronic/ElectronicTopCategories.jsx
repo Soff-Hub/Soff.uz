@@ -3,6 +3,7 @@ import Link from 'next/link';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import NextImage from '~/components/nextImage';
 import NextImageCard from '~/components/nextImagecard';
+import Meta from '~/components/shared/headers/Meta';
 
 function ElectronicTopCategories() {
     const [category, getCategory] = useState([]);
@@ -21,6 +22,7 @@ function ElectronicTopCategories() {
 
     return (
         <div className="ps-top-categories">
+              <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
             <div className="container">
                 <h3>
                     <Link

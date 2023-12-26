@@ -4,10 +4,12 @@ import PageContainer from '~/components/layouts/PageContainer';
 
 import HomeElectronicsPage from './home/electronic'
 import { baseUrl } from '~/repositories/Repository';
+import Meta from '~/components/shared/headers/Meta';
 
 const HomepageDefaultPage = ({ category }) => {
     return (
         <PageContainer title="Soff - barcha ma'lumotlar bazasi">
+               <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
             <HomeElectronicsPage category={category?.results} />
         </PageContainer>
     );

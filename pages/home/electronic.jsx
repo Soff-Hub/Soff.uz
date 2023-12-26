@@ -8,6 +8,7 @@ import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { useSelector } from 'react-redux';
 import VedioPage from '~/components/VedioPage';
+import Meta from '~/components/shared/headers/Meta';
 
 const HomeElectronicsPage = ({ category }) => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
@@ -29,6 +30,7 @@ const HomeElectronicsPage = ({ category }) => {
 
     return (
         <main id="homepage-7">
+              <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
             <ElectronicBanner />
             <VedioPage/>
             <ElectronicTopCategories />
