@@ -12,23 +12,31 @@ const Selection = () => {
         <PageContainer>
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
-                    <div className="ps-form--account d-flex justify-content-around">
-                        <Link
-                            className="ps-btn ps-btn--fullwidth "
-                            href="/account/register-user">
-                            <a className="register-choose-button">
-                                <i className="fa-solid fa-user me-3"></i>{' '}
-                                <span> Foydalanuvchi</span>
-                            </a>
-                        </Link>
-                        <Link
-                            className="ps-btn ps-btn--fullwidth register-choose-button"
-                            href={`/account/register`}>
-                            <a className="register-choose-button">
-                                <i className="fa-solid fa-user-plus me-3"></i>{' '}
-                                <span>Sotuvchi</span>
-                            </a>
-                        </Link>
+                    <div className="ps-form--account d-flex justify-content-around register-choose-button-parent ">
+                        <div className='register-choose-button-parent_div' >
+                            <Link
+                                // className="ps-btn ps-btn--fullwidth "
+                                href="/account/register-user">
+                                <a className="register-choose-button">
+                                    <div>
+                                    <i class="fa-solid fa-user-tie fa-2xl"></i>
+                                    </div>
+                                    <h3> Foydalanuvchi</h3>
+                                </a>
+                            </Link>
+                        </div>
+                        <div className='register-choose-button-parent_div' >
+                            <Link
+                                // className="ps-btn ps-btn--fullwidth "
+                                href="/account/register">
+                                <a className="register-choose-button">
+                                    <div>
+                                    <i class="fa-solid fa-user-pen fa-2xl"></i>
+                                    </div>
+                                    <h3> Sotuvchi</h3>
+                                </a>
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>

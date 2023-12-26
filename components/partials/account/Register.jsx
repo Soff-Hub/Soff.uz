@@ -286,7 +286,7 @@ class Register extends Component {
                                                     Ro'yxatdan o'tish
                                                 </button>
                                             ) : (
-                                                <Tooltip title="Ro'yxatdan o'tishingiz uchun tanishuv shartlariga rozilik bildirishingiz zarur">
+                                                <Tooltip className='ps-btn ps-btn--fullwidth' title="Ro'yxatdan o'tishingiz uchun tanishuv shartlariga rozilik bildirishingiz zarur">
                                                     <button
                                                         disabled={true}
                                                         style={{

@@ -17,8 +17,7 @@ export default function VedioPage() {
                     <i class="fa-regular fa-circle-play fa-beat fa-2xl"></i>
                 </div>
                 <div className="content">
-                    <h3>Soff.uz</h3>
-                    <p> - biz bilan bilimingiz orqali daromad qiling</p>
+                    <p> <span>Soff.uz</span> - biz bilan bilimingiz orqali daromad qiling</p>
                 </div>
             </div>
             <>
