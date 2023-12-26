@@ -84,12 +84,14 @@ class Login extends Component {
     };
 
     handleGoogleClick = async (e) => {
+        this.setState({reportGoogle : false})
         const { registerGoogleUser } = useAuth();
         const url = this.props.url;
         window.location = 'http://api.soff.uz/auth/social/login/customer';
         const user = await registerGoogleUser(url, this.state.role);
         if (user) {
             if (user.status >= 400 && user.status !== 500) {
+                this.setState({reportGoogle : true})
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik',
@@ -97,7 +99,8 @@ class Login extends Component {
                 });
                 modal.update;
             } else if (user.status == 200 || user.status == 201) {
-                localStorage.setItem('token', user.data.access);
+                this.setState({reportGoogle : true})
+                // localStorage.setItem('token', user.data.access);
             }
         }
     };
