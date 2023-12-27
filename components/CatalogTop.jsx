@@ -49,14 +49,21 @@ console.log('category', data);
                                             )}
                                         </div>
                                         <div className="ps-block__content">
+                                            {
+                                                category.child.length > 0 ?
                                             <h4>
                                                 <Link
                                                     href={`/category/${category.slug}`}>
                                                     <a>{category.name}</a>
                                                 </Link>
                                             </h4>
+                                                    :
+                                                    <h4>
+                                                   {category.name}
+                                                </h4>  
+                                            }
                                             <ul>
-                                                {category.child &&
+                                                {category.child.length > 0 ?
                                                     category.child
                                                         .slice(0, 3)
                                                         .map((link) => {
@@ -78,7 +85,12 @@ console.log('category', data);
                                                                     </li>
                                                                 </>
                                                             );
-                                                        })}
+                                                        }) : 
+                                                        <li>
+                                                            Tez orada...
+                                                        </li>
+                                                        
+                                                        }
                                                 {category?.child?.length >
                                                     0 && (
                                                     <li>

@@ -1629,7 +1629,7 @@
     }
     .bannerModal2Carousel {
         top: 25%;
-        left: 80%;
+        left: 64%;
         max-width: 400px;
     }
 }
@@ -1663,9 +1663,7 @@
         top: 20%;
         left: 15%;
      
-    }
-
-   
+    } 
 
     .bannerModal3 {
         position: fixed;
@@ -1674,6 +1672,12 @@
        
     
     }
+
+    // .bannerModal2Carousel {
+    //     top: 25%;
+    //     left: 70%;
+    //     max-width: 400px;
+    // }
 }
 
 @media (min-width:1000px) and (max-width:1200px) {

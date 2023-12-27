@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicProductGroupWithCarousel';
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
 import ElectronicTopCategories from '~/components/partials/homepage/electronic/ElectronicTopCategories';
@@ -9,6 +9,7 @@ import useWishlist from '~/hooks/useWishlist';
 import { useSelector } from 'react-redux';
 import VedioPage from '~/components/VedioPage';
 import Meta from '~/components/shared/headers/Meta';
+import Link from 'next/link';
 
 const HomeElectronicsPage = ({ category }) => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
@@ -28,12 +29,19 @@ const HomeElectronicsPage = ({ category }) => {
         }
     }, []);
 
+    const memoizedCard = useMemo(() => {
+        return  <ElectronicTopCategories />
+    }, []);
+    const memoizedBanner = useMemo(() => {
+        return   <ElectronicBanner />
+    }, []);
+
     return (
         <main id="homepage-7">
               <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
-            <ElectronicBanner />
+          {memoizedBanner}
             <VedioPage/>
-            <ElectronicTopCategories />
+           {memoizedCard}
             {category?.length > 0 ? (
                 category?.map(
                     (item, index) =>
@@ -60,6 +68,24 @@ const HomeElectronicsPage = ({ category }) => {
             )}
 
             <SiteFeatures />
+            <div className="text-center">
+                    <div className=" more-parent">
+                        <div className="more">
+                            <Link href="/topCategory/categories">
+                                <a>
+                                    Ko'proq
+                                    <i
+                                        className="fa-solid fa-angles-right fa-beat-fade"
+                                        style={{
+                                            fontSize: '13px',
+                                            paddingTop: '1px',
+                                            paddingLeft: '5px',
+                                        }}></i>
+                                </a>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
         </main>
     );
 };
