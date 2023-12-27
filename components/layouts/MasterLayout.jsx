@@ -19,14 +19,14 @@ const MasterLayout = ({ children }) => {
     const { pathname } = router;
 
     function initEcomerceValues() {
-        if (cookies) {
-            if (cookies.wishlist) {
-                dispatch(setWishlistTtems(cookies.wishlist));
-            }
-            if (cookies.compare) {
-                dispatch(setCompareItems(cookies.compare));
-            }
-        }
+        // if (cookies) {
+        //     if (cookies.wishlist) {
+        //         dispatch(setWishlistTtems(cookies.wishlist));
+        //     }
+        //     if (cookies.compare) {
+        //         dispatch(setCompareItems(cookies.compare));
+        //     }
+        // }
     }
 
     useEffect(() => {

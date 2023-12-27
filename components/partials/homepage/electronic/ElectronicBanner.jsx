@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
@@ -15,66 +16,46 @@ function ElectronicBanner() {
     const dispatch = useDispatch();
 
     async function getBannerItems() {
-        const responseData = await MediaRepository.getBannersBySlug();
-        if (responseData) {
-            setBannerItems(responseData);
+        try {
+            const responseData = await MediaRepository.getBannersBySlug();
+            if (responseData) {
+                setBannerItems(responseData);
+            }
+        } catch (error) {
+            console.error("Error fetching banners: ", error);
         }
     }
-    function CloseButton() {
+
+    function closeBanner() {
         dispatch(Category(false));
         setModalClose(false);
-        localStorage.setItem('soat', date.getHours());
+        localStorage.setItem('soat', new Date().getHours());
     }
-    const date = new Date();
+
     useEffect(() => {
         getBannerItems();
-        // console.log('==>', date.getHours());
-        if (localStorage.getItem('soat')) {
-            const expr = localStorage.getItem('soat');
-            switch (expr) {
-                case expr === 20:
-                    if (date.getHours() === 1) {
-                        setModal(true);
-                        localStorage.removeItem('modal');
-                    }
-                    break;
-                case expr === 21:
-                    if (date.getHours() === 2) {
-                        setModal(true);
-                        localStorage.removeItem('modal');
-                    }
-                    break;
-                case expr === 22:
-                    if (date.getHours() === 2) {
-                        setModal(true);
-                        localStorage.removeItem('modal');
-                    }
-                    break;
-                case expr === 23:
-                    if (date.getHours() === 2) {
-                        setModal(true);
-                        localStorage.removeItem('modal');
-                    }
-                    break;
-                case expr === 24:
-                    if (date.getHours() === 2) {
-                        setModal(true);
-                    }
+        const expr = localStorage.getItem('soat');
+        const hours = new Date().getHours();
+
+        if (expr) {
+            switch (true) {
+                case expr === '20':
+                case expr === '21':
+                case expr === '22':
+                case expr === '23':
+                case expr === '24':
+                    setModal(hours === 2);
                     break;
                 default:
-                    if (expr + 5 === date.getHours()) {
-                        setModal(true);
-                        localStorage.removeItem('modal');
-                    } else {
-                        setModal(false);
-                    }
+                    setModal(expr + 5 === hours);
+                    break;
             }
         }
     }, []);
 
     return (
         <>
-        
+
             <section className="ps-home-banner">
                 <div className="container">
                     <div className="ps-section__left">
@@ -83,15 +64,15 @@ function ElectronicBanner() {
                                 <Link href={`${bannerItem?.[0]?.url}`}>
                                     <a>
                                         {/* <img
-                                            style={{
-                                                width: '100%',
-                                                height: '370px',
-                                                backgroundImage: `url(${bannerItem?.[0]?.image})`,
-                                                backgroundPosition: 'center',
-                                                backgroundRepeat: 'no-repeat',
-                                                backgroundSize: 'cover',
-                                            }}
-                                        /> */}
+                                    style={{
+                                        width: '100%',
+                                        height: '370px',
+                                        backgroundImage: `url(${bannerItem?.[0]?.image})`,
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                        backgroundSize: 'cover',
+                                    }}
+                                /> */}
                                         <NextImage
                                             url={bannerItem[0]?.image}
                                             width="800px"
@@ -185,7 +166,7 @@ function ElectronicBanner() {
             {modal ? (
                 <>
                     <div
-                        onClick={CloseButton}
+                        onClick={closeBanner}
                         className={
                             modalClose
                                 ? 'modalBannerCarousel '
@@ -202,7 +183,7 @@ function ElectronicBanner() {
                             style={{
                                 position: 'absolute',
                                 right: 0,
-                                top:' -9px',
+                                top: ' -9px',
                                 zIndex: 1
                             }}
                             >
@@ -210,7 +191,7 @@ function ElectronicBanner() {
                                 className="fs-3"
                                 style={{ cursor: 'pointer' }}>
                                 <i
-                                    onClick={CloseButton}
+                                    onClick={closeBanner}
                                     className="fa-solid  fa-2x p-3 text-white fa-xmark"></i>{' '}
                             </span>
                         </div>
@@ -237,31 +218,32 @@ function ElectronicBanner() {
                 <></>
             )}
             {/* {
-                category ?
-                    <>
-                        <div    onClick={CloseButton} className={modalClose ? "modalBanner " : "modalBanner2 "} >
-                        </div>
-                        <div className={modalClose ? " bannerModal2  " : "bannerModal3  "} > 
-                            <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
-                                <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={CloseButton} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
-                            </div>
-                            <div className="iframe-container" style={{border:'1px solid red'}}>
-                                {
-                                    modalClose ?
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/SF5MuRFg-0I?si=G3Z1ZqUBSvAfUPJU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                                 :
-                                 <></>
-                                }
-                            </div>
+        category ?
+            <>
+                <div    onClick={CloseButton} className={modalClose ? "modalBanner " : "modalBanner2 "} >
+                </div>
+                <div className={modalClose ? " bannerModal2  " : "bannerModal3  "} > 
+                    <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
+                        <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={CloseButton} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
+                    </div>
+                    <div className="iframe-container" style={{border:'1px solid red'}}>
+                        {
+                            modalClose ?
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/SF5MuRFg-0I?si=G3Z1ZqUBSvAfUPJU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                         :
+                         <></>
+                        }
+                    </div>
 
 
-                        </div>
-                    </>
-                    :
-                    <></>
-            } */}
+                </div>
+            </>
+            :
+            <></>
+    } */}
         </>
     );
 }
 
 export default ElectronicBanner;
+
