@@ -15,12 +15,11 @@ const HomeElectronicsPage = ({ category }) => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
 
     const { setAllCartItem } = useCart();
-    const { setAllSaved } = useWishlist();
+    const { setAllSaved } = useWishlist();  
 
     useEffect(() => {
-        if (
-            cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))
-        ) {
+        // localStoragedagi ma'lumotlar va redux store o'rtasidagi ma'lumotlar solishtiriladi
+        if (cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))) {
             setAllCartItem();
         }
 
@@ -29,34 +28,37 @@ const HomeElectronicsPage = ({ category }) => {
         }
     }, []);
 
+    // Memoization bilan komponentlarni o'zlashtirish
     const memoizedCard = useMemo(() => {
-        return  <ElectronicTopCategories />
+        return <ElectronicTopCategories />;
     }, []);
+
     const memoizedBanner = useMemo(() => {
-        return   <ElectronicBanner />
+        return <ElectronicBanner />;
     }, []);
 
     return (
         <main id="homepage-7">
-              <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
-          {memoizedBanner}
-            <VedioPage/>
-           {memoizedCard}
+            <Meta title="Soff.uz" image="/static/img/soff/soff_green_white.png" />
+            {memoizedBanner}
+            <VedioPage />
+            {memoizedCard}
+
             {category?.length > 0 ? (
-                category?.map(
-                    (item, index) =>
-                        item?.promotional_sliders?.length > 0 && (
-                            <ElectronicProductGroupWithCarousel
-                                collectionSlug="electronics-best-sellers"
-                                title={item.name}
-                                data={item}
-                                id={item.id}
-                                key={index}
-                                slug={item.slug}
-                            />
-                        )
+                category.map((item, index) =>
+                    item?.promotional_sliders?.length > 0 && (
+                        <ElectronicProductGroupWithCarousel
+                            collectionSlug="electronics-best-sellers"
+                            title={item.name}
+                            data={item}
+                            id={item.id}
+                            key={index}
+                            slug={item.slug}
+                        />
+                    )
                 )
             ) : (
+                // Kategoriya yuklanishi kutilayotgan payt Progress bar ko'rsatiladi
                 <div
                     style={{
                         display: 'flex',
@@ -66,26 +68,26 @@ const HomeElectronicsPage = ({ category }) => {
                     <PropagateLoader className="progres-color" />
                 </div>
             )}
-
+            
             <SiteFeatures />
             <div className="text-center">
-                    <div className=" more-parent">
-                        <div className="more">
-                            <Link href="/topCategory/categories">
-                                <a>
-                                    Ko'proq
-                                    <i
-                                        className="fa-solid fa-angles-right fa-beat-fade"
-                                        style={{
-                                            fontSize: '13px',
-                                            paddingTop: '1px',
-                                            paddingLeft: '5px',
-                                        }}></i>
-                                </a>
-                            </Link>
-                        </div>
+                <div className=" more-parent">
+                    <div className="more">
+                        <Link href="/topCategory/categories">
+                            <a>
+                                Ko'proq
+                                <i
+                                    className="fa-solid fa-angles-right fa-beat-fade"
+                                    style={{
+                                        fontSize: '13px',
+                                        paddingTop: '1px',
+                                        paddingLeft: '5px',
+                                    }}></i>
+                            </a>
+                        </Link>
                     </div>
                 </div>
+            </div>
         </main>
     );
 };
