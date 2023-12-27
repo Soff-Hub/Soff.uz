@@ -1615,6 +1615,11 @@
   }
 
 
+  .modal-dating{
+    height: 500px;
+    overflow-y: scroll;
+  }
+
   
 
 @media (min-width:1500px) and (max-width:2000px) {
@@ -1624,7 +1629,7 @@
     }
     .bannerModal2Carousel {
         top: 25%;
-        left: 80%;
+        left: 64%;
         max-width: 400px;
     }
 }
@@ -1658,9 +1663,7 @@
         top: 20%;
         left: 15%;
      
-    }
-
-   
+    } 
 
     .bannerModal3 {
         position: fixed;
@@ -1669,13 +1672,19 @@
        
     
     }
+
+    // .bannerModal2Carousel {
+    //     top: 25%;
+    //     left: 70%;
+    //     max-width: 400px;
+    // }
 }
 
 @media (min-width:1000px) and (max-width:1200px) {
     .bannerModal2 {
         position: fixed;
         top: 20%;
-        left: 11%;
+        left: 15%;
      
     }
 
@@ -1769,8 +1778,8 @@
     .bannerModal2 {
         padding-bottom: 100%;
         position: fixed;
-        top: 30%;
-        left: 12%;
+        top: 22%;
+        left: 18%;
         width: 75%;
         max-width: 860px;
 
