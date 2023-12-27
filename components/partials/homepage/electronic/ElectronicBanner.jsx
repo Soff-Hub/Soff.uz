@@ -201,8 +201,9 @@ function ElectronicBanner() {
                             className="closeButton"
                             style={{
                                 position: 'absolute',
-                                right: '-50px',
-                                top: '-10px',
+                                right: 0,
+                                top:' -9px',
+                                zIndex: 1
                             }}>
                             <span
                                 className="fs-3"
