@@ -13,7 +13,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Category_Lists, TopCategory_Lists } from '~/store/auth/action';
 import NextImageCard from '~/components/nextImagecard';
 
-const HeaderElectronic = () => {
+const HeaderElectronic = ({kk}) => {
+    console.log('next function category => ', kk);
     const {
         category_lists: categoryData,
         top_category_lists: topCategoryData,
@@ -40,12 +41,12 @@ const HeaderElectronic = () => {
         if (process.browser) {
             window.addEventListener('scroll', stickyHeader);
         }
-        if (categoryData?.length === 0) {
-            getCategoryFunc();
-        }
-        if (topCategoryData?.length === 0) {
-            getTopCategory();
-        }
+        // if (categoryData?.length === 0) {
+        //     getCategoryFunc();
+        // }
+        // if (topCategoryData?.length === 0) {
+        //     getTopCategory();
+        // }
     }, []);
 
     return (
@@ -63,13 +64,11 @@ const HeaderElectronic = () => {
                                 /> */}
                             <NextImageCard
                              url="/static/img/soff/soff_green_white.png" clasS='logoo' width='200px' height='60px' />
-
                             </a>
                         </Link>
                         <div className="menu--product-categories">
                             <div className="menu__toggle">
                                 <i className="icon-menu"></i>
-
                                 <span> Kategoriya </span>
                             </div>
                             <div className="menu__content">
@@ -90,10 +89,10 @@ const HeaderElectronic = () => {
             </div>
             <nav className="navigation">
                 <div className="container">
-                    <Menu
+                    {/* <Menu
                         source={topCategoryData}
                         className="menu menu--electronic"
-                    />
+                    /> */}
                 </div>
             </nav>
         </header>
@@ -101,3 +100,29 @@ const HeaderElectronic = () => {
 };
 
 export default HeaderElectronic;
+
+
+export async function getServerSideProps() {
+    try {
+        const request = await fetch(baseUrl + 'seller/admin/category-parent/');
+        if (!request.ok) {
+            console.log('-->',request)
+            throw new Error('Request to the API failed with status ' + request.status);
+        }
+        const categoryResponse = await request.json();
+
+        return {
+            props: {
+                kk: categoryResponse,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        return {
+            props: {
+                kk: null,
+            },
+        };
+    }
+}
+

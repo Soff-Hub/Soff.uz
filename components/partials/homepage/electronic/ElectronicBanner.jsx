@@ -204,7 +204,8 @@ function ElectronicBanner() {
                                 right: 0,
                                 top:' -9px',
                                 zIndex: 1
-                            }}>
+                            }}
+                            >
                             <span
                                 className="fs-3"
                                 style={{ cursor: 'pointer' }}>

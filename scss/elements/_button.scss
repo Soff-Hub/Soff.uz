@@ -18,11 +18,11 @@ button {
 }
 
 
-.ant-btn-default{
-    &:hover{
-        color: #fff !important;
-    }
-}
+// .ant-btn-default{
+//     &:hover{
+//         color: #fff !important;
+//     }
+// }
 
 :where(.css-dev-only-do-not-override-pr0fja).ant-btn >span{
     font-weight: 600;

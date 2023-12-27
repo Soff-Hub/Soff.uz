@@ -60,6 +60,13 @@ const ModuleProductActions = ({ product, ecomerce }) => {
                 onOk={hideModalOk}
                 onCancel={hideModal}
                 okText="Savatga o'tish"
+                cancelButtonProps={{style:{
+                    color:'#000'
+                }}}
+                okButtonProps={{style:{
+                    color:'#fff',
+                }}}
+                
                 cancelText="Xaridlarni davom etirish">
                 <p></p>
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
