@@ -51,7 +51,7 @@ const ProductCategoryScreen = () => {
             null
         );
         if (responseData) {
-            setFilteredData(responseData?.results);
+            setFilteredData(responseData?.results); 
             console.log("-->", responseData);
             setCount(responseData.count);
         }
@@ -127,7 +127,7 @@ const ProductCategoryScreen = () => {
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories data={category}  />
+                            <WidgetShopCategories data={category} />
                             <WidgetShopFilterByPriceRange
                                 setFilteredData={setFilteredData}
                                 chaildId={chaildId}
