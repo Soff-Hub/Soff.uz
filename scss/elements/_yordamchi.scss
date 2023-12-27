@@ -1399,7 +1399,7 @@
     animation: modalClose 1s ease-in-out forwards;
     position: fixed;
     top: 15%;
-    left: 25%;
+    left: -100%;
     z-index: 99999;
     height: 100%;
   }
@@ -1656,7 +1656,7 @@
     .bannerModal3 {
         position: fixed;
         top: 20%;
-        left: 18%;
+        left: -200%;
     }
    
 }
@@ -1675,7 +1675,7 @@
 
     .bannerModal3 {
         position: fixed;
-        top: 20%;
+        top: -100%;
         left: 15%;
        
     
@@ -1699,7 +1699,7 @@
     .bannerModal3 {
         position: fixed;
         top: 20%;
-        left: 11%;
+        left: -100%;
        
     
     }
@@ -1720,7 +1720,7 @@
 
         position: fixed;
         top: -30%;
-        left: 15%;
+        left: -100%;
         width: 75%;
         max-width: 860px;
     }
@@ -1748,7 +1748,7 @@
         height: 0;
         overflow: hidden;
         width: 100%;
-        left: 22%;
+        left: -100%;
         max-width: 860px;
     
     }
@@ -1795,7 +1795,7 @@
     .bannerModal3{
         position: fixed;
         top: 30%;
-        left: 12%;
+        left: -100%;
         width: 75%;
         max-width: 860px;
     }
@@ -1866,7 +1866,7 @@
     }
     .bannerModal3{
         position: fixed;
-        left: 0;
+        left: -100%;
     }
 
     .iframe-container {
@@ -1915,7 +1915,7 @@
     }
     .bannerModal3{
         position: fixed;
-        left: 0;
+        left: -100%;
     }
 
     .iframe-container {
