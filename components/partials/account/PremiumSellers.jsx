@@ -7,6 +7,7 @@ import { Pagination } from 'antd';
 import NextImageCard from '~/components/nextImagecard';
 import ModalDeletePostEdit from './ModalPostEdit';
 import ModalDelete from './Modal';
+import DebounceSelect from './SearchPMSellers';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -17,6 +18,7 @@ function Notifications() {
     const [currPage, setCurrPage] = useState(1)
     const [isPremium, setIsPremium] = useState(null)
     const [discount, setDiscount] = useState(0)
+    const [value, setValue] = useState([]);
 
     async function GetItems(page) {
         const ItemsData = await GetRepository.getPMSellers(page, search, user?.access);
@@ -28,10 +30,8 @@ function Notifications() {
 
     const getDicount = async (id) => {
         setIsPremium(id)
-        // const ItemsData = await GetRepository.getPMSellerDetail(id, user?.access)
-        // console.log(ItemsData);
-        await GetRepository.getPMSellerDetail(id, user?.access).then(() => {
-            setDiscount(20)
+        await GetRepository.getPMSellerDetail(id, user?.access).then((resp) => {
+            setDiscount(resp.privilege_percentage)
             const a = document.createElement('a')
             const body = document.querySelector('.ps-page__left')
             a.setAttribute("data-bs-target", "#exampleModalMyProductsPrice")
@@ -44,8 +44,6 @@ function Notifications() {
         return 0
     }
 
-    console.log(discount);
-
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum)
         GetItems(pageNum, search)
@@ -55,11 +53,34 @@ function Notifications() {
         await GetRepository.updatePMSellerDetail(id, { privilege_percentage: discount }, user?.access)
     }
 
+    console.log(user);
+
 
     const handleClickIdEditModal = async () => {
         await GetRepository.updatePMSellerDetail(+isPremium, { has_privilege: false }, user?.access)
         GetItems(currPage)
     }
+
+    async function fetchUserList(username) {
+        return fetch('https://api.soff.uz/api/v1/seller/admin/seller-list/?search=' + username, {
+            headers: {
+                Authorization: `Bearer ${user?.access}`
+            }
+        })
+            .then((response) => response.json())
+            .then((body) => body.results.map(user => ({
+                label: `${user.first_name}`,
+                value: user.id,
+            })));
+    }
+
+    const updateToPremium = async () => {
+        for (const item of value) {
+            await GetRepository.updatePMSellerDetail(+item.value, { has_privilege: true, privilege_percentage: discount }, user?.access)
+        }
+        return GetItems(currPage)
+    }
+
 
 
     useEffect(() => {
@@ -67,21 +88,6 @@ function Notifications() {
     }, [search])
 
     const columns = [
-        {
-            title: 'Avatar',
-            dataIndex: 'image',
-            key: 'name',
-            render: (image) => (
-                <div>
-                    {
-                        image ?
-                            <NextImageCard url={image} clasS='rounded-3 ' width='54px' height='54px' />
-                            :
-                            <span className='fs-4'><i className="  fa-2x fa-solid fa-circle-user"></i></span>
-                    }
-                </div>
-            ),
-        },
         {
             title: 'Ism',
             dataIndex: 'first_name',
@@ -114,6 +120,14 @@ function Notifications() {
             ),
         },
         {
+            title: 'Ustama (%)',
+            dataIndex: 'privilege_percentage',
+            key: 'privilege_percentage',
+            render: (privilege_percentage) => (
+                <strong>{privilege_percentage} %</strong>
+            ),
+        },
+        {
             title: 'Mahsulotlar',
             dataIndex: 'total_product',
             key: 'address',
@@ -138,7 +152,7 @@ function Notifications() {
             )
 
         },
-        {
+        user?.is_superuser ? {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'id',
@@ -151,8 +165,7 @@ function Notifications() {
                     <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                 </a>
             </div>
-
-        },
+        } : <></>
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -164,16 +177,23 @@ function Notifications() {
                         </div>
                     </div>
                     <div className="col-lg-8 pb-5">
-                        <ModalDelete onSuccess={handleClickIdEditModal} />
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className='bg-white p-3'>
                                     <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{ backgroundColor: "GrayText" }} >Sotuvchilar soni: {pageCount} ta</span>
-                                    <label className='form-label border w-100 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
-                                        <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
-                                        <span className='px-4'><i className='fa-solid fa-search '></i></span>
-
-                                    </label>
+                                    <div className="d-flex" style={{ alignItems: 'center', gap: 6 }}>
+                                        <label className='form-label border w-100 d-flex justify-content-between align-items-center mb-0' style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+                                        </label>
+                                        {user?.is_superuser && <button
+                                            type="type"
+                                            data-bs-target="#add-seller"
+                                            data-bs-toggle="modal"
+                                            className="btn btn-success d-block w-25" style={{ padding: '12px 0px' }}>
+                                            <span className="fs-3">Qo'shish</span>
+                                        </button>}
+                                    </div>
                                     <Table scroll={{ x: 1150 }} dataSource={data} columns={columns} pagination={false}
                                     />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} />
@@ -187,6 +207,25 @@ function Notifications() {
                         <input id='discount' onChange={(e) => setDiscount(e.target.value)} max={100} min={0} value={discount} type="number" className='form-control rounded-3' placeholder='Ustama qiymati (%)' />
                     </label>
                 </ModalDeletePostEdit >
+                <ModalDeletePostEdit dataBsTarget="add-seller" onSubmited={updateToPremium} formID="products-edit_price" >
+                    <label htmlFor="discount" className='form-label'>Sotuvchilarni belgilang</label>
+                    <DebounceSelect
+                        mode="multiple"
+                        value={value}
+                        placeholder="Qidirish..."
+                        fetchOptions={fetchUserList}
+                        onChange={(newValue) => {
+                            setValue(newValue);
+                        }}
+                        style={{
+                            width: '100%',
+                        }}
+                    />
+                    <label htmlFor="discount" className='form-label'>Ustamasi (%)
+                        <input id='discount' onChange={(e) => setDiscount(e.target.value)} max={100} min={0} value={discount} type="number" className='form-control rounded-3' placeholder='Ustama qiymati (%)' />
+                    </label>
+                </ModalDeletePostEdit >
+                <ModalDelete onSuccess={handleClickIdEditModal} />
             </div>
         </section>
     );

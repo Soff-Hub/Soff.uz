@@ -280,7 +280,7 @@ function MyProductsLists() {
                 <div >
                     {
                         poster_url ?
-                        <NextImageCard url={poster_url} clasS='rounded-3 mb-2' width='54px' height='54px' />
+                            <NextImageCard url={poster_url} clasS='rounded-3 mb-2' width='54px' height='54px' />
                             :
                             <i key={poster_url} className="fa-solid fa-image fa-2x"></i>
                     }
@@ -353,11 +353,11 @@ function MyProductsLists() {
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
                             </a>
                         </Link> :
-                        data.some(el => el.id == id && el.data_status?.status === 'approved') ?
-                            <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal" onClick={() => handleClickIdEditModal(id)} >
-                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
-                            </a>
-                            :
+                        // data.some(el => el.id == id && el.data_status?.status === 'approved') ?
+                        //     <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal" onClick={() => handleClickIdEditModal(id)} >
+                        //         <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
+                        //     </a>
+                        //     :
                             data.some(el => el.id == id && el.data_status?.status === 'cancelled') ?
                                 <Link href={"#"}>
                                     <a>

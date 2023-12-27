@@ -545,7 +545,7 @@ class GetRepository {
     }
 
     async getPMSellerDetail(id, token) {
-        const endPoint = `admin/premium-detail/${id}`;
+        const endPoint = `admin/premium-user/${id}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
