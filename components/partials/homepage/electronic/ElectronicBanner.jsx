@@ -163,7 +163,7 @@ function ElectronicBanner() {
                 </div>
             </section>
 
-            {modal ? (
+            {false ? (
                 <>
                     <div
                         onClick={closeBanner}
