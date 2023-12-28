@@ -21,7 +21,7 @@ export default function VedioPage() {
                 </div>
             </div>
             <>
-                {/* <div
+                <div
                     onClick={CloseButton}
                     className={
                         modalClose ? 'modalBanner ' : 'modalBanner2 '
@@ -57,7 +57,7 @@ export default function VedioPage() {
                             <></>
                         )}
                     </div>
-                </div> */}
+                </div>
             </>
         </div>
     );
