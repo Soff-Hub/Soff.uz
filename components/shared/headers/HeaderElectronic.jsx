@@ -41,12 +41,12 @@ const HeaderElectronic = ({kk}) => {
         if (process.browser) {
             window.addEventListener('scroll', stickyHeader);
         }
-        // if (categoryData?.length === 0) {
-        //     getCategoryFunc();
-        // }
-        // if (topCategoryData?.length === 0) {
-        //     getTopCategory();
-        // }
+        if (categoryData?.length === 0) {
+            getCategoryFunc();
+        }
+        if (topCategoryData?.length === 0) {
+            getTopCategory();
+        }
     }, []);
 
     return (
@@ -89,10 +89,10 @@ const HeaderElectronic = ({kk}) => {
             </div>
             <nav className="navigation">
                 <div className="container">
-                    {/* <Menu
+                    <Menu
                         source={topCategoryData}
                         className="menu menu--electronic"
-                    /> */}
+                    />
                 </div>
             </nav>
         </header>
