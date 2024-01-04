@@ -61,6 +61,12 @@ const ModuleDetailShoppingActions = ({ product }) => {
                 open={open}
                 onOk={hideModalOk}
                 onCancel={hideModal}
+                cancelButtonProps={{style:{
+                    color:'#000'
+                }}}
+                okButtonProps={{style:{
+                    color:'#fff',
+                }}}
                 okText="Savatga o'tish"
                 cancelText="Xaridlarni davom etirish">
                 <p></p>

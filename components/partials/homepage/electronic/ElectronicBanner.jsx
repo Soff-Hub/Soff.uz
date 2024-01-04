@@ -162,8 +162,7 @@ function ElectronicBanner() {
                     </div>
                 </div>
             </section>
-
-            {modal ? (
+            { modal ? (
                 <>
                     <div
                         onClick={closeBanner}
@@ -185,7 +184,8 @@ function ElectronicBanner() {
                                 right: 0,
                                 top: ' -9px',
                                 zIndex: 1
-                            }}>
+                            }}
+                            >
                             <span
                                 className="fs-3"
                                 style={{ cursor: 'pointer' }}>
@@ -199,7 +199,6 @@ function ElectronicBanner() {
                                 <>
                                     <div className="modal-carousel-header">
                                         <h3>Xush kelibsiz! 😊</h3>
-                                        {/* <p>Qani boshladik unda</p> */}
                                         <p>
                                             Platformada qanday qilib daromad
                                             topish mumkin ?

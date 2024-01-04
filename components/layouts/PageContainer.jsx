@@ -33,11 +33,6 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-shop',
     },
     {
-        text: 'Pemium Sotuvchilar',
-        url: '/account/pemium-sellers',
-        icon: 'fa-solid fa-star',
-    },
-    {
         text: 'Mahsulotlar',
         url: '/account/products',
         icon: 'fa-solid fa-cube',
@@ -66,6 +61,11 @@ export let accountAdminLinks = [
         text: "Ariza bo'limi",
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
+    },
+    {
+        text: 'Pemium Sotuvchilar',
+        url: '/account/pemium-sellers',
+        icon: 'fa-solid fa-star',
     },
     {
         text: 'Context',
@@ -192,29 +192,29 @@ const PageContainer = ({
             <div>
                 <div
                     className={`${query === '/page/form'
-                        ? 'container faq-page-container'
-                        : query === '/page/questions'
                             ? 'container faq-page-container'
-                            : query === '/page/about-us'
+                            : query === '/page/questions'
                                 ? 'container faq-page-container'
-                                : query === '/page/become-a-seller'
+                                : query === '/page/about-us'
                                     ? 'container faq-page-container'
-                                    : query === '/page/video-list'
+                                    : query === '/page/become-a-seller'
                                         ? 'container faq-page-container'
-                                        : ''
+                                        : query === '/page/video-list'
+                                            ? 'container faq-page-container'
+                                            : ''
                         }  `}>
                     <div
                         className={` ${query === '/page/form'
-                            ? ''
-                            : query === '/page/questions'
                                 ? ''
-                                : query === '/page/about-us'
+                                : query === '/page/questions'
                                     ? ''
-                                    : query === '/page/become-a-seller'
+                                    : query === '/page/about-us'
                                         ? ''
-                                        : query === '/page/video-list'
+                                        : query === '/page/become-a-seller'
                                             ? ''
-                                            : 'd-none'
+                                            : query === '/page/video-list'
+                                                ? ''
+                                                : 'd-none'
                             }`}>
                         <FaqSaidbar />
                     </div>
