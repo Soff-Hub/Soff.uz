@@ -8,11 +8,12 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 
 import ShopItems from '~/components/partials/shop/ShopItems';
+import { baseUrl } from '~/repositories/Repository';
 
-const ProductCategoryScreen = () => {
+export default function ProductCategoryScreen() {
     const Router = useRouter();
     const { slug } = Router.query;
-    const [category, setCategory] = useState(null);
+    const [category, setCategory] = useState([]);
     const [filteredData, setFilteredData] = useState(null);
 
     const [chaildId, setchaildId] = useState(null);
@@ -51,7 +52,7 @@ const ProductCategoryScreen = () => {
             null
         );
         if (responseData) {
-            setFilteredData(responseData?.results); 
+            setFilteredData(responseData?.results);
             console.log("-->", responseData);
             setCount(responseData.count);
         }
@@ -149,4 +150,15 @@ const ProductCategoryScreen = () => {
         </PageContainer>
     );
 };
-export default ProductCategoryScreen;
+export async function getServerSideProps(context) {
+    const { slug } = context.params
+    const res = await fetch(`${baseUrl}customer/parent-category-list/?category=${slug}`);
+    const responseData = await res.json();
+    console.log('customer/parent-category-list/');
+
+    return {
+        props: {
+            category2: responseData,
+        },
+    };
+}
