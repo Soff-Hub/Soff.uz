@@ -20,7 +20,7 @@ export default function useProduct() {
                                         backgroundPosition: 'center',
                                     }}
                                     className="products-image1 m-0"></div> */}
-                                    <NextImageCard url={payload?.poster_url} clasS='products-image1 m-0 ' width='70px' height='70px'/>
+                                <NextImageCard url={payload?.poster_url} clasS='products-image1 m-0 ' width='70px' height='70px' />
                             </div>
                         ) : (
                             <div
@@ -40,19 +40,25 @@ export default function useProduct() {
             if (payload.sale_price) {
                 view = (
                     <p className="ps-product__price sale">
-                        {formatCurrency(payload.sale_price)}
-                        <span> so'm</span>
-                        <del className="ml-2">
-                            {formatCurrency(payload.price)}
+                        {payload.price > 0 ? <>
+                            {formatCurrency(payload.sale_price)}
                             <span> so'm</span>
-                        </del>
+                            <del className="ml-2">
+                                {formatCurrency(payload.price)}
+                                <span> so'm</span>
+                            </del>
+                        </> : "Bepul"}
+
                     </p>
                 );
             } else {
                 view = (
                     <p className="ps-product__price">
-                        {formatCurrency(payload.price)}
+                        {payload.price > 0 ? <>
+                            {formatCurrency(payload.price)}
                         <span> so'm</span>
+                        </> : "Bepul"}
+                        
                     </p>
                 );
             }

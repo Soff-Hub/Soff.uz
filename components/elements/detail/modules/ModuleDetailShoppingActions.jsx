@@ -5,6 +5,7 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
+import { fileDownloader } from '~/utilities/common-helpers';
 
 const ModuleDetailShoppingActions = ({ product }) => {
     const { setCartOneItem } = useCart();
@@ -12,7 +13,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
     const dispatch = useDispatch();
     const Router = useRouter();
     const statee = useSelector((state) => state.auth);
-    console.log('redux' , statee);
+    console.log('redux', statee);
     const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
@@ -56,47 +57,62 @@ const ModuleDetailShoppingActions = ({ product }) => {
     if (true) {
         return (
             <>
-             <Modal
-                title="Muvaffaqqiyatli"
-                open={open}
-                onOk={hideModalOk}
-                onCancel={hideModal}
-                cancelButtonProps={{style:{
-                    color:'#000'
-                }}}
-                okButtonProps={{style:{
-                    color:'#fff',
-                }}}
-                okText="Savatga o'tish"
-                cancelText="Xaridlarni davom etirish">
-                <p></p>
-                <p>Mahsulotingizni savatga qo'shdingiz!</p>
-                <p></p>
-            </Modal>
-            <div className="ps-product__shopping">
-                <a
-                    className="ps-btn ps-btn--black max-class"
-                    href="#"
-                    onClick={(e) => handleAddItemToCart(e)}>
-                    Savatga qo'shish
-                </a>
-                <a className="ps-btn max-class" href="#" onClick={(e) => handleBuynow(e)}>
-                 1 klikda sotib oling
-                </a>
-                <div className="ps-product__actions">
-                    <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                        <i
-                            className={`${
-                                wishlist?.some(
+                <Modal
+                    title="Muvaffaqqiyatli"
+                    open={open}
+                    onOk={hideModalOk}
+                    onCancel={hideModal}
+                    cancelButtonProps={{
+                        style: {
+                            color: '#000'
+                        }
+                    }}
+                    okButtonProps={{
+                        style: {
+                            color: '#fff',
+                        }
+                    }}
+                    okText="Savatga o'tish"
+                    cancelText="Xaridlarni davom etirish">
+                    <p></p>
+                    <p>Mahsulotingizni savatga qo'shdingiz!</p>
+                    <p></p>
+                </Modal>
+                <div className="ps-product__shopping">
+                    {
+                        product.price > 0 ? <>
+                            <a
+                                className="ps-btn ps-btn--black max-class"
+                                href="#"
+                                onClick={(e) => handleAddItemToCart(e)}>
+                                Savatga qo'shish
+                            </a>
+                            <a className="ps-btn max-class" href="#" onClick={(e) => handleBuynow(e)}>
+                                1 klikda sotib oling
+                            </a>
+                        </> : <a
+                            className="ps-btn ps-btn--black max-class"
+                            href="#"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                fileDownloader(product)
+                            }}>
+                            Bepul yuklab olish
+                        </a>
+                    }
+                    <div className="ps-product__actions">
+                        <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
+                            <i
+                                className={`${wishlist?.some(
                                     (item) =>
                                         Number(item.id) === Number(product.id)
                                 )
                                     ? 'fa-solid fa-heart text-danger'
                                     : 'icon-heart'
-                            } `}></i>
-                    </a>
+                                    } `}></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
             </>
         );
     }

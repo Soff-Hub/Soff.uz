@@ -9,7 +9,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
+import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -38,6 +38,7 @@ const Posts = () => {
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [free, setFree] = useState(false)
 
     const breadCrumb = [
         {
@@ -177,13 +178,18 @@ const Posts = () => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('title', title),
-            formData.append('price', narx),
-            formData.append('description', Fulldata),
-            formData.append('tags', tagSearchResult),
-            liveFile2?.images?.[0]?.id
-                ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
-                : 'None',
+        formData.append('title', title)
+        if (free) {
+            formData.append('price', 0)
+        }
+        else {
+            formData.append('price', narx)
+        }
+        formData.append('description', Fulldata)
+        formData.append('tags', tagSearchResult)
+        liveFile2?.images?.[0]?.id
+            ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
+            : 'None',
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
             formData.append('category', category_id[0]);
@@ -202,6 +208,7 @@ const Posts = () => {
                     "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             });
         } else {
+            console.log(patchItems)
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
@@ -278,6 +285,10 @@ const Posts = () => {
                 setChegirmaTek(true);
             }
         }
+    };
+
+    const handleFreeChange = (e) => {
+        setFree(!free)
     };
 
     useEffect(() => {
@@ -459,7 +470,7 @@ const Posts = () => {
                                             livePosterFile?.images?.map(
                                                 (item, i) =>
                                                     item.id ===
-                                                    fileImgFileID ? (
+                                                        fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
@@ -542,7 +553,7 @@ const Posts = () => {
                                     </Select>
                                 </div>
                             </div>
-                            <div className="row   mt-3">
+                            <div className="row mt-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot sotish narxi: *</p>{' '}
                                     <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
@@ -551,11 +562,13 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
+                                <Checkbox defaultChecked={free} className='col-md-2 d-flex align-items-center justify-content-start px-0 py-2' onChange={handleFreeChange}>Bepul</Checkbox>
                                 <input
                                     required
                                     type={narxNomi ? 'text' : 'number'}
-                                    className="form-control  rounded-3 col-md-8"
+                                    className="form-control  rounded-3 col-md-6"
                                     name="price"
+                                    disabled={free}
                                     value={taxminiyNarx}
                                     onChange={(e) => (
                                         setNarxNomi(false),
@@ -647,8 +660,8 @@ const Posts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                      removePrefix(taxminiyNarx)
-                                                  ) + "so'm"
+                                                    removePrefix(taxminiyNarx)
+                                                ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -675,10 +688,10 @@ const Posts = () => {
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                              return (
-                                                  <span key={i}>#{item} </span>
-                                              );
-                                          })
+                                            return (
+                                                <span key={i}>#{item} </span>
+                                            );
+                                        })
                                         : "To'ldirilmadi"}
                                 </p>
                                 <p className="live-card-p">
@@ -698,8 +711,8 @@ const Posts = () => {
                                             </strong>{' '}
                                             {livePosterFile?.page_count
                                                 ? livePosterFile?.page_count +
-                                                  ' ' +
-                                                  'ta'
+                                                ' ' +
+                                                'ta'
                                                 : ''}{' '}
                                         </li>
                                         <li>
@@ -784,10 +797,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -814,14 +827,14 @@ const Posts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              #{item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            #{item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -841,8 +854,8 @@ const Posts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                      ' ' +
-                                                      'ta'
+                                                    ' ' +
+                                                    'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -936,10 +949,10 @@ const Posts = () => {
                                                     {' '}
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                              removePrefix(
-                                                                  taxminiyNarx
-                                                              )
-                                                          ) + "so'm"
+                                                            removePrefix(
+                                                                taxminiyNarx
+                                                            )
+                                                        ) + "so'm"
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>
@@ -964,8 +977,8 @@ const Posts = () => {
                                                             </strong>{' '}
                                                             {livePosterFile?.page_count
                                                                 ? livePosterFile?.page_count +
-                                                                  ' ' +
-                                                                  'ta'
+                                                                ' ' +
+                                                                'ta'
                                                                 : ''}{' '}
                                                         </li>
                                                         <li>
@@ -994,8 +1007,8 @@ const Posts = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : livePosterFile
-                                                                      ?.category
-                                                                      ?.name}
+                                                                    ?.category
+                                                                    ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>

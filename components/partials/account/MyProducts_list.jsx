@@ -311,7 +311,7 @@ function MyProductsLists() {
             dataIndex: 'discount_price',
             key: 'address',
             render: (price) => (
-                <span key={price}> <i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
+                <span key={price}> <i className="fa-solid fa-coins text-warning"></i> {+price == 0 ? "Bepul" : addPeriodToThousands(price)}</span>
             ),
         },
         {
@@ -319,6 +319,12 @@ function MyProductsLists() {
             dataIndex: 'created_at',
             key: 'created_at',
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Yuklanishlar soni',
+            dataIndex: 'upload_count',
+            key: 'upload_count',
+            render: (upload_count) => <span key={upload_count}> <i class="fa-solid fa-download"></i> {upload_count}</span>
         },
         user?.role === "seller" ? {
             title: 'Holat',
@@ -358,21 +364,21 @@ function MyProductsLists() {
                         //         <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
                         //     </a>
                         //     :
-                            data.some(el => el.id == id && el.data_status?.status === 'cancelled') ?
-                                <Link href={"#"}>
-                                    <a>
-                                        <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
-                                    </a>
-                                </Link>
-                                :
-                                <></>
+                        data.some(el => el.id == id && el.data_status?.status === 'cancelled') ?
+                            <Link href={"#"}>
+                                <a>
+                                    <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
+                                </a>
+                            </Link>
+                            :
+                            <></>
 
                 }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
 
             </div>
         } : {
-            title: 'Mahsulot',
+            title: 'Faylni yuklash  ',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <>
