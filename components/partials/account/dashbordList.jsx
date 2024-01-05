@@ -162,10 +162,10 @@ function DashbordList() {
             : <></>,
         {
             title: 'Buyurtma nomi',
-            dataIndex: 'title',
+            dataIndex: 'info',
             key: 'age',
             width: 300,
-            render: (title) => <Link href={"/product/iqtisodiyot-xalqaro-valyuta-munosabatlari"}>{title}</Link>,
+            render: (info) => <Link href={`/product/${info[0].slug}`}><a>{info[0].title}</a></Link>,
         },
         user.role === "admin" ?
             {
