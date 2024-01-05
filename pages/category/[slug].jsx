@@ -10,10 +10,10 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import ShopItems from '~/components/partials/shop/ShopItems';
 import { baseUrl } from '~/repositories/Repository';
 
-export default function ProductCategoryScreen() {
+export default function ProductCategoryScreen({ category2 }) {
     const Router = useRouter();
     const { slug } = Router.query;
-    const [category, setCategory] = useState([]);
+    const [category, setCategory] = useState(category2);
     const [filteredData, setFilteredData] = useState(null);
 
     const [chaildId, setchaildId] = useState(null);
