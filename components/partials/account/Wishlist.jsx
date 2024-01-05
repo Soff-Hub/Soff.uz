@@ -5,6 +5,7 @@ import ProductCart from '~/components/elements/products/ProductCart';
 import { Modal } from 'antd';
 import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
+import { fileDownloader } from '~/utilities/common-helpers';
 
 const Wishlist = ({ ecomerce }) => {
     const { removeSavedItem } = useWishlist();
@@ -66,7 +67,7 @@ const Wishlist = ({ ecomerce }) => {
                             <th>Mahsulot nomi</th>
                             <th>Narxi</th>
                             <th className="d-flex justify-content-center ">
-                                Qo'shish
+                                Amallar
                             </th>
                         </tr>
                     </thead>
@@ -93,23 +94,22 @@ const Wishlist = ({ ecomerce }) => {
                                         <span>
                                             {product?.discount === 0 ? (
                                                 <p>
-                                                    {addPeriodToThousands(
+                                                    {+product.price > 0 ? addPeriodToThousands(
                                                         product.price
-                                                     ) }
-                                                    so'm
+                                                    ) + "so'm" : "Bepul mahsulot"}
                                                 </p>
                                             ) : (
                                                 <>
                                                     <del>
                                                         {addPeriodToThousands(
                                                             product.price
-                                                         )}
+                                                        )}
                                                         so'm
                                                     </del>
                                                     <p>
                                                         {addPeriodToThousands(
                                                             product.discount_price
-                                                         ) }
+                                                        )}
                                                         so'm
                                                     </p>
                                                 </>
@@ -117,14 +117,29 @@ const Wishlist = ({ ecomerce }) => {
                                         </span>
                                     </td>
                                     <td style={{ margin: '0 auto' }}>
-                                        <a
-                                            className="ps-btn d-inline-block"
-                                            href=""
-                                            onClick={(e) =>
-                                                handleAddItemToCart(e, product)
-                                            }>
-                                            Savatga qo'shish
-                                        </a>
+                                        {
+                                            +product.price > 0 ? (
+                                                <a
+                                                    className="ps-btn d-inline-block"
+                                                    href=""
+                                                    onClick={(e) =>
+                                                        handleAddItemToCart(e, product)
+                                                    }>
+                                                    Savatga qo'shish
+                                                </a>
+                                            ) : (
+                                                <a
+                                                    className="ps-btn d-inline-block"
+                                                    href=""
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        fileDownloader(product)
+                                                    }}>
+                                                    Yuklab olish
+                                                </a>
+                                            )
+                                        }
+
                                     </td>
                                 </tr>
                             ))}

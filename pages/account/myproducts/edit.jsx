@@ -8,7 +8,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
+import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
@@ -28,6 +28,7 @@ const PostsMyProducts = () => {
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
+    const [free, setFree] = useState(false)
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
@@ -67,13 +68,16 @@ const PostsMyProducts = () => {
     async function handleClickPostsEdit(e) {
         e.preventDefault()
 
-        if (title || taxminiyNarx  || tagSearchResult || category_id[0]) {
+        if (title || taxminiyNarx || tagSearchResult || category_id[0]) {
             const formData = new FormData();
             if (title) {
                 formData.append('title', title);
             }
-            if (taxminiyNarx) {
-                formData.append('price', taxminiyNarx);
+            if (free) {
+                formData.append('price', 0)
+            }
+            else {
+                formData.append('price', taxminiyNarx)
             }
             if (Fulldata) {
                 formData.append('description', Fulldata);
@@ -85,14 +89,24 @@ const PostsMyProducts = () => {
                 formData.append('tags', tagSearchResult)
             }
             const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
-            setTagSearchResult(null)
-            setTitle(null)
-            setTaxminiyNarx(null)
+            if (patchItems?.status == 202) {
+                Router.push('/account/myproducts');
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content:
+                        "Sizning mahsulotingiz muvaffaqqiyatli o'zgartirildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                });
+                setTagSearchResult(null)
+                setTitle(null)
+                setTaxminiyNarx(null)
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: patchItems?.data.msg,
+                });
+            }
 
         }
         else {
@@ -102,8 +116,6 @@ const PostsMyProducts = () => {
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
-
-        Router.push('/account/myproducts');
 
     }
 
@@ -155,7 +167,15 @@ const PostsMyProducts = () => {
     }
 
 
+    const handleFreeChange = (e) => {
+        setFree(!free)
+    };
+
+
     useEffect(() => {
+        if (products?.price === 0) {
+            setFree(true)
+        }
         GetItemsTag();
         setEditorLoaded(true);
         GetItemsCategoryLists();
@@ -228,11 +248,12 @@ const PostsMyProducts = () => {
                             </div>
                             <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
-
+                                <Checkbox checked={free} className='col-md-2 d-flex align-items-center justify-content-start px-0 py-2' onChange={handleFreeChange}>Bepul</Checkbox>
                                 <input
                                     type='number'
-                                    className="form-control  rounded-3 col-md-8 mb-3 "
+                                    className="form-control  rounded-3 col-md-6 mb-3"
                                     name="price"
+                                    disabled={free}
                                     defaultValue={products?.price}
                                     onChange={(e) => (
                                         setTaxminiyNarx(e.target.value)

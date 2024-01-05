@@ -22,7 +22,7 @@ const ProductOnCart = ({ product, children }) => {
 
         return formattedNumber;
     }
-    
+
     return (
         <div className="ps-product--cart-mobile">
             <div className="ps-product__thumbnail">
@@ -34,20 +34,15 @@ const ProductOnCart = ({ product, children }) => {
                 {title(product)}
                 <p>
                     <small>
-                        {product?.discount === 0 ? (
-                            <p>
-                                {addPeriodToThousands(product.price)}{' '}
-                                so'm
-                            </p>
+                        {+product.price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
+                            <p>{addPeriodToThousands(product.price)} so'm</p>
                         ) : (
                             <>
                                 <del>
                                     {addPeriodToThousands(product.price)} so'm
                                 </del>
                                 <p>
-                                    {addPeriodToThousands(
-                                        product.discount_price
-                                    )}
+                                    {addPeriodToThousands(product.discount_price)}
                                     so'm
                                 </p>
                             </>

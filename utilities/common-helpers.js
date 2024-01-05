@@ -22,3 +22,31 @@ export const generateTempArray = (maxItems) => {
     }
     return result;
 };
+
+// console.log(product);
+// console.log(product.poster_url.split("/").at(-1));
+
+export const fileDownloader = (product) => {
+    fetch(product.file_url)
+        .then(response => (response.blob()))
+        .then(blob => {
+            const url = window.URL.createObjectURL(new Blob([blob]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', `soff.uz-${product?.category?.name || product.slug}.${product.file_url.split(".").at(-1)}`);
+
+            link.style.display = 'none';
+            document.body.appendChild(link);
+
+            link.click();
+
+            document.body.removeChild(link);
+            window.URL.revokeObjectURL(url);
+        })
+        .catch(error => console.error(error));
+
+    fetch(`https://api.soff.uz/api/v1/seller/upload-count/?pk=${product.id}`)
+};
+
+
+

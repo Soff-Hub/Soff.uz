@@ -54,8 +54,7 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                     </div>
                 </div>
             </div>
-            {/* Modal */}
-            {/* <div
+            <div
                 onClick={CloseButton}
                 className={modalClose ? 'modalBanner ' : 'modalBanner2 '}></div>
             <div className={modalClose ? ' bannerModal2  ' : 'bannerModal3  '}>
@@ -87,7 +86,7 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                         <></>
                     )}
                 </div>
-            </div> */}
+            </div>
         </div>
     );
 }

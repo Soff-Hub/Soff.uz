@@ -26,13 +26,16 @@ const ModuleDetailTopInformation = ({ product }) => {
     if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
-                {product.discount === 0 ? (
-                    <p> {addPeriodToThousands(product.price )} so'm </p>
+                {+product.price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
+                    <p>{addPeriodToThousands(product.price)} so'm</p>
                 ) : (
                     <>
-                        <del>{addPeriodToThousands(product.price )} so'm</del>
+                        <del>
+                            {addPeriodToThousands(product.price)} so'm
+                        </del>
                         <p>
-                            {addPeriodToThousands(product.discount_price )} so'm
+                            {addPeriodToThousands(product.discount_price)}
+                            so'm
                         </p>
                     </>
                 )}
@@ -41,16 +44,17 @@ const ModuleDetailTopInformation = ({ product }) => {
     } else {
         priceView = (
             <h4 className="ps-product__price">
-                {product.discount === 0  ? (
-                    <h4>
-                        {addPeriodToThousands(product?.price )} so'm{' '}
-                    </h4>
+                {+product.price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
+                    <p>{addPeriodToThousands(product.price)} so'm</p>
                 ) : (
                     <>
-                        <del>{addPeriodToThousands(product?.price )} so'm</del>
-                        <h4>
-                            {addPeriodToThousands(product?.discount_price )} so'm
-                        </h4>
+                        <del>
+                            {addPeriodToThousands(product.price)} so'm
+                        </del>
+                        <p>
+                            {addPeriodToThousands(product.discount_price)}
+                            so'm
+                        </p>
                     </>
                 )}
             </h4>

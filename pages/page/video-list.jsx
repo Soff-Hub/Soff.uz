@@ -42,7 +42,7 @@ const VedioList = () => {
                         <div className="row">
                             {data?.map((el) => (
                                 <div
-                                    className="col-6 col-lg-4 col-md-6 col-sm-6 mt-2"
+                                    className="col-md-4 mt-2"
                                     key={el.id}>
                                     <VedioCart
                                         title={el.title}

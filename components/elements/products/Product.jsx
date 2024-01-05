@@ -49,21 +49,21 @@ const Product = ({ product }) => {
             <div className="ps-product__container">
                 <div className="ps-product__content card-narx-box">
                     {title(product)}
-                    {product.discount === 0 ? (
-                        <p>{addPeriodToThousands(product.price )} so'm</p>
+                    {+product.price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
+                        <p>{addPeriodToThousands(product.price)} so'm</p>
                     ) : (
                         <>
                             <del>
-                                {addPeriodToThousands(product.price )} so'm
+                                {addPeriodToThousands(product.price)} so'm
                             </del>
                             <p>
-                                {addPeriodToThousands(product.discount_price )}
+                                {addPeriodToThousands(product.discount_price)}
                                 so'm
                             </p>
                         </>
                     )}
                 </div>
-                
+
             </div>
         </div>
     );

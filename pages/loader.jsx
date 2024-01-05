@@ -42,7 +42,7 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-tags',
     },
     {
-        text: "Ariza bo'limi",
+        text: "Ariza va Takliflar",
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },
@@ -84,7 +84,7 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-truck',
     },
     {
-        text: "Ariza bo'limi",
+        text: "Ariza va Takliflar",
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
     },

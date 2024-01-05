@@ -14,7 +14,7 @@ const Application = () => {
             url: '/',
         },
         {
-            text: "Ariza bo'limi",
+            text: "Ariza va Takliflar",
 
         },
     ];

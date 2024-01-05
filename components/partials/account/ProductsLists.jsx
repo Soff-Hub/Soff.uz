@@ -210,7 +210,7 @@ function ProductsLists() {
             dataIndex: 'discount_price',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i> {+price == 0 ? "Bepul" : addPeriodToThousands(price)}</span>
             ),
         },
         {
@@ -335,7 +335,7 @@ function ProductsLists() {
                                                     <header>
                                                         <h1>{deleteIdView?.title}</h1>
                                                         <h4>
-                                                            {addPeriodToThousands(deleteIdView?.discount_price)} so'm{' '}
+                                                            {+deleteIdView?.price !== 0 ? addPeriodToThousands(deleteIdView?.discount_price + "so'm") : "Bepul mahsulot"}{' '}
                                                         </h4>
                                                     </header>
                                                     <div>
