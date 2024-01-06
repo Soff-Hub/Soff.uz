@@ -98,7 +98,7 @@ export function StrapiProductThumbnail(product) {
                 <a>
                     <LazyLoad>
 
-                        <img src="/static/img/not-found.jpg" alt="soff" />
+                        <img src="/static/img/not-found.png" alt="soff" />
                     </LazyLoad>
                 </a>
             </Link>

@@ -446,7 +446,7 @@ const PostsMyProducts = () => {
                                                             ))
 
                                                             :
-                                                            <img src="/static/img/docCopy.jpg" alt="doc" />
+                                                            <img src="/static/img/docCopy.png" alt="doc" />
 
 
                                                     }

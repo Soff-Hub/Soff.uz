@@ -1,12 +1,24 @@
 import React from 'react';
-import HomepageDefaultPage from './main';
+
+import PageContainer from '~/components/layouts/PageContainer';
+
+import HomeElectronicsPage from './home/electronic'
 import { baseUrl } from '~/repositories/Repository';
+import Meta from '~/components/shared/headers/Meta';
+import { useMemo } from 'react';
 
-
-
-export default function Page({ category }) {
-    return <HomepageDefaultPage category={category} />
+const HomepageDefaultPage = ({ category }) => {
+    const memoValue = useMemo(() => {
+        return   <HomeElectronicsPage category={category?.results} />
+    },[])
+    return (
+        <PageContainer title="Soff - barcha ma'lumotlar bazasi">
+               <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
+          {memoValue}
+        </PageContainer>
+    );
 };
+
 
 export async function getServerSideProps() {
     try {
@@ -32,3 +44,6 @@ export async function getServerSideProps() {
     }
 }
 
+
+
+export default HomepageDefaultPage;

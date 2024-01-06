@@ -362,7 +362,7 @@ const ShopItems = ({
                     }}>
                     <div className={classes} style={{ marginTop: '30px' }}>
                         <img
-                            src="/static/img/no-document.jpg"
+                            src="/static/img/no-document.png"
                             alt="no documnt"
                         />
                         <p className="text-center">Mahsulot yo'q</p>

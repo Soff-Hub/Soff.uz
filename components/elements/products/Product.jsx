@@ -39,7 +39,7 @@ const Product = ({ product }) => {
                         {product.poster_url ? (
                             thumbnailImage(product)
                         ) : (
-                            <img src="/static/img/docCopy.jpg" alt="hujjat" />
+                            <img src="/static/img/docCopy.png" alt="hujjat" />
                         )}
                     </a>
                 </Link>

@@ -27,7 +27,7 @@ const ProductSearchResult = ({ product }) => {
                             ) : (
                                 <div
                                     style={{
-                                        backgroundImage: `url(/static/img/docCopy.jpg)`,
+                                        backgroundImage: `url(/static/img/docCopy.png)`,
                                         backgroundSize: 'contain',
                                         backgroundRepeat: 'no-repeat',
                                         border: "1px solid green",
