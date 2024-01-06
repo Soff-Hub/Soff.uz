@@ -26,7 +26,7 @@ function AccountQuickLinks() {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz muvaffaqqiyatli chiqdingiz`,
             });
-            Router.push('/main');
+            Router.push('/');
             dispatch(logOut());
         }
     };

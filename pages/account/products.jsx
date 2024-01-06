@@ -12,7 +12,7 @@ const Products = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/main',
+            url: '/',
         },
         {
             text: 'Mahsulotlar',

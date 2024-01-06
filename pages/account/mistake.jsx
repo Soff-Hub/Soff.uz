@@ -16,7 +16,7 @@ export default function Mistake() {
                                     Afsuski siz o'zingizni taklif qilolmaysiz
                                 </h3>
                                 <p>
-                                    <Link href="/main">
+                                    <Link href="/">
                                         <a> Bosh sahifaga qayting</a>
                                     </Link>
                                 </p>

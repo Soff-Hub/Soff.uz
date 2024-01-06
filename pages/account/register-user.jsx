@@ -11,7 +11,7 @@ const RegisterPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/main',
+            url: '/',
         },
         {
             text: "Ro'yxatdan o'tish",

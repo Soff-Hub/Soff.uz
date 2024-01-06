@@ -13,7 +13,7 @@ function Error() {
                             <img src="/static/img/404.jpg" alt="" />
                             <h3>Afsuski sahifa topilmadi</h3>
                             <p>
-                                <Link href="/main">
+                                <Link href="/">
                                     <a> Bosh sahifaga qayting</a>
                                 </Link>
                             </p>

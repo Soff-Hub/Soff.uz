@@ -31,7 +31,7 @@ const HeaderMobileProduct = () => {
             data-sticky="true">
             <div className="navigation--mobile">
             <div className="navigation__left">
-                        <Link href="/main">
+                        <Link href="/">
                             <a className="ps-logo">
                                 <img
                                     src="/static/img/soff/soff_green_white.png"

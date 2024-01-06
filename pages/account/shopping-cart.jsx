@@ -27,7 +27,7 @@ const ShoppingCartScreen = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/main',
+            url: '/',
         },
         {
             text: 'Xarid savati',
@@ -51,7 +51,7 @@ const ShoppingCartScreen = () => {
                             cartItems={cartItems}
                         />
                         <div className="ps-section__cart-actions">
-                            <Link href="/main">
+                            <Link href="/">
                                 <a className="ps-btn">Ortga</a>
                             </Link>
                         </div>
@@ -94,7 +94,7 @@ const ShoppingCartScreen = () => {
                         </div>
 
                         <div className="ps-section__cart-actions">
-                            <Link href="/main">
+                            <Link href="/">
                                 <a className="ps-btn">Ortga</a>
                             </Link>
                         </div>

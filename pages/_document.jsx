@@ -5,7 +5,7 @@ import React from 'react';
 
 export default function Document() {
     return (
-        <Html lang='uz'>
+        <Html>
             <Head>
 
                 <link rel="shortcut icon" href={'/static/img/soff logo.png'} />

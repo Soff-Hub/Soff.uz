@@ -40,7 +40,7 @@ const ProductDefaultPage = ({ product, similar }) => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/main',
+            url: '/',
         },
         {
             text: product.title

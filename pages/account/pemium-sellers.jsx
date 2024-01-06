@@ -11,7 +11,7 @@ const AccountOrdersPage = () => {
     const breadCrumb = [
         {
             text: 'Home',
-            url: '/main',
+            url: '/',
         },
         {
             text: 'Pemium Sotuvchilar',

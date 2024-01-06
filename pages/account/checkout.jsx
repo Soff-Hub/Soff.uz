@@ -9,7 +9,7 @@ const CheckoutPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/main',
+            url: '/',
         },
         {
             text: 'Xarid savati',
