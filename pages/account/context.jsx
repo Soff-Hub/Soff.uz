@@ -11,7 +11,7 @@ const AccountNotificationsPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: "Bannerlarni o'zgartirish ",

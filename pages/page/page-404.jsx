@@ -15,7 +15,7 @@ const Page404 = () => {
                             <p>
                             Siz qidirayotgan narsani topa olmadik.
                             
-                                <Link href="/">
+                                <Link href="/main">
                                     <a> Bosh sahifa</a>
                                 </Link>
                             </p>

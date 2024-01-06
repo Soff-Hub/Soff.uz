@@ -11,7 +11,7 @@ const MyAccountPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Bosh panel',

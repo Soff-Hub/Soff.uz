@@ -114,7 +114,7 @@ const SearchHeader = () => {
         <form
             className="ps-form--quick-search"
             method="get"
-            action="/"
+            action="/main"
             onSubmit={handleSubmit}>
   
             <div className="ps-form__input">

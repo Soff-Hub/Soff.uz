@@ -31,7 +31,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     let listItemsView, totalView;
     if (ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0) {
         listItemsView = ecomerce.cartDataItems?.map((item, i) => (
-            <Link href="/" key={item.id}>
+            <Link href="/main" key={item.id}>
                 <a>
                     <strong>
                         {i + 1}. {item.title}

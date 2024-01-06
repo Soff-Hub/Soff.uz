@@ -32,7 +32,7 @@ const PostsMyProducts = () => {
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: "Mahsulotni tahrirlash",

@@ -9,7 +9,7 @@ const SellerPage = ({ seller }) => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: seller?.results[0]

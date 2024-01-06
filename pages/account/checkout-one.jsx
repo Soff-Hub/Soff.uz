@@ -8,7 +8,7 @@ const CheckoutOnePage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Hisob - kitob ma\'lumotlari',

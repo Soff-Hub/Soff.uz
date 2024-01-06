@@ -14,7 +14,7 @@ class HeaderMobileElectronic extends Component {
               
                 <div className="navigation--mobile">
                     <div className="navigation__left">
-                        <Link href="/">
+                        <Link href="/main">
                             <a className="ps-logo">
                                 {/* <img
                                     src="/static/img/soff/soff_green_white.png"

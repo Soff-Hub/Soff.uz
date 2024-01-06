@@ -1,48 +1,15 @@
-import React from 'react';
+import Router from 'next/router';
+import React, { useEffect } from 'react';
 
-import PageContainer from '~/components/layouts/PageContainer';
+const HomepageDefaultPage = () => {
 
-import HomeElectronicsPage from './home/electronic'
-import { baseUrl } from '~/repositories/Repository';
-import Meta from '~/components/shared/headers/Meta';
-import { useMemo } from 'react';
+    useEffect(() => {
+        Router.push('/main')
+    }, [])
 
-const HomepageDefaultPage = ({ category }) => {
-    const memoValue = useMemo(() => {
-        return   <HomeElectronicsPage category={category?.results} />
-    },[])
-    return (
-        <PageContainer title="Soff - barcha ma'lumotlar bazasi">
-               <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
-          {memoValue}
-        </PageContainer>
-    );
+    return <></>
 };
 
-
-export async function getServerSideProps() {
-    try {
-        const request = await fetch(baseUrl + 'customer/category-list/');
-        if (!request.ok) {
-            throw new Error('Request to the API failed with status ' + request.status);
-        }
-
-        const categoryResponse = await request.json();
-
-        return {
-            props: {
-                category: categoryResponse,
-            },
-        };
-    } catch (error) {
-        console.error('Error fetching data:', error);
-        return {
-            props: {
-                category: null,
-            },
-        };
-    }
-}
 
 
 

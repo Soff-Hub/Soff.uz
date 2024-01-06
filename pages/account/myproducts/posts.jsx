@@ -43,7 +43,7 @@ const Posts = () => {
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Mahsulot qo’shish',
