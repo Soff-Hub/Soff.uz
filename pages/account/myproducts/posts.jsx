@@ -630,7 +630,7 @@ const Posts = () => {
                                         src={
                                             livePosterFile?.images?.[0]
                                                 ?.image_url ||
-                                            '/static/img/docCopy.jpg'
+                                            '/static/img/docCopy.png'
                                         }
                                         alt="doc"
                                         className="border mb-4"
@@ -767,7 +767,7 @@ const Posts = () => {
                                             src={
                                                 livePosterFile?.images?.[0]
                                                     ?.image_url ||
-                                                '/static/img/docCopy.jpg'
+                                                '/static/img/docCopy.png'
                                             }
                                             alt="doc"
                                             className="border mb-4"
@@ -930,7 +930,7 @@ const Posts = () => {
                                                         )
                                                     ) : (
                                                         <img
-                                                            src="/static/img/docCopy.jpg"
+                                                            src="/static/img/docCopy.png"
                                                             alt="doc"
                                                         />
                                                     )}

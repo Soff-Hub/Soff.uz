@@ -15,6 +15,30 @@ import NextProgress from 'next-progress';
 function App({ Component, pageProps }) {
     
       
+    useEffect(() => {
+        setTimeout(function () {
+            document.getElementById('__next').classList.add('loaded');
+        }, 100);
+        window.addEventListener('contextmenu', function (e) {
+            e.preventDefault();
+        });
+
+        // document.onkeydown = function (e) {
+        //     if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86)) {
+        //         e.preventDefault();
+        //     }
+        // };
+  
+
+        // document.onkeydown = function (e) {
+        //     if (e.keyCode == 123) {
+        //         e.preventDefault();
+        //         return false;
+        //     }
+        // };
+    });
+
+
     return (
         <>
             <Head>

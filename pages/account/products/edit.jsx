@@ -440,7 +440,7 @@ const PostsProductsEdit = () => {
                                 <div className="image rounded ">
                                     {!products.poster ? (
                                         <img
-                                            src="/static/img/docCopy.jpg"
+                                            src="/static/img/docCopy.png"
                                             alt="doc"
                                             className="border mb-4"
                                             style={{ objectFit: 'cover' }}
@@ -535,7 +535,7 @@ const PostsProductsEdit = () => {
                                     <div className="image rounded ">
                                         {!products.poster ? (
                                             <img
-                                                src="/static/img/docCopy.jpg"
+                                                src="/static/img/docCopy.png"
                                                 alt="doc"
                                                 className="border mb-4"
                                                 style={{ objectFit: 'cover' }}
@@ -647,7 +647,7 @@ const PostsProductsEdit = () => {
                                                         )
                                                     ) : (
                                                         <img
-                                                            src="/static/img/docCopy.jpg"
+                                                            src="/static/img/docCopy.png"
                                                             alt="doc"
                                                         />
                                                     )}

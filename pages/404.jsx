@@ -10,7 +10,7 @@ function Error() {
                 <div className="container">
                     <div className="ps-section__content">
                         <figure>
-                            <img src="/static/img/404.jpg" alt="" />
+                            <img src="/static/img/404.png" alt="" />
                             <h3>Afsuski sahifa topilmadi</h3>
                             <p>
                                 <Link href="/">

@@ -34,7 +34,7 @@ const MasterLayout = ({ children }) => {
     }, []);
 
     return (
-        <div className='loaded'>
+        <>
             {children}
             <PageLoader />
             {accountLinks.some((el) => el.url === pathname) ? (
@@ -53,7 +53,7 @@ const MasterLayout = ({ children }) => {
                     <i className="icon-arrow-up" />
                 </button>
             </FloatButton.BackTop>
-        </div>
+        </>
     );
 };
 

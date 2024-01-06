@@ -25,7 +25,7 @@ export default function useProduct() {
                         ) : (
                             <div
                                 style={{
-                                    backgroundImage: `url(/static/img/docCopy.jpg)`,
+                                    backgroundImage: `url(/static/img/docCopy.png)`,
                                     backgroundSize: 'contain',
                                     backgroundRepeat: 'no-repeat',
                                 }}
