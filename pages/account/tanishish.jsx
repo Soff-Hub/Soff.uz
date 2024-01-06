@@ -8,7 +8,7 @@ const Tanishish = () => {
   const breadCrumb = [
     {
         text: 'Asosiy sahifa',
-        url: '/',
+        url: '/main',
     },
     {
         text: 'Ro\'yxatdan o\'tish',

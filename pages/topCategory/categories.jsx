@@ -30,7 +30,7 @@ const ProductCategoryScreen = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
 
         {

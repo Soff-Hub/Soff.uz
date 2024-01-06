@@ -42,7 +42,7 @@ const SearchPage = () => {
     const breadcrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Qidiruv natijalari',

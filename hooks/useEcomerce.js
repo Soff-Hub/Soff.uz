@@ -93,7 +93,7 @@ export default function useEcomerce() {
                 let newItems = cookies?.cart ? cookies.cart : [];
                 newItems.push(newItem.id);
                 // localStorage.setItem('cart', JSON.stringify(newItems));
-                setCookie('cart', newItems, { path: '/' });
+                setCookie('cart', newItems, { path: '/main' });
                 // dispatch(setCartItems(newItems));
             }
 
@@ -110,7 +110,7 @@ export default function useEcomerce() {
                     currentItems.splice(index, 1);
                 }
 
-                setCookie('cart', currentItems, { path: '/' });
+                setCookie('cart', currentItems, { path: '/main' });
                 return currentItems
             }
 
@@ -123,18 +123,18 @@ export default function useEcomerce() {
                     currentItems.splice(index, 1);
                 }
 
-                setCookie('wishlist', currentItems, { path: '/' });
+                setCookie('wishlist', currentItems, { path: '/main' });
                 dispatch(setWishlistTtems(currentItems));
             }
         },
 
         removeItems: (group) => {
             if (group === 'wishlist') {
-                setCookie('wishlist', [], { path: '/' });
+                setCookie('wishlist', [], { path: '/main' });
                 dispatch(setWishlistTtems([]));
             }
             if (group === 'cart') {
-                setCookie('cart', [], { path: '/' });
+                setCookie('cart', [], { path: '/main' });
                 // dispatch(setCartItems([]));
             }
         },

@@ -13,7 +13,7 @@ const LoginPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Kirish',

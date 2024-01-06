@@ -11,7 +11,7 @@ const AccountSettingsPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Sozlamalar',

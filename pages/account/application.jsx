@@ -11,7 +11,7 @@ const Application = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: "Ariza va Takliflar",

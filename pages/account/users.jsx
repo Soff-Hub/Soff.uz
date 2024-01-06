@@ -11,7 +11,7 @@ const AccountUsersPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Xaridorlar',

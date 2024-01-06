@@ -27,7 +27,7 @@ const PanelSearch = ({
         <div className="ps-panel__search-results">
             <form
                 className="ps-form--search-mobile"
-                action="/"
+                action="/main"
                 method="get"
                 onSubmit={(e) => handleSubmit(e)}>
                 <div className="form-group--nest">

@@ -11,7 +11,7 @@ const AccountShopsPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Sotuchilar',

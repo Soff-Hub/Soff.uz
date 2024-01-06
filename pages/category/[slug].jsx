@@ -111,7 +111,7 @@ export default function ProductCategoryScreen({ category2 }) {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
 
         {

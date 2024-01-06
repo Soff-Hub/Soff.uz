@@ -8,7 +8,7 @@ const WishlistPage = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
-            url: '/',
+            url: '/main',
         },
         {
             text: 'Tanlanganlar',
