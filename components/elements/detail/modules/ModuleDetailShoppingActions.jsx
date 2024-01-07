@@ -80,7 +80,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                 </Modal>
                 <div className="ps-product__shopping">
                     {
-                        product.price > 0 ? <>
+                        product.discount_price > 0 ? <>
                             <a
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"

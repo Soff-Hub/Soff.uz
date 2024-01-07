@@ -40,7 +40,7 @@ export default function useProduct() {
             if (payload.sale_price) {
                 view = (
                     <p className="ps-product__price sale">
-                        {payload.price > 0 ? <>
+                        {payload> 0 ? <>
                             {formatCurrency(payload.sale_price)}
                             <span> so'm</span>
                             <del className="ml-2">
@@ -54,7 +54,7 @@ export default function useProduct() {
             } else {
                 view = (
                     <p className="ps-product__price">
-                        {payload.price > 0 ? <>
+                        {payload> 0 ? <>
                             {formatCurrency(payload.price)}
                         <span> so'm</span>
                         </> : "Bepul"}

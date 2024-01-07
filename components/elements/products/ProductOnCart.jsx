@@ -34,8 +34,8 @@ const ProductOnCart = ({ product, children }) => {
                 {title(product)}
                 <p>
                     <small>
-                        {+product.price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
-                            <p>{addPeriodToThousands(product.price)} so'm</p>
+                        {+product.discount_price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
+                            <p>{addPeriodToThousands(product.discount_price)} so'm</p>
                         ) : (
                             <>
                                 <del>

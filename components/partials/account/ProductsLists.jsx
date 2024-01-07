@@ -335,7 +335,7 @@ function ProductsLists() {
                                                     <header>
                                                         <h1>{deleteIdView?.title}</h1>
                                                         <h4>
-                                                            {+deleteIdView?.price !== 0 ? addPeriodToThousands(deleteIdView?.discount_price + "so'm") : "Bepul mahsulot"}{' '}
+                                                            {+deleteIdView?.discount_price !== 0 ? addPeriodToThousands(deleteIdView?.discount_price + "so'm") : "Bepul mahsulot"}{' '}
                                                         </h4>
                                                     </header>
                                                     <div>

@@ -92,33 +92,37 @@ const Wishlist = ({ ecomerce }) => {
                                     </td>
                                     <td>
                                         <span>
-                                            {product?.discount === 0 ? (
-                                                <p>
-                                                    {+product.price > 0 ? addPeriodToThousands(
-                                                        product.price
-                                                    ) + "so'm" : "Bepul mahsulot"}
-                                                </p>
-                                            ) : (
-                                                <>
-                                                    <del>
-                                                        {addPeriodToThousands(
-                                                            product.price
-                                                        )}
-                                                        so'm
-                                                    </del>
-                                                    <p>
-                                                        {addPeriodToThousands(
-                                                            product.discount_price
-                                                        )}
-                                                        so'm
-                                                    </p>
-                                                </>
-                                            )}
+                                            {
+                                                +product.discount_price === 0 ? "Bepul mahsulot" : (
+                                                    product?.discount === 0 ? (
+                                                        <p>
+                                                            {addPeriodToThousands(
+                                                                product.discount_price
+                                                            )}
+                                                        </p>
+                                                    ) : (
+                                                        <>
+                                                            <del>
+                                                                {addPeriodToThousands(
+                                                                    product.price
+                                                                )}
+                                                                so'm
+                                                            </del>
+                                                            <p>
+                                                                {addPeriodToThousands(
+                                                                    product.discount_price
+                                                                )}
+                                                                so'm
+                                                            </p>
+                                                        </>
+                                                    )
+                                                )
+                                            }
                                         </span>
                                     </td>
                                     <td style={{ margin: '0 auto' }}>
                                         {
-                                            +product.price > 0 ? (
+                                            +product.discount_price > 0 ? (
                                                 <a
                                                     className="ps-btn d-inline-block"
                                                     href=""

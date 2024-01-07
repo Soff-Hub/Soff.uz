@@ -42,7 +42,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
                     <span>
                         {item.discount === 0 ? (
                             <p>
-                                {addPeriodToThousands(item.price )}  so'm
+                                {addPeriodToThousands(item.discount_price )}  so'm
                             </p>
                         ) : (
                             <>
