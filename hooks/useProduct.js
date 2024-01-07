@@ -40,25 +40,25 @@ export default function useProduct() {
             if (payload.sale_price) {
                 view = (
                     <p className="ps-product__price sale">
-                        {payload> 0 ? <>
+                        {payload.discount_price !== 0 ? <>
                             {formatCurrency(payload.sale_price)}
                             <span> so'm</span>
                             <del className="ml-2">
                                 {formatCurrency(payload.price)}
                                 <span> so'm</span>
                             </del>
-                        </> : "Bepul"}
+                        </> : "Bepul mahsulot"}
 
                     </p>
                 );
             } else {
                 view = (
                     <p className="ps-product__price">
-                        {payload> 0 ? <>
-                            {formatCurrency(payload.price)}
-                        <span> so'm</span>
-                        </> : "Bepul"}
-                        
+                        {payload.discount_price === 0 ? <>
+                            Bepul mahsulot
+                            <span> so'm</span>
+                        </> : formatCurrency(payload.price)}
+
                     </p>
                 );
             }
