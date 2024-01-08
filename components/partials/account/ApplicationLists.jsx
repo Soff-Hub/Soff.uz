@@ -49,7 +49,7 @@ function ApplicationLists() {
         }
     }
     async function ProfileUsersTextItems(page, dataFormat) {
-        const ItemsData = await GetRepository.getTagTaklifLists(page,dataFormat, user?.access);
+        const ItemsData = await GetRepository.getTagTaklifLists(page, dataFormat, user?.access);
         if (ItemsData?.results) {
             setData2([...ItemsData.results]);
             setPageCount1(ItemsData?.count);
@@ -77,7 +77,7 @@ function ApplicationLists() {
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
-      e.target.reset()
+        e.target.reset()
 
     }
 
@@ -111,7 +111,7 @@ function ApplicationLists() {
     }
 
     async function getItemsSellerPost() {
-        const data = { "credit_card": JSON.parse(dataCard), "amount": dataPrice }
+        const data = { credit_card: dataCard, amount: dataPrice }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
         if (Items?.status === 200 || Items?.status === 201) {
             const modal = Modal.success({
@@ -649,7 +649,7 @@ function ApplicationLists() {
                                 onSubmit={ProfileUsersTextItem}
                                 className="w-100 px-4 py-4 d-flex row-gap-3 flex-column"
                                 id="edit-phone-adminID">
-                                     <textarea onChange={(e) => (setDataCardModalDesID(e.target.value))} defaultValue={data1 ? dataDescripton?.description : ""}  className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflarga  yuboring"></textarea>
+                                <textarea onChange={(e) => (setDataCardModalDesID(e.target.value))} defaultValue={data1 ? dataDescripton?.description : ""} className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflarga  yuboring"></textarea>
                                 <div className="d-flex justify-content-end  py-3">
                                     <button
                                         type="submit"
