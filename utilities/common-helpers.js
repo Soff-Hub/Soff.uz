@@ -45,7 +45,10 @@ export const fileDownloader = (product) => {
         })
         .catch(error => console.error(error));
 
-    fetch(`https://api.soff.uz/api/v1/seller/upload-count/?pk=${product.id}`)
+    fetch(`https://api.soff.uz/api/v1/seller/upload-count/`, {
+        method: "POST",
+        body: { pk: product.id }
+    })
 };
 
 
