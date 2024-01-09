@@ -1,24 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
-import useEcomerce from '~/hooks/useEcomerce';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
-import { useCookies } from 'react-cookie';
-import { Modal } from 'antd';
-import PostRepository from '~/repositories/PostRepository';
+import useCart from '~/hooks/useCart';
 
-const MiniCart = ({ ecomerce }) => {
-    const { products, removeItem, removeItems, getProducts } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
-    const [cart, setCart] = useState([])
+const MiniCart = () => {
     const state = useSelector((state) => state.auth.user);
-    const token = useSelector((state) => state.auth.user?.access);
+    const data = useSelector((state) => state.ecomerce.cartDataItems);
+
+    const { removeCartOneItem } = useCart();
+
     function handleRemoveItem(e, item) {
         e.preventDefault();
-        removeItem(item, ecomerce.cartItems, 'cart');
+        removeCartOneItem(item.id);
     }
-    const amount = calculateAmount(ecomerce.cartItems);
+
+    const amount = calculateAmount(data);
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -39,90 +37,60 @@ const MiniCart = ({ ecomerce }) => {
     const hisob = addPeriodToThousands(amount);
 
 
-
-    const stat = useSelector(state => state)
-
-    const getCardListData = async () => {
-        let config = {
-            headers: {
-                Authorization: `Bearer ${localStorage.getItem('token')} `,
-            },
-        };
-        const respons = await PostRepository.getCartData(config)
-
-        if (respons) {
-            setCart(respons)
-        }
-    }
-
-
-
-    useEffect(() => {
-        // getCardListData()
-        getProducts(ecomerce.cartItems, 'cart');
-    }, [ecomerce]);
-
-
-
-    let cartItemsView;
-    if (ecomerce.cartItems && ecomerce.cartItems?.length > 0) {
-        const productItems = ecomerce.cartItems?.map((item) => {
-            return (
-                <ProductOnCart product={item} key={item.id}>
-                    <a
-                        className="ps-product__remove"
-                        onClick={(e) => handleRemoveItem(e, item)}>
-                        <i className="icon-cross"></i>
-                    </a>
-                </ProductOnCart>
-            );
-        });
-        cartItemsView = (
-            <div className="ps-cart__content">
-                <div className="ps-cart__items">{productItems}</div>
-                <div className="ps-cart__footer">
-                    <h3>
-                        Jami:
-                        <strong>{hisob ? hisob : 0} so'm</strong>
-                    </h3>
-                    <figure>
-                        <Link href="/account/shopping-cart">
-                            <a className="ps-btn">Savat</a>
-                        </Link>
-                        {state !== null ? (
-                            <Link href="/account/checkout">
-                                <a className="ps-btn">Sotib olish</a>
-                            </Link>
-                        ) : (
-                            <Link href="/account/foydalanuvchi">
-                                <a className="ps-btn">Sotib olish</a>
-                            </Link>
-                        )}
-                    </figure>
-                </div>
-            </div>
-        );
-    } else {
-        cartItemsView = (
-            <div className="ps-cart__content">
-                <div className="ps-cart__items">
-                    <span>Savatda hujjat yo'q</span>
-                </div>
-            </div>
-        );
-    }
-// console.log(cart.results);
     return (
         <div className="ps-cart--mini">
-            <a className="header__extra" href="#">
-                <i className="icon-bag2"></i>
-                <span>
-                    {
-                        <i>{ecomerce ? ecomerce.cartItems.length : 0}</i>
-                    }
-                </span>
-            </a>
-            {cartItemsView}
+            <Link href="/account/shopping-cart">
+                <a className="header__extra">
+                    <i className="icon-bag2"></i>
+                    <span>{<i>{data.length}</i>}</span>
+                </a>
+            </Link>
+            {data && data.length > 0 ? (
+                <div className="ps-cart__content">
+                    <div className="ps-cart__items">
+                        {data?.map((item) => {
+                            return (
+                                <ProductOnCart product={item} key={item.id}>
+                                    <a
+                                        className="ps-product__remove"
+                                        style={{ cursor: 'pointer' }}
+                                        onClick={(e) =>
+                                            handleRemoveItem(e, item)
+                                        }>
+                                        <i className="icon-cross"></i>
+                                    </a>
+                                </ProductOnCart>
+                            );
+                        })}
+                    </div>
+                    <div className="ps-cart__footer">
+                        <h3>
+                            Jami:
+                            <strong>{hisob ? hisob : 0} so'm</strong>
+                        </h3>
+                        <figure>
+                            <Link href="/account/shopping-cart">
+                                <a className="ps-btn">Savat</a>
+                            </Link>
+                            {state !== null ? (
+                                <Link href="/account/checkout">
+                                    <a className="ps-btn">Sotib olish</a>
+                                </Link>
+                            ) : (
+                                <Link href="/account/register-user">
+                                    <a className="ps-btn">Sotib olish</a>
+                                </Link>
+                            )}
+                        </figure>
+                    </div>
+                </div>
+            ) : (
+                <div className="ps-cart__content">
+                    <div className="ps-cart__items">
+                        <span>Savatda mahsulot yo'q</span>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

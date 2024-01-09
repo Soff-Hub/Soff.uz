@@ -1,0 +1,47 @@
+.active-faq {
+    background-color: $color-1st !important;
+    color: #fff !important;
+}
+
+.faqs-sidebar {
+    max-width: 300px !important;
+    width: 300px;
+    padding: 10px 5px 50px 5px;
+    background-color: #f1f1f1;
+    margin-top: 20px;
+
+  ul{
+    padding: 0;
+    li {
+        list-style: none;
+        border-bottom: 1px solid #ccc;
+        a {
+            display: inline-block;
+            width: 100%;
+            color: #000;
+            padding: 10px 7px;
+            font-size: 16px;
+            line-height: 24px;
+            font-weight: 500;
+            transition: all 5ms;
+            &:hover {
+                background-color: #faf7f7;
+            }
+        }
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+    .faqs-sidebar {
+        max-width: 200px !important;
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .faqs-sidebar {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+}

@@ -1,15 +1,14 @@
 import React from 'react';
 
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import Invoices from '~/components/partials/account/ProductsLists';
+import ProductsLists from '~/components/partials/account/ProductsLists';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
-import LoginPage from './login';
+import Selection from './selection';
 
-const InvoicePage = () => {
+const Products = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -27,11 +26,10 @@ const InvoicePage = () => {
         <PageContainer footer={<FooterDefault />} title="Invoices">
             <div className="ps-page--my-account">
                 <BreadCrumb breacrumb={breadCrumb} />
-                <Invoices />
+                <ProductsLists />
             </div>
-            <Newletters layout="container" />
-        </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
+        </PageContainer> : user?.access ? <Page404/> : <Selection /> 
     );
 };
 
-export default InvoicePage;
+export default Products;

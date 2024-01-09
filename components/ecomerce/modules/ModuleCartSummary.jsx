@@ -3,7 +3,6 @@ import Link from 'next/link';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 
 const ModuleCartSummary = ({ source }) => {
-    const amount = calculateAmount(source);
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -13,7 +12,6 @@ const ModuleCartSummary = ({ source }) => {
             /\B(?=(\d{3})+(?!\d))/g,
             ' '
         );
-
         const formattedNumber =
             decimalPart !== undefined
                 ? `${formattedIntegerPart}.${decimalPart}`
@@ -21,24 +19,34 @@ const ModuleCartSummary = ({ source }) => {
 
         return formattedNumber;
     }
+
+    const amount = calculateAmount(source);
     const hisob = addPeriodToThousands(amount);
+
 
     // View
     let productItemsView;
-    if (source && source.length > 0) {
-
-        productItemsView = source.map((item, i) => (
+    if (source && source?.length > 0) {
+        productItemsView = source?.map((item, i) => (
             <li key={item.id}>
-                <div className="ps-block__estimate " style={{display:'flex', aliginContent:'center', justifyContent:'space-between'}}>
-                    <Link href="/product/[pid]" as={`/product/${item.id}`}>
+                <div
+                    className="ps-block__estimate "
+                    style={{
+                        display: 'flex',
+                        aliginContent: 'center',
+                        justifyContent: 'space-between',
+                    }}>
+                    <Link
+                        style={{ width: '70%' }}
+                        href="/product/[pid]"
+                        as={`/product/${item.slug}`}>
                         <a className="ps-product__title">
                             {i + 1}. {item.title}
                         </a>
-                        
                     </Link>
-                    <Link href="/product/[pid]" as={`/product/${item.id}`}>
+                    <Link href="/product/[pid]" as={`/product/${item.slug}`}>
                         <a className="ps-product__price">
-                           {addPeriodToThousands(item.price)} so'm
+                            {addPeriodToThousands(item?.price)} so'm
                         </a>
                     </Link>
                 </div>
@@ -57,7 +65,7 @@ const ModuleCartSummary = ({ source }) => {
                 <div className="ps-block__content">
                     <ul className="ps-block__product">{productItemsView}</ul>
                     <h3>
-                        Jami:  <span>{hisob} so'm</span>
+                        Jami: <span>{hisob} so'm</span>
                     </h3>
                 </div>
             </div>

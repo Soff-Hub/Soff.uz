@@ -1,9 +1,22 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import FormCheckoutInformation from './modules/FormCheckoutInformation';
 import ModulePaymentOrderSummary from '~/components/partials/account/modules/ModulePaymentOrderSummary';
+import { useSelector } from 'react-redux';
+import useCart from '~/hooks/useCart';
 const Checkout = () => {
+    const ecomerce = useSelector((state) => state.ecomerce.cartDataItems);
 
-    
+    const { setAllCartItem } = useCart()
+
+
+    useEffect(() => {
+        if (ecomerce.length !== JSON.parse(localStorage.getItem('cart'))) {
+            setAllCartItem();
+        }
+    }, []);
+
+
+
 
     return (
         <div className="ps-checkout ps-section--shopping">
@@ -21,7 +34,7 @@ const Checkout = () => {
                                 <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12  ps-block--checkout-order">
                                     <div className="ps-form__orders">
                                         <h3>Sizning buyurtmangiz</h3>
-                                        <ModulePaymentOrderSummary />
+                                        <ModulePaymentOrderSummary ecomerce={ecomerce} />
                                     </div>
                                 </div>
                             </div>

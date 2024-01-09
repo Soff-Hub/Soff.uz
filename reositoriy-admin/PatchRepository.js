@@ -1,4 +1,4 @@
-import Repository, { baseUrl } from './Repository';
+import Repository, { baseUrl, baseUrlProfie } from './Repository';
 
 class PatchRepository {
     async PatchCategory(data, id, token) {
@@ -13,16 +13,36 @@ class PatchRepository {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error?.response));
         return reponse;
     }
     async PatchUsers(data, id, token) {
         const endPoint = `admin/customer-list/${id}/`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'PATCH',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => (error.response));
+        return reponse;
+    }
+    async PatchTegs(data, id, token) {
+        const endPoint = `admin/tag-list/${id}/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'PATCH',
@@ -73,12 +93,12 @@ class PatchRepository {
         })
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return reponse;
     }
     async getMyProductsPatch(data, id, token) {
@@ -92,13 +112,33 @@ class PatchRepository {
             data:data
         })
             .then((response) => {
-                if (response.status === 200) {
-                    return response.data;
+                if (response.status === 202) {
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error?.response));
+        return reponse;
+    }
+    async getTextItemsUpdate(data, id, token) {
+        const endPoint = `admin/offer-update/${id}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'PATCH',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response.status === 202) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => (error?.response));
         return reponse;
     }
     async getBannersPatch(data, id, token) {
@@ -116,12 +156,12 @@ class PatchRepository {
 
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
         return reponse;
     }
     async getMyProductsDelete(id, token) {
@@ -132,7 +172,6 @@ class PatchRepository {
             headers: {
                 'Authorization' : `Bearer ${token}`
             },
-            data:data
         })
 
 
@@ -148,8 +187,9 @@ class PatchRepository {
         return reponse;
     }
     async getPatchProfile(data ,token) {
+        const endPoint = "auth/profile/"
         const reponse = await Repository({
-            url:"https://alldataaa.pythonanywhere.com/auth/profile/",
+            url:baseUrlProfie+endPoint,
             method: 'PATCH',
             headers: {
                 'Authorization' : `Bearer ${token}`
@@ -158,7 +198,7 @@ class PatchRepository {
         })
 
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 201) {
                     return response.data;
                 } else {
                     return null;
@@ -180,12 +220,33 @@ class PatchRepository {
 
             .then((response) => {
                 if (response.status === 200) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error.response));
+        return reponse;
+    }
+    async getPatchPoster(data,token) {
+        const endPoint =`product-create-second/`
+        const reponse = await Repository({
+            url:baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+
+            .then((response) => {
+                if (response.status === 201) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
         return reponse;
     }
 

@@ -2,26 +2,27 @@ import React, { useEffect } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import { connect, useSelector } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
 import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerceCartItems';
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
-import { Modal } from 'antd';
-import { useCookies } from 'react-cookie';
-import Router from 'next/router';
-import PostRepository from '~/repositories/PostRepository';
+import useCart from '~/hooks/useCart';
 
-const ShoppingCartScreen = ({ ecomerce }) => {
-    const { products, getProducts } = useEcomerce();
+const ShoppingCartScreen = () => {
     const state = useSelector((state) => state.auth.user);
+    const cartItems = useSelector(state => state.ecomerce.cartDataItems)
+
+
+    const { setAllCartItem } = useCart()
+
 
     useEffect(() => {
-        if (ecomerce.cartItems) {
-            getProducts(ecomerce.cartItems, 'card');
+        if (cartItems.length !== JSON.parse(localStorage.getItem('cart'))) {
+            setAllCartItem();
         }
-    }, [ecomerce]);
+    }, []);
+
+
 
     const breadCrumb = [
         {
@@ -35,19 +36,19 @@ const ShoppingCartScreen = ({ ecomerce }) => {
 
 
 
- 
 
-  
+
+
 
     // View
     let contentView;
-    if (ecomerce.cartItems) {
-        if (ecomerce.cartItems?.length > 0) {
+    if (cartItems) {
+        if (cartItems?.length > 0) {
             contentView = (
                 <>
                     <div className="ps-section__content">
                         <ModuleEcomerceCartItems
-                            cartItems={ecomerce.cartItems}
+                            cartItems={cartItems}
                         />
                         <div className="ps-section__cart-actions">
                             <Link href="/">
@@ -59,20 +60,20 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                         <div className="row justify-space-between">
                             <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12 ">
                                 <ModuleCartSummary
-                                    source={ecomerce.cartItems}
+                                    source={cartItems}
                                 />
                                 {state !== null ? (
-                                  <Link href='/account/checkout' as='/account/checkout'>
+                                    <Link href='/account/checkout' as='/account/checkout'>
                                         <a className="ps-btn ps-btn--fullwidth"
-                                        
+
                                         >
                                             Sotib olish
                                         </a>
 
-                                  </Link>
-                                  
+                                    </Link>
+
                                 ) : (
-                                    <Link href="/account/foydalanuvchi">
+                                    <Link href="/account/register-user">
                                         <a className="ps-btn ps-btn--fullwidth">
                                             Sotib olish
                                         </a>
@@ -93,7 +94,7 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                         </div>
 
                         <div className="ps-section__cart-actions">
-                            <Link href="/shop">
+                            <Link href="/">
                                 <a className="ps-btn">Ortga</a>
                             </Link>
                         </div>
@@ -118,7 +119,6 @@ const ShoppingCartScreen = ({ ecomerce }) => {
                         </div>
                     </div>
                 </div>
-                {/* <Newletters layout="container" /> */}
             </PageContainer>
         </>
     );

@@ -21,7 +21,7 @@
 
 .ps-product {
     position: relative;
-    padding: 20px 20px 0;
+    // padding: 20px 20px 0;
     border: 1px solid transparent;
     border-bottom: none;
     @extend %list-reset;
@@ -69,13 +69,11 @@
 
         li {
             margin: 0;
-            margin-right: 6px;
+            // margin-right: 6px;
             max-width: 40px;
 
             a {
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                position: relative;
                 width: 34px;
                 height: 34px;
                 border-radius: 50%;
@@ -83,6 +81,12 @@
                 &:hover {
                     background-color: $color-1st;
                     color: #ffffff;
+                }
+                 i{
+                    position: absolute;
+                    left: 50%;
+                    top: 50%;
+                    transform: translate(-50%, -50%);
                 }
             }
 
@@ -169,7 +173,7 @@
 
     .ps-product__thumbnail {
 
-        min-height: 120px;
+        // min-height: 120px;
         max-width: 170px;
         width: 100%;
         position: relative;
@@ -183,7 +187,11 @@
             position: absolute;
             bottom: 0;
             left: 50%;
+            top: 50%;
             @include transform(translate(-50%, 100%));
+        }
+        a {
+            display: block !important;
         }
     }
 
@@ -219,7 +227,7 @@
     }
 
     &:hover {
-        border-color: silver;
+        border-color: none;
 
         .ps-product__thumbnail {
             .ps-product__actions {
@@ -227,15 +235,6 @@
             }
         }
 
-        .ps-product__content {
-            @include hidden;
-            height: 0;
-
-            &.hover {
-                height: auto;
-                @include show;
-            }
-        }
 
         &.ps-product--inner {
             border: none;
@@ -246,6 +245,28 @@
             }
         }
     }
+
+    @include media('<lg') {
+        &:hover {
+            border: none;
+            .ps-product__thumbnail {
+                .ps-product__actions {
+                    // @include transform(translate(-50%, 0));
+                }
+            }
+    
+    
+            &.ps-product--inner {
+                border: none;
+    
+                .ps-product__content {
+                    // display: block;
+                    // @include show;
+                }
+            }
+        }
+    }
+
 
     @include media('<sm') {
         padding: 0;
@@ -526,6 +547,8 @@
         a {
             font-size: 16px;
             color: #0066cc;
+            display: block;
+            width: 230px;
 
             &:hover {
                 color: $color-1st;
@@ -535,6 +558,24 @@
         p {
             strong {
                 font-weight: 500;
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 2592px) {
+    .max-class{
+        padding: 15px !important;
+    }
+    .ps-product--detail{
+        .ps-product__shopping {
+            .ps-btn {
+                font-weight: 600;
+                padding-left: 20px !important;
+                padding-right: 20px !important;
+                vertical-align: top;
+                max-height: 50px;
+                font-size: 18px;
             }
         }
     }
@@ -848,7 +889,7 @@
         border-bottom: 1px solid #e1e1e1;
 
         > * {
-            margin-right: 30px;
+            margin-right: 18px;
         }
 
         figure {
@@ -971,6 +1012,15 @@
             .ps-btn {
                 margin-right: 10px;
                 text-align: center;
+            }
+        }
+        @media (max-width: 1200px) {
+
+            .ps-btn {
+                margin-right: 10px;
+                text-align: center;
+                width: 100%;
+                margin: 5px 0;
             }
         }
     }
@@ -1340,7 +1390,7 @@
     .ps-product__thumbnail {
         width: 100%;
         display: flex;
-        flex-flow: row-reverse nowrap;
+        // flex-flow: row-reverse nowrap;
         align-content: flex-start;
 
         > * {
@@ -1473,7 +1523,7 @@
         }
 
         .ps-product__thumbnail {
-            max-width: 43%;
+            // max-width: 43%;
         }
 
         .ps-product__info {
@@ -2340,8 +2390,7 @@
     .ps-product__thumbnail {
         max-width: 100px;
         min-width: 100px;
-
-        height: 30px;
+        height: 70px;
     }
 
     .ps-product__content {

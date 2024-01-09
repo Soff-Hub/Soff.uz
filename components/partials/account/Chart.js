@@ -116,13 +116,15 @@ function Example() {
             data: {
                 labels: labels,
                 datasets: [
-                    {
+                    {   label:"salom",
                         data: data2,
                         borderColor: '#3cba9f',
                         backgroundColor: '#71d1bd',
                         borderWidth: 2,
+                        
                     },
                 ],
+                
             },
         });
     }, [data2]);

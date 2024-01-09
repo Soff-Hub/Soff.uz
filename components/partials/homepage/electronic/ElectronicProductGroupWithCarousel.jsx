@@ -1,59 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
-import Slider from 'react-slick';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import Product from '~/components/elements/products/Product';
-import { carouselStandard } from '~/utilities/carousel-helpers';
-import useGetProducts from '~/hooks/useGetProducts';
-
 
 const ElectronicProductGroupWithCarousel = ({
-    collectionSlug,
     title,
     data,
-    id
+    id,
+    slug
 }) => {
-    const { productItems, loading, getProductsByCollection } = useGetProducts();
-    useEffect(() => {
-        if (collectionSlug) {
-            getProductsByCollection(collectionSlug);
-        }
-    }, [collectionSlug]);
 
     // Views
-
     let productItemsView;
-    if (!loading) {
-        if (data && data.promotional_sliders.length > 0) {
-            //  let slideItems
-            productItemsView = 
-            (
-              <div className='d-flex align-content-center carosusel-cards'>
-               {
-                 data.promotional_sliders?.slice(0,5).map((item, index) => (
-                  <div className='home-card' >   <Product key={item.id} product={item} /> </div>
-                ))
-               }
-              </div>
-
-                // <Slider
-                //     {...carouselStandard}
-                //     arrows={false}
-                //     className="ps-carousel outside">
-                //     {
-                //     data.promotional_sliders.map((item, index) => (
-                //         <Product key={item.id} product={item} />
-                //     ))
-                //     }
-                // </Slider>
-            )
+    if (true) {
+        if (data && data?.promotional_sliders.length > 0) {
+            productItemsView = (
+                <div className="d-flex align-content-center row">
+                    {data?.promotional_sliders
+                        ?.slice(0, 6)
+                        .map((item, index) => (
+                            <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                <Product  product={item} />{' '}
+                            </div>
+                        ))}
+                </div>
+            );
         } else {
-            productItemsView = <p>Hujjat topilmadi</p>;
+            productItemsView = <p>Mahsulot topilmadi</p>;
         }
     } else {
-        const skeletons = generateTempArray(6).map((item) => (
-            <div key={item.id} className="col-xl-2 col-lg-3 col-sm-3 col-6">
+        const skeletons = generateTempArray(6).map((item, i) => (
+            <div key={i} className="col-xl-2 col-lg-3 col-sm-3 col-6">
                 <SkeletonProduct />
             </div>
         ));
@@ -66,10 +44,8 @@ const ElectronicProductGroupWithCarousel = ({
                 <div className="ps-section__header">
                     <h3>{title}</h3>
                     <ul className="ps-section__links">
-
-                        {/* {linksView} */}
                         <li>
-                            <Link href={`/category/${id}`}>
+                            <Link href={`/category/${slug}`}>
                                 <a>Barchasini ko'rish</a>
                             </Link>
                         </li>

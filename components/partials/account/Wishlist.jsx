@@ -1,100 +1,157 @@
-import React, { Component, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { connect, useSelector } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
 import ProductCart from '~/components/elements/products/ProductCart';
-import ProductRepository from '~/repositories/ProductRepository';
-import { Modal, Table } from 'antd';
-import { useCookies } from 'react-cookie';
+
+import { Modal } from 'antd';
+import useWishlist from '~/hooks/useWishlist';
+import useCart from '~/hooks/useCart';
+import { fileDownloader } from '~/utilities/common-helpers';
 
 const Wishlist = ({ ecomerce }) => {
-    const [cookies, setCookie] = useCookies(['cart']);
-    const { loading, products, getProducts } = useEcomerce();
-    const { addItem, removeItem } = useEcomerce();
+    const { removeSavedItem } = useWishlist();
+    const { setCartOneItem } = useCart();
 
-    const state = useSelector((state) => state);
+    const { wishlist } = useSelector((state) => state.ecomerce);
+    const { setAllSaved } = useWishlist();
 
+    useEffect(() => {
+        if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
+            setAllSaved();
+        }
+    }, []);
 
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
-        addItem(product, cookies.cart, 'cart');
+        setCartOneItem(product.id);
+
         const modal = Modal.success({
             centered: true,
             title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz`,
+            content: `Siz mahsulotni savatga qo'shdingiz`,
         });
         modal.update;
     }
 
     async function handleRemoveWishlistItem(e, item) {
         e.preventDefault();
-        removeItem(item, ecomerce.wishlistItems, 'wishlist');
+        removeSavedItem(item.id);
     }
 
-    useEffect(() => {
-        // getCategoryData();
-        if (ecomerce.wishlistItems) {
-            getProducts(ecomerce.wishlistItems);
-        }
-    }, [ecomerce.wishlistItems]);
     // views
     let wishlistItemsView;
-    if ( cookies?.wishlist?.length > 0) {
+    if (wishlist?.length > 0) {
         wishlistItemsView = (
             <div className="table-responsive">
                 <table className="table ps-table--whishlist table-sm table-md table-xs">
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Hujjat nomi</th>
+                            <th>Mahsulot nomi</th>
                             <th>Narxi</th>
-                            <th className='d-flex justify-content-center '>Qo'shish</th>
+                            <th className="d-flex justify-content-center ">
+                                Amallar
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
-                        { cookies.wishlist?.length > 0 &&  cookies.wishlist.map((product) => (
-
-                            <tr key={product?.id}>
-                                <td>
-                                    <a
-                                        href="#"
-                                        onClick={(e) =>
-                                            handleRemoveWishlistItem(
-                                                e,
-                                                product
+                        {wishlist?.length > 0 &&
+                            wishlist?.map((product) => (
+                                <tr key={product?.id}>
+                                    <td>
+                                        <a
+                                            href="#"
+                                            onClick={(e) =>
+                                                handleRemoveWishlistItem(
+                                                    e,
+                                                    product
+                                                )
+                                            }>
+                                            <i className="icon-cross"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <ProductCart product={product} />
+                                    </td>
+                                    <td>
+                                        <span>
+                                            {
+                                                +product.discount_price === 0 ? "Bepul mahsulot" : (
+                                                    product?.discount === 0 ? (
+                                                        <p>
+                                                            {addPeriodToThousands(
+                                                                product.discount_price
+                                                            )}
+                                                        </p>
+                                                    ) : (
+                                                        <>
+                                                            <del>
+                                                                {addPeriodToThousands(
+                                                                    product.price
+                                                                )}
+                                                                so'm
+                                                            </del>
+                                                            <p>
+                                                                {addPeriodToThousands(
+                                                                    product.discount_price
+                                                                )}
+                                                                so'm
+                                                            </p>
+                                                        </>
+                                                    )
+                                                )
+                                            }
+                                        </span>
+                                    </td>
+                                    <td style={{ margin: '0 auto' }}>
+                                        {
+                                            +product.discount_price > 0 ? (
+                                                <a
+                                                    className="ps-btn d-inline-block"
+                                                    href=""
+                                                    onClick={(e) =>
+                                                        handleAddItemToCart(e, product)
+                                                    }>
+                                                    Savatga qo'shish
+                                                </a>
+                                            ) : (
+                                                <a
+                                                    className="ps-btn d-inline-block"
+                                                    href=""
+                                                    onClick={(e) => {
+                                                        e.preventDefault()
+                                                        fileDownloader(product)
+                                                    }}>
+                                                    Yuklab olish
+                                                </a>
                                             )
-                                        }>
-                                        <i className="icon-cross"></i>
-                                    </a>
-                                </td>
-                                <td>
-                                    <ProductCart product={product} />
-                                </td>
-                                <td >
-                                   <span> {product.price} so'm</span>
+                                        }
 
-                                </td>
-                                <td style={{margin: "0 auto"}} >
-                                    <a
-                                        className="ps-btn d-inline-block"
-                                        href=""
-                                        onClick={(e) =>
-                                            handleAddItemToCart(
-                                                e,
-                                                product
-                                            )
-                                        }>
-                                       Savatga qo'shish
-                                    </a>
-                                </td>
-                            </tr>
-                        ))}
+                                    </td>
+                                </tr>
+                            ))}
                     </tbody>
                 </table>
             </div>
-
         );
-    } else if(cookies?.wishlist?.length <= 0) {
+    } else if (wishlist?.length <= 0) {
         // if (loading) {
         wishlistItemsView = (
             <div className="alert alert-danger" role="alert">

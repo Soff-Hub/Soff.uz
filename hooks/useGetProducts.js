@@ -38,13 +38,11 @@ export default function useGetProducts() {
         },
 
         getProductsByCategory: async (payload) => {
-            console.log('//', payload);
             setLoading(true);
             const responseData = await getProductsByCategoriesHelper(payload);
             if (responseData) {
                 setProductItems(responseData.items);
 
-                console.log('productbycategory', responseData.items);
                 setTimeout(
                     function () {
                         setLoading(false);

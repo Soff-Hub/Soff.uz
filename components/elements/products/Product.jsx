@@ -2,11 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import ModuleProductActions from '~/components/elements/products/modules/ModuleProductActions';
 import useProduct from '~/hooks/useProduct';
-
+import Image from 'next/image';
 
 const Product = ({ product }) => {
-    const { thumbnailImage, price, title } = useProduct();
-    // console.log('//', product);
+    const { thumbnailImage, title } = useProduct();
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -26,17 +25,22 @@ const Product = ({ product }) => {
     }
     return (
         <div className="ps-product">
-            <div className="ps-product__thumbnail">
-                <Link href="/product/[pid]" as={`/product/${product.id}`}>
-                    <a>
-                        { 
-                        product.poster_url ?
-                    
-                        thumbnailImage(product)
-                    :
-                    <img src="/static/img/not-found.png" alt="" />
-                    }
-                    
+            <div
+                className="ps-product__thumbnail"
+                style={{
+                    margin: '0 auto',
+                }}>
+                <Link href="/product/[pid]" as={`/product/${product.slug}`}>
+                    <a
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                        }}>
+                        {product.poster_url ? (
+                            thumbnailImage(product)
+                        ) : (
+                            <img src="/static/img/docCopy.png" alt="hujjat" />
+                        )}
                     </a>
                 </Link>
 
@@ -45,12 +49,21 @@ const Product = ({ product }) => {
             <div className="ps-product__container">
                 <div className="ps-product__content card-narx-box">
                     {title(product)}
-                    {addPeriodToThousands(product.price)} so'm
+                    {+product.discount_price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
+                        <p>{addPeriodToThousands(product.discount_price)} so'm</p>
+                    ) : (
+                        <>
+                            <del>
+                                {addPeriodToThousands(product.price)} so'm
+                            </del>
+                            <p>
+                                {addPeriodToThousands(product.discount_price)}
+                                so'm
+                            </p>
+                        </>
+                    )}
                 </div>
-                <div className="ps-product__content hover">
-                    {title(product)}
-                    {addPeriodToThousands(product.price)} so'm
-                </div>
+
             </div>
         </div>
     );

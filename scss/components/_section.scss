@@ -521,6 +521,30 @@
         margin-top: 40px;
     }
 
+    @media screen and (max-width: 768px) {
+        .ps-shopping__view{
+            display: none;
+        }
+        .ps-shopping__actions {
+            width: 100%;
+            flex-direction: column;
+            .ps-input{
+                width: 100%;
+            }
+            .category-search-label{
+                width: 100%;
+            }
+            .category-search-label {
+                .search-label{
+                    left: 5%;
+                }
+            } 
+            .select2 {
+                display: none;
+            }
+        }
+    }
+
     @include media('<sm') {
         .ps-shopping__header {
             flex-flow: row nowrap;
@@ -528,7 +552,7 @@
 
             > * {
                 flex-basis: 100%;
-                max-width: 50%;
+                max-width: 70%;
             }
 
             .ps-shopping__view {
@@ -543,6 +567,11 @@
             .select2 {
                 display: none;
             }
+            .category-search-label {
+                .search-label{
+                    left: 7%;
+                }
+            } 
         }
     }
 
@@ -1460,7 +1489,7 @@
 }
 
 .ps-my-account {
-    min-height: 120vh;
+    min-height: 145vh !important;
     background-color: #f1f1f1;
 }
 
@@ -1825,6 +1854,8 @@
         padding-top: 0;
         margin-bottom: 30px;
         border: 1px solid #e8e8e8;
+        
+
 
         .ps-tab-list {
             width: 100%;
@@ -2256,7 +2287,11 @@
         padding: 60px 0 40px;
         h1 {
             font-size: 24px;
-            font-weight: 600;
+            font-weight: 500;
+
+            i {
+                text-decoration: underline;
+            }
         }
     }
 

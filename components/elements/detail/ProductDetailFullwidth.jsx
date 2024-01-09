@@ -3,51 +3,75 @@ import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDe
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
-import ModuleProductDetailSpecification from '~/components/elements/detail/modules/ModuleProductDetailSpecification';
-import ModuleProductDetailSharing from '~/components/elements/detail/modules/ModuleProductDetailSharing';
-import ModuleDetailActionsMobile from '~/components/elements/detail/modules/ModuleDetailActionsMobile';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
-import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
+import Router from 'next/router';
+import Meta from '~/components/shared/headers/Meta';
 
 const ProductDetailFullwidth = ({ product }) => {
+    const [tag, setTag] = useState([]);
 
-    const [tag, setTag] = useState([])
+    const searchTag = (e) => {
+        Router.push(`/search?keyword=${e}`);
+    };
 
-    const getTagData = async () => {
-        const data = await ProductRepository.getTagData()
-        if (data) {
-            setTag(data)
-        }
-    }
+    const SellerPage = (e) => {
+        Router.push(`/seller/${e}`);
+    };
 
     useEffect(() => {
-        getTagData()
-    },[])
-
+        setTag(product?.tag);
+    }, []);
     return (
+        <>
+        <Meta  title={product?.title} image={product?.iamges?.map(item=>(item?.image_url))}/>
         <div className="ps-product--detail ps-product--fullwidth">
-            <div className="ps-product__header">
+            <div className="ps-product__header ">
                 <ThumbnailDefault product={product} />
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
+                    <div>
+                        {product?.seller?.first_name && (
+                            <h4
+                                style={{
+                                    cursor: 'pointer',
+                                }}
+                                onClick={() =>
+                                    SellerPage(product?.seller?.id)
+                                }>
+                                Muallif : {product?.seller?.first_name}  {product?.seller?.last_name} 
+                            </h4>
+                        )}
+                    </div>
                     <ModuleProductDetailDescription product={product} />
                     <ModuleDetailShoppingActions product={product} />
-                    <div className='d-flex align-content-center'>
-                        {
-                            tag?.length > 0 &&
-                            tag.map((item,i) => (
-                                <div key={i} className='mx-4' > <a href='#' > # {item.name} </a> </div>
-                            ))
-                        }
+                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                        {tag?.length > 0 &&
+                            tag.map((item, i) => (
+                                <div key={i} className="mx-2">
+                                    <Link href="#" as="#">
+                                        <a
+                                            onClick={() =>
+                                                searchTag(item?.name)
+                                            }>
+                                            {' '}
+                                            #{item.name}{' '}
+                                        </a>
+                                    </Link>
+                                </div>
+                            ))}
                     </div>
-                    {/* <ModuleProductDetailSpecification /> */}
-                    {/* <ModuleProductDetailSharing /> */}
-                    <ModuleDetailActionsMobile product={product} />
                 </div>
             </div>
-            <DefaultDescription product={product} />
+            {
+                product?.description ? 
+                <DefaultDescription product={product} />
+                :
+                ''
+            }
         </div>
+        </>
+
     );
 };
 

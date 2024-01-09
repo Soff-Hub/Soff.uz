@@ -4,7 +4,7 @@ class ClickRepository {
   
     async postClick(data,payload) {
         const endPoint = `seller/click/`;
-        const reponse = await Repository.post(`${baseUrl}/${endPoint}`, data, payload)
+        const reponse = await Repository.post(`${baseUrl}${endPoint}`, data, payload)
             .then((response) => {
                 return response
             })

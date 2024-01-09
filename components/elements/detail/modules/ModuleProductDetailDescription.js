@@ -1,22 +1,23 @@
 import React from 'react';
-import Link from 'next/link';
 
 const ModuleProductDetailDescription = ({ product }) => (
     <div className="ps-product__desc">
-
-        {/* <p>
-            Sold By:
-            <Link href="/shop">
-                <a>
-                    <strong> {product.vendor}</strong>
-                </a>
-            </Link>
-
-        </p> */}
-        <ul className="ps-list--dot">
-           {
-            <li>{product.short_description}</li>
-           }
+        <strong className="fs-3"> Qisqa tavsif </strong>
+        <ul style={{ listStyleType: 'revert' }}>
+            <li>
+                <strong>Betlar soni : </strong> {product?.document?.page_count} ta
+            </li>
+            <li>
+                <strong>Hajmi : </strong> {product?.document?.file_size}
+            </li>
+            <li>
+                <strong>Turi : </strong> {product?.document?.file_type}
+            </li>
+            {product?.category?.name && (
+                <li>
+                    <strong> Kategoriyasi</strong> : {product?.category?.name}
+                </li>
+            )}
         </ul>
     </div>
 );

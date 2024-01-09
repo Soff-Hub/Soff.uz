@@ -3,6 +3,31 @@ button {
     @include transition(all 0.4s ease);
 }
 
+
+.taklif-div{
+    display: flex;
+    flex-basis: 100%;
+    justify-content: space-between;
+    border: 1px solid $color-1st;
+   .link{
+    padding: 10px;
+   }
+    button{
+        padding: 3px 35px;
+    }
+}
+
+
+// .ant-btn-default{
+//     &:hover{
+//         color: #fff !important;
+//     }
+// }
+
+:where(.css-dev-only-do-not-override-pr0fja).ant-btn >span{
+    font-weight: 600;
+}
+
 .menu-toggle,
 .ps-btn--hamburger {
     position: relative;
@@ -80,7 +105,7 @@ button {
 .ps-btn,
 button.ps-btn {
     display: inline-block;
-    padding: 15px 45px;
+    padding: 15px 9px;
     font-size: 16px;
     font-weight: 600;
     line-height: 20px;
@@ -264,6 +289,8 @@ button.ps-btn {
         display: none;
     }
 }
+
 .ant-back-top {
     right: 50px !important;
+    bottom: 100px !important;
 }

@@ -161,7 +161,7 @@
             padding-bottom: 50px;
         }
         @include media('<sm') {
-            padding-bottom: 40px;
+            padding-bottom: 10px;
         }
         @include media('<xs') {
             padding-bottom: 0px;

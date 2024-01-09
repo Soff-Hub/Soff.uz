@@ -26,7 +26,7 @@ const ProductOnCart = ({ product, children }) => {
     return (
         <div className="ps-product--cart-mobile">
             <div className="ps-product__thumbnail">
-                <Link href="/product/[pid]" as={`/product/${product.id}`}>
+                <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                     <a>{thumbnailImage(product)}</a>
                 </Link>
             </div>
@@ -34,7 +34,19 @@ const ProductOnCart = ({ product, children }) => {
                 {title(product)}
                 <p>
                     <small>
-                         {addPeriodToThousands(product.price)} so'm
+                        {+product.discount_price === 0 ? <p>Bepul mahsulot</p> : product.discount === 0 ? (
+                            <p>{addPeriodToThousands(product.discount_price)} so'm</p>
+                        ) : (
+                            <>
+                                <del>
+                                    {addPeriodToThousands(product.price)} so'm
+                                </del>
+                                <p>
+                                    {addPeriodToThousands(product.discount_price)}
+                                    so'm
+                                </p>
+                            </>
+                        )}
                     </small>
                 </p>{' '}
                 {children}

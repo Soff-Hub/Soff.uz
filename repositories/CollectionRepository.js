@@ -6,6 +6,22 @@ class CollectionRepository {
         const reponse = await Repository.get(`${baseUrl}${slug}` )
             .then((response) => {
                 if (response.data ) {
+                    return response
+                } else {
+                    return null;
+                }
+                return response.data;
+            })
+            .catch((error) => {
+                return null;
+            });
+        return reponse;
+    }
+    
+    async getCategoryDataCount(slug) {
+        const reponse = await Repository.get(`${baseUrl}${slug}` )
+            .then((response) => {
+                if (response.data ) {
                     return response.data.results
                 } else {
                     return null;
@@ -13,7 +29,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -33,7 +48,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;
@@ -52,7 +66,6 @@ class CollectionRepository {
                 return response.data;
             })
             .catch((error) => {
-                console.log(JSON.stringify(error));
                 return null;
             });
         return reponse;

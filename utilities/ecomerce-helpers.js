@@ -11,7 +11,6 @@ import { getProductsByIds } from '~/repositories/ProductRepository';
 export function getCartItemsFromCookies() {
     const cartItems = cookies.get('cart');
     if (cartItems) {
-        console.log('cooke', cartItems);
         return JSON.parse(cartItems);
     } else {
         return null;
@@ -27,14 +26,14 @@ export function addItemToCartHelper(product) {
     let cookieCart = getCartItemsFromCookies();
     if (cookieCart) {
         cart = cookieCart;
-        const existItem = cart.items.find((item) => item.id === product.id);
+        // const existItem = cart.items.find((item) => item.id === product.id);
         // if (existItem) {
         //     existItem.quantity += product.quantity;
         // } else {
-            /* if (!product.quantity) {
+        /* if (!product.quantity) {
                 product.quantity = 1;
             }*/
-            cart.items.push(product);
+        cart?.items.push(product);
         // }
     } else {
         cart = {
@@ -91,16 +90,36 @@ export function removeCartItemHelper(product) {
 // new
 
 export function calculateAmount(obj) {
-    return Object.values(obj)
-        .reduce((acc, { price }) => acc + Number(price), 0)
-        // .toFixed(2);
+//     let price = [];
+//     let discount_Price = [];
+//     obj?.map((item) => {
+//         if (item.discount > 0) {
+//             discount_Price.push(item);
+//         } else {
+//             price.push(item);
+//         }
+//     });
+//     console.log('hisob', price, discount_Price);
+
+//     let PriceSum = Object.values(price).reduce(
+//         (acc, { price }) => acc + Number(price),
+//         0
+//     );
+
+//     let DiscountPriceSum = Object.values(discount_Price).reduce(
+//         (acc, { discount_price }) => acc + Number(discount_price),
+//         0
+//     );
+// console.log('price = ', PriceSum, 'discount-price = ', DiscountPriceSum);
+//     return PriceSum + DiscountPriceSum
+
+
+    return  Object.values(obj).reduce(
+        (acc, { discount_price }) => acc + Number(discount_price),
+        0
+    );
+
+
+
+    // .toFixed(2);
 }
-
-
-// export function calculateCartQuantity(obj) {
-//     return Object.values(obj).reduce((acc, { quantity }) => acc + 0, 0);
-// }
-
-// export function caculateArrayQuantity(obj) {
-//     return Object.values(obj).reduce((acc) => acc + 1, 0);
-// }

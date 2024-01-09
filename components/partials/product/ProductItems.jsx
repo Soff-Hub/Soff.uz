@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Product from '~/components/elements/products/Product';
 import ProductWide from '~/components/elements/products/ProductWide';
-import ModuleShopSortBy from '~/components/partials/shop/modules/ModuleShopSortBy';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 
-/*
- * NOTICE!
- * This component just dipslay product items, not fetching data.
- * */
+
 
 const ProductItems = ({ products, columns = 4 }) => {
     const [listView, setListView] = useState(true);
@@ -56,7 +52,11 @@ const ProductItems = ({ products, columns = 4 }) => {
         if (productItems && productItems.length > 0) {
             if (listView) {
                 const items = productItems.map((item) => (
-                    <div className={classes} key={item.id}>
+                    <div className={classes} key={item.id}  style={{
+                        display:'flex',
+                        justifyContent:'center',
+                        alignContent:'center'
+                    }} >
                         <Product product={item} />
                     </div>
                 ));
@@ -67,7 +67,7 @@ const ProductItems = ({ products, columns = 4 }) => {
                 );
             } else {
                 productItemsView = productItems.map((item) => (
-                    <ProductWide product={item} />
+                    <ProductWide product={item} key={item.id} />
                 ));
             }
         } else {
@@ -90,7 +90,6 @@ const ProductItems = ({ products, columns = 4 }) => {
                     Products found
                 </p>
                 <div className="ps-shopping__actions">
-                    <ModuleShopSortBy />
                     <div className="ps-shopping__view">
                         <p>View</p>
                         <ul className="ps-tab-list">

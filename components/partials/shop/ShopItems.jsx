@@ -1,63 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { Pagination } from 'antd';
 import Product from '~/components/elements/products/Product';
-import ProductWide from '~/components/elements/products/ProductWide';
 import { useRouter } from 'next/router';
-import useGetProducts from '~/hooks/useGetProducts';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
+import ProductRepository from '~/repositories/ProductRepository';
+import { useDispatch, useSelector } from 'react-redux';
+import { CategorySlug } from '~/store/auth/action';
 
-const ShopItems = ({ columns = 4, pageSize, data }) => {
+const ShopItems = ({
+    columns = 4,
+    pageSize,
+    data,
+    dataCount,
+    setDataCount
+}) => {
     const Router = useRouter();
     const { query } = Router;
+    const { slug } = Router.query;
     const [listView, setListView] = useState(true);
-    const [total, setTotal] = useState(0);
     const [classes, setClasses] = useState(
         'col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6 '
     );
     const [load, setLoad] = useState(false);
     const [success, setSuccess] = useState(true);
 
-    const { productItems, loading, getProducts } = useGetProducts();
-    const [pagenationData, setPagenationData] = useState([]);
+    const [chaildId, setchaildId] = useState(null);
+    const [parentId, setParentId] = useState(null);
+
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
+    const dispatch = useDispatch()
+    const { category_lists: categoryData } = useSelector(state => state.auth)
+
+
+    async function getCategry() {
+        const responseData = await ProductRepository.getCategoryParent();
+        if (responseData?.length > 0) {
+            dispatch(CategorySlug(responseData?.data?.results));
+        }
+    }
+
 
     function handleChangeViewMode(e) {
         e.preventDefault();
         setListView(!listView);
     }
 
-    async function handlePagination(pageVal) {
-        setPage(pageVal);
-        setNewData(data);
-        const arr = [];
-
-        for (
-            let i = (pageVal - 1) * pageSize;
-            i < (pageVal - 1) * pageSize + 8;
-            i++
-        ) {
-            data?.[i] ? arr.push(data[i]) : '';
-        }
-
-        setNewData(arr);
-
-        for (
-            let i = (pageVal - 1) * pageSize;
-            i < (pageVal - 1) * pageSize + 2;
-            i++
-        ) {
-            data?.[i] ? arr.push(data[i]) : '';
-
-            // console.log(data[i]);
-        }
-
-        // console.log(pageVal);
-        // console.log('arr', arr);
-        setNewData(arr);
-    }
-
+   
     function handleSetColumns() {
         switch (columns) {
             case 2:
@@ -78,67 +68,291 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
         }
     }
 
+
     useEffect(() => {
         setTimeout(() => {
             setLoad(true);
         }, 2000);
 
-        data?.length > 0 ? setSuccess(true) : setSuccess(false);
+        data !== null  ? setSuccess(false) : setSuccess(true);
+
+        console.log("=>", data);
+  
 
         handleSetColumns();
-        if (data) {
-            setPagenationData(data);
-            handlePagination(1);
+        if (true) {
+            setNewData(data);
+        } else {
+            setLoad(true);
         }
     }, [query, data]);
 
     useEffect(() => {
-        // console.log('data', pagenationData);
-    }, [pagenationData]);
+        if (categoryData?.length === 0) {
+            getCategry();
+        }
 
-    // const count = [Math.ceil(data?.length / 3)];
-    //     function createArray(length, value) {
-    //         return Array.from({ length }, () => value);
-    //     }
+        if (categoryData?.every((cat) => cat.slug !== slug)) {
+            console.log(slug);
+            setchaildId(slug);
+            setParentId(null)
+        } else {
+            setParentId(slug);
+            setchaildId(null)
+        }
 
-    function compareByCreatedAt(a, b) {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        return dateA - dateB;
+    }, [slug])
+
+    const handlePagination = async (e) => {
+        console.log('pagination', e);
+        setPage(e);
+        if (chaildId) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
+        } else if (parentId) {
+            const respons = await ProductRepository.getFilderProduct(
+                e,
+                null,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
+        }
+    };
+
+    async function handleSelect(e) {
+        const ID = 'id';
+        const PRICE = 'price';
+        const DePRICE = '-price';
+        if (chaildId) {
+            if (e.target.value === 'all') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    ID,
+                    null,
+                    null
+                );
+                if (respons) {
+                    setNewData(respons?.results);
+                } else {
+                    setNewData(respons?.results);
+                }
+            } else if (e.target.value === 'mashhur') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    'approved_count'
+                );
+                setNewData(respons?.results);
+            } else if (e.target.value === 'arzondan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    null
+                );
+                setNewData(respons?.results);
+            } else if (e.target.value === 'qimmatdan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DePRICE,
+                    null
+                );
+                setNewData(respons?.results);
+            }
+        } else if (parentId) {
+            if (e.target.value === 'all') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    ID,
+                    null,
+                    null
+                );
+                if (respons) {
+                    setNewData(respons?.results);
+                } else {
+                    setNewData(respons?.results);
+                }
+            } else if (e.target.value === 'mashhur') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    'approved_count'
+                );
+                setNewData(respons?.results);
+            } else if (e.target.value === 'arzondan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    PRICE,
+                    null
+                );
+                setNewData(respons?.results);
+            } else if (e.target.value === 'qimmatdan') {
+                const respons = await ProductRepository.getFilderProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DePRICE,
+                    null
+                );
+                setNewData(respons?.results);
+            }
+        }
     }
-    function compareByCreatedAtLast(a, b) {
-        const dateA = new Date(a.created_at);
-        const dateB = new Date(b.created_at);
-        return dateB - dateA;
-    }
 
-    let arr = newData ? [...newData] : [];
-
-    function handleSelect(e) {
-        if (e.target.value === 'boshi') {
-            arr.sort(compareByCreatedAt);
-            setNewData(arr);
-        } else if (e.target.value === 'oxiri') {
-            arr.sort(compareByCreatedAtLast);
-            setNewData(arr);
+    async function detailSearch(e) {
+        if (chaildId) {
+            const respons = await ProductRepository.getSearchProduct(
+                1,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                e
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
+        } else if (parentId) {
+            const respons = await ProductRepository.getSearchProduct(
+                1,
+                null,
+                slug,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                e
+            );
+            if (respons) {
+                setDataCount(respons.count);
+                setNewData(respons.results);
+            } else {
+                setLoad(true);
+            }
         }
     }
 
     // Views
     let productItemsView;
-    if (load) {
-        if (success) {
-            const items = data?.length > 0 && data?.map((item) => (
-                <div className={classes} key={item.id}>
-                    <Product product={item} />
-                </div>
-            ));
+    if (success) {
+        const skeletonItems = generateTempArray(4).map((item) => (
+            <div className={classes} key={item}>
+                <SkeletonProduct />
+            </div>
+        ));
+        productItemsView = <div className="row">{skeletonItems}</div>;
+
+        
+
+    } else {
+        if (data?.length > 0) {
+            const items =
+                newData?.length > 0 &&
+                newData?.map((item) => (
+                    <div
+                        className={classes + ' home-card-category'}
+                        key={item.id}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignContent: 'center',
+                        }}>
+                        <Product product={item} />
+                    </div>
+                ));
             productItemsView = (
                 <div className="ps-shop-items">
                     <div className="row">{items}</div>
                 </div>
             );
         } else {
+            const skeletonItems = generateTempArray(4).map((item) => (
+                <div className={classes} key={item}>
+                    <SkeletonProduct />
+                </div>
+            ));
+            productItemsView = <div className="row">{skeletonItems}</div>;
+        }
+
+        if (data?.length <= 0) {
             productItemsView = (
                 <div
                     style={{
@@ -148,78 +362,68 @@ const ShopItems = ({ columns = 4, pageSize, data }) => {
                     }}>
                     <div className={classes} style={{ marginTop: '30px' }}>
                         <img
-                            src="/static/img/no-document.jpg"
+                            src="/static/img/no-document.png"
                             alt="no documnt"
                         />
-                        <p className="text-center">Hujjat yo'q</p>
+                        <p className="text-center">Mahsulot yo'q</p>
                     </div>
                 </div>
             );
         }
-    } else {
-        const skeletonItems = generateTempArray(4).map((item) => (
-            <div className={classes} key={item}>
-                <SkeletonProduct />
-            </div>
-        ));
-        productItemsView = <div className="row">{skeletonItems}</div>;
+       
     }
 
     return (
         <div className="ps-shopping">
             <div className="ps-shopping__header">
                 <p>
-                    <strong className="mr-2">{data?.length}</strong>
-                    ta hujjat bor
+                    <strong className="mr-2">{dataCount}</strong>
+                    ta mahsulot bor
                 </p>
                 <div className="ps-shopping__actions">
+                    <label className="category-search-label">
+                        <i className="fa-solid fa-magnifying-glass search-label"></i>
+                        <input
+                            className="ps-input"
+                            type="text"
+                            placeholder="Mahsulotingizni izlang..."
+                            onChange={(e) => detailSearch(e.target.value)}
+                        />
+                    </label>
+
                     <select
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
-                        <option value="boshi">
-                            Boshidagilar bo'yicha saralash
+                        <option value="mashhur">
+                            Mashhurlari bo'yicha saralash
                         </option>
-                        <option value="oxiri">
-                            Oxirgi qo'shilganlar bo'yicha saralash
+                        <option value="all">Yangilari</option>
+                        <option value="arzondan">
+                            Narx bo'yicha: arzondan qimmatga
+                        </option>
+                        <option value="qimmatdan">
+                            Narx bo'yicha: qimmatdan arzonga
                         </option>
                     </select>
-                    <div className="ps-shopping__view">
-                        <ul className="ps-tab-list">
-                            <li className={!listView === true ? 'active' : ''}>
-                                <a
-                                    href="#"
-                                    onClick={(e) => handleChangeViewMode(e)}>
-                                    <i className="icon-grid"></i>
-                                </a>
-                            </li>
-                            {/* <li className={listView !== true ? 'active' : ''}>
-                                <a
-                                    href="#"
-                                    onClick={(e) => handleChangeViewMode(e)}>
-                                    <i className="icon-list4"></i>
-                                </a>
-                            </li> */}
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div className="ps-shopping__content pagination-product-box">
                 {productItemsView}
             </div>
             <div className="ps-shopping__footer text-center">
-                <div className="ps-pagination">
-                    {data?.length > 0 && (
-                        <Pagination
-                            total={data?.length}
+                {data?.length >= 16 && (
+                    <div className="ps-pagination">
+                        <Pagination className="mt-3"
+                            total={dataCount}
                             pageSize={pageSize}
                             responsive={true}
                             showSizeChanger={false}
-                            current={page || 1}
+                            current={page}
                             onChange={(e) => handlePagination(e)}
                         />
-                    )}
-                </div>
+                    </div>
+                )}
             </div>
         </div>
     );

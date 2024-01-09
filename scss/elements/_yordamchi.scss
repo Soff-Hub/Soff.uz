@@ -1,6 +1,6 @@
 .tolov-usullari {
     display: flex;
-    align-items: start;
+    align-items: flex-start;
     justify-content: center;
     flex-direction: column;
     gap: 20px;
@@ -10,7 +10,7 @@
         width: 100%;
         display: flex;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
         gap: 20px;
 
         img {
@@ -34,40 +34,36 @@
 // banner mobile uchun
 
 .banner-right {
-
-
     display: flex;
     flex-direction: column;
 }
 
 .ps-product {
     margin: 15px 0 !important;
+    width: 100%;
 }
 
 .pagination-product-box {
     min-height: 430px;
-    max-height: 430px;
+    // max-height: 430px;
 }
 
 .products-image1 {
     max-height: 120px;
     height: 100px;
-    width: 180px;
-    // width: 100%;
-    background-size: cover;
-    background-position: center;
+    // width: 180px;
+    // background-size: cover;
+    // background-position: center;
+    margin: 0 auto;
+    transition: .5s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
 }
 
 .carosusel-cards {
     gap: 15px;
-}
-
-.ps-product--cart {
-    .ps-product__content {
-        .ps-product__title {
-            padding-left: 80px;
-        }
-    }
 }
 
 .ps-product--cart-mobile {
@@ -88,6 +84,14 @@
 .ps-table--whishlist {
     .ps-product--cart {
         margin: 10px 0;
+
+        .ps-product__thumbnail {
+            a {
+                .products-image1 {
+                    width: 95px;
+                }
+            }
+        }
     }
 }
 
@@ -115,22 +119,330 @@
         align-items: center;
     }
 }
-.dropdown-toggle{
-    &::after{
+
+.dropdown-toggle {
+    &::after {
         margin-top: 10px;
     }
 }
 
+.tanishuv-sharti-title {
+    color: $color-1st;
+}
+
+.accordion {
+    --bs-accordion-bs: #fffcfced;
+}
+
+.category-list-item {
+    background-color: #fffcfced;
+    padding: 6px;
+}
+
+.accordion-button {
+    font-weight: 400;
+    font-size: 13px;
+}
+
+.add-product-user-image {
+    input {
+        opacity: 0;
+    }
+}
+
+.ck-editor__editable_inline {
+    min-height: 150px;
+}
+
+.ant-select-selection-overflow {
+    min-height: 40px;
+}
+
+.live-card_title {
+    padding: 40px 0;
+}
+
+.mahsulotingiz {
+    display: none;
+}
+
+.cardResponsive {
+    display: block;
+}
+
+.fixed-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffc107;
+    color: #fff;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.text-start {
+    padding: 0 10px !important;
+}
+
+.ant-select {
+    max-height: 70px !important;
+}
+
+.live-card-image {
+    max-height: 200px;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.image {
+    width: 100%;
+    min-height: 250px;
+    background-size: cover;
+    background-position: center !important;
+    background-repeat: no-repeat;
+    background-clip: border-box;
+}
+
+.ps-product {
+    .ps-product__thumbnail {
+        img {
+            height: 100px !important;
+        }
+    }
+
+    .ps-product__container {
+        text-align: center;
+    }
+}
+
+.hujjat-detail-full-image {
+    height: 370px;
+}
+
+.category-search-label {
+    position: relative;
+    margin: 0 10px;
+
+    input {
+        padding: 8px 15px 8px 35px;
+        transition: all 0.4s ease;
+        border: 1px solid #dddddd;
+
+        &:focus {
+            border: 1px solid #ffc107;
+        }
+    }
+
+    .search-label {
+        position: absolute;
+        top: 50%;
+        left: 10%;
+        transform: translate(-50%, -50%);
+    }
+}
+
+.ps-product--search-result {
+    .ps-product__thumbnail {
+        a {
+            .products-image1 {
+                width: 90px;
+            }
+        }
+    }
+}
+
+.cart-product {
+    .ps-product--cart {
+        .ps-product__thumbnail {
+            a {
+                .products-image1 {
+                    width: 95px;
+                }
+            }
+        }
+    }
+}
+
+.ps-product--cart {
+    .ps-product__thumbnail {
+        a {
+            .products-image1 {
+                width: 95px;
+            }
+        }
+    }
+}
+
+.chegirma-xato {
+    border: 1px solid red !important;
+}
+
+// .ps-product:hover {
+//     height: 150px;
+//     // text-align: center;
+// }
+
+#homepage-7 .ps-product-list {  
+    margin-bottom: 80px
+}
+
+.ps-block--shopping-total {
+    .ps-block__product {
+        .ps-block__estimate a:first-child {
+            display: block;
+            width: 70% !important;
+            padding-right: 10px;
+        }
+    }
+}
+
+.ps-block--checkout-order {
+    .ps-block__items a strong {
+        width: 67% !important;
+    }
+}
+
+#acc-li-xl {
+    padding: 3px 10px;
+}
+
+.accordion-button {
+    padding: 10px 7px;
+}
+
+.footer-left-a {
+    border: 1px solid #000;
+    border-radius: 50%;
+    padding: 10px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.footer-icon-parent-div {
+    display: flex;
+    align-items: center;
+    gap: 10px
+}
+
+.footer-right-ul-social {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.yaxshi-categoriyalar-image {
+    transition: .5s;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+}
+
+.ps-product {
+    max-height: 200px;
+    height: 100%;
+    border: 1px solid #00000005;
+    box-shadow: 0px 0px 15px -15px black;
+}
+
+:where(.css-dev-only-do-not-override-17a39f8).ant-notification {
+    z-index: 9999999999 !important;
+}
+
+#heart-danger {
+    color: red !important;
+}
+
+.ps-wrapper {
+    position: relative;
+    text-align: center;
+    overflow-y: scroll;
+    height: 100%;
+    max-height: 350px !important;
+
+    img {
+        max-width: 300px;
+        width: 100%;
+    }
+}
+
+.footer-company-logo {
+    width: 80px;
+}
+
+.home-card-category {
+    margin-bottom: 42px;
+}
+
+.home-card {
+    margin-bottom: 42px;
+}
+
 @include media('<lg') {
-    .carosusel-cards {
+
+    .responsive-image-card{
+        display: flex;
         justify-content: center;
     }
 
-    .home-card {
-        max-width: 237px;
-        min-height: 200px;
-        max-height: 200px;
+
+    .ant-float-btn-default {
+        bottom: 90px;
     }
+
+    .cardResponsive {
+        display: none;
+    }
+
+    #homepage-7 .ps-product-list {
+        margin-bottom: 80px
+    }
+
+    .acc-li {
+        padding: 5px 5px 0 5px;
+    }
+
+    .accordion-button {
+        padding: 5px 8px;
+
+    }
+
+    .ps-product {
+        .ps-product__thumbnail {
+            img {
+                height: 75px !important;
+            }
+        }
+
+        &:hover {
+            .ps-product__content.hover {
+                padding-bottom: 0;
+            }
+        }
+    }
+
+    .ps-product__actions {
+        display: none;
+    }
+
+    .carosusel-cards {
+        justify-content: space-around;
+    }
+
+    // .home-car{
+    //     max-width: 230px;
+    //     min-width: 150px;
+    //     width: 100%;
+    //     min-height: 200px;
+    //     max-height: 200px;
+    // }
 
     .products-image1 {
         height: 100px;
@@ -182,13 +494,15 @@
     }
 
     .top-category-items {
-        min-height: 173px;
+        // min-height: 173px;
         //    max-height: 160px;
     }
 
     .yaxshi-categoriyalar-image {
-        min-height: 100px;
+        // min-height: 100px;
         max-height: 100px;
+        height: 100%;
+        width: 80px;
     }
 
     .ps-product__thumbnail {
@@ -309,9 +623,44 @@
             }
         }
     }
+
+    .hujjat-detail-full-image {
+        height: 350px;
+    }
+}
+
+@include media ('>lg') {
+    .responsiveCardButton {
+        position: absolute;
+        bottom: 15px;
+        left: 80%;
+        width: 140px;
+    }
+
+}
+
+@media screen and (max-width: 1060px) {
+    .detail-card {
+        max-width: 230px;
+    }
+
 }
 
 @include media('<md') {
+    .cardResponsive {
+        display: none;
+    }
+
+    #homepage-7 {
+        .ps-product-list {
+            margin-bottom: 80px;
+        }
+    }
+
+    .ps-input {
+        width: 100%;
+    }
+
     .ps-pagination {
         padding-top: 200px;
     }
@@ -362,8 +711,8 @@
                 width: 100%;
                 max-width: 323px;
                 min-width: 323px;
-                max-height: 191px;
-                min-height: 191px;
+                max-height: 151px;
+                min-height: 151px;
                 object-fit: cover;
             }
         }
@@ -371,11 +720,6 @@
 
     .ps-btn {
         padding: 7px 6px;
-    }
-
-    .yaxshi-categoriyalar-image {
-        min-height: 60px;
-        max-height: 90px;
     }
 
     .ps-block__content {
@@ -407,6 +751,10 @@
             display: none;
         }
 
+        // .card-narx-box {
+        //     display: none;
+        // }
+
         .ps-product__content {
             visibility: visible;
             opacity: 1;
@@ -428,7 +776,6 @@
 
         .ps-product__content {
             padding-left: 10px;
-            max-width: 80px;
         }
     }
 
@@ -441,9 +788,37 @@
             }
         }
     }
+
+    .ps-product:hover {
+        height: 130px;
+    }
+
+    // .home-car{
+    //     max-width: 230px;
+    //     min-width: 110px;
+    //     width: 100%;
+    //     min-height: 200px;
+    //     max-height: 200px;
+    // }
+}
+
+@media screen and (max-width: 719px) {
+    .detail-card {
+        max-width: 200px;
+    }
+}
+
+@media screen and (max-width: 629px) {
+    .detail-card {
+        max-width: 150px;
+    }
 }
 
 @include media('<sm') {
+    // .ps-product {
+    //     height: 140px;
+    // }
+
     .banner-placholder {
         display: flex;
         flex-direction: row;
@@ -459,8 +834,8 @@
     }
 
     .products-image1 {
-        height: 60px;
-        width: 80px;
+        height: 75px;
+        width: 90px;
     }
 
     .banner-right {
@@ -489,33 +864,34 @@
     }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 15px;
+        padding: 0;
     }
 
     .top-category-items {
-        min-height: 130px;
+        min-height: 120px;
     }
 
     .ps-product {
         .ps-product__thumbnail {
-            min-height: 60px;
+            min-height: 65px;
         }
     }
 
-    .home-card {
-        min-height: auto;
-    }
+    // .home-car{
+    //    min-width: 105px;
+    // }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 8px;
+        padding: 0;
     }
 
-    .yaxshi-categoriyalar-image {
-        width: auto !important;
-    }
+    // .yaxshi-categoriyalar-image {
+    //     width: auto !important;
+    // }
 
     .card-narx-box {
         padding: 0 10px;
+        text-align: center;
     }
 
     .ps-block__right {
@@ -527,11 +903,23 @@
             font-size: 13px;
         }
     }
+
+    .hujjat-detail-full-image {
+        height: 300px;
+    }
 }
 
-@media screen and (max-width:768px){
-    .colCard{
-        margin-top: 5rem;
+@include media('<xs') {
+    .hujjat-detail-full-image {
+        height: 200px;
+    }
+
+    #homepage-7 .ps-product-list {
+        margin-bottom: 60px;
+    }
+
+    .home-card {
+        margin: 10px 0;
     }
 }
 
@@ -553,6 +941,10 @@
 }
 
 @media screen and (max-width: 524px) {
+    .ps-product-list .ps-section__content {
+        padding-top: 0;
+    }
+
     .banner-right {
         display: flex;
         flex-direction: row !important;
@@ -587,12 +979,12 @@
     }
 
     .ps-block--category-2 .ps-block__content {
-        padding: 8px 2px 8px;
+        padding: 0;
     }
 
     .ps-product__thumbnail {
-        min-height: 90px;
-        height: 100%;
+        min-height: 50px;
+        height: 50%;
         max-width: 80px;
         display: flex;
         align-items: center;
@@ -612,6 +1004,32 @@
             margin: 0 auto;
         }
     }
+
+    .mahsulotingiz {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(100%, 180%);
+        display: block;
+
+    }
+
+    .mahsulotingizElh3 {
+        margin-top: 7rem;
+    }
+
+    .cardResponsive {
+        display: none;
+    }
+
+    .offcanvas-header {
+        margin-top: 4rem;
+
+    }
+
+    .elh3 {
+        font-size: 18px;
+    }
 }
 
 @media screen and (max-width: 520px) {
@@ -622,25 +1040,6 @@
 
         #banner-placholder-item {
             width: 220px;
-            height: 100px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-    }
-}
-
-@media screen and (max-width: 477px) {
-
-    .ps-section__righ{
-        justify-content: center;
-    }
-    .banner-placholder {
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        #banner-placholder-item {
-            width: 200px;
             height: 100px;
             display: flex;
             justify-content: center;
@@ -662,6 +1061,10 @@
                 min-width: 107px;
                 object-fit: cover;
             }
+            
+            div {
+                height: 93px!important;
+            }
         }
     }
 
@@ -671,14 +1074,14 @@
         a {
             img {
                 width: 100%;
-                max-height: 200px;
+                max-height: 164px;
             }
         }
     }
 
     .ps-product__thumbnail {
         min-height: 80px;
-        height: 100%;
+        height: 50%;
         max-width: 60px;
         display: flex;
         align-items: center;
@@ -697,19 +1100,21 @@
         text-align: center;
     }
 
-    .ps-product-list {
-        .ps-section__content {
-            padding-top: 25px;
-        }
-    }
+    // .ps-product-list {
+    //     .ps-section__content {
+    //         padding-top: 25px;
+    //     }
+    // }
 
     .carosusel-cards {
         flex-wrap: wrap !important;
     }
 
-    .home-card {
-        padding: 15px 0;
-    }
+    // .home-car{
+    //     padding: 15px 0;
+    //     min-width: 170px;
+    //     max-width: 170px;
+    // }
 
     .ps-product__actions {
         a {
@@ -719,17 +1124,18 @@
     }
 }
 
-@media screen and (max-width: 441px) {
-
-    .ps-section__righ{
+@media screen and (max-width: 477px) {
+    .ps-section__righ {
         justify-content: center;
     }
+
     .banner-placholder {
         display: flex;
         flex-direction: row;
         gap: 10px;
+
         #banner-placholder-item {
-            width: 150px;
+            width: 200px;
             height: 100px;
             display: flex;
             justify-content: center;
@@ -738,23 +1144,36 @@
     }
 }
 
-@media screen and (max-width: 441px) {
 
-    .ps-section__righ{
+
+@media screen and (max-width: 441px) {
+    .ps-section__righ {
         justify-content: center;
     }
+
     .banner-placholder {
         display: flex;
         flex-direction: row;
+        justify-content: space-around;
         gap: 10px;
+
         #banner-placholder-item {
-            width: 130px;
+            width: 150px;
             height: 100px;
             display: flex;
             justify-content: center;
             align-items: center;
         }
     }
+
+    .ps-form--account .ps-tab-list li.active a {
+        font-size: 22px !important;
+    }
+
+    .ps-form--account .ps-tab-list li a {
+        font-size: 17px !important;
+    }
+
 }
 
 
@@ -765,7 +1184,6 @@
     }
 }
 
-
 @media screen and (max-width: 404px) {
     .ps-product__container {
         min-width: 175px;
@@ -775,6 +1193,30 @@
 @media screen and (max-width: 384px) {
     .ps-product__container {
         min-width: 160px;
+    }
+}
+
+@media screen and (max-width: 370px) {
+
+    // .home-card{
+    //     max-width: 160px;
+    //     min-width: 160px;
+    // }
+    .ps-product-list {
+        .ps-section__header {
+            h3 {
+                padding-bottom: 0;
+                font-size: 16px;
+            }
+        }
+
+        .ps-section__links {
+            li {
+                a {
+                    font-size: 13px;
+                }
+            }
+        }
     }
 }
 
@@ -793,7 +1235,8 @@
     }
 }
 
-@media screen and (max-width: 329px) {
+
+@media screen and (max-width: 330px) {
     .ps-product__thumbnail {
         margin: 0 auto;
     }
@@ -807,8 +1250,26 @@
         min-width: 140px;
     }
 
-    .hover {
-        display: none;
+    .yaxshi-categoriyalar {
+        .yaxshi-categoriyalar-image {
+            height: 75px;
+        }
+    }
+
+    .ps-block--shopping-total {
+        .ps-block__product {
+            .ps-block__estimate a {
+                font-size: 11px;
+            }
+        }
+    }
+
+    .ps-form--account .ps-tab-list li.active a {
+        font-size: 20px !important;
+    }
+
+    .ps-form--account .ps-tab-list li a {
+        font-size: 15px !important;
     }
 }
 
@@ -820,68 +1281,58 @@
 *::-webkit-scrollbar {
     display: flex;
     width: 5px;
-    height: 5px;
+    height: 10px;
 }
 
 *::-webkit-scrollbar-thumb {
-    background: #ffc107;
+    background: $color-1st;
 }
 
 *::-webkit-scrollbar-track {
     background: #dadbe1;
 }
 
-
-
-.formCard {
-    border-radius: 10px;
-    box-shadow: -1px 8px 15px 0px rgba(0, 0, 0, 0.44);
-}
-#Card{
-    margin: 0 auto;
+#Card {
     height: 183px;
-}
-.colCard{
-    position: absolute;
-    top: 52%;
+    width: 300px;
 }
 
 
-/* rccs-signature-background: repeating-linear-gradient(
-    0.1deg,
-    #fff 20%,
-    #fff 40%,
-    #fea 40%,
-    #fea 44%,
-    #fff 44%
-  );
-  rccs-default-background: linear-gradient(25deg, #d32121, #178a63);
-  rccs-unknown-background: linear-gradient(25deg, rgb(160, 18, 101), #999);
-  rccs-background-transition: 0.5s;
-  rccs-animate-background: true; */
+
 
 .BackImg {
-    background-image: url('../../public/static/CardCredit/humo_.png');
+    background-image: url('../../public/static/CardCredit/humoca.gif');
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
-    max-width: 300px;
+}
+
+.BackImg4 {
+    background-image: url('../../public/static/CardCredit/moster.gif');
+    background-size: 100%;
+    background-position: center;
+    border-radius: 10px;
+}
+
+.BackImg3 {
+    background-image: url('../../public/static/CardCredit/ei-flex-elite-550x347.png');
+    background-size: 100%;
+    background-position: center;
+    border-radius: 10px;
 }
 
 .BackImg1 {
-    background-image: url('../../public/static/CardCredit/cartaDD.jpg');
+    background-image: url('../../public/static/CardCredit/defaukt6.jpg');
     background-size: 100%;
-    background-position: center;
     border-radius: 10px;
-    max-width: 300px;
+
 }
 
 .BackImg2 {
-    background-image: url('../../public/static/CardCredit/png.png');
+    background-image: url('../../public/static/CardCredit/Uzcard.jpg');
     background-size: 100%;
     background-position: center;
     border-radius: 10px;
-    max-width: 300px;
 }
 
 .cardText {
@@ -889,6 +1340,625 @@
     color: #bcb4b4;
     font-size: 17px;
 }
-.cardColorHumo{
-    color:#ffc107;
+
+.cardColorHumo {
+    color: #F1F1F1;
 }
+
+.add-product-user-image {
+    input {
+        opacity: 0;
+    }
+}
+
+
+
+.modalBanner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    animation: modalOpenOrqafon 0.5s ease-in-out forwards;
+    animation-delay: 1s;
+    opacity: 0;
+}
+
+.modalBanner2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    animation: modalCloseOrqaFon 1s ease-in-out forwards;
+}
+
+.bannerModal2 {
+    position: fixed;
+    top: 10%;
+    left: 25%;
+    z-index: 99999;
+    opacity: 0;
+    height: 100%;
+    animation: modalOpen 0.5s ease-in-out both;
+    animation-delay: 1s;
+    padding-bottom:100%;
+    height: 200px;
+}
+
+.bannerModal3 {
+    animation: modalClose 1s ease-in-out forwards;
+    position: fixed;
+    top: 15%;
+    left: -100%;
+    z-index: 99999;
+    height: 100%;
+  }
+
+
+  .iframe-container {
+    position: relative;
+    padding-bottom: 57.25%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+    height: 0;
+    overflow: hidden;
+  }
+  
+  .iframe-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes modalClose {
+    from {
+      transform: translateY(0); 
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-620px); 
+      opacity: 0;
+    }
+  }
+
+  @keyframes modalCloseOrqaFon {
+    from {  
+      opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+  }
+
+  @keyframes modalOpen {
+    from {
+      transform: translateY(-220px); 
+      opacity: 0; 
+    }
+    to {
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+  }
+
+  @keyframes modalOpenOrqafon {
+    from {
+      opacity: 0; 
+    }
+    to {
+      opacity: 1; 
+    }
+  }
+
+// Vedio tutorial uchun carousel modal
+
+
+.modalBannerCarousel {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    animation: modalOpenOrqafonCarousel 0.5s ease-in-out forwards;
+    animation-delay: 1s;
+    opacity: 0;
+}
+
+.modalBanner2Carousel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+    animation: modalCloseOrqaFon 1s ease-in-out forwards;
+    .iframe-containerCarousel {
+        border: 0px solid #022335;
+      }
+}
+
+.bannerModal2Carousel {
+    position: fixed;
+    top: 32%;
+    left: 66%;
+    z-index: 99999;
+    opacity: 0;
+    // height: 300px;
+    animation: modalOpen 0.5s ease-in-out both;
+    animation-delay: 1s;
+    max-width: 400px;
+    width: 101%;
+}
+
+.bannerModal3Carousel {
+    animation: modalClose 1s ease-in-out forwards;
+    position: fixed;
+    top: 15%;
+    right: 0;
+    z-index: 99999;
+    height: 100%;
+  }
+
+
+  .iframe-containerCarousel {
+    position: relative;
+    padding-bottom: 57.25%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+    height: 268px;
+    overflow: hidden;
+    border: 3px solid #022335;
+  }
+
+  .swiper-button-next{
+    color: $color-1st !important;
+  }
+
+  .swiper-button-prev{
+    color: $color-1st !important;
+  }
+
+  .swiper-pagination-bullet .swiper-pagination-bullet-active{
+    color: $color-1st;
+  }
+  
+  .iframe-containerCarousel iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  @keyframes modalClose {
+    from {
+      transform: translateY(0); 
+      opacity: 1;
+    }
+    to {
+      transform: translateY(-620px); 
+      opacity: 0;
+    }
+  }
+
+  @keyframes modalCloseOrqaFon {
+    from {  
+      opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+  }
+
+  @keyframes modalOpen {
+    from {
+      transform: translateY(-220px); 
+      opacity: 0; 
+    }
+    to {
+      transform: translateY(0); 
+      opacity: 1; 
+    }
+  }
+
+  @keyframes modalOpenOrqafon {
+    from {
+      opacity: 0; 
+    }
+    to {
+      opacity: .3; 
+    }
+  }
+  @keyframes modalOpenOrqafonCarousel {
+    from {
+      opacity: 0; 
+    }
+    to {
+      opacity: 0; 
+    }
+  }
+
+
+  .modal-vedio-tutorial_container-carousel{
+    height: 200px;
+    width: 400px;
+    object-fit: contain;
+  }
+
+  .modal-carousel-header{
+    background-color: #022335;
+    text-align: center !important;
+    padding: 7px 0;
+    p{
+        color: #fff !important;
+        padding: 0;
+        margin: 0;
+        font-size: 13px;
+    }
+    h3{
+        color: #fff;
+        padding: 0;
+        margin: 0;
+        font-size: 18px;
+        padding-bottom: 7px;
+    }
+  }
+
+
+  .modal-dating{
+    height: 500px;
+    overflow-y: scroll;
+  }
+
+  
+
+@media (min-width:1500px) and (max-width:2000px) {
+    .colCard {
+        position: absolute;
+        top: 64%;
+    }
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 64%;
+        max-width: 400px;
+    }
+}
+@media (min-width:1300px) and (max-width:1500px) {
+    .colCard {
+        position: absolute;
+        top: 64%;
+    }
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 18%;
+     
+    }
+
+    .bannerModal3 {
+        position: fixed;
+        top: 20%;
+        left: -200%;
+    }
+   
+}
+
+@media (min-width:1200px) and (max-width:1300px) {
+    .colCard {
+        position: absolute;
+        top: 64%;
+    }
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 15%;
+     
+    } 
+
+    .bannerModal3 {
+        position: fixed;
+        top: -100%;
+        left: 15%;
+       
+    
+    }
+
+    // .bannerModal2Carousel {
+    //     top: 25%;
+    //     left: 70%;
+    //     max-width: 400px;
+    // }
+}
+
+@media (min-width:1000px) and (max-width:1200px) {
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 15%;
+     
+    }
+
+    .bannerModal3 {
+        position: fixed;
+        top: 20%;
+        left: -100%;
+       
+    
+    }
+}
+
+@include media('<lg') {
+    .bannerModal2 {
+        padding-bottom: 100%;
+        /* Mobil responsive uchun moslashuvchan qilamiz */
+        position: fixed;
+        top: 30%;
+        left: 15%;
+        width: 75%;
+        max-width: 860px;
+    }
+    
+    .bannerModal3{
+
+        position: fixed;
+        top: -30%;
+        left: -100%;
+        width: 75%;
+        max-width: 860px;
+    }
+
+    .bannerModal2Carousel {
+        top: 32%;
+        left: 50%;
+        // height: 300px;
+        max-width: 400px;
+    }
+}
+@include media('>lg') {
+    .bannerModal2 {
+        position: fixed;
+        top: 20%;
+        left: 22%;
+     
+    }
+
+    .bannerModal3 {
+        position: fixed;
+        z-index: 99999;
+        position: fixed;
+        top: 20%;
+        height: 0;
+        overflow: hidden;
+        width: 100%;
+        left: -100%;
+        max-width: 860px;
+    
+    }
+}
+@media (max-width: 900px){
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 25%;
+        // height: 300px;
+        max-width: 400px;
+    }
+}
+@media (max-width: 860px) {
+    .bannerModal2 {
+        padding-bottom: 100%;
+        position: fixed;
+        top: 30%;
+
+    }
+    .bannerModal3{
+        position: fixed;
+        top: 30%;
+    }
+    .colCard {
+        position: absolute;
+        top: 52%;
+    }
+}
+
+@media (min-width: 860px) {
+    .colCard {
+        position: absolute;
+        top: 52%;
+    }
+    .bannerModal2 {
+        // padding-bottom: 100%;
+        position: fixed;
+        top: 19%;
+        left: 18%;
+        width: 75%;
+        max-width: 860px;
+        height: 0 !important;
+    }
+    
+    .bannerModal3{
+        position: fixed;
+        top: 30%;
+        left: -100%;
+        width: 75%;
+        max-width: 860px;
+    }
+}
+
+
+@media (max-width: 598px){
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 15%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 526px){
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 12%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 500px){
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 18%;
+        max-width: 300px;
+    }
+    
+  .modal-carousel-header{
+    background-color: #022335;
+    text-align: center !important;
+    padding: 7px 0;
+    p{
+        color: #fff !important;
+        padding: 0;
+        margin: 0;
+        font-size: 11px;
+    }
+    h3{
+        color: #fff;
+        padding: 0;
+        margin: 0;
+        font-size: 15px;
+        padding-bottom: 7px;
+    }
+  }
+  .iframe-containerCarousel{
+    height: 260px;
+  }
+  .closeButton{
+    position: 'absolute';
+    right: 0;
+    top:' -9px';
+    z-index: 1
+  }
+}
+@media (min-width: 400px) and (max-width:500px) {
+    .colCard {
+        position: absolute;
+        top: 52%;
+    }
+    .bannerModal2 {
+        padding-bottom: 100%;
+        position: fixed;
+        left: 0;
+
+    }
+    .bannerModal3{
+        position: fixed;
+        left: -100%;
+    }
+
+    .iframe-container {
+        position: relative;
+        padding-bottom: 75%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+        height: 300px;
+        overflow: hidden;
+        width: 450px;
+      }
+      
+      .iframe-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .closeButton{
+        right: 0;
+        top:' -9px';
+      }
+}
+
+
+@media (max-width: 500px){
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 14%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 400px) {
+
+    .colCard {
+        position: absolute;
+        top: 52%;
+    }
+    
+
+    .bannerModal2 {
+        padding-bottom: 100%;
+        position: fixed;
+        left: 0;
+
+    }
+    .bannerModal3{
+        position: fixed;
+        left: -100%;
+    }
+
+    .iframe-container {
+        position: relative;
+        padding-bottom: 75%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+        height: 300px;
+        overflow: hidden;
+        width: 390px;
+      }
+      
+      .iframe-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .closeButton{
+        right: 0;
+        top:' -9px';
+      }
+}
+
+
+@media (max-width: 395px){
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 10%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 360px){
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 3%;
+        max-width: 300px;
+    }
+    .closeButton{
+        right: 0;
+        top:' -9px';
+      }
+}
+
+

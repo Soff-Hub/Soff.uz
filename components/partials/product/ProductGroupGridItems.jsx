@@ -78,7 +78,11 @@ const ProductGroupGridItems = ({
         if (data.length > 0) {
             const items = data.map((item) => {
                 return (
-                    <div className={classes} key={item.id}>
+                    <div className={classes} key={item.id} style={{
+                        display:'flex',
+                        justifyContent:'center',
+                        alignContent:'center'
+                    }}>
                         <Product product={item} />
                     </div>
                 );
@@ -88,8 +92,8 @@ const ProductGroupGridItems = ({
             productItemsView = <p>No product(s) found.</p>;
         }
     } else {
-        const skeletonItems = generateTempArray(columns * 2).map((item) => (
-            <div className={classes} key={item}>
+        const skeletonItems = generateTempArray(columns * 2).map((item, i) => (
+            <div className={classes} key={i}>
                 <SkeletonProduct />
             </div>
         ));

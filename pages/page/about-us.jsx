@@ -1,32 +1,19 @@
 import React from 'react';
-
-import BreadCrumb from '~/components/elements/BreadCrumb';
-import OurTeam from '~/components/partials/page/about-us/OurTeam';
-import AboutAwards from '~/components/partials/page/about-us/AboutAwards';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import PageContainer from '~/components/layouts/PageContainer';
+import AboutContent from '~/components/partials/faqs/AboutContent';
 
-const AboutUsPage = () => {
-    const breadCrumb = [
-        {
-            text: 'Home',
-            url: '/',
-        },
-        {
-            text: 'About Us',
-        },
-    ];
+const AboutUs = () => {
     return (
-        <PageContainer footer={<FooterDefault />} title="About Us">
-            <div className="ps-page--single">
-                <img src="/static/img/bg/about-us.jpg" alt="" />
-                <BreadCrumb breacrumb={breadCrumb} />
-                <OurTeam />
-                <AboutAwards />
+        <PageContainer footer={<FooterDefault />} title="FAQ page">
+            <div className="ps-page--singlee">
+                <div className="container-faqs">
+                    <AboutContent/>
+                </div>
             </div>
-            <Newletters layout="container" />
         </PageContainer>
     );
 };
-export default AboutUsPage;
+
+export default AboutUs;
+

@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { Modal, Table } from 'antd';
+import NextImageCard from '~/components/nextImagecard';
 
 
 
@@ -13,6 +14,7 @@ function ContextLists() {
     const [dataUrl, setDataUrl] = useState(null);
     const [dataUrlFile, setDataUrlFile] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
+
 
     async function GetItemsBanners() {
         const ItemsData = await GetRepository.getBannerLists(user?.access)
@@ -24,23 +26,32 @@ function ContextLists() {
 
     }
     async function handleClickID(ID) {
-        const formData = new FormData();
-        if (dataUrlFile) {
-            formData.append("image", dataUrlFile);
-
-        }
-        if (dataUrl) {
-            formData.append("url", dataUrl);
-        }
-        const ItemsData = await PatchRepository.getBannersPatch(formData, ID, user?.access)
-
-
 
         if (dataUrlFile || dataUrl) {
+            const formData = new FormData();
+            if (dataUrlFile) {
+                formData.append("image", dataUrlFile);
+
+            }
+            if (dataUrl) {
+                formData.append("url", dataUrl);
+            }
+            const ItemsData = await PatchRepository.getBannersPatch(formData, ID, user?.access);
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: `Siz malumotlarni o'zgartirdingiz`,
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+            GetItemsBanners()
+            setDataUrlFile(null)
+            setDataUrl(null)
+
+        }
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
 
@@ -49,6 +60,7 @@ function ContextLists() {
     useEffect(() => {
         GetItemsBanners()
     }, [])
+
     const columns = [
         {
             title: 'Rasm',
@@ -58,7 +70,7 @@ function ContextLists() {
                 <div>
                     {
                         image ?
-                            <img src={image} width={74} height={46} className='rounded-3 mb-2' />
+                            <NextImageCard url={image} clasS='rounded-3 mb-2' width='74px' height='46px' />
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }
@@ -90,16 +102,15 @@ function ContextLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => (
-                <button className='btn btn-success ' style={{ padding: "12px 12px" }}><span className='fs-4 d-flex gap-2 ' onClick={() => handleClickID(id)}>
-                    Tahrirlash
-                    <i className="fa-solid fa-pen-to-square pt-1"></i>
+                <button className='btn btn-success ' style={{ padding: "12px 12px" }} onClick={() => handleClickID(id)}><span className='fs-4 d-flex gap-2 ' >
+                    Saqlash
                 </span></button>
             )
         },
     ];
 
     return (
-        <section className="ps-my-account ps-page--account">
+        <section className="ps-my-account ps-page--account p-0">
             <div className="container pb-5">
                 <div className="row">
                     <div className="col-lg-4">
@@ -110,12 +121,8 @@ function ContextLists() {
                     <div className="col-lg-8">
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
-                                <div className="ps-section__header mx-3 mt-4 mb-4">
-
-                                    <h3>Bannerlarni o'zgartirish</h3>
-                                </div>
                                 <div>
-                                    <Table scroll={{ x: 750 }} pagination={{ disabled: true }} dataSource={data} columns={columns} />
+                                    <Table scroll={{ x: 750 }} pagination={false} dataSource={data} columns={columns} />
                                 </div>
                             </div>
                         </div>

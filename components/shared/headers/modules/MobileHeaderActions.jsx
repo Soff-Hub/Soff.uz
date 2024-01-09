@@ -1,29 +1,37 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import AccountQuickLinksMobile from './AccountQuickLinksMobile';
-import { useCookies } from 'react-cookie';
+import { Dropdown, Menu } from 'antd';
 
 const MobileHeaderActions = ({ auth, ecomerce }) => {
+const state = useSelector((state => state.ecomerce.cartDataItems))
+    const menu = (
 
-    const [cookies, setCookie] = useCookies(['cart']);
-    const { cartItems, wishlist } = ecomerce;
+        <Menu>
+           <div className='d-flex flex-column p-2'>
+           <Link href="/account/login" >
+                    <a>Kirish</a>
+                </Link>
+
+                <Link href="/account/selection">
+                    <a>Ro'yxatdan o'tish</a>
+                </Link>
+            </div>      
+        </Menu>
+    );
     return (
         <div className="navigation__right">
-            {/* <Link href="/account/wishlist">
-                <a className="header__extra" href="#">
-                    <i className="icon-heart"></i>
-                    <span>
-                        <i>{wishlist ? wishlist.length : 0}</i>
-                    </span>
+            <Link href="/page/about-us">
+                <a className="header__extra">
+                <i className="fa-regular fa-circle-question" ></i>
                 </a>
-
-            </Link> */}
+            </Link>
             <Link href="/account/shopping-cart">
                 <a className="header__extra" href="#">
                     <i className="icon-bag2"></i>
                     <span>
-                        <i>{cookies ? cookies.cart?.length : 0}</i>
+                        <i>{state ? state?.length : 0}</i>
                     </span>
                 </a>
             </Link>
@@ -31,11 +39,11 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinksMobile />
             ) : (
-                <div className="header__extra color-light">
-                    <Link href="/account/login">
+                <Dropdown overlay={menu} placement="bottomLeft">
+                    <a href="#" className="header__extra ps-user--mobile">
                         <i className="icon-user"></i>
-                    </Link>
-                </div>
+                    </a>
+                </Dropdown>
             )}
         </div>
     );

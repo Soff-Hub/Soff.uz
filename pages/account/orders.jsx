@@ -2,11 +2,10 @@ import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 import Orders from '~/components/partials/account/Orders';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
-import LoginPage from './login';
+import Selection from './selection';
 
 const AccountOrdersPage = () => {
     const breadCrumb = [
@@ -26,8 +25,7 @@ const AccountOrdersPage = () => {
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Orders />
                 </div>
-                <Newletters layout="container" />
-            </PageContainer> : user?.access ? <Page404/> : <LoginPage /> 
+            </PageContainer> : user?.access ? <Page404/> : <Selection /> 
 
     );
 };

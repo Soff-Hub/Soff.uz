@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Table } from 'antd';
+import { Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -10,36 +10,49 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
+import NextImageCard from '~/components/nextImagecard';
 
 function CategoryLists() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
+    const [tagItems, setTagItems] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
-    const [file, setFile] = useState({});
-    ;
+    const [file, setFile] = useState(null);
+    const [tagName, setTagName] = useState(null);
+    const [tagNameIcon, setTagNameIcon] = useState(null);
+    const [tagNameUser, setTagNameUsers] = useState(null);
+    const [tagNameTop, setTagNameTop] = useState(null);
     const { accountLinks, user } = useSelector(state => state.auth)
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(1)
 
-    async function GetItemsProducts(page) {
-        if (page === 1) {
-            setData([])
-        }
-        const ItemsData = await GetRepository.getCategory(page, user?.access);
+    async function GetItemsProducts(page, search, id) {
+        setCurrPage(page)
+        const ItemsData = await GetRepository.getCategory(page, search, id, user?.access);
         if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsProducts(page + 1)
-            }
+            setPageCount(ItemsData.count)
+            setData([...ItemsData.results]);
         }
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.name.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
+
+
+    async function GetItemsProductsEdit(id) {
+        const ItemsData = await GetRepository.getCategory(currPage, search, id, user?.access);
+        if (ItemsData) {
+            setDeleteIdEdit(ItemsData)
+        }
     }
+
+    async function getParentLists() {
+        const Items = await GetRepository.getCategoryParentLists(user?.access);
+        if (Items?.results) {
+            setTagItems(Items?.results)
+        }
+    }
+
+
+
     async function deleteItemsId() {
         const deleteIdItems = await DeleteRepository.getCategoryDelete(deleteId, user?.access)
         const modal = Modal.error({
@@ -47,53 +60,93 @@ function CategoryLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsProducts(1)
+        GetItemsProducts(currPage, search, null)
     }
+
     async function handleItemsPost(values) {
         const formData = new FormData()
-        formData.append('image', file)
-        formData.append('icon', values.icon)
-        formData.append('name', values.name)
+        if (file) {
+            formData.append('image', file)
+        }
+        if (values.icon) {
+            formData.append('icon', values.icon)
+        }
+        formData.append('name', values?.name)
+
+        if (tagName) {
+            formData.append('parent', tagName)
+        }
         const postsItems = await PostsRepository.PostsCategory(formData, user?.access);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  yangi malumot qo'shdingiz`,
-        });
-        GetItemsProducts(1)
+        if (postsItems?.status === 201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz  yangi malumot qo'shdingiz`,
+            });
+
+        }
+        GetItemsProducts(currPage, search, null)
     }
 
-    async function handleItemsEdit(values) {
-        const formData = new FormData()
-        formData.append('image', file)
-        formData.append('icon', values.icon)
-        formData.append('name', values.name)
-        const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: "Siz  malumotlarni o'zgartirdingiz ",
-        });
-        GetItemsProducts(1)
 
-    }
-    async function handleClickChecked(item) {
-        const patchItems = await PatchRepository.PatchCategory({ top: !item.top }, item.id, user?.access)
-        GetItemsProducts(1)
+    async function handleItemsEdit() {
+
+        if (tagNameUser || tagNameIcon || tagName || tagNameTop || file) {
+
+            const formData = new FormData()
+            if (file) {
+                formData.append('image', file)
+            }
+            if (tagNameIcon) {
+                formData.append('icon', tagNameIcon)
+            }
+            if (tagNameUser) {
+                formData.append('name', tagNameUser)
+            }
+            if (tagName) {
+                formData.append('parent', tagName)
+            }
+            if (tagNameTop) {
+                formData.append('top', tagNameTop)
+            }
+
+            const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+            GetItemsProducts(currPage, search, null)
+            setTagNameTop(null)
+            setTagName(null)
+            setFile(null)
+            setTagNameIcon(null)
+            setTagNameUsers(null)
+
+        }
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
+        }
+
+
     }
 
     function handleClickPostsImg(e) {
         setFile(e.target.files[0])
     }
     useEffect(() => {
-        GetItemsProducts(1)
+        getParentLists()
     }, []);
+
+    useEffect(() => {
+        GetItemsProducts(currPage, search, null)
+    }, [search]);
+
     const columns = [
-        {
-            title: 'ID',
-            dataIndex: 'id',
-            key: 'age',
-        },
         {
             title: 'Belgi',
             dataIndex: 'icon',
@@ -108,6 +161,14 @@ function CategoryLists() {
             key: 'address',
         },
         {
+            title: 'Parent',
+            dataIndex: 'parent',
+            key: 'address',
+            render: (parent) => (
+                <span>{parent?.name}</span>
+            )
+        },
+        {
             title: 'Rasm',
             dataIndex: 'image',
             key: 'address',
@@ -115,7 +176,7 @@ function CategoryLists() {
                 <div>
                     {
                         poster_url ?
-                            <img src={poster_url} width={54} height={54} className='rounded-3' />
+                            <a href={poster_url} target='blank'> <NextImageCard url={poster_url} clasS='rounded-3 mb-2' width='54px' height='54px' /></a>
                             :
                             <i className="fa-solid fa-image fa-2x"></i>
                     }
@@ -123,43 +184,29 @@ function CategoryLists() {
             ),
         },
         {
-            title: 'Top',
-            dataIndex: 'top',
-            key: 'address',
-            render: (top, id) => (
-                <input type='checkbox' defaultChecked={top} onChange={() => handleClickChecked(id)} />
-            )
-        },
-        {
             title: 'Harakatlar',
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                <a data-bs-target="#exampleModalToggleEditCategory" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-4 text-success-emphasis" onClick={() => GetItemsProductsEdit(id)}></i></a>
                 {
 
                     data.some(el => el.id == id && el.is_delete === true) ?
                         <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-3" onClick={() => setDeleteId(id)}></i></a>
                         :
-                        <a style={{ opacity: 0.6, cursor: "not-allowed" }}><i className="fa-solid fa-trash-can text-danger mx-3" ></i></a>
-
-
-
+                        <></>
 
                 }
             </div>
         },
     ];
+
+
     return (
-        <section className="ps-my-account ps-page--account">
+        <section className="ps-my-account ps-page--account p-0">
             <div className="container">
-                <div className="row  mx-auto gap-5 row-gap-3 p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-4'>Kategoriya</h3>
-                        <input type='search' className='form-control rounded col-md-5 ' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'>Kategoriya qo'shish </span></button>
-                </div>
-                <div className="row ">
-                    <div className="col-lg-4 pb-5">
+                <div className="row " style={{ alignItems: "flex-start" }}>
+                    <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
                         </div>
@@ -168,7 +215,20 @@ function CategoryLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div>
-                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns} />
+                                    <div className='row row-gap-3 bg-white m-0 gap-5 px-4 mb-3 pb-4 rounded'>
+                                        <h5 className='bg-white m-0 px-4 pt-4 rounded text-danger '> <i className="fa-solid fa-square-check text-primary"></i> Top qilish uchun maxsimal oltita element tanlashingiz lozim!</h5>
+                                        <label className='form-label border col-md-8 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+
+                                        </label>
+                                        {/* <input type='search' className='form-control rounded ' placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} /> */}
+                                        <button className="btn btn-success col-md-3 py-3 " data-bs-target="#addcategory" data-bs-toggle="modal" ><span className='fs-4'> <i className="fa-solid fa-plus"></i> Kategoriya qo'shish</span></button>
+                                    </div>
+                                    <Table scroll={{ x: 750 }} dataSource={data} columns={columns} pagination={false}
+                                    />
+                                    <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
+                                        onChange={page => GetItemsProducts(page, search)} />
                                 </div>
                             </div>
                         </div>
@@ -177,19 +237,56 @@ function CategoryLists() {
 
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
-                    <input
-                        type='file'
-                        className="form-control rounded-3 py-4"
-                        required
-                        onChange={handleClickPostsImg}
-                        defaultValue={deleteIdEdit?.image}
-                    />
+                    <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                        {
+                            deleteIdEdit?.image ? deleteIdEdit?.image :
+                                <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
+                        }
+                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} accept="image/*" />
+                    </label>
+                    <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
+                    {
+                        data.some(el => (el?.id == deleteIdEdit?.id && el.is_update === true)) ?
+                            <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                                <option value="">Parent</option>
+                                {
+                                    tagItems?.length > 0 && (
+                                        tagItems?.map(item => (
+                                            <option key={item.id} value={item.id}>{item.name}</option>
+                                        ))
+                                    )
+                                }
+                            </select>
+                            :
+                            <></>
+                    }
+                    {
+                        data.some(el => (el?.id == deleteIdEdit?.id && el.is_parent === true)) ?
+                            <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagNameTop(e.target.value)} >
+                                {
+                                    data.some(el => (el?.id == deleteIdEdit?.id && el.top === true)) ?
+                                        <>
+                                            <option selected value={"true"} >Top </option>
+                                            <option value={"false"} >Top emas</option>
+                                        </>
+                                        :
+                                        <>
+                                            <option selected value={"false"} >Top emas</option>
+                                            <option value={"true"} >Top </option>
+                                        </>
+                                }
+
+                            </select>
+                            :
+                            <></>
+                    }
                     <input
                         type='text'
                         placeholder="Belgi"
                         className="form-control rounded-3"
                         name='icon'
                         defaultValue={deleteIdEdit?.icon}
+                        onChange={(e) => setTagNameIcon(e.target.value)}
                     />
                     <input
                         type='text'
@@ -197,28 +294,45 @@ function CategoryLists() {
                         className="form-control rounded-3"
                         name='name'
                         defaultValue={deleteIdEdit?.name}
+                        onChange={(e) => setTagNameUsers(e.target.value)}
                     />
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addcategory" onSubmited={handleItemsPost} formID={'post-form-category'}>
-                    <input
-                        type='file'
-                        className="form-control rounded-3 py-4"
-                        required
-                        onChange={handleClickPostsImg}
-                    />
+                    <label htmlFor="file" className='w-100 ' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
+                        {
+                            file ? "soff.uz//b30b856b-606c-4001-8bee-4839557c" :
+                                <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
+                        }
+                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={handleClickPostsImg} />
+                    </label>
+                    {
+                        file ?
+                            <a className='text-primary m-0' href={deleteIdEdit?.image} target="_blank" rel="noopener noreferrer">Link (rasm)</a>
+                            :
+                            <></>
+                    }
+
+                    <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setTagName(e.target.value)} >
+                        <option value="">Parent</option>
+                        {
+                            tagItems?.length > 0 && (
+                                tagItems?.map(item => (
+                                    <option key={item.id} value={item.id}>{item.name}</option>
+                                ))
+                            )
+                        }
+                    </select>
                     <input
                         type='text'
                         placeholder="Belgi"
                         className="form-control rounded-3"
                         name='icon'
-                        required
                     />
                     <input
                         type='text'
                         placeholder="Nomi"
                         className="form-control rounded-3"
                         name='name'
-                        required
                     />
                 </ModalDeletePostEdit>
             </div>

@@ -1,4 +1,4 @@
-@import '~antd/dist/antd.css';
+
 @import 'vendor/bourbon/bourbon';
 @import 'utils/mixin';
 
@@ -54,6 +54,12 @@
 
 @import 'elements/accordion';
 @import 'elements/skeleton';
+
+@import 'elements/faqs-faq';
+@import 'elements/faqs-questions';
+@import 'elements/faqs-sidebar';
+// 2.18 faq
+
 
 
 

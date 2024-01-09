@@ -3,10 +3,8 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import Product from '~/components/elements/products/Product';
 import ProductGroupGridItems from '~/components/partials/product/ProductGroupGridItems';
 import PageContainer from '~/components/layouts/PageContainer';
-import Newsletters from '~/components/partials/commons/Newletters';
 import useGetProducts from '~/hooks/useGetProducts';
 import { useRouter } from 'next/router';
-import ProductRepository from '~/repositories/ProductRepository';
 import PostRepository from '~/repositories/PostRepository';
 
 const SearchPage = () => {
@@ -15,8 +13,6 @@ const SearchPage = () => {
     const { productItems, loading, getProducts } = useGetProducts();
     const Router = useRouter();
     const { query } = Router;
-
-    const [data, setData] = useState(null);
     const [resultdata, setresultData] = useState([]);
 
     async function getSearchData() {
@@ -26,11 +22,7 @@ const SearchPage = () => {
         }
     }
 
-    document.addEventListener("keydown", function(event) {
-        if(event.key === "Enter" && query != ''){
-            getSearchData()
-        }
-      })
+
 
     function handleSetKeyword() {
         if (query && query.keyword !== '') {
@@ -40,29 +32,12 @@ const SearchPage = () => {
         }
     }
 
-   
 
-    useEffect(() => {
-        // filterFunc()
-    }, [data])
-    
     useEffect(() => {
         getSearchData();
+        handleSetKeyword();
+    }, [query.keyword, query]);
 
-        if (query && query.keyword) {
-            handleSetKeyword(query.keyword);
-            const queries = {
-                _limit: pageSize,
-                title_contains: query.keyword,
-            };
-            getProducts(queries);
-        }
-
-
-        // filterFunc();
-    }, [ keyword ]);
-
-  
 
     const breadcrumb = [
         {
@@ -73,9 +48,8 @@ const SearchPage = () => {
             text: 'Qidiruv natijalari',
         },
     ];
-    console.log('qidiruv', resultdata);
     let shopItemsView, statusView;
-    if (loading) {
+    if (true) {
         if (resultdata) {
             shopItemsView = (
                 <ProductGroupGridItems
@@ -99,15 +73,15 @@ const SearchPage = () => {
                     <p>
                         <strong style={{ color: '#000' }}>
                             {resultdata?.length}
-                        </strong>{' '}
-                        yozuv(lar) topildi.
+                        </strong> ta
+                        mahsulot(lar) topildi.
                     </p>
                 );
             } else {
-                shopItemsView = <p>Hujjat(lar) topilmadi.</p>;
+                shopItemsView = <p>Mahsulot(lar) topilmadi.</p>;
             }
         } else {
-            shopItemsView = <p>Hujjat(lar) topilmadi.</p>;
+            shopItemsView = <p>Mahsulot(lar) topilmadi.</p>;
         }
     } else {
         statusView = <p>Qidiruv...</p>;
@@ -123,7 +97,7 @@ const SearchPage = () => {
                     <div className="container">
                         <div className="ps-shop__header">
                             <h1>
-                                Qidiruv uchun: "<strong>{keyword}</strong>"
+                                <i>{keyword}</i> {keyword === '' ? "Qidirish uchun qiymat kiring" : "Bo'yicha qidiruv natijalari"}
                             </h1>
                         </div>
                         <div className="ps-shop__content">

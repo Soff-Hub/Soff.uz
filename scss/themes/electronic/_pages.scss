@@ -58,13 +58,13 @@
                 .ps-section__right {
                     width: 100%;
                     max-width: 100%;
-                    display: flex;
+                    // display: flex;
                     flex-flow: row nowrap;
 
                     .ps-collection {
                         width: 100%;
                         max-width: 50%;
-                        margin: 0 10px;
+                        // margin: 0 10px;
                     }
                 }
             }
@@ -88,7 +88,27 @@
     }
 
     .ps-product-list {
-        margin-bottom: 50px;
+        margin-bottom: 70px;
+    }
+
+    @include media('<md') {
+        .ps-product-list {
+            margin-bottom: 50px;
+        }
+    }
+    @include media('<sm') {
+        .ps-product-list {
+            margin-bottom: 10px;
+        }
+        .ps-home-banner {
+            padding-top: 30px;
+            padding-bottom: 0px;
+        }
+    }
+    @media screen and (max-width: 495px) {
+        .ps-product-list {
+            margin-bottom: 30px;
+        }
     }
 
     .ps-deal-of-day {

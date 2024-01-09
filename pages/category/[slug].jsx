@@ -1,70 +1,112 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import WidgetShopCategories from '~/components/shared/widgets/WidgetShopCategories';
-import WidgetShopBrands from '~/components/shared/widgets/WidgetShopBrands';
 import WidgetShopFilterByPriceRange from '~/components/shared/widgets/WidgetShopFilterByPriceRange';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useRouter } from 'next/router';
-import ProductItems from '~/components/partials/product/ProductItems';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
-import Newletters from '~/components/partials/commons/Newletters';
 
 import ShopItems from '~/components/partials/shop/ShopItems';
+import { baseUrl } from '~/repositories/Repository';
 
-const ProductCategoryScreen = () => {
+export default function ProductCategoryScreen({ category2 }) {
     const Router = useRouter();
     const { slug } = Router.query;
-    const [category, setCategory] = useState([]);
-    const [loading, setLoading] = useState(false);
-    const [detail_arr, setDetail_arr] = useState([]);
-    const [filteredData, setFilteredData] = useState([]);
+    const [category, setCategory] = useState(category2);
+    const [filteredData, setFilteredData] = useState(null);
+
     const [chaildId, setchaildId] = useState(null);
-    const [parentId, setParentId] = useState('');
+    const [parentId, setParentId] = useState(null);
+
+    const [count, setCount] = useState(null);
+    const [nom, setNom] = useState('Kategoriyalar');
+    // const [breadCrumbName, setBreadCrumb] = useState(null)
+
     async function getCategry() {
-        const responseData = await ProductRepository.getRelatedProduct(slug);
-        if (responseData) {
+        const responseData = await ProductRepository.getCategoryParent();
+        if (responseData?.length > 0) {
+            if (responseData?.every((cat) => cat.slug !== slug)) {
+                setchaildId(slug);
+                setParentId(null)
+            } else {
+                setParentId(slug);
+                setchaildId(null)
+            }
             setCategory(responseData);
-            setFilteredData(responseData);
-            console.log('default data', responseData);
         }
     }
-    // async function getParentDefaultData() {
-    //     const responseData = await ProductRepository.getRelatedProduct(slug);
-    //     if (responseData) {
-    //         console.log('ota categoriya ichidagilar', responseData);
-    //         setCategory(responseData);
-    //         setFilteredData(responseData);
-    //     }
-    // }
 
-    async function getChaildData(id) {
+    async function getChaildData(chaildID) {
+        setParentId(null);
         setFilteredData(null);
-        const responseData = await ProductRepository.getCategoriesChaild(id);
+        const responseData = await ProductRepository.getFilderProduct(
+            1,
+            chaildID,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
         if (responseData) {
-            console.log('respons chaild data', responseData);
-            setFilteredData(responseData);
+            setFilteredData(responseData?.results);
+            console.log("-->", responseData);
+            setCount(responseData.count);
         }
-
         setchaildId(null);
     }
 
-    async function getParentData(id) {
+    async function getParentData(parentID) {
+        setchaildId(null);
         setFilteredData(null);
-        const responseData = await ProductRepository.getDocumnetsParentData(id);
+        const responseData = await ProductRepository.getFilderProduct(
+            1,
+            null,
+            parentID,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null
+        );
         if (responseData) {
-            setFilteredData(responseData);
+            setFilteredData(responseData?.results);
+            setCount(responseData.count);
         }
         setParentId(null);
     }
 
-    
     useEffect(() => {
-        getParentData(slug);
+        getCategry();
+    }, [slug]);
+
+    useEffect(() => {
         if (chaildId) {
             getChaildData(slug);
         }
-    }, [slug]);
+
+        if (parentId) {
+            getParentData(slug);
+        }
+
+        if (category?.length > 0) {
+            for (let i = 0; i < category.length; i++) {
+                if (category[i].id === Number(slug)) {
+                    setNom(category[i].name);
+                } else {
+                    for (let j = 0; j < category[i]?.children?.length; j++) {
+                        if (category[i]?.children[j].id === Number(slug)) {
+                            setNom(category[i]?.children[j].name);
+                        }
+                    }
+                }
+            }
+        }
+    }, [slug, parentId, chaildId]);
 
     const breadCrumb = [
         {
@@ -73,49 +115,33 @@ const ProductCategoryScreen = () => {
         },
 
         {
-            text: 'Product category',
+            text: nom,
         },
     ];
-    //Views
-    let productItemsViews;
-
-    if (!loading) {
-        if (category && category.length > 0) {
-            productItemsViews = (
-                <ProductItems columns={4} products={category} />
-            );
-        } else {
-            productItemsViews = <p>No Product found</p>;
-        }
-    } else {
-        productItemsViews = <p>Loading...</p>;
-    }
-
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={category ? category.name : 'Category'}
+            title={category ? category.name : 'Kategoriya'}
             boxed={true}>
             <div className="ps-page--shop">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories
-                                data={category}
-                                setchaildId={setchaildId}
-                                setParentId={(id) => getParentData(id)}
-                            />
+                            <WidgetShopCategories data={category} />
                             <WidgetShopFilterByPriceRange
-                                data={filteredData}
                                 setFilteredData={setFilteredData}
+                                chaildId={chaildId}
+                                parentId={parentId}
                             />
                         </div>
                         <div className="ps-layout__right">
                             <ShopItems
                                 data={filteredData}
                                 columns={4}
-                                pageSize={8}
+                                pageSize={16}
+                                dataCount={count}
+                                setDataCount={setCount}
                             />
                         </div>
                     </div>
@@ -124,4 +150,15 @@ const ProductCategoryScreen = () => {
         </PageContainer>
     );
 };
-export default ProductCategoryScreen;
+export async function getServerSideProps(context) {
+    const { slug } = context.params
+    const res = await fetch(`${baseUrl}customer/parent-category-list/?category=${slug}`);
+    const responseData = await res.json();
+    console.log('customer/parent-category-list/');
+
+    return {
+        props: {
+            category2: responseData,
+        },
+    };
+}

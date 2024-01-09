@@ -1,43 +1,29 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
+import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
-import useEcomerce from '~/hooks/useEcomerce';
 import useProduct from '~/hooks/useProduct';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import useCart from '~/hooks/useCart';
 
-const PanelCartMobile = ({ ecomerce }) => {
-    const { products, getProducts, removeItem } = useEcomerce();
-    const { title, thumbnailImage } = useProduct();
+const PanelCartMobile = ({ ecomerce, setMenuDrawer,
+    setCartDrawer,
+    setCategoriesDrawer,
+    setSearchDrawer, }) => {
+    const { thumbnailImage } = useProduct();
+    const { removeCartOneItem } = useCart()
+    const products = useSelector(state => state.ecomerce.cartDataItems)
 
     function handleRemoveCartItem(e, product) {
         e.preventDefault();
-        removeItem(product, ecomerce.cartItems, 'cart');
+        removeCartOneItem(product.id);
     }
 
-    useEffect(() => {
-        if (ecomerce.cartItems) {
-            getProducts(ecomerce.cartItems);
-        }
-    }, [ecomerce]);
-    // const amount = calculateAmount(products);
-    // function addPeriodToThousands(number) {
-    //     const numStr = String(number);
-
-    //     const [integerPart, decimalPart] = numStr.split('.');
-
-    //     const formattedIntegerPart = integerPart.replace(
-    //         /\B(?=(\d{3})+(?!\d))/g,
-    //         ' '
-    //     );
-
-    //     const formattedNumber =
-    //         decimalPart !== undefined
-    //             ? `${formattedIntegerPart}.${decimalPart}`
-    //             : formattedIntegerPart;
-
-    //     return formattedNumber;
-    // }
-    // const hisob = addPeriodToThousands(amount);
+    const handleDrawerClose = () => {
+        setMenuDrawer(false);
+        setCartDrawer(false);
+        setCategoriesDrawer(false);
+        setSearchDrawer(false);
+    };
 
 
     //view
@@ -47,23 +33,23 @@ const PanelCartMobile = ({ ecomerce }) => {
         const amount = calculateAmount(products);
         const items = products.map((item) => (
             <div className="ps-product--cart-mobile" key={item.id}>
-                <div className="ps-product__thumbnail">
-                    <Link href="/product/[pid]" as={`/product/${item.id}`}>
-                       {
-                        item ?
-                        <a>{thumbnailImage(item)}</a>
-                        :
-                        <>Loading...</>
-                       }
+                <div className="ps-product__thumbnail" onClick={handleDrawerClose}>
+                    <Link href="/product/[pid]" as={`/product/${item.slug}`}>
+                        {
+                            item?.slug ?
+                                <a>{thumbnailImage(item)}</a>
+                                :
+                                <>Loading...</>
+                        }
                     </Link>
                 </div>
-                <div className="ps-product__content">
+                <div className="ps-product__content" onClick={handleDrawerClose}>
                     <a
                         className="ps-product__remove"
                         onClick={(e) => handleRemoveCartItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
-                    <Link href="/product/[pid]" as={`/product/${item.id}`}>
+                    <Link href="/product/[pid]" as={`/product/${item.slug}`} >
                         <a className="ps-product__title">{item.title}</a>
                     </Link>
                     <p>
@@ -79,9 +65,9 @@ const PanelCartMobile = ({ ecomerce }) => {
         footerView = (
             <div className="ps-cart__footer">
                 <h3>
-                  Umumiy narx :<strong>{amount} so'm </strong>
+                    Umumiy narx :<strong>{amount} so'm </strong>
                 </h3>
-                <figure>
+                <figure onClick={handleDrawerClose}>
                     <Link href="/account/shopping-cart">
                         <a className="ps-btn">Savat</a>
                     </Link>
@@ -93,13 +79,6 @@ const PanelCartMobile = ({ ecomerce }) => {
         );
     } else {
         cartItemsView = <p>Savat bo'sh!</p>;
-        // footerView = (
-        //     <div className="ps-cart__footer">
-        //         <Link href="/shop">
-        //             <a className="ps-btn ps-btn--fullwidth">Qaytish</a>
-        //         </Link>
-        //     </div>
-        // );
     }
     return (
         <div className="ps-cart--mobile">

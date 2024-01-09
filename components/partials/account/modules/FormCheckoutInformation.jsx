@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
-import { useCookies } from 'react-cookie';
 import { useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
-import useEcomerce from '~/hooks/useEcomerce';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
+import  Router  from 'next/router';
+import useCart from '~/hooks/useCart';
+import Image from 'next/image';
+
 
 function FormCheckoutInformation() {
-    const { increaseQty, decreaseQty, removeItem, removeItems } = useEcomerce();
-
-    const [cookies, setCookie] = useCookies(['cart']);
     const select = useSelector((state) => state.auth.user?.access);
+    const cartData = useSelector((state) => state.ecomerce.cartDataItems);
     const [card, setCard] = useState([]);
     const [data, setData] = useState([]);
     const [selectedValue, setSelectedValue] = useState('click');
     const [message, setMessage] = useState(true);
+    const {removeAll} = useCart()
 
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
@@ -32,48 +33,11 @@ function FormCheckoutInformation() {
         }, 1000);
     };
 
-    console.log('cardd', card);
 
     useEffect(() => {
-        // let cookeCard = cookies?.cart;
-        select && GetCard();
-
-        setData(cookies?.cart);
-
-        // if (card?.length > 0) {
-        //     // function Tekshirish(array1, array2) {
-        //     //     const yangiData = [];
-
-        //     //     for (let i = 0; i < array1.length; i++) {
-        //     //       let isIdFound = false;
-
-        //     //       for (let j = 0; j < array2.length; j++) {
-        //     //         if (array1[i].id !== array2[j].id) {
-        //     //             yangiData.push(array1[i]);
-        //     //           break;
-        //     //         }
-        //     //       }
-
-        //     //       if (!isIdFound) {
-        //     //         yangiData.push(array1[i]);
-        //     //       }
-        //     //     }
-
-        //     //     return yangiData;
-        //     //   }
-
-        //     function Tekshirish(array1, array2) {
-        //         return array2.filter(
-        //             (obj1) => !array1.some((obj2) => obj2.id !== obj1.id)
-        //         );
-        //     }
-
-        //     setData(Tekshirish(cookeCard, card));
-        //     console.log('tek', Tekshirish(cookeCard, card));
-        // }else{
-        //     setData(cookies?.cart)
-        // }
-    }, [cookies]);
+        select && GetCard()
+        setData(cartData);
+    }, [cartData]);
 
     function extractIds(data) {
         const ids = [];
@@ -83,10 +47,10 @@ function FormCheckoutInformation() {
         return ids;
     }
     const ids = extractIds(data);
-    console.log("to'lov uchun berib yuborilgan id lar ", ids);
 
     const ProductToApi = async () => {
         setMessage(false);
+        removeAll()
         const data = {
             documents: ids,
         };
@@ -96,22 +60,22 @@ function FormCheckoutInformation() {
             },
         };
         const respons = await ClickRepository.postClick(data, token);
-
-        if (respons?.status === 200 || respons?.status === 201) {
-            setCookie('cart', [], { path: '/' });
-            removeItems('cart');
+        if (respons) {
             window.open(`${respons?.data?.url}`, '_blank');
             setMessage(true);
-        } else {
-            setMessage(true);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Nimadir xato!',
-                content: `Sizning savatdagi hujjatlaringiz sotib olish uchun qo'shilmadi`,
-            });
-            modal.update;
         }
-
+        // else {
+        //     Router.push('/account/register-user');
+        //     setMessage(true);
+        //     const modal = Modal.error({
+        //         centered: true,
+        //         title: 'Xatolik!',
+        //         content: 'Siz sotuvchisiz , foydalanuvchi bo\'lib ro\'yxatdan o\'tishingiz zarur' ,
+        //     });
+        //     modal.update;
+        
+        // }
+       
         // const responsClick = await ClickRepository.postClick( token)
     };
 
@@ -141,8 +105,8 @@ function FormCheckoutInformation() {
                     style={{ display: 'inline-block' }}
                     className="ps-btn"
                     onClick={() => ProductToApi()}>
-                    <i class="fa-solid fa-angles-left fa-fade me-2"></i> To'lov
-                    qilish{' '}
+                    <i className="fa-solid fa-angles-left fa-fade me-2"></i> To'lov
+                    qilish
                 </p>
             ) : (
                 <p>

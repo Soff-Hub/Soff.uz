@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /models/
+Sitemap: https://soff.uz/sitemap.xml

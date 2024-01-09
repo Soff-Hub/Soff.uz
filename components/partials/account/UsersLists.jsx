@@ -1,108 +1,77 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Table } from 'antd';
+import { Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import DeleteRepository from '~/reositoriy-admin/DeleteRepository';
-import ModalDelete from './Modal';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
+import CalculateTimeDifference from './DateFormatter';
 
-function OrdersLists() {
+function AccountUserPages() {
     const { accountLinks, user } = useSelector(state => state.auth)
 
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
-    const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
-    const [file, setFIle] = useState({});
-    const [selectVal, setSelectVal] = useState({});
+    const [selectVal, setSelectVal] = useState(null);
+    const [selectValStatus, setSelectValStatus] = useState("");
+
+    const [pageCount, setPageCount] = useState(0)
+    const [currPage, setCurrPage] = useState(1)
 
 
-    async function GetItemsUsers(page) {
-        if (page === 1) {
-            setData([])
+    async function GetItemsUsers(page, status, search) {
+        setCurrPage(page)
+        const ItemsData = await GetRepository.getUsersLists(page, status, search, user?.access);
+        setPageCount(ItemsData.count)
+        setData([...ItemsData.results]);
+    }
+
+    async function handleItemsPost() {
+        const postsItems = await PostsRepository.PostsUsers(selectVal, user?.access);
+        if (postsItems?.status === 201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: postsItems?.data?.msg,
+            });
         }
-        const ItemsData = await GetRepository.getUsersLists(page, user?.access);
-        if (ItemsData?.results) {
-            setData((prev) => [...prev, ...ItemsData.results]);
-            setSerach((prev) => [...prev, ...ItemsData.results]);
-            if (ItemsData.next) {
-                GetItemsUsers(page + 1)
-            }
+        GetItemsUsers(currPage, selectValStatus, search)
+    }
+    async function handleItemsEdit() {
+        if (selectVal) {
+            const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz  malumotlarni o'zgartirdingiz ",
+            });
+
+            GetItemsUsers(currPage, selectValStatus, search)
+            setSelectVal(null)
+        }
+        else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "O'zgartirish uchun malumot kiritilmadi ",
+            });
         }
     }
-    function handleClick(e) {
-        const text = e.target.value;
-        const filterSearch = search.filter(item => (
-            item.first_name.toLowerCase().includes(text.toLowerCase())
-        ))
-        setData(filterSearch)
-    }
-    async function deleteItemsId() {
-        const userDelete = await DeleteRepository.getUsersListsDelete(deleteId, user?.access);
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  malumotlarni o'chirdingiz`,
-        });
-        GetItemsUsers(1)
-    }
-    async function handleItemsPost(values) {
-        const formData = new FormData()
-        formData.append('image', file)
-        formData.append('first_name', values.first_name)
-        formData.append('phone', values.phone)
-        formData.append('auth_status', selectVal)
-        const postsItems = await PostsRepository.PostsUsers(formData, user?.access);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  yangi malumot qo'shdingiz`,
-        });
-        GetItemsUsers(1)
-    }
-    async function handleItemsEdit(values) {
-        const formData = new FormData()
-        formData.append('image', file)
-        formData.append('first_name', values.first_name)
-        formData.append('phone', values.phone)
-        formData.append('auth_status', selectVal)
-        const patchItems = await PatchRepository.PatchUsers(formData, deleteIdEdit?.id, user?.access)
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: "Siz  malumotlarni o'zgartirdingiz ",
-        });
-        GetItemsUsers(1)
-    }
-    const handleSelectFileFile = (e) => {
-        setFIle(e.target.files[0])
-    };
-
 
     useEffect(() => {
-        GetItemsUsers(1)
-    }, [])
+        GetItemsUsers(currPage, selectValStatus, search)
+    }, [selectValStatus, search])
     const columns = [
-        {
-            title: 'Avatar',
-            dataIndex: 'image',
-            key: 'name',
-            render: (image) => (
-                <div>
-                    {
-                        image ?
-                            <img src={image} width={54} height={54} />
-                            :
-                            <i className="fa-solid fa-image fa-2x"></i>
-                    }
-                </div>
-            ),
-        },
         {
             title: 'Ism',
             dataIndex: 'first_name',
@@ -113,20 +82,38 @@ function OrdersLists() {
             ),
         },
         {
-            title: 'Telefon raqam',
-            dataIndex: 'phone',
+            title: 'Telefon raqam yoki email',
+            dataIndex: 'data',
             key: 'address',
-            render: (title) => (
-                <span className="truncate whitespace-nowrap"><i className=" text-primary-emphasis fa-solid fa-phone-volume"></i> {title}</span>
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    {
+                        data.phone === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
+                    }
+                    {
+                        data.email === "None" ?
+                            <></> :
+                            <span className="truncate whitespace-nowrap"> {data.email}</span>
+                    }
+
+                </div>
 
             ),
+        },
+        {
+            title:  "Ro'yxatdan o'tgan sana",
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
             title: 'Holat',
             dataIndex: 'auth_status',
             key: 'address',
             render: (auth_status) => (
-                <span>{auth_status === 'code_verified' ? (<span><i className="fa-solid text-success fa-circle-check"></i> Faol</span>) : (<span><i class="fa-solid fa-circle-xmark text-danger"></i> Faol emas</span>)}</span>
+                <span>{auth_status === 'code_verified' ? (<span><i className="fa-solid text-success fa-circle-check"></i> Faol</span>) : (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Faol emas</span>)}</span>
             )
 
         },
@@ -135,21 +122,19 @@ function OrdersLists() {
             dataIndex: 'id',
             key: 'address',
             render: (id) => <div >
-                <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger" onClick={() => setDeleteId(id)}></i></a>
+                {
+                    data.some(el => el.id == id && el.auth_status === 'new') ?
+                        <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+                        : <></>
+                }
             </div>
         },
     ];
     return (
-        <section className="ps-my-account ps-page--account">
+        <section className="ps-my-account ps-page--account p-0">
             <div className="container">
-                <div className="row gap-5 row-gap-3 mx-auto p-5 mb-5 rounded" style={{ backgroundColor: "#fff", boxShadow: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)" }}>
-                    <h3 className='col-md-4'>Xaridorlar</h3>
-                        <input type='search' className='form-control rounded col-md-5' placeholder="Qidiruv" onInput={handleClick} />
-                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor qo'shish </span></button>
-                </div>
                 <div className="row " style={{ alignItems: "flex-start" }}>
-                    <div className="col-lg-4 pb-5">
+                    <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
                         </div>
@@ -158,55 +143,41 @@ function OrdersLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <Table dataSource={data} scroll={{x:740}} columns={columns} />
+                                    <div className='row row-gap-3 gap-3 m-0 pb-3'>
+                                    <label className='form-label border col-md-5 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                            <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                            <span className='px-4'><i className='fa-solid fa-search '></i></span>
+
+                                        </label>
+                                        <select className='form-select fs-3 py-3   col-md-4' onChange={(e) => setSelectValStatus(e.target.value)}>
+                                            <option className='fs-3' value="" >Barcha holat</option>
+                                            <option className='fs-3' value="new">Faol emas</option>
+                                            <option className='fs-3' value="code_verified">Faol</option>
+                                        </select>
+                                        <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
+                                    </div>
+
+                                    <Table dataSource={data} scroll={{ x: 900 }} columns={columns} pagination={false} />
+                                    <Pagination total={pageCount} defaultCurrent={currPage}
+                                        onChange={(val) => GetItemsUsers(val, selectValStatus)} />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalTogglEdit" onSubmited={handleItemsEdit} formID={'edit-form-users'}>
-                    <input
-                        type='file'
-                        placeholder="Belgi"
-                        className="form-control pt-4 rounded-3"
-                        onChange={handleSelectFileFile}
-                        defaultValue={deleteIdEdit?.image}
-                    />
-                    <input
-                        type='text'
-                        placeholder="Ism"
-                        className="form-control rounded-3"
-                        name='first_name'
-                        defaultValue={deleteIdEdit?.first_name}
-                    />
-                    <input
-                        type='tel'
-                        placeholder="Telefon raqam"
-                        className="form-control rounded-3"
-                        name='phone'
-                        defaultValue={deleteIdEdit?.phone}
-                    />
-                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
-                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
-                        <option className='fs-3' value="new">Faol emas</option>
+                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
+                        <option className='fs-3' selected value="new">Faol emas</option>
                         <option className='fs-3' value="code_verified">Faol</option>
                     </select>
                 </ModalDeletePostEdit >
                 <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>
                     <input
-                        type='file'
-                        placeholder="Belgi"
-                        className="form-control pt-4 rounded-3"
-                        onChange={handleSelectFileFile}
-                        required
-                    />
-                    <input
                         type='text'
                         placeholder="Ism"
                         className="form-control rounded-3"
                         name='first_name'
-                        required
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, first_name: e.target.value }))}
 
                     />
                     <input
@@ -215,14 +186,18 @@ function OrdersLists() {
                         className="form-control rounded-3"
                         name='phone'
                         defaultValue="+998"
-                        required
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, phone: e.target.value }))}
+                        maxLength={13}
 
                     />
-                    <select required className='form-select fs-3 py-3' onChange={(e) => setSelectVal(e.target.value)}>
-                        <option className='fs-3' selected disabled value="new">Holatni tanlang</option>
-                        <option className='fs-3' value="new">Faol emas</option>
-                        <option className='fs-3' value="code_verified">Faol</option>
-                    </select>
+                    <input
+                        type='email'
+                        placeholder="Elektron pochta"
+                        className="form-control rounded-3"
+                        name='email'
+                        defaultValue={deleteIdEdit?.data?.email}
+                        onChange={(e) => setSelectVal((prev) => ({ ...prev, email: e.target.value }))}
+                    />
                 </ModalDeletePostEdit>
             </div>
         </section>
@@ -230,4 +205,4 @@ function OrdersLists() {
 
 }
 
-export default OrdersLists;
+export default AccountUserPages;

@@ -1,20 +1,13 @@
 import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
-import { useCookies } from 'react-cookie';
 
-const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
-    const { products, getProducts } = useEcomerce();
-    const [cookies, setCookie] = useCookies(['cart']);
+const ModulePaymentOrderSummary = ({ ecomerce }) => {
+    
+    let amount = calculateAmount(ecomerce.cartDataItems);
 
-    useEffect(() => {
-        if (ecomerce.cartItems) {
-            getProducts(ecomerce.cartItems, 'cart');
-        }
-    }, [ecomerce]);
-    let amount = cookies?.cart && calculateAmount(cookies?.cart)
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -35,55 +28,50 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
     const hisob = addPeriodToThousands(amount);
 
     // view
-    let listItemsView, shippingView, totalView;
-    if (cookies?.cart && cookies?.cart?.length > 0) {
-        
-        listItemsView = cookies?.cart?.map((item, i) => (
+    let listItemsView, totalView;
+    if (ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0) {
+        listItemsView = ecomerce.cartDataItems?.map((item, i) => (
             <Link href="/" key={item.id}>
                 <a>
                     <strong>
-                      {i+1}.  {item.title}
+                        {i + 1}. {item.title}
                     </strong>
-                    <small>{addPeriodToThousands(item.price)} so'm </small>
+                    <small>
+                        {item?.discount === 0 ? (
+                           <p>{ addPeriodToThousands(item.price)} so'm</p>
+                        ) : (
+                            <>
+                                <del>
+                                    {addPeriodToThousands(item.price)} so'm
+                                </del>
+                                <p>
+                                    {addPeriodToThousands(item.discount_price) }{' '}
+                                    so'm
+                                </p>
+                            </>
+                        )}
+                    </small>
                 </a>
             </Link>
         ));
     } else {
-        listItemsView = <p>Hujjat yo'q.</p>;
+        listItemsView = <p>Mahsulot yo'q.</p>;
     }
-    if (shipping === true) {
-        shippingView = (
-            <figure>
-                <figcaption>
-                    <strong>Shipping Fee</strong>
-                    <small>$20.00</small>
-                </figcaption>
-            </figure>
-        );
+  
         totalView = (
             <figure className="ps-block__total">
                 <h3>
-                Umumiy hisob: 
-                    <strong>{hisob}.00</strong>
-                </h3>
-            </figure>
-        );
-    } else {
-        totalView = (
-            <figure className="ps-block__total">
-                <h3>
-                    Umumiy hisob: 
+                    Umumiy hisob:
                     <strong>{hisob}.00 so'm </strong>
                 </h3>
             </figure>
         );
-    }
     return (
         <div className="ps-block--checkout-order">
             <div className="ps-block__content">
                 <figure>
                     <figcaption>
-                        <strong>Hujjat</strong>
+                        <strong>Mahsulot</strong>
                         <strong>narx</strong>
                     </figcaption>
                 </figure>
@@ -94,7 +82,6 @@ const ModulePaymentOrderSummary = ({ ecomerce, shipping }) => {
                         <small>{hisob}.00 so'm </small>
                     </figcaption>
                 </figure>
-                {shippingView}
                 {totalView}
             </div>
         </div>

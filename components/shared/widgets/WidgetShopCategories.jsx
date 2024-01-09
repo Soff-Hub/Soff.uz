@@ -1,84 +1,104 @@
 import React, { useEffect, useState } from 'react';
-import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { PropagateLoader } from 'react-spinners';
+import ProductRepository from '~/repositories/ProductRepository';
 
-const WidgetShopCategories = ({ data, setchaildId, setParentId }) => {
+const WidgetShopCategories = ({ data }) => {
     const Router = useRouter();
-    const [loading, setLoading] = useState(false);
     const { slug } = Router.query;
-    const [category, setCategory] = useState([]);
+    const category = data;
+    const [activeAccordionIndex, setActiveAccordionIndex] = useState(null);
+    const [childData, setChildData] = useState({});
 
-    async function getCategry() {
-        const responseData = await ProductRepository.getTotalRecords();
-        if (responseData) {
-            setCategory(responseData);
+    const handleClickGetChildData = async (slug) => {
+        const response = await ProductRepository.getChaildCategory(slug);
+        if (response) {
+            setChildData((prevData) => ({
+                ...prevData,
+                [slug]: response,
+            }));
         }
-    }
+    };
 
-    const  IdYuborish = (id) => {
-        setchaildId(id)
-    }
-
-    const ParentDocumentId = (id) => {
-        setParentId(id)
-    }
-
-    useEffect(() => {
-        getCategry();
-    
-    }, [data]);
-    
-    // Views
-    let categoriesView;
-    if (!loading) {
-        if (category && category.length > 0) {
-            const items = category.map((item) => (
-                <li
-                    key={item.id}
-                    className={item.id === Number(slug) ? 'active' : ''}>
-                    {item.children !== null ? (
-                        <div className="dropdown">
-                            <button
-                                className="btn btn-light fs-4  dropdown-toggle d-flex justify-content-between align-content-center"
-                                style={{ minWidth: '120px' }}
-                                type="button"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                {item.name}
-                            </button>
-                            <ul className="dropdown-menu">
-                                {item?.children.map((item, i) => (
-                                    <li key={i}>
-                                        <Link href={`/category/${item.id}`}>
-                                            <a className="dropdown-item fs-4" onClick={() => IdYuborish(item.id)} >
-                                                {item.name}
-                                            </a>
-                                        </Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
-                    ) : (
-                        <Link href={`/category/${item.id}`}>
-                            <a onClick={() => ParentDocumentId(item.id)}>
-                            {item.name}
-                            </a>
-                        </Link>
-                    )}
-                </li>
-            ));
-            categoriesView = <ul className="ps-list--categories">{items}</ul>;
+    const handleAccordionClick = (index, slug) => {
+        if (activeAccordionIndex === index) {
+            setActiveAccordionIndex(null);
         } else {
+            setActiveAccordionIndex(index);
+            handleClickGetChildData(slug);
         }
-    } else {
-        categoriesView = <p>Loading...</p>;
-    }
+    };
+
+    const renderChildLinks = (children, parentSlug) => {
+        return children?.map((item, i) => (
+            <Link key={i} href={`/category/${item.slug}`}>
+                <a  className={ `acc-body-child-a ${item.slug === slug ? 'active' : ''}`}>
+                    {item.name}
+                </a>
+            </Link>
+        ));
+    };
+console.log('===>', category);
+    const renderAccordionItems = () => {
+        return category?.map((item, i) => (
+            <li key={item.id} className={item.slug === slug ? 'active' : ''}>
+                {item.is_childe ? (
+                    <div className="accordion accordion-flush" id={`accordion-${i}`}>
+                        <div
+                            className="accordion-item"
+                            style={{ backgroundColor: '#fffcfced' }}
+                        >
+                          <Link href={`/category/${item.slug}`}>
+                          <a>
+                          <h2 className="accordion-header active" id={`heading-${i}`}>
+                                <button
+                                    className={`accordion-button ${activeAccordionIndex === i ? '' : 'collapsed'
+                                        }`}
+                                    type="button"
+                                    onClick={() => handleAccordionClick(i, item.slug)}
+                                >
+                                {item.name}
+                                </button>
+                            </h2>
+                          </a>
+                          </Link>
+                            <div
+                                id={`collapse-${i}`}
+                                className={`accordion-collapse collapse ${activeAccordionIndex === i ? 'show' : ''
+                                    }`}
+                                aria-labelledby={`heading-${i}`}
+                                data-bs-parent={`#accordion-${i}`}
+                            >
+                                <div className="accordion-body">
+                                    {renderChildLinks(childData[item.slug], item.slug)}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                ) : (
+                    <span className="category-list-item d-block" >{item.name}</span>
+                )}
+            </li>
+        ));
+    };
 
     return (
         <aside className="widget widget_shop">
-            <h4 className="widget-title">Categories</h4>
-            {categoriesView}
+            <h4 className="widget-title">Kategoriyalar</h4>
+            {category?.length ? (
+                <ul className="ps-list--categories">{renderAccordionItems()}</ul>
+            ) : (
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignContent: 'center',
+                    }}
+                >
+                    <PropagateLoader color="#C9C9C9" />
+                </div>
+            )}
         </aside>
     );
 };

@@ -1,16 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import useEcomerce from '~/hooks/useEcomerce';
-import { Modal, Result } from 'antd';
+import { Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
+import useCart from '~/hooks/useCart';
 
-const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
-    const { increaseQty, decreaseQty, removeItem } = useEcomerce();
+const ModuleEcomerceCartItems = ({ cartItems }) => {
+    const { removeCartOneItem } = useCart()
 
-    function handleRemoveItem(e, productId) {
+    const handleRemoveItem = async (e, item) => {
         e.preventDefault();
-        removeItem({ id: productId }, ecomerce.cartItems, 'cart');
-    }
+        removeCartOneItem(item.id)
+    };
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -35,18 +35,31 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
     if (cartItems && cartItems.length > 0) {
         const items = cartItems.map((item) => (
             <tr key={item.id}>
-                <td className='cart-product'>
+                <td className="cart-product">
                     <ProductCart product={item} />
                 </td>
                 <td data-label="narxi" className="price pe-5">
-                   <span> {addPeriodToThousands(item.price)} so'm</span>
+                    <span>
+                        {item.discount === 0 ? (
+                            <p>
+                                {addPeriodToThousands(item.discount_price )}  so'm
+                            </p>
+                        ) : (
+                            <>
+                                <del>
+                                    {addPeriodToThousands(item.price )} so'm
+                                </del>
+                                <p>
+                                    {addPeriodToThousands(item.discount_price )}
+                                    so'm
+                                </p>
+                            </>
+                        )}
+                    </span>
                 </td>
-                <td >
-                    {/* <strong>${(item.price * item.quantity).toFixed(2)}</strong> */}
-                </td>
-                <td >
-
-                    <a href="#" onClick={(e) => handleRemoveItem(e, item.id)}>
+                <td></td>
+                <td>
+                    <a href="#" onClick={(e) => handleRemoveItem(e, item)}>
                         <i className="icon-cross"></i>
                     </a>
                 </td>
@@ -58,10 +71,8 @@ const ModuleEcomerceCartItems = ({ ecomerce, cartItems }) => {
                 <table className="table  ps-table--shopping-cart ps-table--responsive">
                     <thead>
                         <tr>
-                            <th>Hujjat</th>
+                            <th>Mahsulot</th>
                             <th>Narx</th>
-
-                            {/* <th>Quantity</th> */}
                             <th></th>
                             <th>O'chirish</th>
                         </tr>

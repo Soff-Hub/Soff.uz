@@ -4,73 +4,13 @@ import Router from 'next/router';
 import { Spin } from 'antd';
 
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
-import ProductRepository from '~/repositories/ProductRepository';
 import PostRepository from '~/repositories/PostRepository';
 
-const exampleCategories = [
-    'All',
-    'Babies & Moms',
-    'Books & Office',
-    'Cars & Motocycles',
-    'Clothing & Apparel',
-    ' Accessories',
-    'Bags',
-    'Kid’s Fashion',
-    'Mens',
-    'Shoes',
-    'Sunglasses',
-    'Womens',
-    'Computers & Technologies',
-    'Desktop PC',
-    'Laptop',
-    'Smartphones',
-    'Consumer Electrics',
-    'Air Conditioners',
-    'Accessories',
-    'Type Hanging Cell',
-    'Audios & Theaters',
-    'Headphone',
-    'Home Theater System',
-    'Speakers',
-    'Car Electronics',
-    'Audio & Video',
-    'Car Security',
-    'Radar Detector',
-    'Vehicle GPS',
-    'Office Electronics',
-    'Printers',
-    'Projectors',
-    'Scanners',
-    'Store & Business',
-    'Refrigerators',
-    'TV Televisions',
-    '4K Ultra HD TVs',
-    'LED TVs',
-    'OLED TVs',
-    'Washing Machines',
-    'Type Drying Clothes',
-    'Type Horizontal',
-    'Type Vertical',
-    'Garden & Kitchen',
-    'Cookware',
-    'Decoration',
-    'Furniture',
-    'Garden Tools',
-    'Home Improvement',
-    'Powers And Hand Tools',
-    'Utensil & Gadget',
-    'Health & Beauty',
-    'Equipments',
-    'Hair Care',
-    'Perfumer',
-    'Wine Cabinets',
-];
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
     useEffect(() => {
-        // Update debounced value after delay
         const handler = setTimeout(() => {
             setDebouncedValue(value);
         }, delay);
@@ -91,13 +31,6 @@ const SearchHeader = () => {
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 300);
 
-    // async function getSearchData() {
-    //     const responseData = await ProductRepository.getRecordsSearch();
-    //     if (responseData) {
-    //         setResultItems(responseData);
-    //     }
-    // }
-
     function handleClearKeyword() {
         setKeyword('');
         setIsSearch(false);
@@ -106,7 +39,9 @@ const SearchHeader = () => {
 
     function handleSubmit(e) {
         e.preventDefault();
-        Router.push(`/search?keyword=${keyword}`);
+        if (keyword) {
+            Router.push(`/search?keyword=${keyword}`);
+        }
     }
     useEffect(() => {
         // getSearchData();
@@ -141,7 +76,6 @@ const SearchHeader = () => {
     // Views
     let productItemsView,
         clearTextView,
-        selectOptionView,
         loadingView,
         loadMoreView;
     if (!loading) {
@@ -149,7 +83,7 @@ const SearchHeader = () => {
             if (resultItems.length > 5) {
                 loadMoreView = (
                     <div className="ps-panel__footer text-center">
-                        <Link href="/search">
+                        <Link href={`/search?keyword=${keyword}`}>
                             <a>Hamma natijalarni ko'rish</a>
                         </Link>
                     </div>
@@ -159,7 +93,7 @@ const SearchHeader = () => {
                 <ProductSearchResult product={product} key={product.id} />
             ));
         } else {
-            productItemsView = <p>Hujjat topilmadi</p>;
+            productItemsView = <p>Mahsulot topilmadi</p>;
         }
         if (keyword !== '') {
             clearTextView = (
@@ -176,28 +110,20 @@ const SearchHeader = () => {
         );
     }
 
-    selectOptionView = exampleCategories.map((option) => (
-        <option value={option} key={option}>
-            {option}
-        </option>
-    ));
-
     return (
         <form
             className="ps-form--quick-search"
             method="get"
             action="/"
             onSubmit={handleSubmit}>
-            {/* <div className="ps-form__categories">
-                <select className="form-control">{selectOptionView}</select>
-            </div> */}
+  
             <div className="ps-form__input">
                 <input
                     ref={inputEl}
                     className="form-control"
                     type="text"
                     value={keyword}
-                    placeholder="Men hujjat izlayapman..."
+                    placeholder="Izlash"
                     onChange={(e) => setKeyword(e.target.value)}
                 />
                 {clearTextView}

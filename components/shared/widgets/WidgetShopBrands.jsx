@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 import Link from 'next/link';
-import { Checkbox } from 'antd';
-import { Radio, Input } from 'antd';
+import { Radio } from 'antd';
 import { useRouter } from 'next/router';
 
 const WidgetShopBrands = () => {
@@ -50,7 +49,7 @@ const WidgetShopBrands = () => {
         if (brands && brands.length > 0) {
             const items = brands.map((item) => (
                 <li key={item.id}>
-                    <Link href={`shop/${item.slug}`}>{item.name}</Link>
+                    <Link href={`shop/${item.slug}`}><a>{item.name}</a></Link>
                 </li>
             ));
             brandsView = <ul className="ps-list--brands">{items}</ul>;

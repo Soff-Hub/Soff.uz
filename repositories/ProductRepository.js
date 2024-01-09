@@ -38,10 +38,7 @@ class ProductRepository {
         return reponse;
     }
     async WishlistDataDelete(id) {
-        // const select = useSelector(state => state.auth.user?.access)
         const select = localStorage.getItem('token');
-        // console.log('select', select);
-        console.log('id', id);
 
         const reponse = await Repository({
             url: `${baseUrl}customer/wishlist/${id}/`,
@@ -57,16 +54,105 @@ class ProductRepository {
         return reponse;
     }
 
-    async getRelatedProduct(pid) {
+    async getFilderProduct(
+        page,
+        chaildID,
+        parentID,
+        min,
+        max,
+        approved_count,
+        tartib,
+        price,
+        mashhur
+    ) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?category=&created_at=&category__parent=${pid ? pid : ''}&min_price=&max_price=`
+            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
+                chaildID || ''
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
+                min || ''
+            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
+                approved_count || ''
+            }&order_by_id=${tartib || ''}&order_by_price=${
+                price || ''
+            }&approved_count=${mashhur || ''}`
         )
             .then((response) => {
-                return response.data.results;
+                console.log("responsss", response);
+                return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getFilderPrice(
+        page,
+        chaildID,
+        parentID,
+        min,
+        max,
+        approved_count,
+        tartib,
+        price,
+        mashhur
+    ) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
+                chaildID || ''
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
+                min || ''
+            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
+                approved_count || ''
+            }&order_by_id=${tartib || ''}&order_by_price=${
+                price || ''
+            }&approved_count=${mashhur || ''}`
+        )
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getSearchProduct(
+        page,
+        chaildID,
+        parentID,
+        min,
+        max,
+        approved_count,
+        tartib,
+        price,
+        mashhur,
+        search
+    ) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/documents/?page=${page || ''}&id=&category=${
+                chaildID || ''
+            }&created_at=&category_parent_slug=${parentID || ''}&min_price=${
+                min || ''
+            }&max_price=${max || ''}&min_id=&max_id=&order_by_approved_count=${
+                approved_count || ''
+            }&order_by_id=${tartib || ''}&order_by_price=${
+                price || ''
+            }&approved_count=${mashhur || ''}&search=${search || ''}`
+        )
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    // async getFilterPagination(payload) {
+    //     const reponse = await Repository.get(
+    //         `${baseUrl}customer/documents/?page=${payload}`
+    //     )
+    //         .then((response) => {
+    //             return response.data;
+    //         })
+    //         .catch((error) => ({ error: JSON.stringify(error) }));
+    //     return reponse;
+    // }
 
     async getCardData() {
         const reponse = await Repository.get(`${baseUrl}customer/data/`)
@@ -77,24 +163,23 @@ class ProductRepository {
         return reponse;
     }
 
-    async getProducts(params) {
-        const reponse = await Repository.get(
-            `${baseUrl}/products?${serializeQuery(params)}`
-        )
-            .then((response) => {
-                if (response.data && response.data.length > 0) {
-                    return response.data;
-                } else {
-                    return null;
-                }
-            })
+    // async getProducts(params) {
+    //     const reponse = await Repository.get(
+    //         `${baseUrl}/products?${serializeQuery(params)}`
+    //     )
+    //         .then((response) => {
+    //             if (response.data && response.data.length > 0) {
+    //                 return response.data;
+    //             } else {
+    //                 return null;
+    //             }
+    //         })
 
-            .catch((error) => {
-                // console.log(JSON.stringify(error));
-                return null;
-            });
-        return reponse;
-    }
+    //         .catch((error) => {
+    //             return null;
+    //         });
+    //     return reponse;
+    // }
 
     async getBrands() {
         const reponse = await Repository.get(`${baseUrl}/brands`)
@@ -122,40 +207,42 @@ class ProductRepository {
                 return response.data.results;
             })
             .catch((error) => ({ error: JSON.stringify(error) }))
-            .finally(false)
+            .finally(false);
         return reponse;
     }
-    async getCategoriesChaild(id) {
+    async getCategoryParent() {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?category=${id ? id : ''}&created_at=&category__parent=&min_price=&max_price=`
+            `${baseUrl}customer/parent-category-list/`
         )
             .then((response) => {
-                return response.data.results;
+                return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }))
-            .finally(false)
+            .finally(false);
         return reponse;
     }
-    async getDocumnetsParentData(id) {
-        const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?category=&created_at=&category__parent=${id}&min_price=&max_price=`
-        )
-            .then((response) => {
-                return response.data.results;
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }))
-            .finally(false)
-        return reponse;
-    }
-
 
     async getTopCategories() {
         const reponse = await Repository.get(
             `${baseUrl}customer/top-categories/`
         )
             .then((response) => {
-                // console.log(response.data.results);
                 return response.data.results;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async postCartData(arr) {
+        const reponse = await Repository({
+            method: 'POST',
+            url: `${baseUrl}customer/documents-list/`,
+            data: {
+                documents: arr,
+            },
+        })
+            .then((response) => {
+                return response;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
@@ -171,47 +258,30 @@ class ProductRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
-    async getProductsByCategory(payload) {
+    async getProductSimilarSlug(pid) {
         const reponse = await Repository.get(
-            `${baseUrl}/product-categories?slug=${payload}`
+            `${baseUrl}customer/similar/${pid}/`
         )
             .then((response) => {
-                if (response.data) {
-                    if (response.data.length > 0) {
-                        return response.data[0];
-                    }
-                } else {
-                    return null;
-                }
+                return response.data;
             })
-            .catch(() => {
-                return null;
-            });
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getProductImagesSlug(pid) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/promotional-sliders/${pid}`
+        )
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
 
-    async getProductsByBrand(payload) {
-        const reponse = await Repository.get(
-            `${baseUrl}/brands?slug=${payload}`
-        )
-            .then((response) => {
-                if (response.data) {
-                    if (response.data.length > 0) {
-                        return response.data[0];
-                    }
-                } else {
-                    return null;
-                }
-            })
-            .catch(() => {
-                return null;
-            });
-        return reponse;
-    }
 
-    async getProductsByIds(payload) {
-        const endPoint = `${baseUrl}customer/documents/${payload}/`;
+    async getSellerProduct(payload) {
+        const endPoint = `${baseUrl}customer/documents/?id=&category=&created_at=&category__parent=&seller__phone=&seller__email=&seller__id=${payload}12&min_price=&max_price=&min_id=&max_id=&order_by_id=&order_by_price=&approved_count=`;
         const reponse = await Repository.get(endPoint)
             .then((response) => {
                 if (response.data) {
@@ -221,7 +291,36 @@ class ProductRepository {
                 }
             })
             .catch((error) => {
-                // console.log(JSON.stringify(error));
+                return null;
+            });
+        return reponse;
+    }
+    async getChaildCategory(payload) {
+        const endPoint = `customer/get-child-category/${payload}`
+        const reponse = await Repository.get(baseUrl+endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response.data.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return null;
+            });
+        return reponse;
+    }
+    async getMoreTopCategorys() {
+        const endPoint = `customer/four-child`
+        const reponse = await Repository.get(baseUrl+endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response.data
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
                 return null;
             });
         return reponse;

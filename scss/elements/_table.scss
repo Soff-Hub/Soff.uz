@@ -251,7 +251,7 @@
 @media screen and (max-width: 486px){
     .cart-product{
         display: flex !important;
-        justify-content: start !important;
+        justify-content: flex-start !important;
     }
 }
 
@@ -311,7 +311,7 @@
 @media screen and (max-width: 415px){
     .cart-product{
         .ps-product__thumbnail{
-            margin: 0 40px;
+            margin: 0;
         }
     }
 }

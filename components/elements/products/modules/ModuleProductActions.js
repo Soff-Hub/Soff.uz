@@ -2,33 +2,43 @@ import React, { useState } from 'react';
 import { Modal } from 'antd';
 import { connect } from 'react-redux';
 import ProductDetailQuickView from '~/components/elements/detail/ProductDetailQuickView';
-import useEcomerce from '~/hooks/useEcomerce';
+import useCart from '~/hooks/useCart';
+import useWishlist from '~/hooks/useWishlist';
+import Router from 'next/router';
 
 const ModuleProductActions = ({ product, ecomerce }) => {
     const [isQuickView, setIsQuickView] = useState(false);
-    const { addItem } = useEcomerce();
-// console.log(';;', product);
+    const { setCartOneItem } = useCart();
+    const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
+    const [open, setOpen] = useState(false);
+    const showModal = () => {
+        setOpen(true);
+    };
+    const hideModal = () => {
+        setOpen(false);
+    };
+    const hideModalOk = () => {
+        setOpen(false);
+        Router.push('/account/shopping-cart')
+    };
 
     function handleAddItemToCart(e) {
+        showModal();
         e.preventDefault();
-        addItem( product, ecomerce.cartItems, 'cart');
-        
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni savatga qo'shdingiz`,
-        });
-        modal.update;
+        setCartOneItem(product.id);
+        // const modal = Modal.success({
+        //     centered: true,
+        //     title: 'Muvaffaqqiyatli!',
+        //     content: "Siz  malumotlarni o'zgartirdingiz ",
+        // });
     }
+
     function handleAddItemToWishlist(e) {
         e.preventDefault();
-        addItem(product, ecomerce.wishlistItems, 'wishlist');
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz hujjatni saqlanganlarga qo'shdingiz`,
-        });
-        modal.update;
+        addSavedItem(product.id);
+        if (wishlist?.find((item) => item.id === product?.id)) {
+            removeSavedItem(product.id);
+        }
     }
 
     const handleShowQuickView = (e) => {
@@ -36,54 +46,83 @@ const ModuleProductActions = ({ product, ecomerce }) => {
         setIsQuickView(true);
     };
 
-    const handleHideQuickView = (e) => {
+    const handleHideQuickView = async (e) => {
         e.preventDefault();
+
         setIsQuickView(false);
     };
-    
+
     return (
-        <ul className="ps-product__actions">
-            <li>
-                <a
-                    href="#"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Add To Cart"
-                    onClick={handleAddItemToCart}>
-                    <i className="icon-bag2"></i>
-                </a>
-            </li>
-            <li>
-                <a
-                    href="#"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Quick View"
-                    onClick={handleShowQuickView}>
-                    <i className="icon-eye"></i>
-                </a>
-            </li>
-            <li>
-                <a
-                    href="#"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    title="Add to wishlist"
-                    onClick={handleAddItemToWishlist}>
-                    <i className="icon-heart"></i>
-                </a>
-            </li>
+        <>
             <Modal
-                centered
-                footer={null}
-                width={1024}
-                onCancel={(e) => handleHideQuickView(e)}
-                visible={isQuickView}
-                closeIcon={<i className="icon icon-cross2"></i>}>
-                <h3>Tezkor ko'rish</h3>
-                <ProductDetailQuickView product={product} />
+                title="Muvaffaqqiyatli"
+                open={open}
+                onOk={hideModalOk}
+                onCancel={hideModal}
+                okText="Savatga o'tish"
+                cancelButtonProps={{style:{
+                    color:'#000'
+                }}}
+                okButtonProps={{style:{
+                    color:'#fff',
+                }}}
+                
+                cancelText="Xaridlarni davom etirish">
+                <p></p>
+                <p>Mahsulotingizni savatga qo'shdingiz!</p>
+                <p></p>
             </Modal>
-        </ul>
+            <ul className="ps-product__actions">
+                <li>
+                    <a
+                        href="#"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Savatga qo'shish"
+                        onClick={handleAddItemToCart}>
+                        <i className="icon-bag2"></i>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Ko'proq ko'rish"
+                        onClick={handleShowQuickView}>
+                        <i className="icon-eye"></i>
+                    </a>
+                </li>
+                <li>
+                    <a
+                        href="#"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Tanlanganlarga qo'shish"
+                        onClick={handleAddItemToWishlist}>
+                        <i
+                            className={`${
+                                wishlist?.some(
+                                    (item) =>
+                                        Number(item.id) === Number(product?.id)
+                                )
+                                    ? 'fa-solid fa-heart  text-danger '
+                                    : 'icon-heart'
+                            } `}></i>
+                    </a>
+                </li>
+                <Modal
+                    centeredwishlist
+                    footer={null}
+                    width={1024}
+                    onCancel={(e) => handleHideQuickView(e)}
+                    open={isQuickView}
+                    closeIcon={<i className="icon icon-cross2"></i>}>
+                    <h3>Tezkor ko'rish</h3>
+                    <ProductDetailQuickView product={product} />
+                </Modal>
+            </ul>
+        </>
     );
 };
 

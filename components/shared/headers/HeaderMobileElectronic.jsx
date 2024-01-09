@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import CurrencyDropdown from './modules/CurrencyDropdown';
 import Link from 'next/link';
-import LanguageSwicher from './modules/LanguageSwicher';
 import MobileHeaderActions from './modules/MobileHeaderActions';
+import NextImageCard from '~/components/nextImagecard';
 
 class HeaderMobileElectronic extends Component {
     constructor({ props }) {
@@ -17,32 +16,19 @@ class HeaderMobileElectronic extends Component {
                     <div className="navigation__left">
                         <Link href="/">
                             <a className="ps-logo">
-                                <img
-                                    src="/static/img/alldata_logo.png"
-                                    alt="martfury"
-                                />
+                                {/* <img
+                                    src="/static/img/soff/soff_green_white.png"
+                                    alt="soff"
+                                    width={100}
+                                /> */}
+                                 <NextImageCard
+                             url="/static/img/soff/soff_green_white.png" clasS='logoo' width='100px' height='40px' />
+
                             </a>
                         </Link>
                     </div>
                     <MobileHeaderActions />
                 </div>
-                {/* <div className="ps-search--mobile">
-                    <form
-                        className="ps-form--search-mobile"
-                        action="/"
-                        method="get">
-                        <div className="form-group--nest">
-                            <input
-                                className="form-control"
-                                type="text"
-                                placeholder="Search something..."
-                            />
-                            <button>
-                                <i className="icon-magnifier"></i>
-                            </button>
-                        </div>
-                    </form>
-                </div> */}
             </header>
         );
     }
