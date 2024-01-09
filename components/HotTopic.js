@@ -1,0 +1,48 @@
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
+import { VideoLinks } from '~/utilities/vedio_link_api';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+export default () => {
+    const [data, setData] = useState(null);
+    useEffect(() => {
+        setData(VideoLinks);
+    }, []);
+    return (
+        <Swiper
+            // install Swiper modules
+            modules={[Navigation, Pagination, Scrollbar, A11y]}
+            spaceBetween={50}
+            slidesPerView={1}
+            navigation
+            controller={{ control: Swiper }}
+            pagination={{ clickable: true }}
+            // scrollbar={{ draggable: true }}
+            onSwiper={(swiper) => console.log(swiper)}
+            onSlideChange={() => console.log('slide change')}>
+            {data?.map((el) => (
+                <SwiperSlide>
+                    <div
+                        key={el.id}
+                        className="modal-vedio-tutorial_container-carousel">
+                        <iframe
+                            width="100%"
+                            height="300px"
+                            src={`${el.vedioUrl}`}
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
+                            allowfullscreen></iframe>
+                    </div>
+                </SwiperSlide>
+            ))}
+        </Swiper>
+    );
+};

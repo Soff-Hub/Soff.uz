@@ -1,0 +1,163 @@
+.label-before {
+    margin-bottom: 10px;
+    width: 100%;
+    font-size: 18px;
+    &::before {
+        position: absolute;
+        content: '+998';
+        top: 99px;
+        left: 15px !important;
+    }
+}
+
+.raqam-input {
+    padding: 0 10px;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #dddddd;
+    width: 100%;
+    margin-bottom: 20px;
+    &:focus {
+        border-color: #fcb800;
+        outline: none;
+        box-shadow: 0 0 0 transparent;
+    }
+    &:valid {
+        font-size: 18px;
+    }
+    &::placeholder {
+        font-size: 14px;
+    }
+}
+
+.raqam-input-parol {
+    padding-left: 8px;
+    height: 50px;
+    border-radius: 0;
+    border: 1px solid #dddddd;
+    width: 100%;
+    margin-bottom: 20px;
+    &:focus {
+        border-color: #fcb800;
+        outline: none;
+        box-shadow: 0 0 0 transparent;
+    }
+    &:valid {
+        font-size: 18px;
+    }
+}
+
+// register ni tanlash uchun tugmalarga still
+
+.register-choose-button-parent {
+    & .register-choose-button-parent_div {
+        border: 2px dashed $color-1st;
+        width: 140px;
+        height: 140px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 35px;
+        transition: all .6s;
+        & .register-choose-button {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 30px !important;
+            & h3 {
+                margin-top: 20%;
+                font-size: 15px;
+                color: $color-1st;
+                width: 110px;
+                text-align: center;
+            }
+            & div {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                & i {
+                    font-size: 50px;
+                    color: $color-1st;
+                }
+            }
+        }
+        &:hover {
+            background-color: $color-1st;
+            & .register-choose-button {
+                & h3 {
+                    color: #fff;
+                }
+                & div {
+                    & i {
+                        font-size: 50px;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+@include media('<xs') {
+    // .register-choose-button{
+    //     width: 150px;
+    // }
+}
+
+@media screen and (max-width: 362px) {
+    .selection-user {
+        display: flex !important;
+        max-width: 280px !important;
+        gap: 8px !important;
+        .register-choose-button-parent_div{
+            width: 120px;
+            height: 120px;
+        }
+    }
+}
+
+// home => top category items
+
+.top-category-items {
+    display: flex;
+    flex-direction: column;
+}
+
+// home => eng yaxshi categoriyalar uchun
+
+.yaxshi-categoriyalar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    .yaxshi-categoriyalar-image {
+        height: 100px;
+        width: 100%;
+        display: inline-block;
+    }
+}
+
+.card-img-top {
+    height: 100px;
+    width: 100%;
+    min-width: 170px;
+}
+
+.yaxshi-categ-placholder-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 32px;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.detail-card {
+    max-width: 250px;
+}
