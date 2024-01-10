@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import Head from 'next/head';
 import { VideoLinks } from '~/utilities/vedio_link_api';
+import Meta from '~/components/shared/headers/Meta';
 
 const VedioList = () => {
     const [data, setData] = useState(null);
@@ -18,24 +19,10 @@ const VedioList = () => {
 
     return (
         <div>
-            <Head>
-                <title>Soff.uz video qo'llanmasi</title>
-                <meta
-                    name="description"
-                    content="Soff.uz vedio yo'riqnomasini ko'rish"
-                />
-                <meta
-                    name="keywords"
-                    content="video, watch, entertainment, soff.uz , soff"
-                />
-                <meta name="author" content="Soff.uz soff" />
-                <meta name="robots" content="index, follow" />
-                <meta
-                    name="viewport"
-                    content="width=device-width, initial-scale=1.0"
-                />
-            </Head>
             <PageContainer footer={<FooterDefault />} title="FAQ page">
+                <Meta
+                    title={"Video qo'llanma"}
+                />
                 <div className="ps-page--singlee">
                     <div className="container-faqs mt-4">
                         <h3>Video qo'llanma</h3>
