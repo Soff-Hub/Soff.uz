@@ -7,6 +7,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
 import Selection from './selection';
+import Meta from '~/components/shared/headers/Meta';
 
 const SellerProducts = () => {
     const breadCrumb = [
@@ -15,21 +16,24 @@ const SellerProducts = () => {
             url: '/',
         },
         {
-            text: 'Mening mahsulotlarim' ,
+            text: 'Mening mahsulotlarim',
         },
     ];
     const { user } = useSelector(state => state.auth)
     return (
-         user?.role === 'seller' ?
+        user?.role === 'seller' ?
             <PageContainer
                 footer={<FooterDefault />}
                 title="Recent Viewed Products">
                 <div className="ps-page--my-account">
+                    <Meta
+                        title={"Mening mahsulotlarim"}
+                    />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <MyProducts_listSeller />
                 </div>
-            </PageContainer> : user?.access ? <Page404/> : <Selection /> 
-    
+            </PageContainer> : user?.access ? <Page404 /> : <Selection />
+
     );
 };
 

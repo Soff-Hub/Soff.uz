@@ -7,6 +7,7 @@ import ModuleEcomerceCartItems from '~/components/ecomerce/modules/ModuleEcomerc
 import Link from 'next/link';
 import ModuleCartSummary from '~/components/ecomerce/modules/ModuleCartSummary';
 import useCart from '~/hooks/useCart';
+import Meta from '~/components/shared/headers/Meta';
 
 const ShoppingCartScreen = () => {
     const state = useSelector((state) => state.auth.user);
@@ -109,6 +110,9 @@ const ShoppingCartScreen = () => {
         <>
             <PageContainer footer={<FooterDefault />} title="Shopping Cart">
                 <div className="ps-page--simple">
+                    <Meta
+                        title={"Xarid savati"}
+                    />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <div className="ps-section--shopping ps-shopping-cart">
                         <div className="container">

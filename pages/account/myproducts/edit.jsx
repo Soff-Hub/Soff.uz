@@ -12,6 +12,7 @@ import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require("html-react-parser");
 import { useRouter } from 'next/router';
+import Meta from '~/components/shared/headers/Meta';
 const category_id = []
 
 
@@ -188,6 +189,9 @@ const PostsMyProducts = () => {
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
+                <Meta
+                    title={"Mahsulotni tahirirlash"}
+                />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
                     <div className='row w-100 gap-3 pt-5 ' style={{ alignItems: "flex-start" }}>
