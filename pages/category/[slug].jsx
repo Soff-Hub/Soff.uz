@@ -9,6 +9,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 
 import ShopItems from '~/components/partials/shop/ShopItems';
 import { baseUrl } from '~/repositories/Repository';
+import Meta from '~/components/shared/headers/Meta';
 
 export default function ProductCategoryScreen({ category2 }) {
     const Router = useRouter();
@@ -95,7 +96,7 @@ export default function ProductCategoryScreen({ category2 }) {
 
         if (category?.length > 0) {
             for (let i = 0; i < category.length; i++) {
-                if (category[i].id === Number(slug)) {
+                if (category[i].slug === slug) {
                     setNom(category[i].name);
                 } else {
                     for (let j = 0; j < category[i]?.children?.length; j++) {
@@ -121,8 +122,12 @@ export default function ProductCategoryScreen({ category2 }) {
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={category ? category.name : 'Kategoriya'}
+            title={category ? nom : 'Kategoriya'}
             boxed={true}>
+            <Meta
+                title={nom}
+            // image={product.document.images[0].image_url}
+            />
             <div className="ps-page--shop">
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="container">

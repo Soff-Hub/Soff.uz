@@ -6,6 +6,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
+import Meta from '~/components/shared/headers/Meta';
 
 const RegisterPage = () => {
     const breadCrumb = [
@@ -24,12 +25,15 @@ const RegisterPage = () => {
         //   user?.access ?
         //   <Page404/>
         //   :
-            <PageContainer footer={<FooterDefault />} title="Register">
-                <div className="ps-page--my-account">
-                    <BreadCrumb breacrumb={breadCrumb} />
-                    <Register url={sallerEndPoint} />
-                </div>
-            </PageContainer>
+        <PageContainer footer={<FooterDefault />} title="Register">
+            <div className="ps-page--my-account">
+                <Meta
+                    title={"Ro'yxatdan o'tish"}
+                />
+                <BreadCrumb breacrumb={breadCrumb} />
+                <Register url={sallerEndPoint} />
+            </div>
+        </PageContainer>
     );
 };
 
