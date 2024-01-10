@@ -6,6 +6,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
 import Selection from './selection';
+import Meta from '~/components/shared/headers/Meta';
 
 const AccountSettingsPage = () => {
     const breadCrumb = [
@@ -20,13 +21,16 @@ const AccountSettingsPage = () => {
     const { user } = useSelector(state => state.auth)
     return (
 
-        user?.role === 'admin' || user?.role === 'seller' || user?.role==="customer" ?
+        user?.role === 'admin' || user?.role === 'seller' || user?.role === "customer" ?
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
+                    <Meta
+                        title={"Sozlamalar"}
+                    />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Settings />
                 </div>
-            </PageContainer> : user?.access ? <Page404/> : <Selection /> 
+            </PageContainer> : user?.access ? <Page404 /> : <Selection />
 
     );
 };

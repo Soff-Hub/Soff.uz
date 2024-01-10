@@ -3,6 +3,7 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import PageContainer from '~/components/layouts/PageContainer';
 import CheckoutOne from '~/components/partials/account/Chekout-one';
+import Meta from '~/components/shared/headers/Meta';
 
 const CheckoutOnePage = () => {
     const breadCrumb = [
@@ -18,8 +19,11 @@ const CheckoutOnePage = () => {
     return (
         <PageContainer footer={<FooterDefault />} title="Checkout">
             <div className="ps-page--simple">
+                <Meta
+                    title={"Hisob - kitob ma\'lumotlari"}
+                />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <CheckoutOne  />
+                <CheckoutOne />
             </div>
         </PageContainer>
     );

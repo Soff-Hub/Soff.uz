@@ -12,6 +12,7 @@ import { Button, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
+import Meta from '~/components/shared/headers/Meta';
 const category_id = []
 
 const PostsProductsEdit = () => {
@@ -208,6 +209,9 @@ const PostsProductsEdit = () => {
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
+                <Meta
+                    title={"Mahsulotni tahrirlash"}
+                />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
                     <div
@@ -298,26 +302,26 @@ const PostsProductsEdit = () => {
                                     )}
                                 </select>
                             </div>
-                            { (dataCatStatus==="cancelled" ||  products.status==="cancelled") ?
-                            <div className="row">
-                                <div className="col-md-4 d-flex justify-content-between p-0">
-                                    <p>Holat to'g'risida sabab: *</p>{' '}
-                                    <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
+                            {(dataCatStatus === "cancelled" || products.status === "cancelled") ?
+                                <div className="row">
+                                    <div className="col-md-4 d-flex justify-content-between p-0">
+                                        <p>Holat to'g'risida sabab: *</p>{' '}
+                                        <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
 
-                                <div className="col-md-8 p-0 mb-3">
-                                    <textarea  defaultValue={products?.reason} onChange={(e)=>setTextAreaItmes(e.target.value)} required rows={4}   className='rounded w-100 border p-3 border-danger'>
+                                    <div className="col-md-8 p-0 mb-3">
+                                        <textarea defaultValue={products?.reason} onChange={(e) => setTextAreaItmes(e.target.value)} required rows={4} className='rounded w-100 border p-3 border-danger'>
 
-                                    </textarea>
+                                        </textarea>
+                                    </div>
                                 </div>
-                            </div>
-                             :
-                             <></>
-                            } 
+                                :
+                                <></>
+                            }
                             <div className="row">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                     <p>Aktiv teglar:</p>{' '}

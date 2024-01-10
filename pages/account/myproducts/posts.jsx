@@ -14,6 +14,7 @@ var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { ClipLoader } from 'react-spinners';
+import Meta from '~/components/shared/headers/Meta';
 const category_id = [];
 
 const Posts = () => {
@@ -307,6 +308,9 @@ const Posts = () => {
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
+                <Meta
+                    title={"Yangi mahsulot yaratish"}
+                />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center ">
                     <div
