@@ -30,10 +30,10 @@ function ElectronicTopCategories() {
                 className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
                 key={category.id}
             >
-                <Meta
+                {/* <Meta
                     title={category.name}
                     image={category?.image}
-                />
+                /> */}
                 <Link
                     href={`/category/${category.slug}`}
                     as={`/category/${category.slug}`}

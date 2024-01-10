@@ -15,7 +15,7 @@ const HomeElectronicsPage = ({ category }) => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
 
     const { setAllCartItem } = useCart();
-    const { setAllSaved } = useWishlist();  
+    const { setAllSaved } = useWishlist();
 
     useEffect(() => {
         // localStoragedagi ma'lumotlar va redux store o'rtasidagi ma'lumotlar solishtiriladi
@@ -39,7 +39,7 @@ const HomeElectronicsPage = ({ category }) => {
 
     return (
         <main id="homepage-7">
-            <Meta title="Soff.uz" image="/static/img/soff/soff_green_white.png" />
+            <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}
@@ -68,7 +68,7 @@ const HomeElectronicsPage = ({ category }) => {
                     <PropagateLoader className="progres-color" />
                 </div>
             )}
-            
+
             <SiteFeatures />
             <div className="text-center">
                 <div className=" more-parent">
