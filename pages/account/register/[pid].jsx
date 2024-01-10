@@ -7,10 +7,11 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import Mistake from '../mistake';
+import Meta from '~/components/shared/headers/Meta';
 
 const RegisterPage = () => {
     const Router = useRouter()
-    const {pid} = Router.query
+    const { pid } = Router.query
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -25,13 +26,16 @@ const RegisterPage = () => {
 
 
     return (
-          user?.access ?
-          <Mistake/>
-          :
+        user?.access ?
+            <Mistake />
+            :
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
+                    <Meta
+                        title={"Soff - Ro'yxatdan o'tish"}
+                    />
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <Register url={sallerEndPoint}  />
+                    <Register url={sallerEndPoint} />
                 </div>
             </PageContainer>
     );

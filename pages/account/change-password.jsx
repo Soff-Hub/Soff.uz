@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux';
 import Router, { useRouter } from 'next/router';
 import { BeatLoader } from 'react-spinners';
 import Page404 from '../page/page-404';
+import Meta from '~/components/shared/headers/Meta';
 
 const Xabar = (e) => {
     const tokenn = useSelector((state) => state.auth);
@@ -105,6 +106,9 @@ const Xabar = (e) => {
         <Page404 />
     ) : (
         <PageContainer>
+            <Meta
+                title={"Parolni o'zgartirish"}
+            />
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">
                     <Form
@@ -128,11 +132,10 @@ const Xabar = (e) => {
                                         min="0"
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                    <h4>{` 0 ${Math.floor(countdown / 60)} : ${
-                                        countdown >= 10
+                                    <h4>{` 0 ${Math.floor(countdown / 60)} : ${countdown >= 10
                                             ? countdown % 60
                                             : '0 ' + countdown
-                                    }`}</h4>
+                                        }`}</h4>
                                 </div>
                                 <div className="form-group submit">
                                     {buttonTrue ? (
