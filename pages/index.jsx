@@ -13,7 +13,7 @@ const HomepageDefaultPage = ({ category }) => {
     },[])
     return (
         <PageContainer title="Soff - barcha ma'lumotlar bazasi">
-               <Meta  title="Soff.uz" image="/static/img/soff/soff_green_white.png"/>
+               <Meta  title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png"/>
           {memoValue}
         </PageContainer>
     );

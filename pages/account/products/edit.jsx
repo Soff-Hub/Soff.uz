@@ -210,7 +210,7 @@ const PostsProductsEdit = () => {
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
                 <Meta
-                    title={"Mahsulotni tahrirlash"}
+                    title={"Soff | Mahsulotni tahrirlash"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">

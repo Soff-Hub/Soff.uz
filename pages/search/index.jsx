@@ -6,6 +6,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import useGetProducts from '~/hooks/useGetProducts';
 import { useRouter } from 'next/router';
 import PostRepository from '~/repositories/PostRepository';
+import Meta from '~/components/shared/headers/Meta';
 
 const SearchPage = () => {
     const [pageSize] = useState(100);
@@ -90,6 +91,9 @@ const SearchPage = () => {
     return (
         <PageContainer title={`Search results for: "${keyword}" `}>
             <div className="ps-page">
+                <Meta
+                    title={"Soff | Qidiruv natijalar"}
+                />
                 <BreadCrumb breacrumb={breadcrumb} />
             </div>
             <div className="container">

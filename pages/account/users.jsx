@@ -25,7 +25,7 @@ const AccountUsersPage = () => {
             <PageContainer footer={<FooterDefault />} title="   s">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Xaridorlar"}
+                        title={"Soff | Xaridorlar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <UsersLists />

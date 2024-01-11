@@ -26,7 +26,7 @@ const Application = () => {
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Ariza va Takliflar"}
+                        title={"Soff | Ariza va Takliflar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <ApplicationLists />

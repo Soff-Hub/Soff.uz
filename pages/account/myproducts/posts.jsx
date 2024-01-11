@@ -309,7 +309,7 @@ const Posts = () => {
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
                 <Meta
-                    title={"Yangi mahsulot yaratish"}
+                    title={"Soff | Yangi mahsulot yaratish"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center ">

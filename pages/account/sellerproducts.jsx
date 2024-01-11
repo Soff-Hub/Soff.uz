@@ -27,7 +27,7 @@ const SellerProducts = () => {
                 title="Recent Viewed Products">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Mening mahsulotlarim"}
+                        title={"Soff | Mening mahsulotlarim"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <MyProducts_listSeller />
