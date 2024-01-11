@@ -44,7 +44,7 @@ const UserMenuPanel = ({
     }, [socket])
 
     useEffect(() => {
-        setSocket(new WebSocket("wss://api.soff.uz/ws/offer-status/"));
+        setSocket(new Web("wss://api.soff.uz/ws/offer-status/"));
     }, [])
 
     useEffect(() => {

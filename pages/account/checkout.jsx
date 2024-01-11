@@ -25,7 +25,7 @@ const CheckoutPage = () => {
         <PageContainer footer={<FooterDefault />} title="Checkout">
             <div className="ps-page--simple">
                 <Meta
-                    title={"Hisob - kitob ma\'lumotlari"}
+                    title={"Soff | Hisob - kitob ma\'lumotlari"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Checkout />

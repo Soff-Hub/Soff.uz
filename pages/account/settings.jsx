@@ -25,7 +25,7 @@ const AccountSettingsPage = () => {
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Sozlamalar"}
+                        title={"Soff | Sozlamalar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Settings />

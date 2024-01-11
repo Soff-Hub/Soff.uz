@@ -25,7 +25,7 @@ const AccountTegPage = () => {
             <PageContainer footer={<FooterDefault />} title="   s">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Teglar"}
+                        title={"Soff | Teglar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <TegLists />

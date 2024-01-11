@@ -23,8 +23,11 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     const [socket1, setSocket1] = useState(null);
     const [webdata2, setWebData2] = useState(null);
     const [socket2, setSocket2] = useState(null);
-    const [loading, setLoading] = useState(false);
-    
+    const [loading, setLoading] = useState(false)
+
+    const [socketApplication, setSocketApplication] = useState(null);
+    const [applicationData, setApplicationData] = useState(null);
+
 
     const handleLogoutToken = () => {
 
@@ -44,7 +47,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     async function ProfileUsersToken() {
         const ItemsData = await GetRepository.getProfileToken(user?.access);
         console.log(ItemsData.status);
-        if (Number(ItemsData?.status)==403) {
+        if (Number(ItemsData?.status) == 403) {
             handleLogoutToken()
         }
     }
@@ -61,12 +64,18 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         if (socket) {
             socket.addEventListener("message", (event) => {
                 setWebData(JSON.parse(event.data))
+                console.log(JSON.parse(event.data))
             });
         }
     }, [socket])
 
     useEffect(() => {
-        setSocket(new WebSocket("wss://api.soff.uz/ws/offer-status/"));
+        if (user.role === "admin") {
+            setSocket(new WebSocket("wss://api.soff.uz/ws/admin-offer/"));
+        }
+        else {
+            setSocket(new WebSocket("wss://api.soff.uz/ws/seller-offer/" + user?.access));
+        }
     }, [])
 
     useEffect(() => {
@@ -78,7 +87,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, [socket1])
 
     useEffect(() => {
-        setSocket1(new WebSocket("wss://api.soff.uz/ws/admin-document/"));
+        if (user.role === "admin") {
+            setSocket1(new WebSocket("wss://api.soff.uz/ws/admin-document/"));
+        }
     }, [])
 
     useEffect(() => {
@@ -94,15 +105,36 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, [])
 
 
+    useEffect(() => {
+        if (socketApplication) {
+            socketApplication.onmessage = (event) => {
+                setApplicationData(JSON.parse(event.data))
+                console.log(JSON.parse(event.data));
+            };
+        }
+    }, [socketApplication]);
+
+
+    useEffect(() => {
+        if (user.role === "admin") {
+            setSocketApplication(new WebSocket("wss://api.soff.uz/ws/admin-application/"));
+        }
+        else {
+            setSocketApplication(new WebSocket("wss://api.soff.uz/ws/seller-application/" + user?.access));
+        }
+
+    }, [])
+
+
 
     useEffect(() => (
         ProfileUsers()
     ), [renderProfile])
 
 
-    useEffect(()=>{
+    useEffect(() => {
         ProfileUsersToken()
-    },[])
+    }, [])
 
 
 
@@ -161,11 +193,12 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                     {data.map(link => (
                         <li key={link.text} className={link.url === asPath ? 'active' : ''}>
                             <Link href={link.url}>
-                                <a>
+                                <a className='d-flex align-items-center'>
                                     <i className={link.icon}></i>
-                                    {link.text} {user?.role==="admin" ? (link?.url==="/account/application" && webdata?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"11rem"}}>{webdata?.count}</strong> : "" ) : ""} 
-                                    {user?.role==="admin" ? (link?.url==="/account/products" && webdata1?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"12rem"}}>{webdata1?.count}</strong> : "" ) : ""}
-                                    {user?.role==="seller" ? (link?.url==="/account/myproducts" && webdata2?.is_avaiable===true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{marginLeft:"4rem"}}>{webdata2?.count}</strong> : "" ) : ""}
+                                    {link.text} {user?.role === "admin" ? (link?.url === "/account/application" && (applicationData?.is_avaiable || webdata?.is_avaiable) ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{ marginLeft: "11rem" }}>{Number(applicationData?.count) + Number(webdata?.count)}</strong> : "") : ""}
+                                    {user?.role === "admin" ? (link?.url === "/account/products" && webdata1?.is_avaiable === true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{ marginLeft: "12rem" }}>{webdata1?.count}</strong> : "") : ""}
+                                    {user?.role === "seller" ? (link?.url === "/account/myproducts" && webdata2?.is_avaiable === true ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{ marginLeft: "4rem" }}>{webdata2?.count}</strong> : "") : ""}
+                                    {user?.role === "seller" ? (link?.url === "/account/application" && (applicationData?.is_avaiable || webdata?.is_avaiable) ? <strong className='text-white bg-warning  border px-3 py-2  fs-5 rounded-circle' style={{ marginLeft: "11rem" }}>{Number(applicationData?.count) + Number(webdata?.count)}</strong> : "") : ""}
                                 </a>
                             </Link>
                         </li>
