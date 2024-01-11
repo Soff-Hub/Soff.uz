@@ -38,6 +38,7 @@ const MasterLayout = ({ children }) => {
             {children}
             <PageLoader />
             {accountLinks.some((el) => el.url === pathname) ? (
+                
                 user?.role === 'admin' ? (
                     <NavigationListAdmin />
                 ) : user?.role === 'seller' ? (
