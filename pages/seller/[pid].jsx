@@ -3,9 +3,10 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import Product from '~/components/elements/products/Product';
+import Meta from '~/components/shared/headers/Meta';
 
 const SellerPage = ({ seller }) => {
- 
+
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -22,6 +23,9 @@ const SellerPage = ({ seller }) => {
     return (
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+            <Meta
+                title={`Soff | Sotuvchi ${seller?.results[0]?.seller?.first_name} ${seller?.results[0]?.seller?.last_name}`}
+            />
 
             <div className="ps-product-list mb-5">
                 <div className="container">
@@ -31,13 +35,13 @@ const SellerPage = ({ seller }) => {
 
                     <div className="row">
                         {seller?.results?.map((item, index) => (
-                             <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6' key={item.id}>   <Product product={item} /> </div>
+                            <div className='home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6' key={item.id}>   <Product product={item} /> </div>
                         ))}
                     </div>
                 </div>
             </div>
         </PageContainer>
-        
+
     );
 };
 

@@ -32,7 +32,7 @@ const RegisterPage = () => {
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff - Ro'yxatdan o'tish"}
+                        title={"Soff | Ro'yxatdan o'tish"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Register url={sallerEndPoint} />

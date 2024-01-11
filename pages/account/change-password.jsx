@@ -107,7 +107,7 @@ const Xabar = (e) => {
     ) : (
         <PageContainer>
             <Meta
-                title={"Parolni o'zgartirish"}
+                title={"Soff | Parolni o'zgartirish"}
             />
             <div className="ps-checkout ps-section--shopping">
                 <div className="container">

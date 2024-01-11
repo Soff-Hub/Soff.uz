@@ -10,7 +10,7 @@ const BecomeASeller = () => {
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta
-                        title={"Sotuvchiga aylaning"}
+                        title={"Soff | Sotuvchiga aylaning"}
                     />
                     <BecomeSeller />
                 </div>
