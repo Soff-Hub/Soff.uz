@@ -10,7 +10,7 @@ const AboutUs = () => {
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta
-                        title={"Soff.uz nima?"}
+                        title={"Soff | Soff.uz nima?"}
                     />
                     <AboutContent />
                 </div>

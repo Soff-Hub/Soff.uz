@@ -39,7 +39,7 @@ const HomeElectronicsPage = ({ category }) => {
 
     return (
         <main id="homepage-7">
-            <Meta title="Soff - barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
+            <Meta title="Soff | Barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}

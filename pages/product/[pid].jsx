@@ -60,7 +60,7 @@ const ProductDefaultPage = ({ product, similar }) => {
         <>
             <PageContainer title={product ? product.title : 'Loading...'}>
                 <Meta
-                    title={product.title}
+                    title={`Soff | ${product.title}`}
                     image={product.document.images[0].image_url}
                 />
 

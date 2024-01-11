@@ -20,7 +20,7 @@ const WishlistPage = () => {
         <PageContainer footer={<FooterDefault />} title="Wishlist">
             <div className="ps-page--simple">
                 <Meta
-                    title={"Tanlanganlar"}
+                    title={"Soff | Tanlanganlar"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Wishlist />

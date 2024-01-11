@@ -11,7 +11,7 @@ const QuestionsPage = () => {
     return (
         <PageContainer footer={<FooterDefault />} title="FAQ page">
             <Meta
-                title={"Savol-javoblar"}
+                title={"Soff | Savol-javoblar"}
             />
             <div className="ps-page--singlee">
                 <div className="container-faqs">

@@ -24,7 +24,7 @@ const AccountOrdersPage = () => {
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Buyurtmalar"}
+                        title={"Soff | Buyurtmalar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Orders />

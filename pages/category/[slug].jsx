@@ -125,7 +125,7 @@ export default function ProductCategoryScreen({ category2 }) {
             title={category ? nom : 'Kategoriya'}
             boxed={true}>
             <Meta
-                title={nom}
+                title={`Soff | ${nom}`}
             />
             <div className="ps-page--shop">
                 <BreadCrumb breacrumb={breadCrumb} />
