@@ -248,7 +248,7 @@ class GetRepository {
     }
 
     async getOrdersLists(page, status, date, search, token) {
-        const endPoint = `admin/order-list/?page=${page}&status=${status || ''
+        const endPoint = `admin/order/?page=${page}&status=${status || ''
             }&start_date=${date || ''}&search=${search}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
