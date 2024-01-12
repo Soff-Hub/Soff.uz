@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
+import Link from 'next/link';
 
 
 function OrdersLists() {
@@ -96,10 +97,10 @@ function OrdersLists() {
         },
         {
             title: 'Narx',
-            dataIndex: 'discount_price',
+            dataIndex: 'price',
             key: 'address',
             render: (price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)} so'm</span>
             ),
         },
         {
@@ -110,9 +111,15 @@ function OrdersLists() {
         },
         {
             title: 'Buyurtma nomi',
-            dataIndex: 'title',
+            dataIndex: 'info',
             key: 'address',
             width: 350,
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    <Link href={`/product/${data[0].slug}`} className="truncate whitespace-nowrap">{data[0].title}</Link>
+                </div>
+
+            ),
         },
         {
             title: 'Holat',
@@ -137,14 +144,20 @@ function OrdersLists() {
             key: 'user',
         },
         {
-            title: 'Buyurtma kategoriya',
-            dataIndex: 'title',
+            title: 'Buyurtma nomi',
+            dataIndex: 'info',
             key: 'title',
-            width: 350
+            width: 350,
+            render: (data) => (
+                <div className='d-flex flex-column'>
+                    <Link href={`/product/${data[0].slug}`} className="truncate whitespace-nowrap">{data[0].title}</Link>
+                </div>
+
+            ),
         },
         {
             title: 'Narx',
-            dataIndex: 'discount_price',
+            dataIndex: 'price',
             key: 'address',
             render: (price) => (
                 <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
