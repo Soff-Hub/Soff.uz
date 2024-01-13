@@ -123,6 +123,7 @@ figure {
 }
 
 .ps-document {
+
     ul,
     ol {
         margin-bottom: 10px;
@@ -139,10 +140,12 @@ figure {
         font-size: $document-font-size;
         line-height: 1.6em;
     }
+
     h5 {
         font-size: 16px;
         font-weight: 600;
     }
+
     p {
         margin-bottom: 4rem;
         line-height: 1.8em;
@@ -169,6 +172,7 @@ figure {
         padding: 3rem 2rem;
         padding-left: 6rem;
         background-color: #f1f1f1;
+
         &:before {
             content: '“';
             position: absolute;
@@ -232,9 +236,11 @@ figure {
     color: $color-heading;
     font-weight: 600;
     line-height: 1.4em;
+
     &--2 {
         font-size: 2.4rem;
     }
+
     @include media('<sm') {
         font-size: 2.4rem;
     }
@@ -243,12 +249,14 @@ figure {
 .ps-blockquote {
     border-left: 4px solid $color-1st;
     padding-left: 60px;
+
     p {
         font-family: $font-2nd;
         font-size: 26px;
         font-weight: 400;
         color: $color-heading;
     }
+
     span {
         font-weight: 600;
         color: $color-heading;
@@ -257,9 +265,11 @@ figure {
 
 .ps-tag {
     font-weight: 600;
+
     &--in-stock {
         color: $color-success;
     }
+
     &--out-stock {
         color: $color-heading;
     }
@@ -267,14 +277,18 @@ figure {
 
 .ps-rating {
     display: inline-block;
+
     i {
         margin-right: 0.5em;
+
         &.fa-star {
             color: $color-1st;
         }
+
         &.fa-star-o {
             color: #999;
         }
+
         &:last-child {
             margin-right: 0;
         }
@@ -282,7 +296,17 @@ figure {
 }
 
 .layout--default {
-       a {
-           color: inherit;
-       }
+    a {
+        color: inherit;
+    }
+}
+
+
+.free-product-text {
+    padding: 0px !important;
+    padding-left: 10px !important;
+    background-color: #F4DF4EFF;
+    border-radius: 5px;
+    max-width: 200px;
+    font-weight: 700;
 }

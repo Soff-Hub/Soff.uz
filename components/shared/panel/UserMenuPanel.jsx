@@ -44,10 +44,6 @@ const UserMenuPanel = ({
     }, [socket])
 
     useEffect(() => {
-        setSocket(new Web("wss://api.soff.uz/ws/offer-status/"));
-    }, [])
-
-    useEffect(() => {
         if (socket1) {
             socket1.addEventListener("message", (event) => {
                 setWebData1(JSON.parse(event.data))
