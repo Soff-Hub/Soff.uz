@@ -56,8 +56,7 @@ export default function useProduct() {
                     <p className="ps-product__price">
                         {payload.discount_price === 0 ? <>
                             Bepul mahsulot
-                            <span> so'm</span>
-                        </> : formatCurrency(payload.price)}
+                        </> : <>{formatCurrency(payload.price)} <span> so'm</span></>}
 
                     </p>
                 );
