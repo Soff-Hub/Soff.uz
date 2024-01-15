@@ -54,9 +54,8 @@ export default function ProductCategoryScreen({ category2 }) {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
-            console.log("-->", responseData);
-            setCount(responseData.count);
         }
+        setCount(responseData?.count || 0);
         setchaildId(null);
     }
 
@@ -76,8 +75,8 @@ export default function ProductCategoryScreen({ category2 }) {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
-            setCount(responseData.count);
         }
+        setCount(responseData?.count || 0);
         setParentId(null);
     }
 
@@ -126,6 +125,7 @@ export default function ProductCategoryScreen({ category2 }) {
             boxed={true}>
             <Meta
                 title={`Soff | ${nom}`}
+                description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning ${nom} kategoriyasida topdik`}
             />
             <div className="ps-page--shop">
                 <BreadCrumb breacrumb={breadCrumb} />
@@ -143,7 +143,7 @@ export default function ProductCategoryScreen({ category2 }) {
                             <ShopItems
                                 data={filteredData}
                                 columns={4}
-                                pageSize={16}
+                                pageSize={40}
                                 dataCount={count}
                                 setDataCount={setCount}
                             />

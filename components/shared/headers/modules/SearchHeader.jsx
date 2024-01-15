@@ -29,7 +29,7 @@ const SearchHeader = () => {
     const [keyword, setKeyword] = useState('');
     const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
-    const debouncedSearchTerm = useDebounce(keyword, 300);
+    const debouncedSearchTerm = useDebounce(keyword, 1000);
 
     function handleClearKeyword() {
         setKeyword('');
@@ -48,11 +48,6 @@ const SearchHeader = () => {
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword) {
-                const queries = {
-                    _limit: 5,
-                    title_contains: keyword,
-                };
-
                 const products = PostRepository.postSearchFilter(keyword);
 
                 products.then((result) => {
@@ -71,7 +66,7 @@ const SearchHeader = () => {
             setLoading(false);
             setIsSearch(false);
         }
-    }, [debouncedSearchTerm, keyword]);
+    }, [debouncedSearchTerm]);
 
     // Views
     let productItemsView,
@@ -116,7 +111,7 @@ const SearchHeader = () => {
             method="get"
             action="/"
             onSubmit={handleSubmit}>
-  
+
             <div className="ps-form__input">
                 <input
                     ref={inputEl}
@@ -132,9 +127,8 @@ const SearchHeader = () => {
 
             <button onClick={handleSubmit}>Qidiruv</button>
             <div
-                className={`ps-panel--search-result${
-                    isSearch ? ' active ' : ''
-                }`}>
+                className={`ps-panel--search-result${isSearch ? ' active ' : ''
+                    }`}>
                 <div className="ps-panel__content">{productItemsView}</div>
                 {loadMoreView}
             </div>

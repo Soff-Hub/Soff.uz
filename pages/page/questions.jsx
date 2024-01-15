@@ -12,6 +12,7 @@ const QuestionsPage = () => {
         <PageContainer footer={<FooterDefault />} title="FAQ page">
             <Meta
                 title={"Soff | Savol-javoblar"}
+                description="Saytdan foydalanish haqida to'liq qo'llanma bizning Savol-javoblar sahifamizda batafsil yoritib berilgan"
             />
             <div className="ps-page--singlee">
                 <div className="container-faqs">

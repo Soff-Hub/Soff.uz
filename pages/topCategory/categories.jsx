@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import CatalogTop from '~/components/CatalogTop';
+import Meta from '~/components/shared/headers/Meta';
 
 
 const ProductCategoryScreen = () => {
@@ -43,10 +44,14 @@ const ProductCategoryScreen = () => {
             title={category ? category.name : 'Kategoriya'}
             boxed={true}>
             <div className="ps-page--shop">
+                <Meta
+                    title={`Soff | Ayni vaqtdagi eng yaxshi kategoriyalar`}
+                    description={`Saytimizdagi eng sotuvi avjida bo'lgan kategoriyalardan biri⚡`}
+                />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
-                    <CatalogTop/>
+                        <CatalogTop />
                     </div>
                 </div>
             </div>

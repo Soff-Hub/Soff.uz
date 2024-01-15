@@ -62,6 +62,7 @@ const ProductDefaultPage = ({ product, similar }) => {
                 <Meta
                     title={`Soff | ${product.title}`}
                     image={product.document.images[0].image_url}
+                    description={`${product.title} mahsulotni saytimizdan Soff.uz bepul yuklab yoki sotib olishingiz mumkin`}
                 />
 
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />

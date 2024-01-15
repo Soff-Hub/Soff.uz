@@ -25,6 +25,7 @@ const SellerPage = ({ seller }) => {
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
                 title={`Soff | Sotuvchi ${seller?.results[0]?.seller?.first_name} ${seller?.results[0]?.seller?.last_name}`}
+                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${seller?.results[0]?.seller?.first_name} ${seller?.results[0]?.seller?.last_name}ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
 
             <div className="ps-product-list mb-5">

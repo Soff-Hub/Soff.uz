@@ -21,6 +21,7 @@ const WishlistPage = () => {
             <div className="ps-page--simple">
                 <Meta
                     title={"Soff | Tanlanganlar"}
+                    description="Soff.uz - Saytida harid savatiga saqlab qo'ygan mahsuloatlaringizni sotib olishni unutmang"
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Wishlist />
