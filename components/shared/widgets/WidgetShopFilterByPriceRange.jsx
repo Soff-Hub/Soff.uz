@@ -5,7 +5,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategorySlug } from '~/store/auth/action';
 
-const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
+const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount }) => {
     const Router = useRouter();
     const [min, setMin] = useState(null);
     const [max, setMax] = useState(null);
@@ -15,7 +15,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
     const { slug } = Router.query;
 
     const dispatch = useDispatch();
-    const { category_lists: categoryData } = useSelector((state) => state.auth);
+    // const { category_lists: categoryData } = useSelector((state) => state.auth);
 
     async function getCategry() {
         const responseData = await ProductRepository.getCategoryParent();
@@ -39,6 +39,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.results);
+                setCount(respons?.count)
             }
         } else if (parentId !== null) {
             const respons = await ProductRepository.getFilderPrice(
@@ -54,6 +55,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.data?.results);
+                setCount(respons?.data?.count)
             }
         } else {
             const respons = await ProductRepository.getFilderPrice(
@@ -69,6 +71,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             );
             if (respons && setFilteredData) {
                 setFilteredData(respons?.data?.results);
+                setCount(respons?.data?.count)
             }
         }
     };
@@ -95,6 +98,8 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             setDefVal([respons?.data?.min_price, respons?.data?.max_price]);
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
+            setFilteredData(respons?.data?.results);
+            setCount(respons?.data?.count)
         }
     };
 
@@ -114,14 +119,16 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
             setDefVal([respons?.data?.min_price, respons?.data?.max_price]);
             setMax(respons?.data?.max_price);
             setMin(respons?.data?.min_price);
+            setFilteredData(respons?.data?.results);
+            setCount(respons?.data?.count)
         }
     };
-
+    
     useEffect(() => {
         if (categoryData?.length === 0) {
             getCategry();
         }
-
+        
         if (categoryData?.every((cat) => cat.slug !== slug)) {
             setchaildId(slug);
             setParentId(null);
@@ -176,7 +183,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData }) => {
                     max={max}
                     min={min}
                     onAfterChange={(e) => handleChangeRange(e)}
-                    // onChange={(e) => setDefVal(e)}
+                // onChange={(e) => setDefVal(e)}
                 />
                 <p>
                     Narx:{' '}
