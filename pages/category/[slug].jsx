@@ -25,16 +25,15 @@ export default function ProductCategoryScreen({ category2 }) {
     // const [breadCrumbName, setBreadCrumb] = useState(null)
 
     async function getCategry() {
-        const responseData = await ProductRepository.getCategoryParent();
-        if (responseData?.length > 0) {
-            if (responseData?.every((cat) => cat.slug !== slug)) {
-                setchaildId(slug);
-                setParentId(null)
+        // const responseData = await ProductRepository.getCategoryParent();
+        if (category2?.length > 0) {
+            if (category2?.every((cat) => cat.slug !== slug)) {
+                // setchaildId(slug);
+                // setParentId(null)
             } else {
-                setParentId(slug);
-                setchaildId(null)
+                // setParentId(slug);
+                // setchaildId(null)
             }
-            setCategory(responseData);
         }
     }
 
@@ -61,6 +60,7 @@ export default function ProductCategoryScreen({ category2 }) {
 
     async function getParentData(parentID) {
         setchaildId(null);
+        setParentId(null);
         setFilteredData(null);
         const responseData = await ProductRepository.getFilderProduct(
             1,
@@ -77,7 +77,6 @@ export default function ProductCategoryScreen({ category2 }) {
             setFilteredData(responseData?.results);
         }
         setCount(responseData?.count || 0);
-        setParentId(null);
     }
 
     useEffect(() => {
@@ -137,6 +136,8 @@ export default function ProductCategoryScreen({ category2 }) {
                                 setFilteredData={setFilteredData}
                                 chaildId={chaildId}
                                 parentId={parentId}
+                                categoryData={category2 || []}
+                                setCount={setCount}
                             />
                         </div>
                         <div className="ps-layout__right">
@@ -146,6 +147,7 @@ export default function ProductCategoryScreen({ category2 }) {
                                 pageSize={40}
                                 dataCount={count}
                                 setDataCount={setCount}
+                                categoryData={category2 || []}
                             />
                         </div>
                     </div>

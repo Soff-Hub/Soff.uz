@@ -13,7 +13,8 @@ const ShopItems = ({
     pageSize,
     data,
     dataCount,
-    setDataCount
+    setDataCount,
+    categoryData
 }) => {
     const Router = useRouter();
     const { query } = Router;
@@ -31,7 +32,7 @@ const ShopItems = ({
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
     const dispatch = useDispatch()
-    const { category_lists: categoryData } = useSelector(state => state.auth)
+    // const { category_lists: categoryData } = useSelector(state => state.auth)
 
 
     async function getCategry() {
@@ -72,16 +73,13 @@ const ShopItems = ({
 
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoad(true);
-        }, 2000);
-
         data !== null ? setSuccess(false) : setSuccess(true);
 
         console.log("=>", data);
 
 
         handleSetColumns();
+        setNewData(data);
         if (true) {
             setNewData(data);
         } else {
@@ -413,7 +411,7 @@ const ShopItems = ({
                 {productItemsView}
             </div>
             <div className="ps-shopping__footer text-center">
-                {data?.length >= 16 && (
+                {data?.length >= 40 ? (
                     <div className="ps-pagination">
                         <Pagination className="mt-3"
                             total={dataCount}
@@ -424,7 +422,16 @@ const ShopItems = ({
                             onChange={(e) => handlePagination(e)}
                         />
                     </div>
-                )}
+                ) : <div className="ps-pagination">
+                    <Pagination className="mt-3"
+                        total={1}
+                        pageSize={1}
+                        responsive={true}
+                        showSizeChanger={false}
+                        current={1}
+                        onChange={(e) => handlePagination(e)}
+                    />
+                </div>}
             </div>
         </div>
     );
