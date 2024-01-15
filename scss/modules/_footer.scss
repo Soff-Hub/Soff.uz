@@ -93,7 +93,7 @@
         &__widgets {
             flex-flow: row wrap;
 
-            > * {
+            >* {
                 width: 100%;
                 max-width: 25%;
             }
@@ -107,11 +107,12 @@
 
     @include media('<xs') {
         &__widgets {
-            > * {
+            >* {
                 max-width: 50%;
                 flex-basis: 50%;
             }
         }
+
         &__copyright {
             flex-flow: row wrap;
             text-align: center;
@@ -223,4 +224,26 @@
             }
         }
     }
+}
+
+// .ps-footer--2 {
+//     background-color: transparent !important;
+// }
+
+footer {
+    background-color: #022335 !important;
+    color: #e1e1e1 !important;
+}
+
+footer .container footer {
+    background-color: transparent !important;
+    color: #e1e1e1 !important;
+}
+
+footer p {
+    color: #e1e1e1 !important;
+}
+
+footer h4 {
+    color: #e1e1e1 !important;
 }
