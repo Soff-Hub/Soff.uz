@@ -11,6 +11,7 @@ const BecomeASeller = () => {
                 <div className="container-faqs">
                     <Meta
                         title={"Soff | Sotuvchiga aylaning"}
+                        description="Soff.uz - Saytimizda siz sotuvchi bo'lib ro'yxatdan o'tishingiz mumkin albatta"
                     />
                     <BecomeSeller />
                 </div>

@@ -33,6 +33,7 @@ const RegisterPage = () => {
                 <div className="ps-page--my-account">
                     <Meta
                         title={"Soff | Ro'yxatdan o'tish"}
+                        description="Soff.uz - O'z hisobingizga kiring va mahsulotlaringizni soting"
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Register url={sallerEndPoint} />

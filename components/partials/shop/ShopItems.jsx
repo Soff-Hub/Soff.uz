@@ -35,9 +35,11 @@ const ShopItems = ({
 
 
     async function getCategry() {
-        const responseData = await ProductRepository.getCategoryParent();
+        const responseData = await ProductRepository.getCategoryParent().then(() => setLoad(true))
         if (responseData?.length > 0) {
+            console.log("responseData => ", responseData);
             dispatch(CategorySlug(responseData?.data?.results));
+            // categorySlug
         }
     }
 
@@ -47,7 +49,7 @@ const ShopItems = ({
         setListView(!listView);
     }
 
-   
+
     function handleSetColumns() {
         switch (columns) {
             case 2:
@@ -74,10 +76,10 @@ const ShopItems = ({
             setLoad(true);
         }, 2000);
 
-        data !== null  ? setSuccess(false) : setSuccess(true);
+        data !== null ? setSuccess(false) : setSuccess(true);
 
         console.log("=>", data);
-  
+
 
         handleSetColumns();
         if (true) {
@@ -93,7 +95,6 @@ const ShopItems = ({
         }
 
         if (categoryData?.every((cat) => cat.slug !== slug)) {
-            console.log(slug);
             setchaildId(slug);
             setParentId(null)
         } else {
@@ -320,7 +321,7 @@ const ShopItems = ({
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
 
-        
+
 
     } else {
         if (data?.length > 0) {
@@ -370,7 +371,7 @@ const ShopItems = ({
                 </div>
             );
         }
-       
+
     }
 
     return (

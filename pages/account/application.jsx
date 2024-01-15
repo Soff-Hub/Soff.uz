@@ -27,6 +27,7 @@ const Application = () => {
                 <div className="ps-page--my-account">
                     <Meta
                         title={"Soff | Ariza va Takliflar"}
+                        description="Soff - Sizga kelib tushgan Ariza va Takliflarni ko'rib chiqing"
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <ApplicationLists />

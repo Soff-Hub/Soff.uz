@@ -11,6 +11,7 @@ const AboutUs = () => {
                 <div className="container-faqs">
                     <Meta
                         title={"Soff | Soff.uz nima?"}
+                        description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
                     />
                     <AboutContent />
                 </div>

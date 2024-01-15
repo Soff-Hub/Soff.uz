@@ -77,7 +77,6 @@ class ProductRepository {
             }&approved_count=${mashhur || ''}`
         )
             .then((response) => {
-                console.log("responsss", response);
                 return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
