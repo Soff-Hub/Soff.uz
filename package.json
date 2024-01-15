@@ -1,9 +1,9 @@
 {
-    "name": "faylBazar",
+    "name": "Soff - barcha ma'lumotlar bazasi",
     "version": "2.2.1",
     "private": true,
     "author": "Soff Hub",
-    "homepage": "https://soffhub.uz",
+    "homepage": "https://soff.uz",
     "scripts": {
         "dev": "next dev -p 3001",
         "build": "next build",
