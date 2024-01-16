@@ -74,7 +74,7 @@ function OrdersLists() {
             ),
         },
         {
-            title: 'Telefon raqam yoki email',
+            title: 'Sotuvchi ',
             dataIndex: 'data',
             key: 'age',
             width: 300,
