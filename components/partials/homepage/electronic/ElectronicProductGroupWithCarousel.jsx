@@ -21,7 +21,7 @@ const ElectronicProductGroupWithCarousel = ({
                         ?.slice(0, 6)
                         .map((item, index) => (
                             <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
-                                <Product  product={item} />{' '}
+                                <Product product={item} />{' '}
                             </div>
                         ))}
                 </div>
@@ -42,11 +42,14 @@ const ElectronicProductGroupWithCarousel = ({
         <div className="ps-product-list">
             <div className="container">
                 <div className="ps-section__header">
-                    <h3>{title}</h3>
+                    <h3 className='titleeeeeeee'>{title}</h3>
                     <ul className="ps-section__links">
                         <li>
                             <Link href={`/category/${slug}`}>
-                                <a>Barchasini ko'rish</a>
+                                <a className='d-flex align-items-center gap-2'>
+                                    <span>Barchasini ko'rish</span>
+                                    <i className='fa-solid fa-angles-right fa-beat-fade'></i>
+                                </a>
                             </Link>
                         </li>
                     </ul>
