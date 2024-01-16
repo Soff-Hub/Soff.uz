@@ -244,7 +244,7 @@ function CategoryLists() {
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
                     <label htmlFor="is_home" className='w-100 text-truncate' style={{ cursor: "pointer", display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <Checkbox onChange={e => setIsHomeVal(e.target.checked)} value={isHomeVal} defaultChecked={deleteIdEdit?.is_home}>Asosiy sahifada ko'rsatilsin</Checkbox>
+                        <Checkbox onChange={e => setIsHomeVal(e.target.checked)} defaultChecked={deleteIdEdit?.is_home}>Asosiy sahifada ko'rsatilsin</Checkbox>
                     </label>
                     <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         {
