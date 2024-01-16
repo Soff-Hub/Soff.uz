@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicProductGroupWithCarousel';
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
 import ElectronicTopCategories from '~/components/partials/homepage/electronic/ElectronicTopCategories';
@@ -10,12 +10,26 @@ import { useSelector } from 'react-redux';
 import VedioPage from '~/components/VedioPage';
 import Meta from '~/components/shared/headers/Meta';
 import Link from 'next/link';
+import { baseUrl } from '~/repositories/Repository';
+import axios from 'axios';
 
-const HomeElectronicsPage = ({ category }) => {
+const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
+    const [category, setCategory] = useState([])
 
     const { setAllCartItem } = useCart();
     const { setAllSaved } = useWishlist();
+
+
+    async function getProducts() {
+        const responseData = await axios.get(baseUrl + 'customer/category-list/')
+        setCategory(responseData.data.results);
+    }
+
+    useEffect(() => {
+        getProducts()
+    }, [])
+
 
     useEffect(() => {
         // localStoragedagi ma'lumotlar va redux store o'rtasidagi ma'lumotlar solishtiriladi
