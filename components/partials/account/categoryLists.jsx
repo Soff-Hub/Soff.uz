@@ -128,7 +128,6 @@ function CategoryLists() {
             setTagNameIcon(null)
             setTagNameUsers(null)
             setIsHomeVal(null)
-
         }
         else {
             const modal = Modal.info({
@@ -243,9 +242,10 @@ function CategoryLists() {
 
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
-                    <label htmlFor="is_home" className='w-100 text-truncate' style={{ cursor: "pointer", display: 'flex', alignItems: 'center', gap: '10px' }}>
-                        <Checkbox onChange={e => setIsHomeVal(e.target.checked)} defaultChecked={deleteIdEdit?.is_home}>Asosiy sahifada ko'rsatilsin</Checkbox>
-                    </label>
+                    {deleteIdEdit?.parent == null && <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setIsHomeVal(e.target.value)} >
+                        <option value={true} selected={deleteIdEdit?.is_home}>Asosiy sahifada</option>
+                        <option value={false} selected={!deleteIdEdit?.is_home}>Asosiy sahifada emas</option>
+                    </select>}
                     <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         {
                             deleteIdEdit?.image ? deleteIdEdit?.image :
