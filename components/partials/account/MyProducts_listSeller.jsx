@@ -118,6 +118,20 @@ function MyProductsListsSeller() {
 
     const columns = [
         {
+            title: 'Mahsulot',
+            dataIndex: 'id',
+            key: 'address',
+            render: (id) => <>
+                {
+                    loading2 ?
+                        <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
+                            <span className="visually-hidden">Loading...</span>
+                        </div> :
+                        <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
+                }
+            </>
+        },
+        {
             title: 'Rasm',
             dataIndex: 'poster',
             key: 'name',
@@ -165,21 +179,6 @@ function MyProductsListsSeller() {
             key: 'created_at',
             render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
-        {
-            title: 'Mahsulot',
-            dataIndex: 'id',
-            key: 'address',
-            render: (id) => <>
-                {
-                    loading2 ?
-                        <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
-                            <span className="visually-hidden">Loading...</span>
-                        </div> :
-                        <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
-                }
-            </>
-        }
-
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">
