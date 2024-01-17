@@ -19,6 +19,7 @@
         "ant-design": "^1.0.0",
         "antd": "^5.8.4",
         "antd-tools": "^7.7.1",
+        "apexcharts": "^3.45.1",
         "axios": "^0.19.2",
         "chart.js": "2.9.4",
         "es6-promise": "^4.2.8",

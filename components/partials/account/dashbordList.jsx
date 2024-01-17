@@ -12,6 +12,7 @@ import { Tabs } from 'antd';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import Axios from 'axios';
 import Link from 'next/link';
+import Example from './Chart';
 
 
 function DashbordList() {
@@ -431,6 +432,7 @@ function DashbordList() {
                     </div>
 
                     <div className="col-lg-8 pb-5">
+                        {/* <Example /> */}
                         <div className='pb-5'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                             {

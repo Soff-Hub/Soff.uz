@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
 import axios from 'axios';
 import NextImageCard from '~/components/nextImagecard';
+import useDebounce from '~/hooks/useDebounce';
 
 
 function MyProductsListsSeller() {
@@ -26,6 +27,7 @@ function MyProductsListsSeller() {
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
     const { accountLinks, user } = useSelector(state => state.auth)
     const Option = Select.Option;
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsProducts(page, category, dataFormat) {
@@ -114,7 +116,7 @@ function MyProductsListsSeller() {
     }, [])
     useEffect(() => {
         GetItemsProducts(currPage, dataValCat, dataFormat)
-    }, [dataValCat, dataFormat, search])
+    }, [dataValCat, dataFormat, searchDebounce])
 
     const columns = [
         {

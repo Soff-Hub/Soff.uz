@@ -7,6 +7,7 @@ import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategorySlug } from '~/store/auth/action';
+import useDebounce from '~/hooks/useDebounce';
 
 const ShopItems = ({
     columns = 4,
@@ -33,6 +34,8 @@ const ShopItems = ({
     const [page, setPage] = useState(1);
     const dispatch = useDispatch()
     // const { category_lists: categoryData } = useSelector(state => state.auth)
+    const [search, setSearch] = useState('')
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function getCategry() {
@@ -309,6 +312,10 @@ const ShopItems = ({
         }
     }
 
+    useEffect(() => {
+        detailSearch(search)
+    }, [searchDebounce])
+
     // Views
     let productItemsView;
     if (success) {
@@ -386,7 +393,7 @@ const ShopItems = ({
                             className="ps-input"
                             type="text"
                             placeholder="Mahsulotingizni izlang..."
-                            onChange={(e) => detailSearch(e.target.value)}
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                     </label>
 

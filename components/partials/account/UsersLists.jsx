@@ -9,6 +9,7 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
+import useDebounce from '~/hooks/useDebounce';
 
 function AccountUserPages() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -21,6 +22,7 @@ function AccountUserPages() {
 
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsUsers(page, status, search) {
@@ -70,7 +72,7 @@ function AccountUserPages() {
 
     useEffect(() => {
         GetItemsUsers(currPage, selectValStatus, search)
-    }, [selectValStatus, search])
+    }, [selectValStatus, searchDebounce])
     const columns = [
         {
             title: 'Ism',
@@ -103,7 +105,7 @@ function AccountUserPages() {
             ),
         },
         {
-            title:  "Ro'yxatdan o'tgan sana",
+            title: "Ro'yxatdan o'tgan sana",
             dataIndex: 'created_at',
             key: 'created_at',
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
@@ -144,7 +146,7 @@ function AccountUserPages() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                    <label className='form-label border col-md-5 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                        <label className='form-label border col-md-5 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
                                             <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                             <span className='px-4'><i className='fa-solid fa-search '></i></span>
 

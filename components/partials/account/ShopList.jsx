@@ -7,6 +7,7 @@ import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import Image from 'next/image';
 import NextImageCard from '~/components/nextImagecard';
+import useDebounce from '~/hooks/useDebounce';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -15,6 +16,7 @@ function Notifications() {
     const [search, setSerach] = useState([]);
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const searchDebounce = useDebounce(search, 1000)
 
     async function GetItems(page) {
         const ItemsData = await GetRepository.getShops(page, search, user?.access);
@@ -32,7 +34,7 @@ function Notifications() {
 
     useEffect(() => {
         GetItems(currPage, search)
-    }, [search])
+    }, [searchDebounce])
 
     const columns = [
         {
@@ -43,7 +45,7 @@ function Notifications() {
                 <div>
                     {
                         image ?
-                             <NextImageCard url={image} clasS='rounded-3 ' width='54px' height='54px' />
+                            <NextImageCard url={image} clasS='rounded-3 ' width='54px' height='54px' />
                             :
                             <span className='fs-4'><i className="  fa-2x fa-solid fa-circle-user"></i></span>
                     }
@@ -128,8 +130,8 @@ function Notifications() {
                                 <div className='bg-white p-3'>
                                     <span className='col-md-12 m-0 py-3 border d-flex bg-white justify-content-center rounded mb-2 h4' style={{ backgroundColor: "GrayText" }} >Sotuvchilar soni: {pageCount} ta</span>
                                     <label className='form-label border w-100 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
-                                    <input type='search' className='form-control' style={{border:"none"}}   placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
-                                    <span className='px-4'><i className='fa-solid fa-search '></i></span>
+                                        <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
+                                        <span className='px-4'><i className='fa-solid fa-search '></i></span>
 
                                     </label>
                                     <Table scroll={{ x: 1150 }} dataSource={data} columns={columns} pagination={false}
