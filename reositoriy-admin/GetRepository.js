@@ -366,8 +366,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getChartLists(token) {
-        const endPoint = `AdminMonthlySales/`;
+    async getChartLists(token, year) {
+        const endPoint = `AdminMonthlySales/?year=${year}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
