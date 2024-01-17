@@ -13,6 +13,7 @@ import NextImageCard from '~/components/nextImagecard';
 const ProductDetailQuickView = ({ product }) => {
     const [tag, setTag] = useState([]);
     const [img, setImage] = useState(null);
+    const [document, setDocument] = useState(null);
 
     const searchTag = (e) => {
         Router.push(`/search?keyword=${e}`);
@@ -28,7 +29,9 @@ const ProductDetailQuickView = ({ product }) => {
         );
         if (responsImage) {
             console.log(responsImage);
-            setImage(responsImage);
+            setImage(responsImage.images);
+            const { page_count, file_type, file_size } = responsImage
+            setDocument({ page_count, file_type, file_size })
         }
     };
 
@@ -50,7 +53,7 @@ const ProductDetailQuickView = ({ product }) => {
                                 //       style={{ objectFit: 'contain' }}
                                 //   />
                                 <NextImageCard key={i} url={item?.image_url} clasS='border mb-3 objectFitCover ' width='380px' height='390px' />
-                              ))
+                            ))
                             : ''}
 
                     </div>
@@ -71,7 +74,7 @@ const ProductDetailQuickView = ({ product }) => {
                             </h4>
                         )}
                     </div>
-                    <ModuleProductDetailDescription product={product} />
+                    <ModuleProductDetailDescription product={{ ...product, document }} />
                     <ModuleDetailShoppingActions
                         product={product}
                         extended={true}

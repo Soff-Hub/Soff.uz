@@ -46,7 +46,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     async function ProfileUsersToken() {
         const ItemsData = await GetRepository.getProfileToken(user?.access);
-        console.log(ItemsData.status);
         if (Number(ItemsData?.status) == 403) {
             handleLogoutToken()
         }

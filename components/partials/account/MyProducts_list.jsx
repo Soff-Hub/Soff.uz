@@ -20,6 +20,7 @@ import PartialDescription from '~/components/elements/detail/description/Partial
 import Axios from 'axios';
 import Router from 'next/router';
 import NextImageCard from '~/components/nextImagecard';
+import useDebounce from '~/hooks/useDebounce';
 const { TabPane } = Tabs;
 
 function MyProductsLists() {
@@ -49,6 +50,7 @@ function MyProductsLists() {
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
     const { accountLinks, user, products } = useSelector(state => state.auth)
     const Option = Select.Option;
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsProducts(page, category, tagName, dataFormat, status, search) {
@@ -269,7 +271,7 @@ function MyProductsLists() {
     }, [])
     useEffect(() => {
         GetItemsProducts(currPage, dataValCat, tagName, dataFormat, selectValStatus, search)
-    }, [dataValCat, tagName, dataFormat, selectValStatus, search])
+    }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce])
 
     const columns = [
         {

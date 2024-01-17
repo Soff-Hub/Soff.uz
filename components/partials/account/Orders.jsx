@@ -8,6 +8,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import useDebounce from '~/hooks/useDebounce';
 
 
 function OrdersLists() {
@@ -20,6 +21,7 @@ function OrdersLists() {
     const [selector, setSelector] = useState(null);
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const searchDebounce = useDebounce(search, 1000)
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
@@ -62,7 +64,7 @@ function OrdersLists() {
     useEffect(() => {
 
         GetItemsProducts(currPage, selector, dataFormat, search)
-    }, [currPage, selector, dataFormat, search])
+    }, [currPage, selector, dataFormat, searchDebounce])
 
     const columns = [
         {

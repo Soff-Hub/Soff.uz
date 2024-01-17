@@ -8,6 +8,7 @@ import NextImageCard from '~/components/nextImagecard';
 import ModalDeletePostEdit from './ModalPostEdit';
 import ModalDelete from './Modal';
 import DebounceSelect from './SearchPMSellers';
+import useDebounce from '~/hooks/useDebounce';
 
 function Notifications() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -19,6 +20,7 @@ function Notifications() {
     const [isPremium, setIsPremium] = useState(null)
     const [discount, setDiscount] = useState(0)
     const [value, setValue] = useState([]);
+    const searchDebounce = useDebounce(search, 1000)
 
     async function GetItems(page) {
         const ItemsData = await GetRepository.getPMSellers(page, search, user?.access);
@@ -53,9 +55,6 @@ function Notifications() {
         await GetRepository.updatePMSellerDetail(id, { privilege_percentage: discount }, user?.access)
     }
 
-    console.log(user);
-
-
     const handleClickIdEditModal = async () => {
         await GetRepository.updatePMSellerDetail(+isPremium, { has_privilege: false }, user?.access)
         GetItems(currPage)
@@ -85,7 +84,7 @@ function Notifications() {
 
     useEffect(() => {
         GetItems(currPage, search)
-    }, [search])
+    }, [searchDebounce])
 
     const columns = [
         {
