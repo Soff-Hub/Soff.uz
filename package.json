@@ -21,7 +21,7 @@
         "antd-tools": "^7.7.1",
         "apexcharts": "^3.45.1",
         "axios": "^0.19.2",
-        "chart.js": "2.9.4",
+        "chart.js": "^2.9.0",
         "es6-promise": "^4.2.8",
         "fusioncharts": "^3.20.0",
         "history": "^4.10.1",

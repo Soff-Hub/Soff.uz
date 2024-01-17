@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Pagination, Table } from 'antd';
+import { Pagination, Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 // import Example from './Chart';
 import { useSelector } from 'react-redux';
@@ -24,6 +24,7 @@ function DashbordList() {
     const [pageCount2, setPageCount2] = useState(0)
     const [currPage, setCurrPage] = useState(null)
     const [loading, setLoading] = useState(false);
+    const [year, setYear] = useState(new Date().getFullYear())
 
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -54,9 +55,8 @@ function DashbordList() {
     }
     async function GetItemsProductsPopular() {
         const ItemsData = await GetRepository.getPopularProducts(user?.access);
-        if (ItemsData?.info) {
-            setPageCount(ItemsData.count)
-            setDataProducts(ItemsData?.info);
+        if (ItemsData) {
+            setDataProducts(ItemsData);
         }
     }
 
@@ -84,6 +84,10 @@ function DashbordList() {
         setCurrPage(pageNum)
         GetItemsProductsOrders(pageNum)
     }
+
+    const handleChange = (value) => {
+        setYear(+value)
+    };
 
 
     useEffect(() => {
@@ -432,8 +436,25 @@ function DashbordList() {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        {/* <Example /> */}
-                        <div className='pb-5'>
+                        <div className="mb-2">
+                            <Select
+                                defaultValue={{
+                                    value: +year,
+                                    label: `${+year}-yil bo'yicha hisobotlar`,
+                                }}
+                                style={{
+                                    width: 300,
+                                }}
+                                onChange={handleChange}
+                                options={
+                                    [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((el) => ({
+                                        value: +el,
+                                        label: `${+el}-yil bo'yicha hisobotlar`,
+                                    }))}
+                            />
+                        </div>
+                        <Example year={year} />
+                        <div className='pb-5 mt-4'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                             {
                                 user?.role == "admin" ?
