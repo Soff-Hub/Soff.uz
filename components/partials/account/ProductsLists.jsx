@@ -18,6 +18,7 @@ import { Tabs } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import Router from 'next/router';
 import NextImageCard from '~/components/nextImagecard';
+import useDebounce from '~/hooks/useDebounce';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -35,6 +36,7 @@ function ProductsLists() {
     const [currPage, setCurrPage] = useState(1)
     const [category_id, setCategoryID] = useState(null)
     const Option = Select.Option;
+    const searchDebounce = useDebounce(search, 1000)
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
@@ -150,7 +152,7 @@ function ProductsLists() {
 
     useEffect(() => {
         GetItemsProductsLists(currPage, category_id, dataValStatus, dataFormat, null, dateArxiv, search)
-    }, [category_id, dataValStatus, dataFormat, dateArxiv, search])
+    }, [category_id, dataValStatus, dataFormat, dateArxiv, searchDebounce])
 
 
     const columns = [
