@@ -36,7 +36,7 @@ function ProductsLists() {
     const [currPage, setCurrPage] = useState(1)
     const [category_id, setCategoryID] = useState(null)
     const Option = Select.Option;
-    const searchDebounce = useDebounce(search, 1000)
+    const searchDebounce = useDebounce(search, 800)
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
