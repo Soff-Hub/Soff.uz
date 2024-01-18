@@ -51,83 +51,36 @@ function getMonthName(monthNumber) {
 }
 
 
-function Example({ year }) {
+function Example({ year, month }) {
     const { user } = useSelector((state) => state.auth);
 
-    const [tableData, setTableData] = useState([]);
+    const [tableData, setTableData] = useState({ data: [], count: [] });
+    const [labels, setLabels] = useState([])
 
 
     async function getChartItems() {
-        const ItemsChartData = await GetRepository.getChartLists(user?.access, year);
+        const arr = []
+        const arr2 = []
+        const arr3 = []
+        const ItemsChartData = await GetRepository.getChartLists(user?.access, year, month);
         if (ItemsChartData) {
-            const objData = [];
-            if (ItemsChartData) {
-                ItemsChartData.length > 0 && ItemsChartData?.map((el) => {
-                    return objData.push({
-                        labels: getMonthName(el.month),
-                        data: el.total_price,
-                        document_count: el.document_count,
-                    });
-                });
+            for (let i = 0; i < ItemsChartData.length; i++) {
+                arr.push(ItemsChartData[i].total_price);
+                arr2.push(ItemsChartData[i].document_count);
+                arr3.push(ItemsChartData[i].label)
             }
-            setTableData(objData);
         }
-
+        await setLabels(arr3)
+        setTableData({
+            data: arr,
+            count: arr2
+        })
     }
 
     useEffect(() => {
         getChartItems();
-    }, [year]);
-    const labels = [
-        'Yanvar',
-        'Fevral',
-        'Mart',
-        'Aprel',
-        'May',
-        'Iyun',
-        'Iyul',
-        'Avgust',
-        'Sentyabr',
-        'Oktyabr',
-        'Noyabr',
-        'Dekabr',
-    ];
+    }, [year, month]);
 
-    const [chartData, setChartData] = useState({
-        data: [],
-        count: []
-    })
-
-    const convertLabel = () => {
-        const arr = [];
-        const arr2 = [];
-        if (tableData.length > 0) {
-            for (let i = 0; i < labels.length; i++) {
-                if (tableData.every(el => el.labels !== labels[i])) {
-                    arr.push(0);
-                    arr2.push(0);
-                }
-                else {
-                    const findedItem = tableData.find(el => el.labels === labels[i])
-                    arr.push(findedItem.data);
-                    arr2.push(findedItem.document_count);
-                }
-            }
-        }
-        Array(12).forEach(e => {
-            arr.push(0);
-            arr2.push(0);
-        })
-        setChartData({
-            data: arr,
-            count: arr2
-        })
-    };
-
-
-    useEffect(() => {
-        convertLabel();
-    }, [tableData]);
 
     useEffect(() => {
         var body = document.getElementById('canvas')
@@ -141,21 +94,19 @@ function Example({ year }) {
                 datasets: [
                     {
                         label: "Umumiy ko'rilgan daromad",
-                        data: chartData.data,
+                        data: tableData.data,
                         borderColor: '#3cba9f',
                         backgroundColor: '#71d1bd',
                         borderWidth: 2,
-                        cubicInterpolationMode: true
                     },
                     {
                         label: "Umumiy sotilgan mahsulotlar soni",
-                        data: chartData.count,
+                        data: tableData.count,
                         borderColor: '#00b4d8',
                         backgroundColor: '#00b4d8',
                         borderWidth: 2,
                     },
                 ],
-
             }
         });
         body.appendChild(canvas)
@@ -165,7 +116,7 @@ function Example({ year }) {
             body.innerHTML = ''
         }
 
-    }, [chartData]);
+    }, [tableData]);
 
     return (
         <>
