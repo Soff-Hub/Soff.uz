@@ -5,42 +5,41 @@ import { useSelector } from 'react-redux';
 
 function getMonthName(monthNumber) {
     let monthName;
-    const date = monthNumber.split('-');
-    switch (date?.[1]) {
-        case '01':
+    switch (monthNumber) {
+        case 'January':
             monthName = 'Yanvar';
             break;
-        case '02':
+        case 'February':
             monthName = 'Fevral';
             break;
-        case '03':
+        case 'March':
             monthName = 'Mart';
             break;
-        case '04':
+        case 'April':
             monthName = 'Aprel';
             break;
-        case '05':
+        case 'May':
             monthName = 'May';
             break;
-        case '06':
+        case 'June':
             monthName = 'Iyun';
             break;
-        case '07':
+        case 'July':
             monthName = 'Iyul';
             break;
-        case '08':
+        case 'August':
             monthName = 'Avgust';
             break;
-        case '09':
+        case 'September':
             monthName = 'Sentyabr';
             break;
-        case '10':
+        case 'October':
             monthName = 'Oktyabr';
             break;
-        case '11':
+        case 'November':
             monthName = 'Noyabr';
             break;
-        case '12':
+        case 'December':
             monthName = 'Dekabr';
             break;
         default:
@@ -57,7 +56,6 @@ function Example({ year, month }) {
     const [tableData, setTableData] = useState({ data: [], count: [] });
     const [labels, setLabels] = useState([])
 
-
     async function getChartItems() {
         const arr = []
         const arr2 = []
@@ -66,11 +64,16 @@ function Example({ year, month }) {
         if (ItemsChartData) {
             for (let i = 0; i < ItemsChartData.length; i++) {
                 arr.push(ItemsChartData[i].total_price);
-                arr2.push(ItemsChartData[i].document_count);
-                arr3.push(ItemsChartData[i].label)
+                arr2.push(ItemsChartData[i].count);
+                if (month) {
+                    arr3.push(ItemsChartData[i].day.split('-')[2])
+                }
+                else {
+                    arr3.push(getMonthName(ItemsChartData[i].month))
+                }
             }
         }
-        await setLabels(arr3)
+        setLabels(arr3)
         setTableData({
             data: arr,
             count: arr2
