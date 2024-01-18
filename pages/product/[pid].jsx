@@ -61,7 +61,7 @@ const ProductDefaultPage = ({ product, similar }) => {
             <PageContainer title={product ? product.title : 'Loading...'}>
                 <Meta
                     title={`Soff | ${product.title}`}
-                    image={product.document.images[0].image_url}
+                    image={product?.document?.images?.[0]?.image_url}
                     description={`${product.title} mahsulotni saytimizdan Soff.uz bepul yuklab yoki sotib olishingiz mumkin`}
                 />
 
