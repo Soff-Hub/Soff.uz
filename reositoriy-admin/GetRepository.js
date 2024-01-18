@@ -326,8 +326,9 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     } z
-    async getTagTaklifLists(page, date, token) {
-        const endPoint = `admin/offer-list/?page=${page}&start_date=${date || ''
+    async getTagTaklifLists(page, date, token, isAdmin) {
+        const endPoint = isAdmin ? `admin/offer-list/?page=${page}&start_date=${date || ''
+            }` : `offer-list/?page=${page}&start_date=${date || ''
             }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -443,8 +444,8 @@ class GetRepository {
         return reponse;
     }
 
-    async getProfileAriza(page, token) {
-        const endPoint = `application-list/?page=${page}`;
+    async getProfileAriza(page, token, isAdmin) {
+        const endPoint = isAdmin ? `admin/application/?page=${page}` : `application-list/?page=${page}`
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -481,8 +482,9 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getProfileArizaAdmin(page, status, token) {
-        const endPoint = `admin/application/?page=${page}&status=${status ? status : ''
+    async getProfileArizaAdmin(page, status, token, isAdmin) {
+        const endPoint = isAdmin ? `admin/application/?page=${page}&status=${status ? status : ''
+            }` : `application-list/?page=${page}&status=${status ? status : ''
             }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -502,12 +504,12 @@ class GetRepository {
         return reponse;
     }
     async getProfileArizaTaklif(page, token) {
-        const endPoint = `seller/offer-list/?page=${page}`;
+        const endPoint = `seller/offer-list/?page=${page} `;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token} `,
             },
         })
             .then((response) => {
@@ -525,12 +527,12 @@ class GetRepository {
 
     async getPMSellers(page, search, token) {
         const endPoint = `admin/premium-user/?page=${page}&search=${search || ''
-            }`;
+            } `;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token} `,
             },
         })
             .then((response) => {
@@ -545,12 +547,12 @@ class GetRepository {
     }
 
     async getPMSellerDetail(id, token) {
-        const endPoint = `admin/premium-user/${id}`;
+        const endPoint = `admin / premium - user / ${id} `;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token} `,
             },
         })
             .then((response) => {
@@ -565,12 +567,12 @@ class GetRepository {
     }
 
     async updatePMSellerDetail(id, data, token) {
-        const endPoint = `admin/premium-user/${id}`;
+        const endPoint = `admin / premium - user / ${id} `;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                Authorization: `Bearer ${token}`,
+                Authorization: `Bearer ${token} `,
             },
             data
         })
