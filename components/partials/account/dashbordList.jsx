@@ -25,6 +25,7 @@ function DashbordList() {
     const [currPage, setCurrPage] = useState(null)
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear())
+    const [month, setMonth] = useState(null)
 
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -85,8 +86,11 @@ function DashbordList() {
         GetItemsProductsOrders(pageNum)
     }
 
-    const handleChange = (value) => {
+    const handleChangeYear = (value) => {
         setYear(+value)
+    };
+    const handleChangeMonth = (value) => {
+        setMonth(value)
     };
 
 
@@ -234,6 +238,21 @@ function DashbordList() {
             ),
 
         },
+    ];
+
+    const labels = [
+        { name: 'Yanvar', value: '01' },
+        { name: 'Fevral', value: '02' },
+        { name: 'Mart', value: '03' },
+        { name: 'Aprel', value: '04' },
+        { name: 'May', value: '05' },
+        { name: 'Iyun', value: '06' },
+        { name: 'Iyul', value: '07' },
+        { name: 'Avgust', value: '08' },
+        { name: 'Sentyabr', value: '09' },
+        { name: 'Oktyabr', value: '10' },
+        { name: 'Noyabr', value: '11' },
+        { name: 'Dekabr', value: '12' },
     ];
 
 
@@ -436,7 +455,7 @@ function DashbordList() {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        <div className="mb-2">
+                        {user?.role === "admin" && <div className="dashboard-div mb-2">
                             <Select
                                 defaultValue={{
                                     value: +year,
@@ -445,15 +464,28 @@ function DashbordList() {
                                 style={{
                                     width: 300,
                                 }}
-                                onChange={handleChange}
+                                onChange={handleChangeYear}
                                 options={
                                     [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((el) => ({
                                         value: +el,
                                         label: `${+el}-yil bo'yicha hisobotlar`,
                                     }))}
+                                className='me-2'
                             />
-                        </div>
-                        <div className="dashboard-div"><Example year={year} /></div>
+                            <Select
+                                defaultValue={{ label: `Barcha oy ma'lumotlari`, value: '01' }}
+                                style={{
+                                    width: 300,
+                                }}
+                                onChange={handleChangeMonth}
+                                options={[
+                                    { label: `Barcha oy ma'lumotlari`, value: null },
+                                    ...labels.map(el => ({ label: `${el.name} oyi ma'lumotlari`, value: el.value }))
+                                ]}
+                            />
+                        </div>}
+
+                        {user?.role === "admin" && <div className="dashboard-div"><Example year={year} month={month} /></div>}
                         <div className='pb-5 mt-4'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                             {
