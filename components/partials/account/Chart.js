@@ -159,6 +159,12 @@ function Example({ year }) {
             }
         });
         body.appendChild(canvas)
+
+        if (window.innerWidth < 768) {
+            var body = document.getElementById('canvas')
+            body.innerHTML = ''
+        }
+
     }, [chartData]);
 
     return (

@@ -284,7 +284,7 @@
 //     // text-align: center;
 // }
 
-#homepage-7 .ps-product-list {  
+#homepage-7 .ps-product-list {
     margin-bottom: 80px
 }
 
@@ -387,7 +387,7 @@
 
 @include media('<lg') {
 
-    .responsive-image-card{
+    .responsive-image-card {
         display: flex;
         justify-content: center;
     }
@@ -790,7 +790,7 @@
     }
 
     .ps-product:hover {
-        height: 130px;
+        // height: 130px;
     }
 
     // .home-car{
@@ -1061,9 +1061,9 @@
                 min-width: 107px;
                 object-fit: cover;
             }
-            
+
             div {
-                height: 93px!important;
+                height: 93px !important;
             }
         }
     }
@@ -1392,7 +1392,7 @@
     height: 100%;
     animation: modalOpen 0.5s ease-in-out both;
     animation-delay: 1s;
-    padding-bottom:100%;
+    padding-bottom: 100%;
     height: 200px;
 }
 
@@ -1403,63 +1403,68 @@
     left: -100%;
     z-index: 99999;
     height: 100%;
-  }
+}
 
 
-  .iframe-container {
+.iframe-container {
     position: relative;
-    padding-bottom: 57.25%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+    padding-bottom: 57.25%;
+    /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
     height: 0;
     overflow: hidden;
-  }
-  
-  .iframe-container iframe {
+}
+
+.iframe-container iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-  }
+}
 
-  @keyframes modalClose {
+@keyframes modalClose {
     from {
-      transform: translateY(0); 
-      opacity: 1;
+        transform: translateY(0);
+        opacity: 1;
     }
-    to {
-      transform: translateY(-620px); 
-      opacity: 0;
-    }
-  }
 
-  @keyframes modalCloseOrqaFon {
-    from {  
-      opacity: 1;
+    to {
+        transform: translateY(-620px);
+        opacity: 0;
     }
+}
+
+@keyframes modalCloseOrqaFon {
+    from {
+        opacity: 1;
+    }
+
     to {
         opacity: 0;
     }
-  }
+}
 
-  @keyframes modalOpen {
+@keyframes modalOpen {
     from {
-      transform: translateY(-220px); 
-      opacity: 0; 
+        transform: translateY(-220px);
+        opacity: 0;
     }
-    to {
-      transform: translateY(0); 
-      opacity: 1; 
-    }
-  }
 
-  @keyframes modalOpenOrqafon {
-    from {
-      opacity: 0; 
-    }
     to {
-      opacity: 1; 
+        transform: translateY(0);
+        opacity: 1;
     }
-  }
+}
+
+@keyframes modalOpenOrqafon {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 // Vedio tutorial uchun carousel modal
 
@@ -1492,9 +1497,10 @@
     justify-content: center;
     z-index: 99999;
     animation: modalCloseOrqaFon 1s ease-in-out forwards;
+
     .iframe-containerCarousel {
         border: 0px solid #022335;
-      }
+    }
 }
 
 .bannerModal2Carousel {
@@ -1517,140 +1523,152 @@
     right: 0;
     z-index: 99999;
     height: 100%;
-  }
+}
 
 
-  .iframe-containerCarousel {
+.iframe-containerCarousel {
     position: relative;
-    padding-bottom: 57.25%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+    padding-bottom: 57.25%;
+    /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
     height: 268px;
     overflow: hidden;
     border: 3px solid #022335;
-  }
+}
 
-  .swiper-button-next{
+.swiper-button-next {
     color: $color-1st !important;
-  }
+}
 
-  .swiper-button-prev{
+.swiper-button-prev {
     color: $color-1st !important;
-  }
+}
 
-  .swiper-pagination-bullet .swiper-pagination-bullet-active{
+.swiper-pagination-bullet .swiper-pagination-bullet-active {
     color: $color-1st;
-  }
-  
-  .iframe-containerCarousel iframe {
+}
+
+.iframe-containerCarousel iframe {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-  }
+}
 
-  @keyframes modalClose {
+@keyframes modalClose {
     from {
-      transform: translateY(0); 
-      opacity: 1;
+        transform: translateY(0);
+        opacity: 1;
     }
-    to {
-      transform: translateY(-620px); 
-      opacity: 0;
-    }
-  }
 
-  @keyframes modalCloseOrqaFon {
-    from {  
-      opacity: 1;
+    to {
+        transform: translateY(-620px);
+        opacity: 0;
     }
+}
+
+@keyframes modalCloseOrqaFon {
+    from {
+        opacity: 1;
+    }
+
     to {
         opacity: 0;
     }
-  }
+}
 
-  @keyframes modalOpen {
+@keyframes modalOpen {
     from {
-      transform: translateY(-220px); 
-      opacity: 0; 
+        transform: translateY(-220px);
+        opacity: 0;
     }
-    to {
-      transform: translateY(0); 
-      opacity: 1; 
-    }
-  }
 
-  @keyframes modalOpenOrqafon {
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes modalOpenOrqafon {
     from {
-      opacity: 0; 
+        opacity: 0;
     }
+
     to {
-      opacity: .3; 
+        opacity: .3;
     }
-  }
-  @keyframes modalOpenOrqafonCarousel {
+}
+
+@keyframes modalOpenOrqafonCarousel {
     from {
-      opacity: 0; 
+        opacity: 0;
     }
+
     to {
-      opacity: 0; 
+        opacity: 0;
     }
-  }
+}
 
 
-  .modal-vedio-tutorial_container-carousel{
+.modal-vedio-tutorial_container-carousel {
     height: 200px;
     width: 400px;
     object-fit: contain;
-  }
+}
 
-  .modal-carousel-header{
+.modal-carousel-header {
     background-color: #022335;
     text-align: center !important;
     padding: 7px 0;
-    p{
+
+    p {
         color: #fff !important;
         padding: 0;
         margin: 0;
         font-size: 13px;
     }
-    h3{
+
+    h3 {
         color: #fff;
         padding: 0;
         margin: 0;
         font-size: 18px;
         padding-bottom: 7px;
     }
-  }
+}
 
 
-  .modal-dating{
+.modal-dating {
     height: 500px;
     overflow-y: scroll;
-  }
+}
 
-  
+
 
 @media (min-width:1500px) and (max-width:2000px) {
     .colCard {
         position: absolute;
         top: 64%;
     }
+
     .bannerModal2Carousel {
         top: 25%;
         left: 64%;
         max-width: 400px;
     }
 }
+
 @media (min-width:1300px) and (max-width:1500px) {
     .colCard {
         position: absolute;
         top: 64%;
     }
+
     .bannerModal2 {
         position: fixed;
         top: 20%;
         left: 18%;
-     
+
     }
 
     .bannerModal3 {
@@ -1658,7 +1676,7 @@
         top: 20%;
         left: -200%;
     }
-   
+
 }
 
 @media (min-width:1200px) and (max-width:1300px) {
@@ -1666,19 +1684,20 @@
         position: absolute;
         top: 64%;
     }
+
     .bannerModal2 {
         position: fixed;
         top: 20%;
         left: 15%;
-     
-    } 
+
+    }
 
     .bannerModal3 {
         position: fixed;
         top: -100%;
         left: 15%;
-       
-    
+
+
     }
 
     // .bannerModal2Carousel {
@@ -1693,15 +1712,15 @@
         position: fixed;
         top: 20%;
         left: 15%;
-     
+
     }
 
     .bannerModal3 {
         position: fixed;
         top: 20%;
         left: -100%;
-       
-    
+
+
     }
 }
 
@@ -1715,8 +1734,8 @@
         width: 75%;
         max-width: 860px;
     }
-    
-    .bannerModal3{
+
+    .bannerModal3 {
 
         position: fixed;
         top: -30%;
@@ -1732,12 +1751,13 @@
         max-width: 400px;
     }
 }
+
 @include media('>lg') {
     .bannerModal2 {
         position: fixed;
         top: 20%;
         left: 22%;
-     
+
     }
 
     .bannerModal3 {
@@ -1750,10 +1770,11 @@
         width: 100%;
         left: -100%;
         max-width: 860px;
-    
+
     }
 }
-@media (max-width: 900px){
+
+@media (max-width: 900px) {
     .bannerModal2Carousel {
         top: 25%;
         left: 25%;
@@ -1761,6 +1782,7 @@
         max-width: 400px;
     }
 }
+
 @media (max-width: 860px) {
     .bannerModal2 {
         padding-bottom: 100%;
@@ -1768,10 +1790,12 @@
         top: 30%;
 
     }
-    .bannerModal3{
+
+    .bannerModal3 {
         position: fixed;
         top: 30%;
     }
+
     .colCard {
         position: absolute;
         top: 52%;
@@ -1783,6 +1807,7 @@
         position: absolute;
         top: 52%;
     }
+
     .bannerModal2 {
         // padding-bottom: 100%;
         position: fixed;
@@ -1792,8 +1817,8 @@
         max-width: 860px;
         height: 0 !important;
     }
-    
-    .bannerModal3{
+
+    .bannerModal3 {
         position: fixed;
         top: 30%;
         left: -100%;
@@ -1803,7 +1828,7 @@
 }
 
 
-@media (max-width: 598px){
+@media (max-width: 598px) {
     .bannerModal2Carousel {
         top: 25%;
         left: 15%;
@@ -1811,7 +1836,7 @@
     }
 }
 
-@media (max-width: 526px){
+@media (max-width: 526px) {
     .bannerModal2Carousel {
         top: 25%;
         left: 12%;
@@ -1819,80 +1844,89 @@
     }
 }
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
     .bannerModal2Carousel {
         top: 25%;
         left: 18%;
         max-width: 300px;
     }
-    
-  .modal-carousel-header{
-    background-color: #022335;
-    text-align: center !important;
-    padding: 7px 0;
-    p{
-        color: #fff !important;
-        padding: 0;
-        margin: 0;
-        font-size: 11px;
+
+    .modal-carousel-header {
+        background-color: #022335;
+        text-align: center !important;
+        padding: 7px 0;
+
+        p {
+            color: #fff !important;
+            padding: 0;
+            margin: 0;
+            font-size: 11px;
+        }
+
+        h3 {
+            color: #fff;
+            padding: 0;
+            margin: 0;
+            font-size: 15px;
+            padding-bottom: 7px;
+        }
     }
-    h3{
-        color: #fff;
-        padding: 0;
-        margin: 0;
-        font-size: 15px;
-        padding-bottom: 7px;
+
+    .iframe-containerCarousel {
+        height: 260px;
     }
-  }
-  .iframe-containerCarousel{
-    height: 260px;
-  }
-  .closeButton{
-    position: 'absolute';
-    right: 0;
-    top:' -9px';
-    z-index: 1
-  }
+
+    .closeButton {
+        position: 'absolute';
+        right: 0;
+        top: ' -9px';
+        z-index: 1
+    }
 }
+
 @media (min-width: 400px) and (max-width:500px) {
     .colCard {
         position: absolute;
         top: 52%;
     }
+
     .bannerModal2 {
         padding-bottom: 100%;
         position: fixed;
         left: 0;
 
     }
-    .bannerModal3{
+
+    .bannerModal3 {
         position: fixed;
         left: -100%;
     }
 
     .iframe-container {
         position: relative;
-        padding-bottom: 75%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+        padding-bottom: 75%;
+        /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
         height: 300px;
         overflow: hidden;
         width: 450px;
-      }
-      
-      .iframe-container iframe {
+    }
+
+    .iframe-container iframe {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-      }
-      .closeButton{
+    }
+
+    .closeButton {
         right: 0;
-        top:' -9px';
-      }
+        top: ' -9px';
+    }
 }
 
 
-@media (max-width: 500px){
+@media (max-width: 500px) {
     .bannerModal2Carousel {
         top: 25%;
         left: 14%;
@@ -1906,7 +1940,7 @@
         position: absolute;
         top: 52%;
     }
-    
+
 
     .bannerModal2 {
         padding-bottom: 100%;
@@ -1914,34 +1948,37 @@
         left: 0;
 
     }
-    .bannerModal3{
+
+    .bannerModal3 {
         position: fixed;
         left: -100%;
     }
 
     .iframe-container {
         position: relative;
-        padding-bottom: 75%; /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
+        padding-bottom: 75%;
+        /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
         height: 300px;
         overflow: hidden;
         width: 390px;
-      }
-      
-      .iframe-container iframe {
+    }
+
+    .iframe-container iframe {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-      }
-      .closeButton{
+    }
+
+    .closeButton {
         right: 0;
-        top:' -9px';
-      }
+        top: ' -9px';
+    }
 }
 
 
-@media (max-width: 395px){
+@media (max-width: 395px) {
     .bannerModal2Carousel {
         top: 25%;
         left: 10%;
@@ -1949,16 +1986,15 @@
     }
 }
 
-@media (max-width: 360px){
+@media (max-width: 360px) {
     .bannerModal2Carousel {
         top: 25%;
         left: 3%;
         max-width: 300px;
     }
-    .closeButton{
+
+    .closeButton {
         right: 0;
-        top:' -9px';
-      }
+        top: ' -9px';
+    }
 }
-
-

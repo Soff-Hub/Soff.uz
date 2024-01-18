@@ -453,7 +453,7 @@ function DashbordList() {
                                     }))}
                             />
                         </div>
-                        <Example year={year} />
+                        <div className="dashboard-div"><Example year={year} /></div>
                         <div className='pb-5 mt-4'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                             {
