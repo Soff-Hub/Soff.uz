@@ -6,6 +6,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { BeatLoader } from 'react-spinners';
 import useAuth from '~/hooks/useAuth';
 import { logOut } from '~/store/auth/action';
+import { Tooltip } from 'antd';
 
 
 
@@ -182,7 +183,19 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                 user?.role === "seller"
                     ?
                     <div className='pb-3'>
-                        <h4 className='w-100  border m-0 p-3 rounded-3  text-truncate ' ><strong className={`fs-3 text-${profile?.is_payment === false ? "danger" : "success"}`} ><i className="fa-solid fa-wallet mx-2"></i>  Balans: {addPeriodToThousands(profile?.wallet)} so'm</strong></h4>
+                        <h4 className='w-100  border m-0 p-3 rounded-3  text-truncate mb-2' ><strong className={`fs-3 text-${profile?.is_payment === false ? "danger" : "success"}`} ><i className="fa-solid fa-wallet mx-2"></i>  Balans: {addPeriodToThousands(profile?.wallet)} so'm</strong></h4>
+                        <h5 className='w-100  border m-0 p-3 rounded-3  text-truncate' >
+                            <p className='m-0' style={{ fontWeight: 600, color: 'black' }}>Taklif qilingan foydalanuvhcilar: <span className='text-success'>0</span> ta</p>
+                            <p className='m-0' style={{ fontWeight: 600, color: 'black' }}>Taklif orqali daromadingiz: <span className='text-success'>0</span> so'm</p>
+                            <p className='m-0 mt-3' style={{ display: 'flex', alignItems: 'flex-start', gap: 20 }}>
+                                <a href={'https://t.me/soff_uz_bot'} target='_blank'>Taklif havolani olish <i class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3" style={{ color: '#6492e3' }}></i></a>
+                                <Tooltip title={`Taklif havlasi bu, siz o'z taklif havolangiz orqali ro'yxatdan o'tgan har bir sotuvchi foydasidan, 10% sizga beriladigan bonus`}>
+                                    <i
+                                        style={{ cursor: 'pointer' }}
+                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                </Tooltip>
+                            </p>
+                        </h5>
                     </div>
                     :
                     <></>
