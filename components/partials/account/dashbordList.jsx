@@ -473,7 +473,7 @@ function DashbordList() {
                                 className='me-2'
                             />
                             <Select
-                                defaultValue={{ label: `Barcha oy ma'lumotlari`, value: '01' }}
+                                defaultValue={{ label: `Barcha oy ma'lumotlari`, value: null }}
                                 style={{
                                     width: 300,
                                 }}
