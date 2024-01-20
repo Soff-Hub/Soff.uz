@@ -151,6 +151,21 @@ const ShopItems = ({
         const ID = 'id';
         const PRICE = 'price';
         const DePRICE = '-price';
+        if (e.target.value === '&free_documents=0') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                "&free_documents=0",
+                null
+            );
+            setDataCount(respons.count)
+            return setNewData(respons?.results);
+        }
         if (chaildId) {
             if (e.target.value === 'all') {
                 const respons = await ProductRepository.getFilderProduct(
@@ -192,19 +207,6 @@ const ShopItems = ({
                     null,
                     null,
                     PRICE,
-                    null
-                );
-                setNewData(respons?.results);
-            } else if (e.target.value === 'qimmatdan') {
-                const respons = await ProductRepository.getFilderProduct(
-                    1,
-                    slug,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    DePRICE,
                     null
                 );
                 setNewData(respons?.results);
@@ -396,13 +398,16 @@ const ShopItems = ({
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </label>
-
+                    <span style={{margin: "0 10px"}}>Saralash</span>
                     <select
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
                         <option value="mashhur">
-                            Mashhurlari bo'yicha saralash
+                            Mashhurlari bo'yicha
+                        </option>
+                        <option value="&free_documents=0">
+                            Bepul mahsulotlar
                         </option>
                         <option value="all">Yangilari</option>
                         <option value="arzondan">
