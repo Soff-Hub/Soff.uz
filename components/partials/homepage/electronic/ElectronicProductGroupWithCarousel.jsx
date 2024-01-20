@@ -14,7 +14,7 @@ const ElectronicProductGroupWithCarousel = ({
     // Views
     let productItemsView;
     if (true) {
-        if (data && data?.promotional_sliders.length > 0) {
+        if (data && data?.promotional_sliders?.length > 0) {
             productItemsView = (
                 <div className="d-flex align-content-center row">
                     {data?.promotional_sliders
