@@ -16,6 +16,7 @@ import axios from 'axios';
 const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
     const [category, setCategory] = useState([])
+    const [freeProducts, setFreeProducts] = useState({})
 
     const { setAllCartItem } = useCart();
     const { setAllSaved } = useWishlist();
@@ -26,8 +27,21 @@ const HomeElectronicsPage = () => {
         setCategory(responseData.data.results);
     }
 
+    async function getFreeDocuments() {
+        const responseData = await axios.get(baseUrl + 'customer/free-document/')
+        setFreeProducts({
+            id: 999999999999999,
+            name: "Bepul mahsulotlar",
+            icon: null,
+            image: null,
+            slug: "taqdimotlar/?free_documents=0",
+            promotional_sliders: [...responseData.data]
+        });
+    }
+
     useEffect(() => {
         getProducts()
+        getFreeDocuments()
     }, [])
 
 
@@ -57,7 +71,14 @@ const HomeElectronicsPage = () => {
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}
-
+            <ElectronicProductGroupWithCarousel
+                collectionSlug="electronics-best-sellers"
+                title={freeProducts.name}
+                data={freeProducts}
+                id={freeProducts.id}
+                key={234}
+                slug={freeProducts.slug}
+            />
             {category?.length > 0 ? (
                 category.map((item, index) =>
                     item?.promotional_sliders?.length > 0 && (
