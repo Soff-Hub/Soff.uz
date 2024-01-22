@@ -6,12 +6,17 @@
     gap: 20px;
 
     .payme-logo {
-        object-fit: cover;
-        width: 100%;
+        object-fit: contain;
+        max-width: 130px;
+        // width: 100%;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        gap: 20px;
+        gap: 10px;
+
+        div {
+            padding-left: 25px !important;
+        }
 
         img {
             max-width: 300px;
