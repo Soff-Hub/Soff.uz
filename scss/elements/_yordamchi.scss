@@ -1386,7 +1386,8 @@
 .bannerModal2 {
     position: fixed;
     top: 10%;
-    left: 25%;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
     z-index: 99999;
     opacity: 0;
     height: 100%;
