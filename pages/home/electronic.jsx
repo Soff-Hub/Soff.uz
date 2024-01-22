@@ -34,7 +34,7 @@ const HomeElectronicsPage = () => {
             name: "Bepul mahsulotlar",
             icon: null,
             image: null,
-            slug: "taqdimotlar/?free_documents=0",
+            slug: "bepul-mahsulotlar",
             promotional_sliders: [...responseData.data]
         });
     }

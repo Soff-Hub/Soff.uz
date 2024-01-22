@@ -8,6 +8,8 @@ import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategorySlug } from '~/store/auth/action';
 import useDebounce from '~/hooks/useDebounce';
+import { baseUrl } from '~/repositories/Repository';
+import axios from 'axios';
 
 const ShopItems = ({
     columns = 4,
@@ -36,6 +38,13 @@ const ShopItems = ({
     // const { category_lists: categoryData } = useSelector(state => state.auth)
     const [search, setSearch] = useState('')
     const searchDebounce = useDebounce(search, 1000)
+
+    async function getFreeDocuments(page = 1, searchVal = '') {
+        const responseData = await axios.get(`${baseUrl}customer/documents/?free_documents=0&page=${page}&search=${searchVal}`)
+        if (responseData) {
+            setNewData(responseData?.data?.results);
+        }
+    }
 
 
     async function getCategry() {
@@ -95,12 +104,14 @@ const ShopItems = ({
             getCategry();
         }
 
-        if (categoryData?.every((cat) => cat.slug !== slug)) {
-            setchaildId(slug);
-            setParentId(null)
-        } else {
-            setParentId(slug);
-            setchaildId(null)
+        if (slug !== "bepul-mahsulotlar") {
+            if (categoryData?.every((cat) => cat.slug !== slug)) {
+                setchaildId(slug);
+                setParentId(null)
+            } else {
+                setParentId(slug);
+                setchaildId(null)
+            }
         }
 
     }, [slug])
@@ -145,6 +156,9 @@ const ShopItems = ({
                 setLoad(true);
             }
         }
+        if (slug === "bepul-mahsulotlar") {
+            getFreeDocuments(e, search)
+        }
     };
 
     async function handleSelect(e) {
@@ -154,10 +168,8 @@ const ShopItems = ({
         if (e.target.value === '&free_documents=0') {
             const respons = await ProductRepository.getFilderProduct(
                 1,
-                null,
-                null,
-                null,
-                null,
+                chaildId,
+                parentId,
                 null,
                 null,
                 "&free_documents=0",
@@ -273,43 +285,47 @@ const ShopItems = ({
     }
 
     async function detailSearch(e) {
-        if (chaildId) {
-            const respons = await ProductRepository.getSearchProduct(
-                1,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                e
-            );
-            if (respons) {
-                setDataCount(respons.count);
-                setNewData(respons.results);
-            } else {
-                setLoad(true);
-            }
-        } else if (parentId) {
-            const respons = await ProductRepository.getSearchProduct(
-                1,
-                null,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                e
-            );
-            if (respons) {
-                setDataCount(respons.count);
-                setNewData(respons.results);
-            } else {
-                setLoad(true);
+        if (slug === "bepul-mahsulotlar") {
+            getFreeDocuments(1, e)
+        } else {
+            if (chaildId) {
+                const respons = await ProductRepository.getSearchProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    e
+                );
+                if (respons) {
+                    setDataCount(respons.count);
+                    setNewData(respons.results);
+                } else {
+                    setLoad(true);
+                }
+            } else if (parentId) {
+                const respons = await ProductRepository.getSearchProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    e
+                );
+                if (respons) {
+                    setDataCount(respons.count);
+                    setNewData(respons.results);
+                } else {
+                    setLoad(true);
+                }
             }
         }
     }
@@ -398,8 +414,8 @@ const ShopItems = ({
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </label>
-                    <span style={{margin: "0 10px"}}>Saralash</span>
-                    <select
+                    {slug !== "bepul-mahsulotlar" && <span style={{ margin: "0 10px" }}>Saralash</span>}
+                    {slug !== "bepul-mahsulotlar" && <select
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
@@ -416,7 +432,7 @@ const ShopItems = ({
                         <option value="qimmatdan">
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
-                    </select>
+                    </select>}
                 </div>
             </div>
             <div className="ps-shopping__content pagination-product-box">

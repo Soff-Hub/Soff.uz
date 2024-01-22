@@ -4,6 +4,8 @@ import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategorySlug } from '~/store/auth/action';
+import axios from 'axios';
+import { baseUrl } from '~/repositories/Repository';
 
 const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount }) => {
     const Router = useRouter();
@@ -21,6 +23,18 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount 
         const responseData = await ProductRepository.getCategoryParent();
         if (responseData?.length > 0) {
             dispatch(CategorySlug(responseData?.data?.results));
+        }
+    }
+
+    async function getFreeDocuments() {
+        const responseData = await axios.get(`${baseUrl}customer/documents/?free_documents=0&page=${1}`)
+        if (responseData) {
+            setCount(responseData.data.count)
+            setDefVal([responseData?.data?.min_price, responseData?.data?.max_price]);
+            setMax(responseData?.data?.max_price);
+            setMin(responseData?.data?.min_price);
+            setFilteredData(responseData?.data?.results);
+            setCount(responseData?.data?.count)
         }
     }
 
@@ -123,18 +137,21 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount 
             setCount(respons?.data?.count)
         }
     };
-    
+
     useEffect(() => {
         if (categoryData?.length === 0) {
             getCategry();
         }
-        
-        if (categoryData?.every((cat) => cat.slug !== slug)) {
-            setchaildId(slug);
-            setParentId(null);
+        if (slug === "bepul-mahsulotlar") {
+            getFreeDocuments()
         } else {
-            setParentId(slug);
-            setchaildId(null);
+            if (categoryData?.every((cat) => cat.slug !== slug)) {
+                setchaildId(slug);
+                setParentId(null);
+            } else {
+                setParentId(slug);
+                setchaildId(null);
+            }
         }
     }, [slug]);
 
