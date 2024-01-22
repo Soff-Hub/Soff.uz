@@ -78,7 +78,7 @@ function FormCheckoutInformationOne() {
                         alt="payme"
                         width="100%"
                         height="40px"
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'contain' }}
                     />
                 </div>
             </div>
