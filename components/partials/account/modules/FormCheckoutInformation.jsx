@@ -63,6 +63,7 @@ function FormCheckoutInformation() {
         if (respons) {
             const a = document.createElement('a')
             a.href = `${respons?.data?.url}`
+            a.rel = 'noopener noreferrer'
             a.target = '_blank'
             a.click()
             a.remove()
