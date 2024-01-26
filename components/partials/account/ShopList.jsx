@@ -31,7 +31,7 @@ function Notifications() {
         GetItems(pageNum, search)
     }
 
-
+    console.log('sotuvchi', data);
     useEffect(() => {
         GetItems(currPage, search)
     }, [searchDebounce])
@@ -104,6 +104,15 @@ function Notifications() {
             dataIndex: 'created_at',
             key: 'created_at',
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Hisob',
+            dataIndex: 'wallet',
+            key: 'wallet',
+            render: (wallet) => (
+                <span key={wallet}> {wallet} so'm </span>
+            )
+
         },
         {
             title: 'Holat',

@@ -72,7 +72,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === "admin") {
-            setSocket(new WebSocket("wss://api.soff.uz/ws/admin-offer/"));
+            setSocket(new WebSocket("wss://api.soff.uz/ws/admin-offer/" + user?.access));
         }
         else {
             setSocket(new WebSocket("wss://api.soff.uz/ws/seller-offer/" + user?.access));
@@ -89,7 +89,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === "admin") {
-            setSocket1(new WebSocket("wss://api.soff.uz/ws/admin-document/"));
+            setSocket1(new WebSocket("wss://api.soff.uz/ws/admin-document/" + user?.access));
         }
     }, [])
 
@@ -102,7 +102,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, [socket2])
 
     useEffect(() => {
-        setSocket2(new WebSocket("wss://api.soff.uz/ws/seller-document/"));
+        setSocket2(new WebSocket("wss://api.soff.uz/ws/seller-document/" + user?.access));
     }, [])
 
 
@@ -118,7 +118,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === "admin") {
-            setSocketApplication(new WebSocket("wss://api.soff.uz/ws/admin-application/"));
+            setSocketApplication(new WebSocket("wss://api.soff.uz/ws/admin-application/" + user?.access));
         }
         else {
             setSocketApplication(new WebSocket("wss://api.soff.uz/ws/seller-application/" + user?.access));
@@ -194,7 +194,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                         style={{ cursor: 'pointer' }}
                                         className="fa-regular fa-circle-question mt-2"></i>
                                 </Tooltip>
-                                <a href={'https://t.me/soff_uz_bot'} target='_blank'>Taklif havolani olish <i class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3" style={{ color: '#6492e3' }}></i></a>
+                                <a href={'https://t.me/soff_uz_bot'} target='_blank'>Taklif havolani olish <i class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3" style={{ color: '#6492e3', fontSize:'16px' }}></i></a>
                             </p>
                         </h5>
                     </div>
