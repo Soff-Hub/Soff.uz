@@ -19,6 +19,7 @@ function AccountUserPages() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [selectVal, setSelectVal] = useState(null);
     const [selectValStatus, setSelectValStatus] = useState("");
+    const [customers_count, setCustomers_Count] = useState('')
 
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
@@ -30,6 +31,7 @@ function AccountUserPages() {
         const ItemsData = await GetRepository.getUsersLists(page, status, search, user?.access);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
+        setCustomers_Count(ItemsData.count)
     }
 
     async function handleItemsPost() {
@@ -111,6 +113,15 @@ function AccountUserPages() {
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
         {
+            title: 'Sotib olingan mahsulotlar soni',
+            dataIndex: 'purchased_count',
+            key: 'purchased_count',
+            render: (purchased_count) => (
+                <span className="truncate whitespace-nowrap"> {purchased_count === 0 ? 0 : purchased_count + ' ta' }</span>
+
+            ),
+        },
+        {
             title: 'Holat',
             dataIndex: 'auth_status',
             key: 'address',
@@ -158,6 +169,12 @@ function AccountUserPages() {
                                         </select>
                                         <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
                                     </div>
+                                    {
+                                        user.role === 'admin' ?
+                                        <h4 className='ps-2' >Barcha xaridorlar soni {customers_count} ta </h4>
+                                        : ''
+                                    }
+
 
                                     <Table dataSource={data} scroll={{ x: 900 }} columns={columns} pagination={false} />
                                     <Pagination total={pageCount} defaultCurrent={currPage}
