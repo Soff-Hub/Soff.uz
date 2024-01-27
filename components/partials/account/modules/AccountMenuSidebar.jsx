@@ -72,7 +72,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === "admin") {
-            setSocket(new WebSocket("wss://api.soff.uz/ws/admin-offer/" + user?.access));
+            setSocket(new WebSocket("wss://api.soff.uz/ws/admin-offer/"));
         }
         else {
             setSocket(new WebSocket("wss://api.soff.uz/ws/seller-offer/" + user?.access));
@@ -89,7 +89,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === "admin") {
-            setSocket1(new WebSocket("wss://api.soff.uz/ws/admin-document/" + user?.access));
+            setSocket1(new WebSocket("wss://api.soff.uz/ws/admin-document/"));
         }
     }, [])
 
@@ -102,7 +102,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, [socket2])
 
     useEffect(() => {
-        setSocket2(new WebSocket("wss://api.soff.uz/ws/seller-document/" + user?.access));
+        if (user.role !== "admin"){
+            setSocket2(new WebSocket("wss://api.soff.uz/ws/seller-document/" + user?.access));
+        }
     }, [])
 
 
@@ -118,7 +120,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === "admin") {
-            setSocketApplication(new WebSocket("wss://api.soff.uz/ws/admin-application/" + user?.access));
+            setSocketApplication(new WebSocket("wss://api.soff.uz/ws/admin-application/"));
         }
         else {
             setSocketApplication(new WebSocket("wss://api.soff.uz/ws/seller-application/" + user?.access));

@@ -5,15 +5,16 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { fileDownloader } from '~/utilities/common-helpers';
+import { fileDownloader, fileDownloaderSale } from '~/utilities/common-helpers';
 
-const ModuleDetailShoppingActions = ({ product }) => {
+const ModuleDetailShoppingActions = ({ product, document }) => {
+    console.log('document => ', document);
+
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
     const statee = useSelector((state) => state.auth);
-    console.log('redux', statee);
     const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
@@ -23,13 +24,13 @@ const ModuleDetailShoppingActions = ({ product }) => {
     };
     const hideModalOk = () => {
         setOpen(false);
-        Router.push('/account/shopping-cart')
+        Router.push('/account/shopping-cart');
     };
 
     function handleAddItemToCart(e) {
         e.preventDefault();
         setCartOneItem(product.id);
-        showModal()
+        showModal();
     }
 
     const state = useSelector((state) => state.auth.user?.access);
@@ -44,7 +45,6 @@ const ModuleDetailShoppingActions = ({ product }) => {
         }
     }
 
-
     const handleAddItemToWishlist = async (e) => {
         e.preventDefault();
         addSavedItem(product.id);
@@ -52,7 +52,6 @@ const ModuleDetailShoppingActions = ({ product }) => {
             removeSavedItem(product.id);
         }
     };
-
 
     if (true) {
         return (
@@ -64,13 +63,13 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     onCancel={hideModal}
                     cancelButtonProps={{
                         style: {
-                            color: '#000'
-                        }
+                            color: '#000',
+                        },
                     }}
                     okButtonProps={{
                         style: {
                             color: '#fff',
-                        }
+                        },
                     }}
                     okText="Savatga o'tish"
                     cancelText="Xaridlarni davom etirish">
@@ -79,37 +78,58 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
                 <div className="ps-product__shopping">
-                    {
-                        product.discount_price > 0 ? <>
-                            <a
-                                className="ps-btn ps-btn--black max-class"
-                                href="#"
-                                onClick={(e) => handleAddItemToCart(e)}>
-                                Savatga qo'shish
-                            </a>
-                            <a className="ps-btn max-class" href="#" onClick={(e) => handleBuynow(e)}>
-                                1 klikda sotib oling
-                            </a>
-                        </> : <a
+                    {product.discount_price > 0 ? (
+                        <>
+                            {document.file_url ? (
+                                <a
+                                    className="ps-btn ps-btn--black max-class"
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        fileDownloaderSale(document);
+                                    }}>
+                                    Bepul yuklab olish
+                                </a>
+                            ) : (
+                                <>
+                                    <a
+                                        className="ps-btn ps-btn--black max-class"
+                                        href="#"
+                                        onClick={(e) => handleAddItemToCart(e)}>
+                                        Savatga qo'shish
+                                    </a>
+                                    <a
+                                        className="ps-btn max-class"
+                                        href="#"
+                                        onClick={(e) => handleBuynow(e)}>
+                                        1 klikda sotib oling
+                                    </a>
+                                </>
+                            )}
+                        </>
+                    ) : (
+                        <a
                             className="ps-btn ps-btn--black max-class"
                             href="#"
                             onClick={(e) => {
-                                e.preventDefault()
-                                fileDownloader(product)
+                                e.preventDefault();
+                                fileDownloader(product);
                             }}>
                             Bepul yuklab olish
                         </a>
-                    }
+                    )}
                     <div className="ps-product__actions">
                         <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
                             <i
-                                className={`${wishlist?.some(
-                                    (item) =>
-                                        Number(item.id) === Number(product.id)
-                                )
-                                    ? 'fa-solid fa-heart text-danger'
-                                    : 'icon-heart'
-                                    } `}></i>
+                                className={`${
+                                    wishlist?.some(
+                                        (item) =>
+                                            Number(item.id) ===
+                                            Number(product.id)
+                                    )
+                                        ? 'fa-solid fa-heart text-danger'
+                                        : 'icon-heart'
+                                } `}></i>
                         </a>
                     </div>
                 </div>

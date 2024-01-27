@@ -109,10 +109,14 @@ function DashbordList() {
         },
         {
             title: 'Sotuvchi',
-            dataIndex: 'seller',
+            dataIndex: 'seller_info',
             key: 'address',
-            render: (seller) => (
-                <span><i className="fa-solid fa-child-reaching text-primary-emphasis"></i> {seller?.first_name}</span>
+            render: (seller_info) => (
+                <div className='d-flex flex-column'>
+                            <span className="truncate whitespace-nowrap"> {seller_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {seller_info.email_or_phone}</span>
+                </div>
+
             ),
         },
         {
@@ -144,26 +148,24 @@ function DashbordList() {
     const columnsOrders = [
         {
             title: 'Buyurtmachi',
-            dataIndex: 'user_name',
+            dataIndex: 'customer_info',
             key: 'age',
+            render: (customer_info) => (
+                <div className='d-flex flex-column'>
+                            <span className="truncate whitespace-nowrap"> {customer_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                </div>
+
+            ),
         },
         user?.role === "admin" ? {
-            title: 'Telefon raqam yoki email',
-            dataIndex: 'data',
+            title: 'Sotuvchi',
+            dataIndex: 'seller_info',
             key: 'age',
-            render: (data) => (
+            render: (seller_info) => (
                 <div className='d-flex flex-column'>
-                    {
-                        data.phone === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
-                    }
-                    {
-                        data.email === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.email}</span>
-                    }
-
+                            <span className="truncate whitespace-nowrap"> {seller_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {seller_info.email_or_phone}</span>
                 </div>
 
             ),
@@ -171,18 +173,18 @@ function DashbordList() {
             : <></>,
         {
             title: 'Buyurtma nomi',
-            dataIndex: 'info',
+            dataIndex: 'document',
             key: 'age',
             width: 300,
-            render: (info) => <Link href={`/product/${info[0].slug}`}><a>{info[0].title}</a></Link>,
+            render: (document) => <Link href={`/product/${document.slug}`}><a>{document.title}</a></Link>,
         },
         user.role === "admin" ?
             {
                 title: 'Narx',
-                dataIndex: 'discount_price',
+                dataIndex: 'price',
                 key: 'address',
-                render: (total_price) => (
-                    <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
+                render: (price) => (
+                    <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
                 ),
             }
             : <></>,
@@ -205,15 +207,22 @@ function DashbordList() {
     const columnsOrdersSeller = [
         {
             title: 'Buyurtmachi',
-            dataIndex: 'user_name',
+            dataIndex: 'customer_info',
             key: 'age',
+            render: (customer_info) => (
+                <div className='d-flex flex-column'>
+                            <span className="truncate whitespace-nowrap"> {customer_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                </div>
+
+            )
         },
         {
             title: 'Buyurtma nomi',
-            dataIndex: 'info',
+            dataIndex: 'document',
             key: 'age',
             width: 300,
-            render: (info) => <Link href={`/product/${info[0].slug}`}><a>{info[0].title}</a></Link>,
+            render: (document) => <Link href={`/product/${document.slug}`}><a>{document.title}</a></Link>,
         },
         {
             title: 'Buyurtma sanasi',
@@ -223,10 +232,10 @@ function DashbordList() {
         },
         {
             title: 'Narx',
-            dataIndex: 'discount_price',
+            dataIndex: 'price',
             key: 'address',
-            render: (total_price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
         {
