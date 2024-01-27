@@ -8,34 +8,64 @@ import Meta from '~/components/shared/headers/Meta';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import { baseUrl } from '~/repositories/Repository';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import ProductRepository from '~/repositories/ProductRepository';
+
+export async function getServerSideProps(context) {
+    console.log('===>', context.token);
+
+    try {
+        const request = await fetch(
+            baseUrl + `customer/documents/${context.query.pid}/`
+        );
+        const product = await request.json();
+
+        const SimilarRes = await fetch(
+            baseUrl + `customer/similar/${context.query.pid}/`
+        );
+        const similar = await SimilarRes.json();
+
+        return {
+            props: {
+                product,
+                similar,
+            },
+        };
+    } catch (error) {
+        console.error('Error fetching data:', error);
+
+        return {
+            props: {
+                product: null,
+                similar: null,
+            },
+        };
+    }
+}
 
 const ProductDefaultPage = ({ product, similar }) => {
-    // const router = useRouter();
-    // const { pid } = router.query;
-    // const [product, setProduct] = useState(null);
-    // const [similar, setSimilar] = useState([]);
-    // const [loading, setLoading] = useState(false);
+    const router = useRouter();
+    const { pid } = router.query;
+    const [document, setDocument] = useState('');
+    const { user } = useSelector((state) => state.auth);
 
-    // async function getProduct() {
-    //     setLoading(true);
-    //     const responseData = await ProductRepository.getProductsById(pid);
-    //     if (responseData) {
-    //         setProduct(responseData);
-    //     }
-    // }
-    // async function getSimilar() {
-    //     setLoading(true);
-    //     const responsSimilar = await ProductRepository.getProductSimilarSlug(pid)
-    //     if (responsSimilar) {
-    //         setSimilar(responsSimilar);
-    //     }
-    // }
+    async function getDocument() {
+        const responsDocumentFile = await ProductRepository.getProductFileSlug(
+            pid,
+            user?.access
+        );
+        if (responsDocumentFile) {
+            setDocument(responsDocumentFile);
+        }
+    }
 
-    // useEffect(() => {
-    //     getProduct();
-    //     getSimilar()
-    // }, [pid]);
-
+    useEffect(() => {
+        if (user?.access) {
+            getDocument();
+        }
+    }, [user?.access]);
 
     const breadCrumb = [
         {
@@ -43,18 +73,16 @@ const ProductDefaultPage = ({ product, similar }) => {
             url: '/',
         },
         {
-            text: product.title
-                ? product.title
-                : 'Loading...',
+            text: product.title ? product.title : 'Loading...',
         },
     ];
-    
-    useEffect(()=>{
-        document.addEventListener('selectstart', function (e) {
-            e.preventDefault();
-        });
-    
-    },[])
+
+    // useEffect(() => {
+    //     document.addEventListener('selectstart', function (e) {
+    //         e.preventDefault();
+    //     });
+    // }, []);
+
 
     return (
         <>
@@ -75,6 +103,7 @@ const ProductDefaultPage = ({ product, similar }) => {
                                     {product ? (
                                         <ProductDetailFullwidth
                                             product={product}
+                                            document={document}
                                         />
                                     ) : (
                                         <SkeletonProductDetail />
@@ -97,42 +126,5 @@ const ProductDefaultPage = ({ product, similar }) => {
         </>
     );
 };
-
-// export async function getStaticPaths() {
-//     const res = await fetch(baseUrl + 'customer/documents/');
-//     const documentSlug = await res.json();
-//     console.log('doc slug', documentSlug);
-//     const path = documentSlug.results.map((item) => ({
-//         params: { pid: item.slug },
-//     }));
-//     return { path, fallback: false };
-// }
-
-export async function getServerSideProps(context) {
-    try {
-        const request = await fetch(baseUrl + `customer/documents/${context.query.pid}/`);
-        const product = await request.json();
-
-        const SimilarRes = await fetch(baseUrl + `customer/similar/${context.query.pid}/`);
-        const similar = await SimilarRes.json();
-
-        return {
-            props: {
-                product,
-                similar
-            }
-        };
-    } catch (error) {
-        console.error("Error fetching data:", error);
-
-        return {
-            props: {
-                product: null,
-                similar: null
-            }
-        };
-    }
-}
-
 
 export default ProductDefaultPage;

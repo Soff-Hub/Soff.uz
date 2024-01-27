@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 
-const ProductDetailFullwidth = ({ product }) => {
+const ProductDetailFullwidth = ({ product, document }) => {
     const [tag, setTag] = useState([]);
 
     const searchTag = (e) => {
@@ -44,7 +44,7 @@ const ProductDetailFullwidth = ({ product }) => {
                         )}
                     </div>
                     <ModuleProductDetailDescription product={product} />
-                    <ModuleDetailShoppingActions product={product} />
+                    <ModuleDetailShoppingActions product={product} document={document} />
                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
                         {tag?.length > 0 &&
                             tag.map((item, i) => (

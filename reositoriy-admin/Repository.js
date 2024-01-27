@@ -1,6 +1,6 @@
 import axios from 'axios';
-const baseDomain = 'https://api.soff.uz/api/v1/seller/'; 
-const baseDomainProfile = 'https://api.soff.uz/'; 
+const baseDomain = 'http://192.168.1.20/api/v1/seller/'; 
+const baseDomainProfile = 'http://192.168.1.20/'; 
 export const baseUrlCustomer = 'https://api.soff.uz/api/v1/'
 
 
