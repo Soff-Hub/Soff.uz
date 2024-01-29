@@ -144,6 +144,12 @@
     padding: 6px;
 }
 
+.ck-toolbar__items{
+.ck-file-dialog-button{
+ display: none !important;
+}
+}
+
 .accordion-button {
     font-weight: 400;
     font-size: 13px;
