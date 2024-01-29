@@ -63,6 +63,11 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-file-signature',
     },
     {
+        text: "Pochtaga xabar yuborish",
+        url: '/account/email',
+        icon: 'fa-solid fa-envelope',
+    },
+    {
         text: 'Pemium Sotuvchilar',
         url: '/account/pemium-sellers',
         icon: 'fa-solid fa-star',
