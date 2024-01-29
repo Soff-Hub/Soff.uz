@@ -7,31 +7,32 @@ import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
+import EmailLists from '~/components/partials/account/EmailLists';
 
-const AccountOrdersPage = () => {
+const AccountEmail = () => {
     const breadCrumb = [
         {
             text: 'Home',
             url: '/',
         },
         {
-            text: 'Pemium Sotuvchilar',
+            text: 'Pochtaga Xabar Yuborish',
         },
     ];
     const { user } = useSelector(state => state.auth)
     return (
-        user?.role === 'admin' ?
+        user?.role === 'admin'?
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Pemium Sotuvchilar"}
+                        title={"Soff | Pochtaga Xabar Yuborish"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <PremiumSellers />
+                    <EmailLists />
                 </div>
             </PageContainer> : user?.access ? <Page404 /> : <Selection />
 
     );
 };
 
-export default AccountOrdersPage;
+export default AccountEmail;
