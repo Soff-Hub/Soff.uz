@@ -4,23 +4,77 @@ import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import Product from '~/components/elements/products/Product';
 import Meta from '~/components/shared/headers/Meta';
-import { Pagination, Table } from 'antd';
+import { Pagination, Select, Table } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
+import { useRouter } from 'next/router';
+import ChartSeller from '~/components/partials/account/ChartSeller';
 
 const SellerAccount = ({ seller }) => {
     const [data, setData] = useState([]);
-    const [search, setSerach] = useState([]);
-    const [deleteIdEdit, setDeleteIdEdit] = useState(null);
-    const [selectVal, setSelectVal] = useState(null);
-    const [selectValStatus, setSelectValStatus] = useState('');
-    const [customers_count, setCustomers_Count] = useState('');
-
+    const [dashboardData, setDashboardData] = useState([]);
+    // const [search, setSerach] = useState([]);
+    // const [deleteIdEdit, setDeleteIdEdit] = useState(null);
+    // const [selectVal, setSelectVal] = useState(null);
+    // const [selectValStatus, setSelectValStatus] = useState('');
+    const [tableData, setTableData] = useState([]);
+    const router = useRouter();
+    const { pid } = router.query;
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
 
     const { user } = useSelector((state) => state.auth);
+
+    const [year, setYear] = useState(new Date().getFullYear());
+    const [month, setMonth] = useState(null);
+
+    const labels = [
+        { name: 'Yanvar', value: '01' },
+        { name: 'Fevral', value: '02' },
+        { name: 'Mart', value: '03' },
+        { name: 'Aprel', value: '04' },
+        { name: 'May', value: '05' },
+        { name: 'Iyun', value: '06' },
+        { name: 'Iyul', value: '07' },
+        { name: 'Avgust', value: '08' },
+        { name: 'Sentyabr', value: '09' },
+        { name: 'Oktyabr', value: '10' },
+        { name: 'Noyabr', value: '11' },
+        { name: 'Dekabr', value: '12' },
+    ];
+
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+
+    const handleChangeYear = (value) => {
+        setYear(+value);
+    };
+    const handleChangeMonth = (value) => {
+        setMonth(value);
+    };
+
+    const getDashboardData = async (id, token) => {
+        if (token) {
+            const ItemsData = await GetRepository.getSellerDashboard(id, token);
+            setDashboardData(ItemsData);
+        }
+    };
 
     const breadCrumb = [
         {
@@ -32,87 +86,72 @@ const SellerAccount = ({ seller }) => {
         },
     ];
 
-    async function GetItemsUsers(page, status, search) {
-        setCurrPage(page);
-        const ItemsData = await GetRepository.getUsersLists(
-            page,
-            status,
-            search,
-            user?.access
-        );
-        setPageCount(ItemsData.count);
-        setData([...ItemsData.results]);
-        setCustomers_Count(ItemsData.count);
+    async function GetSellerList(pid, token) {
+        // setCurrPage(page);
+        console.log('token', token);
+        if (token) {
+            const ItemsData = await GetRepository.getSellerLists(pid, token);
+            // setPageCount(ItemsData.count);
+            setData(ItemsData);
+            setTableData(ItemsData.documents);
+        }
     }
 
     useEffect(() => {
-        GetItemsUsers(currPage, selectValStatus, search);
-    }, [selectValStatus]);
+        if (user?.access && pid) {
+            GetSellerList(pid, user?.access);
+            getDashboardData(pid, user?.access);
+        }
+    }, [pid]);
 
     const columns = [
         {
-            title: 'Mahsulotlar',
-            dataIndex: 'first_name',
-            key: 'age',
+            title: 'Mahsulot',
+            dataIndex: 'title',
+            key: 'title',
             render: (title) => (
                 <span className="truncate whitespace-nowrap"> {title}</span>
             ),
         },
         {
-            title: 'Xaridor',
-            dataIndex: 'data',
-            key: 'address',
-            render: (data) => (
-                <div className="d-flex flex-column">
-                    {data.phone === 'None' ? (
-                        <></>
-                    ) : (
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {data.phone}
-                        </span>
-                    )}
-                    {data.email === 'None' ? (
-                        <></>
-                    ) : (
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {data.email}
-                        </span>
-                    )}
-                </div>
-            ),
-        },
-        {
-            title: "Yuklangan sana / Sotilgan sana ",
+            title: 'Yuklangan sana',
             dataIndex: 'created_at',
             key: 'created_at',
             render: (created_at) => (
                 <span key={created_at}>
-                    {' '}
                     <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
                     <CalculateTimeDifference targetDate={created_at} />
                 </span>
             ),
         },
         {
-            title: 'Arizalari',
-            dataIndex: 'purchased_count',
-            key: 'purchased_count',
-            render: (purchased_count) => (
-                <span className="truncate whitespace-nowrap">
-                    {' '}
-                    {purchased_count === 0 ? 0 : purchased_count + ' ta'}
+            title: 'Buyurtmalar soni',
+            dataIndex: 'approved_count',
+            key: 'approved_count',
+            render: (approved_count) => (
+                <span key={approved_count}>
+                    {approved_count !== 0 ? approved_count + " ta" : 0}
                 </span>
             ),
         },
+        // {
+        //     title: 'Arizalari',
+        //     // dataIndex: 'purchased_count',
+        //     key: 'purchased_count',
+        //     render: (purchased_count) => (
+        //         <span className="truncate whitespace-nowrap">
+        //             {' '}
+        //             {purchased_count === 0 ? 0 : purchased_count + ' ta'}
+        //         </span>
+        //     ),
+        // },
         {
             title: 'Holat',
-            dataIndex: 'auth_status',
-            key: 'address',
-            render: (auth_status) => (
+            dataIndex: 'status',
+            key: 'status',
+            render: (status) => (
                 <span>
-                    {auth_status === 'code_verified' ? (
+                    {status === 'approved' ? (
                         <span>
                             <i className="fa-solid text-success fa-circle-check"></i>{' '}
                             Faol
@@ -144,13 +183,12 @@ const SellerAccount = ({ seller }) => {
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
-                title={`Soff | Sotuvchi ${seller?.results[0]?.seller?.first_name} ${seller?.results[0]?.seller?.last_name}`}
-                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${seller?.results[0]?.seller?.first_name} ${seller?.results[0]?.seller?.last_name}ning barcha mahsulotlarini ko'rishingiz mumkin`}
+                title={`Soff | } `}
+                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan  ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
-
             <div className="ps-product-list mb-5">
                 <div className="container">
-                    <div className="pb-4  d-flex gap-3 overflow-x-scroll">
+                    <div className="py-4  d-flex gap-3 overflow-x-scroll">
                         <div>
                             <div
                                 className=" bg-white py-5 px-4"
@@ -170,12 +208,12 @@ const SellerAccount = ({ seller }) => {
                                         <i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i>
                                     </div>
                                 </div>
-                                {false ? (
+                                {dashboardData?.total_approved_amount >= 0  ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
                                         {addPeriodToThousands(
-                                            data?.all_revenue
+                                            dashboardData?.total_approved_amount
                                         )}{' '}
                                         so'm
                                     </h4>
@@ -209,12 +247,13 @@ const SellerAccount = ({ seller }) => {
                                         <i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i>
                                     </div>
                                 </div>
-                                {false ? (
+                                {dashboardData?.days_approved_amount_30 >= 0
+                        ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
                                         {addPeriodToThousands(
-                                            data?.last_month_revenue
+                                            dashboardData?.days_approved_amount_30
                                         )}{' '}
                                         so'm
                                     </h4>
@@ -248,12 +287,12 @@ const SellerAccount = ({ seller }) => {
                                         <i className="fa-solid fa-sack-dollar fa-2x text-warning"></i>
                                     </div>
                                 </div>
-                                {false ? (
+                                {dashboardData?.todays_approved_amount >= 0 ? (
                                     <h4 className="mt-5">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
                                         {addPeriodToThousands(
-                                            data?.today_revenue
+                                            dashboardData?.todays_approved_amount
                                         )}{' '}
                                         so'm
                                     </h4>
@@ -287,10 +326,10 @@ const SellerAccount = ({ seller }) => {
                                         <i className="fa-solid fa-truck fa-2x text-danger"></i>
                                     </div>
                                 </div>
-                                {false ? (
+                                {dashboardData?.total_approved_count >= 0 ? (
                                     <h4 className="mt-5">
                                         {addPeriodToThousands(
-                                            data?.total_order
+                                            dashboardData?.total_approved_count
                                         )}{' '}
                                         ta
                                     </h4>
@@ -306,13 +345,64 @@ const SellerAccount = ({ seller }) => {
                             </div>
                         </div>
                     </div>
-
-                    <h4 className="pt-5 col-lg-12 d-flex align-items-center gap-5">
-                        <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
-                        <span> Doniyor Eshmamatov</span> |
-                        edoniyorbekdev@gmail.com |
-                        <span> 7/23 ta</span>
-                    </h4>
+                    <div className="row my-5">
+                        <div className="pt-5 col-lg-4">
+                            <i className=" fa-3x text-info fa-solid fa-circle-user mb-3"></i>
+                            <h4> Doniyor Eshmamatov</h4>
+                            <span className="mb-4 d-block">
+                                {' '}
+                                edoniyorbekdev@gmail.com
+                            </span>
+                            <h4> - Jami mahsulotlari soni {data?.total_product} ta</h4>
+                            <h4> - Taklif qilinganlar soni</h4>
+                            <h4> - Taklif orqali daromad</h4>
+                        </div>
+                        <div className="col-8">
+                            <div className="dashboard-div mb-2">
+                                <Select
+                                    defaultValue={{
+                                        value: +year,
+                                        label: `${+year}-yil bo'yicha hisobotlar`,
+                                    }}
+                                    style={{
+                                        width: 300,
+                                    }}
+                                    onChange={handleChangeYear}
+                                    options={[
+                                        2023, 2024, 2025, 2026, 2027, 2028,
+                                        2029, 2030, 2031, 2032, 2033,
+                                    ].map((el) => ({
+                                        value: +el,
+                                        label: `${+el}-yil bo'yicha hisobotlar`,
+                                    }))}
+                                    className="me-2"
+                                />
+                                <Select
+                                    defaultValue={{
+                                        label: `Barcha oy ma'lumotlari`,
+                                        value: null,
+                                    }}
+                                    style={{
+                                        width: 300,
+                                    }}
+                                    onChange={handleChangeMonth}
+                                    options={[
+                                        {
+                                            label: `Barcha oy ma'lumotlari`,
+                                            value: null,
+                                        },
+                                        ...labels.map((el) => ({
+                                            label: `${el.name} oyi ma'lumotlari`,
+                                            value: el.value,
+                                        })),
+                                    ]}
+                                />
+                            </div>
+                            <div className="dashboard-div">
+                                <ChartSeller year={year} month={month} />
+                            </div>
+                        </div>
+                    </div>
 
                     <div className="row ">
                         <div className="col-lg-12 pb-5">
@@ -320,7 +410,7 @@ const SellerAccount = ({ seller }) => {
                                 <div className="ps-section--account-setting">
                                     <div className="ps-section__content">
                                         <Table
-                                            dataSource={data}
+                                            dataSource={tableData}
                                             scroll={{ x: 900 }}
                                             columns={columns}
                                             pagination={false}
@@ -347,17 +437,17 @@ const SellerAccount = ({ seller }) => {
     );
 };
 
-export async function getServerSideProps({ query }) {
-    const resquest = await fetch(
-        `http://192.168.1.24/api/v1/seller/admin/seller-detail/${query.pid}`
-    );
-    const seller = await resquest.json();
+// export async function getServerSideProps({ query }) {
+//     const resquest = await fetch(
+//         `http://192.168.1.24/api/v1/seller/admin/seller-detail/${query.pid}`
+//     );
+//     const seller = await resquest.json();
 
-    return {
-        props: {
-            seller,
-        },
-    };
-}
+//     return {
+//         props: {
+//             seller,
+//         },
+//     };
+// }
 
 export default SellerAccount;
