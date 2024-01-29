@@ -43,7 +43,7 @@ function getMonthName(monthNumber) {
             monthName = 'Dekabr';
             break;
         default:
-            monthName = 'bunaqa oy yuq'; // If an invalid month name is provided
+            monthName = 'bunday oy yuq'; // If an invalid month name is provided
             break;
     }
     return monthName;
@@ -62,6 +62,8 @@ function Example({ year, month }) {
         const arr3 = []
         const ItemsChartData = await GetRepository.getChartLists(user?.access, year, month);
         if (ItemsChartData) {
+            console.log('chart data', ItemsChartData);
+            
             for (let i = 0; i < ItemsChartData.length; i++) {
                 arr.push(ItemsChartData[i].total_price);
                 arr2.push(ItemsChartData[i].count);
