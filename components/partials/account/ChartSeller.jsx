@@ -50,7 +50,7 @@ function getMonthName(monthNumber) {
 }
 
 
-function Example({ year, month }) {
+function ChartSeller({ year, month }) {
     const { user } = useSelector((state) => state.auth);
 
     const [tableData, setTableData] = useState({ data: [], count: [] });
@@ -132,4 +132,4 @@ function Example({ year, month }) {
     );
 }
 
-export default Example;
+export default ChartSeller;
