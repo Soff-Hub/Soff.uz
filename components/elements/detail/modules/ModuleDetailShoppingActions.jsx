@@ -78,9 +78,9 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
                     <p></p>
                 </Modal>
                 <div className="ps-product__shopping">
-                    {product.discount_price > 0 ? (
+                    {product?.discount_price > 0 ? (
                         <>
-                            {document.file_url ? (
+                            {document?.file_url ? (
                                 <a
                                     className="ps-btn ps-btn--black max-class"
                                     href="#"
