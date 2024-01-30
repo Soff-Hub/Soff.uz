@@ -18,6 +18,7 @@ function Notifications() {
     const [profile, setProfile] = useState(null);
     const [profilePassword, setProfilePassword] = useState(null);
     const [profilePassword1, setProfilePassword2] = useState(null);
+    const [image, setImage] = useState('');
     const divRef = useRef(null);
     const [copyIcon, setCopyIcon] = useState('fa-regular fa-copy');
     const handleCopyClick = () => {
@@ -43,12 +44,17 @@ function Notifications() {
     }
 
     useEffect(() => ProfileUsers(), [renderProfile]);
-
     async function handleClickEdit(e) {
         e.preventDefault();
         setLoading(true);
+
+        const formData = new FormData()
+        formData.append("first_name", profileData?.first_name ? profileData?.first_name : profile?.first_name )
+        formData.append("last_name", profileData?.last_name ? profileData?.last_name : profile?.last_name )
+        formData.append("image", image)
+
         const ItemsData = await PatchRepository.getPatchProfile(
-            profileData,
+            formData,
             user?.access
         );
         setRenderProfile(!renderProfile);
@@ -61,6 +67,8 @@ function Notifications() {
         });
         modal.update;
     }
+
+
     async function handleClickEditChangePassword(e) {
         e.preventDefault();
         setLoading1(true);
@@ -87,7 +95,7 @@ function Notifications() {
             modal.update;
         }
     }
-
+console.log(image);
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -119,7 +127,7 @@ function Notifications() {
                                                         }
                                                         required
                                                         placeholder="Ismingiz"
-                                                        className="form-control rounded-3 col-md-4"
+                                                        className="form-control rounded-3 col-md-3"
                                                         onChange={(e) =>
                                                             setProfileData(
                                                                 (prev) => ({
@@ -138,7 +146,7 @@ function Notifications() {
                                                             profile?.last_name
                                                         }
                                                         placeholder="Familiyangiz"
-                                                        className="form-control rounded-3 col-md-4"
+                                                        className="form-control rounded-3 col-md-3"
                                                         onChange={(e) =>
                                                             setProfileData(
                                                                 (prev) => ({
@@ -150,6 +158,24 @@ function Notifications() {
                                                             )
                                                         }
                                                     />
+                                                   <label className='profile-image  rounded-3 col-md-3'>
+                                                  {
+                                                    image ?
+                                                   <span> image?.name</span>
+                                                    : 
+                                                    <i class="fa-regular fa-image"></i>
+
+                                                  }
+                                                   <input
+                                                        type="file"
+                                                        className="form-control"
+                                                        onChange={(e) =>
+                                                            setImage(
+                                                               e.target.files[0]
+                                                            )
+                                                        }
+                                                    />
+                                                   </label>
 
                                                     <button
                                                         type="submit"

@@ -1286,13 +1286,13 @@
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: #41418f #bcb4b4;
+    scrollbar-color: $color-1st #F1F1F1;
 }
 
 *::-webkit-scrollbar {
     display: flex;
     width: 5px;
-    height: 10px;
+    height: 3px;
 }
 
 *::-webkit-scrollbar-thumb {

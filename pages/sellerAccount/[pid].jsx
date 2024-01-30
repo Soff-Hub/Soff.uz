@@ -86,11 +86,11 @@ const SellerAccount = ({ seller }) => {
         },
     ];
 
-    async function GetSellerList(pid, token) {
-        // setCurrPage(page);
-        console.log('token', token);
-        if (token) {
-            const ItemsData = await GetRepository.getSellerLists(pid, token);
+    async function GetSellerList(val) {
+
+        console.log('val', val);
+        if (user?.access) {
+            const ItemsData = await GetRepository.getSellerLists(pid, user?.access);
             // setPageCount(ItemsData.count);
             setData(ItemsData);
             setTableData(ItemsData.documents);
@@ -109,6 +109,7 @@ const SellerAccount = ({ seller }) => {
             title: 'Mahsulot',
             dataIndex: 'title',
             key: 'title',
+            width: 350,
             render: (title) => (
                 <span className="truncate whitespace-nowrap"> {title}</span>
             ),
@@ -130,21 +131,10 @@ const SellerAccount = ({ seller }) => {
             key: 'approved_count',
             render: (approved_count) => (
                 <span key={approved_count}>
-                    {approved_count !== 0 ? approved_count + " ta" : 0}
+                    {approved_count !== 0 ? approved_count + ' ta' : 0}
                 </span>
             ),
         },
-        // {
-        //     title: 'Arizalari',
-        //     // dataIndex: 'purchased_count',
-        //     key: 'purchased_count',
-        //     render: (purchased_count) => (
-        //         <span className="truncate whitespace-nowrap">
-        //             {' '}
-        //             {purchased_count === 0 ? 0 : purchased_count + ' ta'}
-        //         </span>
-        //     ),
-        // },
         {
             title: 'Holat',
             dataIndex: 'status',
@@ -186,7 +176,7 @@ const SellerAccount = ({ seller }) => {
                 title={`Soff | } `}
                 description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan  ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
-            <div className="ps-product-list mb-5">
+            <div className="ps-product-list color-seller-background">
                 <div className="container">
                     <div className="py-4  d-flex gap-3 overflow-x-scroll">
                         <div>
@@ -208,7 +198,7 @@ const SellerAccount = ({ seller }) => {
                                         <i className="fa-solid fa-money-check-dollar fa-2x text-warning"></i>
                                     </div>
                                 </div>
-                                {dashboardData?.total_approved_amount >= 0  ? (
+                                {dashboardData?.total_approved_amount >= 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -247,8 +237,7 @@ const SellerAccount = ({ seller }) => {
                                         <i className="fa-solid fa-hand-holding-dollar fa-2x text-success"></i>
                                     </div>
                                 </div>
-                                {dashboardData?.days_approved_amount_30 >= 0
-                        ? (
+                                {dashboardData?.days_approved_amount_30 >= 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -346,16 +335,58 @@ const SellerAccount = ({ seller }) => {
                         </div>
                     </div>
                     <div className="row my-5">
-                        <div className="pt-5 col-lg-4">
-                            <i className=" fa-3x text-info fa-solid fa-circle-user mb-3"></i>
-                            <h4> Doniyor Eshmamatov</h4>
-                            <span className="mb-4 d-block">
+                        <div className="col-12 my-2"></div>
+                        <div className="col-lg-4 user-inviter">
+                            <div className="d-flex gap-3 align-items-start">
+                                <i className=" fa-3x text-info fa-solid fa-circle-user mb-3"></i>
+                                <div>
+                                    <h4 className="m-0">{data?.full_name}</h4>
+                                    <span className="mb-4 d-block">
+                                        {' '}
+                                        {data?.email_or_phone}
+                                    </span>
+                                </div>
+                            </div>
+                            <h4>
                                 {' '}
-                                edoniyorbekdev@gmail.com
-                            </span>
-                            <h4> - Jami mahsulotlari soni {data?.total_product} ta</h4>
-                            <h4> - Taklif qilinganlar soni</h4>
-                            <h4> - Taklif orqali daromad</h4>
+                                - Jami mahsulotlari soni {
+                                    data?.total_product
+                                }{' '}
+                                ta
+                            </h4>
+                            <h4>
+                                {' '}
+                                - Taklif orqali daromad {
+                                    data?.inviter_wallet
+                                }{' '}
+                                so'm{' '}
+                            </h4>
+                            <h4>
+                                {' '}
+                                - Taklif qilinganlar soni{' '}
+                                {data?.inviter_users?.length
+                                    ? data?.inviter_users?.length + ' ta'
+                                    : 0}{' '}
+                            </h4>
+                            <div className="inviter_user__container">
+                                {data?.inviter_users?.map((el, i) => (
+                                    <>
+                                      
+                                        <div className="inviter_user__items">
+                                         <p> - {' '}
+                                                {el.full_name} {'  '}
+                                                {el.auth_status ===
+                                                'code_verified' ? (
+                                                    <i className="fa-solid text-success fa-circle-check"></i>
+                                                ) : (
+                                                    <i className="fa-solid fa-circle-xmark text-danger"></i>
+                                                )}
+                                            </p>
+                                            <span>{el.email_or_phone}</span>
+                                        </div>
+                                    </>
+                                ))}
+                            </div>
                         </div>
                         <div className="col-8">
                             <div className="dashboard-div mb-2">
@@ -411,7 +442,7 @@ const SellerAccount = ({ seller }) => {
                                     <div className="ps-section__content">
                                         <Table
                                             dataSource={tableData}
-                                            scroll={{ x: 900 }}
+                                            scroll={{ x: 800 }}
                                             columns={columns}
                                             pagination={false}
                                         />
@@ -420,9 +451,8 @@ const SellerAccount = ({ seller }) => {
                                             defaultCurrent={currPage}
                                             className="my-3"
                                             onChange={(val) =>
-                                                GetItemsUsers(
-                                                    val,
-                                                    selectValStatus
+                                                GetSellerList(
+                                                    val
                                                 )
                                             }
                                         />
@@ -437,17 +467,5 @@ const SellerAccount = ({ seller }) => {
     );
 };
 
-// export async function getServerSideProps({ query }) {
-//     const resquest = await fetch(
-//         `http://192.168.1.24/api/v1/seller/admin/seller-detail/${query.pid}`
-//     );
-//     const seller = await resquest.json();
-
-//     return {
-//         props: {
-//             seller,
-//         },
-//     };
-// }
 
 export default SellerAccount;
