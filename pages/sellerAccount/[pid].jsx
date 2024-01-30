@@ -173,8 +173,8 @@ const SellerAccount = ({ seller }) => {
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
-                title={`Soff | } `}
-                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan  ning barcha mahsulotlarini ko'rishingiz mumkin`}
+                title={`Soff | ${data?.full_name} } `}
+                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${data?.full_name} ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
             <div className="ps-product-list color-seller-background">
                 <div className="container">

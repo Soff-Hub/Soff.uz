@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Chart } from 'chart.js';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 function getMonthName(monthNumber) {
     let monthName;
@@ -52,16 +53,18 @@ function getMonthName(monthNumber) {
 
 function ChartSeller({ year, month }) {
     const { user } = useSelector((state) => state.auth);
-
+    const router = useRouter()
+    const {pid} = router.query
     const [tableData, setTableData] = useState({ data: [], count: [] });
     const [labels, setLabels] = useState([])
 
-    async function getChartItems() {
+    async function getChartItems(id) {
         const arr = []
         const arr2 = []
         const arr3 = []
-        const ItemsChartData = await GetRepository.getChartLists(user?.access, year, month);
+        const ItemsChartData = await GetRepository.getChartListsSeller(user?.access, year, month, id);
         if (ItemsChartData) {
+            console.log('itemdata', ItemsChartData);
             for (let i = 0; i < ItemsChartData.length; i++) {
                 arr.push(ItemsChartData[i].total_price);
                 arr2.push(ItemsChartData[i].count);
@@ -81,8 +84,8 @@ function ChartSeller({ year, month }) {
     }
 
     useEffect(() => {
-        getChartItems();
-    }, [year, month]);
+        getChartItems(pid);
+    }, [year, month, pid]);
 
 
     useEffect(() => {
