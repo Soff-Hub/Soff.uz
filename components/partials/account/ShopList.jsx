@@ -43,9 +43,10 @@ function Notifications() {
 
     const columns = [
         {
-            title: 'To\'liq ma\'lumot',
+            title: 'Batafsil',
             dataIndex: 'id',
             key: 'age',
+            width: 50,
             render: (id) => (
                 <Link href={`/sellerAccount/${id}`}>
                     <a className="truncate whitespace-nowrap">
@@ -77,11 +78,11 @@ function Notifications() {
         },
         {
             title: 'Ism',
-            dataIndex: 'first_name',
+            dataIndex: 'full_name',
             key: 'age',
-            render: (first_name) => (
+            render: (full_name) => (
                     <span className="truncate whitespace-nowrap">
-                        {first_name}
+                        {full_name}
                     </span>
             ),
         },
@@ -198,7 +199,7 @@ function Notifications() {
                                         </span>
                                     </label>
                                     <Table
-                                        scroll={{ x: 1150 }}
+                                        scroll={{ x: 1400 }}
                                         dataSource={data}
                                         columns={columns}
                                         pagination={false}

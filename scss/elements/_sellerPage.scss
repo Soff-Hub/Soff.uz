@@ -1,0 +1,58 @@
+.color-seller-background {
+    background-color: #f1f1f1;
+}
+
+.user-inviter {
+    background-color: #fff;
+    padding: 15px;
+    & h4{
+        font-size: 16px;
+        line-height: 22px;
+        margin: 0;
+    }
+}
+
+.inviter_user__container {
+    max-height: 250px;
+    overflow-y: scroll;
+    border-radius: 5px;
+}
+.inviter_user__container::-webkit-scrollbar {
+    display: none;
+}
+.inviter_user__items {
+    padding: 3px 10px;
+    p {
+        font-weight: 600;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.profile-image{
+    border: 1px solid rgb(216, 214, 214);
+    position: relative;
+    & i{
+        position: absolute;
+        font-size: 22px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    & span{
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    input{
+        display: none;
+    }
+}
+
+.profile__image{
+    width: 50px;
+    height: 50px;
+    border: 2px solid $color-1st    ;
+    object-fit: cover;
+}
