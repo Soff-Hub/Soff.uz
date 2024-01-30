@@ -48,10 +48,18 @@ function Notifications() {
         e.preventDefault();
         setLoading(true);
 
-        const formData = new FormData()
-        formData.append("first_name", profileData?.first_name ? profileData?.first_name : profile?.first_name )
-        formData.append("last_name", profileData?.last_name ? profileData?.last_name : profile?.last_name )
-        formData.append("image", image)
+        const formData = new FormData();
+        formData.append(
+            'first_name',
+            profileData?.first_name
+                ? profileData?.first_name
+                : profile?.first_name
+        );
+        formData.append(
+            'last_name',
+            profileData?.last_name ? profileData?.last_name : profile?.last_name
+        );
+        formData.append('image', image);
 
         const ItemsData = await PatchRepository.getPatchProfile(
             formData,
@@ -67,7 +75,6 @@ function Notifications() {
         });
         modal.update;
     }
-
 
     async function handleClickEditChangePassword(e) {
         e.preventDefault();
@@ -95,7 +102,7 @@ function Notifications() {
             modal.update;
         }
     }
-console.log(image);
+    console.log(image);
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -158,24 +165,26 @@ console.log(image);
                                                             )
                                                         }
                                                     />
-                                                   <label className='profile-image  rounded-3 col-md-3'>
-                                                  {
-                                                    image ?
-                                                   <span> image?.name</span>
-                                                    : 
-                                                    <i class="fa-regular fa-image"></i>
-
-                                                  }
-                                                   <input
-                                                        type="file"
-                                                        className="form-control"
-                                                        onChange={(e) =>
-                                                            setImage(
-                                                               e.target.files[0]
-                                                            )
-                                                        }
-                                                    />
-                                                   </label>
+                                                    <label className="profile-image  rounded-3 col-md-3">
+                                                        {image ? (
+                                                            <span>
+                                                                {' '}
+                                                                image?.name
+                                                            </span>
+                                                        ) : (
+                                                            <i class="fa-regular fa-image"></i>
+                                                        )}
+                                                        <input
+                                                            type="file"
+                                                            className="form-control"
+                                                            onChange={(e) =>
+                                                                setImage(
+                                                                    e.target
+                                                                        .files[0]
+                                                                )
+                                                            }
+                                                        />
+                                                    </label>
 
                                                     <button
                                                         type="submit"
@@ -281,7 +290,7 @@ console.log(image);
                                                                         }
                                                                         required
                                                                         placeholder="Ismingiz"
-                                                                        className="form-control rounded-3 col-md-4"
+                                                                        className="form-control rounded-3 col-md-3"
                                                                         onChange={(
                                                                             e
                                                                         ) =>
@@ -305,7 +314,7 @@ console.log(image);
                                                                             profile?.last_name
                                                                         }
                                                                         placeholder="Familiyangiz"
-                                                                        className="form-control rounded-3 col-md-4"
+                                                                        className="form-control rounded-3 col-md-3"
                                                                         onChange={(
                                                                             e
                                                                         ) =>
@@ -322,6 +331,29 @@ console.log(image);
                                                                             )
                                                                         }
                                                                     />
+                                                                    <label className="profile-image  rounded-3 col-md-3">
+                                                                        {image ? (
+                                                                            <span>
+                                                                                {' '}
+                                                                               { image?.name}
+                                                                            </span>
+                                                                        ) : (
+                                                                            <i class="fa-regular fa-image"></i>
+                                                                        )}
+                                                                        <input
+                                                                            type="file"
+                                                                            className="form-control"
+                                                                            onChange={(
+                                                                                e
+                                                                            ) =>
+                                                                                setImage(
+                                                                                    e
+                                                                                        .target
+                                                                                        .files[0]
+                                                                                )
+                                                                            }
+                                                                        />
+                                                                    </label>
 
                                                                     <button
                                                                         type="submit"
@@ -405,24 +437,32 @@ console.log(image);
                                                 </div>
                                             </div>
                                             <div className="border pt-3 pl-2 mt-3">
-                                              
-                                               <Link className='d-block' href="https://t.me/soff_uz_bot"  >
-                                                <a target='_blank'>
-                                                <div className='d-flex gap-2 gap-lg-3'>
-                                               <h5 className="fs-3">
-                                                    Taklif xavolasini olish uchun telegram botga o'ting
-                                                </h5>
-                                                {/* <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
+                                                <Link
+                                                    className="d-block"
+                                                    href="https://t.me/soff_uz_bot">
+                                                    <a target="_blank">
+                                                        <div className="d-flex gap-2 gap-lg-3">
+                                                            <h5 className="fs-3">
+                                                                Taklif
+                                                                xavolasini olish
+                                                                uchun telegram
+                                                                botga o'ting
+                                                            </h5>
+                                                            {/* <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}
                                                         className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                                 </Tooltip> */}
-                                              
-                                                    <i class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3" style={{color:'#6492e3'}}></i>
-                                               </div>
-                                                </a>
+
+                                                            <i
+                                                                class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3"
+                                                                style={{
+                                                                    color: '#6492e3',
+                                                                }}></i>
+                                                        </div>
+                                                    </a>
                                                 </Link>
                                                 {/* <div className=" mt-3 taklif-div">
                                                     <div

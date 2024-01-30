@@ -7,44 +7,44 @@ import { useRouter } from 'next/router';
 function getMonthName(monthNumber) {
     let monthName;
     switch (monthNumber) {
-        case 'January':
+        case 'Yanvar':
             monthName = 'Yanvar';
             break;
-        case 'February':
+        case 'Fevral':
             monthName = 'Fevral';
             break;
-        case 'March':
+        case 'Mart':
             monthName = 'Mart';
             break;
-        case 'April':
+        case 'Aprel':
             monthName = 'Aprel';
             break;
         case 'May':
             monthName = 'May';
             break;
-        case 'June':
+        case 'Iyun':
             monthName = 'Iyun';
             break;
-        case 'July':
+        case 'Iyul':
             monthName = 'Iyul';
             break;
-        case 'August':
+        case 'Avgust':
             monthName = 'Avgust';
             break;
-        case 'September':
-            monthName = 'Sentyabr';
+        case 'Sentabr':
+            monthName = 'Sentabr';
             break;
-        case 'October':
-            monthName = 'Oktyabr';
+        case 'Oktabr':
+            monthName = 'Oktabr';
             break;
-        case 'November':
+        case 'Noyabr':
             monthName = 'Noyabr';
             break;
-        case 'December':
+        case 'Dekabr':
             monthName = 'Dekabr';
             break;
         default:
-            monthName = 'bunaqa oy yuq'; // If an invalid month name is provided
+            monthName = 'bunday oy yuq'; // If an invalid month name is provided
             break;
     }
     return monthName;
@@ -69,10 +69,10 @@ function ChartSeller({ year, month }) {
                 arr.push(ItemsChartData[i].total_price);
                 arr2.push(ItemsChartData[i].count);
                 if (month) {
-                    arr3.push(ItemsChartData[i].day.split('-')[2])
+                    arr3.push(ItemsChartData[i].date.split('-')[2])
                 }
                 else {
-                    arr3.push(getMonthName(ItemsChartData[i].month))
+                    arr3.push(getMonthName(ItemsChartData[i].date))
                 }
             }
         }
