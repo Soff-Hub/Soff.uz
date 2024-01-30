@@ -82,15 +82,17 @@ const SellerAccount = ({ seller }) => {
             url: '/',
         },
         {
-            text: false ? seller?.results[0]?.seller?.first_name : 'Loading...',
+            text: data ? data?.full_name : 'Loading...',
         },
     ];
 
     async function GetSellerList(val) {
-
         console.log('val', val);
         if (user?.access) {
-            const ItemsData = await GetRepository.getSellerLists(pid, user?.access);
+            const ItemsData = await GetRepository.getSellerLists(
+                pid,
+                user?.access
+            );
             // setPageCount(ItemsData.count);
             setData(ItemsData);
             setTableData(ItemsData.documents);
@@ -173,8 +175,8 @@ const SellerAccount = ({ seller }) => {
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
-                title={`Soff | } `}
-                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan  ning barcha mahsulotlarini ko'rishingiz mumkin`}
+                title={`Soff | ${data?.full_name} } `}
+                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${data?.full_name} ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
             <div className="ps-product-list color-seller-background">
                 <div className="container">
@@ -338,7 +340,15 @@ const SellerAccount = ({ seller }) => {
                         <div className="col-12 my-2"></div>
                         <div className="col-lg-4 user-inviter">
                             <div className="d-flex gap-3 align-items-start">
-                                <i className=" fa-3x text-info fa-solid fa-circle-user mb-3"></i>
+                                {/* <i className=" fa-3x text-info fa-solid fa-circle-user mb-3"></i> */}
+                                {data?.image ? (
+                                    <img
+                                        src={`${data?.image}`}
+                                        className="profile__image"
+                                    />
+                                ) : (
+                                    <i className=" fa-3x text-info fa-solid fa-circle-user mb-3"></i>
+                                )}
                                 <div>
                                     <h4 className="m-0">{data?.full_name}</h4>
                                     <span className="mb-4 d-block">
@@ -371,10 +381,10 @@ const SellerAccount = ({ seller }) => {
                             <div className="inviter_user__container">
                                 {data?.inviter_users?.map((el, i) => (
                                     <>
-                                      
                                         <div className="inviter_user__items">
-                                         <p> - {' '}
-                                                {el.full_name} {'  '}
+                                            <p>
+                                                {' '}
+                                                - {el.full_name} {'  '}
                                                 {el.auth_status ===
                                                 'code_verified' ? (
                                                     <i className="fa-solid text-success fa-circle-check"></i>
@@ -446,7 +456,7 @@ const SellerAccount = ({ seller }) => {
                                             columns={columns}
                                             pagination={false}
                                         />
-                                        <Pagination
+                                        {/* <Pagination
                                             total={pageCount}
                                             defaultCurrent={currPage}
                                             className="my-3"
@@ -455,7 +465,7 @@ const SellerAccount = ({ seller }) => {
                                                     val
                                                 )
                                             }
-                                        />
+                                        /> */}
                                     </div>
                                 </div>
                             </div>
@@ -466,6 +476,5 @@ const SellerAccount = ({ seller }) => {
         </PageContainer>
     );
 };
-
 
 export default SellerAccount;

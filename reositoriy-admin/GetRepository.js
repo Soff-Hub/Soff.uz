@@ -448,6 +448,29 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    
+    async getChartListsSeller(token, year, month, id) {
+        const endPoint = month
+            ? `admin/seller-chart/${id}?${year}&month=${month}`
+            : `admin/seller-chart/${id}?${year}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getBannerLists(token) {
         const endPoint = `admin/banner/`;
         const reponse = await Repository({
