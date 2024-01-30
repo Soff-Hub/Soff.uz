@@ -123,7 +123,7 @@ function ChartSeller({ year, month }) {
 
     return (
         <>
-            <div className="w-[1100px] h-screen flex mx-auto my-auto">
+            <div className="w-[1100px] h-25 flex mx-auto my-auto">
                 <div className="border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl" id='canvas' style={{ backgroundColor: 'white' }}>
                     <canvas id="myChart"></canvas>
                 </div>
