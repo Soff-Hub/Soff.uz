@@ -33,29 +33,31 @@ const SellerPage = ({ seller }) => {
                         <div style={{ textAlign: 'center' }}>
                             {seller?.results[0]?.seller?.image_url ? (
                                 <img
-                                alt='no photo'
+                                    alt="soff"
                                     src={`${seller?.results[0]?.seller?.image_url}`}
                                     className="profile__image"
                                 />
                             ) : (
-                                <i
-                                    className=" fa-3x text-info fa-solid fa-circle-user"
-                                    ></i>
+                                <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
                             )}
                         </div>
-                      <div style={{
-                        display:'flex',
-                        flexDirection:'column'
-                      }} >
-                      <h4>
-                           {seller?.results[0]?.seller?.first_name}{' '}
-                            {seller?.results[0]?.seller?.last_name} {" "}
-                        </h4>
-                    <span>
-                          Jami mahsulotlar soni - <h4 style={{display:'inline'}} >{seller?.count}</h4> ta
-                           
-                        </span>
-                      </div>
+                        <div
+                            style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                            }}>
+                            <h4>
+                                {seller?.results[0]?.seller?.first_name}{' '}
+                                {seller?.results[0]?.seller?.last_name}{' '}
+                            </h4>
+                            <span>
+                                Jami mahsulotlar soni -{' '}
+                                <h4 style={{ display: 'inline' }}>
+                                    {seller?.count}
+                                </h4>{' '}
+                                ta
+                            </span>
+                        </div>
                     </div>
 
                     <div className="row">

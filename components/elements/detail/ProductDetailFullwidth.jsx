@@ -43,6 +43,7 @@ const ProductDetailFullwidth = ({ product, document }) => {
                                     <div>
                                         {product?.seller?.image ? (
                                             <img
+                                            alt='soff'
                                                 src={`${product?.seller?.image}`}
                                                 className="profile__image-client"
                                             />
