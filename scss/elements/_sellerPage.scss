@@ -57,3 +57,28 @@
     border: 2px solid $color-1st    ;
     object-fit: cover;
 }
+
+.profile__image-client{
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    border: 2px solid $color-1st    ;
+    object-fit: cover;
+}
+
+.document-seller-about{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    h4{
+        margin: 0;
+    }
+}
+
+.product_detail__seller_name{
+    transition: all .5s;
+    &:hover{
+        cursor: pointer;
+        text-decoration: underline;
+    }
+}

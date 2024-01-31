@@ -30,8 +30,8 @@ const ProductDetailQuickView = ({ product }) => {
         if (responsImage) {
             console.log(responsImage);
             setImage(responsImage.images);
-            const { page_count, file_type, file_size } = responsImage
-            setDocument({ page_count, file_type, file_size })
+            const { page_count, file_type, file_size } = responsImage;
+            setDocument({ page_count, file_type, file_size });
         }
     };
 
@@ -45,17 +45,22 @@ const ProductDetailQuickView = ({ product }) => {
                     <div className="ps-wrapper">
                         {img?.length > 0
                             ? img?.map((item, i) => (
-                                //   <img
-                                //       key={i}
-                                //       src={item?.image_url}
-                                //       alt="document"
-                                //       className="border mb-3 "
-                                //       style={{ objectFit: 'contain' }}
-                                //   />
-                                <NextImageCard key={i} url={item?.image_url} clasS='border mb-3 objectFitCover ' width='380px' height='390px' />
-                            ))
+                                  //   <img
+                                  //       key={i}
+                                  //       src={item?.image_url}
+                                  //       alt="document"
+                                  //       className="border mb-3 "
+                                  //       style={{ objectFit: 'contain' }}
+                                  //   />
+                                  <NextImageCard
+                                      key={i}
+                                      url={item?.image_url}
+                                      clasS="border mb-3 objectFitCover "
+                                      width="380px"
+                                      height="390px"
+                                  />
+                              ))
                             : ''}
-
                     </div>
                 </figure>
 
@@ -63,18 +68,33 @@ const ProductDetailQuickView = ({ product }) => {
                     <ModuleDetailTopInformation product={product} />
                     <div>
                         {product?.seller?.first_name && (
-                            <h4
-                                style={{
-                                    cursor: 'pointer',
-                                }}
+                            <div
+                                className="document-seller-about mb-3 product_detail__seller_name "
                                 onClick={() => SellerPage(product?.seller?.id)}>
-                                {' '}
-                                Muallif : {product?.seller?.first_name}{' '}
-                                {product?.seller?.last_name}
-                            </h4>
+                                <div style={{ textAlign: 'center' }}>
+                                    {product?.seller?.image ? (
+                                        <img
+                                        alt='soff'
+                                            src={`${product?.seller?.image}`}
+                                            className="profile__image-client"
+                                        />
+                                    ) : (
+                                        <i
+                                            className=" fa-2x text-info fa-solid fa-circle-user"
+                                            style={{ fontSize: '35px' }}></i>
+                                    )}
+                                </div>
+
+                                <h4>
+                                    {product?.seller?.first_name}{' '}
+                                    {product?.seller?.last_name}
+                                </h4>
+                            </div>
                         )}
                     </div>
-                    <ModuleProductDetailDescription product={{ ...product, document }} />
+                    <ModuleProductDetailDescription
+                        product={{ ...product, document }}
+                    />
                     <ModuleDetailShoppingActions
                         product={product}
                         extended={true}
