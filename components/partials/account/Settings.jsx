@@ -8,6 +8,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { BeatLoader } from 'react-spinners';
 import Link from 'next/link';
+import ProfileImage from '~/components/elements/profileImage';
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -59,7 +60,7 @@ function Notifications() {
             'last_name',
             profileData?.last_name ? profileData?.last_name : profile?.last_name
         );
-        formData.append('image', image);
+        formData.append('image', image?.originFileObj);
 
         const ItemsData = await PatchRepository.getPatchProfile(
             formData,
@@ -68,12 +69,15 @@ function Notifications() {
         setRenderProfile(!renderProfile);
         e.target.reset();
         setLoading(false);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Sizning ismingiz va familiyangiz o'zgartirildi`,
-        });
-        modal.update;
+        if (ItemsData) {
+            console.log(ItemsData);
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Sizning ma'lumotlaringiz o'zgartirildi`,
+            });
+            modal.update;
+        }
     }
 
     async function handleClickEditChangePassword(e) {
@@ -102,7 +106,7 @@ function Notifications() {
             modal.update;
         }
     }
-    console.log(image);
+    console.log('=>', image);
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -165,28 +169,17 @@ function Notifications() {
                                                             )
                                                         }
                                                     />
-                                                    <label className="profile-image  rounded-3 col-md-3">
-                                                        {image ? (
-                                                            <span>
-                                                                {' '}
-                                                                image?.name
-                                                            </span>
-                                                        ) : (
-                                                            <i class="fa-regular fa-image"></i>
-                                                        )}
-                                                        <input
-                                                            type="file"
-                                                            className="form-control"
-                                                            onChange={(e) =>
-                                                                setImage(
-                                                                    e.target
-                                                                        .files[0]
-                                                                )
-                                                            }
+
+                                                    <div className="col-md-3 text-center">
+                                                        <ProfileImage
+                                                            setImage={setImage}
                                                         />
-                                                    </label>
+                                                    </div>
 
                                                     <button
+                                                     style={{
+                                                        maxHeight:'50px'
+                                                    }}
                                                         type="submit"
                                                         className="btn btn-success py-3 col-md-2  ">
                                                         {loading ? (
@@ -279,7 +272,7 @@ function Notifications() {
                                                                     o'zgartirish
                                                                 </h4>
                                                                 <form
-                                                                    className="row gap-4 row-gap-3 mx-auto "
+                                                                    className="row gap-4 row-gap-3 mx-auto d-flex aligin-center "
                                                                     onSubmit={
                                                                         handleClickEdit
                                                                     }>
@@ -331,31 +324,18 @@ function Notifications() {
                                                                             )
                                                                         }
                                                                     />
-                                                                    <label className="profile-image  rounded-3 col-md-3">
-                                                                        {image ? (
-                                                                            <span>
-                                                                                {' '}
-                                                                               { image?.name}
-                                                                            </span>
-                                                                        ) : (
-                                                                            <i class="fa-regular fa-image"></i>
-                                                                        )}
-                                                                        <input
-                                                                            type="file"
-                                                                            className="form-control"
-                                                                            onChange={(
-                                                                                e
-                                                                            ) =>
-                                                                                setImage(
-                                                                                    e
-                                                                                        .target
-                                                                                        .files[0]
-                                                                                )
+                                                                    <div className="col-md-3 text-center">
+                                                                        <ProfileImage
+                                                                            setImage={
+                                                                                setImage
                                                                             }
                                                                         />
-                                                                    </label>
+                                                                    </div>
 
                                                                     <button
+                                                                    style={{
+                                                                        maxHeight:'50px'
+                                                                    }}
                                                                         type="submit"
                                                                         className="btn btn-success py-3 col-md-2  ">
                                                                         {loading ? (
