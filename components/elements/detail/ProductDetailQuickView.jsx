@@ -74,6 +74,7 @@ const ProductDetailQuickView = ({ product }) => {
                                 <div style={{ textAlign: 'center' }}>
                                     {product?.seller?.image ? (
                                         <img
+                                        alt='soff'
                                             src={`${product?.seller?.image}`}
                                             className="profile__image-client"
                                         />

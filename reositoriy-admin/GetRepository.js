@@ -451,8 +451,8 @@ class GetRepository {
     
     async getChartListsSeller(token, year, month, id) {
         const endPoint = month
-            ? `admin/seller-chart/${id}?${year}&month=${month}`
-            : `admin/seller-chart/${id}?${year}`;
+            ? `admin/seller-chart/${id}?year=${year}&month=${month}`
+            : `admin/seller-chart/${id}?year=${year}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
