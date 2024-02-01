@@ -5,7 +5,7 @@ const ModuleProductDetailDescription = ({ product }) => (
         <strong className="fs-3"> Qisqa tavsif </strong>
         <ul style={{ listStyleType: 'revert' }}>
             <li>
-                <strong>Betlar soni : </strong> {product?.document?.page_count} ta
+                <strong>Betlar s : </strong> {product?.document?.page_count} ta
             </li>
             <li>
                 <strong>Hajmi : </strong> {product?.document?.file_size}
