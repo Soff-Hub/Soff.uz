@@ -38,6 +38,7 @@ const ProductDetailQuickView = ({ product }) => {
     useEffect(() => {
         getImage();
     }, []);
+    console.log('modal image', product);
     return (
         <div className="ps-product--detail ps-product--quickview">
             <div className="ps-product__header">
@@ -72,10 +73,10 @@ const ProductDetailQuickView = ({ product }) => {
                                 className="document-seller-about mb-3 product_detail__seller_name "
                                 onClick={() => SellerPage(product?.seller?.id)}>
                                 <div style={{ textAlign: 'center' }}>
-                                    {product?.seller?.image ? (
+                                    {product?.seller?.image_url ? (
                                         <img
                                         alt='soff'
-                                            src={`${product?.seller?.image}`}
+                                            src={`${product?.seller?.image_url}`}
                                             className="profile__image-client"
                                         />
                                     ) : (
