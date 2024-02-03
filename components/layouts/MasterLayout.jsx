@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { FloatButton } from 'antd';
+import React, { useEffect, useState } from 'react';
+// import { FloatButton } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { useCookies } from 'react-cookie';
 import { setCompareItems, setWishlistTtems } from '~/store/ecomerce/action';
@@ -9,7 +9,7 @@ import NavigationListAdmin from '../shared/navigation/NavigationListAdmin';
 import { useRouter } from 'next/router';
 import NavigationListSeller from '../shared/navigation/NavigationListSeller';
 import NavigationListCustomer from '../shared/navigation/NavigationListCustomer';
-
+import Backtop from '../elements/backTop';
 
 const MasterLayout = ({ children }) => {
     const dispatch = useDispatch();
@@ -17,6 +17,7 @@ const MasterLayout = ({ children }) => {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const router = useRouter();
     const { pathname } = router;
+    const [background, setBackground] = useState(false);
 
     function initEcomerceValues() {
         // if (cookies) {
@@ -38,7 +39,6 @@ const MasterLayout = ({ children }) => {
             {children}
             <PageLoader />
             {accountLinks.some((el) => el.url === pathname) ? (
-                
                 user?.role === 'admin' ? (
                     <NavigationListAdmin />
                 ) : user?.role === 'seller' ? (
@@ -49,11 +49,17 @@ const MasterLayout = ({ children }) => {
             ) : (
                 <NavigationList />
             )}
-            <FloatButton.BackTop>
-                <button className="ps-btn--backtop">
+            {/* <FloatButton.BackTop> */}
+            {/* <button className="ps-btn--backtop">
                     <i className="icon-arrow-up" />
-                </button>
-            </FloatButton.BackTop>
+                </button> */}
+            {/* </FloatButton.BackTop> */}
+            <div className="ant-back-top">
+                <Backtop setBackground={setBackground} backtop={background} />
+            </div>
+            <div
+                onClick={() => setBackground(!background)}
+                className={background ? 'backgound-black' : ''}></div>
         </>
     );
 };

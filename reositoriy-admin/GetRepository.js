@@ -322,8 +322,49 @@ class GetRepository {
         return reponse;
     }
 
+    async getAllUserLists(token, search) {
+        const endPoint = `all-user/`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getSellerLists(id, token) {
         const endPoint = `admin/seller-detail/${id}`;
+
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getCustomerLists(id, token) {
+        const endPoint = `customer-info/${id}`;
         console.log('res token', token);
 
         const reponse = await Repository({
@@ -343,7 +384,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    
+
     async getSellerDashboard(id, token) {
         const endPoint = `admin/seller-dashboard/${id}`;
         const reponse = await Repository({
@@ -448,7 +489,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    
+
     async getChartListsSeller(token, year, month, id) {
         const endPoint = month
             ? `admin/seller-chart/${id}?year=${year}&month=${month}`

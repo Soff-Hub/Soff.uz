@@ -191,7 +191,7 @@ const PageContainer = ({
     return (
         <>
             <Head>
-                {/* <title>Soff - barcha ma'lumotlar bazasi </title> */}
+                <title>Soff - barcha ma'lumotlar bazasi </title>
             </Head>
             {header}
             <div>
