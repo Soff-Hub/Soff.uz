@@ -10,6 +10,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
 import useDebounce from '~/hooks/useDebounce';
+import Link from 'next/link';
 
 function AccountUserPages() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -76,6 +77,19 @@ function AccountUserPages() {
         GetItemsUsers(currPage, selectValStatus, search)
     }, [selectValStatus, searchDebounce])
     const columns = [
+        {
+            title: 'Batafsil',
+            dataIndex: 'id',
+            key: 'age',
+            width: 50,
+            render: (id) => (
+                <Link href={`/customerAccount/${id}`}>
+                    <a className="truncate whitespace-nowrap">
+                    <i class="fa-solid fa-eye"></i>
+                    </a>
+                </Link>
+            ),
+        },
         {
             title: 'Ism',
             dataIndex: 'first_name',

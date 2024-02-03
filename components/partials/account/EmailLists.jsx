@@ -1,33 +1,41 @@
-import React, { useEffect, useState } from 'react'
-import AccountMenuSidebar from './modules/AccountMenuSidebar'
-import { useSelector } from 'react-redux'
-import { Button, Form, Modal, Select, Input } from 'antd'
+import React, { useEffect, useState } from 'react';
+import AccountMenuSidebar from './modules/AccountMenuSidebar';
+import { useSelector } from 'react-redux';
+import { Button, Form, Modal, Select, Input } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import CKEditor from './CKeditor';
-const { Option } = Select;
+import GetRepository from '~/reositoriy-admin/GetRepository';
+// const { Option } = Select;
 
 const EmailLists = () => {
-  const { accountLinks, user } = useSelector(state => state.auth)
-  const [form] = Form.useForm();
+    const { accountLinks, user } = useSelector((state) => state.auth);
+    const [form] = Form.useForm();
 
-  const [email, setEmail] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const [text, setText] = useState(null);
-  const [editorLoaded, setEditorLoaded] = useState(false);
+    const [email, setEmail] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [text, setText] = useState(null);
+    const [editorLoaded, setEditorLoaded] = useState(false);
+    const [data, setData] = useState(null);
+    const [option, setOption] = useState([]);
+    const [userRole, setUserRole] = useState(null)
 
+    const OnChangeSelect = (event) => {
+        console.log(event);
+        setEmail(event);
+    };
 
+    async function GetItemsEmail() {
+        if (text) {
+            form.resetFields();
+            setLoading(true);
+            setEmail(null);
+            setText(null);
+            setUserRole(email?.find((el) => (el === "customer" || el === "seller" || el === '0') ? el : null) )
 
-
-  async function GetItemsEmail() {
-     if (text) {
-      form.resetFields();
-      setLoading(true)
-      setEmail(null);
-      setText(null)
-  
-      const data = {
-        role: email,
-        text: `<!DOCTYPE html>
+            const data = {
+                user_role: email?.find((el) => (el === "customer" || el === "seller" || el === '0') ? el : null),
+                email: email,
+                text: `<!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
@@ -202,114 +210,169 @@ const EmailLists = () => {
                 </footer>
             </div>
         </body>
-        </html>`
-      }
-      const ItemsData = await PostsRepository.EmailSend(data, user?.access);
-      if (ItemsData?.status == 201) {
-        const modal = Modal.success({
-          centered: true,
-          title: 'Muvaffaqqiyatli!',
-          content: `Sizning xabaringiz yuborildi`,
-        });
-        modal.update
-      }
-      else {
-        const modal = Modal.error({
-          centered: true,
-          title: 'Xato!',
-          content: `Nimadir xato ketdi `,
-        });
-        modal.update
-      }
-     }
-     else {
-      const modal = Modal.error({
-        centered: true,
-        title: 'Xato!',
-        content: `Malumot to'g'ri kiritilmadi`,
-      });
-      modal.update
+        </html>`,
+            };
+            const ItemsData = await PostsRepository.EmailSend(
+                data,
+                user?.access
+            );
+            if (ItemsData?.status == 200) {
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content: `Sizning xabaringiz yuborildi`,
+                });
+                modal.update;
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xato!',
+                    content: `Nimadir xato ketdi `,
+                });
+                modal.update;
+            }
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xato!',
+                content: `Malumot to'g'ri kiritilmadi`,
+            });
+            modal.update;
+        }
+        setLoading(false);
     }
-    setLoading(false)
+    const validateEmail = (rule, value) => {
+        if (!email || !value) {
+            return Promise.reject(
+                'Iltimos, birorini tanlang yoki matn kiriting'
+            );
+        }
+        return Promise.resolve();
+    };
 
-  }
-  const validateEmail = (rule, value) => {
-    if (!email || !value) {
-      return Promise.reject('Iltimos, birorini tanlang yoki matn kiriting');
+    async function GetAllUsers() {
+        if (user?.access) {
+            const ItemsData = await GetRepository.getAllUserLists(user?.access);
+            if (ItemsData) {
+                setData(ItemsData?.results);
+            }
+        }
     }
-    return Promise.resolve();
-  };
 
+    useEffect(() => {
+        setEditorLoaded(true);
+        if (user?.access) {
+            GetAllUsers();
+        }
+    }, []);
 
-  useEffect(() => {
-    setEditorLoaded(true);
-  }, []);
+    useEffect(() => {
+        if (data?.length > 0) {
+            setOption(
+                data?.map((el) => ({
+                    label:
+                        el?.data?.name +
+                        ' | ' +
+                        el?.data?.role +
+                        ' | ' +
+                        el?.data?.email,
+                    value: el?.data?.email,
+                }))
+            );
+        }
+    }, [data]);
 
-  console.log(text);
+    // console.log('option', [ {
+    //   label:' Barcha Foydalanuvchilar',
+    //   value : '0'
+    // },
+    // {
+    //   label:'Barcha Sotuvchilar',
+    //   value : 'seller'
+    // },
+    // {
+    //   label:'Barcha Xaridorlar',
+    //   value : 'customer'
+    // }, ...option]);
 
-  return (
-    <section className="ps-my-account ps-page--account pb-5 p-0">
-      <div className="container">
-        <div className="row" style={{ alignItems: "flex-start" }}>
-          <div className="col-lg-4">
-            <div className="ps-page__left">
-              <AccountMenuSidebar data={accountLinks} />
+    return (
+        <section className="ps-my-account ps-page--account pb-5 p-0">
+            <div className="container">
+                <div className="row" style={{ alignItems: 'flex-start' }}>
+                    <div className="col-lg-4">
+                        <div className="ps-page__left">
+                            <AccountMenuSidebar data={accountLinks} />
+                        </div>
+                    </div>
+                    <div
+                        className="col-lg-8 bg-white"
+                        style={{ padding: '20px' }}>
+                        <Form
+                            form={form}
+                            onFinish={GetItemsEmail}
+                            className="row  p-4 border-2 border">
+                            <div className="col-md-12 p-0 mb-3">
+                                <CKEditor
+                                    name="description"
+                                    onChange={(data) => {
+                                        setText(data);
+                                    }}
+                                    editorLoaded={editorLoaded}
+                                    value={text || ''}
+                                />
+                            </div>
+
+                            <Form.Item
+                                className="col-md-8 p-0"
+                                name="email"
+                                rules={[{ validator: validateEmail }]}>
+                                <Select
+                                    showSearch
+                                    onChange={OnChangeSelect}
+                                    style={{ width: '100%' }}
+                                    placeholder="Pochtaga Xabar Yuborish"
+                                    mode="multiple"
+                                    allowClear
+                                    options={[
+                                        {
+                                            label: ' Barcha Foydalanuvchilar',
+                                            value: '0',
+                                        },
+                                        {
+                                            label: 'Barcha Sotuvchilar',
+                                            value: 'seller',
+                                        },
+                                        {
+                                            label: 'Barcha Xaridorlar',
+                                            value: 'customer',
+                                        },
+                                        ...option,
+                                    ]}></Select>
+                            </Form.Item>
+
+                            <Form.Item
+                                className="col-md-3 p-0"
+                                style={{ marginLeft: '15px' }}>
+                                <Button
+                                    loading={loading}
+                                    htmlType="submit"
+                                    style={{ width: '200px', height: '45px' }}
+                                    className="btn-success">
+                                    <span
+                                        style={{
+                                            color: '#fff',
+                                            fontSize: '16px',
+                                        }}>
+                                        Yuborish
+                                    </span>
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div className="col-lg-8 bg-white" style={{ padding: "20px" }}>
-            <Form form={form} onFinish={GetItemsEmail} className='row  p-4 border-2 border'>
-              <div
-                className='col-md-12 p-0 mb-3'
-              >
-                <CKEditor
-                  name="description"
-                  onChange={(data) => {
-                    setText(data);
-                  }}
-                  editorLoaded={editorLoaded}
-                  value={text || ""}
-                />
-              </div>
+        </section>
+    );
+};
 
-              <Form.Item
-                className='col-md-8 p-0'
-                name="email"
-                rules={[{ validator: validateEmail }]}
-              >
-                <Select
-                  mode='select'
-                  showSearch
-                  allowClear
-                  onChange={(e) => setEmail(e)}
-                  style={{ width: '100%', height: "47px" }}
-                  placeholder="Pochtaga Xabar Yuborish"
-                  value={email}
-                >
-                  <Option value='0'>
-                    Barcha Foydalanuvchilar
-                  </Option>
-                  <Option value="('seller',)">
-                    Barcha Sotuvchilar
-                  </Option>
-                  <Option value="('customer',)">
-                    Barcha Xaridorlar
-                  </Option>
-                </Select>
-              </Form.Item>
-
-              <Form.Item className='col-md-3 p-0' style={{ marginLeft: "15px" }}>
-                <Button loading={loading} htmlType='submit' style={{ width: "200px", height: '45px' }} className='btn-success'>
-                  <span style={{ color: "#fff", fontSize: "16px" }}>Yuborish</span>
-                </Button>
-
-              </Form.Item>
-            </Form>
-
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
-export default EmailLists
+export default EmailLists;

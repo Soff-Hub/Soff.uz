@@ -64,16 +64,6 @@ function ElectronicBanner() {
                             {bannerItem?.[0]?.image ? (
                                 <Link href={`${bannerItem?.[0]?.url.replace('https://soff.uz', '')}`}>
                                     <a>
-                                        {/* <img
-                                    style={{
-                                        width: '100%',
-                                        height: '370px',
-                                        backgroundImage: `url(${bannerItem?.[0]?.image})`,
-                                        backgroundPosition: 'center',
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundSize: 'cover',
-                                    }}
-                                /> */}
                                         <NextImage
                                             url={bannerItem[0]?.image}
                                             width="800px"

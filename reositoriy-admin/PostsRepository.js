@@ -64,7 +64,7 @@ class PostRepository {
     }
 
     async EmailSend(data, token) {
-        const endPoint = `admin/send-email/`;
+        const endPoint = `send-email/`;
         const response = await Repository({
             url: baseUrl + endPoint,
             method: 'POST',
@@ -74,7 +74,7 @@ class PostRepository {
             data:data
         })
             .then((response) => {
-                if (response.status === 201) {
+                if (response.status === 200) {
                     return response;
                 } else {
                     return null;

@@ -62,12 +62,7 @@ function Notifications() {
             render: (image) => (
                 <div>
                     {image ? (
-                        <NextImageCard
-                            url={image}
-                            clasS="rounded-3 "
-                            width="54px"
-                            height="54px"
-                        />
+                        <img src={image} alt="soff.uz" className='profile__image-client' />
                     ) : (
                         <span className="fs-4">
                             <i className="  fa-2x fa-solid fa-circle-user"></i>
