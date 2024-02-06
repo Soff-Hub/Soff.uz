@@ -18,6 +18,7 @@ const EmailLists = () => {
     const [data, setData] = useState(null);
     const [option, setOption] = useState([]);
     const [userRole, setUserRole] = useState(null)
+    const [subject, setSubject] = useState(null)
 
     const OnChangeSelect = (event) => {
         console.log(event);
@@ -30,11 +31,13 @@ const EmailLists = () => {
             setLoading(true);
             setEmail(null);
             setText(null);
-            setUserRole(email?.find((el) => (el === "customer" || el === "seller" || el === '0') ? el : null) )
+            setSubject(null);
+            setUserRole(email?.find((el) => (el === "customer" || el === "seller" || el === '0') ? el : null))
 
             const data = {
                 user_role: email?.find((el) => (el === "customer" || el === "seller" || el === '0') ? el : null),
                 email: email,
+                subject,
                 text: `<!DOCTYPE html>
         <html lang="en">
         <head>
@@ -254,7 +257,7 @@ const EmailLists = () => {
         if (user?.access) {
             const ItemsData = await GetRepository.getAllUserLists(user?.access);
             if (ItemsData) {
-                setData(ItemsData?.results);
+                setData(ItemsData);
             }
         }
     }
@@ -311,6 +314,15 @@ const EmailLists = () => {
                             form={form}
                             onFinish={GetItemsEmail}
                             className="row  p-4 border-2 border">
+                            <Form.Item
+                                className="col-md-8 p-0"
+                                name="subject"
+                                rules={[{ required: true, message: "Xabar mavzusini kiritish majburiy" }]}>
+                                <Input
+                                    onChange={(e) => setSubject(e.target.value)}
+                                    placeholder="Xabar mavzusi">
+                                </Input>
+                            </Form.Item>
                             <div className="col-md-12 p-0 mb-3">
                                 <CKEditor
                                     name="description"
