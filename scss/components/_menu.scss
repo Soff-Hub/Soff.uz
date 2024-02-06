@@ -54,10 +54,10 @@
         display: none;
     }
 
-    > li {
+    >li {
         display: block;
 
-        > a {
+        >a {
             display: inline-block;
             padding: 6px 20px;
             width: 100%;
@@ -82,11 +82,11 @@
         &.menu-item-has-children {
             position: relative;
 
-            > .sub-toggle {
+            >.sub-toggle {
                 display: none;
             }
 
-            > .sub-menu {
+            >.sub-menu {
                 position: absolute;
                 top: 0;
                 left: 100%;
@@ -99,7 +99,7 @@
             }
 
             &:hover {
-                > .sub-menu {
+                >.sub-menu {
                     @include show;
                     @include transform(translateY(0));
                 }
@@ -117,7 +117,7 @@
     @include transition(all 0.4s ease);
     border: 1px solid #ccc;
 
-    > * {
+    >* {
         width: 100%;
         padding: 10px 15px;
     }
@@ -184,10 +184,10 @@
 .menu {
     text-align: left;
 
-    > li {
+    >li {
         display: inline-block;
 
-        > a {
+        >a {
             display: inline-block;
             padding: 15px 25px;
             font-size: 16px;
@@ -203,7 +203,7 @@
         &:first-child {
             padding-left: 0;
 
-            > a {
+            >a {
                 padding-left: 0;
             }
         }
@@ -234,7 +234,7 @@
         &.menu-item-has-children {
             position: relative;
 
-            > a {
+            >a {
                 &:after {
                     content: '\e93a';
                     font: normal normal normal 12px/1 linearicons;
@@ -260,7 +260,7 @@
             }
 
             &:hover {
-                > .sub-menu {
+                >.sub-menu {
                     @include transform(scale3d(1, 1, 1) translateY(0));
                 }
             }
@@ -288,12 +288,12 @@
                 color: #ffffff;
             }
 
-            > .sub-menu {
+            >.sub-menu {
                 @include show;
             }
 
             &.menu-item-has-children {
-                > a {
+                >a {
                     &:before {
                         @include show;
                     }
@@ -366,6 +366,7 @@
         background-color: #fff;
         border: 1px solid #d3d3d3;
         min-width: 260px;
+
         .menu-item-has-children {
             position: relative;
         }
@@ -386,11 +387,11 @@
         list-style-type: none;
     }
 
-    > li {
+    >li {
         padding: 0 20px;
         transition: all 0.4s ease;
 
-        > a {
+        >a {
             display: block;
             padding: 10px 0;
             color: $color-heading;
@@ -416,6 +417,10 @@
         &:hover {
             background-color: $color-1st;
 
+            a {
+                color: #fff;
+            }
+
             &.has-mega-menu {
                 .mega-menu {
                     @include show;
@@ -434,8 +439,8 @@
         @include transition(all 0s ease);
         border: none;
 
-        > li {
-            > a {
+        >li {
+            >a {
                 border: none;
                 padding: 10px 20px;
             }
@@ -479,10 +484,10 @@
         }
     }
 
-    > li {
+    >li {
         border-bottom: 1px solid #dedede;
 
-        > a {
+        >a {
             position: relative;
             z-index: 10;
             display: block;
@@ -520,7 +525,7 @@
     }
 
     .mega-menu__list {
-        > li {
+        >li {
             border-bottom: 1px solid #dedede;
 
             a {
@@ -536,19 +541,19 @@
 
 .menu--mobile-2 {
     .ant-menu-submenu {
-        > .ant-menu-submenu-title {
-            > a {
+        >.ant-menu-submenu-title {
+            >a {
                 color: $color-heading;
                 font-size: 16px;
             }
 
-            > span {
+            >span {
                 font-size: 16px;
                 color: $color-heading;
             }
         }
 
-        > .ant-menu-sub {
+        >.ant-menu-sub {
             padding-left: 20px;
         }
     }
