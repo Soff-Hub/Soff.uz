@@ -5,8 +5,6 @@ import { Modal, Table } from 'antd';
 import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
-import Image from 'next/image';
-import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
 import Link from 'next/link';
 

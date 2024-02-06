@@ -61,13 +61,14 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     }, [socket]);
 
+
     useEffect(() => {
         if (user.role === 'admin') {
-            setSocket(new WebSocket('wss://api.soff.uz/ws/admin-offer/'));
+            setSocket(new WebSocket('wss://192.168.1.20/ws/admin-offer/'));
         } else {
             setSocket(
                 new WebSocket(
-                    'wss://api.soff.uz/ws/seller-offer/' + user?.access
+                    'wss://192.168.1.20/ws/seller-offer/' + user?.access
                 )
             );
         }
@@ -96,10 +97,10 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, [socket2]);
 
     useEffect(() => {
-        if (user.role !== 'admin') {
+        if (user.role) {
             setSocket2(
                 new WebSocket(
-                    'wss://api.soff.uz/ws/seller-document/' + user?.access
+                    'wss://api.soff.uz/ws/seller-document/?token=' + user?.access
                 )
             );
         }
@@ -280,8 +281,8 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     {link.text}{' '}
                                     {user?.role === 'admin' ? (
                                         link?.url === '/account/application' &&
-                                        (applicationData?.is_avaiable ||
-                                            webdata?.is_avaiable) ? (
+                                        (applicationData?.count ||
+                                            webdata?.count > 0) ? (
                                             <strong
                                                 className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                 style={{ marginLeft: '11rem' }}>
@@ -297,7 +298,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     )}
                                     {user?.role === 'admin' ? (
                                         link?.url === '/account/products' &&
-                                        webdata1?.is_avaiable === true ? (
+                                        webdata1?.count > 0 ? (
                                             <strong
                                                 className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                 style={{ marginLeft: '12rem' }}>
@@ -311,7 +312,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     )}
                                     {user?.role === 'seller' ? (
                                         link?.url === '/account/myproducts' &&
-                                        webdata2?.is_avaiable === true ? (
+                                        webdata2?.count > 0 ? (
                                             <strong
                                                 className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                 style={{ marginLeft: '4rem' }}>
@@ -325,8 +326,8 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     )}
                                     {user?.role === 'seller' ? (
                                         link?.url === '/account/application' &&
-                                        (applicationData?.is_avaiable ||
-                                            webdata?.is_avaiable) ? (
+                                        (applicationData?.count ||
+                                            webdata?.count > 0) ? (
                                             <strong
                                                 className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                 style={{ marginLeft: '11rem' }}>
