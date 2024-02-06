@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import ElectronicProductGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicProductGroupWithCarousel';
 import ElectronicBanner from '~/components/partials/homepage/electronic/ElectronicBanner';
 import ElectronicTopCategories from '~/components/partials/homepage/electronic/ElectronicTopCategories';
@@ -10,12 +10,40 @@ import { useSelector } from 'react-redux';
 import VedioPage from '~/components/VedioPage';
 import Meta from '~/components/shared/headers/Meta';
 import Link from 'next/link';
+import { baseUrl } from '~/repositories/Repository';
+import axios from 'axios';
 
-const HomeElectronicsPage = ({ category }) => {
+const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
+    const [category, setCategory] = useState([])
+    const [freeProducts, setFreeProducts] = useState({})
 
     const { setAllCartItem } = useCart();
     const { setAllSaved } = useWishlist();
+
+
+    async function getProducts() {
+        const responseData = await axios.get(baseUrl + 'customer/category-list/')
+        setCategory(responseData.data.results);
+    }
+
+    async function getFreeDocuments() {
+        const responseData = await axios.get(baseUrl + 'customer/free-document/')
+        setFreeProducts({
+            id: 999999999999999,
+            name: "Bepul mahsulotlar",
+            icon: null,
+            image: null,
+            slug: "bepul-mahsulotlar",
+            promotional_sliders: [...responseData.data]
+        });
+    }
+
+    useEffect(() => {
+        getProducts()
+        getFreeDocuments()
+    }, [])
+
 
     useEffect(() => {
         // localStoragedagi ma'lumotlar va redux store o'rtasidagi ma'lumotlar solishtiriladi
@@ -43,7 +71,14 @@ const HomeElectronicsPage = ({ category }) => {
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}
-
+            <ElectronicProductGroupWithCarousel
+                collectionSlug="electronics-best-sellers"
+                title={freeProducts.name}
+                data={freeProducts}
+                id={freeProducts.id}
+                key={234}
+                slug={freeProducts.slug}
+            />
             {category?.length > 0 ? (
                 category.map((item, index) =>
                     item?.promotional_sliders?.length > 0 && (

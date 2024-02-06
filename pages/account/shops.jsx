@@ -15,7 +15,7 @@ const AccountShopsPage = () => {
             url: '/',
         },
         {
-            text: 'Sotuchilar',
+            text: 'Sotuvchilar',
         },
     ];
     const { user } = useSelector(state => state.auth)
@@ -25,7 +25,7 @@ const AccountShopsPage = () => {
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Sotuchilar"}
+                        title={"Soff | Sotuvchilar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <Notifications />

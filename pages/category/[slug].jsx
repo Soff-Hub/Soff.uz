@@ -25,16 +25,15 @@ export default function ProductCategoryScreen({ category2 }) {
     // const [breadCrumbName, setBreadCrumb] = useState(null)
 
     async function getCategry() {
-        const responseData = await ProductRepository.getCategoryParent();
-        if (responseData?.length > 0) {
-            if (responseData?.every((cat) => cat.slug !== slug)) {
-                setchaildId(slug);
-                setParentId(null)
+        // const responseData = await ProductRepository.getCategoryParent();
+        if (category2?.length > 0) {
+            if (category2?.every((cat) => cat.slug !== slug)) {
+                // setchaildId(slug);
+                // setParentId(null)
             } else {
-                setParentId(slug);
-                setchaildId(null)
+                // setParentId(slug);
+                // setchaildId(null)
             }
-            setCategory(responseData);
         }
     }
 
@@ -54,14 +53,14 @@ export default function ProductCategoryScreen({ category2 }) {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
-            console.log("-->", responseData);
-            setCount(responseData.count);
         }
+        setCount(responseData?.count || 0);
         setchaildId(null);
     }
 
     async function getParentData(parentID) {
         setchaildId(null);
+        setParentId(null);
         setFilteredData(null);
         const responseData = await ProductRepository.getFilderProduct(
             1,
@@ -76,9 +75,8 @@ export default function ProductCategoryScreen({ category2 }) {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
-            setCount(responseData.count);
         }
-        setParentId(null);
+        setCount(responseData?.count || 0);
     }
 
     useEffect(() => {
@@ -126,6 +124,7 @@ export default function ProductCategoryScreen({ category2 }) {
             boxed={true}>
             <Meta
                 title={`Soff | ${nom}`}
+                description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning ${nom} kategoriyasida topdik`}
             />
             <div className="ps-page--shop">
                 <BreadCrumb breacrumb={breadCrumb} />
@@ -137,15 +136,18 @@ export default function ProductCategoryScreen({ category2 }) {
                                 setFilteredData={setFilteredData}
                                 chaildId={chaildId}
                                 parentId={parentId}
+                                categoryData={category2 || []}
+                                setCount={setCount}
                             />
                         </div>
                         <div className="ps-layout__right">
                             <ShopItems
                                 data={filteredData}
                                 columns={4}
-                                pageSize={16}
+                                pageSize={40}
                                 dataCount={count}
                                 setDataCount={setCount}
+                                categoryData={category2 || []}
                             />
                         </div>
                     </div>

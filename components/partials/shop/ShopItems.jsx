@@ -7,13 +7,17 @@ import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useDispatch, useSelector } from 'react-redux';
 import { CategorySlug } from '~/store/auth/action';
+import useDebounce from '~/hooks/useDebounce';
+import { baseUrl } from '~/repositories/Repository';
+import axios from 'axios';
 
 const ShopItems = ({
     columns = 4,
     pageSize,
     data,
     dataCount,
-    setDataCount
+    setDataCount,
+    categoryData
 }) => {
     const Router = useRouter();
     const { query } = Router;
@@ -31,13 +35,24 @@ const ShopItems = ({
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
     const dispatch = useDispatch()
-    const { category_lists: categoryData } = useSelector(state => state.auth)
+    // const { category_lists: categoryData } = useSelector(state => state.auth)
+    const [search, setSearch] = useState('')
+    const searchDebounce = useDebounce(search, 1000)
+
+    async function getFreeDocuments(page = 1, searchVal = '') {
+        const responseData = await axios.get(`${baseUrl}customer/documents/?free_documents=0&page=${page}&search=${searchVal}`)
+        if (responseData) {
+            setNewData(responseData?.data?.results);
+        }
+    }
 
 
     async function getCategry() {
-        const responseData = await ProductRepository.getCategoryParent();
+        const responseData = await ProductRepository.getCategoryParent().then(() => setLoad(true))
         if (responseData?.length > 0) {
+            console.log("responseData => ", responseData);
             dispatch(CategorySlug(responseData?.data?.results));
+            // categorySlug
         }
     }
 
@@ -47,7 +62,7 @@ const ShopItems = ({
         setListView(!listView);
     }
 
-   
+
     function handleSetColumns() {
         switch (columns) {
             case 2:
@@ -70,16 +85,13 @@ const ShopItems = ({
 
 
     useEffect(() => {
-        setTimeout(() => {
-            setLoad(true);
-        }, 2000);
-
-        data !== null  ? setSuccess(false) : setSuccess(true);
+        data !== null ? setSuccess(false) : setSuccess(true);
 
         console.log("=>", data);
-  
+
 
         handleSetColumns();
+        setNewData(data);
         if (true) {
             setNewData(data);
         } else {
@@ -92,13 +104,14 @@ const ShopItems = ({
             getCategry();
         }
 
-        if (categoryData?.every((cat) => cat.slug !== slug)) {
-            console.log(slug);
-            setchaildId(slug);
-            setParentId(null)
-        } else {
-            setParentId(slug);
-            setchaildId(null)
+        if (slug !== "bepul-mahsulotlar") {
+            if (categoryData?.every((cat) => cat.slug !== slug)) {
+                setchaildId(slug);
+                setParentId(null)
+            } else {
+                setParentId(slug);
+                setchaildId(null)
+            }
         }
 
     }, [slug])
@@ -143,12 +156,28 @@ const ShopItems = ({
                 setLoad(true);
             }
         }
+        if (slug === "bepul-mahsulotlar") {
+            getFreeDocuments(e, search)
+        }
     };
 
     async function handleSelect(e) {
         const ID = 'id';
         const PRICE = 'price';
         const DePRICE = '-price';
+        if (e.target.value === '&free_documents=0') {
+            const respons = await ProductRepository.getFilderProduct(
+                1,
+                chaildId,
+                parentId,
+                null,
+                null,
+                "&free_documents=0",
+                null
+            );
+            setDataCount(respons.count)
+            return setNewData(respons?.results);
+        }
         if (chaildId) {
             if (e.target.value === 'all') {
                 const respons = await ProductRepository.getFilderProduct(
@@ -190,19 +219,6 @@ const ShopItems = ({
                     null,
                     null,
                     PRICE,
-                    null
-                );
-                setNewData(respons?.results);
-            } else if (e.target.value === 'qimmatdan') {
-                const respons = await ProductRepository.getFilderProduct(
-                    1,
-                    slug,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    DePRICE,
                     null
                 );
                 setNewData(respons?.results);
@@ -269,46 +285,54 @@ const ShopItems = ({
     }
 
     async function detailSearch(e) {
-        if (chaildId) {
-            const respons = await ProductRepository.getSearchProduct(
-                1,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                e
-            );
-            if (respons) {
-                setDataCount(respons.count);
-                setNewData(respons.results);
-            } else {
-                setLoad(true);
-            }
-        } else if (parentId) {
-            const respons = await ProductRepository.getSearchProduct(
-                1,
-                null,
-                slug,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                e
-            );
-            if (respons) {
-                setDataCount(respons.count);
-                setNewData(respons.results);
-            } else {
-                setLoad(true);
+        if (slug === "bepul-mahsulotlar") {
+            getFreeDocuments(1, e)
+        } else {
+            if (chaildId) {
+                const respons = await ProductRepository.getSearchProduct(
+                    1,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    e
+                );
+                if (respons) {
+                    setDataCount(respons.count);
+                    setNewData(respons.results);
+                } else {
+                    setLoad(true);
+                }
+            } else if (parentId) {
+                const respons = await ProductRepository.getSearchProduct(
+                    1,
+                    null,
+                    slug,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    e
+                );
+                if (respons) {
+                    setDataCount(respons.count);
+                    setNewData(respons.results);
+                } else {
+                    setLoad(true);
+                }
             }
         }
     }
+
+    useEffect(() => {
+        detailSearch(search)
+    }, [searchDebounce])
 
     // Views
     let productItemsView;
@@ -320,7 +344,7 @@ const ShopItems = ({
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
 
-        
+
 
     } else {
         if (data?.length > 0) {
@@ -370,7 +394,7 @@ const ShopItems = ({
                 </div>
             );
         }
-       
+
     }
 
     return (
@@ -387,16 +411,19 @@ const ShopItems = ({
                             className="ps-input"
                             type="text"
                             placeholder="Mahsulotingizni izlang..."
-                            onChange={(e) => detailSearch(e.target.value)}
+                            onChange={(e) => setSearch(e.target.value)}
                         />
                     </label>
-
-                    <select
+                    {slug !== "bepul-mahsulotlar" && <span style={{ margin: "0 10px" }}>Saralash</span>}
+                    {slug !== "bepul-mahsulotlar" && <select
                         className="ps-select form-control"
                         data-placeholder="Sort Items"
                         onChange={(e) => handleSelect(e)}>
                         <option value="mashhur">
-                            Mashhurlari bo'yicha saralash
+                            Mashhurlari bo'yicha
+                        </option>
+                        <option value="&free_documents=0">
+                            Bepul mahsulotlar
                         </option>
                         <option value="all">Yangilari</option>
                         <option value="arzondan">
@@ -405,14 +432,14 @@ const ShopItems = ({
                         <option value="qimmatdan">
                             Narx bo'yicha: qimmatdan arzonga
                         </option>
-                    </select>
+                    </select>}
                 </div>
             </div>
             <div className="ps-shopping__content pagination-product-box">
                 {productItemsView}
             </div>
             <div className="ps-shopping__footer text-center">
-                {data?.length >= 16 && (
+                {data?.length >= 40 ? (
                     <div className="ps-pagination">
                         <Pagination className="mt-3"
                             total={dataCount}
@@ -423,7 +450,16 @@ const ShopItems = ({
                             onChange={(e) => handlePagination(e)}
                         />
                     </div>
-                )}
+                ) : <div className="ps-pagination">
+                    <Pagination className="mt-3"
+                        total={1}
+                        pageSize={1}
+                        responsive={true}
+                        showSizeChanger={false}
+                        current={1}
+                        onChange={(e) => handlePagination(e)}
+                    />
+                </div>}
             </div>
         </div>
     );

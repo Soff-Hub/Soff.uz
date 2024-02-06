@@ -53,6 +53,7 @@ function ElectronicBanner() {
         }
     }, []);
 
+
     return (
         <>
 
@@ -61,18 +62,8 @@ function ElectronicBanner() {
                     <div className="ps-section__left">
                         <div className="item banner-left-one">
                             {bannerItem?.[0]?.image ? (
-                                <Link href={`${bannerItem?.[0]?.url}`}>
+                                <Link href={`${bannerItem?.[0]?.url.replace('https://soff.uz', '')}`}>
                                     <a>
-                                        {/* <img
-                                    style={{
-                                        width: '100%',
-                                        height: '370px',
-                                        backgroundImage: `url(${bannerItem?.[0]?.image})`,
-                                        backgroundPosition: 'center',
-                                        backgroundRepeat: 'no-repeat',
-                                        backgroundSize: 'cover',
-                                    }}
-                                /> */}
                                         <NextImage
                                             url={bannerItem[0]?.image}
                                             width="800px"
@@ -108,7 +99,7 @@ function ElectronicBanner() {
                     <div className="ps-section__right">
                         {bannerItem?.[1] ? (
                             <div className="banner-right">
-                                <Link href={`${bannerItem?.[1].url}`}>
+                                <Link href={`${bannerItem?.[1].url.replace('https://soff.uz', '')}`}>
                                     <a className="ps-collection">
                                         <div
                                             style={{
@@ -121,7 +112,7 @@ function ElectronicBanner() {
                                         {/* <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' /> */}
                                     </a>
                                 </Link>
-                                <Link href={`${bannerItem?.[2].url}`}>
+                                <Link href={`${bannerItem?.[2].url.replace('https://soff.uz', '')}`}>
                                     <a className="ps-collection">
                                         <div
                                             style={{
@@ -162,7 +153,7 @@ function ElectronicBanner() {
                     </div>
                 </div>
             </section>
-            { modal ? (
+            {modal ? (
                 <>
                     <div
                         onClick={closeBanner}
@@ -185,7 +176,7 @@ function ElectronicBanner() {
                                 top: ' -9px',
                                 zIndex: 1
                             }}
-                            >
+                        >
                             <span
                                 className="fs-3"
                                 style={{ cursor: 'pointer' }}>

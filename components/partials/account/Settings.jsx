@@ -8,6 +8,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { BeatLoader } from 'react-spinners';
 import Link from 'next/link';
+import ProfileImage from '~/components/elements/profileImage';
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -18,6 +19,7 @@ function Notifications() {
     const [profile, setProfile] = useState(null);
     const [profilePassword, setProfilePassword] = useState(null);
     const [profilePassword1, setProfilePassword2] = useState(null);
+    const [image, setImage] = useState('');
     const divRef = useRef(null);
     const [copyIcon, setCopyIcon] = useState('fa-regular fa-copy');
     const handleCopyClick = () => {
@@ -43,24 +45,41 @@ function Notifications() {
     }
 
     useEffect(() => ProfileUsers(), [renderProfile]);
-
     async function handleClickEdit(e) {
         e.preventDefault();
         setLoading(true);
+
+        const formData = new FormData();
+        formData.append(
+            'first_name',
+            profileData?.first_name
+                ? profileData?.first_name
+                : profile?.first_name
+        );
+        formData.append(
+            'last_name',
+            profileData?.last_name ? profileData?.last_name : profile?.last_name
+        );
+        formData.append('image', image?.originFileObj);
+
         const ItemsData = await PatchRepository.getPatchProfile(
-            profileData,
+            formData,
             user?.access
         );
         setRenderProfile(!renderProfile);
         e.target.reset();
         setLoading(false);
-        const modal = Modal.success({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Sizning ismingiz va familiyangiz o'zgartirildi`,
-        });
-        modal.update;
+        if (ItemsData) {
+            console.log(ItemsData);
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Sizning ma'lumotlaringiz o'zgartirildi`,
+            });
+            modal.update;
+        }
     }
+
     async function handleClickEditChangePassword(e) {
         e.preventDefault();
         setLoading1(true);
@@ -87,7 +106,7 @@ function Notifications() {
             modal.update;
         }
     }
-
+    console.log('=>', image);
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -119,7 +138,7 @@ function Notifications() {
                                                         }
                                                         required
                                                         placeholder="Ismingiz"
-                                                        className="form-control rounded-3 col-md-4"
+                                                        className="form-control rounded-3 col-md-3"
                                                         onChange={(e) =>
                                                             setProfileData(
                                                                 (prev) => ({
@@ -138,7 +157,7 @@ function Notifications() {
                                                             profile?.last_name
                                                         }
                                                         placeholder="Familiyangiz"
-                                                        className="form-control rounded-3 col-md-4"
+                                                        className="form-control rounded-3 col-md-3"
                                                         onChange={(e) =>
                                                             setProfileData(
                                                                 (prev) => ({
@@ -151,7 +170,16 @@ function Notifications() {
                                                         }
                                                     />
 
+                                                    <div className="col-md-3 text-center">
+                                                        <ProfileImage
+                                                            setImage={setImage}
+                                                        />
+                                                    </div>
+
                                                     <button
+                                                     style={{
+                                                        maxHeight:'50px'
+                                                    }}
                                                         type="submit"
                                                         className="btn btn-success py-3 col-md-2  ">
                                                         {loading ? (
@@ -244,7 +272,7 @@ function Notifications() {
                                                                     o'zgartirish
                                                                 </h4>
                                                                 <form
-                                                                    className="row gap-4 row-gap-3 mx-auto "
+                                                                    className="row gap-4 row-gap-3 mx-auto d-flex aligin-center "
                                                                     onSubmit={
                                                                         handleClickEdit
                                                                     }>
@@ -255,7 +283,7 @@ function Notifications() {
                                                                         }
                                                                         required
                                                                         placeholder="Ismingiz"
-                                                                        className="form-control rounded-3 col-md-4"
+                                                                        className="form-control rounded-3 col-md-3"
                                                                         onChange={(
                                                                             e
                                                                         ) =>
@@ -279,7 +307,7 @@ function Notifications() {
                                                                             profile?.last_name
                                                                         }
                                                                         placeholder="Familiyangiz"
-                                                                        className="form-control rounded-3 col-md-4"
+                                                                        className="form-control rounded-3 col-md-3"
                                                                         onChange={(
                                                                             e
                                                                         ) =>
@@ -296,8 +324,18 @@ function Notifications() {
                                                                             )
                                                                         }
                                                                     />
+                                                                    <div className="col-md-3 text-center">
+                                                                        <ProfileImage
+                                                                            setImage={
+                                                                                setImage
+                                                                            }
+                                                                        />
+                                                                    </div>
 
                                                                     <button
+                                                                    style={{
+                                                                        maxHeight:'50px'
+                                                                    }}
                                                                         type="submit"
                                                                         className="btn btn-success py-3 col-md-2  ">
                                                                         {loading ? (
@@ -379,24 +417,32 @@ function Notifications() {
                                                 </div>
                                             </div>
                                             <div className="border pt-3 pl-2 mt-3">
-                                              
-                                               <Link className='d-block' href="https://t.me/soff_uz_bot"  >
-                                                <a target='_blank'>
-                                                <div className='d-flex gap-2 gap-lg-3'>
-                                               <h5 className="fs-3">
-                                                    Taklif xavolasini olish uchun telegram botga o'ting
-                                                </h5>
-                                                {/* <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
+                                                <Link
+                                                    className="d-block"
+                                                    href="https://t.me/soff_uz_bot">
+                                                    <a target="_blank">
+                                                        <div className="d-flex gap-2 gap-lg-3">
+                                                            <h5 className="fs-3">
+                                                                Taklif
+                                                                xavolasini olish
+                                                                uchun telegram
+                                                                botga o'ting
+                                                            </h5>
+                                                            {/* <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}
                                                         className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                                 </Tooltip> */}
-                                              
-                                                    <i class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3" style={{color:'#6492e3'}}></i>
-                                               </div>
-                                                </a>
+
+                                                            <i
+                                                                class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3"
+                                                                style={{
+                                                                    color: '#6492e3',
+                                                                }}></i>
+                                                        </div>
+                                                    </a>
                                                 </Link>
                                                 {/* <div className=" mt-3 taklif-div">
                                                     <div

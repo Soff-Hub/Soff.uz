@@ -37,6 +37,7 @@ const LoginPage = () => {
                     <div className="ps-page--my-account">
                         <Meta
                             title={"Soff | Kirish"}
+                            description="Soff.uz - Saytiga hoziroq kiring va o'z mahsulatlaringizni soting"
                         />
                         <BreadCrumb breacrumb={breadCrumb} />
                         <Login />

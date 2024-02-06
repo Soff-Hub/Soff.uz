@@ -39,7 +39,6 @@ const WidgetShopCategories = ({ data }) => {
             </Link>
         ));
     };
-console.log('===>', category);
     const renderAccordionItems = () => {
         return category?.map((item, i) => (
             <li key={item.id} className={item.slug === slug ? 'active' : ''}>

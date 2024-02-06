@@ -25,6 +25,7 @@ const MyAccountPage = () => {
                 <div className="ps-page--my-account">
                     <Meta
                         title={"Soff | Kategoriyalar"}
+                        description="O'zingizga kerakli mahsulotlarni Soff.uz saytingiz ushbu kategoriyasidan topishingiz mumkin"
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <CategoryLists />

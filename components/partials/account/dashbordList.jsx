@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Pagination, Table } from 'antd';
+import { Pagination, Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 // import Example from './Chart';
 import { useSelector } from 'react-redux';
@@ -12,6 +12,7 @@ import { Tabs } from 'antd';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import Axios from 'axios';
 import Link from 'next/link';
+import Example from './Chart';
 
 
 function DashbordList() {
@@ -23,6 +24,8 @@ function DashbordList() {
     const [pageCount2, setPageCount2] = useState(0)
     const [currPage, setCurrPage] = useState(null)
     const [loading, setLoading] = useState(false);
+    const [year, setYear] = useState(new Date().getFullYear())
+    const [month, setMonth] = useState(null)
 
     const { accountLinks, user } = useSelector(state => state.auth)
 
@@ -53,9 +56,8 @@ function DashbordList() {
     }
     async function GetItemsProductsPopular() {
         const ItemsData = await GetRepository.getPopularProducts(user?.access);
-        if (ItemsData?.info) {
-            setPageCount(ItemsData.count)
-            setDataProducts(ItemsData?.info);
+        if (ItemsData) {
+            setDataProducts(ItemsData);
         }
     }
 
@@ -84,6 +86,13 @@ function DashbordList() {
         GetItemsProductsOrders(pageNum)
     }
 
+    const handleChangeYear = (value) => {
+        setYear(+value)
+    };
+    const handleChangeMonth = (value) => {
+        setMonth(value)
+    };
+
 
     useEffect(() => {
         GetItemsProducts()
@@ -100,10 +109,14 @@ function DashbordList() {
         },
         {
             title: 'Sotuvchi',
-            dataIndex: 'seller',
+            dataIndex: 'seller_info',
             key: 'address',
-            render: (seller) => (
-                <span><i className="fa-solid fa-child-reaching text-primary-emphasis"></i> {seller?.first_name}</span>
+            render: (seller_info) => (
+                <div className='d-flex flex-column'>
+                            <span className="truncate whitespace-nowrap"> {seller_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {seller_info.email_or_phone}</span>
+                </div>
+
             ),
         },
         {
@@ -135,26 +148,24 @@ function DashbordList() {
     const columnsOrders = [
         {
             title: 'Buyurtmachi',
-            dataIndex: 'user_name',
+            dataIndex: 'customer_info',
             key: 'age',
+            render: (customer_info) => (
+                <div className='d-flex flex-column'>
+                            <span className="truncate whitespace-nowrap"> {customer_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                </div>
+
+            ),
         },
         user?.role === "admin" ? {
-            title: 'Telefon raqam yoki email',
-            dataIndex: 'data',
+            title: 'Sotuvchi',
+            dataIndex: 'seller_info',
             key: 'age',
-            render: (data) => (
+            render: (seller_info) => (
                 <div className='d-flex flex-column'>
-                    {
-                        data.phone === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
-                    }
-                    {
-                        data.email === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.email}</span>
-                    }
-
+                            <span className="truncate whitespace-nowrap"> {seller_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {seller_info.email_or_phone}</span>
                 </div>
 
             ),
@@ -162,18 +173,18 @@ function DashbordList() {
             : <></>,
         {
             title: 'Buyurtma nomi',
-            dataIndex: 'info',
+            dataIndex: 'document',
             key: 'age',
             width: 300,
-            render: (info) => <Link href={`/product/${info[0].slug}`}><a>{info[0].title}</a></Link>,
+            render: (document) => <Link href={`/product/${document.slug}`}><a>{document.title}</a></Link>,
         },
         user.role === "admin" ?
             {
                 title: 'Narx',
-                dataIndex: 'discount_price',
+                dataIndex: 'price',
                 key: 'address',
-                render: (total_price) => (
-                    <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
+                render: (price) => (
+                    <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
                 ),
             }
             : <></>,
@@ -196,15 +207,22 @@ function DashbordList() {
     const columnsOrdersSeller = [
         {
             title: 'Buyurtmachi',
-            dataIndex: 'user_name',
+            dataIndex: 'customer_info',
             key: 'age',
+            render: (customer_info) => (
+                <div className='d-flex flex-column'>
+                            <span className="truncate whitespace-nowrap"> {customer_info.name}</span>
+                            <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                </div>
+
+            )
         },
         {
             title: 'Buyurtma nomi',
-            dataIndex: 'info',
+            dataIndex: 'document',
             key: 'age',
             width: 300,
-            render: (info) => <Link href={`/product/${info[0].slug}`}><a>{info[0].title}</a></Link>,
+            render: (document) => <Link href={`/product/${document.slug}`}><a>{document.title}</a></Link>,
         },
         {
             title: 'Buyurtma sanasi',
@@ -214,10 +232,10 @@ function DashbordList() {
         },
         {
             title: 'Narx',
-            dataIndex: 'discount_price',
+            dataIndex: 'price',
             key: 'address',
-            render: (total_price) => (
-                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(total_price)}</span>
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i> {addPeriodToThousands(price)}</span>
             ),
         },
         {
@@ -229,6 +247,21 @@ function DashbordList() {
             ),
 
         },
+    ];
+
+    const labels = [
+        { name: 'Yanvar', value: '01' },
+        { name: 'Fevral', value: '02' },
+        { name: 'Mart', value: '03' },
+        { name: 'Aprel', value: '04' },
+        { name: 'May', value: '05' },
+        { name: 'Iyun', value: '06' },
+        { name: 'Iyul', value: '07' },
+        { name: 'Avgust', value: '08' },
+        { name: 'Sentyabr', value: '09' },
+        { name: 'Oktyabr', value: '10' },
+        { name: 'Noyabr', value: '11' },
+        { name: 'Dekabr', value: '12' },
     ];
 
 
@@ -431,7 +464,38 @@ function DashbordList() {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        <div className='pb-5'>
+                        {user?.role === "admin" && <div className="dashboard-div mb-2">
+                            <Select
+                                defaultValue={{
+                                    value: +year,
+                                    label: `${+year}-yil bo'yicha hisobotlar`,
+                                }}
+                                style={{
+                                    width: 300,
+                                }}
+                                onChange={handleChangeYear}
+                                options={
+                                    [2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030, 2031, 2032, 2033].map((el) => ({
+                                        value: +el,
+                                        label: `${+el}-yil bo'yicha hisobotlar`,
+                                    }))}
+                                className='me-2'
+                            />
+                            <Select
+                                defaultValue={{ label: `Barcha oy ma'lumotlari`, value: null }}
+                                style={{
+                                    width: 300,
+                                }}
+                                onChange={handleChangeMonth}
+                                options={[
+                                    { label: `Barcha oy ma'lumotlari`, value: null },
+                                    ...labels.map(el => ({ label: `${el.name} oyi ma'lumotlari`, value: el.value }))
+                                ]}
+                            />
+                        </div>}
+
+                        {user?.role === "admin" && <div className="dashboard-div"><Example year={year} month={month} /></div>}
+                        <div className='pb-5 mt-4'>
                             <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                             {
                                 user?.role == "admin" ?

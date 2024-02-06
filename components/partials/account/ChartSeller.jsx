@@ -2,74 +2,77 @@ import React, { useEffect, useState } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Chart } from 'chart.js';
 import { useSelector } from 'react-redux';
+import { useRouter } from 'next/router';
 
 function getMonthName(monthNumber) {
     let monthName;
     switch (monthNumber) {
-        case 'January':
+        case 'Yanvar':
             monthName = 'Yanvar';
             break;
-        case 'February':
+        case 'Fevral':
             monthName = 'Fevral';
             break;
-        case 'March':
+        case 'Mart':
             monthName = 'Mart';
             break;
-        case 'April':
+        case 'Aprel':
             monthName = 'Aprel';
             break;
         case 'May':
             monthName = 'May';
             break;
-        case 'June':
+        case 'Iyun':
             monthName = 'Iyun';
             break;
-        case 'July':
+        case 'Iyul':
             monthName = 'Iyul';
             break;
-        case 'August':
+        case 'Avgust':
             monthName = 'Avgust';
             break;
-        case 'September':
-            monthName = 'Sentyabr';
+        case 'Sentabr':
+            monthName = 'Sentabr';
             break;
-        case 'October':
-            monthName = 'Oktyabr';
+        case 'Oktabr':
+            monthName = 'Oktabr';
             break;
-        case 'November':
+        case 'Noyabr':
             monthName = 'Noyabr';
             break;
-        case 'December':
+        case 'Dekabr':
             monthName = 'Dekabr';
             break;
         default:
-            monthName = 'bunaqa oy yuq'; // If an invalid month name is provided
+            monthName = 'bunday oy yuq'; // If an invalid month name is provided
             break;
     }
     return monthName;
 }
 
 
-function Example({ year, month }) {
+function ChartSeller({ year, month }) {
     const { user } = useSelector((state) => state.auth);
-
+    const router = useRouter()
+    const {pid} = router.query
     const [tableData, setTableData] = useState({ data: [], count: [] });
     const [labels, setLabels] = useState([])
 
-    async function getChartItems() {
+    async function getChartItems(id) {
         const arr = []
         const arr2 = []
         const arr3 = []
-        const ItemsChartData = await GetRepository.getChartLists(user?.access, year, month);
+        const ItemsChartData = await GetRepository.getChartListsSeller(user?.access, year, month, id);
         if (ItemsChartData) {
+            console.log('itemdata', ItemsChartData);
             for (let i = 0; i < ItemsChartData.length; i++) {
                 arr.push(ItemsChartData[i].total_price);
                 arr2.push(ItemsChartData[i].count);
                 if (month) {
-                    arr3.push(ItemsChartData[i].day.split('-')[2])
+                    arr3.push(ItemsChartData[i].date.split('-')[2])
                 }
                 else {
-                    arr3.push(getMonthName(ItemsChartData[i].month))
+                    arr3.push(getMonthName(ItemsChartData[i].date))
                 }
             }
         }
@@ -81,8 +84,8 @@ function Example({ year, month }) {
     }
 
     useEffect(() => {
-        getChartItems();
-    }, [year, month]);
+        getChartItems(pid);
+    }, [year, month, pid]);
 
 
     useEffect(() => {
@@ -123,7 +126,7 @@ function Example({ year, month }) {
 
     return (
         <>
-            <div className="w-[1100px] h-screen flex mx-auto my-auto">
+            <div className="w-[1100px] h-25 flex mx-auto my-auto">
                 <div className="border border-gray-400 pt-0 rounded-xl  w-full h-fit my-auto  shadow-xl" id='canvas' style={{ backgroundColor: 'white' }}>
                     <canvas id="myChart"></canvas>
                 </div>
@@ -132,4 +135,4 @@ function Example({ year, month }) {
     );
 }
 
-export default Example;
+export default ChartSeller;

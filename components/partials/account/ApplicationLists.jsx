@@ -51,11 +51,12 @@ function ApplicationLists() {
         }
     }
     async function ProfileUsersTextItems(page, dataFormat) {
-        const ItemsData = await GetRepository.getTagTaklifLists(page, dataFormat, user?.access);
+        const ItemsData = await GetRepository.getTagTaklifLists(page, dataFormat, user?.access, user?.role === "admin");
         if (ItemsData?.results) {
             setData2([...ItemsData.results]);
             setPageCount1(ItemsData?.count);
         }
+        console.log(ItemsData?.results);
         getItemsSellerTaklif(currPage)
     }
 
@@ -84,7 +85,7 @@ function ApplicationLists() {
     }
 
     async function getItemsSeller(page) {
-        const Items = await GetRepository.getProfileAriza(page, user?.access);
+        const Items = await GetRepository.getProfileAriza(page, user?.access, user?.role === "admin");
         if (Items?.results) {
             setData([...Items.results]);
             setPageCount(Items?.count);
@@ -99,8 +100,11 @@ function ApplicationLists() {
         }
     }
     async function getItemsSellerAdmin(page) {
-        const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access);
-        if (Items?.results) {
+        const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin");
+        if (Items && user?.role === "admin") {
+            return setDataAdmin([...Items]);
+        }
+        if (Items.results) {
             setDataAdmin([...Items.results]);
         }
     }

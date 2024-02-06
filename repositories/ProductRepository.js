@@ -77,7 +77,6 @@ class ProductRepository {
             }&approved_count=${mashhur || ''}`
         )
             .then((response) => {
-                console.log("responsss", response);
                 return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
@@ -264,6 +263,21 @@ class ProductRepository {
         )
             .then((response) => {
                 return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getProductFileSlug(pid, token) {
+        const reponse = await Repository({
+            url: baseUrl + `customer/get-file-url/${pid}`,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                return response.data
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
