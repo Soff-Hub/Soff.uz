@@ -1,13 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 
-const BreadCrumb = ({ breacrumb, layout }) => {
+const BreadCrumb = ({ breacrumb }) => {
     return (
         <div className="ps-breadcrumb">
             <div
-                className={
-                    layout === 'fullwidth' ? 'ps-container' : 'container'
-                }>
+                >
                <div className="container">
                <ul className="breadcrumb">
                     {breacrumb.map((item, index) => {

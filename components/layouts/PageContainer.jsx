@@ -110,6 +110,11 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-truck',
     },
     {
+        text: 'Yangiliklar',
+        url: '/account/notification',
+        icon: 'fa-solid fa-bell',
+    },
+    {
         text: "Ariza va Takliflar",
         url: '/account/application',
         icon: 'fa-solid fa-file-signature',
@@ -125,6 +130,12 @@ export let cutomerAccountLink = [
         text: 'Mening mahsulotlarim',
         url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
+        
+    },
+    {
+        text: 'Yangiliklar',
+        url: '/account/notification',
+        icon: 'fa-solid fa-bell',
     },
     {
         text: 'Profil',
