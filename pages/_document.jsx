@@ -7,9 +7,12 @@ export default function Document() {
     return (
         <Html>
             <Head>
-
                 <link rel="shortcut icon" href={'/static/img/soff logo.png'} />
-                <link rel="icon" href={'/static/img/soff logo.png'} sizes="32x32" />
+                <link
+                    rel="icon"
+                    href={'/static/img/soff logo.png'}
+                    sizes="32x32"
+                />
                 <link
                     rel="icon"
                     href={'/static/img/soff logo.png'}
@@ -17,7 +20,6 @@ export default function Document() {
                 />
                 <link
                     rel="apple-touch-icon-precomposed"
-
                     href={'/static/img/soff logo.png'}
                 />
 
@@ -26,13 +28,31 @@ export default function Document() {
                     rel="stylesheet"
                 />
 
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
-                <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" />
+                <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+                />
+                <link
+                    rel="stylesheet"
+                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+                />
+
                 <script
                     async
-                    src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"
-                ></script>
-                <noscript><div><img src="https://mc.yandex.ru/watch/96065878" style={{ position: "absolute", left: "-9999px", }} alt="" /></div></noscript>
+                    src="https://www.googletagmanager.com/gtag/js?id=G-H60GJQ0WF2"></script>
+                <noscript>
+                    <div>
+                        <img
+                            src="https://mc.yandex.ru/watch/96065878"
+                            style={{ position: 'absolute', left: '-9999px' }}
+                            alt=""
+                        />
+                    </div>
+                </noscript>
+
+                
+
+
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `
@@ -41,8 +61,7 @@ export default function Document() {
                         gtag('js', new Date());
                         gtag('config', 'G-H60GJQ0WF2');
                     `,
-                    }}
-                ></script>
+                    }}></script>
                 <script
                     dangerouslySetInnerHTML={{
                         __html: `
@@ -55,8 +74,7 @@ export default function Document() {
                             a.appendChild(r);
                         })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
                         `,
-                    }}
-                ></script>
+                    }}></script>
 
                 <script
                     dangerouslySetInnerHTML={{
@@ -73,9 +91,7 @@ export default function Document() {
                              accurateTrackBounce:true
                         });
                     `,
-                    }}
-                ></script>
-
+                    }}></script>
             </Head>
             <body>
                 <Main />

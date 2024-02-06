@@ -1,40 +1,38 @@
 import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
-import ApplicationLists from '~/components/partials/account/ApplicationLists';
 import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
+import PremiumSellers from '~/components/partials/account/PremiumSellers';
 import Page404 from '../page/page-404';
 import { useSelector } from 'react-redux';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
+import EmailLists from '~/components/partials/account/EmailLists';
 
-const Application = () => {
+const AccountEmail = () => {
     const breadCrumb = [
         {
-            text: 'Asosiy sahifa',
+            text: 'Home',
             url: '/',
         },
         {
-            text: "Ariza va Takliflar",
-
+            text: 'Pochtaga Xabar Yuborish',
         },
     ];
     const { user } = useSelector(state => state.auth)
     return (
-
-        user?.role === 'admin' || user?.role === 'seller' ?
+        user?.role === 'admin'?
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Ariza va Takliflar"}
-                        description="Soff - Sizga kelib tushgan Ariza va Takliflarni ko'rib chiqing"
+                        title={"Soff | Pochtaga Xabar Yuborish"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <ApplicationLists />
+                    <EmailLists />
                 </div>
             </PageContainer> : user?.access ? <Page404 /> : <Selection />
 
     );
 };
 
-export default Application;
+export default AccountEmail;

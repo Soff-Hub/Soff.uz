@@ -2,7 +2,7 @@
 import Head from "next/head";
 import React from "react";
 
-const Meta = ({ title, image }) => {
+const Meta = ({ title, image, description = "Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling." }) => {
   return (
     <Head>
       <meta property="og:title" content={title} />
@@ -12,8 +12,11 @@ const Meta = ({ title, image }) => {
       />
       <meta property="og:image" content={image} />
       <meta property="og:site_name" content="Soff.uz" />
-      {/* <meta name="description" content="Soff | Soff online hujjatlar bazasi" /> */}
       <title>{title}</title>
+      <meta
+        name="description"
+        content={description}
+      />
     </Head>
   );
 };

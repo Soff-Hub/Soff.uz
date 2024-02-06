@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import PostRepository from '~/repositories/PostRepository';
 import ClickRepository from '~/repositories/ClickRepository';
 import { BeatLoader } from 'react-spinners';
-import  Router  from 'next/router';
+import Router from 'next/router';
 import useCart from '~/hooks/useCart';
 import Image from 'next/image';
 
@@ -16,7 +16,7 @@ function FormCheckoutInformation() {
     const [data, setData] = useState([]);
     const [selectedValue, setSelectedValue] = useState('click');
     const [message, setMessage] = useState(true);
-    const {removeAll} = useCart()
+    const { removeAll } = useCart()
 
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
@@ -61,7 +61,12 @@ function FormCheckoutInformation() {
         };
         const respons = await ClickRepository.postClick(data, token);
         if (respons) {
-            window.open(`${respons?.data?.url}`, '_blank');
+            const a = document.createElement('a')
+            a.href = `${respons?.data?.url}`
+            a.rel = 'noopener noreferrer'
+            a.target = '_blank'
+            a.click()
+            a.remove()
             setMessage(true);
         }
         // else {
@@ -73,9 +78,9 @@ function FormCheckoutInformation() {
         //         content: 'Siz sotuvchisiz , foydalanuvchi bo\'lib ro\'yxatdan o\'tishingiz zarur' ,
         //     });
         //     modal.update;
-        
+
         // }
-       
+
         // const responsClick = await ClickRepository.postClick( token)
     };
 

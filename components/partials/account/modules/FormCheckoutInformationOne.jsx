@@ -10,22 +10,22 @@ function FormCheckoutInformationOne() {
     const [selectedValue, setSelectedValue] = useState('click');
     const [message, setMessage] = useState(true);
     const Router = useRouter()
-    const {id} =  Router.query
+    const { id } = Router.query
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
     };
-  
+
 
     console.log('log', id);
 
     const state = useSelector(state => state?.auth?.shop)
     let arr = []
     arr.push(id)
-//   if (state.id) {
-//     arr.push(state?.id)
-//   }else{
-//   }
-   
+    //   if (state.id) {
+    //     arr.push(state?.id)
+    //   }else{
+    //   }
+
 
     const ProductToApi = async () => {
         setMessage(false);
@@ -39,7 +39,12 @@ function FormCheckoutInformationOne() {
         };
         const respons = await ClickRepository.postClick(data, token);
         if (respons) {
-            window.open(`${respons?.data?.url}`, '_blank');
+            const a = document.createElement('a')
+            a.href = `${respons?.data?.url}`
+            a.rel = 'noopener noreferrer'
+            a.target = '_blank'
+            a.click()
+            a.remove()
             setMessage(true);
         }
         // else {
@@ -51,9 +56,9 @@ function FormCheckoutInformationOne() {
         //         content: 'Siz sotuvchisiz , foydalanuvchi bo\'lib ro\'yxatdan o\'tishingiz zarur' ,
         //     });
         //     modal.update;
-        
+
         // }
-       
+
     };
 
     return (
@@ -73,7 +78,7 @@ function FormCheckoutInformationOne() {
                         alt="payme"
                         width="100%"
                         height="40px"
-                        style={{ objectFit: 'cover' }}
+                        style={{ objectFit: 'contain' }}
                     />
                 </div>
             </div>

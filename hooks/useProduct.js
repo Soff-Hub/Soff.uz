@@ -47,7 +47,7 @@ export default function useProduct() {
                                 {formatCurrency(payload.price)}
                                 <span> so'm</span>
                             </del>
-                        </> : "Bepul mahsulot"}
+                        </> : <p className='free-product-text'>Bepul mahsulot</p>}
 
                     </p>
                 );
@@ -55,9 +55,8 @@ export default function useProduct() {
                 view = (
                     <p className="ps-product__price">
                         {payload.discount_price === 0 ? <>
-                            Bepul mahsulot
-                            <span> so'm</span>
-                        </> : formatCurrency(payload.price)}
+                            <p className='free-product-text'>Bepul mahsulot</p>
+                        </> : <>{formatCurrency(payload.price)} <span> so'm</span></>}
 
                     </p>
                 );

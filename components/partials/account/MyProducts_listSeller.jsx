@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
 import axios from 'axios';
 import NextImageCard from '~/components/nextImagecard';
+import useDebounce from '~/hooks/useDebounce';
 
 
 function MyProductsListsSeller() {
@@ -26,6 +27,7 @@ function MyProductsListsSeller() {
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
     const { accountLinks, user } = useSelector(state => state.auth)
     const Option = Select.Option;
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsProducts(page, category, dataFormat) {
@@ -114,9 +116,23 @@ function MyProductsListsSeller() {
     }, [])
     useEffect(() => {
         GetItemsProducts(currPage, dataValCat, dataFormat)
-    }, [dataValCat, dataFormat, search])
+    }, [dataValCat, dataFormat, searchDebounce])
 
     const columns = [
+        {
+            title: 'Mahsulot',
+            dataIndex: 'id',
+            key: 'address',
+            render: (id) => <>
+                {
+                    loading2 ?
+                        <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
+                            <span className="visually-hidden">Loading...</span>
+                        </div> :
+                        <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
+                }
+            </>
+        },
         {
             title: 'Rasm',
             dataIndex: 'poster',
@@ -165,21 +181,6 @@ function MyProductsListsSeller() {
             key: 'created_at',
             render: (created_at) => <span> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
         },
-        {
-            title: 'Mahsulot',
-            dataIndex: 'id',
-            key: 'address',
-            render: (id) => <>
-                {
-                    loading2 ?
-                        <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
-                            <span className="visually-hidden">Loading...</span>
-                        </div> :
-                        <a><i className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3" onClick={() => handleButtonClick(id)}></i></a>
-                }
-            </>
-        }
-
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">

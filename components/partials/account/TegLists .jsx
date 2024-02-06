@@ -10,6 +10,7 @@ import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
+import useDebounce from '~/hooks/useDebounce';
 
 function TegLists() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -22,6 +23,7 @@ function TegLists() {
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
     const [dataVal, setDataVal] = useState("")
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsUsers(page) {
@@ -66,7 +68,7 @@ function TegLists() {
 
     useEffect(() => {
         GetItemsUsers(currPage, search, dataVal)
-    }, [search, dataVal])
+    }, [searchDebounce, dataVal])
 
     const columns = [
         {

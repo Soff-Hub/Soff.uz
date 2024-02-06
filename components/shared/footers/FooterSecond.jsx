@@ -93,10 +93,10 @@ const FooterSecond = ({ classes }) => {
                             Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.
                         </p>
                      
-                        <aside className="widget widget_footer widget_contact-us">
+                        {/* <aside className="widget widget_footer widget_contact-us">
                             <NextImageCard  url="/static/img/payment-method/click_logo.png" clasS='category-image mt-1' width='75rem' height='35px' />
                             <NextImageCard  url="/static/img/payment-method/payme_logo.png" clasS='category-image ms-2' width='75rem' height='25px' />
-                        </aside>
+                        </aside> */}
                     </div>
                 </div>
                 <div className="ps-footer__copyright">

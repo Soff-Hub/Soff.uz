@@ -20,6 +20,7 @@ import PartialDescription from '~/components/elements/detail/description/Partial
 import Axios from 'axios';
 import Router from 'next/router';
 import NextImageCard from '~/components/nextImagecard';
+import useDebounce from '~/hooks/useDebounce';
 const { TabPane } = Tabs;
 
 function MyProductsLists() {
@@ -31,7 +32,7 @@ function MyProductsLists() {
     const [tagName, setTagName] = useState(null);
     const [tagItems, setTagItems] = useState([]);
     const [View, setView] = useState({});
-    const [ViewPriceDiscount, setViewPriceDiscount] = useState(null);
+    const [ViewPriceDiscount, setViewPriceDiscount] = useState({ price: 0, discount: 0 });
     const [dataValCat, setDataCat] = useState(null);
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
@@ -49,6 +50,7 @@ function MyProductsLists() {
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
     const { accountLinks, user, products } = useSelector(state => state.auth)
     const Option = Select.Option;
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsProducts(page, category, tagName, dataFormat, status, search) {
@@ -77,15 +79,7 @@ function MyProductsLists() {
         }
     };
 
-    const finalPrice =
-        ViewPriceDiscount?.price && ViewPriceDiscount?.discount
-            ? ViewPriceDiscount.price - (ViewPriceDiscount.discount * ViewPriceDiscount.price) / 100
-            : (
-                (products?.price - ((products?.price) * (ViewPriceDiscount?.discount) / 100)) ||
-                (ViewPriceDiscount?.price - ((products?.discount) * (ViewPriceDiscount?.price) / 100))
-            );
-
-
+    const finalPrice = ViewPriceDiscount?.price - (ViewPriceDiscount?.discount * ViewPriceDiscount?.price) / 100
 
 
     const options = [];
@@ -160,6 +154,7 @@ function MyProductsLists() {
         const ItemsData = await GetRepository.getMyProductsView(productsItems, user?.access);
         if (ItemsData) {
             setProducts2(ItemsData)
+            setViewPriceDiscount({ price: ItemsData.price, discount: ItemsData.discount })
             setLoading3(false)
         }
     }
@@ -269,7 +264,7 @@ function MyProductsLists() {
     }, [])
     useEffect(() => {
         GetItemsProducts(currPage, dataValCat, tagName, dataFormat, selectValStatus, search)
-    }, [dataValCat, tagName, dataFormat, selectValStatus, search])
+    }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce])
 
     const columns = [
         {
@@ -359,19 +354,19 @@ function MyProductsLists() {
                                 <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
                             </a>
                         </Link> :
-                        // data.some(el => el.id == id && el.data_status?.status === 'approved') ?
-                        //     <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal" onClick={() => handleClickIdEditModal(id)} >
-                        //         <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
-                        //     </a>
-                        //     :
-                        data.some(el => el.id == id && el.data_status?.status === 'cancelled') ?
-                            <Link href={"#"}>
-                                <a>
-                                    <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
-                                </a>
-                            </Link>
+                        data.some(el => el.id == id && el.data_status?.status === 'approved') ?
+                            <a data-bs-target="#exampleModalMyProductsPrice" data-bs-toggle="modal" onClick={() => handleClickIdEditModal(id)} >
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" ></i>
+                            </a>
                             :
-                            <></>
+                            data.some(el => el.id == id && el.data_status?.status === 'cancelled') ?
+                                <Link href={"#"}>
+                                    <a>
+                                        <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis" onClick={() => handleClickIdEdit(id)}></i>
+                                    </a>
+                                </Link>
+                                :
+                                <></>
 
                 }
                 <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal"><i className="fa-solid fa-trash-can text-danger mx-2" onClick={() => setDeleteId(id)}></i></a>
@@ -536,7 +531,7 @@ function MyProductsLists() {
                                                     <header>
                                                         <h1>{View?.title}</h1>
                                                         <h4>
-                                                            {+View?.discount_price !== 0 ? addPeriodToThousands(View?.discount_price) + "so'm " : "Bepul mahsulot"}
+                                                            {+View?.discount_price !== 0 ? addPeriodToThousands(View?.discount_price) + "so'm " : <p className='free-product-text'>Bepul mahsulot</p>}
                                                         </h4>
                                                     </header>
                                                     <div>
@@ -626,7 +621,7 @@ function MyProductsLists() {
                                 <label htmlFor="discount" className='form-label'>Hujjatingizni narxi
                                     <input id='discount' onChange={(e) => setViewPriceDiscount((prev) => ({ ...prev, price: e.target.value }))} defaultValue={products2?.price} type="number" className='form-control rounded-3' placeholder='Hujjatingizni narxi' />
                                 </label>
-                                <label htmlFor="discount" className='form-label'>Sotuvdagi narxi:  <span className={finalPrice < 1000 || products2?.discount_pric < 1000 ? "text-danger" : "text-primary"}> {finalPrice || products2?.discount_price}</span>
+                                <label htmlFor="discount" className='form-label'>Sotuvdagi narxi:  <span className={finalPrice < 1000 || products2?.discount_pric < 1000 ? "text-danger" : "text-primary"}> {JSON.stringify(finalPrice)}</span>
                                 </label>
                             </>
                     }

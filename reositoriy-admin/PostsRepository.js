@@ -62,6 +62,28 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
+
+    async EmailSend(data, token) {
+        const endPoint = `send-email/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                'Authorization' : `Bearer ${token}`
+            },
+            data:data
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => (error.response));
+        return response;
+    }
+
     async PostsMyProducts(data, token) {
         const endPoint = `product-create/`;
         const response = await Repository({

@@ -9,6 +9,8 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from './DateFormatter';
+import useDebounce from '~/hooks/useDebounce';
+import Link from 'next/link';
 
 function AccountUserPages() {
     const { accountLinks, user } = useSelector(state => state.auth)
@@ -18,9 +20,11 @@ function AccountUserPages() {
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [selectVal, setSelectVal] = useState(null);
     const [selectValStatus, setSelectValStatus] = useState("");
+    const [customers_count, setCustomers_Count] = useState('')
 
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsUsers(page, status, search) {
@@ -28,6 +32,7 @@ function AccountUserPages() {
         const ItemsData = await GetRepository.getUsersLists(page, status, search, user?.access);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
+        setCustomers_Count(ItemsData.count)
     }
 
     async function handleItemsPost() {
@@ -70,8 +75,21 @@ function AccountUserPages() {
 
     useEffect(() => {
         GetItemsUsers(currPage, selectValStatus, search)
-    }, [selectValStatus, search])
+    }, [selectValStatus, searchDebounce])
     const columns = [
+        {
+            title: 'Batafsil',
+            dataIndex: 'id',
+            key: 'age',
+            width: 50,
+            render: (id) => (
+                <Link href={`/customerAccount/${id}`}>
+                    <a className="truncate whitespace-nowrap">
+                    <i class="fa-solid fa-eye"></i>
+                    </a>
+                </Link>
+            ),
+        },
         {
             title: 'Ism',
             dataIndex: 'first_name',
@@ -103,10 +121,19 @@ function AccountUserPages() {
             ),
         },
         {
-            title:  "Ro'yxatdan o'tgan sana",
+            title: "Ro'yxatdan o'tgan sana",
             dataIndex: 'created_at',
             key: 'created_at',
             render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Sotib olingan mahsulotlar soni',
+            dataIndex: 'purchased_count',
+            key: 'purchased_count',
+            render: (purchased_count) => (
+                <span className="truncate whitespace-nowrap"> {purchased_count === 0 ? 0 : purchased_count + ' ta' }</span>
+
+            ),
         },
         {
             title: 'Holat',
@@ -117,18 +144,18 @@ function AccountUserPages() {
             )
 
         },
-        {
-            title: 'Harakatlar',
-            dataIndex: 'id',
-            key: 'address',
-            render: (id) => <div >
-                {
-                    data.some(el => el.id == id && el.auth_status === 'new') ?
-                        <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-                        : <></>
-                }
-            </div>
-        },
+        // {
+        //     title: 'Harakatlar',
+        //     dataIndex: 'id',
+        //     key: 'address',
+        //     render: (id) => <div >
+        //         {
+        //             data.some(el => el.id == id && el.auth_status === 'new') ?
+        //                 <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
+        //                 : <></>
+        //         }
+        //     </div>
+        // },
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -144,7 +171,7 @@ function AccountUserPages() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
                                     <div className='row row-gap-3 gap-3 m-0 pb-3'>
-                                    <label className='form-label border col-md-5 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
+                                        <label className='form-label border col-md-5 m-0 p-0 d-flex justify-content-between align-items-center' style={{ backgroundColor: "#F1F1F1" }} >
                                             <input type='search' className='form-control' style={{ border: "none" }} placeholder="Qidiruv" onInput={e => setSerach(e.target.value)} />
                                             <span className='px-4'><i className='fa-solid fa-search '></i></span>
 
@@ -156,6 +183,12 @@ function AccountUserPages() {
                                         </select>
                                         <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
                                     </div>
+                                    {
+                                        user.role === 'admin' ?
+                                        <h4 className='ps-2' >Barcha xaridorlar soni {customers_count} ta </h4>
+                                        : ''
+                                    }
+
 
                                     <Table dataSource={data} scroll={{ x: 900 }} columns={columns} pagination={false} />
                                     <Pagination total={pageCount} defaultCurrent={currPage}

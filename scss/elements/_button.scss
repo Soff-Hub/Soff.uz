@@ -269,19 +269,20 @@ button.ps-btn {
     align-items: center;
     width: 45px;
     height: 45px;
+    border-radius: 50%;
     z-index: 10000;
-    background-color: #fff;
-    border: 1px solid #eaeaea;
+    background-color: $color-1st;
+    border: 1px solid $color-1st;
 
     i {
-        color: $color-text;
+        color: #fff;
     }
 
     &:hover {
         cursor: pointer;
         border-color: $color-1st;
         i {
-            color: $color-1st;
+            color: #fff;
         }
     }
 
@@ -290,7 +291,164 @@ button.ps-btn {
     }
 }
 
+
+.ps-btn--container {
+    position: relative;
+
+    ul {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -67%);
+        margin: 0;
+        padding: 0;
+        li {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            background-color: $color-1st;
+            border-radius: 50%;
+            margin-top: 5px;
+            cursor: pointer;
+            i {
+                padding: 14px;
+                font-size: 17px;
+                color: #ffffff;
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+
+    .backtop__ul--true {
+        visibility: visible;
+        opacity: 1;
+        position: absolute;
+        top: -57px;
+        transition: all 0.5s ease;
+        z-index: 9999;
+    }
+    .backtop__ul--false {
+        visibility: hidden;
+        opacity: 0;
+        top: 0;
+        transition: all 0.3s ease;
+    }
+
+    .ps-btn--backtop--border2 {
+        width: 57px;
+        height: 57px;
+        border: 6px solid #08ad5891;
+        display: inline-block;
+        position: absolute;
+        border-radius: 50%;
+    }
+
+    .ps-btn--backtop--border1 {
+        width: 50px;
+        height: 50px;
+        z-index: 999999;
+        display: inline-block;
+        position: absolute;
+        border-radius: 50%;
+        animation-name: border-animate;
+        animation-duration: 1s;
+        animation-iteration-count: infinite;
+        animation-fill-mode: forwards;
+        animation-timing-function: linear;
+        animation-delay: 0.5s;
+    }
+
+    @keyframes border-animate {
+        0% {
+            transform: scale(0.9);
+            border: 2px solid #08ad5891;
+        }
+        100% {
+            transform: scale(2);
+            border: 2px solid #08ad586e;
+        }
+    }
+}
+
+.message-icon {
+    animation-name: message-iconn;
+    animation-duration: 3s;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation-iteration-count: infinite;
+}
+.fa-message::before {
+    animation-name: message-iconn;
+    animation-duration: 3s;
+    animation-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    animation-iteration-count: infinite;
+}
+
+@keyframes message-iconn {
+    0% {
+        display: none;
+    }
+    100% {
+        display: block;
+    }
+}
+
+.backgound-black {
+    position: fixed;
+    z-index: 1001;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #0000005c;
+    width: 100%;
+    height: 100%;
+}
+
 .ant-back-top {
+    position: fixed;
     right: 50px !important;
-    bottom: 100px !important;
+    z-index: 1009;
+    bottom: 60px;
+}
+
+@media screen and (max-width: 1200px) {
+    .ant-back-top {
+        right: 50px !important;
+        bottom: 100px;
+        z-index: 999999;
+    }
+    .backgound-black {
+        z-index: 99999;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .ant-back-top {
+        right: 30px !important;
+        bottom: 100px;
+    }
+
+    .ps-btn--container {
+        ul {
+            li {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    }
+
+    .ps-btn--backtop {
+        width: 45px;
+        height: 45px;
+    }
+
+    .ps-btn--backtop--border2 {
+        border: 3px solid #08ad586e;
+        width: 50px;
+        height: 50px;
+    }
 }

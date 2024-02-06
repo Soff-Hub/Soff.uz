@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal, Pagination, Table } from 'antd';
+import { Checkbox, Modal, Pagination, Table } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -11,10 +11,11 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import NextImageCard from '~/components/nextImagecard';
+import useDebounce from '~/hooks/useDebounce';
 
 function CategoryLists() {
     const [data, setData] = useState([]);
-    const [search, setSerach] = useState([]);
+    const [search, setSerach] = useState("");
     const [tagItems, setTagItems] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
@@ -26,6 +27,8 @@ function CategoryLists() {
     const { accountLinks, user } = useSelector(state => state.auth)
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
+    const [isHomeVal, setIsHomeVal] = useState(false)
+    const searchVal = useDebounce(search, 1000);
 
     async function GetItemsProducts(page, search, id) {
         setCurrPage(page)
@@ -91,7 +94,7 @@ function CategoryLists() {
 
     async function handleItemsEdit() {
 
-        if (tagNameUser || tagNameIcon || tagName || tagNameTop || file) {
+        if (tagNameUser || tagNameIcon || tagName || tagNameTop || file || isHomeVal !== null) {
 
             const formData = new FormData()
             if (file) {
@@ -110,6 +113,8 @@ function CategoryLists() {
                 formData.append('top', tagNameTop)
             }
 
+            formData.append('is_home', isHomeVal)
+
             const patchItems = await PatchRepository.PatchCategory(formData, deleteIdEdit?.id, user?.access)
             const modal = Modal.success({
                 centered: true,
@@ -122,7 +127,7 @@ function CategoryLists() {
             setFile(null)
             setTagNameIcon(null)
             setTagNameUsers(null)
-
+            setIsHomeVal(null)
         }
         else {
             const modal = Modal.info({
@@ -131,7 +136,6 @@ function CategoryLists() {
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
-
 
     }
 
@@ -143,8 +147,8 @@ function CategoryLists() {
     }, []);
 
     useEffect(() => {
-        GetItemsProducts(currPage, search, null)
-    }, [search]);
+        GetItemsProducts(currPage, searchVal, null)
+    }, [searchVal]);
 
     const columns = [
         {
@@ -202,6 +206,7 @@ function CategoryLists() {
     ];
 
 
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -237,6 +242,10 @@ function CategoryLists() {
 
                 <ModalDelete onSuccess={deleteItemsId} />
                 <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditCategory" onSubmited={handleItemsEdit} formID={'edit-form-category'}>
+                    {deleteIdEdit?.parent == null && <select className='form-select  rounded-3 py-3 fs-3' onChange={(e) => setIsHomeVal(e.target.value)} >
+                        <option value={true} selected={deleteIdEdit?.is_home}>Asosiy sahifada</option>
+                        <option value={false} selected={!deleteIdEdit?.is_home}>Asosiy sahifada emas</option>
+                    </select>}
                     <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
                         {
                             deleteIdEdit?.image ? deleteIdEdit?.image :
