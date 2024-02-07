@@ -31,6 +31,9 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
             message: 'Soff.uz da yangiliklar',
             description: (
                 <div>
+                    {
+                        notifications?.map((el) => <h3>{el.title}</h3>)
+                    }
                     <Link href={`/account/notification`}>
                         <a>Yangiliklarni batafsil ko'rish</a>
                     </Link>
@@ -48,6 +51,7 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
 
     useEffect(() => {
         if (user?.access) {
+            getNotification(user?.access)
             // Agar user?.access mavjud bo'lsa
             const newSocket = new WebSocket(
                 `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
@@ -59,9 +63,11 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
             };
     
             // Xabarlarni qabul qilish uchun funksiya
-            newSocket.onmessage = function (event) {
-                setSocket(event?.data.count);
-            };
+            if (newSocket) {
+                newSocket.onmessage = function (event) {
+                        setSocket(JSON.parse(event.data));
+                };
+            }
     
             // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
@@ -78,10 +84,10 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
     
 
     useEffect(() => {
-        socket > 0 && openNotification();
-    }, [socket]);
+        socket?.count > 0 && openNotification();
+    }, [socket?.count]);
 
-    console.log('not', socket);
+    console.log('not', socket, socket?.count);
 
     return (
         <div className="header__actions">
@@ -91,7 +97,7 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
                 style={{ cursor: 'pointer' }}
                 onClick={openNotification}>
                 <i class="fa-regular fa-bell fa-lg"></i>
-                { socket ? <span className="socket_navbar">{socket}</span> : '' }
+                { socket?.count ? <span className="socket_navbar">{socket?.count}</span> : '' }
             </span>
             <Link href="/account/wishlist">
                 <a className="header__extra">
