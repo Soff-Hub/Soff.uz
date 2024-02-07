@@ -30,7 +30,8 @@ export default function NotificationList() {
                 <div className="ps-section__content">
                     {notification?.length ? (
                         <div className="text-center">{
-                            notification?.map((el) => <div>{el}</div>)
+                        "notification"
+                            // notification?.map((el) => <div>{el}</div>)
                         }</div>
                     ) : (
                         <div className="alert alert-danger" role="alert">
