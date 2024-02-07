@@ -14,7 +14,7 @@ export default function VedioPage() {
                 className="banner-bottom-vedio"
                 onClick={() => setModalClose(true)}>
                 <div className="player">
-                    <i class="fa-regular fa-circle-play fa-beat fa-2xl"></i>
+                    <i className="fa-regular fa-circle-play fa-beat fa-2xl"></i>
                 </div>
                 <div className="content">
                     <p> <span>Soff.uz</span> - biz bilan bilimingiz orqali daromad qiling</p>
