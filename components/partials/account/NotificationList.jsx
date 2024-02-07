@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+var parse = require('html-react-parser');
 
 export default function NotificationList() {
     const [notification, setNotification] = useState(null);
@@ -30,8 +31,10 @@ export default function NotificationList() {
                 <div className="ps-section__content">
                     {notification?.length ? (
                         <div className="text-center">{
-                        "notification"
-                            // notification?.map((el) => <div>{el}</div>)
+                            notification?.map((el) => <div>
+                                <h3>{el?.title}</h3>
+                                <p>{parse(el?.text)}</p>
+                                </div>)
                         }</div>
                     ) : (
                         <div className="alert alert-danger" role="alert">
