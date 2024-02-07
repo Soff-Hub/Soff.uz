@@ -32,7 +32,7 @@ export default function NotificationList() {
                 <div className="ps-section__content">
                     {notification?.length ? (
                         <div className="text-start">{
-                            notification?.map((el, i) => <div>
+                            notification?.map((el, i) => <div key={el?.notification?.title} >
                                 <h3>{i+1}. {" "} {el?.notification?.title}</h3>
                                 <p>{ el?.notification?.body && parse(el?.notification?.body)}</p>
                                 <hr />

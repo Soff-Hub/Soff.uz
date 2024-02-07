@@ -28,7 +28,7 @@ export default function Backtop({ setBackground , backtop }) {
                         </Link>
                     </li>
                     <li onClick={() => setBackground(!backtop)}>
-                        <Link href="https://t.me/hr_soffhub">
+                        <Link href="https://t.me/soff_uz">
                             <a target="_blank">
                                 <i className="fa-regular fa-paper-plane"></i>
                             </a>

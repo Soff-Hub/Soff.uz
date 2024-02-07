@@ -9,22 +9,12 @@ import { SmileOutlined } from '@ant-design/icons';
 import { notification } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 
-const ElectronicHeaderActions = ({ auth, ecomerce }) => {
+const ElectronicHeaderActions = ({ auth }) => {
     const { wishlist } = useWishlist();
     const [socket, setSocket] = useState(null);
     const [api, contextHolder] = notification.useNotification();
     const { user } = useSelector((state) => state.auth);
-    // const [notifications, setNotifications] = useState(null);
-
-    // const getNotification = async (token) => {
-    //     const respons = await GetRepository.getNotificationData(token);
-    //     if (respons) {
-    //         setNotifications(respons.results);
-    //         console.log('notification list', respons.results);
-    //     }
-    // };
 
     const openNotification = () => {
         api.open({
@@ -32,7 +22,7 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
             description: (
                 <div>
                     {socket?.notifications?.map((el, i) => (
-                        <h4>
+                        <h4 key={el?.title}>
                             {i + 1}. {el.title}
                         </h4>
                     ))}
@@ -89,8 +79,6 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
     useEffect(() => {
         socket?.count > 0 && openNotification();
     }, [socket?.count]);
-
-    console.log('not', socket, socket?.count);
 
     return (
         <div className="header__actions">
