@@ -13,6 +13,7 @@ export default function NotificationList() {
         const respons = await GetRepository.getNotificationData(token);
         if (respons) {
             setNotification(respons.results);
+            console.log(respons.results);
         }
     };
 
@@ -20,7 +21,7 @@ export default function NotificationList() {
         if (user?.access) {
             getNotification(user?.access);
         }
-    }, []);
+    }, [user?.access]);
 
     return (
         <div className="ps-section--shopping ps-whishlist">
@@ -30,10 +31,11 @@ export default function NotificationList() {
                 </div>
                 <div className="ps-section__content">
                     {notification?.length ? (
-                        <div className="text-center">{
-                            notification?.map((el) => <div>
-                                <h3>{el?.title}</h3>
-                                <p>{parse(el?.text)}</p>
+                        <div className="text-start">{
+                            notification?.map((el, i) => <div>
+                                <h3>{i+1}. {" "} {el?.notification?.title}</h3>
+                                <p>{ el?.notification?.body && parse(el?.notification?.body)}</p>
+                                <hr />
                                 </div>)
                         }</div>
                     ) : (

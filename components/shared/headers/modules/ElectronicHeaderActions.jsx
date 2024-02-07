@@ -16,26 +16,31 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
     const [socket, setSocket] = useState(null);
     const [api, contextHolder] = notification.useNotification();
     const { user } = useSelector((state) => state.auth);
-    const [notifications, setNotifications] = useState(null);
+    // const [notifications, setNotifications] = useState(null);
 
-    const getNotification = async (token) => {
-        const respons = await GetRepository.getNotificationData(token);
-        if (respons) {
-            setNotifications(respons.results);
-            console.log('notification list', respons.results);
-        }
-    };
+    // const getNotification = async (token) => {
+    //     const respons = await GetRepository.getNotificationData(token);
+    //     if (respons) {
+    //         setNotifications(respons.results);
+    //         console.log('notification list', respons.results);
+    //     }
+    // };
 
     const openNotification = () => {
         api.open({
             message: 'Soff.uz da yangiliklar',
             description: (
                 <div>
-                    {
-                        notifications?.map((el) => <h3>{el.title}</h3>)
-                    }
+                    {socket?.notifications?.map((el, i) => (
+                        <h4>
+                            {i + 1}. {el.title}
+                        </h4>
+                    ))}
                     <Link href={`/account/notification`}>
-                        <a>Yangiliklarni batafsil ko'rish</a>
+                        <a>
+                            Yangiliklarni batafsil ko'rish{' '}
+                            <i class="fa-regular fa-hand-point-right"></i>
+                        </a>
                     </Link>
                 </div>
             ),
@@ -51,29 +56,28 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
 
     useEffect(() => {
         if (user?.access) {
-            getNotification(user?.access)
             // Agar user?.access mavjud bo'lsa
             const newSocket = new WebSocket(
                 `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
             );
-    
+
             // Yangi WebSocket ulanishini yaratish
             newSocket.onopen = function () {
                 console.log('WebSocket ulanishi amalga oshirildi.');
             };
-    
+
             // Xabarlarni qabul qilish uchun funksiya
             if (newSocket) {
                 newSocket.onmessage = function (event) {
-                        setSocket(JSON.parse(event.data));
+                    setSocket(JSON.parse(event.data));
                 };
             }
-    
+
             // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
                 console.error('WebSocket xatosi:', error);
             };
-    
+
             // useEffect funksiyasiga qaytariladigan cleanup funksiya
             return () => {
                 // WebSocket ulanishini yopish
@@ -81,7 +85,6 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
             };
         }
     }, [user?.access]);
-    
 
     useEffect(() => {
         socket?.count > 0 && openNotification();
@@ -97,7 +100,11 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
                 style={{ cursor: 'pointer' }}
                 onClick={openNotification}>
                 <i class="fa-regular fa-bell fa-lg"></i>
-                { socket?.count ? <span className="socket_navbar">{socket?.count}</span> : '' }
+                {socket?.count ? (
+                    <span className="socket_navbar">{socket?.count}</span>
+                ) : (
+                    ''
+                )}
             </span>
             <Link href="/account/wishlist">
                 <a className="header__extra">
