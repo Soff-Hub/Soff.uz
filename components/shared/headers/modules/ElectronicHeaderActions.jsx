@@ -91,7 +91,7 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
                 style={{ cursor: 'pointer' }}
                 onClick={openNotification}>
                 <i class="fa-regular fa-bell fa-lg"></i>
-                { <span className="socket_navbar">{socket}</span> }
+                { socket ? <span className="socket_navbar">{socket}</span> : '' }
             </span>
             <Link href="/account/wishlist">
                 <a className="header__extra">
