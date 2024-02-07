@@ -27,7 +27,7 @@ const ElectronicHeaderActions = ({ auth }) => {
                         </h4>
                     ))}
                     <Link href={`/account/notification`}>
-                        <a>
+                        <a className='yashil' >
                             Yangiliklarni batafsil ko'rish{' '}
                             <i class="fa-regular fa-hand-point-right"></i>
                         </a>
