@@ -207,7 +207,7 @@ const EmailLists = () => {
                                 >
                                 <Select
                                     onChange={OnChangeSelectFull}
-                                    style={{ width: '100%', height: '45px' }}
+                                    style={{ width: '100%', height: '45px'}}
                                     placeholder="Barchasini tanlash"
                                     options={[
                                         {
