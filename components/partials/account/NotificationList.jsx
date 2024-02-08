@@ -35,6 +35,7 @@ export default function NotificationList() {
                             notification?.map((el, i) => <div key={el?.notification?.title} >
                                 <h3>{i+1}. {" "} {el?.notification?.title}</h3>
                                 <p>{ el?.notification?.body && parse(el?.notification?.body)}</p>
+                                
                                 <hr />
                                 </div>)
                         }</div>
