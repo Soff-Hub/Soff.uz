@@ -21,7 +21,7 @@ const EmailLists = () => {
     const [subject, setSubject] = useState(null);
 
     const OnChangeSelect = (event) => {
-        console.log(event);
+        console.log('um', event);
         setEmail(event);
     };
 
@@ -32,20 +32,14 @@ const EmailLists = () => {
             setEmail(null);
             setText(null);
             setSubject(null);
-            setUserRole(
-                email?.find((el) =>
-                    el === 'customer' || el === 'seller' || el === '0'
-                        ? el
-                        : null
-                )
-            );
 
             const data = {
-                user_role: email?.find((el) =>
-                    el === 'customer' || el === 'seller' || el === '0'
-                        ? el
-                        : null
-                ),
+                user_role: userRole,
+                //  email?.find((el) =>
+                //     el === 'customer' || el === 'seller' || el === '0'
+                //         ? el
+                //         : null
+                // ),
                 email: email,
                 subject,
                 text: `<!DOCTYPE html>
@@ -264,6 +258,11 @@ const EmailLists = () => {
         return Promise.resolve();
     };
 
+    const OnChangeSelectFull = (event) => {
+        setUserRole(event);
+        console.log(event);
+    };
+
     async function GetAllUsers() {
         if (user?.access) {
             const ItemsData = await GetRepository.getAllUserLists(user?.access);
@@ -351,16 +350,13 @@ const EmailLists = () => {
                             </div>
 
                             <Form.Item
-                                className="col-md-8 p-0"
-                                name="email"
-                                rules={[{ validator: validateEmail }]}>
+                                className="col-md-4 p-0"
+                                name="userRole"
+                                >
                                 <Select
-                                    showSearch
-                                    onChange={OnChangeSelect}
-                                    style={{ width: '100%' }}
-                                    placeholder="Pochtaga Xabar Yuborish"
-                                    mode="multiple"
-                                    allowClear
+                                    onChange={OnChangeSelectFull}
+                                    style={{ width: '100%', height: '45px' }}
+                                    placeholder="Barchasini tanlash"
                                     options={[
                                         {
                                             label: ' Barcha Foydalanuvchilar',
@@ -374,8 +370,22 @@ const EmailLists = () => {
                                             label: 'Barcha Xaridorlar',
                                             value: 'customer',
                                         },
-                                        ...option,
                                     ]}></Select>
+                            </Form.Item>
+                            <Form.Item
+                                className="col-md-4 p-0 ms-lg-4 ms-xs-4 ms-md-4 ms-xxs-4"
+                                name="email"
+                                rules={[{ validator: validateEmail }]}>
+                                <Select
+                                    showSearch
+                                    onChange={OnChangeSelect}
+                                    style={{ width: '100%' }}
+                                    placeholder="Umumiy foydalanuvchilar"
+                                    mode="multiple"
+                                    allowClear
+                                    options={option}>
+
+                                    </Select>
                             </Form.Item>
 
                             <Form.Item

@@ -12,6 +12,7 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
+import { v4 as uuidv4 } from 'uuid';
 
 export async function getServerSideProps(context) {
 
@@ -64,6 +65,7 @@ const ProductDefaultPage = ({ product, similar }) => {
         if (user?.access) {
             getDocument();
         }
+        console.log('uuidv4', uuidv4());
     }, [user?.access]);
 
     const breadCrumb = [
