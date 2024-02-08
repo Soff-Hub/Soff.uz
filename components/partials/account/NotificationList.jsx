@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+var parse = require('html-react-parser');
 
 export default function NotificationList() {
     const [notification, setNotification] = useState(null);
@@ -12,6 +13,7 @@ export default function NotificationList() {
         const respons = await GetRepository.getNotificationData(token);
         if (respons) {
             setNotification(respons.results);
+            console.log(respons.results);
         }
     };
 
@@ -19,7 +21,7 @@ export default function NotificationList() {
         if (user?.access) {
             getNotification(user?.access);
         }
-    }, []);
+    }, [user?.access]);
 
     return (
         <div className="ps-section--shopping ps-whishlist">
@@ -29,9 +31,12 @@ export default function NotificationList() {
                 </div>
                 <div className="ps-section__content">
                     {notification?.length ? (
-                        <div className="text-center">{
-                        "notification"
-                            // notification?.map((el) => <div>{el}</div>)
+                        <div className="text-start">{
+                            notification?.map((el, i) => <div key={el?.notification?.title} >
+                                <h3>{i+1}. {" "} {el?.notification?.title}</h3>
+                                <p>{ el?.notification?.body && parse(el?.notification?.body)}</p>
+                                <hr />
+                                </div>)
                         }</div>
                     ) : (
                         <div className="alert alert-danger" role="alert">

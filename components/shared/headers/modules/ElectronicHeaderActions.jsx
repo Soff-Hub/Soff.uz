@@ -9,30 +9,28 @@ import { SmileOutlined } from '@ant-design/icons';
 import { notification } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 
-const ElectronicHeaderActions = ({ auth, ecomerce }) => {
+const ElectronicHeaderActions = ({ auth }) => {
     const { wishlist } = useWishlist();
     const [socket, setSocket] = useState(null);
     const [api, contextHolder] = notification.useNotification();
     const { user } = useSelector((state) => state.auth);
-    const [notifications, setNotifications] = useState(null);
-
-    const getNotification = async (token) => {
-        const respons = await GetRepository.getNotificationData(token);
-        if (respons) {
-            setNotifications(respons.results);
-            console.log('notification list', respons.results);
-        }
-    };
 
     const openNotification = () => {
         api.open({
             message: 'Soff.uz da yangiliklar',
             description: (
                 <div>
+                    {socket?.notifications?.map((el, i) => (
+                        <h4 key={el?.title}>
+                            {i + 1}. {el.title}
+                        </h4>
+                    ))}
                     <Link href={`/account/notification`}>
-                        <a>Yangiliklarni batafsil ko'rish</a>
+                        <a className='yashil' >
+                            Yangiliklarni batafsil ko'rish{' '}
+                            <i class="fa-regular fa-hand-point-right"></i>
+                        </a>
                     </Link>
                 </div>
             ),
@@ -52,22 +50,24 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
             const newSocket = new WebSocket(
                 `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
             );
-    
+
             // Yangi WebSocket ulanishini yaratish
             newSocket.onopen = function () {
                 console.log('WebSocket ulanishi amalga oshirildi.');
             };
-    
+
             // Xabarlarni qabul qilish uchun funksiya
-            newSocket.onmessage = function (event) {
-                setSocket(event?.data.count);
-            };
-    
+            if (newSocket) {
+                newSocket.onmessage = function (event) {
+                    setSocket(JSON.parse(event.data));
+                };
+            }
+
             // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
                 console.error('WebSocket xatosi:', error);
             };
-    
+
             // useEffect funksiyasiga qaytariladigan cleanup funksiya
             return () => {
                 // WebSocket ulanishini yopish
@@ -75,24 +75,28 @@ const ElectronicHeaderActions = ({ auth, ecomerce }) => {
             };
         }
     }, [user?.access]);
-    
 
     useEffect(() => {
-        socket > 0 && openNotification();
-    }, [socket]);
-
-    console.log('not', socket);
+        socket?.count > 0 && openNotification();
+    }, [socket?.count]);
 
     return (
         <div className="header__actions">
             {contextHolder}
-            <span
+          <Link href={`/account/notification`} >
+          <a
                 className="header__extra"
                 style={{ cursor: 'pointer' }}
-                onClick={openNotification}>
+                // onClick={openNotification}
+                >
                 <i class="fa-regular fa-bell fa-lg"></i>
-                { <span className="socket_navbar">{socket}</span> }
-            </span>
+                {socket?.count ? (
+                    <span className="socket_navbar">{socket?.count}</span>
+                ) : (
+                    ''
+                )}
+            </a>
+          </Link>
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>

@@ -17,8 +17,8 @@ const EmailLists = () => {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState(null);
     const [option, setOption] = useState([]);
-    const [userRole, setUserRole] = useState(null)
-    const [subject, setSubject] = useState(null)
+    const [userRole, setUserRole] = useState(null);
+    const [subject, setSubject] = useState(null);
 
     const OnChangeSelect = (event) => {
         console.log(event);
@@ -32,10 +32,20 @@ const EmailLists = () => {
             setEmail(null);
             setText(null);
             setSubject(null);
-            setUserRole(email?.find((el) => (el === "customer" || el === "seller" || el === '0') ? el : null))
+            setUserRole(
+                email?.find((el) =>
+                    el === 'customer' || el === 'seller' || el === '0'
+                        ? el
+                        : null
+                )
+            );
 
             const data = {
-                user_role: email?.find((el) => (el === "customer" || el === "seller" || el === '0') ? el : null),
+                user_role: email?.find((el) =>
+                    el === 'customer' || el === 'seller' || el === '0'
+                        ? el
+                        : null
+                ),
                 email: email,
                 subject,
                 text: `<!DOCTYPE html>
@@ -214,6 +224,7 @@ const EmailLists = () => {
             </div>
         </body>
         </html>`,
+                text_site: text,
             };
             const ItemsData = await PostsRepository.EmailSend(
                 data,
@@ -317,11 +328,16 @@ const EmailLists = () => {
                             <Form.Item
                                 className="col-md-8 p-0"
                                 name="subject"
-                                rules={[{ required: true, message: "Xabar mavzusini kiritish majburiy" }]}>
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            'Xabar mavzusini kiritish majburiy',
+                                    },
+                                ]}>
                                 <Input
                                     onChange={(e) => setSubject(e.target.value)}
-                                    placeholder="Xabar mavzusi">
-                                </Input>
+                                    placeholder="Xabar mavzusi"></Input>
                             </Form.Item>
                             <div className="col-md-12 p-0 mb-3">
                                 <CKEditor
