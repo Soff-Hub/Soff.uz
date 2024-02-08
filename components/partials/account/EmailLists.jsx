@@ -48,182 +48,34 @@ const EmailLists = () => {
                 ),
                 email: email,
                 subject,
-                text: `<!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Soff.uz | Pochta xabari</title>
-            <style>
-                @import url(https://fonts.googleapis.com/css2?family=Roboto:wght@100;200;300;400;500;600;800;900&display=swap);
-        
-                * {
-                    margin: 0;
-                    padding: 0;
-                    box-sizing: border-box;
-                    font-family: 'Roboto', sans-serif;
-                }
-        
-                .container {
-                    max-width: 700px;
-                    width: 100%;
-                    margin: 0 auto;
-                    padding: 0 10px;
-                }
-        
-                .header {
-                    background-color: #022335;
-                    display: flex;
-                    align-items: center;
-                    color: #fff;
-                    gap: 10px;
-                    padding: 15px 30px;
-                }
-        
-                .header-text span {
-                    padding: 0 5px;
-                }
-        
-                main {
-                    padding: 15px 30px;
-                }
-        
-                .message {
-                    font-size: 22px;
-                    margin: 5px 0;
-                    padding: 20px 0;
-                }
-        
-                .table {
-                    padding: 10px;
-                    font-size: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    gap: 15px;
-                }
-        
-                footer {
-                    width: 100%;
-                    background-color: #00A44F;
-                    padding: 30px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: space-between;
-                    color: #fff;
-                }
-        
-                footer div {
-                    display: flex;
-                    align-items: center;
-                    gap: 10px;
-                }
-        
-                a {
-                    display: flex;
-                    align-items: center;
-                    gap: 2px;
-                    padding: 5px;
-                    background-color: #022335;
-                    color: #fff;
-                    text-transform: uppercase;
-                    text-align: center;
-                    max-width: 160px;
-                    justify-content: center;
-                    margin: 5px auto;
-                    text-decoration: none;
-        
-                }
-        
-                @media only screen and (max-width: 576px) {
-                    .container {
-                        padding: 0;
-                    }
-        
-                    .message {
-                        font-size: 19px;
-                    }
-        
-                    .table {
-                        font-size: 17px;
-                    }
-        
-                    footer {
-                        padding: 20px;
-                    }
-                }
-        
-                @media only screen and (max-width: 420px) {
-                    .message {
-                        font-size: 17px;
-                    }
-        
-                    .table {
-                        font-size: 15px;
-                    }
-        
-                    .header {
-                        font-size: 14px;
-                    }
-        
-                    .logo {
-                        width: 70px;
-                    }
-        
-                    .table {
-                        gap: 10px;
-                    }
-        
-                    footer {
-                        flex-direction: column;
-                        align-items: center;
-                        gap: 5px;
-                        padding: 10px 20px;
-                    }
-        
-                    footer div {
-                        gap: 6px;
-                    }
-                }
-            </style>
-        
-        </head>
-        
-        <body>
-            <div class="container">
-                <header class="header">
-                    <img src="https://soff.uz/static/img/soff/soff_green_white.png" alt="logo" class="logo" width="100">
-                    <div class="header-text"><span>|</span> Intellektual Mulk bozori</div>
-                </header>
-                <main>
-                    <div class="message " style="padding:0 8px">
-                   ${text} 
-                    </div>
-        
-                    <a href="https://soff.uz" target="_blank" style="text-align:center;" > saytga kirish
-                        <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path opacity="0.5"
-                                    d="M5.46967 17.4697C5.17678 17.7626 5.17678 18.2374 5.46967 18.5303C5.76256 18.8232 6.23744 18.8232 6.53033 18.5303L5.46967 17.4697ZM6.53033 18.5303L18.5303 6.53033L17.4697 5.46967L5.46967 17.4697L6.53033 18.5303Z"
-                                    fill="#ffffff"></path>
-                                <path d="M9 6H18V15" stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round"></path>
-                            </g>
-                        </svg>
-                    </a>
-                </main>
-                <footer >
+                text: `<div style="padding: 0; background-color: #fff; max-width: 600px; margin: 0 auto;">
+
+                <div style="text-align: center; background-color: #055160; color: #fff; padding: 5px 15px; display: flex; align-items: center; gap: 15px; justify-content: space-between;">
+                    <img src="https://soff.uz/static/img/soff/soff_green_white.png" alt="Soff.uz Logo" width="100">
                     <div>
-                        <p>soff.uz</p>
-                        <p>|</p>
-                        <p>2024</p>
+                        <ul style="list-style-type: none; display: flex; align-items: center; gap: 15px; font-size: 14px;">
+                            <li style="display: inline-block; margin-right: 10px;"><a href="https://soff.uz" target="_blank" style="text-decoration: none; color: #fff;">Home</a></li>
+                            <li style="display: inline-block;"><a href="https://soff.uz/account/dashbord" target="_blank" style="text-decoration: none; color: #fff;">About</a></li>
+                        </ul>
                     </div>
-                    <p>Barcha huquqlar himoyalangan</p>
-                </footer>
-            </div>
-        </body>
-        </html>`,
+                </div>
+        
+                <div style="padding: 10px 30px; text-align: start;">
+                    <div style="margin-bottom: 30px; margin-left: 30px;">
+                        <h1 style="color: #333; font-size: 24px; margin-bottom: 10px;">Assalomu alaykum!</h1>
+                        <div style="text-align: start;">
+                            <p style="color: #333; font-size: 16px; line-height: 1.6;">
+                                ${text} <br/> 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+        
+                <div style="margin-top: 20px; text-align: center; color: #fff; background-color: #055160; padding: 15px; font-size: 12px; display: flex; align-items: center; justify-content: space-between;">
+                    <p style="color: #ffffff">&copy; 2023 | "Soff.uz Jamoasi"</p>
+                    <p style="margin-left: auto; color: #ffffff">Barcha huquqlar himoyalangan</p>
+                </div>
+            </div>`,
                 text_site: text,
             };
             const ItemsData = await PostsRepository.EmailSend(
