@@ -63,7 +63,7 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-file-signature',
     },
     {
-        text: "Pochtaga xabar yuborish",
+        text: "Bildirishnomalar yuborish",
         url: '/account/email',
         icon: 'fa-solid fa-envelope',
     },

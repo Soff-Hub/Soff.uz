@@ -14,7 +14,6 @@ import { useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
 
 export async function getServerSideProps(context) {
-    console.log('===>', context.token);
 
     try {
         const request = await fetch(
@@ -76,12 +75,6 @@ const ProductDefaultPage = ({ product, similar }) => {
             text: product.title ? product.title : 'Loading...',
         },
     ];
-
-    // useEffect(() => {
-    //     document.addEventListener('selectstart', function (e) {
-    //         e.preventDefault();
-    //     });
-    // }, []);
 
 
     return (

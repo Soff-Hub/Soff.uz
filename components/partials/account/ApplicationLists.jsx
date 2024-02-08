@@ -505,7 +505,7 @@ function ApplicationLists() {
                                                     <form className='row row-gap-3 px-4 gap-4 mx-auto'>
                                                         <label className='h4 p-0 ' style={{ color: "orange" }} >
                                                             Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
-                                                            <strong>!Eslatma: Xisobingizda kamida {formatCurrency(alertMess)} so’m bo’lishi kerak.</strong>
+                                                            <strong>!Eslatma: Xisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
                                                         </label>
                                                         <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
                                                         <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >

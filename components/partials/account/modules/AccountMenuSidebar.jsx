@@ -64,11 +64,11 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === 'admin') {
-            setSocket(new WebSocket('wss://192.168.1.20/ws/admin-offer/'));
+            setSocket(new WebSocket(`wss://192.168.1.20/ws/admin-offer/?token=${user?.access}`));
         } else {
             setSocket(
                 new WebSocket(
-                    'wss://192.168.1.20/ws/seller-offer/' + user?.access
+                    'wss://192.168.1.20/ws/seller-offer/?token=' + user?.access
                 )
             );
         }
@@ -84,7 +84,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === 'admin') {
-            setSocket1(new WebSocket('wss://api.soff.uz/ws/admin-document/'));
+            setSocket1(new WebSocket(`wss://api.soff.uz/ws/admin-document/?token=${user?.access}`));
         }
     }, []);
 
@@ -118,12 +118,12 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     useEffect(() => {
         if (user.role === 'admin') {
             setSocketApplication(
-                new WebSocket('wss://api.soff.uz/ws/admin-application/')
+                new WebSocket(`wss://api.soff.uz/ws/admin-application/?token=${user?.access}`)
             );
         } else {
             setSocketApplication(
                 new WebSocket(
-                    'wss://api.soff.uz/ws/seller-application/' + user?.access
+                    'wss://api.soff.uz/ws/seller-application/?token=' + user?.access
                 )
             );
         }
