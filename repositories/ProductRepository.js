@@ -268,13 +268,16 @@ class ProductRepository {
         return reponse;
     }
 
-    async getProductFileSlug(pid, token) {
+    async getProductFileSlug(pid, token, uuid) {
         const reponse = await Repository({
             url: baseUrl + `customer/get-file-url/${pid}`,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+            data:{
+                uuid: uuid
+            }
         })
             .then((response) => {
                 return response.data

@@ -54,7 +54,8 @@ const ProductDefaultPage = ({ product, similar }) => {
     async function getDocument() {
         const responsDocumentFile = await ProductRepository.getProductFileSlug(
             pid,
-            user?.access
+            user?.access,
+            localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4()
         );
         if (responsDocumentFile) {
             setDocument(responsDocumentFile);
@@ -65,7 +66,7 @@ const ProductDefaultPage = ({ product, similar }) => {
         if (user?.access) {
             getDocument();
         }
-        console.log('uuidv4', uuidv4());
+        localStorage.getItem("uuid") ? '' : localStorage.setItem("uuid", uuidv4())
     }, [user?.access]);
 
     const breadCrumb = [
