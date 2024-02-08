@@ -64,11 +64,11 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
 
     useEffect(() => {
         if (user.role === 'admin') {
-            setSocket(new WebSocket(`wss://192.168.1.20/ws/admin-offer/?token=${user?.access}`));
+            setSocket(new WebSocket(`wss://api.soff.uz/ws/admin-offer/?token=${user?.access}`));
         } else {
             setSocket(
                 new WebSocket(
-                    'wss://192.168.1.20/ws/seller-offer/?token=' + user?.access
+                    'wss://api.soff.uz/ws/seller-offer/?token=' + user?.access
                 )
             );
         }
@@ -281,7 +281,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     {link.text}{' '}
                                     {user?.role === 'admin' ? (
                                         link?.url === '/account/application' &&
-                                        (applicationData?.count ||
+                                        (applicationData?.count > 0 ||
                                             webdata?.count > 0) ? (
                                             <strong
                                                 className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
@@ -326,7 +326,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     )}
                                     {user?.role === 'seller' ? (
                                         link?.url === '/account/application' &&
-                                        (applicationData?.count ||
+                                        (applicationData?.count > 0 ||
                                             webdata?.count > 0) ? (
                                             <strong
                                                 className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
