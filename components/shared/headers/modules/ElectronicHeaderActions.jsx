@@ -83,17 +83,20 @@ const ElectronicHeaderActions = ({ auth }) => {
     return (
         <div className="header__actions">
             {contextHolder}
-            <span
+          <Link href={`/account/notification`} >
+          <a
                 className="header__extra"
                 style={{ cursor: 'pointer' }}
-                onClick={openNotification}>
+                // onClick={openNotification}
+                >
                 <i class="fa-regular fa-bell fa-lg"></i>
                 {socket?.count ? (
                     <span className="socket_navbar">{socket?.count}</span>
                 ) : (
                     ''
                 )}
-            </span>
+            </a>
+          </Link>
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>
