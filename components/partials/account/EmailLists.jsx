@@ -40,7 +40,7 @@ const EmailLists = () => {
                 //         ? el
                 //         : null
                 // ),
-                email: email,
+                users_id: email,
                 subject,
                 text: `<div style="padding: 0; background-color: #fff; max-width: 600px; margin: 0 auto;">
 
