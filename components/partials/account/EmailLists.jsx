@@ -212,7 +212,7 @@ const EmailLists = () => {
                                     options={[
                                         {
                                             label: ' Barcha Foydalanuvchilar',
-                                            value: '0',
+                                            value: '1',
                                         },
                                         {
                                             label: 'Barcha Sotuvchilar',
