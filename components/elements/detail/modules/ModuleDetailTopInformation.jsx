@@ -78,10 +78,10 @@ const ModuleDetailTopInformation = ({ product }) => {
                         style={{cursor:'pointer'}}
                         onClick={() => SellerPage(product?.seller?.id)}>
                         <div>
-                            {product?.seller?.image_url ? (
+                            {product?.seller?.image ? (
                                 <img
                                     alt="soff"
-                                    src={product?.seller?.image_url}
+                                    src={product?.seller?.image}
                                     className="profile__image-client"
                                 />
                             ) : (
