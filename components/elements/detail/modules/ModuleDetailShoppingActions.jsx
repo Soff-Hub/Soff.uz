@@ -78,7 +78,8 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
                     <p></p>
                 </Modal>
                 <div className="ps-product__shopping">
-                    {product?.discount_price > 0 ? (
+                  <div>
+                  {product?.discount_price > 0 ? (
                         <>
                             {document?.file_url ? (
                                 <a
@@ -118,6 +119,7 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
                             Bepul yuklab olish
                         </a>
                     )}
+                  </div>
                     <div className="ps-product__actions">
                         <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
                             <i

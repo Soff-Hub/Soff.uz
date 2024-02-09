@@ -1,6 +1,12 @@
+
+import Router from 'next/router';
 import React from 'react';
 
 const ModuleDetailTopInformation = ({ product }) => {
+    const SellerPage = (e) => {
+        Router.push(`/seller/${e}`);
+    };
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -19,20 +25,19 @@ const ModuleDetailTopInformation = ({ product }) => {
         return formattedNumber;
     }
 
-
     // Views
     let priceView;
 
     if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
-                {+product.discount_price === 0 ? <p className='free-product-text'>Bepul mahsulot</p> : product.discount === 0 ? (
+                {+product.discount_price === 0 ? (
+                    <p className="free-product-text">Bepul mahsulot</p>
+                ) : product.discount === 0 ? (
                     <p>{addPeriodToThousands(product.discount_price)} so'm</p>
                 ) : (
                     <>
-                        <del>
-                            {addPeriodToThousands(product.price)} so'm
-                        </del>
+                        <del>{addPeriodToThousands(product.price)} so'm</del>
                         <p>
                             {addPeriodToThousands(product.discount_price)}
                             so'm
@@ -44,13 +49,13 @@ const ModuleDetailTopInformation = ({ product }) => {
     } else {
         priceView = (
             <h4 className="ps-product__price">
-                {+product.discount_price === 0 ? <p className='free-product-text'>Bepul mahsulot</p> : product.discount === 0 ? (
+                {+product.discount_price === 0 ? (
+                    <p className="free-product-text">Bepul mahsulot</p>
+                ) : product.discount === 0 ? (
                     <p>{addPeriodToThousands(product.discount_price)} so'm</p>
                 ) : (
                     <>
-                        <del>
-                            {addPeriodToThousands(product.price)} so'm
-                        </del>
+                        <del>{addPeriodToThousands(product.price)} so'm</del>
                         <p>
                             {addPeriodToThousands(product.discount_price)}
                             so'm
@@ -62,8 +67,46 @@ const ModuleDetailTopInformation = ({ product }) => {
     }
     return (
         <header>
-            <h1>{product?.title !== undefined ? product?.title : ''}</h1>
-            {priceView}
+            <h1 className="product__name">
+                {product?.title !== undefined ? product?.title : ''}
+            </h1>
+            <div className="product__top-information">
+                <div>
+                    <span className="input--label">muallif</span>
+                    <div
+                        className="product__top-information-account"
+                        style={{cursor:'pointer'}}
+                        onClick={() => SellerPage(product?.seller?.id)}>
+                        <div>
+                            {product?.seller?.image ? (
+                                <img
+                                    alt="soff"
+                                    src={`${product?.seller?.image}`}
+                                    className="profile__image-client"
+                                />
+                            ) : (
+                                <i
+                                    className=" fa-2x text-info fa-solid fa-circle-user"
+                                    style={{
+                                        fontSize: '30px',
+                                    }}></i>
+                            )}
+                        </div>
+                        {product?.seller?.first_name && (
+                            <p>
+                                {product?.seller?.first_name}{' '}
+                                {product?.seller?.last_name}
+                            </p>
+                        )}
+                    </div>
+                </div>
+                <div>
+                    <span className="input--label">narxi</span>
+                    <div className="product__top-information--price">
+                        {priceView}
+                    </div>
+                </div>
+            </div>
         </header>
     );
 };

@@ -268,16 +268,13 @@ class ProductRepository {
         return reponse;
     }
 
-    async getProductFileSlug(pid, token, uuid) {
+    async getProductFileSlug(pid, token) {
         const reponse = await Repository({
             url: baseUrl + `customer/get-file-url/${pid}`,
             method: 'POST',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            data:{
-                uuid: uuid
-            }
         })
             .then((response) => {
                 return response.data
@@ -285,6 +282,7 @@ class ProductRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+   
     async getProductImagesSlug(pid) {
         const reponse = await Repository.get(
             `${baseUrl}customer/promotional-sliders/${pid}`
