@@ -202,7 +202,7 @@ const EmailLists = () => {
                             </div>
 
                             <Form.Item
-                                className="col-md-4 p-0"
+                                className="col-md-3 p-0"
                                 name="userRole"
                                 >
                                 <Select
@@ -225,7 +225,7 @@ const EmailLists = () => {
                                     ]}></Select>
                             </Form.Item>
                             <Form.Item
-                                className="col-md-4 p-0 ms-lg-4 ms-xs-4 ms-md-4 ms-xxs-4"
+                                className="col-md-6 p-0 mx-xxs-3 mx-lg-3 mx-md-3 mx-xs-0 mx-0"
                                 name="email"
                                 rules={[{ validator: validateEmail }]}>
                                 <Select
@@ -241,12 +241,12 @@ const EmailLists = () => {
                             </Form.Item>
 
                             <Form.Item
-                                className="col-md-3 p-0"
-                                style={{ marginLeft: '15px' }}>
+                                className="col-md-2 p-0"
+                               >
                                 <Button
                                     loading={loading}
                                     htmlType="submit"
-                                    style={{ width: '200px', height: '45px' }}
+                                    style={{ width: '100%', height: '45px' }}
                                     className="btn-success">
                                     <span
                                         style={{
