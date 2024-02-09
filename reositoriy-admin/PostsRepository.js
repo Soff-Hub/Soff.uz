@@ -3,15 +3,11 @@ import Repository, { baseUrl, baseUrlProfie } from './Repository';
 class PostRepository {
     async PostsCategory(data, token) {
         const endPoint = `admin/category-list/`;
-        const response = await Repository.post(
-            baseUrl + endPoint,
-            data,
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+        const response = await Repository.post(baseUrl + endPoint, data, {
+            headers: {
+                Authorization: `Bearer ${token}`,
             },
-        )
+        })
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
@@ -28,9 +24,9 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -39,7 +35,7 @@ class PostRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return response;
     }
     async TegUsers(data, token) {
@@ -48,9 +44,9 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -69,9 +65,9 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -80,7 +76,7 @@ class PostRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return response;
     }
 
@@ -90,9 +86,9 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response) {
@@ -110,9 +106,9 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response) {
@@ -130,9 +126,9 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response) {
@@ -151,18 +147,18 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response) {
-                    return response
+                    return response;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return response;
     }
     async TaxminiyNarxOlish(data, token) {
@@ -171,9 +167,9 @@ class PostRepository {
             url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response?.data) {
@@ -185,16 +181,16 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
-    
-     CardPostsCredit(data, token) {
-        const endPoint ="seller-card-create"
+
+    CardPostsCredit(data, token) {
+        const endPoint = 'seller-card-create';
         const response = Repository({
-            url:baseUrl+endPoint,
+            url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response) {
@@ -203,19 +199,19 @@ class PostRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return response;
     }
 
-    async  ChangePassword(data, token) {
-        const endPoint ="auth/change-password/"
+    async ChangePassword(data, token) {
+        const endPoint = 'auth/change-password/';
         const response = await Repository({
-            url:baseUrlProfie+endPoint,
+            url: baseUrlProfie + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response) {
@@ -224,13 +220,44 @@ class PostRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return response;
     }
 
-
-
-   
+    async getDonatLists(data) {
+        const endPoint = 'input/card/';
+        const response = await Repository({
+            url: baseUrlProfie + endPoint,
+            method: 'POST',
+            data: data,
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return response;
+    }
+    async getDonatListsCode(data) {
+        const endPoint = 'verify/';
+        const response = await Repository({
+            url: baseUrlProfie + endPoint,
+            method: 'POST',
+            data: data,
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return response;
+    }
 }
 
 export default new PostRepository();
