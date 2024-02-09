@@ -93,6 +93,22 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
+    async postProductUUID(slug, uuid) {
+
+        const endPoint = `customer/get-view-count/${slug}`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method:'POST',
+            data: {
+                uuid: uuid
+            }
+        })
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
+    }
 }
 
 export default new PostRepository();

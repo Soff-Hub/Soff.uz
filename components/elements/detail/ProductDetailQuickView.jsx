@@ -4,16 +4,20 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 import DefaultDescription from './description/DefaultDescription';
 import { useState } from 'react';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import ProductRepository from '~/repositories/ProductRepository';
 import Image from 'next/image';
 import NextImageCard from '~/components/nextImagecard';
+import PostRepository from '~/repositories/PostRepository';
 
 const ProductDetailQuickView = ({ product }) => {
     const [tag, setTag] = useState([]);
     const [img, setImage] = useState(null);
     const [document, setDocument] = useState(null);
+    const router = useRouter();
+    const { pid } = router.query;
+    const [views, setViews] = useState(null)
 
     const searchTag = (e) => {
         Router.push(`/search?keyword=${e}`);
@@ -35,10 +39,20 @@ const ProductDetailQuickView = ({ product }) => {
         }
     };
 
+    async function getUUID(uuid) {
+        const respons = await PostRepository.postProductUUID (
+            pid,
+            uuid,
+        );
+        if (respons) {
+            setViews(respons)
+        }
+    }
     useEffect(() => {
+        localStorage.getItem("uuid") ? '' : localStorage.setItem("uuid", uuidv4())
         getImage();
+        getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
     }, []);
-    console.log('modal image', product);
     return (
         <div className="ps-product--detail ps-product--quickview">
             <div className="ps-product__header">
@@ -63,11 +77,12 @@ const ProductDetailQuickView = ({ product }) => {
                               ))
                             : ''}
                     </div>
+                    <div className='views view-quik' >  <i class="fa-solid fa-eye"></i> <span>{views?.count}</span></div>
                 </figure>
 
                 <div className="ps-product__info">
                     <ModuleDetailTopInformation product={product} />
-                    <div>
+                    {/* <div>
                         {product?.seller?.first_name && (
                             <div
                                 className="document-seller-about mb-3 product_detail__seller_name "
@@ -92,7 +107,7 @@ const ProductDetailQuickView = ({ product }) => {
                                 </h4>
                             </div>
                         )}
-                    </div>
+                    </div> */}
                     <ModuleProductDetailDescription
                         product={{ ...product, document }}
                     />
@@ -103,7 +118,7 @@ const ProductDetailQuickView = ({ product }) => {
                     <div className=" d-flex justify-content-start align-content-center flex-wrap">
                         {tag?.length > 0 &&
                             tag.map((item, i) => (
-                                <div key={i} className="mx-2">
+                                <div key={i} className="m-2 tag-product">
                                     <Link href="#" as="#">
                                         <a
                                             onClick={() =>
