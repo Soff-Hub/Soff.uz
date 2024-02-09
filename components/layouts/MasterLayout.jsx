@@ -49,11 +49,6 @@ const MasterLayout = ({ children }) => {
             ) : (
                 <NavigationList />
             )}
-            {/* <FloatButton.BackTop> */}
-            {/* <button className="ps-btn--backtop">
-                    <i className="icon-arrow-up" />
-                </button> */}
-            {/* </FloatButton.BackTop> */}
             <div className="ant-back-top">
                 <Backtop setBackground={setBackground} backtop={background} />
             </div>

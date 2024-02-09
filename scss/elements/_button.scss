@@ -264,7 +264,7 @@ button.ps-btn {
 }
 
 .ps-btn--backtop {
-    display: flex;
+    display: flex !important;
     justify-content: center;
     align-items: center;
     width: 45px;
@@ -451,4 +451,13 @@ button.ps-btn {
         width: 50px;
         height: 50px;
     }
+}
+
+
+.antd-notification-topRight{
+    z-index: 99999999999 !important;
+}
+
+.openNotification{
+    z-index: 999999999999999999 !important;
 }

@@ -205,7 +205,7 @@ const PageContainer = ({
                 <title>Soff - barcha ma'lumotlar bazasi </title>
             </Head>
             {header}
-            <div>
+            <div >
                 <div
                     className={`${query === '/page/form'
                             ? 'container faq-page-container'
