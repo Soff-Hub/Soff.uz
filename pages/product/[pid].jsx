@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
 import { v4 as uuidv4 } from 'uuid';
+import PostRepository from '~/repositories/PostRepository';
 
 export async function getServerSideProps(context) {
 
@@ -48,6 +49,7 @@ export async function getServerSideProps(context) {
 const ProductDefaultPage = ({ product, similar }) => {
     const router = useRouter();
     const { pid } = router.query;
+    const [views, setViews] = useState(null)
     const [document, setDocument] = useState('');
     const { user } = useSelector((state) => state.auth);
 
@@ -61,13 +63,26 @@ const ProductDefaultPage = ({ product, similar }) => {
             setDocument(responsDocumentFile);
         }
     }
+    async function getUUID(uuid) {
+        const respons = await PostRepository.postProductUUID (
+            pid,
+            uuid,
+        );
+        if (respons) {
+            setViews(respons)
+        }
+    }
 
     useEffect(() => {
         if (user?.access) {
             getDocument();
         }
-        localStorage.getItem("uuid") ? '' : localStorage.setItem("uuid", uuidv4())
+        
     }, [user?.access]);
+    useEffect(() => {
+        localStorage.getItem("uuid") ? '' : localStorage.setItem("uuid", uuidv4())
+        getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
+    }, [])
 
     const breadCrumb = [
         {
@@ -100,6 +115,7 @@ const ProductDefaultPage = ({ product, similar }) => {
                                         <ProductDetailFullwidth
                                             product={product}
                                             document={document}
+                                            views={views}
                                         />
                                     ) : (
                                         <SkeletonProductDetail />
