@@ -16,11 +16,6 @@ class HeaderMobileElectronic extends Component {
                     <div className="navigation__left">
                         <Link href="/">
                             <a className="ps-logo">
-                                {/* <img
-                                    src="/static/img/soff/soff_green_white.png"
-                                    alt="soff"
-                                    width={100}
-                                /> */}
                                  <NextImageCard
                              url="/static/img/soff/soff_green_white.png" clasS='logoo' width='100px' height='40px' />
 

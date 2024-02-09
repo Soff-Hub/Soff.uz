@@ -27,7 +27,7 @@ const ElectronicHeaderActions = ({ auth }) => {
                         </h4>
                     ))}
                     <Link href={`/account/notification`}>
-                        <a className='yashil' >
+                        <a className="yashil">
                             Yangiliklarni batafsil ko'rish{' '}
                             <i class="fa-regular fa-hand-point-right"></i>
                         </a>
@@ -83,20 +83,20 @@ const ElectronicHeaderActions = ({ auth }) => {
     return (
         <div className="header__actions">
             {contextHolder}
-          <Link href={`/account/notification`} >
-          <a
-                className="header__extra"
-                style={{ cursor: 'pointer' }}
-                // onClick={openNotification}
-                >
-                <i class="fa-regular fa-bell fa-lg"></i>
-                {socket?.count ? (
-                    <span className="socket_navbar">{socket?.count}</span>
-                ) : (
-                    ''
-                )}
-            </a>
-          </Link>
+            {user?.access && (
+                <Link href={`/account/notification`}>
+                    <a className="header__extra" style={{ cursor: 'pointer' }}>
+                        <i class="fa-regular fa-bell fa-lg"></i>
+                        {socket?.count ? (
+                            <span className="socket_navbar">
+                                {socket?.count}
+                            </span>
+                        ) : (
+                            ''
+                        )}
+                    </a>
+                </Link>
+            )}
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>
