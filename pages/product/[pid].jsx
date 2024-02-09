@@ -49,9 +49,9 @@ export async function getServerSideProps(context) {
 const ProductDefaultPage = ({ product, similar }) => {
     const router = useRouter();
     const { pid } = router.query;
+    const [views, setViews] = useState(null)
     const [document, setDocument] = useState('');
     const { user } = useSelector((state) => state.auth);
-    const [views, setViews] = useState(null)
 
     async function getDocument() {
         const responsDocumentFile = await ProductRepository.getProductFileSlug(
@@ -77,9 +77,10 @@ const ProductDefaultPage = ({ product, similar }) => {
         if (user?.access) {
             getDocument();
         }
-        localStorage.getItem("uuid") ? '' : localStorage.setItem("uuid", uuidv4())
+        
     }, [user?.access]);
     useEffect(() => {
+        localStorage.getItem("uuid") ? '' : localStorage.setItem("uuid", uuidv4())
         getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
     }, [])
 
