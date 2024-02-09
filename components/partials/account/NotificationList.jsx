@@ -33,7 +33,7 @@ export default function NotificationList() {
                     {notification?.length ? (
                         <div className="text-start">{
                             notification?.map((el, i) => <div key={el?.notification?.title} >
-                                <h3>{i+1}. {" "} {el?.notification?.title}</h3>
+                                <h3>{i+1}. {" "} {el?.notification?.title}  <span style={{fontSize:'16px', color:'#999'}} > | {el?.notification?.created_at}</span>  </h3>
                                 <p>{ el?.notification?.body && parse(el?.notification?.body)}</p>
                                 
                                 <hr />
