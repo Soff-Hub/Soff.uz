@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useRouter } from 'next/router';
