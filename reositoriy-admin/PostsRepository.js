@@ -1,4 +1,4 @@
-import Repository, { baseUrl, baseUrlProfie } from './Repository';
+import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from './Repository';
 
 class PostRepository {
     async PostsCategory(data, token) {
@@ -227,7 +227,7 @@ class PostRepository {
     async getDonatLists(data) {
         const endPoint = 'input/card/';
         const response = await Repository({
-            url: baseUrlProfie + endPoint,
+            url: baseUrlCustomer + endPoint,
             method: 'POST',
             data: data,
         })
@@ -244,7 +244,7 @@ class PostRepository {
     async getDonatListsCode(data) {
         const endPoint = 'verify/';
         const response = await Repository({
-            url: baseUrlProfie + endPoint,
+            url: baseUrlCustomer + endPoint,
             method: 'POST',
             data: data,
         })

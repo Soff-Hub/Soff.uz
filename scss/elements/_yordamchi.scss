@@ -1,8 +1,8 @@
-.socket_navbar:hover{
+.socket_navbar:hover {
     color: #fff;
 }
 
-.yashil{
+.yashil {
     color: $color-1st;
 }
 
@@ -39,9 +39,11 @@
 
     a {
         width: 100%;
-        span{
+
+        span {
             width: 100% !important;
         }
+
         img {
             width: 100%;
             height: 370px;
@@ -157,10 +159,10 @@
     padding: 6px;
 }
 
-.ck-toolbar__items{
-.ck-file-dialog-button{
- display: none !important;
-}
+.ck-toolbar__items {
+    .ck-file-dialog-button {
+        display: none !important;
+    }
 }
 
 .accordion-button {
@@ -396,14 +398,16 @@
         width: 100%;
     }
 }
-.views{
+
+.views {
     position: absolute;
     top: 0;
     background-color: #f1f1f1;
     padding: 8px;
     border-radius: 3px;
 }
-.view-quik{
+
+.view-quik {
     top: 50px !important;
 }
 
@@ -1107,6 +1111,7 @@
 
         a {
             width: 100%;
+
             img {
                 width: 100%;
                 max-height: 164px;
@@ -1237,6 +1242,10 @@
     //     max-width: 160px;
     //     min-width: 160px;
     // }
+    .resInput {
+        padding: 0 10px;
+    }
+
     .ps-product-list {
         .ps-section__header {
             h3 {

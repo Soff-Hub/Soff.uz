@@ -1,5 +1,4 @@
-import { Button, Form, Input, Modal } from 'antd'
-const { TextArea } = Input;
+import { Modal } from 'antd'
 import React, { useEffect, useState } from 'react'
 import PageContainer from '~/components/layouts/PageContainer'
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
@@ -13,62 +12,16 @@ const Donat = () => {
     const [code, setCode] = useState(null);
     const [resData, setResData] = useState(null);
     const [resDataCode, setResDataCode] = useState(null);
-    const [form] = Form.useForm()
 
     function handleInputChange(e) {
         setInputText(ov => ({ ...ov, [e.target.name]: e.target.value }))
-    }
-
-    async function handleSubmit() {
-        form.resetFields();
-        setNumberDate('');
-        setFormattedCardNumber('');
-        
-        const data = {
-            amount: InputText.price,
-            sponsor_info: InputText.emailPhone,
-            description: InputText.text ? InputText.text : '',
-            card_number: formattedCardNumber.replaceAll(' ', ''),
-            expire_date: numberDate.replaceAll('/', '')
+    };
+    function handleClickModalSubmit(e) {
+        e.preventDefault();
+        if (InputText.price) {
+            setOpen(true)
         }
-
-        const dataNews = await PostsRepository.getDonatLists(data)
-        if (dataNews) {
-            setResData(dataNews);
-        }
-        if (dataNews?.status !== 200) {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: `${dataNews?.data?.msg}`,
-            });
-        }
-
-
-    }
-
-    async function handleSubmitCode() {
-        const data = {
-            code: code,
-            order: resData?.data?.order
-        }
-
-        const dataNews = await PostsRepository.getDonatListsCode(data)
-        if (dataNews) {
-            setOpen(false)
-            setResDataCode(dataNews)
-        }
-        if (resDataCode?.status !== 200) {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: `${resDataCode?.data?.msg}`,
-            });
-        }
-
-    }
-
-
+    };
     const handleCardNumberChange = (e) => {
         const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
         let formattedValue = '';
@@ -101,57 +54,134 @@ const Donat = () => {
         setNumberDate(formattedValue);
     };
 
+
+    async function handleSubmit() {
+        setResDataCode(null)
+
+        if (formattedCardNumber?.length === 19) {
+            const data = {
+                amount: InputText.price,
+                sponsor_info: InputText.emailPhone,
+                description: InputText.text ? InputText.text : '',
+                card_number: formattedCardNumber.replaceAll(' ', ''),
+                expire_date: numberDate.replaceAll('/', '')
+            }
+            const dataNews = await PostsRepository.getDonatLists(data)
+            if (dataNews) {
+                setResData(dataNews);
+            }
+            if (dataNews?.status !== 200) {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: `${dataNews?.data?.msg}`,
+                });
+            }
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: `Karta raqamingiz to'g'ri kiritilmagan!`,
+            });
+
+        }
+
+
+    };
+
+    async function handleSubmitCode() {
+        const data = {
+            code: code,
+            order: resData?.data?.order
+        }
+
+        const dataNews = await PostsRepository.getDonatListsCode(data)
+        if (dataNews) {
+            setResDataCode(dataNews)
+        }
+        if (dataNews?.status !== 200 && dataNews?.data?.msg?.[0] !== 'Parol xato') {
+            setOpen(false);
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: `${dataNews?.data?.msg}`,
+            });
+            setTimeout(() => {
+                setResData(null)
+            }, 2000);
+        }
+        if (dataNews?.status === 200) {
+            setOpen(false)
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muffaqiyatli!',
+                content: `${dataNews?.data?.msg}`,
+            });
+        }
+    }
+
+
+
+
     useEffect(() => {
         if (resData?.status === 200) {
+            setTime(120)
             const timerID = setInterval(() => {
                 setTime(prevTime => {
-                    if (prevTime === 0) {
-                        clearInterval(timerID); // Taymer to'xtatiladi
-                        return prevTime; // Vaqt sonini o'zgartirmaymiz
+                    if (prevTime <= 0 || resDataCode?.status === 200) {
+                        clearInterval(timerID);
+                        setResData(null);
+
+                        return 0;
                     } else {
-                        return prevTime - 1; // Vaqtni 1 sekund bilan kamaytiramiz
+                        return prevTime - 1;
                     }
                 });
-
             }, 1000);
-            if (timerID === 0) {
-                setOpen(false)
-            }
-            // Taymer bekor qilinishi
-            return () => clearInterval(timerID);
         }
-    }, []);
-
-    const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
-
+    }, [resData, resDataCode]);
 
     function handleCancale() {
         setOpen(false)
+        setResData(null)
     }
 
-console.log(code);
+    const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
+
 
     return (
         <PageContainer >
             <div className="container my-5 ">
                 <h2 className='text-center'>Sayt rivoji uchun o'z hissangizni qo'shing</h2>
-                <div className="row g-4 p-3">
+                <div className="row g-4 p-3 align-items-center">
                     <img src="/static/img/support.jpg" className='col-md-7 mb-4' alt="support" style={{ objectFit: "cover" }} srcset="" />
-                    <Form form={form} onFinish={handleSubmit} className='d-flex flex-column border p-5 col-md-4 rounded-4 m-auto' >
-                        <Form.Item
-                            name="price"
+                    <form className='col-md-5  p-5' onSubmit={handleClickModalSubmit} >
+                        <div className='mb-3'>
+                            <input onChange={handleInputChange} value={InputText?.emailPhone} type="text" name='emailPhone' className='form-control rounded-3' placeholder='Telefon raqam yoki Email' />
+                        </div>
+                        <div className='mb-3'>
+                            <input onChange={handleInputChange} type="number" value={InputText?.price} name='price' className='form-control rounded-3' placeholder='Summa'
+                                required />
+                        </div>
 
-                            rules={[
-                                {
-                                    required: true,
-                                    message: 'Iltimos, summangizni  kiriting!',
-                                },
-                            ]}>
-                            <Input type='number' name="price" value={InputText.price} onChange={handleInputChange} placeholder='Summa' />
-                        </Form.Item>
+                        <div className='mb-3'>
+                            <textarea onChange={handleInputChange} name='text' value={InputText?.text} className='form-control rounded-3 px-4 py-3' rows={4} placeholder='Tavsif...'></textarea>
+                        </div>
+                        <button type='submit' className="btn btn-success  w-100 p-3"><span className='fs-4'>Davom etish <i class="fa-solid fa-arrow-right"></i></span></button>
+                    </form>
+                </div>
 
-                        <Form.Item className=' rounded-4'>
-                            <Input
+                <Modal width={500} title={resData?.status !== 200 ? "Karta raqamingizni kiriting!" : "Kodni kiriting!"} centered open={open} onOk={resData?.status !== 200 ? handleSubmit : handleSubmitCode} onCancel={handleCancale}>
+                    {resData?.status === 200 ?
+                        <>
+                            <p>Kod quyidagi raqamga yuborildi:{resData?.data?.phone_number}</p>
+                            <input onChange={(e) => setCode(e.target.value)} type="tel" placeholder='000000' maxLength={6} className='form-control text-center rounded-3 fs-3' />
+                            <strong className='text-danger'>{formattedTime}</strong>
+                            <p className='text-danger'>{resDataCode?.data?.msg?.[0] == 'Parol xato' && resDataCode?.data?.msg}</p>
+                        </>
+                        :
+                        <div className='mb-3 d-flex gap-3'>
+                            <input
                                 inputMode="numeric"
                                 pattern="[0-9\s]{13,19}"
                                 autoComplete="cc-number"
@@ -160,35 +190,16 @@ console.log(code);
                                 value={formattedCardNumber}
                                 onChange={handleCardNumberChange}
                                 name='numbrere'
-                                className='col-8'
+                                className='form-control rounded-3 col-8 resInput'
                             />
-                            <Input onChange={handleCardNumberDate} className='col-3 ml-4 ' type='tel' value={numberDate} maxLength={5} placeholder='MM/YY' />
-                        </Form.Item>
-                        <Form.Item
-                            name="emailPhone">
-                            <Input name="emailPhone" value={InputText.emailPhone} onChange={handleInputChange} placeholder='Telefon raqam yoki Pochta manzil' />
-                        </Form.Item>
-                        <Form.Item
-                            name="text"
-                        >
-                            <TextArea name="text" value={InputText.text} onChange={handleInputChange} rows={5} placeholder="Tavsif..." />
-                        </Form.Item>
-                        {
-                            !InputText.price || formattedCardNumber?.length !== 19 || numberDate?.length !== 5 ?
-                                <Button disabled htmlType="submit" style={{ height: "40px" }}>
-                                    Yuborish
-                                </Button>
-                                :
-                                <Button onClick={() => setOpen(true)} htmlType="submit" className='bg-success text-white' style={{ height: "40px" }}>
-                                    Yuborish
-                                </Button>
-                        }
-                    </Form>
-                </div>
-                <Modal width={300} title="Kodni kiriting!" centered open={resData?.status === 200 ? !open : ""} onOk={handleSubmitCode} onCancel={handleCancale}>
-                    <p>Kod quyidagi raqamga yuborildi:{resData?.data?.phone_number}</p>
-                    <input onClick={(e)=>setCode(e.target.value)} type="tel" placeholder='000000' maxLength={6} className='form-control text-center rounded-3 fs-3' />
-                    <strong className='text-danger'>{formattedTime}</strong>
+                            <input style={{ maxWidth: "137px" }}
+                                onChange={handleCardNumberDate}
+                                type='tel' value={numberDate}
+                                maxLength={5}
+                                className='form-control rounded-3 resInput'
+                                placeholder='MM/YY' />
+                        </div>
+                    }
                 </Modal>
             </div>
         </PageContainer>
