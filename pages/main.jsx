@@ -1,9 +1,6 @@
 import React from 'react';
-
 import PageContainer from '~/components/layouts/PageContainer';
-
 import HomeElectronicsPage from './home/electronic'
-import { baseUrl } from '~/repositories/Repository';
 import Meta from '~/components/shared/headers/Meta';
 import { useMemo } from 'react';
 
