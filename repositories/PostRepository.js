@@ -64,7 +64,6 @@ class PostRepository {
     }
 
     async getFAQCategorys() {
-        
         const endPoint = 'customer/question-category/';
         const response = await Repository.get(baseUrl + endPoint)
             .then((response) => {
@@ -82,9 +81,8 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
-    
-    async getFAQDescriptionItem(id) {
 
+    async getFAQDescriptionItem(id) {
         const endPoint = `customer/faq/?category=${id}`;
         const response = await Repository.get(baseUrl + endPoint)
             .then((response) => {
@@ -94,19 +92,61 @@ class PostRepository {
         return response;
     }
     async postProductUUID(slug, uuid) {
-
         const endPoint = `customer/get-view-count/${slug}`;
         const response = await Repository({
             url: baseUrl + endPoint,
-            method:'POST',
+            method: 'POST',
             data: {
-                uuid: uuid
-            }
+                uuid: uuid,
+            },
         })
             .then((response) => {
                 return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
+    }
+    async postClickCard(documents, card_number , expire_date, token) {
+        const endPoint = `seller/payment/create/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            data: {
+                documents: documents,
+                expire_date: expire_date,
+                card_number: card_number,
+            },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                return error.response
+            } );
+        return response;
+    }
+    async postClickCode(cart, code , token) {
+        const endPoint = `seller/payment/verify/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            data: {
+                cart: cart,
+                code: code,
+            },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                return error.response
+            });
         return response;
     }
 }

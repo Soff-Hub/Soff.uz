@@ -29,6 +29,7 @@ const UserMenuPanel = ({
     async function ProfileUsers() {
         setLoading(true)
         const ItemsData = await GetRepository.getProfile(user?.access);
+        
         setProfile(ItemsData)
         setLoading(false)
     }
