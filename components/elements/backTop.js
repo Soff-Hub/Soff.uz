@@ -21,9 +21,9 @@ export default function Backtop({ setBackground , backtop }) {
                     }>
                     <li onClick={() => setBackground(!backtop)} >
                         <Link
-                            href="tel: +998910086789">
+                            href="/account/donat">
                             <a>
-                                <i className="fa-solid fa-phone"></i>
+                            <i class="fa-solid fa-hand-holding-hand"></i>
                             </a>
                         </Link>
                     </li>
