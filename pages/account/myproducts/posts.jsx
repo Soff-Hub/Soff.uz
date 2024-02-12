@@ -15,6 +15,8 @@ import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
+// import Tab from '~/components/elements/tabs/tab';
+
 const category_id = [];
 
 const Posts = () => {
@@ -39,7 +41,7 @@ const Posts = () => {
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
-    const [free, setFree] = useState(false)
+    const [free, setFree] = useState(false);
 
     const breadCrumb = [
         {
@@ -50,6 +52,10 @@ const Posts = () => {
             text: 'Mahsulot qo’shish',
         },
     ];
+
+    const onChangeTabs = (key) => {
+        console.log(key);
+    };
 
     async function GetItemsCategoryLists() {
         const ItemsData = await GetRepository.getAllCategoryLists();
@@ -179,15 +185,14 @@ const Posts = () => {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('title', title)
+        formData.append('title', title);
         if (free) {
-            formData.append('price', 0)
+            formData.append('price', 0);
+        } else {
+            formData.append('price', narx);
         }
-        else {
-            formData.append('price', narx)
-        }
-        formData.append('description', Fulldata)
-        formData.append('tags', tagSearchResult)
+        formData.append('description', Fulldata);
+        formData.append('tags', tagSearchResult);
         liveFile2?.images?.[0]?.id
             ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
             : 'None',
@@ -209,7 +214,7 @@ const Posts = () => {
                     "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             });
         } else {
-            console.log(patchItems)
+            console.log(patchItems);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
@@ -289,7 +294,7 @@ const Posts = () => {
     };
 
     const handleFreeChange = (e) => {
-        setFree(!free)
+        setFree(!free);
     };
 
     useEffect(() => {
@@ -303,14 +308,263 @@ const Posts = () => {
         PostFilePoster();
     }, [fileImgFile]);
 
+    const items = [
+        {
+            key: '1',
+            label: 'Hujjat (File)',
+            children: (
+                <div className="row">
+                    <label
+                        className="add-product-user-image d-flex flex-column justify-content-center col-md-12 align-content-center form-control py-5 rounded-3 text-truncate"
+                        style={{
+                            backgroundColor: '#F1F1F1',
+                            border: '1px dashed green',
+                            width: '100%',
+                        }}>
+                        {livePosterFile === '' ? (
+                            <span
+                                className="d-flex flex-column align-items-center"
+                                style={{ cursor: 'pointer' }}>
+                                {loading ? (
+                                    <span className="d-flex justify-content-center">
+                                        <ClipLoader size={25} color="#36d7b7" />
+                                    </span>
+                                ) : (
+                                    <span
+                                        className="d-flex flex-column align-items-center "
+                                        style={{
+                                            cursor: 'pointer',
+                                        }}>
+                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                        <span>
+                                            Rasmni  yuklash uchun faylni ushbu hududga
+                                            bosing.
+                                        </span>
+                                    </span>
+                                )}
+                            </span>
+                        ) : (
+                            <span
+                                className="d-flex flex-column align-items-center"
+                                style={{ cursor: 'pointer' }}>
+                                <span>
+                                    {' '}
+                                    Siz mahsulot yukladingiz{' '}
+                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                </span>
+                            </span>
+                        )}
+                        <input
+                            required
+                            type="file"
+                            onChange={(e) => setFileImgFile(e.target.files[0])}
+                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                        />
+                    </label>
+                    <div
+                        className="add-product-user-image d-flex justify-content-between col-md-12  form-control pt-2 rounded-3"
+                        style={{
+                            backgroundColor: '#F1F1F1',
+                            border: '1px dashed green',
+                            height: '100px',
+                        }}>
+                        <label
+                            style={{
+                                width: '50px',
+                                cursor: 'pointer',
+                            }}>
+                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                            <input
+                                type="file"
+                                onChange={(e) => LiveImage(e)}
+                                accept="image/*"
+                                style={{ width: '20px' }}
+                            />
+                        </label>
+                        <div
+                            className="overflow-x-scroll  d-flex  gap-1
+                                   "
+                            style={{ width: '430px' }}>
+                            {!livePosterFile?.images ? (
+                                <span
+                                    className="d-flex flex-column align-items-center mt-4 mx-5"
+                                    style={{ cursor: 'pointer' }}>
+                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                    <span className='text-center' >
+                                        {' '}
+                                      Rasmini yuklash uchun ushbu hududga
+                                        bosing.{' '}
+                                    </span>
+                                </span>
+                            ) : (
+                                livePosterFile?.images?.map((item, i) =>
+                                    item.id === fileImgFileID ? (
+                                        <img
+                                            src={item.image_url}
+                                            alt=" "
+                                            key={i}
+                                            style={{
+                                                display: 'block',
+                                                border: '2px solid red',
+                                                filter: 'blur(1px)',
+                                                cursor: 'not-allowed',
+                                            }}
+                                        />
+                                    ) : (
+                                        <img
+                                            className="mx-1 "
+                                            onClick={() => {
+                                                setLiveFile(item?.image_url),
+                                                    setFileImgFileID(item?.id);
+                                            }}
+                                            src={item?.image_url}
+                                            alt=" "
+                                            key={i}
+                                            style={{
+                                                display: 'block',
+                                                cursor: 'pointer',
+                                            }}
+                                        />
+                                    )
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: 'Video',
+            children: (
+                <div className="row">
+                    <label
+                        className="add-product-user-image d-flex flex-column justify-content-center col-md-12 align-content-center form-control py-5 rounded-3 text-truncate"
+                        style={{
+                            backgroundColor: '#F1F1F1',
+                            border: '1px dashed green',
+                            width: '100%',
+                        }}>
+                        {livePosterFile === '' ? (
+                            <span
+                                className="d-flex flex-column align-items-center"
+                                style={{ cursor: 'pointer' }}>
+                                {loading ? (
+                                    <span className="d-flex justify-content-center">
+                                        <ClipLoader size={25} color="#36d7b7" />
+                                    </span>
+                                ) : (
+                                    <span
+                                        className="d-flex flex-column align-items-center "
+                                        style={{
+                                            cursor: 'pointer',
+                                        }}>
+                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                        <span>
+                                            Faylni yuklash uchun ushbu hududga
+                                            bosing.
+                                        </span>
+                                    </span>
+                                )}
+                            </span>
+                        ) : (
+                            <span
+                                className="d-flex flex-column align-items-center"
+                                style={{ cursor: 'pointer' }}>
+                                <span>
+                                    {' '}
+                                    Siz mahsulot yukladingiz{' '}
+                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                </span>
+                            </span>
+                        )}
+                        <input
+                            required
+                            type="file"
+                            onChange={(e) => setFileImgFile(e.target.files[0])}
+                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                        />
+                    </label>
+                    <div
+                        className="add-product-user-image d-flex justify-content-between col-md-12  form-control pt-2 rounded-3"
+                        style={{
+                            backgroundColor: '#F1F1F1',
+                            border: '1px dashed green',
+                            height: '100px',
+                        }}>
+                        <label
+                            style={{
+                                width: '50px',
+                                cursor: 'pointer',
+                            }}>
+                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                            <input
+                                type="file"
+                                onChange={(e) => LiveImage(e)}
+                                accept="image/*"
+                                style={{ width: '20px' }}
+                            />
+                        </label>
+                        <div
+                            className="overflow-x-scroll  d-flex  gap-1
+                                   "
+                            style={{ width: '430px' }}>
+                            {!livePosterFile?.images ? (
+                                <span
+                                    className="d-flex flex-column align-items-center mt-4 mx-5"
+                                    style={{ cursor: 'pointer' }}>
+                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                    <span className='text-center' >
+                                        {' '}
+                                      Rasmini yuklash uchun ushbu hududga
+                                        bosing.{' '}
+                                    </span>
+                                </span>
+                            ) : (
+                                livePosterFile?.images?.map((item, i) =>
+                                    item.id === fileImgFileID ? (
+                                        <img
+                                            src={item.image_url}
+                                            alt=" "
+                                            key={i}
+                                            style={{
+                                                display: 'block',
+                                                border: '2px solid red',
+                                                filter: 'blur(1px)',
+                                                cursor: 'not-allowed',
+                                            }}
+                                        />
+                                    ) : (
+                                        <img
+                                            className="mx-1 "
+                                            onClick={() => {
+                                                setLiveFile(item?.image_url),
+                                                    setFileImgFileID(item?.id);
+                                            }}
+                                            src={item?.image_url}
+                                            alt=" "
+                                            key={i}
+                                            style={{
+                                                display: 'block',
+                                                cursor: 'pointer',
+                                            }}
+                                        />
+                                    )
+                                )
+                            )}
+                        </div>
+                    </div>
+                </div>
+            ),
+        }
+    ];
+
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
-                <Meta
-                    title={"Soff | Yangi mahsulot yaratish"}
-                />
+                <Meta title={'Soff | Yangi mahsulot yaratish'} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center ">
                     <div
@@ -348,6 +602,7 @@ const Posts = () => {
                                     <h4 className=" p-0">Yangi mahsulot </h4>
                                 </div>
                             </div>
+
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     <p>Mahsulot nomi: *</p>
@@ -374,59 +629,16 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                <label
-                                    className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
-                                    style={{
-                                        backgroundColor: '#F1F1F1',
-                                        border: '1px dashed green',
-                                    }}>
-                                    {livePosterFile === '' ? (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{ cursor: 'pointer' }}>
-                                            {loading ? (
-                                                <span className="d-flex justify-content-center">
-                                                    <ClipLoader
-                                                        size={25}
-                                                        color="#36d7b7"
-                                                    />
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    className="d-flex flex-column align-items-center "
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}>
-                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                    <span>
-                                                        Yuklash uchun faylni
-                                                        ushbu hududga bosing.
-                                                    </span>
-                                                </span>
-                                            )}
-                                        </span>
-                                    ) : (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{ cursor: 'pointer' }}>
-                                            <span>
-                                                {' '}
-                                                Siz mahsulot yukladingiz{' '}
-                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                            </span>
-                                        </span>
-                                    )}
-                                    <input
-                                        required
-                                        type="file"
-                                        onChange={(e) =>
-                                            setFileImgFile(e.target.files[0])
-                                        }
-                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+
+                                <div className=" rounded-3 col-md-8 mb-2">
+                                    <Tabs
+                                        defaultActiveKey="1"
+                                        items={items}
+                                        onChange={onChangeTabs}
                                     />
-                                </label>
+                                </div>
                             </div>
-                            <div className="row mb-3">
+                            {/* <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot rasmi: *</p>{' '}
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
@@ -435,86 +647,7 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                <div
-                                    className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
-                                    style={{
-                                        backgroundColor: '#F1F1F1',
-                                        border: '1px dashed green',
-                                        height: '100px',
-                                    }}>
-                                    <label
-                                        style={{
-                                            width: '50px',
-                                            cursor: 'pointer',
-                                        }}>
-                                        <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => LiveImage(e)}
-                                            accept="image/*"
-                                            style={{ width: '20px' }}
-                                        />
-                                    </label>
-                                    <div
-                                        className="overflow-x-scroll  d-flex  gap-1
-                                   "
-                                        style={{ width: '430px' }}>
-                                        {!livePosterFile?.images ? (
-                                            <span
-                                                className="d-flex flex-column align-items-center mt-4 mx-5"
-                                                style={{ cursor: 'pointer' }}>
-                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                <span>
-                                                    {' '}
-                                                    Yuklash uchun rasmni ushbu
-                                                    hududga bosing.{' '}
-                                                </span>
-                                            </span>
-                                        ) : (
-                                            livePosterFile?.images?.map(
-                                                (item, i) =>
-                                                    item.id ===
-                                                        fileImgFileID ? (
-                                                        <img
-                                                            src={item.image_url}
-                                                            alt=" "
-                                                            key={i}
-                                                            style={{
-                                                                display:
-                                                                    'block',
-                                                                border: '2px solid red',
-                                                                filter: 'blur(1px)',
-                                                                cursor: 'not-allowed',
-                                                            }}
-                                                        />
-                                                    ) : (
-                                                        <img
-                                                            className="mx-1 "
-                                                            onClick={() => {
-                                                                setLiveFile(
-                                                                    item?.image_url
-                                                                ),
-                                                                    setFileImgFileID(
-                                                                        item?.id
-                                                                    );
-                                                            }}
-                                                            src={
-                                                                item?.image_url
-                                                            }
-                                                            alt=" "
-                                                            key={i}
-                                                            style={{
-                                                                display:
-                                                                    'block',
-                                                                cursor: 'pointer',
-                                                            }}
-                                                        />
-                                                    )
-                                            )
-                                        )}
-                                    </div>
-                                </div>
-                            </div>
+                            </div> */}
                             <div className=" row ">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                     <p>Teglar:</p>{' '}
@@ -566,7 +699,12 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                <Checkbox defaultChecked={free} className='col-md-2 d-flex align-items-center justify-content-start px-0 py-2' onChange={handleFreeChange}>Bepul</Checkbox>
+                                <Checkbox
+                                    defaultChecked={free}
+                                    className="col-md-2 d-flex align-items-center justify-content-start px-0 py-2"
+                                    onChange={handleFreeChange}>
+                                    Bepul
+                                </Checkbox>
                                 <input
                                     required
                                     type={narxNomi ? 'text' : 'number'}
@@ -664,8 +802,8 @@ const Posts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                    removePrefix(taxminiyNarx)
-                                                ) + "so'm"
+                                                      removePrefix(taxminiyNarx)
+                                                  ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -692,10 +830,10 @@ const Posts = () => {
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                            return (
-                                                <span key={i}>#{item} </span>
-                                            );
-                                        })
+                                              return (
+                                                  <span key={i}>#{item} </span>
+                                              );
+                                          })
                                         : "To'ldirilmadi"}
                                 </p>
                                 <p className="live-card-p">
@@ -715,8 +853,8 @@ const Posts = () => {
                                             </strong>{' '}
                                             {livePosterFile?.page_count
                                                 ? livePosterFile?.page_count +
-                                                ' ' +
-                                                'ta'
+                                                  ' ' +
+                                                  'ta'
                                                 : ''}{' '}
                                         </li>
                                         <li>
@@ -801,10 +939,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                        removePrefix(
-                                                            taxminiyNarx
-                                                        )
-                                                    ) + "so'm"
+                                                          removePrefix(
+                                                              taxminiyNarx
+                                                          )
+                                                      ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -831,14 +969,14 @@ const Posts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                (item, i) => {
-                                                    return (
-                                                        <span key={i}>
-                                                            #{item}{' '}
-                                                        </span>
-                                                    );
-                                                }
-                                            )
+                                                  (item, i) => {
+                                                      return (
+                                                          <span key={i}>
+                                                              #{item}{' '}
+                                                          </span>
+                                                      );
+                                                  }
+                                              )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -858,8 +996,8 @@ const Posts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                    ' ' +
-                                                    'ta'
+                                                      ' ' +
+                                                      'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -953,10 +1091,10 @@ const Posts = () => {
                                                     {' '}
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                            removePrefix(
-                                                                taxminiyNarx
-                                                            )
-                                                        ) + "so'm"
+                                                              removePrefix(
+                                                                  taxminiyNarx
+                                                              )
+                                                          ) + "so'm"
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>
@@ -981,8 +1119,8 @@ const Posts = () => {
                                                             </strong>{' '}
                                                             {livePosterFile?.page_count
                                                                 ? livePosterFile?.page_count +
-                                                                ' ' +
-                                                                'ta'
+                                                                  ' ' +
+                                                                  'ta'
                                                                 : ''}{' '}
                                                         </li>
                                                         <li>
@@ -1011,8 +1149,8 @@ const Posts = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : livePosterFile
-                                                                    ?.category
-                                                                    ?.name}
+                                                                      ?.category
+                                                                      ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>

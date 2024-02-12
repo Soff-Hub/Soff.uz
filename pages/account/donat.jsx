@@ -70,7 +70,7 @@ const Donat = () => {
             if (dataNews) {
                 setResData(dataNews);
             }
-            if (dataNews?.status !== 200) {
+            if (dataNews?.status !== 201) {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
@@ -124,7 +124,7 @@ const Donat = () => {
 
 
     useEffect(() => {
-        if (resData?.status === 200) {
+        if (resData?.status === 201) {
             setTime(120)
             const timerID = setInterval(() => {
                 setTime(prevTime => {

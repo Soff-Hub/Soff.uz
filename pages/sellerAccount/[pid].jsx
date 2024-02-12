@@ -156,19 +156,7 @@ const SellerAccount = ({ seller }) => {
                     )}
                 </span>
             ),
-        },
-        // {
-        //     title: 'Harakatlar',
-        //     dataIndex: 'id',
-        //     key: 'address',
-        //     render: (id) => <div >
-        //         {
-        //             data.some(el => el.id == id && el.auth_status === 'new') ?
-        //                 <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-        //                 : <></>
-        //         }
-        //     </div>
-        // },
+        }
     ];
 
     return (

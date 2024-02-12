@@ -22,6 +22,7 @@ function Notifications() {
     const [image, setImage] = useState('');
     const divRef = useRef(null);
     const [copyIcon, setCopyIcon] = useState('fa-regular fa-copy');
+
     const handleCopyClick = () => {
         if (divRef.current) {
             const textToCopy = divRef.current.innerText;
@@ -45,6 +46,7 @@ function Notifications() {
     }
 
     useEffect(() => ProfileUsers(), [renderProfile]);
+
     async function handleClickEdit(e) {
         e.preventDefault();
         setLoading(true);
@@ -393,7 +395,6 @@ function Notifications() {
                                                                             )
                                                                         }
                                                                     />
-
                                                                     <button
                                                                         type="submit"
                                                                         className="btn btn-success py-3 col-md-2  ">
@@ -428,14 +429,6 @@ function Notifications() {
                                                                 uchun telegram
                                                                 botga o'ting
                                                             </h5>
-                                                            {/* <Tooltip title="Do'stlaringizni taklif qiling va har bir taklif qilingan do'stingizning sotilgan mahsulotlaridan o'zingizga foyda oling!">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                                                </Tooltip> */}
-
                                                             <i
                                                                 class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3"
                                                                 style={{
@@ -444,28 +437,6 @@ function Notifications() {
                                                         </div>
                                                     </a>
                                                 </Link>
-                                                {/* <div className=" mt-3 taklif-div">
-                                                    <div
-                                                        className="link text-truncate"
-                                                        ref={
-                                                            divRef
-                                                        }>{`https://soff.uz/account/register/${
-                                                        profile !== null
-                                                            ? profile?.code
-                                                            : ''
-                                                    }`}</div>
-                                                    <button
-                                                        className="border-none btn-success"
-                                                        style={{
-                                                            border: 'none',
-                                                        }}
-                                                        onClick={
-                                                            handleCopyClick
-                                                        }>
-                                                        <i
-                                                            className={`${copyIcon}`}></i>
-                                                    </button>
-                                                </div> */}
                                             </div>
                                         </>
                                     )}
