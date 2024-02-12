@@ -37,6 +37,11 @@ const ClickCard = ({ onChange, setCardDate }) => {
         setNumberDate(formattedValue);
     };
 
+    // if (reset) {
+    //     setNumberDate(" ")
+    //     setFormattedCardNumber(" ")
+    // }
+
     return (
         <form className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
             <div className="col-md-8 ">

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Modal } from 'antd';
@@ -116,7 +115,6 @@ const CreditCard2 = ({ document }) => {
             }, 2000);
         }
         if (dataNews?.status === 200) {
-            
             setOpen(false);
             const modal = Modal.success({
                 centered: true,
@@ -133,7 +131,6 @@ const CreditCard2 = ({ document }) => {
             }
         }
     }
-console.log('==', user);
     useEffect(() => {
         if (resData?.status === 201) {
             setTime(120);
@@ -158,8 +155,7 @@ console.log('==', user);
     }
 
     const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
-    console.log('data', document, number, cardDate);
-    console.log('time', time);
+
     return (
         <div className="row g-3  mx-auto overflow-x-auto m-0">
             <div
