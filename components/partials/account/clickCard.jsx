@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ClickCard = ({ onChange , setCardDate }) => {
+const ClickCard = ({ onChange, setCardDate }) => {
     const [formattedCardNumber, setFormattedCardNumber] = useState('');
     const [numberDate, setNumberDate] = useState('');
 
@@ -33,14 +33,13 @@ const ClickCard = ({ onChange , setCardDate }) => {
                 formattedValue += inputValue[i];
             }
         }
-
-        setCardDate(formattedValue);
+        setCardDate(inputValue);
         setNumberDate(formattedValue);
     };
 
     return (
-        <div className=" pt-3 pb-3 d-flex align-items-end row "  >
-            <div className="col-md-8">
+        <form className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+            <div className="col-md-8 ">
                 <label htmlFor="ccn">Karta raqam</label>
                 <input
                     id="ccn"
@@ -69,7 +68,7 @@ const ClickCard = ({ onChange , setCardDate }) => {
                     onChange={handleCardNumberDate}
                 />
             </div>
-        </div>
+        </form>
     );
 };
 

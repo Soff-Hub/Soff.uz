@@ -7,6 +7,7 @@ import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
 import Image from 'next/image';
+import CreditCard2 from '../CreditCard2';
 
 
 function FormCheckoutInformation() {
@@ -14,13 +15,14 @@ function FormCheckoutInformation() {
     const cartData = useSelector((state) => state.ecomerce.cartDataItems);
     const [card, setCard] = useState([]);
     const [data, setData] = useState([]);
-    const [selectedValue, setSelectedValue] = useState('click');
-    const [message, setMessage] = useState(true);
+    // const [selectedValue, setSelectedValue] = useState('click');
+    // const [message, setMessage] = useState(true);
     const { removeAll } = useCart()
 
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
     };
+
     const GetCard = async () => {
         const config = {
             headers: {
@@ -84,10 +86,12 @@ function FormCheckoutInformation() {
         // const responsClick = await ClickRepository.postClick( token)
     };
 
+
     return (
         <div className="tolov-usullari">
-            <div className="payme-logo">
-                <div className="d-flex aligin-content-center border rounded-5 p-3">
+            <div className="d-flex aligin-content-center  rounded-5 p-3">
+            <CreditCard2 document={ids} />
+                {/* <div className="d-flex aligin-content-center border rounded-5 p-3">
                     <label className="mt-3 me-2">
                         <input
                             type="radio"
@@ -103,9 +107,9 @@ function FormCheckoutInformation() {
                         height="40px"
                         style={{ objectFit: 'cover' }}
                     />
-                </div>
+                </div> */}
             </div>
-            {message ? (
+            {/* {message ? (
                 <p
                     style={{ display: 'inline-block' }}
                     className="ps-btn"
@@ -121,7 +125,7 @@ function FormCheckoutInformation() {
                         <BeatLoader color="#fff" />
                     </button>
                 </p>
-            )}
+            )} */}
         </div>
     );
 }
