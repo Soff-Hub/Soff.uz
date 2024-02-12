@@ -22,7 +22,7 @@ const AccountTegPage = () => {
     return (
 
         user?.role === 'admin' ?
-            <PageContainer footer={<FooterDefault />} title="   s">
+            <PageContainer footer={<FooterDefault />} title="tag">
                 <div className="ps-page--my-account">
                     <Meta
                         title={"Soff | Teglar"}

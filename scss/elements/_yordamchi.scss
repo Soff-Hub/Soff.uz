@@ -6,7 +6,6 @@
     color: $color-1st;
 }
 
-
 .tolov-usullari {
     display: flex;
     align-items: flex-start;
@@ -75,7 +74,7 @@
     // background-size: cover;
     // background-position: center;
     margin: 0 auto;
-    transition: .5s;
+    transition: 0.5s;
 
     &:hover {
         transform: scale(1.1);
@@ -311,7 +310,7 @@
 // }
 
 #homepage-7 .ps-product-list {
-    margin-bottom: 80px
+    margin-bottom: 80px;
 }
 
 .ps-block--shopping-total {
@@ -346,13 +345,13 @@
     width: 40px;
     display: flex;
     justify-content: center;
-    align-items: center
+    align-items: center;
 }
 
 .footer-icon-parent-div {
     display: flex;
     align-items: center;
-    gap: 10px
+    gap: 10px;
 }
 
 .footer-right-ul-social {
@@ -364,7 +363,7 @@
 }
 
 .yaxshi-categoriyalar-image {
-    transition: .5s;
+    transition: 0.5s;
 
     &:hover {
         transform: scale(1.1);
@@ -424,12 +423,10 @@
 }
 
 @include media('<lg') {
-
     .responsive-image-card {
         display: flex;
         justify-content: center;
     }
-
 
     .ant-float-btn-default {
         bottom: 90px;
@@ -440,7 +437,7 @@
     }
 
     #homepage-7 .ps-product-list {
-        margin-bottom: 80px
+        margin-bottom: 80px;
     }
 
     .acc-li {
@@ -449,7 +446,6 @@
 
     .accordion-button {
         padding: 5px 8px;
-
     }
 
     .ps-product {
@@ -569,7 +565,7 @@
         display: flex;
         flex-flow: row nowrap;
 
-        >* {
+        > * {
             width: 100%;
         }
 
@@ -667,21 +663,19 @@
     }
 }
 
-@include media ('>lg') {
+@include media('>lg') {
     .responsiveCardButton {
         position: absolute;
         bottom: 15px;
         left: 80%;
         width: 140px;
     }
-
 }
 
 @media screen and (max-width: 1060px) {
     .detail-card {
         max-width: 230px;
     }
-
 }
 
 @include media('<md') {
@@ -789,10 +783,6 @@
             display: none;
         }
 
-        // .card-narx-box {
-        //     display: none;
-        // }
-
         .ps-product__content {
             visibility: visible;
             opacity: 1;
@@ -826,18 +816,6 @@
             }
         }
     }
-
-    .ps-product:hover {
-        // height: 130px;
-    }
-
-    // .home-car{
-    //     max-width: 230px;
-    //     min-width: 110px;
-    //     width: 100%;
-    //     min-height: 200px;
-    //     max-height: 200px;
-    // }
 }
 
 @media screen and (max-width: 719px) {
@@ -1049,7 +1027,6 @@
         left: 50%;
         transform: translate(100%, 180%);
         display: block;
-
     }
 
     .mahsulotingizElh3 {
@@ -1062,7 +1039,6 @@
 
     .offcanvas-header {
         margin-top: 4rem;
-
     }
 
     .elh3 {
@@ -1184,8 +1160,6 @@
     }
 }
 
-
-
 @media screen and (max-width: 441px) {
     .ps-section__righ {
         justify-content: center;
@@ -1213,10 +1187,7 @@
     .ps-form--account .ps-tab-list li a {
         font-size: 17px !important;
     }
-
 }
-
-
 
 @media screen and (max-width: 425px) {
     .ps-product__container {
@@ -1237,7 +1208,6 @@
 }
 
 @media screen and (max-width: 370px) {
-
     // .home-card{
     //     max-width: 160px;
     //     min-width: 160px;
@@ -1279,7 +1249,6 @@
     }
 }
 
-
 @media screen and (max-width: 330px) {
     .ps-product__thumbnail {
         margin: 0 auto;
@@ -1319,7 +1288,7 @@
 
 * {
     scrollbar-width: thin;
-    scrollbar-color: $color-1st #F1F1F1;
+    scrollbar-color: $color-1st #f1f1f1;
 }
 
 *::-webkit-scrollbar {
@@ -1341,8 +1310,11 @@
     width: 300px;
 }
 
-
-
+#Card2 {
+    position: relative;
+    height: 183px;
+    width: 415px;
+}
 
 .BackImg {
     background-image: url('../../public/static/CardCredit/humoca.gif');
@@ -1369,7 +1341,6 @@
     background-image: url('../../public/static/CardCredit/defaukt6.jpg');
     background-size: 100%;
     border-radius: 10px;
-
 }
 
 .BackImg2 {
@@ -1386,7 +1357,7 @@
 }
 
 .cardColorHumo {
-    color: #F1F1F1;
+    color: #f1f1f1;
 }
 
 .add-product-user-image {
@@ -1394,8 +1365,6 @@
         opacity: 0;
     }
 }
-
-
 
 .modalBanner {
     position: fixed;
@@ -1449,7 +1418,6 @@
     z-index: 99999;
     height: 100%;
 }
-
 
 .iframe-container {
     position: relative;
@@ -1513,6 +1481,10 @@
 
 // Vedio tutorial uchun carousel modal
 
+.click-b {
+    max-width: 450px;
+    width: 100%;
+}
 
 .modalBannerCarousel {
     position: fixed;
@@ -1569,7 +1541,6 @@
     z-index: 99999;
     height: 100%;
 }
-
 
 .iframe-containerCarousel {
     position: relative;
@@ -1640,7 +1611,7 @@
     }
 
     to {
-        opacity: .3;
+        opacity: 0.3;
     }
 }
 
@@ -1653,7 +1624,6 @@
         opacity: 0;
     }
 }
-
 
 .modal-vedio-tutorial_container-carousel {
     height: 200px;
@@ -1682,15 +1652,16 @@
     }
 }
 
-
 .modal-dating {
     height: 500px;
     overflow-y: scroll;
 }
+.colCard2 {
+    position: absolute;
+    top: 71%;
+}
 
-
-
-@media (min-width:1500px) and (max-width:2000px) {
+@media (min-width: 1500px) and (max-width: 2000px) {
     .colCard {
         position: absolute;
         top: 64%;
@@ -1703,7 +1674,7 @@
     }
 }
 
-@media (min-width:1300px) and (max-width:1500px) {
+@media (min-width: 1300px) and (max-width: 1500px) {
     .colCard {
         position: absolute;
         top: 64%;
@@ -1713,7 +1684,6 @@
         position: fixed;
         top: 20%;
         left: 18%;
-
     }
 
     .bannerModal3 {
@@ -1721,10 +1691,9 @@
         top: 20%;
         left: -200%;
     }
-
 }
 
-@media (min-width:1200px) and (max-width:1300px) {
+@media (min-width: 1200px) and (max-width: 1300px) {
     .colCard {
         position: absolute;
         top: 64%;
@@ -1734,15 +1703,12 @@
         position: fixed;
         top: 20%;
         left: 15%;
-
     }
 
     .bannerModal3 {
         position: fixed;
         top: -100%;
         left: 15%;
-
-
     }
 
     // .bannerModal2Carousel {
@@ -1752,20 +1718,17 @@
     // }
 }
 
-@media (min-width:1000px) and (max-width:1200px) {
+@media (min-width: 1000px) and (max-width: 1200px) {
     .bannerModal2 {
         position: fixed;
         top: 20%;
         left: 15%;
-
     }
 
     .bannerModal3 {
         position: fixed;
         top: 20%;
         left: -100%;
-
-
     }
 }
 
@@ -1781,7 +1744,6 @@
     }
 
     .bannerModal3 {
-
         position: fixed;
         top: -30%;
         left: -100%;
@@ -1802,7 +1764,6 @@
         position: fixed;
         top: 20%;
         left: 22%;
-
     }
 
     .bannerModal3 {
@@ -1815,7 +1776,6 @@
         width: 100%;
         left: -100%;
         max-width: 860px;
-
     }
 }
 
@@ -1826,14 +1786,16 @@
         // height: 300px;
         max-width: 400px;
     }
+    .tolov-usullari {
+        align-items: center;
+    }
 }
 
-@media (max-width: 860px) {
+@media (min-width: 860px) {
     .bannerModal2 {
         padding-bottom: 100%;
         position: fixed;
         top: 30%;
-
     }
 
     .bannerModal3 {
@@ -1845,12 +1807,13 @@
         position: absolute;
         top: 52%;
     }
-}
-
-@media (min-width: 860px) {
     .colCard {
         position: absolute;
         top: 52%;
+    }
+    .colCard2 {
+        position: absolute;
+        top: 71%;
     }
 
     .bannerModal2 {
@@ -1871,7 +1834,6 @@
         max-width: 860px;
     }
 }
-
 
 @media (max-width: 598px) {
     .bannerModal2Carousel {
@@ -1925,11 +1887,20 @@
         position: 'absolute';
         right: 0;
         top: ' -9px';
-        z-index: 1
+        z-index: 1;
+    }
+    .bannerModal2Carousel {
+        top: 25%;
+        left: 14%;
+        max-width: 300px;
+    }
+    .colCard2 {
+        position: absolute;
+        top: 81%;
     }
 }
 
-@media (min-width: 400px) and (max-width:500px) {
+@media (min-width: 400px) and (max-width: 500px) {
     .colCard {
         position: absolute;
         top: 52%;
@@ -1939,7 +1910,6 @@
         padding-bottom: 100%;
         position: fixed;
         left: 0;
-
     }
 
     .bannerModal3 {
@@ -1950,7 +1920,6 @@
     .iframe-container {
         position: relative;
         padding-bottom: 75%;
-        /* 16:9 nisbatiga mos keladigan qadriyat (9 / 16 * 100%) */
         height: 300px;
         overflow: hidden;
         width: 450px;
@@ -1968,30 +1937,28 @@
         right: 0;
         top: ' -9px';
     }
-}
+    .click-b {
+        max-width: 400px;
+        width: 100%;
+    }
 
-
-@media (max-width: 500px) {
-    .bannerModal2Carousel {
-        top: 25%;
-        left: 14%;
-        max-width: 300px;
+    #Card2 {
+        height: 183px;
+        max-width: 400px;
+        width: 100%;
     }
 }
 
 @media (max-width: 400px) {
-
     .colCard {
         position: absolute;
         top: 52%;
     }
 
-
     .bannerModal2 {
         padding-bottom: 100%;
         position: fixed;
         left: 0;
-
     }
 
     .bannerModal3 {
@@ -2020,8 +1987,17 @@
         right: 0;
         top: ' -9px';
     }
-}
+    .click-b {
+        max-width: 300px;
+        width: 100%;
+    }
 
+    #Card2 {
+        height: 183px;
+        max-width: 300px;
+        width: 100%;
+    }
+}
 
 @media (max-width: 395px) {
     .bannerModal2Carousel {
