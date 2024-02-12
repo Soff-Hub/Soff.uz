@@ -89,7 +89,7 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
                                         e.preventDefault();
                                         fileDownloaderSale(document);
                                     }}>
-                                    Bepul yuklab olish
+                                    Yuklab olish
                                 </a>
                             ) : (
                                 <>
