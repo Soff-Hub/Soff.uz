@@ -153,7 +153,7 @@ function ElectronicBanner() {
                     </div>
                 </div>
             </section>
-            {modal ? (
+            {/* {modal ? (
                 <>
                     <div
                         onClick={closeBanner}
@@ -205,7 +205,7 @@ function ElectronicBanner() {
                 </>
             ) : (
                 <></>
-            )}
+            )} */}
             {/* {
         category ?
             <>
