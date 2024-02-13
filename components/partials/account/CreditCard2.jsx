@@ -70,7 +70,7 @@ const CreditCard2 = ({ document }) => {
             const modal = Modal.error({
                 centered: true,
                 title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.msg ,
+                content:  ItemsData?.data?.expire_date ? " Karta amal qilish muddatini kiriting" : ItemsData?.data?.card_number ? "Karta raqamini to'g'ri kiriting" : ItemsData?.data?.msg ,
             });
             modal.update;
         }
