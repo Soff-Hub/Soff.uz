@@ -66,10 +66,10 @@ function Example({ year, month }) {
                 arr.push(ItemsChartData[i].total_price);
                 arr2.push(ItemsChartData[i].count);
                 if (month) {
-                    arr3.push(ItemsChartData[i].day.split('-')[2])
+                    arr3.push(ItemsChartData[i].date.split('-')[2])
                 }
                 else {
-                    arr3.push(getMonthName(ItemsChartData[i].month))
+                    arr3.push(ItemsChartData[i].date)
                 }
             }
         }
