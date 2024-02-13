@@ -653,7 +653,7 @@ const Posts = () => {
                                         }}>
                                         <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                         <span>
-                                            Rasmni  yuklash uchun faylni ushbu hududga
+                                            Faylni  yuklash uchun ushbu hududga
                                             bosing.
                                         </span>
                                     </span>
