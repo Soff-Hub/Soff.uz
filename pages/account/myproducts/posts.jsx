@@ -23,6 +23,7 @@ const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState(null);
+    const [fileImgVideo, setFileImgVideo] = useState(null);
     const [fileImgFileID, setFileImgFileID] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
@@ -34,6 +35,7 @@ const Posts = () => {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
     const [livePosterFile, setLivePosterFile] = useState('');
+    const [livePosterVideo, setLivePosterVideo] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [liveFile, setLiveFile] = useState('');
@@ -41,7 +43,10 @@ const Posts = () => {
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [loadingVideo, setLoadingVideo] = useState(false);
     const [free, setFree] = useState(false);
+    const [videoPost, setVideoPost] = useState(null);
+    const [videoTab, setVideoTab] = useState(false);
 
     const breadCrumb = [
         {
@@ -54,7 +59,12 @@ const Posts = () => {
     ];
 
     const onChangeTabs = (key) => {
-        console.log(key);
+        console.log(typeof key);
+        if (key === '2') {
+            setVideoTab(true);
+        } else {
+            setVideoTab(false);
+        }
     };
 
     async function GetItemsCategoryLists() {
@@ -180,7 +190,6 @@ const Posts = () => {
             }
         }
     }
-
     async function handleClickPosts(e) {
         e.preventDefault();
 
@@ -199,7 +208,7 @@ const Posts = () => {
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
             formData.append('category', category_id[0]);
-        formData.append('document', livePosterFile?.id);
+        formData.append('document', livePosterVideo?.data?.id ? livePosterVideo?.data?.id : livePosterFile.id  );
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
@@ -230,6 +239,7 @@ const Posts = () => {
             const formData = new FormData();
             setLoading(true);
             formData.append('file', fileImgFile);
+            formData.append('content_type', 'file');
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
                 formData,
                 user?.access
@@ -250,10 +260,51 @@ const Posts = () => {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: "File mahsulot qo'sha olmadingiz ",
+                    content: `${
+                        ItemsData?.data?.msg?.[0]
+                            ? ItemsData?.data?.msg?.[0]
+                            : "File mahsulot qo'sha olmadingiz "
+                    }`,
                 });
             }
             setLoading(false);
+        }
+    }
+
+    async function PostVideoPoster() {
+        if (fileImgVideo) {
+            setLiveFile('');
+            setLivePosterVideo('');
+            const formData = new FormData();
+            setLoadingVideo(true);
+            formData.append('file', fileImgVideo);
+            formData.append('content_type', 'video');
+            const ItemsData = await PostsRepository.PostsMyProductsPoster(
+                formData,
+                user?.access
+            );
+            console.log('video', ItemsData);
+
+            if (ItemsData?.status === 201) {
+                setLivePosterVideo(ItemsData);
+                setVideoPost(ItemsData);
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content: "Yangi video qo'shdingiz ",
+                });
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: `${
+                        ItemsData?.data?.msg?.[0]
+                            ? ItemsData?.data?.msg?.[0]
+                            : "Video mahsulot qo'sha olmadingiz "
+                    }`,
+                });
+            }
+            setLoadingVideo(false);
         }
     }
 
@@ -307,6 +358,9 @@ const Posts = () => {
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);
+    useEffect(() => {
+        PostVideoPoster();
+    }, [fileImgVideo]);
 
     const items = [
         {
@@ -653,11 +707,11 @@ const Posts = () => {
                                 border: '1px dashed green',
                                 width: '100%',
                             }}>
-                            {livePosterFile === '' ? (
+                            {livePosterVideo === '' ? (
                                 <span
                                     className="d-flex flex-column align-items-center"
                                     style={{ cursor: 'pointer' }}>
-                                    {loading ? (
+                                    {loadingVideo ? (
                                         <span className="d-flex justify-content-center">
                                             <ClipLoader
                                                 size={25}
@@ -672,7 +726,7 @@ const Posts = () => {
                                             }}>
                                             <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                             <span>
-                                                Rasmni yuklash uchun faylni
+                                                Vedio / audio yuklash uchun
                                                 ushbu hududga bosing.
                                             </span>
                                         </span>
@@ -684,7 +738,7 @@ const Posts = () => {
                                     style={{ cursor: 'pointer' }}>
                                     <span>
                                         {' '}
-                                        Siz mahsulot yukladingiz{' '}
+                                        Siz video yukladingiz{' '}
                                         <i className="fa-solid fa-circle-check text-success"></i>{' '}
                                     </span>
                                 </span>
@@ -693,7 +747,7 @@ const Posts = () => {
                                 required
                                 type="file"
                                 onChange={(e) =>
-                                    setFileImgFile(e.target.files[0])
+                                    setFileImgVideo(e.target.files[0])
                                 }
                                 accept="video/*, audio/*"
                             />
@@ -945,30 +999,59 @@ const Posts = () => {
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
                             <div className="image rounded mb-3">
-                                {!liveFile ? (
-                                    <img
+                                {videoTab ? (
+                                    <>
+                                    {
+                                        false ?
+                                        <video className="mb-4 border w-100" controls>
+                                            <source
+                                                src={
+                                                    'https://api.soff.uz//media/short_content/output/merged_gPMBRXV.mp4'
+                                                }
+                                                type="video/mp4"
+                                            />
+                                        </video>
+                                        :
+                                        <img
                                         src={
-                                            livePosterFile?.images?.[0]
-                                                ?.image_url ||
-                                            '/static/img/docCopy.png'
+                                            liveFile ||
+                                            '/static/img/video_null.png'
                                         }
                                         alt="doc"
-                                        className="border mb-4"
+                                        className="border mb-4 w-100"
                                         style={{ objectFit: 'cover' }}
                                     />
+
+                                    }
+                                    </>
                                 ) : (
-                                    <img
-                                        src={liveFile}
-                                        alt="doc"
-                                        className="mb-4 border"
-                                        style={{ objectFit: 'cover' }}
-                                    />
+                                    <>
+                                        {!liveFile ? (
+                                            <img
+                                                src={
+                                                    livePosterFile?.images?.[0]
+                                                        ?.image_url ||
+                                                    '/static/img/docCopy.png'
+                                                }
+                                                alt="doc"
+                                                className="border mb-4"
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        ) : (
+                                            <img
+                                                src={liveFile}
+                                                alt="doc"
+                                                className="mb-4 border"
+                                                style={{ objectFit: 'cover' }}
+                                            />
+                                        )}
+                                    </>
                                 )}
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
                                     <strong>Nomi : </strong>{' '}
-                                    <span style={{ maxWidth: '150px' }}>
+                                    <span style={{ maxWidth: `150px` }}>
                                         {' '}
                                         {title ? title : "To'ldirilmadi"}
                                     </span>
@@ -1014,43 +1097,88 @@ const Posts = () => {
                                           })
                                         : "To'ldirilmadi"}
                                 </p>
-                                <p className="live-card-p">
-                                    <span>
+                              {
+                                videoTab ?
+                                <p className="live-card-p"  >
+                                <span>
+                                    <strong className="fs-4">
+                                        Qisqa tavsif
+                                    </strong>
+                                    :{' '}
+                                </span>
+                                <ul
+                                    style={{ maxWidth: `${videoTab ? '200px' : '150px'}` }}
+                                    className="">
+                                    <li>
+                                        {' '}
                                         <strong className="fs-4">
-                                            Qisqa tavsif
-                                        </strong>
-                                        :{' '}
-                                    </span>
-                                    <ul
-                                        style={{ maxWidth: '150px' }}
-                                        className="">
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Betlar soni:{' '}
-                                            </strong>{' '}
-                                            {livePosterFile?.page_count
-                                                ? livePosterFile?.page_count +
-                                                  ' ' +
-                                                  'ta'
-                                                : ''}{' '}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Hajmi:{' '}
-                                            </strong>{' '}
-                                            {livePosterFile?.file_size}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Turi:{' '}
-                                            </strong>{' '}
-                                            {livePosterFile?.file_type}
-                                        </li>
-                                    </ul>
-                                </p>
+                                           Davomiyligi:{' '}
+                                        </strong>{' '}
+                                        {livePosterVideo?.data?.content_duration
+                                            ? livePosterVideo?.data?.content_duration
+                                            : ' '}{' '}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        <strong className="fs-4">
+                                            Sifati:{' '}
+                                        </strong>{' '}
+                                        {livePosterVideo?.data?.content_quality}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        <strong className="fs-4">
+                                            Hajmi :{' '}
+                                        </strong>{' '}
+                                        {livePosterVideo?.data?.file_size}
+                                    </li>
+                                    <li>
+                                        {' '}
+                                        <strong className="fs-4">
+                                            Turi :{' '}
+                                        </strong>{' '}
+                                        {livePosterVideo?.data?.file_type}
+                                    </li>
+                                </ul>
+                            </p> :
+                              <p className="live-card-p">
+                              <span>
+                                  <strong className="fs-4">
+                                      Qisqa tavsif
+                                  </strong>
+                                  :{' '}
+                              </span>
+                              <ul
+                                  style={{ maxWidth: '150px' }}
+                                  className="">
+                                  <li>
+                                      {' '}
+                                      <strong className="fs-4">
+                                          Betlar soni:{' '}
+                                      </strong>{' '}
+                                      {livePosterFile?.page_count
+                                          ? livePosterFile?.page_count +
+                                            ' ' +
+                                            'ta'
+                                          : ''}{' '}
+                                  </li>
+                                  <li>
+                                      {' '}
+                                      <strong className="fs-4">
+                                          Hajmi:{' '}
+                                      </strong>{' '}
+                                      {livePosterFile?.file_size}
+                                  </li>
+                                  <li>
+                                      {' '}
+                                      <strong className="fs-4">
+                                          Turi:{' '}
+                                      </strong>{' '}
+                                      {livePosterFile?.file_type}
+                                  </li>
+                              </ul>
+                          </p>
+                              }
                                 <p className="live-card-p ">
                                     <strong> To'liq ma'lumot : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>

@@ -65,11 +65,12 @@ const CreditCard2 = ({ document }) => {
             setCart(ItemsData.data.cart);
             setResData(ItemsData)
         } else {
+            console.log('xatolik', ItemsData);
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
                 title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.msg,
+                content: ItemsData?.data?.msg ,
             });
             modal.update;
         }

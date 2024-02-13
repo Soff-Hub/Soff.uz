@@ -129,6 +129,7 @@ class PostRepository {
                 Authorization: `Bearer ${token}`,
             },
             data: data,
+            
         })
             .then((response) => {
                 if (response) {
@@ -137,7 +138,7 @@ class PostRepository {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => error.response);
         return response;
     }
 
