@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
-import { baseUrl } from '~/repositories/Repository';
-import Product from '~/components/elements/products/Product';
 import Meta from '~/components/shared/headers/Meta';
 import { Pagination, Select, Table } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
