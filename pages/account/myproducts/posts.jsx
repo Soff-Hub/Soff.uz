@@ -208,7 +208,12 @@ const Posts = () => {
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
             formData.append('category', category_id[0]);
-        formData.append('document', livePosterVideo?.data?.id ? livePosterVideo?.data?.id : livePosterFile.id  );
+        formData.append(
+            'document',
+            livePosterVideo?.data?.id
+                ? livePosterVideo?.data?.id
+                : livePosterFile.id
+        );
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
@@ -365,7 +370,12 @@ const Posts = () => {
     const items = [
         {
             key: '1',
-            label: 'Hujjat (File)',
+            label: (
+                <div className="product_video">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>File</span>
+                </div>
+            ),
             children: (
                 <form
                     onSubmit={handleClickPosts}
@@ -398,7 +408,7 @@ const Posts = () => {
                     <div className="row ">
                         <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                             <p>Mahsulot: *</p>{' '}
-                            <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
+                            <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
                                 <i
                                     style={{ cursor: 'pointer' }}
                                     className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -431,7 +441,7 @@ const Posts = () => {
                                             }}>
                                             <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                             <span>
-                                                Rasmni yuklash uchun faylni
+                                                Mahsulot (fayl) yuklash uchun
                                                 ushbu hududga bosing.
                                             </span>
                                         </span>
@@ -463,7 +473,7 @@ const Posts = () => {
                     <div className="row mb-3">
                         <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                             <p>Mahsulot rasmi: *</p>{' '}
-                            <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
+                            <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin. Bu rasm quyidagi turda bo’lishi mumkin: .png , .jpg">
                                 <i
                                     style={{ cursor: 'pointer' }}
                                     className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -660,7 +670,12 @@ const Posts = () => {
         },
         {
             key: '2',
-            label: 'Video',
+            label: (
+                <div className="product_video">
+                    <i class="fa-solid fa-video"></i>
+                    <span>Video</span>
+                </div>
+            ),
             children: (
                 <form
                     onSubmit={handleClickPosts}
@@ -693,7 +708,7 @@ const Posts = () => {
                     <div className="row ">
                         <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                             <p>Mahsulot: *</p>{' '}
-                            <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
+                            <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdag video bo’lishi mumkin: .mp4, .mov, .avi, .wmv, .avchd, .webm, .flv">
                                 <i
                                     style={{ cursor: 'pointer' }}
                                     className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -726,7 +741,7 @@ const Posts = () => {
                                             }}>
                                             <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                             <span>
-                                                Vedio / audio yuklash uchun
+                                               Mahsulot (video) yuklash uchun
                                                 ushbu hududga bosing.
                                             </span>
                                         </span>
@@ -749,16 +764,17 @@ const Posts = () => {
                                 onChange={(e) =>
                                     setFileImgVideo(e.target.files[0])
                                 }
-                                accept="video/*, audio/*"
+                                accept="video/*"
                             />
                         </label>
 
                         {/* </div> */}
                     </div>
+
                     <div className="row mb-3">
                         <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                             <p>Mahsulot rasmi: *</p>{' '}
-                            <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
+                            <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin. Bu rasm quyidagi turda bo’lishi mumkin: .png , .jpg">
                                 <i
                                     style={{ cursor: 'pointer' }}
                                     className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -1001,28 +1017,28 @@ const Posts = () => {
                             <div className="image rounded mb-3">
                                 {videoTab ? (
                                     <>
-                                    {
-                                        false ?
-                                        <video className="mb-4 border w-100" controls>
-                                            <source
+                                        {false ? (
+                                            <video
+                                                className="mb-4 border w-100"
+                                                controls>
+                                                <source
+                                                    src={
+                                                        'https://api.soff.uz//media/short_content/output/merged_gPMBRXV.mp4'
+                                                    }
+                                                    type="video/mp4"
+                                                />
+                                            </video>
+                                        ) : (
+                                            <img
                                                 src={
-                                                    'https://api.soff.uz//media/short_content/output/merged_gPMBRXV.mp4'
+                                                    liveFile ||
+                                                    '/static/img/video_null.png'
                                                 }
-                                                type="video/mp4"
+                                                alt="doc"
+                                                className="border mb-4 w-100"
+                                                style={{ objectFit: 'cover' }}
                                             />
-                                        </video>
-                                        :
-                                        <img
-                                        src={
-                                            liveFile ||
-                                            '/static/img/video_null.png'
-                                        }
-                                        alt="doc"
-                                        className="border mb-4 w-100"
-                                        style={{ objectFit: 'cover' }}
-                                    />
-
-                                    }
+                                        )}
                                     </>
                                 ) : (
                                     <>
@@ -1097,88 +1113,103 @@ const Posts = () => {
                                           })
                                         : "To'ldirilmadi"}
                                 </p>
-                              {
-                                videoTab ?
-                                <p className="live-card-p"  >
-                                <span>
-                                    <strong className="fs-4">
-                                        Qisqa tavsif
-                                    </strong>
-                                    :{' '}
-                                </span>
-                                <ul
-                                    style={{ maxWidth: `${videoTab ? '200px' : '150px'}` }}
-                                    className="">
-                                    <li>
-                                        {' '}
-                                        <strong className="fs-4">
-                                           Davomiyligi:{' '}
-                                        </strong>{' '}
-                                        {livePosterVideo?.data?.content_duration
-                                            ? livePosterVideo?.data?.content_duration
-                                            : ' '}{' '}
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        <strong className="fs-4">
-                                            Sifati:{' '}
-                                        </strong>{' '}
-                                        {livePosterVideo?.data?.content_quality}
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        <strong className="fs-4">
-                                            Hajmi :{' '}
-                                        </strong>{' '}
-                                        {livePosterVideo?.data?.file_size}
-                                    </li>
-                                    <li>
-                                        {' '}
-                                        <strong className="fs-4">
-                                            Turi :{' '}
-                                        </strong>{' '}
-                                        {livePosterVideo?.data?.file_type}
-                                    </li>
-                                </ul>
-                            </p> :
-                              <p className="live-card-p">
-                              <span>
-                                  <strong className="fs-4">
-                                      Qisqa tavsif
-                                  </strong>
-                                  :{' '}
-                              </span>
-                              <ul
-                                  style={{ maxWidth: '150px' }}
-                                  className="">
-                                  <li>
-                                      {' '}
-                                      <strong className="fs-4">
-                                          Betlar soni:{' '}
-                                      </strong>{' '}
-                                      {livePosterFile?.page_count
-                                          ? livePosterFile?.page_count +
-                                            ' ' +
-                                            'ta'
-                                          : ''}{' '}
-                                  </li>
-                                  <li>
-                                      {' '}
-                                      <strong className="fs-4">
-                                          Hajmi:{' '}
-                                      </strong>{' '}
-                                      {livePosterFile?.file_size}
-                                  </li>
-                                  <li>
-                                      {' '}
-                                      <strong className="fs-4">
-                                          Turi:{' '}
-                                      </strong>{' '}
-                                      {livePosterFile?.file_type}
-                                  </li>
-                              </ul>
-                          </p>
-                              }
+                                {videoTab ? (
+                                    <p className="live-card-p">
+                                        <span>
+                                            <strong className="fs-4">
+                                                Qisqa tavsif
+                                            </strong>
+                                            :{' '}
+                                        </span>
+                                        <ul
+                                            style={{
+                                                maxWidth: `${
+                                                    videoTab ? '200px' : '150px'
+                                                }`,
+                                            }}
+                                            className="">
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Davomiyligi:{' '}
+                                                </strong>{' '}
+                                                {livePosterVideo?.data
+                                                    ?.content_duration
+                                                    ? livePosterVideo?.data
+                                                          ?.content_duration
+                                                    : ' '}{' '}
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Sifati:{' '}
+                                                </strong>{' '}
+                                                {
+                                                    livePosterVideo?.data
+                                                        ?.content_quality
+                                                }
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Hajmi :{' '}
+                                                </strong>{' '}
+                                                {
+                                                    livePosterVideo?.data
+                                                        ?.file_size
+                                                }
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Turi :{' '}
+                                                </strong>{' '}
+                                                {
+                                                    livePosterVideo?.data
+                                                        ?.file_type
+                                                }
+                                            </li>
+                                        </ul>
+                                    </p>
+                                ) : (
+                                    <p className="live-card-p">
+                                        <span>
+                                            <strong className="fs-4">
+                                                Qisqa tavsif
+                                            </strong>
+                                            :{' '}
+                                        </span>
+                                        <ul
+                                            style={{ maxWidth: '150px' }}
+                                            className="">
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Betlar soni:{' '}
+                                                </strong>{' '}
+                                                {livePosterFile?.page_count
+                                                    ? livePosterFile?.page_count +
+                                                      ' ' +
+                                                      'ta'
+                                                    : ''}{' '}
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Hajmi:{' '}
+                                                </strong>{' '}
+                                                {livePosterFile?.file_size}
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Turi:{' '}
+                                                </strong>{' '}
+                                                {livePosterFile?.file_type}
+                                            </li>
+                                        </ul>
+                                    </p>
+                                )}
                                 <p className="live-card-p ">
                                     <strong> To'liq ma'lumot : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>
