@@ -171,8 +171,8 @@ const Donat = () => {
                     </form>
                 </div>
 
-                <Modal width={500} title={resData?.status !== 200 ? "Karta raqamingizni kiriting!" : "Kodni kiriting!"} centered open={open} onOk={resData?.status !== 200 ? handleSubmit : handleSubmitCode} onCancel={handleCancale}>
-                    {resData?.status === 200 ?
+                <Modal width={500} title={resData?.status !== 201 ? "Karta raqamingizni kiriting!" : "Kodni kiriting!"} centered open={open} onOk={resData?.status !== 200 ? handleSubmit : handleSubmitCode} onCancel={handleCancale}>
+                    {resData?.status === 201 ?
                         <>
                             <p>Kod quyidagi raqamga yuborildi:{resData?.data?.phone_number}</p>
                             <input onChange={(e) => setCode(e.target.value)} type="tel" placeholder='000000' maxLength={6} className='form-control text-center rounded-3 fs-3' />
