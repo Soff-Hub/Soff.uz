@@ -741,7 +741,7 @@ const Posts = () => {
                                             }}>
                                             <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                             <span>
-                                               Mahsulot (video) yuklash uchun
+                                                Mahsulot (video) yuklash uchun
                                                 ushbu hududga bosing.
                                             </span>
                                         </span>
@@ -1017,15 +1017,15 @@ const Posts = () => {
                             <div className="image rounded mb-3">
                                 {videoTab ? (
                                     <>
-                                        {false ? (
+                                        {videoPost?.data?.short_content ? (
                                             <video
                                                 className="mb-4 border w-100"
                                                 controls>
                                                 <source
                                                     src={
-                                                        'https://api.soff.uz//media/short_content/output/merged_gPMBRXV.mp4'
+                                                        videoPost?.data?.short_content
                                                     }
-                                                    type="video/mp4"
+                                                    type={`video/${videoPost?.data?.file_type?.replace(".","")}`}
                                                 />
                                             </video>
                                         ) : (

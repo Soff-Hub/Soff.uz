@@ -12,7 +12,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                    <video className='product__video' controls >
                         <source
                             src={product?.document?.short_content_url}
-                            type="video/mp4"
+                            type={`video/${product?.document?.file_type?.replace(".","")}`}
                         />
                     </video>
                    </div>
