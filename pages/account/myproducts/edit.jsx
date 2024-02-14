@@ -10,12 +10,10 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
 import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-var parse = require("html-react-parser");
+var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
-const category_id = []
-
-
+const category_id = [];
 
 const PostsMyProducts = () => {
     const { TabPane } = Tabs;
@@ -29,14 +27,14 @@ const PostsMyProducts = () => {
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
-    const [free, setFree] = useState(false)
+    const [free, setFree] = useState(false);
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
             url: '/',
         },
         {
-            text: "Mahsulotni tahrirlash",
+            text: 'Mahsulotni tahrirlash',
         },
     ];
 
@@ -56,7 +54,6 @@ const PostsMyProducts = () => {
         }
     }
 
-
     const children = [];
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
@@ -64,10 +61,8 @@ const PostsMyProducts = () => {
         );
     }
 
-
-
     async function handleClickPostsEdit(e) {
-        e.preventDefault()
+        e.preventDefault();
 
         if (title || taxminiyNarx || tagSearchResult || category_id[0]) {
             const formData = new FormData();
@@ -75,10 +70,9 @@ const PostsMyProducts = () => {
                 formData.append('title', title);
             }
             if (free) {
-                formData.append('price', 0)
-            }
-            else {
-                formData.append('price', taxminiyNarx)
+                formData.append('price', 0);
+            } else {
+                formData.append('price', taxminiyNarx);
             }
             if (Fulldata) {
                 formData.append('description', Fulldata);
@@ -87,9 +81,13 @@ const PostsMyProducts = () => {
                 formData.append('category', category_id[0]);
             }
             if (tagSearchResult) {
-                formData.append('tags', tagSearchResult)
+                formData.append('tags', tagSearchResult);
             }
-            const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
+            const patchItems = await PatchRepository.getMyProductsPatch(
+                formData,
+                products?.id,
+                user?.access
+            );
             if (patchItems?.status == 202) {
                 Router.push('/account/myproducts');
                 const modal = Modal.warning({
@@ -98,9 +96,9 @@ const PostsMyProducts = () => {
                     content:
                         "Sizning mahsulotingiz muvaffaqqiyatli o'zgartirildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
                 });
-                setTagSearchResult(null)
-                setTitle(null)
-                setTaxminiyNarx(null)
+                setTagSearchResult(null);
+                setTitle(null);
+                setTaxminiyNarx(null);
             } else {
                 const modal = Modal.error({
                     centered: true,
@@ -108,20 +106,14 @@ const PostsMyProducts = () => {
                     content: patchItems?.data.msg,
                 });
             }
-
-        }
-        else {
+        } else {
             const modal = Modal.info({
                 centered: true,
                 title: "Qayta urinib ko'ring",
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
-
     }
-
-
-
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -141,16 +133,14 @@ const PostsMyProducts = () => {
         return formattedNumber;
     }
 
-
     const onChange = async (e) => {
-        category_id.length = 0
-        setCategoryName(e)
+        category_id.length = 0;
+        setCategoryName(e);
         for (let j = 0; j < dataCategory.length; j++) {
             if (dataCategory[j].name === e) {
                 category_id.push(dataCategory[j].id);
             }
         }
-
     };
 
     const onSearch = async (value) => {
@@ -163,51 +153,64 @@ const PostsMyProducts = () => {
 
     for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
-            <Option key={dataCategory[i].name}   >{dataCategory[i].name}</Option>
+            <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
         );
     }
 
-
     const handleFreeChange = (e) => {
-        setFree(!free)
+        setFree(!free);
     };
-
 
     useEffect(() => {
         if (products?.price === 0) {
-            setFree(true)
+            setFree(true);
         }
         GetItemsTag();
         setEditorLoaded(true);
         GetItemsCategoryLists();
     }, []);
 
-
-
+    console.log('edited', products);
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
-                <Meta
-                    title={"Soff | Mahsulotni tahirirlash"}
-                />
+                <Meta title={'Soff | Mahsulotni tahirirlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
-                    <div className='row w-100 gap-3 pt-5 ' style={{ alignItems: "flex-start" }}>
-                        <h4 className="col-md-8 m-0 p-0">Mahsulotni tahrirlash</h4>
-                        <div className='col-md-4 m-0  d-flex justify-content-between p-0 ' style={{ maxWidth: "370px", }}>
+                    <div
+                        className="row w-100 gap-3 pt-5 "
+                        style={{ alignItems: 'flex-start' }}>
+                        <h4 className="col-md-8 m-0 p-0">
+                            Mahsulotni tahrirlash
+                        </h4>
+                        <div
+                            className="col-md-4 m-0  d-flex justify-content-between p-0 "
+                            style={{ maxWidth: '370px' }}>
                             <h4>Sotuvdagi ko'rinishi : </h4>
-                            <Button className='btn-success ' data-bs-target="#staticBackdrop" data-bs-toggle="modal"><i className="fa-solid  fa-eye text-success-emphasis mx-3"></i></Button>
-
+                            <Button
+                                className="btn-success "
+                                data-bs-target="#staticBackdrop"
+                                data-bs-toggle="modal">
+                                <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>
+                            </Button>
                         </div>
                         <form
                             onSubmit={handleClickPostsEdit}
-                            style={{ position: "relative" }}
+                            style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
                             className=" pb-5  col-md-8">
-                            <div className='row'>
-                                <div className='col-md-4  d-flex justify-content-between p-0 '> <p>Mahsulot nomi: *</p><Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2 "></i></Tooltip></div>
+                            <div className="row">
+                                <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                    {' '}
+                                    <p>Mahsulot nomi: *</p>
+                                    <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                    </Tooltip>
+                                </div>
                                 <input
                                     type="text"
                                     className="form-control  rounded-3 col-md-8 mb-3 "
@@ -218,56 +221,90 @@ const PostsMyProducts = () => {
                             </div>
 
                             <div className="row">
-                                <div className='col-md-4 m-0 pt-2 d-flex justify-content-between p-0'><p>Teglar:</p> <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
-
+                                <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
+                                    <p>Teglar:</p>{' '}
+                                    <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
 
                                 <Select
                                     className=" p-0 col-md-8 mb-3"
                                     mode="tags"
                                     style={{ width: '100%' }}
                                     onChange={(e) => setTagSearchResult(e)}
-                                    defaultValue={products?.tag && products?.tag?.map(item => (item.name))}
-                                >
+                                    defaultValue={
+                                        products?.tag &&
+                                        products?.tag?.map((item) => item.name)
+                                    }>
                                     {children}
                                 </Select>
                             </div>
-                            <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Kategoriya: *</p> <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                            <div className="row">
+                                <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                    <p>Kategoriya: *</p>{' '}
+                                    <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
 
                                 <div className="rounded-3  mb-3 p-0 m-0 d-flex flex-column col-md-8">
                                     <Select
-                                        mode='select'
+                                        mode="select"
                                         showSearch
                                         allowClear
-                                        style={{ width: '100%', height: "47px" }}
+                                        style={{
+                                            width: '100%',
+                                            height: '47px',
+                                        }}
                                         onChange={onChange}
                                         onSearch={onSearch}
-                                        defaultValue={products?.category?.name}
-                                    >
+                                        defaultValue={products?.category?.name}>
                                         {options}
-
                                     </Select>
                                 </div>
-
                             </div>
-                            <div className='row'>
-                                <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
-                                <Checkbox checked={free} className='col-md-2 d-flex align-items-center justify-content-start px-0 py-2' onChange={handleFreeChange}>Bepul</Checkbox>
+                            <div className="row">
+                                <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                    <p>Mahsulot sotish narxi: *</p>{' '}
+                                    <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
+                                <Checkbox
+                                    checked={free}
+                                    className="col-md-2 d-flex align-items-center justify-content-start px-0 py-2"
+                                    onChange={handleFreeChange}>
+                                    Bepul
+                                </Checkbox>
                                 <input
-                                    type='number'
+                                    type="number"
                                     className="form-control  rounded-3 col-md-6 mb-3"
                                     name="price"
                                     disabled={free}
                                     defaultValue={products?.price}
-                                    onChange={(e) => (
+                                    onChange={(e) =>
                                         setTaxminiyNarx(e.target.value)
-                                    )}
+                                    }
                                 />
                             </div>
                             <div className="row">
-                                <div className='col-md-4 d-flex justify-content-between p-0'><p>Mahsulot to’liq tavsifi: *</p> <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
+                                <div className="col-md-4 d-flex justify-content-between p-0">
+                                    <p>Mahsulot to’liq tavsifi: *</p>{' '}
+                                    <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
 
-                                <div className='col-md-8 p-0  mb-3'>
+                                <div className="col-md-8 p-0  mb-3">
                                     <CKeditor
                                         name="description"
                                         onChange={(data) => {
@@ -275,23 +312,25 @@ const PostsMyProducts = () => {
                                         }}
                                         editorLoaded={editorLoaded}
                                         value={products?.description}
-
                                     />
                                 </div>
                             </div>
 
-                            <div className="d-flex justify-content-end " style={{ transform: "translateX(16px)" }}>
+                            <div
+                                className="d-flex justify-content-end "
+                                style={{ transform: 'translateX(16px)' }}>
                                 <button
-                                    type='submit'
+                                    type="submit"
                                     className="btn btn-success py-3 px-5 ">
                                     <span className="fs-4">
-                                        Saqlash <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
+                                        Saqlash{' '}
+                                        <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
                                     </span>
                                 </button>
                             </div>
-                            <div className="mahsulotingiz" >
+                            <div className="mahsulotingiz">
                                 <span
-                                    className='fixed-btn'
+                                    className="fixed-btn"
                                     type="button"
                                     data-bs-toggle="offcanvas"
                                     data-bs-target="#offcanvasRight"
@@ -300,57 +339,111 @@ const PostsMyProducts = () => {
                                 </span>
                             </div>
                         </form>
-                        <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", }}>
-                            <div className="image rounded mb-3" >
-                                <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />
+                        <div
+                            className="card rounded-3 col-md-4 p-3 cardResponsive "
+                            style={{ maxWidth: '370px' }}>
+                            <div className="image rounded mb-3">
+                                <img
+                                    src={products.poster}
+                                    alt="doc"
+                                    className="mb-4 border"
+                                    style={{ objectFit: 'cover' }}
+                                />
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
-                                    <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
+                                    <span>
+                                        <strong>Nomi</strong>:{' '}
+                                    </span>{' '}
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {title ? title : products?.title}
+                                    </span>
                                 </p>
                                 <p className="live-card-p">
-                                    <span><strong>Narxi</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
+                                    <span>
+                                        <strong>Narxi</strong>:{' '}
+                                    </span>
+                                    <span style={{ maxWidth: '150px' }}>
                                         {taxminiyNarx
                                             ? addPeriodToThousands(taxminiyNarx)
-                                            : addPeriodToThousands(products?.discount_price)}
+                                            : addPeriodToThousands(
+                                                  products?.discount_price
+                                              )}
                                         so'm
                                     </span>
                                 </p>
 
                                 <p className="live-card-p">
-                                    <span><strong>Teglari</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            products?.tag?.map(item => (<span key={item.name}>#{item.name} </span>))
-                                        }
+                                    <span>
+                                        <strong>Teglari</strong>:{' '}
                                     </span>
-                                </p>
-                                <p className="live-card-p">
-                                    <span><strong>Kategoriya</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            categoryName ? categoryName : products?.category?.name
-                                        }
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {products?.tag?.map((item) => (
+                                            <span key={item.name}>
+                                                #{item.name}{' '}
+                                            </span>
+                                        ))}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
                                     <span>
-                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
+                                        <strong>Kategoriya</strong>:{' '}
                                     </span>
-                                    <ul style={{ maxWidth: '150px' }} className=''>
-                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
-                                        <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
-                                        <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {categoryName
+                                            ? categoryName
+                                            : products?.category?.name}
+                                    </span>
+                                </p>
+                                <p className="live-card-p">
+                                    <span>
+                                        <strong className="fs-4">
+                                            Qisqa tavsif
+                                        </strong>
+                                        :{' '}
+                                    </span>
+                                    <ul
+                                        style={{ maxWidth: '150px' }}
+                                        className="">
+                                        {products?.document?.page_count && (
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Betlar soni:{' '}
+                                                </strong>{' '}
+                                                {products?.document?.page_count}{' '}
+                                                ta
+                                            </li>
+                                        )}
+                                        <li>
+                                            {' '}
+                                            <strong className="fs-4">
+                                                Hajmi:{' '}
+                                            </strong>{' '}
+                                            {products?.document?.file_size}
+                                        </li>
+                                        <li>
+                                            {' '}
+                                            <strong className="fs-4">
+                                                Turi:{' '}
+                                            </strong>{' '}
+                                            {products?.document?.file_type}
+                                        </li>
                                     </ul>
                                 </p>
                                 <p className="live-card-p">
-                                    <span><strong>Mahsulotingiz haqida to'liq ma'umot</strong>: </span>
-                                    <span style={{ maxWidth: '150px' }} >
-                                        {
-                                            Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
-                                        }
-
+                                    <span>
+                                        <strong>
+                                            Mahsulotingiz haqida to'liq ma'umot
+                                        </strong>
+                                        :{' '}
+                                    </span>
+                                    <span style={{ maxWidth: '150px' }}>
+                                        {Fulldata
+                                            ? parse(Fulldata)
+                                            : products?.description
+                                            ? parse(products?.description)
+                                            : ''}
                                     </span>
                                 </p>
                             </div>
@@ -362,7 +455,11 @@ const PostsMyProducts = () => {
                         id="offcanvasRight"
                         aria-labelledby="offcanvasRightLabel">
                         <div className="offcanvas-header pt-5">
-                            <h3 id="offcanvasRightLabel" className='m-0 elh3 '><span >Tahrirlanayotgan  mahsulotingizni ko'rinishi</span> </h3>
+                            <h3 id="offcanvasRightLabel" className="m-0 elh3 ">
+                                <span>
+                                    Tahrirlanayotgan mahsulotingizni ko'rinishi
+                                </span>{' '}
+                            </h3>
                             <button
                                 type="button"
                                 className="btn-close text-reset"
@@ -372,55 +469,108 @@ const PostsMyProducts = () => {
                         <div className="offcanvas-body">
                             <div className="card rounded-3 ">
                                 <div className="image rounded mb-3">
-                                    <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />
+                                    <img
+                                        src={products.poster}
+                                        alt="doc"
+                                        className="mb-4 border"
+                                        style={{ objectFit: 'cover' }}
+                                    />
                                 </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
-                                        <span><strong>Nomi</strong>: </span> <span style={{ maxWidth: '150px' }} >{title ? title : products?.title}</span>
+                                        <span>
+                                            <strong>Nomi</strong>:{' '}
+                                        </span>{' '}
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {title ? title : products?.title}
+                                        </span>
                                     </p>
                                     <p className="live-card-p">
-                                        <span><strong>Narxi</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
+                                        <span>
+                                            <strong>Narxi</strong>:{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
                                             {taxminiyNarx
-                                                ? addPeriodToThousands(taxminiyNarx)
-                                                : addPeriodToThousands(products?.discount_price)}
+                                                ? addPeriodToThousands(
+                                                      taxminiyNarx
+                                                  )
+                                                : addPeriodToThousands(
+                                                      products?.discount_price
+                                                  )}
                                             so'm
                                         </span>
                                     </p>
                                     <p className="live-card-p">
-                                        <span><strong>Teglari</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                products?.tag?.map(item => (<span key={item.name}>#{item.name} </span>))
-                                            }
+                                        <span>
+                                            <strong>Teglari</strong>:{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {products?.tag?.map((item) => (
+                                                <span key={item.name}>
+                                                    #{item.name}{' '}
+                                                </span>
+                                            ))}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
-                                        <span><strong>Kategoriya</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                categoryName ? categoryName : products?.category?.name
-                                            }
+                                        <span>
+                                            <strong>Kategoriya</strong>:{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {categoryName
+                                                ? categoryName
+                                                : products?.category?.name}
                                         </span>
                                     </p>
 
                                     <p className="live-card-p">
                                         <span>
-                                            <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
+                                            <strong className="fs-4">
+                                                Qisqa tavsif
+                                            </strong>
+                                            :{' '}
                                         </span>
-                                        <ul style={{ maxWidth: '150px' }} className=''>
-                                            <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
-                                            <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
-                                            <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                        <ul
+                                            style={{ maxWidth: '150px' }}
+                                            className="">
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Betlar soni:{' '}
+                                                </strong>{' '}
+                                                {products?.document?.page_count}{' '}
+                                                ta
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Hajmi:{' '}
+                                                </strong>{' '}
+                                                {products?.document?.file_size}
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Turi:{' '}
+                                                </strong>{' '}
+                                                {products?.document?.file_type}
+                                            </li>
                                         </ul>
                                     </p>
                                     <p className="live-card-p">
-                                        <span><strong>Mahsulotingiz haqida to'liq ma'umot</strong>: </span>
-                                        <span style={{ maxWidth: '150px' }} >
-                                            {
-                                                Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
-                                            }
-
+                                        <span>
+                                            <strong>
+                                                Mahsulotingiz haqida to'liq
+                                                ma'umot
+                                            </strong>
+                                            :{' '}
+                                        </span>
+                                        <span style={{ maxWidth: '150px' }}>
+                                            {Fulldata
+                                                ? parse(Fulldata)
+                                                : products?.description
+                                                ? parse(products?.description)
+                                                : ''}
                                         </span>
                                     </p>
                                 </div>
@@ -428,105 +578,235 @@ const PostsMyProducts = () => {
                         </div>
                     </div>
                 </div>
-                <div className="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-                    <div className='modal-dialog container '>
-                        <div className='modal-content  mahsulotingizElh3'>
-                            <div className='d-flex justify-content-end p-3'>
-                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div
+                    className="modal fade "
+                    id="staticBackdrop"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                    aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                    <div className="modal-dialog container ">
+                        <div className="modal-content  mahsulotingizElh3">
+                            <div className="d-flex justify-content-end p-3">
+                                <button
+                                    type="button"
+                                    className="btn-close"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
                             </div>
                             <div className="ps-container">
                                 <div className="ps-product--detail ps-product--fullwidth">
                                     <div className="ps-product__header ">
-                                        <div
-                                            className="ps-product__thumbnail"
-                                        >
-
-                                            <figure >
-                                                <div className="ps-wrapper" >
+                                        <div className="ps-product__thumbnail">
+                                            <figure>
+                                                <div className="ps-wrapper">
                                                     {
-                                                        products?.document?.images ?
-                                                            products?.document?.images?.map(item => (
-                                                                <img key={item.id} src={item.image_url} alt="doc" className='border mb-3 img-fluid' />
-                                                            ))
-
-                                                            :
-                                                            <img src="/static/img/docCopy.png" alt="doc" />
-
+                                                        products?.document?.content_type === "video" ?
+                                                        <>
+                                                            {products?.document
+                                                        ?.short_content_url ? (
+                                                            <video
+                                                            className="mb-4 border w-100"
+                                                            controls>
+                                                            <source
+                                                                src={
+                                                                    products?.document?.short_content_url
+                                                                }
+                                                                type={`video/${products?.document?.file_type?.replace(".","")}`}
+                                                            />
+                                                        </video>
+                                                    ) : (
+                                                        <img
+                                                            src="/static/img/docCopy.png"
+                                                            alt="document"
+                                                        />
+                                                    )}
+                                                        </> : products?.document?.content_type === "file" ? 
+                                                         <>
+                                                         {products?.document
+                                                     ?.images?.length > 0 ? (
+                                                     products?.document?.images?.map(
+                                                         (item) => (
+                                                             <img
+                                                                 key={
+                                                                     item.id
+                                                                 }
+                                                                 src={
+                                                                     item.image_url
+                                                                 }
+                                                                 alt="doc"
+                                                                 className="border mb-3 img-fluid"
+                                                             />
+                                                         )
+                                                     )
+                                                 ) : (
+                                                     <img
+                                                         src="/static/img/docCopy.png"
+                                                         alt="document"
+                                                     />
+                                                 )}
+                                                     </> :
+                                                      <img
+                                                      src="/static/img/docCopy.png"
+                                                      alt="document"
+                                                  />
 
                                                     }
+                                                    
                                                 </div>
                                             </figure>
                                         </div>
                                         <div className="ps-product__info">
                                             <header>
-                                                <h1  >{title ? title : products?.title}</h1>
-                                                <h4 >
+                                                <h1>
+                                                    {title
+                                                        ? title
+                                                        : products?.title}
+                                                </h1>
+                                                <h4>
                                                     {taxminiyNarx
-                                                        ? addPeriodToThousands(taxminiyNarx)
-                                                        : addPeriodToThousands(products?.discount_price)}   so'm
-
-
+                                                        ? addPeriodToThousands(
+                                                              taxminiyNarx
+                                                          )
+                                                        : addPeriodToThousands(
+                                                              products?.discount_price
+                                                          )}{' '}
+                                                    so'm
                                                 </h4>
                                             </header>
                                             <div>
-                                                <h4> Muallif : {products?.seller?.first_name} {products?.seller?.last_name}</h4>
+                                                <h4>
+                                                    {' '}
+                                                    Muallif :{' '}
+                                                    {
+                                                        products?.seller
+                                                            ?.first_name
+                                                    }{' '}
+                                                    {
+                                                        products?.seller
+                                                            ?.last_name
+                                                    }
+                                                </h4>
                                             </div>
                                             <div className="ps-product__desc">
                                                 <strong>
                                                     <span>
-                                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
+                                                        <strong className="fs-4">
+                                                            Qisqa tavsif
+                                                        </strong>
+                                                        :{' '}
                                                     </span>
-                                                    <ul style={{ listStyleType: "revert" }}>
-                                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
-                                                        <li> <strong className='fs-4'>Hajmi: </strong>{products?.document?.file_size}</li>
-                                                        <li> <strong className='fs-4'>Turi: </strong>{products?.document?.file_type}</li>
+                                                    <ul
+                                                        style={{
+                                                            listStyleType:
+                                                                'revert',
+                                                        }}>
+                                                        {products?.document
+                                                            ?.page_count && (
+                                                            <li>
+                                                                <strong className="fs-4">
+                                                                    Betlar soni:{' '}
+                                                                </strong>{' '}
+                                                                <div></div>
+                                                               <span>
+                                                               {
+                                                                    products
+                                                                        ?.document
+                                                                        ?.page_count
+                                                                }{' '}
+                                                                ta
+                                                               </span>
+                                                            </li>
+                                                        )}
+                                                        <li>
+                                                            {' '}
+                                                            <strong className="fs-4">
+                                                                Hajmi:{' '}
+                                                            </strong>
+                                                           <div></div>
+                                                           <span> {
+                                                                products
+                                                                    ?.document
+                                                                    ?.file_size
+                                                            }</span>
+                                                        </li>
+                                                        <li>
+                                                            {' '}
+                                                            <strong className="fs-4">
+                                                                Turi:{' '}
+                                                            </strong>
+                                                            <div></div>
+                                                            <span>{
+                                                                products
+                                                                    ?.document
+                                                                    ?.file_type
+                                                            }</span>
+                                                        </li>
                                                         <li>
                                                             <strong>
                                                                 Kategoriyasi
                                                             </strong>{' '}
                                                             :{' '}
-                                                            {categoryName
+                                                           <div></div>
+                                                           <span> {categoryName
                                                                 ? categoryName
-                                                                : products?.category
-                                                                    ?.name}
+                                                                : products
+                                                                      ?.category
+                                                                      ?.name}</span>
                                                         </li>
                                                     </ul>
-
                                                 </strong>
-                                                <ul>
-
-                                                </ul>
+                                                <ul></ul>
                                             </div>
-                                            <div className="ps-product__shopping row-gap-3" >
+                                            <div className="ps-product__shopping row-gap-3">
                                                 <button
                                                     className="ps-btn ps-btn--black"
-                                                    style={{ cursor: "not-allowed" }}
-                                                >
+                                                    style={{
+                                                        cursor: 'not-allowed',
+                                                    }}>
                                                     Savatga qo'shish
                                                 </button>
-                                                <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                <button
+                                                    className="ps-btn"
+                                                    style={{
+                                                        cursor: 'not-allowed',
+                                                    }}>
                                                     Sotib olish
                                                 </button>
                                                 <div className="ps-product__actions">
-                                                    <a style={{ cursor: "not-allowed" }} >
-                                                        <i className={`icon-heart`} ></i>
+                                                    <a
+                                                        style={{
+                                                            cursor: 'not-allowed',
+                                                        }}>
+                                                        <i
+                                                            className={`icon-heart`}></i>
                                                     </a>
                                                 </div>
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                {
-                                                    products?.tag?.map(item => (<span className='mx-3' key={item.name}>#{item.name} </span>))
-                                                }
+                                                {products?.tag?.map((item) => (
+                                                    <span
+                                                        className="mx-3"
+                                                        key={item.name}>
+                                                        #{item.name}{' '}
+                                                    </span>
+                                                ))}
                                             </div>
                                         </div>
                                     </div>
                                     <div className="ps-product__content ps-tab-root">
                                         <Tabs defaultActiveKey="1">
-                                            <TabPane tab="Mahsulot to’liq tavsifi" key="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
                                                 <div className="ps-document">
-                                                    {
-                                                        Fulldata ? parse(Fulldata) : products?.description ? parse(products?.description) : ""
-                                                    }
+                                                    {Fulldata
+                                                        ? parse(Fulldata)
+                                                        : products?.description
+                                                        ? parse(
+                                                              products?.description
+                                                          )
+                                                        : ''}
                                                 </div>
                                             </TabPane>
                                         </Tabs>
