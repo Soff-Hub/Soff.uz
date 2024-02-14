@@ -1,3 +1,38 @@
+// click page 
+
+.click-form-item{
+    label{
+        position: relative;
+        i{
+            position: absolute;
+            top: 50%;
+            left: 8%;
+            transform: translateX(-8%);
+            transform: translateY(-50%);
+            font-size: 18px;
+        }
+    }
+
+    .card__number{
+        padding-left: 50px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 aside{
     span{
         overflow: auto;
