@@ -44,34 +44,40 @@ const ClickCard = ({ onChange, setCardDate }) => {
 
     return (
         <form className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-            <div className="col-md-8 ">
-                <label htmlFor="ccn">Karta raqam</label>
-                <input
-                    id="ccn"
-                    type="tel"
-                    className="form-control rounded-3 "
-                    inputMode="numeric"
-                    pattern="[0-9\s]{13,19}"
-                    autoComplete="cc-number"
-                    maxLength="19"
-                    placeholder="xxxx xxxx xxxx xxxx"
-                    value={formattedCardNumber}
-                    onChange={handleCardNumberChange}
-                />
+            <div className="col-md-8 click-form-item">
+                <span>Karta raqam</span>
+                <label htmlFor="ccn">
+                    <i class="fa-regular fa-credit-card"></i>
+                    <input
+                        id="ccn"
+                        type="tel"
+                        className="form-control rounded-3 card__number "
+                        inputMode="numeric"
+                        pattern="[0-9\s]{13,19}"
+                        autoComplete="cc-number"
+                        maxLength="19"
+                        placeholder="0000 0000 0000 0000"
+                        value={formattedCardNumber}
+                        onChange={handleCardNumberChange}
+                    />
+                </label>
             </div>
-            <div className="col-md-4">
-                <input
-                    id="ccn"
-                    type="tel"
-                    className="form-control rounded-3 text-center "
-                    inputMode="numeric"
-                    pattern="[0-9\s]{13,19}"
-                    autoComplete="cc-number"
-                    maxLength="5"
-                    placeholder="00/00"
-                    value={numberDate}
-                    onChange={handleCardNumberDate}
-                />
+            <div className="col-md-4 click-form-item">
+                <label>
+                    <i class="fa-regular fa-calendar-days"></i>
+                    <input
+                        id="ccn"
+                        type="tel"
+                        className="form-control rounded-3 "
+                        inputMode="numeric"
+                        pattern="[0-9\s]{13,19}"
+                        autoComplete="cc-number"
+                        maxLength="5"
+                        placeholder="MM/YY"
+                        value={numberDate}
+                        onChange={handleCardNumberDate}
+                    />
+                </label>
             </div>
         </form>
     );
