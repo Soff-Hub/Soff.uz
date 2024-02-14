@@ -44,10 +44,10 @@ const ClickCard = ({ onChange, setCardDate }) => {
 
     return (
         <form className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-            <div className="col-md-8 click-form-item">
-                <span>Karta raqam</span>
+            <div className="col-md-8 col-sm-8 click-form-item">
+                <span style={{display:'block'}} >Karta raqam</span>
                 <label htmlFor="ccn">
-                    <i class="fa-regular fa-credit-card"></i>
+                    <i class="fa-regular fa-credit-card i"></i>
                     <input
                         id="ccn"
                         type="tel"
@@ -62,13 +62,13 @@ const ClickCard = ({ onChange, setCardDate }) => {
                     />
                 </label>
             </div>
-            <div className="col-md-4 click-form-item">
+            <div className="col-md-4 col-sm-4 click-form-item">
                 <label>
                     <i class="fa-regular fa-calendar-days"></i>
                     <input
                         id="ccn"
                         type="tel"
-                        className="form-control rounded-3 "
+                        className="form-control rounded-3 card__number"
                         inputMode="numeric"
                         pattern="[0-9\s]{13,19}"
                         autoComplete="cc-number"

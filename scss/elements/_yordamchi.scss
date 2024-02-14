@@ -1779,6 +1779,15 @@
     }
 }
 
+@media (max-width: 992px) {
+    .tolov-usullari {
+        align-items: center !important;
+        .tolov-usullari {
+            align-items: center;
+        }
+    }
+}
+
 @media (max-width: 900px) {
     .bannerModal2Carousel {
         top: 25%;

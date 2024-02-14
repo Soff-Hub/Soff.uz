@@ -24,6 +24,7 @@ const CreditCard2 = ({ document }) => {
     const [cart, setCart] = useState(0);
     const [resDataCode, setResDataCode] = useState(null);
     const { removeAll } = useCart()
+    const [buttonOk, setButtonOk] = useState(false)
     profileCard.forEach((item) => {
         item.credit_card = String(item.credit_card).replace(
             /(\d{4})(?=\d)/g,
@@ -91,6 +92,7 @@ const CreditCard2 = ({ document }) => {
     }, []);
 
     async function handleSubmitCode() {
+            setButtonOk(true)
         const dataNews = await PostRepository.postClickCode(
             cart,
             code,
@@ -98,6 +100,8 @@ const CreditCard2 = ({ document }) => {
         );
         if (dataNews) {
             setResDataCode(dataNews);
+            setButtonOk(false)
+
         }
         if (
             dataNews?.status !== 200 &&
@@ -154,6 +158,7 @@ const CreditCard2 = ({ document }) => {
         setResData(null);
     }
 
+
     const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
 
     return (
@@ -199,7 +204,7 @@ const CreditCard2 = ({ document }) => {
                             onClick={() => handleClickCardPosts()}
                             className="ps-btn w-100 text-center">
                             {/* <i className="fa-solid fa-angles-left fa-fade me-2"></i>{' '} */}
-                            Sotib olish
+                            To'lov qilish
                         </button>
                     ) : (
                         <button className="ps-btn ps-btn--fullwidth w-100 text-center">
@@ -215,7 +220,11 @@ const CreditCard2 = ({ document }) => {
                 centered
                 open={open}
                 onOk={handleSubmitCode}
-                onCancel={handleCancale}>
+                onCancel={handleCancale}
+                okButtonProps={{ style: { backgroundColor: 'green', color: 'white' } }}
+                okText={buttonOk ?  <BeatLoader color="#fff" /> : "Yuborish" } 
+                cancelText="Orqaga"
+                >
                 <>
                     <p>
                         Kod quyidagi raqamga yuborildi:
