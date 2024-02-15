@@ -204,7 +204,7 @@ const CreditCard2 = ({ document }) => {
                             onClick={() => handleClickCardPosts()}
                             className="ps-btn w-100 text-center">
                             {/* <i className="fa-solid fa-angles-left fa-fade me-2"></i>{' '} */}
-                            To'lov qilish
+                            Davom etish
                         </button>
                     ) : (
                         <button className="ps-btn ps-btn--fullwidth w-100 text-center">
@@ -222,7 +222,7 @@ const CreditCard2 = ({ document }) => {
                 onOk={handleSubmitCode}
                 onCancel={handleCancale}
                 okButtonProps={{ style: { backgroundColor: 'green', color: 'white' } }}
-                okText={buttonOk ?  <BeatLoader color="#fff" /> : "Yuborish" } 
+                okText={buttonOk ?  <BeatLoader color="#fff" /> : "To'lov qilish" } 
                 cancelText="Orqaga"
                 >
                 <>
