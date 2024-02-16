@@ -281,6 +281,7 @@ const Posts = () => {
 
         return formattedNumber;
     }
+    
 
     const chegirma = (foiz) => {
         if (narx) {
