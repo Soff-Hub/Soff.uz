@@ -41,6 +41,22 @@
 
 // end new style
 
+// product video style start
+
+.product__video{
+    max-width: 400px;
+    width: 100%;
+}
+
+.product__video--container{
+    height: 100% !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// product video style end
+
 .ps-badge {
     position: absolute;
     padding: 5px 15px;

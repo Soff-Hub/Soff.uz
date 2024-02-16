@@ -66,6 +66,7 @@ const CreditCard2 = ({ document }) => {
             setCart(ItemsData.data.cart);
             setResData(ItemsData)
         } else {
+            console.log('xatolik', ItemsData);
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
