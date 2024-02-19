@@ -6,7 +6,7 @@ import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import Router from 'next/router';
 
-const ModuleProductActions = ({ product, ecomerce }) => {
+const ModuleProductActions = ({ product }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();

@@ -10,6 +10,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import Image from 'next/image';
 import NextImageCard from '~/components/nextImagecard';
 import PostRepository from '~/repositories/PostRepository';
+import { BeatLoader } from 'react-spinners';
 
 const ProductDetailQuickView = ({ product }) => {
     const [tag, setTag] = useState([]);
@@ -41,7 +42,7 @@ const ProductDetailQuickView = ({ product }) => {
 
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID (
-            pid,
+            pid ||  product?.slug,
             uuid,
         );
         if (respons) {
@@ -53,6 +54,8 @@ const ProductDetailQuickView = ({ product }) => {
         getImage();
         getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
     }, []);
+
+    console.log("views", views);
     return (
         <div className="ps-product--detail ps-product--quickview">
             <div className="ps-product__header">
@@ -81,37 +84,19 @@ const ProductDetailQuickView = ({ product }) => {
                 </figure>
 
                 <div className="ps-product__info">
-                    <ModuleDetailTopInformation product={product} />
-                    {/* <div>
-                        {product?.seller?.first_name && (
-                            <div
-                                className="document-seller-about mb-3 product_detail__seller_name "
-                                onClick={() => SellerPage(product?.seller?.id)}>
-                                <div style={{ textAlign: 'center' }}>
-                                    {product?.seller?.image_url ? (
-                                        <img
-                                        alt='soff'
-                                            src={`${product?.seller?.image_url}`}
-                                            className="profile__image-client"
-                                        />
-                                    ) : (
-                                        <i
-                                            className=" fa-2x text-info fa-solid fa-circle-user"
-                                            style={{ fontSize: '35px' }}></i>
-                                    )}
-                                </div>
-
-                                <h4>
-                                    {product?.seller?.first_name}{' '}
-                                    {product?.seller?.last_name}
-                                </h4>
-                            </div>
-                        )}
-                    </div> */}
-                    <ModuleProductDetailDescription
-                        product={{ ...product, document }}
-                    />
-                    <ModuleDetailShoppingActions
+                   {
+                    product &&  <ModuleDetailTopInformation product={product} />
+                   }
+                  {
+                    product ?   <ModuleProductDetailDescription
+                    product={{ ...product, document }}
+                /> : 
+                <div style={{height:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} ><BeatLoader /></div>
+                  }
+                   {
+                    product &&
+                    <>
+                     <ModuleDetailShoppingActions
                         product={product}
                         extended={true}
                     />
@@ -131,6 +116,8 @@ const ProductDetailQuickView = ({ product }) => {
                                 </div>
                             ))}
                     </div>
+                    </>
+                   }
                 </div>
             </div>
             {product?.description ? (
