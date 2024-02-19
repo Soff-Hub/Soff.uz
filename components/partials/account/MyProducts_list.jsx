@@ -67,7 +67,6 @@ function MyProductsLists() {
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
 
-
     async function GetItemsProducts(
         page,
         category,
@@ -341,7 +340,7 @@ function MyProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster',
+            dataIndex: 'poster_url',
             key: 'name',
             render: (poster_url) => (
                 <div>
@@ -567,7 +566,7 @@ function MyProductsLists() {
                                                 <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                                 <strong>Moderatsiya</strong>{' '}
                                                 <em>
-                                                    malumotlar ko'rib
+                                                    ma'lumotlar ko'rib
                                                     chiqilmoqda...
                                                 </em>
                                             </span>
@@ -575,7 +574,7 @@ function MyProductsLists() {
                                                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
                                                 <strong>Tasdiqlangan </strong>{' '}
                                                 <em>
-                                                    malumotlaringiz
+                                                    ma'lumotlaringiz
                                                     muvaffaqqiyatli tasdiqlandi!
                                                 </em>
                                             </span>
@@ -583,7 +582,7 @@ function MyProductsLists() {
                                                 <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
                                                 <strong>Bekor qilingan</strong>{' '}
                                                 <em>
-                                                    malumotlaringiz bekor
+                                                    ma'lumotlaringiz bekor
                                                     qilindi
                                                 </em>
                                             </span>
@@ -811,27 +810,29 @@ function MyProductsLists() {
                                                         {View?.reason}
                                                     </strong>
                                                 </div>
-                                                <ModuleDetailTopInformation product={View} />
+                                                <ModuleDetailTopInformation
+                                                    product={View}
+                                                />
                                                 <ModuleProductDetailDescription
                                                     product={View}
                                                 />
                                                 <div className="ps-product__shopping row-gap-3">
-                                                   <div>
-                                                   <button
-                                                        className="ps-btn ps-btn--black"
-                                                        style={{
-                                                            cursor: 'not-allowed',
-                                                        }}>
-                                                        Savatga qo'shish
-                                                    </button>
-                                                    <button
-                                                        className="ps-btn"
-                                                        style={{
-                                                            cursor: 'not-allowed',
-                                                        }}>
-                                                        Sotib olish
-                                                    </button>
-                                                   </div>
+                                                    <div>
+                                                        <button
+                                                            className="ps-btn ps-btn--black"
+                                                            style={{
+                                                                cursor: 'not-allowed',
+                                                            }}>
+                                                            Savatga qo'shish
+                                                        </button>
+                                                        <button
+                                                            className="ps-btn"
+                                                            style={{
+                                                                cursor: 'not-allowed',
+                                                            }}>
+                                                            Sotib olish
+                                                        </button>
+                                                    </div>
                                                     <div className="ps-product__actions">
                                                         <a
                                                             style={{
