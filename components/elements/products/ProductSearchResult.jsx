@@ -6,7 +6,7 @@ import LazyLoad from 'react-lazyload';
 const ProductSearchResult = ({ product }) => {
     const { price, title } = useProduct();
     return (
-        <div className=" ps-product--wide ps-product--search-result border mb-3 shadow-sm" style={{ height: "83px" }}>
+        <div className=" ps-product--wide ps-product--search-result border mb-3 mx-2 shadow-sm" style={{ height: "83px" }}>
             <div className="ps-product__thumbnail" style={{ height: "83px", }}>
                 <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                     <a>
@@ -40,7 +40,7 @@ const ProductSearchResult = ({ product }) => {
                     </a>
                 </Link>
             </div>
-            <div className="ps-product__content">
+            <div className="ps-product__content ps-product__content--search text-truncate ">
                 {title(product)}
                 {price(product)}
             </div>
