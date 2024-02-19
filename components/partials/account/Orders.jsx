@@ -88,12 +88,13 @@ function OrdersLists() {
             dataIndex: 'customer_info',
             key: 'age',
             render: (customer_info) => (
-               <div className="d-flex flex-column" >
-                 <span className="truncate whitespace-nowrap"> {customer_info.name}</span>
-                <span>
-                {customer_info.email_or_phone}
-            </span>
-               </div>
+                <div className="d-flex flex-column">
+                    <span className="truncate whitespace-nowrap">
+                        {' '}
+                        {customer_info.name}
+                    </span>
+                    <span>{customer_info.email_or_phone}</span>
+                </div>
             ),
         },
         {
@@ -104,13 +105,10 @@ function OrdersLists() {
             render: (seller_info) => (
                 <div className="d-flex flex-column">
                     <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {seller_info.name}
-                            
-                        </span>
-                        <span>
-                {seller_info.email_or_phone}
-            </span>
+                        {' '}
+                        {seller_info.name}
+                    </span>
+                    <span>{seller_info.email_or_phone}</span>
                 </div>
             ),
         },
@@ -291,7 +289,11 @@ function OrdersLists() {
                                         />
                                         <div className="d-flex gap-2">
                                             <label
-                                                className={`form-label border ${ user.role === 'admin' ? 'col-6 w-50' : 'col-12 w-100' } col-6 w-50 p-0 d-flex justify-content-between align-items-center`}
+                                                className={`form-label border ${
+                                                    user.role === 'admin'
+                                                        ? 'col-6 w-50'
+                                                        : 'col-12 w-100'
+                                                } col-6 w-50 p-0 d-flex justify-content-between align-items-center`}
                                                 style={{
                                                     backgroundColor: '#F1F1F1',
                                                 }}>
@@ -310,35 +312,36 @@ function OrdersLists() {
                                                     <i className="fa-solid fa-search "></i>
                                                 </span>
                                             </label>
-                                           {
-                                            user.role === 'admin' ?
-                                            <Select
-                                            className="col-md-6 p-0"
-                                            mode="select"
-                                            // showSearch
-                                            style={{
-                                                width: '100%',
-                                                height: '47px',
-                                            }}
-                                            onChange={(e) =>
-                                                setUserRole(e)
-                                            }
-                                            placeholder="Filter"
-                                            options={[
-                                                {
-                                                    label: 'Barchasi',
-                                                    value: '',
-                                                },
-                                                {
-                                                    label: 'Sotuvchi',
-                                                    value: 'seller',
-                                                },
-                                                {
-                                                    label: 'Xaridor',
-                                                    value: 'customer',
-                                                },
-                                            ]}></Select> : ''
-                                           }
+                                            {user.role === 'admin' ? (
+                                                <Select
+                                                    className="col-md-6 p-0"
+                                                    mode="select"
+                                                    // showSearch
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '47px',
+                                                    }}
+                                                    onChange={(e) =>
+                                                        setUserRole(e)
+                                                    }
+                                                    placeholder="Filter"
+                                                    options={[
+                                                        {
+                                                            label: 'Barchasi',
+                                                            value: '',
+                                                        },
+                                                        {
+                                                            label: 'Sotuvchi',
+                                                            value: 'seller',
+                                                        },
+                                                        {
+                                                            label: 'Xaridor',
+                                                            value: 'customer',
+                                                        },
+                                                    ]}></Select>
+                                            ) : (
+                                                ''
+                                            )}
                                         </div>
                                     </div>
                                     {user?.role === 'admin' ? (
