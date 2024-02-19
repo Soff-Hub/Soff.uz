@@ -16,7 +16,7 @@ const SellerProducts = () => {
             url: '/',
         },
         {
-            text: 'Mening mahsulotlarim',
+            text: 'Sotib olingan',
         },
     ];
     const { user } = useSelector(state => state.auth)
@@ -27,7 +27,7 @@ const SellerProducts = () => {
                 title="Recent Viewed Products">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Mening mahsulotlarim"}
+                        title={"Soff | Sotib olingan"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <MyProducts_listSeller />
