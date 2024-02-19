@@ -180,7 +180,7 @@ function OrdersLists() {
     const columnSellers = [
         {
             title: 'Buyurtmachi',
-            dataIndex: 'user_name',
+            dataIndex: 'customer_info',
             key: 'user',
         },
         {
