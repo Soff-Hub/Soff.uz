@@ -110,7 +110,9 @@ const SearchHeader = () => {
             className="ps-form--quick-search"
             method="get"
             action="/"
-            onSubmit={handleSubmit}>
+            onSubmit={handleSubmit}
+            onBlur={handleClearKeyword}
+            >
 
             <div className="ps-form__input">
                 <input
