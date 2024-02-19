@@ -142,16 +142,6 @@ class ProductRepository {
         return reponse;
     }
 
-    // async getFilterPagination(payload) {
-    //     const reponse = await Repository.get(
-    //         `${baseUrl}customer/documents/?page=${payload}`
-    //     )
-    //         .then((response) => {
-    //             return response.data;
-    //         })
-    //         .catch((error) => ({ error: JSON.stringify(error) }));
-    //     return reponse;
-    // }
 
     async getCardData() {
         const reponse = await Repository.get(`${baseUrl}customer/data/`)
@@ -162,23 +152,6 @@ class ProductRepository {
         return reponse;
     }
 
-    // async getProducts(params) {
-    //     const reponse = await Repository.get(
-    //         `${baseUrl}/products?${serializeQuery(params)}`
-    //     )
-    //         .then((response) => {
-    //             if (response.data && response.data.length > 0) {
-    //                 return response.data;
-    //             } else {
-    //                 return null;
-    //             }
-    //         })
-
-    //         .catch((error) => {
-    //             return null;
-    //         });
-    //     return reponse;
-    // }
 
     async getBrands() {
         const reponse = await Repository.get(`${baseUrl}/brands`)
@@ -337,6 +310,21 @@ class ProductRepository {
             })
             .catch((error) => {
                 return null;
+            });
+        return reponse;
+    }
+    async getSellerProductSlug(slug, page) {
+        const endPoint = `customer/documents/?seller__id=${slug}&page=${page}`
+        const reponse = await Repository.get(baseUrl+endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return error.response;
             });
         return reponse;
     }

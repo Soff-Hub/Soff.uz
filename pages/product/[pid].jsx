@@ -47,6 +47,7 @@ export async function getServerSideProps(context) {
 }
 
 const ProductDefaultPage = ({ product, similar }) => {
+    console.log('product', product);
     const router = useRouter();
     const { pid } = router.query;
     const [views, setViews] = useState(null)

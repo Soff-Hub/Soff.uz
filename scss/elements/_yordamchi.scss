@@ -195,6 +195,13 @@
     display: block;
 }
 
+.yuborish{
+    color: #fff !important;
+    &:hover{
+        background-color: #000 !important;
+    }
+}
+
 .fixed-btn {
     display: flex;
     justify-content: center;

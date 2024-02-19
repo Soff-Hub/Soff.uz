@@ -1,11 +1,38 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
 import Product from '~/components/elements/products/Product';
 import Meta from '~/components/shared/headers/Meta';
+import { Pagination } from 'antd';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const SellerPage = ({ seller }) => {
+    const [data, setData] = useState(seller);
+    const [page, setPage] = useState(1);
+    const router = useRouter()
+    const {pid} = router.query
+
+    const getSellerProduct = async (slug) => {
+        const respons = await ProductRepository.getSellerProductSlug(slug, page)
+        if (respons) {
+            console.log(respons.data)
+            setData(respons.data)
+        }
+    }
+
+    const handlePagination = async (e) => {
+        setPage(e)
+        console.log(e);
+        const respons = await ProductRepository.getSellerProductSlug(pid, e)
+        if (respons) {
+            console.log(respons.data)
+            setData(respons.data)
+        }
+    };
+    
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -17,6 +44,15 @@ const SellerPage = ({ seller }) => {
                 : 'Loading...',
         },
     ];
+
+    useEffect(() => {
+        if (pid) {
+            getSellerProduct(pid)
+        }
+    },[pid])
+
+ 
+
     console.log('seller', seller);
     // let productView = <SkeletonProductDetail />;
     return (
@@ -61,7 +97,7 @@ const SellerPage = ({ seller }) => {
                     </div>
 
                     <div className="row">
-                        {seller?.results?.map((item, index) => (
+                        {data?.results?.map((item) => (
                             <div
                                 className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
                                 key={item.id}>
@@ -69,6 +105,17 @@ const SellerPage = ({ seller }) => {
                                 <Product product={item} />{' '}
                             </div>
                         ))}
+                    </div>
+
+                    <div className="text-center my-4">
+                    <Pagination 
+                    total={data?.count}
+                    pageSize={40}
+                    responsive={true}
+                    showSizeChanger={false}
+                    current={page}
+                    showTotal={(total, range) => `${total} ta dan ${range[0]}-${range[1]} oralig'i `}
+                    onChange={(e) => handlePagination(e)} />
                     </div>
                 </div>
             </div>
