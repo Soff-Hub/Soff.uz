@@ -259,7 +259,7 @@ function Notifications() {
                                                             aria-expanded="false"
                                                             aria-controls="flush-collapseOne">
                                                             <h4 className="m-0 py-2">
-                                                                Malumotlaringiz
+                                                                Ma'lumotlaringiz
                                                             </h4>
                                                         </button>
                                                     </h2>
@@ -422,15 +422,15 @@ function Notifications() {
                                                     className="d-block"
                                                     href="https://t.me/soff_uz_bot">
                                                     <a target="_blank">
-                                                        <div className="d-flex gap-2 gap-lg-3">
-                                                            <h5 className="fs-3">
+                                                        <div className="d-flex row justify-content-start">
+                                                            <h5 className="fs-3 col-8 ">
                                                                 Taklif
                                                                 xavolasini olish
                                                                 uchun telegram
                                                                 botga o'ting
                                                             </h5>
                                                             <i
-                                                                class="fa-brands fa-telegram fa-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3"
+                                                                class="fa-brands fa-telegram fa-lg-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3 col-2"
                                                                 style={{
                                                                     color: '#6492e3',
                                                                 }}></i>
