@@ -201,8 +201,8 @@
     align-items: center;
     background-color: #ffc107;
     color: #fff;
-    width: 70px;
-    height: 70px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
 }
 
@@ -1023,9 +1023,12 @@
 
     .mahsulotingiz {
         position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(100%, 180%);
+        right: 6%;
+        bottom: 20%;
+        transform: translateX(-6%);
+        transform: translateY(-20%);
+        // left: 50%;
+        // transform: translate(100%, 180%);
         display: block;
     }
 
