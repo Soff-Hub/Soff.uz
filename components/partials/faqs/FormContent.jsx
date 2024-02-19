@@ -146,12 +146,12 @@ const App = () => {
                     </div>
 
                    <div className='d-flex justify-content-center'>
-                   <div className="form-group submit w-25">
-                        <Form.Item>
-                            <Button htmlType="submit" className="ps-btn ps-btn--fullwidth yuborish">
+                   <div className="form-group submit">
+                        {/* <Form.Item> */}
+                            <Button htmlType="submit" className="ps-btn  yuborish">
                                 Yuborish
                             </Button>
-                        </Form.Item>
+                        {/* </Form.Item> */}
                         {/* <CaptchaForm/> */}
                     </div>
                    </div>
