@@ -258,7 +258,7 @@ function OrdersLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <div className="d-flex flex-column gap-2">
+                                    {/* <div className="d-flex flex-column gap-2">
                                         <span className="fs-4">
                                             <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                             <strong>Moderatsiya</strong>{' '}
@@ -281,7 +281,7 @@ function OrdersLists() {
                                                 malumotlaringiz bekor qilindi
                                             </em>
                                         </span>
-                                    </div>
+                                    </div> */}
                                     <div className="py-4 row gap-5 mx-auto row-gap-3 pb-5">
                                         <RangePicker
                                             className="col-md-12 rounded-3 py-3"
