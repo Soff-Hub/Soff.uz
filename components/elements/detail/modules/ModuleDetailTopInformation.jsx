@@ -1,10 +1,14 @@
 
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React from 'react';
 
 const ModuleDetailTopInformation = ({ product }) => {
+    const router = useRouter()
+    const pid = router.asPath
     const SellerPage = (e) => {
-        Router.push(`/seller/${e}`);
+        if (pid !== "/account/myproducts") {
+            Router.push(`/seller/${e}`);
+        }
     };
 
     function addPeriodToThousands(number) {

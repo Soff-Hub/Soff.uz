@@ -47,7 +47,7 @@ export async function getServerSideProps(context) {
 }
 
 const ProductDefaultPage = ({ product, similar }) => {
-    console.log('product', product);
+    // console.log('product', product);
     const router = useRouter();
     const { pid } = router.query;
     const [views, setViews] = useState(null)
@@ -100,7 +100,7 @@ const ProductDefaultPage = ({ product, similar }) => {
         <>
             <PageContainer title={product ? product.title : 'Loading...'}>
                 <Meta
-                    title={`Soff | ${product.title}`}
+                    title={`Soff | ${product.title} `}
                     image={product?.document?.images?.[0]?.image_url}
                     description={`${product.title} mahsulotni saytimizdan Soff.uz bepul yuklab yoki sotib olishingiz mumkin`}
                 />

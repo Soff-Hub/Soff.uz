@@ -23,8 +23,8 @@ const CreditCard2 = ({ document }) => {
     const [phone, setPhone] = useState('');
     const [cart, setCart] = useState(0);
     const [resDataCode, setResDataCode] = useState(null);
-    const { removeAll } = useCart()
-    const [buttonOk, setButtonOk] = useState(false)
+    const { removeAll } = useCart();
+    const [buttonOk, setButtonOk] = useState(false);
     profileCard.forEach((item) => {
         item.credit_card = String(item.credit_card).replace(
             /(\d{4})(?=\d)/g,
@@ -50,7 +50,8 @@ const CreditCard2 = ({ document }) => {
         SetNumber('●●●● ●●●● ●●●● ●●●●');
     };
 
-    async function handleClickCardPosts() {
+    async function handleClickCardPosts(e) {
+        e.preventDefault();
         setMessage(false);
         const ItemsData = await PostRepository.postClickCard(
             document,
@@ -64,13 +65,17 @@ const CreditCard2 = ({ document }) => {
             setOpen(true);
             setPhone(ItemsData.data.phone);
             setCart(ItemsData.data.cart);
-            setResData(ItemsData)
+            setResData(ItemsData);
         } else {
             setMessage(true);
             const modal = Modal.error({
                 centered: true,
                 title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.expire_date ? " Karta amal qilish muddatini kiriting" : ItemsData?.data?.card_number ? "Karta raqamini to'g'ri kiriting" : ItemsData?.data?.msg,
+                content: ItemsData?.data?.expire_date
+                    ? ' Karta amal qilish muddatini kiriting'
+                    : ItemsData?.data?.card_number
+                    ? "Karta raqamini to'g'ri kiriting"
+                    : ItemsData?.data?.msg,
             });
             modal.update;
         }
@@ -92,7 +97,7 @@ const CreditCard2 = ({ document }) => {
     }, []);
 
     async function handleSubmitCode() {
-            setButtonOk(true)
+        setButtonOk(true);
         const dataNews = await PostRepository.postClickCode(
             cart,
             code,
@@ -100,8 +105,7 @@ const CreditCard2 = ({ document }) => {
         );
         if (dataNews) {
             setResDataCode(dataNews);
-            setButtonOk(false)
-
+            setButtonOk(false);
         }
         if (
             dataNews?.status !== 200 &&
@@ -125,13 +129,13 @@ const CreditCard2 = ({ document }) => {
                 title: 'Muffaqiyatli!',
                 content: `${dataNews?.data?.msg}`,
             });
-            if (user?.role === "seller") {
-                Router.push('/account/sellerproducts')
-            }else{
-                Router.push('/account/myproducts')
+            if (user?.role === 'seller') {
+                Router.push('/account/sellerproducts');
+            } else {
+                Router.push('/account/myproducts');
             }
             if (document?.length > 1) {
-                removeAll()
+                removeAll();
             }
         }
     }
@@ -143,7 +147,7 @@ const CreditCard2 = ({ document }) => {
                     if (prevTime <= 0) {
                         clearInterval(timerID);
                         setResData(null);
-                        setOpen(false)
+                        setOpen(false);
                         return 0;
                     } else {
                         return prevTime - 1;
@@ -158,13 +162,47 @@ const CreditCard2 = ({ document }) => {
         setResData(null);
     }
 
-
     const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
 
+    const [formattedCardNumber, setFormattedCardNumber] = useState('');
+    const [numberDate, setNumberDate] = useState('');
+
+    const handleCardNumberChange = (e) => {
+        const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
+        let formattedValue = '';
+
+        if (inputValue.length <= 16) {
+            for (let i = 0; i < inputValue.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formattedValue += ' '; // Raqamlarni probil bilan ajratish
+                }
+                formattedValue += inputValue[i];
+            }
+        }
+
+        numberTyper(inputValue);
+        setFormattedCardNumber(formattedValue);
+    };
+
+    const handleCardNumberDate = (e) => {
+        const inputValue = e.target.value.replace(/\D/g, ''); // Raqam va probilni olib tashlash
+        let formattedValue = '';
+
+        if (inputValue.length <= 4) {
+            for (let i = 0; i < inputValue.length; i++) {
+                if (i > 0 && i % 2 === 0) {
+                    formattedValue += '/'; // Raqamlarni probil bilan ajratish
+                }
+                formattedValue += inputValue[i];
+            }
+        }
+        setCardDate(inputValue);
+        setNumberDate(formattedValue);
+    };
+    console.log('carddata', numberCardVal, 'date', cardDate);
     return (
-        <div className="row g-3  mx-auto overflow-x-auto m-0">
-            <div
-                className=" border p-4 rounded click-b">
+        <div className="row   mx-auto m-0">
+            <div className=" px-4 rounded click-b">
                 <div
                     id="Card2"
                     className={
@@ -191,26 +229,60 @@ const CreditCard2 = ({ document }) => {
                     </div>
                 </div>
                 <div>
-                    <ClickCard
-                        setCardDate={setCardDate}
-                        onChange={(value) => numberTyper(value)}
-                    />
-                </div>
-
-                <div className="col-12 p-0">
-                    {message ? (
-                        <button
-                            type="submit"
-                            onClick={() => handleClickCardPosts()}
-                            className="ps-btn w-100 text-center">
-                            {/* <i className="fa-solid fa-angles-left fa-fade me-2"></i>{' '} */}
-                            Davom etish
-                        </button>
-                    ) : (
-                        <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                            <BeatLoader color="#fff" />
-                        </button>
-                    )}
+                    <form
+                        onSubmit={handleClickCardPosts}
+                        className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                        <div className="col-md-8 col-sm-8 click-form-item">
+                            <span style={{ display: 'block' }}>
+                                Karta raqam
+                            </span>
+                            <label htmlFor="ccn">
+                                <i class="fa-regular fa-credit-card i"></i>
+                                <input
+                                    required
+                                    id="ccn"
+                                    type="tel"
+                                    className="form-control rounded-3 card__number "
+                                    inputMode="numeric"
+                                    pattern="[0-9\s]{13,19}"
+                                    autoComplete="cc-number"
+                                    maxLength="19"
+                                    placeholder="0000 0000 0000 0000"
+                                    value={formattedCardNumber}
+                                    onChange={handleCardNumberChange}
+                                />
+                            </label>
+                        </div>
+                        <div className="col-md-4 col-sm-4 click-form-item">
+                            <label>
+                                <i class="fa-regular fa-calendar-days"></i>
+                                <input
+                                    required
+                                    id="ccn"
+                                    className="form-control rounded-3 card__number"
+                                    inputMode="numeric"
+                                    autoComplete="cc-number"
+                                    maxLength="5"
+                                    placeholder="MM/YY"
+                                    value={numberDate}
+                                    onChange={handleCardNumberDate}
+                                />
+                            </label>
+                        </div>
+                        <div className="col-12 p-0 px-4 my-3">
+                            {message ? (
+                                <button
+                                    type="submit"
+                                    className="ps-btn w-100 text-center btn_color">
+                                    Davom etish
+                                </button>
+                            ) : (
+                                <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                    <BeatLoader color="#fff" />
+                                </button>
+                            )}
+                        </div>
+                    </form>
                 </div>
             </div>
 
@@ -221,10 +293,13 @@ const CreditCard2 = ({ document }) => {
                 open={open}
                 onOk={handleSubmitCode}
                 onCancel={handleCancale}
-                okButtonProps={{ style: { backgroundColor: 'green', color: 'white' } }}
-                okText={buttonOk ?  <BeatLoader color="#fff" /> : "To'lov qilish" } 
-                cancelText="Orqaga"
-                >
+                okButtonProps={{
+                    style: { backgroundColor: 'green', color: 'white' },
+                }}
+                okText={
+                    buttonOk ? <BeatLoader color="#fff" /> : "To'lov qilish"
+                }
+                cancelText="Orqaga">
                 <>
                     <p>
                         Kod quyidagi raqamga yuborildi:

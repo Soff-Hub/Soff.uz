@@ -19,6 +19,7 @@ import CalculateTimeDifference from './DateFormatter';
 import Router from 'next/router';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
+import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 
 function ProductsLists() {
     const dispatch = useDispatch();
@@ -80,11 +81,14 @@ function ProductsLists() {
     }
 
 
+  
     async function handleClickView(item) {
         setLoading(true);
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, item, null, search, user?.access);
-        setDeleteIdView(ItemsData);
-        setLoading(false)
+        if (ItemsData?.title) {
+            setDeleteIdView(ItemsData);
+            setLoading(false)
+        }
     }
 
     async function handleClickIdEditProducts(productsItems) {
@@ -334,7 +338,7 @@ function ProductsLists() {
                                                     <div className='mb-4'>
                                                         <strong className='text-danger pb-5'>{deleteIdView?.reason}</strong>
                                                     </div>
-                                                    <header>
+                                                    {/* <header>
                                                         <h1>{deleteIdView?.title}</h1>
                                                         <h4>
                                                             {+deleteIdView?.discount_price !== 0 ? addPeriodToThousands(deleteIdView?.discount_price + "so'm") : "Bepul mahsulot"}{' '}
@@ -347,7 +351,8 @@ function ProductsLists() {
                                                                 :
                                                                 <></>
                                                         }
-                                                    </div>
+                                                    </div> */}
+                                                      <ModuleDetailTopInformation product={deleteIdView} />
                                                     <ModuleProductDetailDescription product={deleteIdView} />
                                                     <div className="ps-product__shopping row-gap-3" >
                                                         <button

@@ -150,30 +150,30 @@ function OrdersLists() {
                 </div>
             ),
         },
-        {
-            title: 'Holat',
-            dataIndex: 'status',
-            key: 'address',
-            render: (status) =>
-                status === 'approved' ? (
-                    <span>
-                        <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                        tasdiqlangan
-                    </span>
-                ) : status === 'cancelled' ? (
-                    <span>
-                        <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                        Bekor qilingan
-                    </span>
-                ) : status === 'pending' ? (
-                    <span>
-                        <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                        Moderatsiya
-                    </span>
-                ) : (
-                    <></>
-                ),
-        },
+        // {
+        //     title: 'Holat',
+        //     dataIndex: 'status',
+        //     key: 'address',
+        //     render: (status) =>
+        //         status === 'approved' ? (
+        //             <span>
+        //                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
+        //                 tasdiqlangan
+        //             </span>
+        //         ) : status === 'cancelled' ? (
+        //             <span>
+        //                 <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
+        //                 Bekor qilingan
+        //             </span>
+        //         ) : status === 'pending' ? (
+        //             <span>
+        //                 <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+        //                 Moderatsiya
+        //             </span>
+        //         ) : (
+        //             <></>
+        //         ),
+        // },
     ];
     const columnSellers = [
         {
@@ -220,30 +220,30 @@ function OrdersLists() {
             ),
         },
 
-        {
-            title: 'Holat',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status) =>
-                status === 'approved' ? (
-                    <span>
-                        <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                        tasdiqlangan
-                    </span>
-                ) : status === 'cancelled' ? (
-                    <span>
-                        <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                        Bekor qilingan
-                    </span>
-                ) : status === 'pending' ? (
-                    <span>
-                        <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                        Moderatsiya
-                    </span>
-                ) : (
-                    <></>
-                ),
-        },
+        // {
+        //     title: 'Holat',
+        //     dataIndex: 'status',
+        //     key: 'status',
+        //     render: (status) =>
+        //         status === 'approved' ? (
+        //             <span>
+        //                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
+        //                 tasdiqlangan
+        //             </span>
+        //         ) : status === 'cancelled' ? (
+        //             <span>
+        //                 <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
+        //                 Bekor qilingan
+        //             </span>
+        //         ) : status === 'pending' ? (
+        //             <span>
+        //                 <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+        //                 Moderatsiya
+        //             </span>
+        //         ) : (
+        //             <></>
+        //         ),
+        // },
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -347,7 +347,7 @@ function OrdersLists() {
                                     {user?.role === 'admin' ? (
                                         <>
                                             <Table
-                                                scroll={{ x: 1550 }}
+                                                scroll={{ x: 1350 }}
                                                 dataSource={data}
                                                 columns={columns}
                                                 pagination={false}
@@ -362,7 +362,7 @@ function OrdersLists() {
                                     ) : (
                                         <>
                                             <Table
-                                                scroll={{ x: 1250 }}
+                                                scroll={{ x: 900 }}
                                                 dataSource={data}
                                                 columns={columnSellers}
                                                 pagination={false}

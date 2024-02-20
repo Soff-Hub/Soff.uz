@@ -4,9 +4,7 @@ import { connect } from 'react-redux';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
-    
     let amount = calculateAmount(ecomerce.cartDataItems);
-
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -38,14 +36,14 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                     </strong>
                     <small>
                         {item?.discount === 0 ? (
-                           <p>{ addPeriodToThousands(item.price)} so'm</p>
+                            <p>{addPeriodToThousands(item.price)} so'm</p>
                         ) : (
                             <>
                                 <del>
                                     {addPeriodToThousands(item.price)} so'm
                                 </del>
                                 <p>
-                                    {addPeriodToThousands(item.discount_price) }{' '}
+                                    {addPeriodToThousands(item.discount_price)}{' '}
                                     so'm
                                 </p>
                             </>
@@ -57,33 +55,76 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     } else {
         listItemsView = <p>Mahsulot yo'q.</p>;
     }
-  
-        totalView = (
-            <figure className="ps-block__total">
-                <h3>
-                    Umumiy hisob:
-                    <strong>{hisob}.00 so'm </strong>
-                </h3>
-            </figure>
-        );
+
+    totalView = (
+        <figure className="ps-block__total">
+            <h3>
+                Umumiy hisob:
+                <strong>{hisob}.00 so'm </strong>
+            </h3>
+        </figure>
+    );
+
     return (
         <div className="ps-block--checkout-order">
+             <h3>Buyurtma mahsulotlari</h3>
+             <div className='shot' >
             <div className="ps-block__content">
-                <figure>
-                    <figcaption>
-                        <strong>Mahsulot</strong>
-                        <strong>narx</strong>
-                    </figcaption>
-                </figure>
-                <figure className="ps-block__items">{listItemsView}</figure>
-                <figure>
-                    <figcaption>
-                        <strong>Jami narx:</strong>
-                        <small>{hisob}.00 so'm </small>
-                    </figcaption>
-                </figure>
-                {totalView}
+                { ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
+                    ecomerce.cartDataItems?.map((el, i) => (
+                        <figure>
+                            <p>Mahsulot</p>
+                            <div className="my-2">
+                                <Link href={`/product/${el?.slug}`}>
+                                    <a>
+                                        <strong>{el?.title}</strong>
+                                    </a>
+                                </Link>
+                            </div>
+                            <span className="product_type  ">
+                                {el?.file_type}
+                            </span>
+                            <div className="product_price_click my-3">
+                                <p>Narxi</p>
+                                <div></div>
+                                <strong>
+                                    {addPeriodToThousands(el?.discount_price)}{' '}
+                                    so'm
+                                </strong>
+                            </div>
+                        </figure>
+                    ))
+                ) : (
+                    <figure className="ps-block__total">
+                        <p>Mahsulot yo'q.</p>
+                    </figure>
+                )}
             </div>
+            <div className="checkout_footer">
+                    {(ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ) && (
+                        <figure>
+                            <figcaption className="product_price_click_all">
+                                <strong>Jami narx</strong>
+                                <div></div>
+                                <strong>{hisob} so'm </strong>
+                            </figcaption>
+                        </figure>
+                    )}
+                    {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
+                        <Link href={'/account/shopping-cart'}>
+                            <a>
+                                <div className="prevev_button">
+                                    {' '}
+                                    <i class="fa-solid fa-angles-left"></i>{' '}
+                                    orqaga
+                                </div>
+                            </a>
+                        </Link>
+                    ) : (
+                        ''
+                    )}
+                </div>
+             </div>
         </div>
     );
 };

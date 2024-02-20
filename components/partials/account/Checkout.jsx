@@ -18,24 +18,21 @@ const Checkout = () => {
 
 
 
+    console.log('ecomerce', ecomerce);
     return (
         <div className="ps-checkout ps-section--shopping">
             <div className="container">
-                <div className="ps-section__header">
-                    <h1>Hisob-kitob ma'lumotlari</h1>
-                </div>
+                    <h2 className='checkOut_header' >Xarid savati</h2>
+                    <hr className='pb-3' />
                 <div className="ps-section__content">
                     <div className="ps-form--checkout">
                         <div className="ps-form__content">
                             <div className="row">
-                                <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12">
-                                    <FormCheckoutInformation />
+                                <div className="col-xl-6 col-lg-6  col-md-6  col-12  ">
+                                     <ModulePaymentOrderSummary ecomerce={ecomerce} />
                                 </div>
-                                <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12  ps-block--checkout-order">
-                                    <div className="ps-form__orders">
-                                        <h3>Sizning buyurtmangiz</h3>
-                                        <ModulePaymentOrderSummary ecomerce={ecomerce} />
-                                    </div>
+                                <div className="col-xl-6 col-lg-6  col-md-6 col-12">
+                                    <FormCheckoutInformation />
                                 </div>
                             </div>
                         </div>

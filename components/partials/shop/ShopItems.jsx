@@ -439,7 +439,7 @@ const ShopItems = ({
                 {productItemsView}
             </div>
             <div className="ps-shopping__footer text-center">
-                {data?.length >= 40 ? (
+                {data?.length >= pageSize ? (
                     <div className="ps-pagination">
                         <Pagination className="mt-3"
                             total={dataCount}

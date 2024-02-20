@@ -153,7 +153,7 @@ function DashbordList() {
             render: (customer_info) => (
                 <div className='d-flex flex-column'>
                             <span className="truncate whitespace-nowrap"> {customer_info.name}</span>
-                            <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                            {/* <span className ="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span> */}
                 </div>
 
             ),
@@ -212,7 +212,7 @@ function DashbordList() {
             render: (customer_info) => (
                 <div className='d-flex flex-column'>
                             <span className="truncate whitespace-nowrap"> {customer_info.name}</span>
-                            <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                            {/* <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span> */}
                 </div>
 
             )
