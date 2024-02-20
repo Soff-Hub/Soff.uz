@@ -422,18 +422,18 @@ function Notifications() {
                                                     className="d-block"
                                                     href="https://t.me/soff_uz_bot">
                                                     <a target="_blank">
-                                                        <div className="d-flex row justify-content-start">
-                                                            <h5 className="fs-3 col-8 ">
+                                                        <div className="d-flex justify-content-start">
+                                                            <h5 className="fs-3 ms-2 " style={{color:'#239AD6'}} >
                                                                 Taklif
                                                                 xavolasini olish
                                                                 uchun telegram
                                                                 botga o'ting
                                                             </h5>
-                                                            <i
+                                                            {/* <i
                                                                 class="fa-brands fa-telegram fa-lg-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3 col-2"
                                                                 style={{
                                                                     color: '#6492e3',
-                                                                }}></i>
+                                                                }}></i> */}
                                                         </div>
                                                     </a>
                                                 </Link>

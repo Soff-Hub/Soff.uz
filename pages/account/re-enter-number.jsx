@@ -10,7 +10,7 @@ import Page404 from '../page/page-404';
 export default function QaytaNomerKiritish() {
     const [report, setReport] = useState(true);
     const [number, setNumber] = useState('');
-    const [telLenght, setTelLenght] = useState('');
+    // const [telLenght, setTelLenght] = useState('');
     const { user } = useSelector((state) => state.auth);
 
     const counter = (count) => {
@@ -49,11 +49,11 @@ export default function QaytaNomerKiritish() {
 
     const handleChange = (e) => {
         setNumber(e);
-        if (e[0] == '+') {
-            setTelLenght('13');
-        } else {
-            setTelLenght('');
-        }
+        // if (e[0] == '+') {
+        //     setTelLenght('13');
+        // } else {
+        //     setTelLenght('');
+        // }
     };
 
     return user?.access ? (
@@ -74,8 +74,8 @@ export default function QaytaNomerKiritish() {
                             placeholder="Raqam yoki email"
                             className="raqam-input"
                             onChange={(e) => handleChange(e.target.value)}
-                            defaultValue={'+998'}
-                            maxLength={telLenght}
+                            // defaultValue={'+998'}
+                            // maxLength={telLenght}
                         />
 
                         <div className="form-group submit">

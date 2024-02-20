@@ -39,8 +39,8 @@ const SellerPage = ({ seller }) => {
             url: '/',
         },
         {
-            text: seller?.results[0]
-                ? seller?.results[0]?.seller?.first_name
+            text: seller?.results?.[0]
+                ? seller?.results?.[0]?.seller?.first_name
                 : 'Loading...',
         },
     ];
@@ -59,18 +59,18 @@ const SellerPage = ({ seller }) => {
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
-                title={`Soff | Sotuvchi ${seller?.results[0]?.seller?.first_name} ${seller?.results[0]?.seller?.last_name}`}
-                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${seller?.results[0]?.seller?.first_name} ${seller?.results[0]?.seller?.last_name}ning barcha mahsulotlarini ko'rishingiz mumkin`}
+                title={`Soff | Sotuvchi ${seller?.results?.[0]?.seller?.first_name}  ${seller?.results?.[0]?.seller?.last_name}`}
+                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${seller?.results?.[0]?.seller?.first_name} ${seller?.results?.[0]?.seller?.last_name}ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
 
             <div className="ps-product-list mb-5">
                 <div className="container">
                     <div className="document-seller-about my-5 ">
                         <div style={{ textAlign: 'center' }}>
-                            {seller?.results[0]?.seller?.image_url ? (
+                            {seller?.results?.[0]?.seller?.image_url ? (
                                 <img
                                     alt="soff"
-                                    src={`${seller?.results[0]?.seller?.image_url}`}
+                                    src={`${seller?.results?.[0]?.seller?.image_url}`}
                                     className="profile__image"
                                 />
                             ) : (
@@ -83,8 +83,8 @@ const SellerPage = ({ seller }) => {
                                 flexDirection: 'column',
                             }}>
                             <h4>
-                                {seller?.results[0]?.seller?.first_name}{' '}
-                                {seller?.results[0]?.seller?.last_name}{' '}
+                                {seller?.results?.[0]?.seller?.first_name}{' '}
+                                {seller?.results?.[0]?.seller?.last_name}{' '}
                             </h4>
                             <span>
                                 Jami mahsulotlar soni -{' '}

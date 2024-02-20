@@ -12,7 +12,7 @@ const CheckoutOnePage = () => {
             url: '/',
         },
         {
-            text: 'Hisob - kitob ma\'lumotlari',
+            text: 'Xarid savati',
         },
     ];
 
@@ -20,7 +20,7 @@ const CheckoutOnePage = () => {
         <PageContainer footer={<FooterDefault />} title="Checkout">
             <div className="ps-page--simple">
                 <Meta
-                    title={"Soff | Hisob - kitob ma\'lumotlari"}
+                    title={"Soff | Xarid savati"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CheckoutOne />

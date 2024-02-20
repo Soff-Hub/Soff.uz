@@ -144,7 +144,7 @@ export default function ProductCategoryScreen({ category2 }) {
                             <ShopItems
                                 data={filteredData}
                                 columns={4}
-                                pageSize={40}
+                                pageSize={36}
                                 dataCount={count}
                                 setDataCount={setCount}
                                 categoryData={category2 || []}

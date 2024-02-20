@@ -46,6 +46,7 @@ function MyProductsLists() {
     const [selectValStatus, setSelectValStatus] = useState('');
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
+    const [count, setCount] = useState('')
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
@@ -86,6 +87,7 @@ function MyProductsLists() {
         );
         if (ItemsData?.results) {
             setData(ItemsData?.results);
+            setCount(ItemsData?.count)
             setPageCount(ItemsData?.count);
             setCurrPage(page);
         }
@@ -152,8 +154,10 @@ function MyProductsLists() {
             item.id,
             user?.access
         );
-        setView(ItemsData);
-        setLoading(false);
+        if (ItemsData) {
+            setView(ItemsData);
+            setLoading(false);
+        }
     }
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyProductsDelete(
@@ -546,7 +550,6 @@ function MyProductsLists() {
                   ),
               },
     ];
-
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -747,6 +750,7 @@ function MyProductsLists() {
                                     </div>
                                     {user?.role === 'seller' ? (
                                         <>
+                                         <h4 className='ms-2 mb-4'>Jami mahsulotlar soni {count} ta </h4>
                                             <Table
                                                 dataSource={data}
                                                 scroll={{ x: 1500 }}

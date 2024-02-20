@@ -5,6 +5,9 @@
 .yashil {
     color: $color-1st;
 }
+.btn_color{
+    color: #fff !important;
+}
 
 .tolov-usullari {
     display: flex;
@@ -336,9 +339,9 @@
 }
 
 .ps-block--checkout-order {
-    .ps-block__items a strong {
-        width: 67% !important;
-    }
+    // .ps-block__items a strong {
+    //     width: 67% !important;
+    // }
 }
 
 #acc-li-xl {
@@ -1675,6 +1678,10 @@
     position: absolute;
     top: 71%;
 }
+.colCard {
+    position: absolute;
+    top: 45%;
+}
 
 @media (min-width: 1500px) and (max-width: 2000px) {
     .colCard {
@@ -1710,8 +1717,7 @@
 
 @media (min-width: 1200px) and (max-width: 1300px) {
     .colCard {
-        position: absolute;
-        top: 64%;
+        top: 70%;
     }
 
     .bannerModal2 {
@@ -1725,12 +1731,6 @@
         top: -100%;
         left: 15%;
     }
-
-    // .bannerModal2Carousel {
-    //     top: 25%;
-    //     left: 70%;
-    //     max-width: 400px;
-    // }
 }
 
 @media (min-width: 1000px) and (max-width: 1200px) {
@@ -1744,6 +1744,10 @@
         position: fixed;
         top: 20%;
         left: -100%;
+    }
+    .colCard {
+        position: absolute;
+        top: 52%;
     }
 }
 
@@ -1794,14 +1798,7 @@
     }
 }
 
-@media (max-width: 992px) {
-    .tolov-usullari {
-        align-items: center !important;
-        .tolov-usullari {
-            align-items: center;
-        }
-    }
-}
+
 
 @media (max-width: 900px) {
     .bannerModal2Carousel {
@@ -1809,9 +1806,6 @@
         left: 25%;
         // height: 300px;
         max-width: 400px;
-    }
-    .tolov-usullari {
-        align-items: center;
     }
 }
 
@@ -1829,15 +1823,7 @@
 
     .colCard {
         position: absolute;
-        top: 52%;
-    }
-    .colCard {
-        position: absolute;
-        top: 52%;
-    }
-    .colCard2 {
-        position: absolute;
-        top: 71%;
+        top: 43%;
     }
 
     .bannerModal2 {
@@ -1856,6 +1842,19 @@
         left: -100%;
         width: 75%;
         max-width: 860px;
+    }
+}
+
+
+@media (min-width: 859px){
+    .colCard {
+        top: 43%;
+    }
+} 
+
+@media screen and (max-width: 768px) {
+    .tolov-usullari{
+        margin-top: 30px !important;
     }
 }
 
@@ -1927,7 +1926,7 @@
 @media (min-width: 400px) and (max-width: 500px) {
     .colCard {
         position: absolute;
-        top: 52%;
+        top: 45%;
     }
 
     .bannerModal2 {
@@ -1976,7 +1975,7 @@
 @media (max-width: 400px) {
     .colCard {
         position: absolute;
-        top: 52%;
+        top: 45%;
     }
 
     .bannerModal2 {

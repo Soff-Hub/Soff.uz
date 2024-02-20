@@ -11,31 +11,9 @@ function FormCheckoutInformationOne() {
     let arr = [];
     arr.push(id);
 
-    // const ProductToApi = async () => {
-    //     setMessage(false);
-    //     const data = {
-    //         documents: arr,
-    //     };
-    //     const token = {
-    //         headers: {
-    //             Authorization: `Bearer ${select} `,
-    //         },
-    //     };
-    //     const respons = await ClickRepository.postClick(data, token);
-    //     if (respons) {
-    //         const a = document.createElement('a');
-    //         a.href = `${respons?.data?.url}`;
-    //         a.rel = 'noopener noreferrer';
-    //         a.target = '_blank';
-    //         a.click();
-    //         a.remove();
-    //         setMessage(true);
-    //     }
-    // };
-
     return (
         <div className="tolov-usullari">
-            <h3 className='tolov-usullari-h3' style={{ fontWeight: '600', margin: '0' }}>To'lov ma'lumotlari</h3>
+            <h3 className='tolov-usullari-h3' style={{ fontWeight: '600', margin: '0' , padding: '0 15px' }}>To'lov ma'lumotlari</h3>
             <div className="d-flex aligin-content-center  rounded-5 px-3">
                 <CreditCard2 document={arr} />
             </div>

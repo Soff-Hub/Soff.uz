@@ -13,11 +13,11 @@ const CheckoutPage = () => {
             url: '/',
         },
         {
-            text: 'Xarid savati',
+            text: 'Savat',
             url: '/account/shopping-cart',
         },
         {
-            text: 'Hisob - kitob ma\'lumotlari',
+            text: 'Xarid savati',
         },
     ];
 
@@ -25,7 +25,7 @@ const CheckoutPage = () => {
         <PageContainer footer={<FooterDefault />} title="Checkout">
             <div className="ps-page--simple">
                 <Meta
-                    title={"Soff | Hisob - kitob ma\'lumotlari"}
+                    title={"Soff | Xarid savati"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <Checkout />

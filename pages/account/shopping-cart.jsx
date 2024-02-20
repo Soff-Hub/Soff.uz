@@ -31,7 +31,7 @@ const ShoppingCartScreen = () => {
             url: '/',
         },
         {
-            text: 'Xarid savati',
+            text: 'Savat',
         },
     ];
 
@@ -53,7 +53,7 @@ const ShoppingCartScreen = () => {
                         />
                         <div className="ps-section__cart-actions">
                             <Link href="/">
-                                <a className="ps-btn">Ortga</a>
+                                <a className="ps-btn btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} ><i class="fa-solid fa-angles-left"></i> Ortga</a>
                             </Link>
                         </div>
                     </div>
@@ -65,7 +65,7 @@ const ShoppingCartScreen = () => {
                                 />
                                 {state !== null ? (
                                     <Link href='/account/checkout' as='/account/checkout'>
-                                        <a className="ps-btn ps-btn--fullwidth"
+                                        <a className="ps-btn ps-btn--fullwidth btn_color "
 
                                         >
                                             Sotib olish
@@ -75,7 +75,7 @@ const ShoppingCartScreen = () => {
 
                                 ) : (
                                     <Link href="/account/register-user">
-                                        <a className="ps-btn ps-btn--fullwidth">
+                                        <a className="ps-btn ps-btn--fullwidth btn_color ">
                                             Sotib olish
                                         </a>
                                     </Link>
@@ -96,7 +96,7 @@ const ShoppingCartScreen = () => {
 
                         <div className="ps-section__cart-actions">
                             <Link href="/">
-                                <a className="ps-btn">Ortga</a>
+                                <a className="ps-btn btn_color btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} > <i class="fa-solid fa-angles-left"></i> Ortga</a>
                             </Link>
                         </div>
                     </div>
@@ -117,7 +117,7 @@ const ShoppingCartScreen = () => {
                     <div className="ps-section--shopping ps-shopping-cart">
                         <div className="container">
                             <div className="ps-section__header">
-                                <h1>Xarid savati</h1>
+                                <h1>Savat</h1>
                             </div>
                             {contentView}
                         </div>
