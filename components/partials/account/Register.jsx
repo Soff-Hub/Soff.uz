@@ -386,6 +386,7 @@ class Register extends Component {
                                 </button>
                             )}
                         </div>
+                        
                     </div>
                     <ModalTanishuv
                         dataBsTarget="exampleModalToggleEditCategory2"
