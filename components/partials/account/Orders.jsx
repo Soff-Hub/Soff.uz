@@ -182,7 +182,7 @@ function OrdersLists() {
             key: 'user',
         },
         {
-            title: 'Buyurtma nomi',
+            title: 'Mahsulot nomi',
             dataIndex: 'info',
             key: 'title',
             width: 350,

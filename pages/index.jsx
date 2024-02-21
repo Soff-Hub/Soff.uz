@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from 'react';
-
+import React from 'react';
 import PageContainer from '~/components/layouts/PageContainer';
 
 import HomeElectronicsPage from './home/electronic'
-import { baseUrl } from '~/repositories/Repository';
 import Meta from '~/components/shared/headers/Meta';
 import { useMemo } from 'react';
 
@@ -22,29 +20,6 @@ const HomepageDefaultPage = () => {
 };
 
 
-// export async function getServerSideProps() {
-//     try {
-//         const request = await fetch(baseUrl + 'customer/category-list/');
-//         if (!request.ok) {
-//             throw new Error('Request to the API failed with status ' + request.status);
-//         }
-
-//         const categoryResponse = await request.json();
-
-//         return {
-//             props: {
-//                 category: categoryResponse,
-//             },
-//         };
-//     } catch (error) {
-//         console.error('Error fetching data:', error);
-//         return {
-//             props: {
-//                 category: null,
-//             },
-//         };
-//     }
-// }
 
 
 
