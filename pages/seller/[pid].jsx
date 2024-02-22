@@ -67,10 +67,10 @@ const SellerPage = ({ seller }) => {
                 <div className="container">
                     <div className="document-seller-about my-5 ">
                         <div style={{ textAlign: 'center' }}>
-                            {seller?.results?.[0]?.seller?.image_url ? (
+                            {seller?.results?.[0]?.seller?.image ? (
                                 <img
                                     alt="soff"
-                                    src={`${seller?.results?.[0]?.seller?.image_url}`}
+                                    src={`${seller?.results?.[0]?.seller?.image}`}
                                     className="profile__image"
                                 />
                             ) : (
