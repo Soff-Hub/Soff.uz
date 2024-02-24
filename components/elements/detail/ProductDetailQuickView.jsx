@@ -11,6 +11,7 @@ import Image from 'next/image';
 import NextImageCard from '~/components/nextImagecard';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
+import { v4 as uuidv4 } from 'uuid';
 
 const ProductDetailQuickView = ({ product }) => {
     const [tag, setTag] = useState([]);
