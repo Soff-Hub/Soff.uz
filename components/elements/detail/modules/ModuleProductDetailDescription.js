@@ -16,7 +16,36 @@ const ModuleProductDetailDescription = ({ product, views }) => {
                 </li>
                 <li>
                     <strong>Turi : </strong> <div></div>{' '}
-                    <span className='file_type-color' >{product?.document?.file_type}</span>
+                    <span
+                        className="file_type-color"
+                        style={{
+                            backgroundColor:
+                                product?.document?.file_type === '.doc'
+                                    ? '#007DFF'
+                                    : product?.document?.file_type === '.xls' ||
+                                      product?.document?.file_type === '.xlsx'
+                                    ? '#69C700'
+                                    : product?.document?.file_type === '.ppt'
+                                    ? '#DC8452'
+                                    : product?.document?.file_type === '.pdf'
+                                    ? '#BD4851'
+                                    : product?.document?.file_type === '.avi'
+                                    ? '#6EB5E9'
+                                    : product?.document?.file_type === 'mp3'
+                                    ? '#88549E'
+                                    : product?.document?.file_type === 'html'
+                                    ? '#6D96A'
+                                    : product?.document?.file_type === 'zip'
+                                    ? '#E4BD3E'
+                                    : product?.document?.file_type === '.psd'
+                                    ? '#0053BD'
+                                    : product?.document?.file_type === '.pptx'
+                                    ? '#DC8452'
+                                    : '#007DFF',
+                        }}>
+                        {' '}
+                        {product?.document?.file_type}
+                    </span>
                 </li>
                 {product?.category?.name && (
                     <li>
