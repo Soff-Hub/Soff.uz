@@ -129,6 +129,9 @@ const CreditCard2 = ({ document }) => {
                 title: 'Muffaqiyatli!',
                 content: `${dataNews?.data?.msg}`,
             });
+
+          
+
             if (user?.role === 'seller') {
                 Router.push('/account/sellerproducts');
             } else {
@@ -137,8 +140,20 @@ const CreditCard2 = ({ document }) => {
             if (document?.length > 1) {
                 removeAll();
             }
+            if (dataNews?.data?.file_url) {
+                handleDownload(dataNews?.data?.file_url)
+            }
         }
     }
+
+    const handleDownload = (url) => {
+        if (typeof window !== 'undefined') {
+            const URL = url
+            window.location.href = URL
+        }
+
+    };
+
     useEffect(() => {
         if (resData?.status === 201) {
             setTime(120);
@@ -199,7 +214,7 @@ const CreditCard2 = ({ document }) => {
         setCardDate(inputValue);
         setNumberDate(formattedValue);
     };
-    console.log('carddata', numberCardVal, 'date', cardDate);
+
     return (
         <div className="row   mx-auto m-0">
             <div className=" px-4 rounded click-b">
@@ -284,6 +299,7 @@ const CreditCard2 = ({ document }) => {
                         </div>
                     </form>
                 </div>
+                <button onClick={() => handleDownload('https://api.soff.uz//media/documents/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC_%D0%B8%D1%88%D0%B8.doc')} > download</button>
             </div>
 
             <Modal
