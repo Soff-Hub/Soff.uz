@@ -11,6 +11,7 @@ export const initState = {
     top_category_lists: [],
     category: true,
     categorySlug: [],
+    id: null
 };
 
 function reducer(state = initState, actions) {
@@ -74,6 +75,8 @@ function reducer(state = initState, actions) {
 
         case actionTypes.CATEGORY_SLUG:
             return { ...state, ...{ categorySlug: actions.payload } };
+        case actionTypes.BEGINROLE:
+            return { ...state, ...{ id: actions.payload } };
         default:
             return state;
     }

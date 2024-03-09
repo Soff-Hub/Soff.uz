@@ -7,6 +7,7 @@ import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 import ModalTanishuv from './modules/Modal-tanishuv';
 import { withRouter } from 'next/router';
+import { begin } from '~/store/auth/action';
 
 class Register extends Component {
     constructor(props) {
@@ -95,6 +96,7 @@ class Register extends Component {
                 });
                 modal.update;
             } else if (user.status == 200 || user.status == 201) {
+                this.props.dispatch(begin({ id : user.data.first }));
                 localStorage.setItem('token', user.data.access);
                 localStorage.setItem('via_', user?.data?.via_);
                 localStorage.setItem('data', JSON.stringify(e));
