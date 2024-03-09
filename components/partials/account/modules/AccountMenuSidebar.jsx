@@ -129,7 +129,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     }, []);
 
-    useEffect(() => ProfileUsers(), [renderProfile]);
+    useEffect(() => {
+        ProfileUsers()
+    }, [renderProfile]);
 
     useEffect(() => {
         ProfileUsersToken();

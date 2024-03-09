@@ -45,7 +45,9 @@ function Notifications() {
         }
     }
 
-    useEffect(() => ProfileUsers(), [renderProfile]);
+    useEffect(() => {
+        ProfileUsers()
+    }, [renderProfile]);
 
     async function handleClickEdit(e) {
         e.preventDefault();
@@ -72,7 +74,6 @@ function Notifications() {
         e.target.reset();
         setLoading(false);
         if (ItemsData) {
-            console.log(ItemsData);
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -108,7 +109,6 @@ function Notifications() {
             modal.update;
         }
     }
-    console.log('=>', image);
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
