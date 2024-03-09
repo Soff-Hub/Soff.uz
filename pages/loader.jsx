@@ -3,7 +3,7 @@ import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { PacmanLoader } from 'react-spinners';
-import { accountLinksReducers, login } from '~/store/auth/action';
+import { accountLinksReducers, begin, login } from '~/store/auth/action';
 
 export let accountAdminLinks = [
     {
@@ -118,13 +118,14 @@ export let cutomerAccountLink = [
 
     useEffect(() => {
         if (asPath.split('').length > 10) {
-            const role = asPath.slice(-12);
+            const roleBegin =  asPath.slice(-1)
+            const role = asPath.slice(-20).split('&')[0];
             console.log(role, typeof(role));
             const tokenArr = asPath.split('token=');
             const token = tokenArr[1]?.split('');
-            const list = token?.reverse()?.splice(0, 12);
+            const list = token?.reverse()?.splice(0, 20);
             const tokenText = token?.reverse()?.join('');
-            console.log('++++', tokenText);
+            console.log('TokenText', tokenText);
             localStorage.setItem('token', tokenText);
             if (role === '38a443b1144e') {
                 const data = {
@@ -139,6 +140,7 @@ export let cutomerAccountLink = [
                 }
                 dispatch(login({ user: data, data: data})); 
             }
+            dispatch(begin({id: roleBegin}))
         }
 
         if (user?.role === 'admin') {

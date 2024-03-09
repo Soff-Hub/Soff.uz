@@ -21,6 +21,8 @@ const MyAccountPage = () => {
 
     const { user } = useSelector(state => state.auth)
 
+    
+
     return (
         user?.role === 'admin' || user?.role === 'seller' ? <PageContainer footer={<FooterDefault />} title="Address">
             <div className="ps-page--my-account">

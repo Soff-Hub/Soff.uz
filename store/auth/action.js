@@ -12,7 +12,12 @@ export const actionTypes = {
     TOP_CATEGORY_LISTS: 'TOP_CATEGORY_LISTS',
     CATEGORY: 'CATEGORY',
     CATEGORY_SLUG:'CATEGORY_SLUG',
+    BEGINROLE: 'BEGINROLE'
 };
+
+export function begin(payload) {
+    return { type: actionTypes.BEGINROLE, payload };
+}
 
 export function login({ user, data }) {
     console.log('action', user, data);

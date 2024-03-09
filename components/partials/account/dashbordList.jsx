@@ -3,14 +3,12 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Pagination, Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
-// import Example from './Chart';
 import { useSelector } from 'react-redux';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 const { TabPane } = Tabs;
 import { Tabs } from 'antd';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import Axios from 'axios';
 import Link from 'next/link';
 import Example from './Chart';
 
@@ -27,7 +25,9 @@ function DashbordList() {
     const [year, setYear] = useState(new Date().getFullYear())
     const [month, setMonth] = useState(null)
 
-    const { accountLinks, user } = useSelector(state => state.auth)
+    const { accountLinks, user} = useSelector(state => state.auth)
+    // Birinchi marta kirgan bolsa id===0 bo'ladi , aks holda 1
+    const{ id }= useSelector(state => state.auth.beginRole)
 
     function addPeriodToThousands(number) {
         const numStr = String(number);

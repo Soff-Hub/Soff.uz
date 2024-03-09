@@ -153,33 +153,8 @@ const PageContainer = ({
     const dispatch = useDispatch();
     const Router = useRouter();
     const query = Router.route;
-    // const { asPath } = Router;
-
 
     useEffect(() => {
-        // if (asPath.split('').length > 10) {
-        //     const role = asPath.slice(-12);
-        //     const tokenArr = asPath.split('token=');
-        //     const token = tokenArr[1]?.split('');
-        //     const list = token?.reverse()?.splice(0, 12);
-        //     const tokenText = token?.reverse()?.join('');
-        //     localStorage.setItem('token', tokenText);
-        //     if (role === '38a443b1144e') {
-        //         console.log('jhjhgjhgjgj');
-        //         const data = {
-        //             access: tokenText,
-        //             role : 'seller'
-        //         }
-        //         dispatch(login({ user: data, data: data}));
-        //     }else if (role === '3a373fb190f8'){
-        //         const data = {
-        //             access: tokenText,
-        //             role : 'customer'
-        //         }
-        //         dispatch(login({ user: user.data, data:data}));
-        //     }
-        // }
-
         if (user?.role === 'admin') {
             dispatch(accountLinksReducers(accountAdminLinks));
         }
