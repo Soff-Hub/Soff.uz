@@ -47,7 +47,6 @@ class Login extends Component {
         this.setState({ report: false });
         const { loginUser } = useAuth();
         const user = await loginUser(e);
-        console.log(user);
         if (user) {
             if (user.status >= 400) {
                 this.setState({ report: true });
@@ -57,7 +56,6 @@ class Login extends Component {
                     type: 'error',
                 });
             } else {
-                console.log('login user', user)
                 this.props.dispatch(login({ user: user.data, data: e }));
                 this.props.dispatch(begin({ id : user.data.first }));
                 this.setState({ report: true });
@@ -123,9 +121,7 @@ class Login extends Component {
 
     render() {
         const { router } = this.props;
-        console.log(router.query);
         const { role } = router.query;
-        console.log(role);
         return (
             <div className=" pb-5 " style={{ backgroundColor: '#f1f1f1' }}>
                 <div className="container">

@@ -21,7 +21,6 @@ const EmailLists = () => {
     const [subject, setSubject] = useState(null);
 
     const OnChangeSelect = (event) => {
-        console.log('um', event);
         setEmail(event);
     };
 
@@ -112,7 +111,6 @@ const EmailLists = () => {
 
     const OnChangeSelectFull = (event) => {
         setUserRole(event);
-        console.log(event);
     };
 
     async function GetAllUsers() {

@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ModuleProductDetailDescription = ({ product, views }) => {
-    console.log(views);
     return (
         <div className="ps-product__desc">
             <strong className="fs-4"> Qisqa tavsif </strong>

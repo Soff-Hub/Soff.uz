@@ -8,8 +8,6 @@ import { Modal } from 'antd';
 import { fileDownloader, fileDownloaderSale } from '~/utilities/common-helpers';
 
 const ModuleDetailShoppingActions = ({ product, document }) => {
-    console.log('document => ', document);
-
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();

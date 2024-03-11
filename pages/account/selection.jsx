@@ -9,8 +9,6 @@ const Selection = () => {
     const { user } = useSelector((state) => state.auth);
     const router = useRouter()
     const {select} = router.query
-    console.log(select);
-
     return user?.access ? (
         <Page404 />
     ) : (

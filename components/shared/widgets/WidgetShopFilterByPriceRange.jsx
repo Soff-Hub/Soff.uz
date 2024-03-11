@@ -93,7 +93,6 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount 
     function handleChangeRange(value) {
         filterByPrice(value[0], value[1]);
         setDefVal(value);
-        console.log(value);
     }
 
     const chaildPrice = async (id) => {

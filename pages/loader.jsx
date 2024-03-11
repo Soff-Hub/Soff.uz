@@ -120,12 +120,10 @@ export let cutomerAccountLink = [
         if (asPath.split('').length > 10) {
             const roleBegin =  asPath.slice(-1)
             const role = asPath.slice(-20).split('&')[0];
-            console.log(role, typeof(role));
             const tokenArr = asPath.split('token=');
             const token = tokenArr[1]?.split('');
             const list = token?.reverse()?.splice(0, 20);
             const tokenText = token?.reverse()?.join('');
-            console.log('TokenText', tokenText);
             localStorage.setItem('token', tokenText);
             if (role === '38a443b1144e') {
                 const data = {

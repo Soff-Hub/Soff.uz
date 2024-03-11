@@ -64,7 +64,6 @@ function ChartSeller({ year, month }) {
         const arr3 = []
         const ItemsChartData = await GetRepository.getChartListsSeller(user?.access, year, month, id);
         if (ItemsChartData) {
-            console.log('itemdata', ItemsChartData);
             for (let i = 0; i < ItemsChartData.length; i++) {
                 arr.push(ItemsChartData[i].total_price);
                 arr2.push(ItemsChartData[i].count);

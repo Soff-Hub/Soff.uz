@@ -53,10 +53,6 @@ const Posts = () => {
         },
     ];
 
-    const onChangeTabs = (key) => {
-        console.log(key);
-    };
-
     async function GetItemsCategoryLists() {
         const ItemsData = await GetRepository.getAllCategoryLists();
         if (ItemsData) {
@@ -214,7 +210,6 @@ const Posts = () => {
                     "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             });
         } else {
-            console.log(patchItems);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',

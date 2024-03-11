@@ -50,7 +50,6 @@ const ShopItems = ({
     async function getCategry() {
         const responseData = await ProductRepository.getCategoryParent().then(() => setLoad(true))
         if (responseData?.length > 0) {
-            console.log("responseData => ", responseData);
             dispatch(CategorySlug(responseData?.data?.results));
             // categorySlug
         }
@@ -86,10 +85,6 @@ const ShopItems = ({
 
     useEffect(() => {
         data !== null ? setSuccess(false) : setSuccess(true);
-
-        console.log("=>", data);
-
-
         handleSetColumns();
         setNewData(data);
         if (true) {
@@ -117,7 +112,6 @@ const ShopItems = ({
     }, [slug])
 
     const handlePagination = async (e) => {
-        console.log('pagination', e);
         setPage(e);
         if (chaildId) {
             const respons = await ProductRepository.getFilderProduct(

@@ -14,7 +14,6 @@ import { Category_Lists, TopCategory_Lists } from '~/store/auth/action';
 import NextImageCard from '~/components/nextImagecard';
 
 const HeaderElectronic = ({kk}) => {
-    console.log('next function category => ', kk);
     const {
         category_lists: categoryData,
         top_category_lists: topCategoryData,
@@ -106,7 +105,6 @@ export async function getServerSideProps() {
     try {
         const request = await fetch(baseUrl + 'seller/admin/category-parent/');
         if (!request.ok) {
-            console.log('-->',request)
             throw new Error('Request to the API failed with status ' + request.status);
         }
         const categoryResponse = await request.json();

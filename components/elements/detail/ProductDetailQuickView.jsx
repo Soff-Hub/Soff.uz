@@ -56,7 +56,6 @@ const ProductDetailQuickView = ({ product }) => {
         getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
     }, []);
 
-    console.log("views", views);
     return (
         <div className="ps-product--detail ps-product--quickview">
             <div className="ps-product__header">

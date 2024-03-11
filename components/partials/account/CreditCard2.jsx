@@ -59,7 +59,6 @@ const CreditCard2 = ({ document }) => {
             cardDate,
             user?.access
         );
-        console.log(ItemsData);
         if (ItemsData?.status === 201) {
             setMessage(true);
             setOpen(true);

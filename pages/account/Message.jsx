@@ -30,7 +30,6 @@ const Xabar = (e) => {
                 let data = {
                     code: `${kod}`,
                 };
-                console.log('kod', kod);
                 const { verifyCode } = useAuth();
                 const user = await verifyCode(data);
     

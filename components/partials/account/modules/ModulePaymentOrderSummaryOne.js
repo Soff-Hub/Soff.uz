@@ -38,7 +38,6 @@ const ModulePaymentOrderSummaryOne = () => {
     }
     const hisob = addPeriodToThousands(data?.discount_price);
 
-    console.log('data', data);
     return (
         <div className="ps-block--checkout-order">
             <h3>Buyurtma mahsulotlari</h3>

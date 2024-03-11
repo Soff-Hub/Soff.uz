@@ -160,7 +160,6 @@ export async function getServerSideProps(context) {
     const { slug } = context.params
     const res = await fetch(`${baseUrl}customer/parent-category-list/?category=${slug}`);
     const responseData = await res.json();
-    console.log('customer/parent-category-list/');
 
     return {
         props: {
