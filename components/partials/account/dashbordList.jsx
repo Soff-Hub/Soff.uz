@@ -27,7 +27,7 @@ function DashbordList() {
 
     const { accountLinks, user} = useSelector(state => state.auth)
     // Birinchi marta kirgan bolsa id===0 bo'ladi , aks holda 1
-    const{ id }= useSelector(state => state.auth.beginRole)
+    // const{ id }= useSelector(state => state.auth.beginRole)
 
     function addPeriodToThousands(number) {
         const numStr = String(number);

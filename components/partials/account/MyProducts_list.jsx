@@ -63,7 +63,7 @@ function MyProductsLists() {
                   : date[1].$M + 1
           }-${date[1].$D}`
         : '';
-    const dataFormat = date ? `${dateFormat0}&end_date=${dateFormat1}` : '';
+    const dataFormat = date ? `${dateFormat0}&date_range_before=${dateFormat1}` : '';
     const { accountLinks, user, products } = useSelector((state) => state.auth);
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);

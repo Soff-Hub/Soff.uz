@@ -121,7 +121,7 @@ class GetRepository {
     async getMyProducts(page, category, tagItems, date, status, search, token) {
         const endPoint = `product-list/?page=${page}&category=${
             category || ''
-        }${tagItems ? `&tag=${tagItems}` : ``}&start_date=${
+        }${tagItems ? `&tag=${tagItems}` : ``}&date_range_after=${
             date || ''
         }&status=${status || ''}&search=${search}`;
 
