@@ -85,7 +85,6 @@ const SellerAccount = ({ seller }) => {
     ];
 
     async function GetSellerList(val) {
-        console.log('val', val);
         if (user?.access) {
             const ItemsData = await GetRepository.getSellerLists(
                 pid,

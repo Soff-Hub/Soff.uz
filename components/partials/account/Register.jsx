@@ -155,12 +155,9 @@ class Register extends Component {
     }
 
     render() {
-        console.log(this.props.url);
         const { router } = this.props;
         const { id } = router.query;
         const { pid } = router.query;
-        console.log('pid', pid);
-
         return (
             <div className="ps-my-account">
                 <div className="container">

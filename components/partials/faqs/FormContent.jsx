@@ -6,9 +6,7 @@ const App = () => {
     const [form] = Form.useForm();
     const { feedbackPost } = useAuth();
     const onFinish = async (values) => {
-        console.log('Received values of form: ', values);
         const respons = await feedbackPost(values);
-        console.log(respons);
         if (respons.status === 201) {
             const modal = Modal.success({
                 centered: true,

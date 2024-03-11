@@ -34,7 +34,6 @@ function Notifications() {
         GetItems(pageNum, search);
     };
 
-    console.log('sotuvchi', data);
     useEffect(() => {
         GetItems(currPage, search);
     }, [searchDebounce]);

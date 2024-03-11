@@ -144,7 +144,6 @@ function ProductsLists() {
 
 
     const handlePagination = (pageNum) => {
-        console.log(pageNum);
         setCurrPage(pageNum)
         GetItemsProductsLists(pageNum, category_id, dataValStatus, dataFormat, null, dateArxiv, search)
     }

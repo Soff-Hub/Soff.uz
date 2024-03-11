@@ -365,8 +365,6 @@ class GetRepository {
 
     async getCustomerLists(id, token) {
         const endPoint = `customer-info/${id}`;
-        console.log('res token', token);
-
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

@@ -53,7 +53,6 @@ const SellerPage = ({ seller }) => {
 
  
 
-    console.log('seller', seller);
     // let productView = <SkeletonProductDetail />;
     return (
         <PageContainer>

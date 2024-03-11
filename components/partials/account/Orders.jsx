@@ -40,7 +40,6 @@ function OrdersLists() {
     const dataFormat = date ? `${dateFormat0}&end_date=${dateFormat1}` : '';
 
     async function GetItemsProducts(page, status, date, searchVal, userRole) {
-        console.log('user role', userRole);
         const ItemsData = await GetRepository.getOrdersLists(
             page,
             status,

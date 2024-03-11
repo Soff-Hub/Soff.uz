@@ -53,7 +53,6 @@ const ElectronicHeaderActions = ({ auth }) => {
 
             // Yangi WebSocket ulanishini yaratish
             newSocket.onopen = function () {
-                console.log('WebSocket ulanishi amalga oshirildi.');
             };
 
             // Xabarlarni qabul qilish uchun funksiya

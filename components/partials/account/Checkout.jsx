@@ -18,7 +18,6 @@ const Checkout = () => {
 
 
 
-    console.log('ecomerce', ecomerce);
     return (
         <div className="ps-checkout ps-section--shopping">
             <div className="container">

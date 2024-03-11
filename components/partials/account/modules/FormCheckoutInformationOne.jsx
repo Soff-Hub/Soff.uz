@@ -6,8 +6,6 @@ function FormCheckoutInformationOne() {
     const Router = useRouter();
     const { id } = Router.query;
 
-    console.log('log', id);
-
     let arr = [];
     arr.push(id);
 
