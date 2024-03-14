@@ -107,9 +107,9 @@ class Login extends Component {
 
     componentDidMount() {
         this.defaultRoutePage();
-        this.setState({
-            value: JSON.parse(localStorage.getItem('data'))?.phone_or_email,
-        });
+        // this.setState({
+        //     value: JSON.parse(localStorage.getItem('data'))?.phone_or_email,
+        // });
     }
 
     handleEnterKeyPress = (e) => {

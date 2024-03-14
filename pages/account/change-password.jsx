@@ -126,7 +126,7 @@ const Xabar = (e) => {
                                     <Input
                                         required
                                         className="form-control mb-4"
-                                        type="number"
+                                        type="text"
                                         placeholder="Kodni kiriting..."
                                         maxLength="4"
                                         min="0"
