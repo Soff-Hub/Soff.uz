@@ -44,6 +44,7 @@ class Login extends Component {
     };
 
     handleLoginSubmit = async (e) => {
+        console.log('login', e);
         this.setState({ report: false });
         const { loginUser } = useAuth();
         const user = await loginUser(e);
@@ -107,9 +108,9 @@ class Login extends Component {
 
     componentDidMount() {
         this.defaultRoutePage();
-        // this.setState({
-        //     value: JSON.parse(localStorage.getItem('data'))?.phone_or_email,
-        // });
+        this.setState({
+            value: JSON.parse(localStorage.getItem('data'))?.phone_or_email,
+        });
     }
 
     handleEnterKeyPress = (e) => {

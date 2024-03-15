@@ -32,7 +32,7 @@ const ProfileImage = ({setImage}) => {
         onChange={onChange}
         onPreview={onPreview}
       >
-        {fileList.length < 1 && '+ Upload'}
+        {fileList.length < 1 && '+ Yuklash'}
       </Upload>
     </ImgCrop>
   );

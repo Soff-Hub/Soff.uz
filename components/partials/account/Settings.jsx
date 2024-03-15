@@ -46,7 +46,7 @@ function Notifications() {
     }
 
     useEffect(() => {
-        ProfileUsers()
+        ProfileUsers();
     }, [renderProfile]);
 
     async function handleClickEdit(e) {
@@ -64,7 +64,9 @@ function Notifications() {
             'last_name',
             profileData?.last_name ? profileData?.last_name : profile?.last_name
         );
-        formData.append('image', image?.originFileObj);
+        if (image?.originFileObj) {
+            formData.append('image', image?.originFileObj);
+        }
 
         const ItemsData = await PatchRepository.getPatchProfile(
             formData,
@@ -179,9 +181,9 @@ function Notifications() {
                                                     </div>
 
                                                     <button
-                                                     style={{
-                                                        maxHeight:'50px'
-                                                    }}
+                                                        style={{
+                                                            maxHeight: '50px',
+                                                        }}
                                                         type="submit"
                                                         className="btn btn-success py-3 col-md-2  ">
                                                         {loading ? (
@@ -335,9 +337,10 @@ function Notifications() {
                                                                     </div>
 
                                                                     <button
-                                                                    style={{
-                                                                        maxHeight:'50px'
-                                                                    }}
+                                                                        style={{
+                                                                            maxHeight:
+                                                                                '50px',
+                                                                        }}
                                                                         type="submit"
                                                                         className="btn btn-success py-3 col-md-2  ">
                                                                         {loading ? (
@@ -423,7 +426,11 @@ function Notifications() {
                                                     href="https://t.me/soff_uz_bot">
                                                     <a target="_blank">
                                                         <div className="d-flex justify-content-start">
-                                                            <h5 className="fs-3 ms-2 " style={{color:'#239AD6'}} >
+                                                            <h5
+                                                                className="fs-3 ms-2 "
+                                                                style={{
+                                                                    color: '#239AD6',
+                                                                }}>
                                                                 Taklif
                                                                 xavolasini olish
                                                                 uchun telegram

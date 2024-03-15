@@ -21,6 +21,7 @@ const EmailLists = () => {
     const [subject, setSubject] = useState(null);
 
     const OnChangeSelect = (event) => {
+        console.log('event',);
         setEmail(event);
     };
 
@@ -34,12 +35,7 @@ const EmailLists = () => {
 
             const data = {
                 user_role: userRole,
-                //  email?.find((el) =>
-                //     el === 'customer' || el === 'seller' || el === '0'
-                //         ? el
-                //         : null
-                // ),
-                users_id: email,
+                users_id: email ? email : [],
                 subject,
                 text: `<div style="padding: 0; background-color: #fff; max-width: 600px; margin: 0 auto;">
 
@@ -71,6 +67,7 @@ const EmailLists = () => {
             </div>`,
                 text_site: text,
             };
+
             const ItemsData = await PostsRepository.EmailSend(
                 data,
                 user?.access
@@ -101,10 +98,12 @@ const EmailLists = () => {
         setLoading(false);
     }
     const validateEmail = (rule, value) => {
-        if (!email || !value) {
-            return Promise.reject(
-                'Iltimos, birorini tanlang yoki matn kiriting'
-            );
+        if (!userRole) {
+            if (!email || !value) {
+                return Promise.reject(
+                    'Iltimos, birorini tanlang yoki matn kiriting'
+                );
+            }
         }
         return Promise.resolve();
     };
@@ -131,6 +130,7 @@ const EmailLists = () => {
 
     useEffect(() => {
         if (data?.length > 0) {
+            console.log('data', data);
             setOption(
                 data?.map((el) => ({
                     label:
@@ -144,19 +144,6 @@ const EmailLists = () => {
             );
         }
     }, [data]);
-
-    // console.log('option', [ {
-    //   label:' Barcha Foydalanuvchilar',
-    //   value : '0'
-    // },
-    // {
-    //   label:'Barcha Sotuvchilar',
-    //   value : 'seller'
-    // },
-    // {
-    //   label:'Barcha Xaridorlar',
-    //   value : 'customer'
-    // }, ...option]);
 
     return (
         <section className="ps-my-account ps-page--account pb-5 p-0">
