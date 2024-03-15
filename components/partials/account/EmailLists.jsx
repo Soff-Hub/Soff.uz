@@ -115,9 +115,15 @@ const EmailLists = () => {
     async function GetAllUsers() {
         if (user?.access) {
             const ItemsData = await GetRepository.getAllUserLists(user?.access);
+            const dataArr = []
             if (ItemsData) {
-                setData(ItemsData);
+                for (const iterator of ItemsData) {
+                    if (iterator?.data) {
+                        dataArr.push(iterator)
+                    }
+                }
             }
+            setData(dataArr);
         }
     }
 
