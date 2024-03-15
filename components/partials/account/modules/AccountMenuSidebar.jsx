@@ -56,7 +56,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         if (socket) {
             socket.addEventListener('message', (event) => {
                 setWebData(JSON.parse(event.data));
-                console.log(JSON.parse(event.data));
             });
         }
     }, [socket]);
@@ -110,7 +109,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         if (socketApplication) {
             socketApplication.onmessage = (event) => {
                 setApplicationData(JSON.parse(event.data));
-                console.log(JSON.parse(event.data));
             };
         }
     }, [socketApplication]);
