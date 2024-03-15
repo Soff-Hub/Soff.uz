@@ -238,7 +238,7 @@ const EmailLists = () => {
                                     loading={loading}
                                     htmlType="submit"
                                     style={{ width: '100%', height: '45px' }}
-                                    className="btn-success">
+                                    className="btn-success btn-send-email">
                                     <span
                                         style={{
                                             color: '#fff',

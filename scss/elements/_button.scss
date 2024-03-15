@@ -3,6 +3,11 @@ button {
     @include transition(all 0.4s ease);
 }
 
+.btn-send-email{
+    &:hover{
+        background-color: $color-1st !important;
+    }
+}
 
 .taklif-div{
     display: flex;
