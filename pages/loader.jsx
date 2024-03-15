@@ -115,7 +115,7 @@ export let cutomerAccountLink = [
     const Router = useRouter();
     const query = Router.route;
     const { asPath } = Router;
-
+console.log('query', query);
     useEffect(() => {
         if (asPath.split('').length > 10) {
             const roleBegin =  asPath.slice(-1)
