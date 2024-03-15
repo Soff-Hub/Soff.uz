@@ -298,7 +298,7 @@ const CreditCard2 = ({ document }) => {
                         </div>
                     </form>
                 </div>
-                <button onClick={() => handleDownload('https://api.soff.uz//media/documents/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC_%D0%B8%D1%88%D0%B8.doc')} > download</button>
+                {/* <button onClick={() => handleDownload('https://api.soff.uz//media/documents/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC_%D0%B8%D1%88%D0%B8.doc')} > download</button> */}
             </div>
 
             <Modal
