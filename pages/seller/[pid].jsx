@@ -12,27 +12,30 @@ import ProductRepository from '~/repositories/ProductRepository';
 const SellerPage = ({ seller }) => {
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
-    const router = useRouter()
-    const {pid} = router.query
+    const router = useRouter();
+    const { pid } = router.query;
 
     const getSellerProduct = async (slug) => {
-        const respons = await ProductRepository.getSellerProductSlug(slug, page)
+        const respons = await ProductRepository.getSellerProductSlug(
+            slug,
+            page
+        );
         if (respons) {
-            console.log(respons.data)
-            setData(respons.data)
-        }
-    }
-
-    const handlePagination = async (e) => {
-        setPage(e)
-        console.log(e);
-        const respons = await ProductRepository.getSellerProductSlug(pid, e)
-        if (respons) {
-            console.log(respons.data)
-            setData(respons.data)
+            console.log(respons.data);
+            setData(respons.data);
         }
     };
-    
+
+    const handlePagination = async (e) => {
+        setPage(e);
+        console.log(e);
+        const respons = await ProductRepository.getSellerProductSlug(pid, e);
+        if (respons) {
+            console.log(respons.data);
+            setData(respons.data);
+        }
+    };
+
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
@@ -47,11 +50,9 @@ const SellerPage = ({ seller }) => {
 
     useEffect(() => {
         if (pid) {
-            getSellerProduct(pid)
+            getSellerProduct(pid);
         }
-    },[pid])
-
- 
+    }, [pid]);
 
     // let productView = <SkeletonProductDetail />;
     return (
@@ -105,17 +106,21 @@ const SellerPage = ({ seller }) => {
                             </div>
                         ))}
                     </div>
-
-                    <div className="text-center my-4">
-                    <Pagination 
-                    total={data?.count}
-                    pageSize={40}
-                    responsive={true}
-                    showSizeChanger={false}
-                    current={page}
-                    showTotal={(total, range) => `${total} ta dan ${range[0]}-${range[1]} oralig'i `}
-                    onChange={(e) => handlePagination(e)} />
-                    </div>
+                    {data?.count >= 40 && (
+                        <div className="text-center my-4">
+                            <Pagination
+                                total={data?.count}
+                                pageSize={40}
+                                responsive={true}
+                                showSizeChanger={false}
+                                current={page}
+                                showTotal={(total, range) =>
+                                    `${total} ta dan ${range[0]}-${range[1]} oralig'i `
+                                }
+                                onChange={(e) => handlePagination(e)}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
         </PageContainer>
