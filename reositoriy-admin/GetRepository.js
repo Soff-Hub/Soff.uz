@@ -95,7 +95,7 @@ class GetRepository {
     ) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
-        }?page=${page}&category=${category || ''}&start_date=${
+        }?page=${page}&category=${category || ''}&date_range_after=${
             date || ''
         }&status=${dataValStatus || ''}&arxiv=${arxiv || ''}&search=${
             search || ''
