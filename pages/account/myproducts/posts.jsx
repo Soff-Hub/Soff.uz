@@ -669,7 +669,7 @@ const Posts = () => {
                         <input
                             required
                             type="file"
-                            onChange={(e) => setFileImgFile(e.target.files[0])}
+                            onChange={(e) => (setFileImgFile(e.target.files[0]), console.log("product"))}
                             accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
                         />
                     </label>
