@@ -80,10 +80,15 @@ const ProductDefaultPage = ({ product, similar }) => {
         }
         
     }, [user?.access]);
+
     useEffect(() => {
         localStorage.getItem("uuid") ? '' : localStorage.setItem("uuid", uuidv4())
-        getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
+        
     }, [])
+
+    useEffect(() => {
+        getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
+    }, [views])
 
     const breadCrumb = [
         {
