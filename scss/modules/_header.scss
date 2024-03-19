@@ -294,6 +294,10 @@
     }
 
     .header__content {
+        // background-image: url('../../public//static//img/soff/spring2\ 111.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position-x: right;
         padding: 20px 0;
 
         .menu--product-categories {
