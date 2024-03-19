@@ -84,6 +84,7 @@ const HeaderElectronic = ({kk}) => {
                     <div className="header__content-right">
                         <ElectronicHeaderActions />
                     </div>
+                   
                 </div>
             </div>
             <nav className="navigation">

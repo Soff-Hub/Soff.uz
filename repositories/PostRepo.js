@@ -6,14 +6,14 @@ class PostRepo {
     // }
 
     async getWishlistPost(payload) {
-        const token = localStorage.getItem('token')
-        
+        const token = localStorage.getItem('token');
+
         const config = {
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json',
             },
-        }
+        };
         const reponse = await Repository.post(
             `${baseUrl}customer/wishlist-create/`,
             payload,

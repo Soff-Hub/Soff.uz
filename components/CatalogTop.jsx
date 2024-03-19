@@ -63,7 +63,7 @@ console.log('category', data);
                                                 </h4>  
                                             }
                                             <ul>
-                                                {category.child.length > 0 ?
+                                                {category.child.length > 0 && category.id !== 46 && category.id !== 47 && category.id !== 55 ?
                                                     category.child
                                                         .slice(0, 3)
                                                         .map((link) => {
@@ -87,12 +87,12 @@ console.log('category', data);
                                                             );
                                                         }) : 
                                                         <li>
-                                                            Tez orada...
+                                                            Tez kunda...
                                                         </li>
                                                         
                                                         }
-                                                {category?.child?.length >
-                                                    0 && (
+                                                {category?.child?.length  >
+                                                    0 && category.id !== 46 && category.id !== 47 && category.id !== 55 && (
                                                     <li>
                                                         <Link
                                                             href={`/category/${category.slug}`}

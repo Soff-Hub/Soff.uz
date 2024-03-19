@@ -148,7 +148,7 @@ const SellerAccount = ({ seller }) => {
                     ) : (
                         <span>
                             <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                            Faol emas
+                            {status}
                         </span>
                     )}
                 </span>
