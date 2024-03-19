@@ -1,4 +1,6 @@
 
+
+
 .slick-list,
 .slick-slider,
 .slick-track {
@@ -98,5 +100,5 @@
 }
 
 .slick-arrow.slick-hidden {
-    display: none
+    /* display: none */
 }
