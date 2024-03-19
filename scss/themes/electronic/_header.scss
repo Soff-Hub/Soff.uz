@@ -1,6 +1,10 @@
 .header--electronic {
     background-color: #022335;
-
+    
+    // background-image: url('../../../public/static/img/spring-removebg.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-y: bottom;
     .header__extra {
         i {
             color: #ffffff;

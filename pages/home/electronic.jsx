@@ -12,11 +12,13 @@ import Meta from '~/components/shared/headers/Meta';
 import Link from 'next/link';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
+import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
 
 const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
     const [category, setCategory] = useState([])
     const [freeProducts, setFreeProducts] = useState({})
+    const [topSellers, setTopSellers] = useState({})
 
     const { setAllCartItem } = useCart();
     const { setAllSaved } = useWishlist();
@@ -38,10 +40,22 @@ const HomeElectronicsPage = () => {
             promotional_sliders: [...responseData.data]
         });
     }
+    async function getTopSellers() {
+        const responseData = await axios.get(baseUrl + 'customer/free-document/')
+        setTopSellers({
+            id: 999999999999999,
+            name: "Top sotuvchilar",
+            icon: null,
+            image: null,
+            slug: "top-sellers",
+            promotional_sliders: [...responseData.data]
+        });
+    }
 
     useEffect(() => {
         getProducts()
         getFreeDocuments()
+        getTopSellers()
     }, [])
 
 
@@ -71,6 +85,14 @@ const HomeElectronicsPage = () => {
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}
+            {/* <ElectronicTopSellersGroupWithCarousel
+                collectionSlug="electronics-top-sellers"
+                title={topSellers.name}
+                data={topSellers}
+                id={topSellers.id}
+                key={234}
+                slug={topSellers.slug}
+            /> */}
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}

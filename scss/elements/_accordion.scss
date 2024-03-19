@@ -1,11 +1,48 @@
-.active{
+.active {
     color: $color-1st !important;
 }
 
-.acc-body-child-a{
+.acc-body-child-a {
     padding: 5px 0;
 }
 
-.acc-mobile-padding{
+.acc-mobile-padding {
     padding: 12px 8px 12px 6px !important;
+}
+
+.top-seller-image {
+    width: 200px;
+    border-radius: 20px;
+    position: relative;
+    .top-seller-image_back {
+        border-radius: 20px;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgb(0, 0, 0);
+        background: linear-gradient(
+            0deg,
+            rgba(0, 0, 0, 0.9136029411764706) 0%,
+            rgba(54 58 61 / 32%) 35%,
+            rgb(243 243 243 / 0%) 100%
+        );
+
+        .top-seller-image_name {
+            position: absolute;
+            bottom: 10%;
+            padding: 0 20px;
+            font-size: 17px;
+            font-weight: 700;
+            color: #fff;
+            font-family: Montserrat !important;
+        }
+    }
+    .top-seller-image_desc{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 }
