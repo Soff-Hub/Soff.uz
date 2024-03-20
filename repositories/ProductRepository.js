@@ -142,7 +142,6 @@ class ProductRepository {
         return reponse;
     }
 
-
     async getCardData() {
         const reponse = await Repository.get(`${baseUrl}customer/data/`)
             .then((response) => {
@@ -151,7 +150,6 @@ class ProductRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
 
     async getBrands() {
         const reponse = await Repository.get(`${baseUrl}/brands`)
@@ -250,12 +248,12 @@ class ProductRepository {
             },
         })
             .then((response) => {
-                return response.data
+                return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-   
+
     async getProductImagesSlug(pid) {
         const reponse = await Repository.get(
             `${baseUrl}customer/promotional-sliders/${pid}`
@@ -266,7 +264,6 @@ class ProductRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
 
     async getSellerProduct(payload) {
         const endPoint = `${baseUrl}customer/documents/?id=&category=&created_at=&category__parent=&seller__phone=&seller__email=&seller__id=${payload}12&min_price=&max_price=&min_id=&max_id=&order_by_id=&order_by_price=&approved_count=`;
@@ -284,8 +281,8 @@ class ProductRepository {
         return reponse;
     }
     async getChaildCategory(payload) {
-        const endPoint = `customer/get-child-category/${payload}`
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const endPoint = `customer/get-child-category/${payload}`;
+        const reponse = await Repository.get(baseUrl + endPoint)
             .then((response) => {
                 if (response.data) {
                     return response.data.data;
@@ -299,11 +296,11 @@ class ProductRepository {
         return reponse;
     }
     async getMoreTopCategorys() {
-        const endPoint = `customer/four-child`
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const endPoint = `customer/four-child`;
+        const reponse = await Repository.get(baseUrl + endPoint)
             .then((response) => {
                 if (response.data) {
-                    return response.data
+                    return response.data;
                 } else {
                     return null;
                 }
@@ -314,11 +311,27 @@ class ProductRepository {
         return reponse;
     }
     async getSellerProductSlug(slug, page) {
-        const endPoint = `customer/documents/?seller__id=${slug}&page=${page}`
-        const reponse = await Repository.get(baseUrl+endPoint)
+        const endPoint = `customer/documents/?seller__id=${slug}&page=${page}`;
+        const reponse = await Repository.get(baseUrl + endPoint)
             .then((response) => {
                 if (response.data) {
-                    return response
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return error.response;
+            });
+        return reponse;
+    }
+
+    async getSellerProfileSlug(slug) {
+        const endPoint = `customer/top-sellers/${slug}`
+        const reponse = await Repository.get(baseUrl + endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response;
                 } else {
                     return null;
                 }
