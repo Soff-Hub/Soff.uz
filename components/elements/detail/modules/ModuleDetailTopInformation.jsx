@@ -96,6 +96,7 @@ const ModuleDetailTopInformation = ({ product }) => {
                                     }}></i>
                             )}
                         </div>
+                        
                         {product?.seller?.first_name && (
                             <p>
                                 {product?.seller?.first_name}{' '}

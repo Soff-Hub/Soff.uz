@@ -52,8 +52,7 @@ const ElectronicHeaderActions = ({ auth }) => {
             );
 
             // Yangi WebSocket ulanishini yaratish
-            newSocket.onopen = function () {
-            };
+            newSocket.onopen = function () {};
 
             // Xabarlarni qabul qilish uchun funksiya
             if (newSocket) {
@@ -82,6 +81,11 @@ const ElectronicHeaderActions = ({ auth }) => {
     return (
         <div className="header__actions">
             {contextHolder}
+            <Link href="/page/about-us">
+                <a className="header__extra">
+                    <i class="fa-regular fa-circle-question"></i>
+                </a>
+            </Link>
             {user?.access && (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>
@@ -96,6 +100,7 @@ const ElectronicHeaderActions = ({ auth }) => {
                     </a>
                 </Link>
             )}
+
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>

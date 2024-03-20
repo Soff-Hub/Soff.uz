@@ -11,6 +11,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 
 const SellerPage = ({ seller }) => {
     const [data, setData] = useState(seller);
+    const [sellerr, setSellerr] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
     const { pid } = router.query;
@@ -21,8 +22,13 @@ const SellerPage = ({ seller }) => {
             page
         );
         if (respons) {
-            console.log(respons.data);
             setData(respons.data);
+        }
+    };
+    const getSellerUser = async (slug) => {
+        const respons = await ProductRepository.getSellerProfileSlug(slug);
+        if (respons) {
+            setSellerr(respons?.data);
         }
     };
 
@@ -36,14 +42,16 @@ const SellerPage = ({ seller }) => {
         }
     };
 
+    console.log(seller);
+
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
             url: '/',
         },
         {
-            text: seller?.results?.[0]
-                ? seller?.results?.[0]?.seller?.first_name
+            text: sellerr?.seller?.full_name
+                ? sellerr?.seller?.full_name
                 : 'Loading...',
         },
     ];
@@ -51,57 +59,106 @@ const SellerPage = ({ seller }) => {
     useEffect(() => {
         if (pid) {
             getSellerProduct(pid);
+            getSellerUser(pid);
         }
     }, [pid]);
 
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+
+    console.log('data', sellerr);
     // let productView = <SkeletonProductDetail />;
     return (
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
-                title={`Soff | Sotuvchi ${seller?.results?.[0]?.seller?.first_name}  ${seller?.results?.[0]?.seller?.last_name}`}
-                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${seller?.results?.[0]?.seller?.first_name} ${seller?.results?.[0]?.seller?.last_name}ning barcha mahsulotlarini ko'rishingiz mumkin`}
+                title={`Soff | Sotuvchi ${sellerr?.seller?.full_name}  `}
+                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${sellerr?.seller?.full_name} ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
 
             <div className="ps-product-list mb-5">
-                <div className="container">
-                    <div className="document-seller-about my-5 ">
-                        <div style={{ textAlign: 'center' }}>
-                            {seller?.results?.[0]?.seller?.image ? (
-                                <img
-                                    alt="soff"
-                                    src={`${seller?.results?.[0]?.seller?.image}`}
-                                    className="profile__image"
-                                />
-                            ) : (
-                                <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
-                            )}
-                        </div>
-                        <div
-                            style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                            }}>
-                            <h4>
-                                {seller?.results?.[0]?.seller?.first_name}{' '}
-                                {seller?.results?.[0]?.seller?.last_name}{' '}
-                            </h4>
-                            <span>
-                                Jami mahsulotlar soni -{' '}
-                                <h4 style={{ display: 'inline' }}>
-                                    {seller?.count}
-                                </h4>{' '}
-                                ta
-                            </span>
+                <div className="seller-account-page">
+                    <div
+                        className="seller-cover"
+                        style={{
+                            backgroundImage: 'url(/static/img/soff/ss.jpg)',
+                            backgroundSize: 'cover',
+                            backgroundRepeat: 'no-repeat',
+                            width: '100%',
+                            backgroundPositionY: 'top',
+                        }}></div>
+                    <div className="container">
+                        <div className="document-seller-about my-5 row">
+                            <div className="seller-profile col-xl-3 col-xxl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-center">
+                                {seller?.results?.[0]?.seller?.image ? (
+                                    <img
+                                        alt="soff"
+                                        src={`${seller?.results?.[0]?.seller?.image}`}
+                                        className="profile__image"
+                                    />
+                                ) : (
+                                    <img
+                                        alt="soff"
+                                        src={`/static/img/user-none.jpg`}
+                                        className="profile__image"
+                                    />
+                                )}
+                            </div>
+                            <div
+                                className=" col-xxl-9 col-lg-9 col-md-9 col-sm-9 col-12 seller-profile-desc"
+                                style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                }}>
+                                <h4>{sellerr?.seller?.full_name}</h4>
+                                <span>
+                                    Jami mahsulotlar soni -{' '}
+                                    <h4 style={{ display: 'inline' }}>
+                                        {sellerr?.total_approved_documents}
+                                    </h4>{' '}
+                                    ta
+                                </span>
+                                <span>
+                                    Sotilgan mahsulotlari soni -{' '}
+                                    <h4 style={{ display: 'inline' }}>
+                                        {sellerr?.total_sold_documents}
+                                    </h4>{' '}
+                                    ta
+                                </span>
+                                <span>
+                                    Daromad -{' '}
+                                    <h4 style={{ display: 'inline' }}>
+                                        {addPeriodToThousands(
+                                            sellerr?.total_income
+                                        )}
+                                    </h4>{' '}
+                                    so'm
+                                </span>
+                            </div>
                         </div>
                     </div>
-
+                </div>
+                <div className="container" style={{ marginTop: '30px' }}>
                     <div className="row">
                         {data?.results?.map((item) => (
                             <div
                                 className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
                                 key={item.id}>
-                                {' '}
                                 <Product product={item} />{' '}
                             </div>
                         ))}
