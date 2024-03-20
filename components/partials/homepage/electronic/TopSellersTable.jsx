@@ -161,13 +161,14 @@ export default function TopSellersTable() {
                     className="ps-select form-control select2"
                     data-placeholder="Sort Items"
                     onChange={(e) => handleSelect(e)}>
-                    <option value="">Daromadi bo'yicha saralash</option>
+                    <option selected disabled>Saralash</option>
                     <option value="total_approved_documents">
-                        Mahsuloti bo'yicha saralash
+                        Jami mahsulotlari soni bo'yicha saralash
                     </option>
                     <option value="total_sold_documents">
                         Sotilgan mahsulotlar soni bo'yicha saralash
                     </option>
+                    <option value="">Daromadi bo'yicha saralash</option>
                 </select>
             </div>
             <Table
