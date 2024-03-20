@@ -89,7 +89,7 @@ export default function TopSellersTable() {
             render: (total_approved_documents) => (
                 <span className="fs-3 text-center d-block">
                     {' '}
-                    {total_approved_documents}+
+                    {total_approved_documents} ta
                 </span>
             ),
         },
@@ -101,7 +101,7 @@ export default function TopSellersTable() {
             render: (total_sold_documents) => (
                 <span className="fs-3 text-center d-block">
                     {' '}
-                    {total_sold_documents}+
+                    {total_sold_documents} ta
                 </span>
             ),
         },
@@ -112,7 +112,7 @@ export default function TopSellersTable() {
             // width: 300,
             render: (total_income) => (
                 <div className="d-block fs-3 text-center fw-bold">
-                    <span> {addPeriodToThousands(total_income)}+ </span>
+                    <span> {addPeriodToThousands(total_income)} so'm</span>
                 </div>
             ),
         },

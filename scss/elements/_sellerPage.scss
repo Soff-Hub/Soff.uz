@@ -64,8 +64,8 @@
 }
 
 .profile__image{
-    width: 50px;
-    height: 50px;
+    width: 150px;
+    // height: 50px;
     border-radius: 50%;
     border: 2px solid $color-1st    ;
     object-fit: cover;
@@ -111,23 +111,23 @@
         height: 200px;
     }
     .document-seller-about{
-        min-height: 150px;
-        h4{
-            margin: 0;
-        }
+        // min-height: 150px;
+        // h4{
+        //     margin: 0;
+        // }
         .seller-profile{
-            padding: 10px;
-            .profile__image{
-                top: -25%;
-                left: 10%;
-                transform: translate(25%, -10%);
-                position: absolute;
-                border-radius: 10px;
-                max-width: 200px;
-                width: 100%;
-                height: 180px;
-                border: none;
-            }
+            // padding: 10px;
+            // .profile__image{
+            //     top: -25%;
+            //     left: 10%;
+            //     transform: translate(25%, -10%);
+            //     position: absolute;
+            //     border-radius: 10px;
+            //     max-width: 200px;
+            //     width: 100%;
+            //     height: 180px;
+            //     border: none;
+            // }
         }
 
         .seller-profile-desc{
@@ -136,106 +136,106 @@
     }
 }
 
-@media screen and (max-width: 1200px ) {
-    .seller-account-page{
-        .document-seller-about{
-            min-height: 150px;
-            .seller-profile-desc{
-                padding-left: 60px;
-            }
-        }
-    }
-}
+// @media screen and (max-width: 1200px ) {
+//     .seller-account-page{
+//         .document-seller-about{
+//             min-height: 150px;
+//             .seller-profile-desc{
+//                 padding-left: 60px;
+//             }
+//         }
+//     }
+// }
 
-@media screen and (max-width: 992px ) {
-    .seller-account-page{
-        .seller-cover{
-            height: 150px;
-        }
-        .document-seller-about{
-            min-height: 150px;
-            .seller-profile-desc{
-                padding-left: 98px;
-                // padding-top: 130px;
-            }
-            .seller-profile{
-                .profile__image{
-                    // height: 150px;
-                }
-            }
-        }
-    }
-}
-@media screen and (max-width: 576px ) {
-    .seller-account-page{
-        .seller-cover{
-            height: 150px;
-        }
-        .document-seller-about{
-            min-height: 150px;
-            .seller-profile-desc{
-                padding-left: 98px;
-                padding-top: 140px;
-            }
-            .seller-profile{
-                .profile__image{
-                    // height: 150px;
-                }
-            }
-        }
-    }
-}
+// @media screen and (max-width: 992px ) {
+//     .seller-account-page{
+//         .seller-cover{
+//             height: 150px;
+//         }
+//         .document-seller-about{
+//             min-height: 150px;
+//             .seller-profile-desc{
+//                 padding-left: 98px;
+//                 // padding-top: 130px;
+//             }
+//             .seller-profile{
+//                 .profile__image{
+//                     // height: 150px;
+//                 }
+//             }
+//         }
+//     }
+// }
+// @media screen and (max-width: 576px ) {
+//     .seller-account-page{
+//         .seller-cover{
+//             height: 150px;
+//         }
+//         .document-seller-about{
+//             min-height: 150px;
+//             .seller-profile-desc{
+//                 padding-left: 98px;
+//                 padding-top: 140px;
+//             }
+//             .seller-profile{
+//                 .profile__image{
+//                     // height: 150px;
+//                 }
+//             }
+//         }
+//     }
+// }
 
-@media screen and (max-width: 450px ) {
-    .seller-account-page{
-        .seller-cover{
-            height: 100px;
-        }
-        .document-seller-about{
-            min-height: 80px;
-            .seller-profile-desc{
-                padding-left: 90px;
-                padding-top: 0;
-                // text-align: center;
+// @media screen and (max-width: 450px ) {
+//     .seller-account-page{
+//         .seller-cover{
+//             height: 100px;
+//         }
+//         .document-seller-about{
+//             min-height: 80px;
+//             .seller-profile-desc{
+//                 padding-left: 90px;
+//                 padding-top: 0;
+//                 // text-align: center;
 
-            }
-            .seller-profile{
-                height: 120px;
-                .profile__image{
-                    // height: 140px;
-                }
-            }
-        }
-    }
-}
+//             }
+//             .seller-profile{
+//                 height: 120px;
+//                 .profile__image{
+//                     // height: 140px;
+//                 }
+//             }
+//         }
+//     }
+// }
 
-@media screen and (max-width: 400px ) {
-    .seller-account-page{
-        .seller-cover{
-            height: 100px;
-        }
-        .document-seller-about{
-            min-height: 80px;
-            .seller-profile-desc{
-                padding-left: 90px;
-                padding-top: 20px;
-                // text-align: center;
+// @media screen and (max-width: 400px ) {
+//     .seller-account-page{
+//         .seller-cover{
+//             height: 100px;
+//         }
+//         .document-seller-about{
+//             min-height: 80px;
+//             .seller-profile-desc{
+//                 padding-left: 90px;
+//                 padding-top: 20px;
+//                 // text-align: center;
 
-            }
-            .seller-profile{
-                height: 120px;
-                .profile__image{
-                    // height: 140px;
-                    top: -25%;
-                    left: 5%;
-                    transform: translate(25%, -5%);
-                    position: absolute;
-                    border-radius: 10px;
-                    max-width: 200px;
-                    width: 100%;
-                    border: none;
-                }
-            }
-        }
-    }
-}
+//             }
+//             .seller-profile{
+//                 height: 120px;
+//                 .profile__image{
+//                     // height: 140px;
+//                     top: -25%;
+//                     left: 5%;
+//                     transform: translate(25%, -5%);
+//                     position: absolute;
+//                     border-radius: 10px;
+//                     max-width: 200px;
+//                     width: 100%;
+//                     border: none;
+//                 }
+//             }
+//         }
+//     }
+// }

@@ -93,7 +93,7 @@ const SellerPage = ({ seller }) => {
 
             <div className="ps-product-list mb-5">
                 <div className="seller-account-page">
-                    <div
+                    {/* <div
                         className="seller-cover"
                         style={{
                             backgroundImage: 'url(/static/img/soff/ss.jpg)',
@@ -101,10 +101,10 @@ const SellerPage = ({ seller }) => {
                             backgroundRepeat: 'no-repeat',
                             width: '100%',
                             backgroundPositionY: 'top',
-                        }}></div>
+                        }}></div> */}
                     <div className="container">
                         <div className="document-seller-about my-5 row">
-                            <div className="seller-profile col-xl-3 col-xxl-3 col-lg-3 col-md-3 col-sm-3 col-12 text-center">
+                            <div className="text-center col-12 col-md-4">
                                 {seller?.results?.[0]?.seller?.image ? (
                                     <img
                                         alt="soff"
@@ -119,36 +119,43 @@ const SellerPage = ({ seller }) => {
                                     />
                                 )}
                             </div>
-                            <div
-                                className=" col-xxl-9 col-lg-9 col-md-9 col-sm-9 col-12 seller-profile-desc"
-                                style={{
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                }}>
-                                <h4>{sellerr?.seller?.full_name}</h4>
-                                <span>
-                                    Jami mahsulotlar soni -{' '}
-                                    <h4 style={{ display: 'inline' }}>
-                                        {sellerr?.total_approved_documents}
-                                    </h4>{' '}
-                                    ta
-                                </span>
-                                <span>
-                                    Sotilgan mahsulotlari soni -{' '}
-                                    <h4 style={{ display: 'inline' }}>
-                                        {sellerr?.total_sold_documents}
-                                    </h4>{' '}
-                                    ta
-                                </span>
-                                <span>
-                                    Daromad -{' '}
-                                    <h4 style={{ display: 'inline' }}>
-                                        {addPeriodToThousands(
-                                            sellerr?.total_income
-                                        )}
-                                    </h4>{' '}
-                                    so'm
-                                </span>
+                            <div className="col-12 col-md-8">
+                                <p className="my-4 text-center text-md-left h1">{sellerr?.seller?.full_name}</p>
+                                <div className="row justify-content-center">
+                                    <div className="col-10 col-sm-6 col-md-4 my-3">
+                                        <div className="d-flex align-items-center">
+                                            <i class="fa-regular fa-hard-drive fa-2x mr-4"></i>
+                                            <div>
+                                                <p className="h1">
+                                                {sellerr?.total_approved_documents} ta
+                                                </p>
+                                                <p className="h4">Jami mahsulotlar soni</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-10 col-sm-6 col-md-4 my-3">
+                                        <div className="d-flex align-items-center">
+                                            <i class="fa-regular fa-handshake fa-2x mr-4"></i>
+                                            <div>
+                                                <p className="h1">
+                                                    {sellerr?.total_sold_documents} ta
+                                                </p>
+                                                <p className="h4">Sotilgan mahsulotlari soni</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-10 col-sm-6 col-md-4 my-3">
+                                        <div className="d-flex align-items-center">
+                                            <i class="fa-regular fa-gem fa-2x mr-4"></i>
+                                            <div>
+                                                <p className="h1">
+                                                    {addPeriodToThousands( sellerr?.total_income )} so'm
+                                                </p>
+                                                <p className="h4">Daromad</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
