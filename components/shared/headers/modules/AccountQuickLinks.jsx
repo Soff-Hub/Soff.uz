@@ -2,21 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
-import { Modal } from 'antd';
+import { Badge, Card, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 
 const AccountQuickLinks = (props) => {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
-    const refresh = useSelector(state => state.auth?.user?.refresh)
+    const refresh = useSelector((state) => state.auth?.user?.refresh);
 
     const handleLogout = () => {
-
         const data = {
-            'refresh': refresh
-        }
+            refresh: refresh,
+        };
         const { logOutAuth } = useAuth();
-        const res = logOutAuth(data)
+        const res = logOutAuth(data);
 
         if (res) {
             const modal = Modal.info({
@@ -26,33 +25,83 @@ const AccountQuickLinks = (props) => {
             });
             dispatch(logOut());
         }
-
     };
-
-
-
 
     const { isLoggedIn } = props;
 
     // View
     const linksView = accountLinks.map((item) => (
-        <li key={item.text}>
-            <Link href={item.url}>
-                <a>  <span><i className={` text-dark fs-4 me-2  ${item.icon}`}></i> </span> {item.text}</a>
-            </Link>
-        </li>
+        <>
+            {item?.url === 'b' ? (
+                <Badge.Ribbon text="Tez kunda" color="volcano">
+                    <Card size="small">
+                        <li>
+                            <span
+                                style={{
+                                    cursor: 'pointer',
+                                }}>
+                                <a className="d-flex align-items-center">
+                                    <i class="fa-solid fa-folder-open text-dark fs-4 me-2 "></i>
+                                    Buyurtma berish
+                                </a>
+                            </span>
+                        </li>
+                    </Card>
+                </Badge.Ribbon>
+            ) : item?.url == '#' ? (
+                <Badge.Ribbon text="Tez kunda" color="volcano">
+                <Card size="small">
+                    <li>
+                        <span
+                            style={{
+                                cursor: 'pointer',
+                            }}>
+                            <a className="d-flex align-items-center">
+                                <i class="fa-regular fa-handshake  text-dark fs-4 me-2"></i>
+                                Mening bitimlarim 
+                            </a>
+                        </span>
+                    </li>
+                </Card>
+            </Badge.Ribbon>
+            ) : (
+                <li key={item.text}>
+                    <Link href={item.url}>
+                        <a>
+                            {' '}
+                            <span>
+                                <i
+                                    className={` text-dark fs-4 me-2  ${item.icon}`}></i>{' '}
+                            </span>{' '}
+                            {item.text}{' '}
+                        </a>
+                    </Link>
+                </li>
+            )}
+        </>
     ));
 
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account">
-                <Link href={user?.role === "admin" || user?.role === "seller" ? "/account/dashbord" : "/account/myproducts"}><a> <i className="icon-user"></i> </a></Link>
+                <Link
+                    href={
+                        user?.role === 'admin' || user?.role === 'seller'
+                            ? '/account/dashbord'
+                            : '/account/myproducts'
+                    }>
+                    <a>
+                        {' '}
+                        <i className="icon-user"></i>{' '}
+                    </a>
+                </Link>
                 <div className="ps-block__content">
-                    <ul className="ps-list--arrow">
+                    <ul className="ps-list--arrow order">
                         {linksView}
                         <li className="ps-block__footer">
                             <a href="#" onClick={() => handleLogout()}>
-                                <i className="fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4"></i>    Chiqish
+                                <i className="fa-solid fa-right-from-bracket me-3 mx-2 text-dark fs-4"></i>{' '}
+                                Chiqish
                             </a>
                         </li>
                     </ul>

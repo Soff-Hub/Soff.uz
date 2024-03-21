@@ -46,3 +46,16 @@
         transform: translate(-50%, -50%);
     }
 }
+
+.ant-card-body{
+    padding: 0 !important;
+}
+
+.order{
+    .ant-card-bordered{
+        border: none !important;
+    }
+    .ant-ribbon-text{
+        font-size: 9px !important;
+    }
+}

@@ -31,7 +31,7 @@ const ModuleDetailTopInformation = ({ product }) => {
 
     // Views
     let priceView;
-
+console.log('profile', product);
     if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">

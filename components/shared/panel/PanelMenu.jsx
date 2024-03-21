@@ -93,7 +93,7 @@ class PanelMenu extends Component {
                                     <Link
                                         href={`${item.url}/[pid]`}
                                         as={`${item.url}/${item.endPoint}`}>
-                                        l<a>{item.text}</a>
+                                        <a>{item.text}</a>
                                     </Link>
                                 ) : (
                                     <Link href={item.url} as={item.alias}>
