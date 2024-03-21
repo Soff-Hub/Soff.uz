@@ -145,7 +145,7 @@ export let cutomerAccountLink = [
     {
         text: 'Buyurtma berish',
         url: 'b',
-        icon: 'fa-solid fa-folder-open',
+        icon: 'fa-regular fa-handshake',
     },
     {
         text: 'Profil',

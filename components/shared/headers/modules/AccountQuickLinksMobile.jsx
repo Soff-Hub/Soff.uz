@@ -57,7 +57,7 @@ function AccountQuickLinks() {
                                         <a>
                                             {' '}
                                             <span>
-                                            <i class="fa-solid fa-folder-open"></i>{' '}
+                                            <i class="fa-regular fa-handshake"></i>{' '}
                                             </span>{' '}
                                             Buyurtma berish
                                         </a>
