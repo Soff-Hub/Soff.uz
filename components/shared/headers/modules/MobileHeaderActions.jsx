@@ -63,8 +63,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             );
 
             // Yangi WebSocket ulanishini yaratish
-            newSocket.onopen = function () {
-            };
+            newSocket.onopen = function () {};
 
             // Xabarlarni qabul qilish uchun funksiya
             if (newSocket) {
@@ -93,6 +92,11 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
     return (
         <div className="navigation__right">
             {contextHolder}
+            <Link href="/page/about-us">
+                <a className="header__extra">
+                    <i class="fa-regular fa-circle-question"></i>
+                </a>
+            </Link>
             {user?.access && (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>

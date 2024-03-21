@@ -149,6 +149,20 @@ class PostRepository {
             });
         return response;
     }
+    async getTopSeller(search, select) {
+        const endPoint = `customer/top-sellers/?search=${search}&ordering_field=${select}`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                return error.response
+            });
+        return response;
+    }
 }
 
 export default new PostRepository();
