@@ -88,7 +88,7 @@ const ProductDefaultPage = ({ product, similar }) => {
 
     useEffect(() => {
         getUUID(localStorage.getItem("uuid") ? localStorage.getItem("uuid") : uuidv4())
-    }, [views])
+    }, [pid])
 
     const breadCrumb = [
         {
@@ -96,7 +96,7 @@ const ProductDefaultPage = ({ product, similar }) => {
             url: '/',
         },
         {
-            text: product.title ? product.title : 'Loading...',
+        text: product?.title ? product?.title : 'Loading...',
         },
     ];
 
@@ -105,9 +105,9 @@ const ProductDefaultPage = ({ product, similar }) => {
         <>
             <PageContainer title={product ? product.title : 'Loading...'}>
                 <Meta
-                    title={`Soff | ${product.title} `}
+                    title={`Soff | ${product?.title} `}
                     image={product?.document?.images?.[0]?.image_url}
-                    description={`${product.title} mahsulotni saytimizdan Soff.uz bepul yuklab yoki sotib olishingiz mumkin`}
+                    description={`${product?.title} mahsulotni saytimizdan Soff.uz bepul yuklab yoki sotib olishingiz mumkin`}
                 />
 
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
