@@ -41,7 +41,8 @@ const AccountQuickLinks = (props) => {
                                     cursor: 'pointer',
                                 }}>
                                 <a className="d-flex align-items-center">
-                                    <i class="fa-solid fa-folder-open text-dark fs-4 me-2 "></i>
+                                    <i class="fa-regular fa-handshake text-dark fs-4 me-2 "></i>
+                                    
                                     Buyurtma berish
                                 </a>
                             </span>

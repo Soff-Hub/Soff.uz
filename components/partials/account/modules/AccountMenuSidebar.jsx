@@ -397,7 +397,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                                     cursor: 'pointer',
                                                 }}>
                                                 <a className="d-flex align-items-center">
-                                                    <i class="fa-solid fa-folder-open"></i>
+                                                <i class="fa-regular fa-handshake"></i>
                                                     Buyurtma berish
                                                 </a>
                                             </span>
