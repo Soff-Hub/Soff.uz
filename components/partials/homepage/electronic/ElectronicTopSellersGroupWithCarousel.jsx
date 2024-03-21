@@ -2,14 +2,14 @@ import React from 'react';
 import Link from 'next/link';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
-import Product from '~/components/elements/products/Product';
-import TopSellers from './TopSeller';
+import TopSellersTable from './TopSellersTable';
 
 const ElectronicTopSellersGroupWithCarousel = ({
     title,
     data,
     id,
-    slug
+    slug,
+    key
 }) => {
 
     // Views
@@ -17,9 +17,7 @@ const ElectronicTopSellersGroupWithCarousel = ({
     if (true) {
         if (data && data?.promotional_sliders?.length > 0) {
             productItemsView = (
-                <div className="d-flex align-content-center">
-                {/* <TopSellers/> */}
-                </div>
+                <TopSellersTable/>
             );
         } else {
             productItemsView = <p>Mahsulot topilmadi</p>;
@@ -40,16 +38,11 @@ const ElectronicTopSellersGroupWithCarousel = ({
                     <h3 className='titleeeeeeee'>{title}</h3>
                     <ul className="ps-section__links">
                         <li>
-                            <Link href={`/category/${slug}`}>
-                                <a className='d-flex align-items-center gap-2'>
-                                    <span>Barchasini ko'rish</span>
-                                    <i className='fa-solid fa-angles-right fa-beat-fade'></i>
-                                </a>
-                            </Link>
+                           
                         </li>
                     </ul>
                 </div>
-                <div className="ps-section__content">{productItemsView}</div>
+                <div className={`ps-section__content top-seller-content`}>{productItemsView}</div>
             </div>
         </div>
     );

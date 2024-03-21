@@ -85,14 +85,14 @@ const HomeElectronicsPage = () => {
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}
-            {/* <ElectronicTopSellersGroupWithCarousel
+            <ElectronicTopSellersGroupWithCarousel
                 collectionSlug="electronics-top-sellers"
                 title={topSellers.name}
                 data={topSellers}
                 id={topSellers.id}
-                key={234}
+                key={235}
                 slug={topSellers.slug}
-            /> */}
+            />
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}
