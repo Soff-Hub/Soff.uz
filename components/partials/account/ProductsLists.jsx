@@ -353,19 +353,19 @@ function ProductsLists() {
                                                     </div> */}
                                                       <ModuleDetailTopInformation product={deleteIdView} />
                                                     <ModuleProductDetailDescription product={deleteIdView} />
-                                                    <div className="ps-product__shopping row-gap-3" >
+                                                    <div className="ps-product__shoppin row-gap-3 d-xl-flex d-lg-flex gap-3 align-items-center " >
                                                         <button
-                                                            className="ps-btn ps-btn--black"
+                                                            className="ps-btn text-white w-100"
                                                             style={{ cursor: "not-allowed" }}
                                                         >
                                                             Savatga qo'shish
                                                         </button>
-                                                        <button className="ps-btn" style={{ cursor: "not-allowed" }} >
+                                                        <button className="ps-btn w-100 text-white mt-3 mt-xl-0 mt-lg-0" style={{ cursor: "not-allowed" }} >
                                                             Sotib olish
                                                         </button>
                                                         <div className="ps-product__actions">
                                                             <a style={{ cursor: "not-allowed" }} >
-                                                                <i className={`icon-heart`} ></i>
+                                                                <i className={`icon-heart fs-2`} ></i>
                                                             </a>
                                                         </div>
                                                     </div>

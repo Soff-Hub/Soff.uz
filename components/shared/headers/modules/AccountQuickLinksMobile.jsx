@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 import { logOut } from '../../../../store/auth/action';
-import { Dropdown, Menu, Modal } from 'antd';
+import { Badge, Card, Dropdown, Menu, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import Router from 'next/router';
-
 
 function AccountQuickLinks() {
     const { accountLinks } = useSelector((state) => state.auth);
@@ -13,7 +12,6 @@ function AccountQuickLinks() {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
-
         const data = {
             refresh: refresh,
         };
@@ -31,23 +29,57 @@ function AccountQuickLinks() {
         }
     };
 
-
-
     const menu = (
         <Menu>
             {accountLinks.map((link) => (
-                <Menu.Item key={link.url}>
-                    <Link href={link.url}>
-                        <a>
-                            {' '}
-                            <span>
-                                <i
-                                    className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
-                            </span>{' '}
-                            {link.text}
-                        </a>
-                    </Link>
-                </Menu.Item>
+                <div className="order">
+                    {link?.url == '#' ? (
+                        <Badge.Ribbon text="Tez kunda" color="volcano">
+                            <Card size="small">
+                                <Menu.Item key={link.url}>
+                                    <Link href={link.url}>
+                                        <a>
+                                            {' '}
+                                            <span>
+                                            <i class="fa-regular fa-handshake"></i>{' '}
+                                            </span>{' '}
+                                            Mening bitimlarim
+                                        </a>
+                                    </Link>
+                                </Menu.Item>
+                            </Card>
+                        </Badge.Ribbon>
+                    ) : link?.url == 'b' ? (
+                        <Badge.Ribbon text="Tez kunda" color="volcano">
+                            <Card size="small">
+                                <Menu.Item key={link.url}>
+                                    <Link href='#'>
+                                        <a>
+                                            {' '}
+                                            <span>
+                                            <i class="fa-solid fa-folder-open"></i>{' '}
+                                            </span>{' '}
+                                            Buyurtma berish
+                                        </a>
+                                    </Link>
+                                </Menu.Item>
+                            </Card>
+                        </Badge.Ribbon>
+                    )        : (
+                        <Menu.Item key={link.url}>
+                            <Link href={link.url}>
+                                <a>
+                                    {' '}
+                                    <span>
+                                        <i
+                                            className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
+                                    </span>{' '}
+                                    {link.text}
+                                </a>
+                            </Link>
+                        </Menu.Item>
+                    )}
+                </div>
             ))}
             <Menu.Item>
                 <a href="#" onClick={() => handleLogout()}>

@@ -79,6 +79,11 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-circle-plus',
     },
     {
+        text: 'Olingan buyurtmalar',
+        url: '#',
+        icon: 'fa-solid fa-folder-open',
+    },
+    {
         text: 'Buyurtmalar',
         url: '/account/orders',
         icon: 'fa-solid fa-truck',

@@ -30,7 +30,12 @@ const SellerPage = ({ seller }) => {
     const handleOkDonate = () => {
         setIsModalOpenDonate(false);
     };
-
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
+    const handleCancelDonate = () => {
+        setIsModalOpenDonate(false);
+    };
     const getSellerProduct = async (slug) => {
         const respons = await ProductRepository.getSellerProductSlug(
             slug,
@@ -103,24 +108,35 @@ const SellerPage = ({ seller }) => {
                 description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${sellerr?.seller?.full_name} ning barcha mahsulotlarini ko'rishingiz mumkin`}
             />
             <Modal
-                title="Buyurtma"
+                title="Buyurtma berish "
                 open={isModalOpen}
                 onOk={handleOk}
+                onCancel={handleCancel}
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+                <p>Tez kunda!</p>
+                <p>
+                    Xurmatli Soff.uz foyalanuvchisi, siz bu yerda Sotuvchiga
+                    mahsulot yoki xizmat buyurtmasini berishingiz mumkin
+                    bo'ladi.
+                </p>
             </Modal>
             <Modal
                 title="Qo'llab quvvatlash"
                 open={isModalOpenDonate}
                 onOk={handleOkDonate}
+                onCancel={handleCancelDonate}
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { backgroundColor: '#c5ab35' } }}>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
-                <p>Some contents...</p>
+                <p>Tez kunda!</p>
+                <p>
+                    Xurmatli Soff.uz foyalanuvchisi, siz bu yerda Sotuvchiga
+                    O'zingizni Anonim yoki ismingizni kiritgan holda xabar
+                    yo'llashingiz va ular uchun donat summasini o'tkazishingiz
+                    mumkin bo'ladi. Sotuvchiga siz ko‘rsatgan summa to‘liq
+                    o‘tkazilib beriladi. Hamda qo'llab quvvatlash maqsadida
+                    biror bir mahsulotini sotib olishingiz mumkin.
+                </p>
             </Modal>
             <div className="ps-product-list mb-5">
                 <div className="seller-account-page">
@@ -197,16 +213,16 @@ const SellerPage = ({ seller }) => {
                                     <button
                                         className="text-white ps-btn w-100"
                                         onClick={showModal}>
-                                        Buyurtma
                                         {' '}
                                         <i class="fa-regular fa-pen-to-square"></i>{' '}
+                                        Buyurtma berish
                                     </button>
                                     <button
                                         className="text-white ps-btn w-100 donate-color-btn mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0"
                                         onClick={showModalDonate}>
-                                        Qo'llab quvvatlash
                                         {' '}
-                                        <i class="fa-solid fa-hand-holding-medical"></i>{" "}
+                                        <i class="fa-solid fa-hand-holding-medical"></i>{' '}
+                                        Qo'llab quvvatlash
                                     </button>
                                 </div>
                             </div>
