@@ -187,6 +187,7 @@ class Login extends Component {
                                         {this.state.report ? (
                                             <button
                                                 type="submit"
+                                                style={{color:'#fff'}}
                                                 className="ps-btn ps-btn--fullwidth">
                                                 Kirish
                                             </button>

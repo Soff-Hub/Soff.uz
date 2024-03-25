@@ -85,31 +85,64 @@ class Register extends Component {
         this.setState({ report: false });
         const url = this.props.url;
         const { registerUser } = useAuth();
-        const user = await registerUser(url, e);
-        if (user) {
-            if (user.status >= 400 && user.status !== 500) {
-                this.setState({ report: true });
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik',
-                    content: user?.data?.msg[0],
-                });
-                modal.update;
-            } else if (user.status == 200 || user.status == 201) {
-                this.props.dispatch(begin({ id: user.data.first }));
-                localStorage.setItem('token', user.data.access);
-                localStorage.setItem('via_', user?.data?.via_);
-                localStorage.setItem('data', JSON.stringify(e));
-                if (this.props.router.query.id) {
-                    Router.push(
-                        `/account/Message?id=${this.props.router.query.id}`
-                    );
-                } else {
-                    Router.push(`/account/Message?via=${user.data.via_}`);
+        
+        if (this.props.router.query.pid || localStorage.getItem('referal')) {
+            const user = await registerUser(`auth/seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, e);   
+            if (user) {
+                if (user.status >= 400 && user.status !== 500) {
+                    this.setState({ report: true });
+                    const modal = Modal.error({
+                        centered: true,
+                        title: 'Xatolik',
+                        content: user?.data?.msg[0],
+                    });
+                    modal.update;
+                } else if (user.status == 200 || user.status == 201) {
+                    this.props.dispatch(begin({ id: user.data.first }));
+                    localStorage.setItem('token', user.data.access);
+                    localStorage.setItem('via_', user?.data?.via_);
+                    localStorage.setItem('data', JSON.stringify(e));
+                    localStorage.removeItem("referal")
+                    if (this.props.router.query.id) {
+                        Router.push(
+                            `/account/Message?id=${this.props.router.query.id}`
+                        );
+                    } else {
+                        Router.push(`/account/Message?via=${user.data.via_}`);
+                    }
+                    this.setState({ report: true });
                 }
-                this.setState({ report: true });
             }
+        }else{
+            const user = await registerUser(url, e);   
+            if (user) {
+                if (user.status >= 400 && user.status !== 500) {
+                    this.setState({ report: true });
+                    const modal = Modal.error({
+                        centered: true,
+                        title: 'Xatolik',
+                        content: user?.data?.msg[0],
+                    });
+                    modal.update;
+                } else if (user.status == 200 || user.status == 201) {
+                    this.props.dispatch(begin({ id: user.data.first }));
+                    localStorage.setItem('token', user.data.access);
+                    localStorage.setItem('via_', user?.data?.via_);
+                    localStorage.setItem('data', JSON.stringify(e));
+                    if (this.props.router.query.id) {
+                        Router.push(
+                            `/account/Message?id=${this.props.router.query.id}`
+                        );
+                    } else {
+                        Router.push(`/account/Message?via=${user.data.via_}`);
+                    }
+                    this.setState({ report: true });
+                }
+            }
+
         }
+
+      
     };
 
     handleChekked = () => {
@@ -147,6 +180,11 @@ class Register extends Component {
     };
 
     componentDidMount() {
+
+        if (this.props.router.query.pid) {
+            localStorage.setItem('referal', this.props.router.query.pid)
+        }
+
         if (this.props.url === 'auth/seller-register/') {
             this.setState({ role: 'seller' });
         } else if (this.props.url === 'auth/register/') {
@@ -154,10 +192,24 @@ class Register extends Component {
         }
     }
 
+    componentDidUpdate() {
+        if (this.props.router.query.pid) {
+            localStorage.setItem('referal', this.props.router.query.pid)
+        }
+
+    }
+
+
+
+   
     render() {
         const { router } = this.props;
         const { id } = router.query;
+        // referal
         const { pid } = router.query;
+
+        console.log('his.props.url', this.props.router.query.pid);
+
         return (
             <div className="ps-my-account">
                 <div className="container">
@@ -294,8 +346,11 @@ class Register extends Component {
                                                         disabled={true}
                                                         style={{
                                                             cursor: 'not-allowed',
+                                                            color:'#fff'
                                                         }}
-                                                        className="ps-btn ps-btn--fullwidth">
+                                                        className="ps-btn ps-btn--fullwidth"
+                                                       
+                                                        >
                                                         Ro'yxatdan o'tish
                                                     </button>
                                                 </Tooltip>
