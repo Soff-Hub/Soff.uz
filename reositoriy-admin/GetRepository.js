@@ -341,6 +341,22 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getNotificationList() {
+        const endPoint = `admin/notification-list`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET'
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
 
     async getSellerLists(id, token) {
         const endPoint = `admin/seller-detail/${id}`;
