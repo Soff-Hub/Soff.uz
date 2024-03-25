@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
-import { Button, Form, Modal, Select, Input } from 'antd';
+import { Button, Form, Modal, Select, Input, DatePicker } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import CKEditor from './CKeditor';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -19,11 +19,33 @@ const EmailLists = () => {
     const [option, setOption] = useState([]);
     const [userRole, setUserRole] = useState(null);
     const [title, setSubject] = useState(null);
+    const [date, setDate] = useState(null);
     const [notification, setNotification] = useState(null);
     const OnChangeSelect = (event) => {
         console.log('event', event);
         setEmail(event);
     };
+
+    const { RangePicker } = DatePicker;
+    const dateFormat0 = date
+        ? `${date[0]?.$y}-${
+              `${date[0].$M + 1}`.length === 1
+                  ? `0${date[0].$M + 1}`
+                  : date[0].$M + 1
+          }-${date[0].$D}`
+        : '';
+    const dateFormat1 = date
+        ? `${date[1]?.$y}-${
+              `${date[1].$M + 1}`.length === 1
+                  ? `0${date[1].$M + 1}`
+                  : date[1].$M + 1
+          }-${date[1].$D}`
+        : '';
+    const dataFormat = date
+        ? `${dateFormat0}&to_date=${dateFormat1}`
+        : '';
+
+        console.log('date', dataFormat);
 
     async function GetItemsEmail() {
         if (text) {
@@ -69,7 +91,8 @@ const EmailLists = () => {
                 };
                 const ItemsData = await PostsRepository.EmailSend(
                     data,
-                    user?.access
+                    user?.access,
+                    dataFormat
                 );
                 if (ItemsData?.status == 201) {
                     console.log('datar', ItemsData);
@@ -126,7 +149,8 @@ const EmailLists = () => {
                 };
                 const ItemsData = await PostsRepository.EmailSend(
                     data,
-                    user?.access
+                    user?.access,
+                dataFormat
                 );
                 if (ItemsData?.status == 201) {
                     console.log('data', ItemsData);
@@ -396,6 +420,10 @@ const EmailLists = () => {
                                     value={text || ''}
                                 />
                             </div>
+                            <RangePicker
+                                className="w-100 py-3 col-md-12 my-3 rounded-3"
+                                onChange={(e) => setDate(e)}
+                            />
 
                             <Form.Item className="col-md-3 p-0" name="userRole">
                                 <Select

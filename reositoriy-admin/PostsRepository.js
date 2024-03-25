@@ -59,8 +59,8 @@ class PostRepository {
         return response;
     }
 
-    async EmailSend(data, token) {
-        const endPoint = `send-notification/`;
+    async EmailSend(data, token,date ) {
+        const endPoint = `send-notification/?from_date=${date}`;
         const response = await Repository({
             url: baseUrl + endPoint,
             method: 'POST',
