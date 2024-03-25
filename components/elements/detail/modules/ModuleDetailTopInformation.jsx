@@ -8,6 +8,7 @@ const ModuleDetailTopInformation = ({ product }) => {
     const SellerPage = (e) => {
         if (pid !== "/account/myproducts") {
             Router.push(`/seller/${e}`);
+            // setAdminModal(true)
         }
     };
 
