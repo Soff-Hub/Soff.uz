@@ -45,7 +45,7 @@ const EmailLists = () => {
         ? `${dateFormat0}&to_date=${dateFormat1}`
         : '';
 
-        console.log('date', dataFormat);
+        // console.log('date', dataFormat);
 
     async function GetItemsEmail() {
         if (text) {
@@ -213,15 +213,16 @@ const EmailLists = () => {
         }
     }
 
-    const getNotifications = async () => {
-        const ItemsData = await GetRepository.getNotificationList;
-        if (ItemsData) {
-            setNotification(ItemsData);
-        }
-    };
+    // const getNotifications = async () => {
+    //     const ItemsData = await GetRepository.getNotificationList;
+    //     if (ItemsData) {
+    //         setNotification(ItemsData);
+    //         console.log('ItemsData', ItemsData);
+    //     }
+    // };
 
     useEffect(() => {
-        getNotifications();
+        // getNotifications();
         setEditorLoaded(true);
         if (user?.access) {
             GetAllUsers();
