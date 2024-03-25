@@ -13,7 +13,6 @@ export default function TopSellersTable() {
         const ItemsData = await PostRepository.getTopSeller('');
         if (ItemsData) {
             setSellerData(ItemsData?.data?.results);
-            console.log(ItemsData?.data?.results);
         }
     };
     const options = [];
@@ -140,9 +139,9 @@ export default function TopSellersTable() {
         }
     };
 
-    const navigateSeller = (e) => {
-        console.log('e', e);
-    };
+    // const navigateSeller = (e) => {
+    //     console.log('e', e);
+    // };
 
     return (
         <div className="top-sellers">
@@ -176,7 +175,7 @@ export default function TopSellersTable() {
                 columns={columns}
                 pagination={false}
                 className="text-center"
-                onRow={(e) => navigateSeller(e)}
+                // onRow={(e) => navigateSeller(e)}
                 scroll={{ x: 1200 }}
             />
         </div>
