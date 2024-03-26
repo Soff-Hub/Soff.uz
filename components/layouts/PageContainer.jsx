@@ -34,7 +34,7 @@ export let accountAdminLinks = [
     },
     {
         text: 'Mahsulotlar',
-        url: '/account/products',
+        url: '/account/products?page=1',
         icon: 'fa-solid fa-cube',
     },
     {
