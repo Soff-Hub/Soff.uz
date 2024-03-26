@@ -91,8 +91,9 @@ function ProductsLists() {
             search,
             user?.access
         );
-        setPageCount(ItemsData.count);
-        setData([...ItemsData.results]);
+        setPageCount(ItemsData?.count);
+        setData([...ItemsData?.results]);
+        console.log('itemsdata', ItemsData);
     }
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryLists();
@@ -158,6 +159,7 @@ function ProductsLists() {
     function handleCLickArxiv() {
         setDateArxiv(!dateArxiv);
     }
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -175,6 +177,7 @@ function ProductsLists() {
 
         return formattedNumber;
     }
+
     const handleButtonClickViewProducts = async () => {
         try {
             setLoading2(true);
@@ -203,16 +206,9 @@ function ProductsLists() {
     };
 
     const handlePagination = (pageNum) => {
+        Router.push(`/account/products?page=${pageNum}`)
         setCurrPage(pageNum);
-        GetItemsProductsLists(
-            pageNum,
-            category_id,
-            dataValStatus,
-            dataFormat,
-            null,
-            dateArxiv,
-            search
-        );
+       
     };
 
     useEffect(() => {
@@ -220,8 +216,10 @@ function ProductsLists() {
     }, []);
 
     useEffect(() => {
+        setCurrPage(router.query.page)
+       if (router.query.page) {
         GetItemsProductsLists(
-            currPage,
+            router.query.page ,
             category_id,
             dataValStatus,
             dataFormat,
@@ -229,7 +227,22 @@ function ProductsLists() {
             dateArxiv,
             search
         );
-    }, [category_id, dataValStatus, dataFormat, dateArxiv, searchDebounce]);
+       }
+    }, [router.query.page])
+
+    useEffect(() => {
+        if (router.query.page) {
+            GetItemsProductsLists(
+                router.query.page  ,
+                category_id,
+                dataValStatus,
+                dataFormat,
+                null,
+                dateArxiv,
+                search
+            );
+        }
+    }, [category_id, dataValStatus, dataFormat, dateArxiv, searchDebounce, router.query.page]);
 
     useEffect(() => {
         if (pid !== '/account/myproducts') {
@@ -287,7 +300,7 @@ function ProductsLists() {
                 <div className="d-flex flex-column">
                     <span>
                         {' '}
-                        {seller?.first_name} {seller.last_name}
+                        {seller?.first_name} {seller?.last_name}
                     </span>
                     <span> {seller?.phone}</span>
                 </div>
@@ -372,6 +385,10 @@ function ProductsLists() {
             ),
         },
     ];
+
+
+    console.log('pageCount => ', pageCount, 'currPage => ', currPage);
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -538,79 +555,16 @@ function ProductsLists() {
                                     />
                                     <Pagination
                                         className="mt-3"
-                                        defaultCurrent={currPage}
+                                        defaultCurrent={router.query.page}
                                         total={pageCount}
                                         onChange={handlePagination}
+                                        showSizeChanger 
                                     />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {/*                
-                        {!loading ? (
-                            <div
-                                className="modal fade "
-                                id="staticBackdrop"
-                                data-bs-backdrop="static"
-                                data-bs-keyboard="false"
-                                aria-labelledby="staticBackdropLabel"
-                                aria-hidden="true">
-                                <div className="modal-dialog container ">
-                                    <div className="modal-content">
-                                        <div className="d-flex justify-content-end p-3">
-                                            <button
-                                                type="button"
-                                                className="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                       
-                                    </div>
-                                </div>
-                            </div>
-                        ) : (
-                            <div
-                                className="modal fade "
-                                id="staticBackdrop"
-                                data-bs-backdrop="static"
-                                data-bs-keyboard="false"
-                                aria-labelledby="staticBackdropLabel"
-                                aria-hidden="true">
-                                <div className="modal-dialog container ">
-                                    <div className="modal-content">
-                                        <div className="d-flex justify-content-end p-3">
-                                            <button
-                                                type="button"
-                                                className="btn-close"
-                                                data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div className="ps-container">
-                                            <div
-                                                className="ps-product--detail ps-product--fullwidth"
-                                                style={{
-                                                    height: '690px',
-                                                    display: 'grid',
-                                                    placeContent: 'center',
-                                                }}>
-                                                <div
-                                                    className="spinner-border "
-                                                    role="status"
-                                                    style={{
-                                                        width: '150px',
-                                                        height: '150px',
-                                                    }}>
-                                                    <span className="visually-hidden">
-                                                        Loading...
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )} */}
 
                 <Modal
                     title=" "
