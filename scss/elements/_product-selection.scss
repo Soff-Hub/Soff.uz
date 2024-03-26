@@ -1,0 +1,31 @@
+.product-selection {
+    height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .select-col {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        &:first-child{
+            justify-content: end;
+        }
+        &:nth-child(2){
+            justify-content: start;
+        }
+        .select-card {
+            text-align: center;
+            max-width: 200px;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+            padding: 20px;
+            border: 1px solid #cccccc9d;
+            transition: all .5s;
+            &:hover{
+                cursor: pointer;
+                box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+            }
+        }
+    }
+}
