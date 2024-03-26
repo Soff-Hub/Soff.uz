@@ -27,8 +27,15 @@ const Posts = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Soff | Yangi mahsulot yaratishni tanlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <div className="container">
-                    
+                <div className="container product-selection">
+                    <div className="row w-100">
+                        <div className="col-6 select-col">
+                            <div className="select-card file">File</div>
+                        </div>
+                        <div className="col-6 select-col">
+                            <div className="select-card audio">Audio</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </PageContainer>
