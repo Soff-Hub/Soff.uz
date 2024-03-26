@@ -5,7 +5,7 @@ import { Button, Form, Modal, Select, Input, DatePicker, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import CKEditor from './CKeditor';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-// const { Option } = Select;
+var parse = require('html-react-parser');
 
 const EmailLists = () => {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -85,7 +85,7 @@ const EmailLists = () => {
                         <p style="margin-left: auto; color: #ffffff">Barcha huquqlar himoyalangan</p>
                     </div>
                 </div>`,
-                    // text_site: text,
+                    body_text: text,
                 };
                 const ItemsData = await PostsRepository.EmailSend(
                     data,
@@ -144,6 +144,7 @@ const EmailLists = () => {
                         <p style="margin-left: auto; color: #ffffff">Barcha huquqlar himoyalangan</p>
                     </div>
                 </div>`,
+                body_text: text,
                 };
                 const ItemsData = await PostsRepository.EmailSend(
                     data,
@@ -270,18 +271,18 @@ const EmailLists = () => {
             render: (created_at) => (
                 <span>
                     {' '}
-                    <i className=" text-primary-emphasis fa-solid fa-layer-group"></i>{' '}
+                    <i class="fa-solid fa-calendar-days"></i>{' '}{" "}
                     {created_at}
                 </span>
             ),
         },
         {
-            title: 'Sotuvchi',
-            dataIndex: 'seller',
-            key: 'address',
-            render: (body) => (
+            title: 'Xabar',
+            dataIndex: 'body_text',
+            key: 'body_text',
+            render: (body_text) => (
                 <div className="d-flex flex-column">
-                    <span> {body}</span>
+                    <span> {body_text ? parse(body_text) : body_text}</span>
                 </div>
             ),
         },
@@ -385,7 +386,7 @@ const EmailLists = () => {
                         </Form>
                         <Table
                             className="my-5"
-                            scroll={{ x: 1000 }}
+                            scroll={{ x: 950 }}
                             dataSource={notification}
                             columns={columns}
                             pagination={false}
