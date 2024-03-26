@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
-import { Button, Form, Modal, Select, Input, DatePicker } from 'antd';
+import { Button, Form, Modal, Select, Input, DatePicker, Table } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import CKEditor from './CKeditor';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -41,11 +41,9 @@ const EmailLists = () => {
                   : date[1].$M + 1
           }-${date[1].$D}`
         : '';
-    const dataFormat = date
-        ? `${dateFormat0}&to_date=${dateFormat1}`
-        : '';
+    const dataFormat = date ? `${dateFormat0}&to_date=${dateFormat1}` : '';
 
-        // console.log('date', dataFormat);
+    // console.log('date', dataFormat);
 
     async function GetItemsEmail() {
         if (text) {
@@ -150,7 +148,7 @@ const EmailLists = () => {
                 const ItemsData = await PostsRepository.EmailSend(
                     data,
                     user?.access,
-                dataFormat
+                    dataFormat
                 );
                 if (ItemsData?.status == 201) {
                     console.log('data', ItemsData);
@@ -213,16 +211,16 @@ const EmailLists = () => {
         }
     }
 
-    // const getNotifications = async () => {
-    //     const ItemsData = await GetRepository.getNotificationList;
-    //     if (ItemsData) {
-    //         setNotification(ItemsData);
-    //         console.log('ItemsData', ItemsData);
-    //     }
-    // };
+    const getNotifications = async () => {
+        const ItemsData = await GetRepository.getNotificationList();
+        if (ItemsData) {
+            setNotification(ItemsData.results);
+            console.log('ItemsData', ItemsData.results);
+        }
+    };
 
     useEffect(() => {
-        // getNotifications();
+        getNotifications();
         setEditorLoaded(true);
         if (user?.access) {
             GetAllUsers();
@@ -245,141 +243,49 @@ const EmailLists = () => {
         }
     }, [data]);
 
-    // const columns = [
-    //     {
-    //         title: 'Rasm',
-    //         dataIndex: 'poster',
-    //         key: 'name',
-    //         render: (poster_url) => (
-    //             <div>
-    //                 {poster_url ? (
-    //                     <NextImageCard
-    //                         url={poster_url}
-    //                         clasS="rounded-3 mb-2"
-    //                         width="54px"
-    //                         height="54px"
-    //                     />
-    //                 ) : (
-    //                     <i className="fa-solid fa-image fa-2x"></i>
-    //                 )}
-    //             </div>
-    //         ),
-    //     },
-    //     {
-    //         title: 'Nomi',
-    //         dataIndex: 'title',
-    //         key: 'age',
-    //         width: 350,
-    //         render: (title) => (
-    //             <span className="truncate whitespace-nowrap "> {title}</span>
-    //         ),
-    //     },
-    //     {
-    //         title: 'Kategoriya',
-    //         dataIndex: 'category',
-    //         key: 'address',
-    //         width: 350,
-    //         render: (category) => (
-    //             <span>
-    //                 {' '}
-    //                 <i className=" text-primary-emphasis fa-solid fa-layer-group"></i>{' '}
-    //                 {category?.name}
-    //             </span>
-    //         ),
-    //     },
-    //     {
-    //         title: 'Sotuvchi',
-    //         dataIndex: 'seller',
-    //         key: 'address',
-    //         render: (seller) => (
-    //             <div className="d-flex flex-column">
-    //                 <span>
-    //                     {' '}
-    //                     {seller?.first_name} {seller.last_name}
-    //                 </span>
-    //                 <span> {seller?.phone}</span>
-    //             </div>
-    //         ),
-    //     },
-    //     {
-    //         title: 'Sana',
-    //         dataIndex: 'created_at',
-    //         key: 'created_at',
-    //         render: (created_at) => (
-    //             <span>
-    //                 {' '}
-    //                 <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
-    //                 <CalculateTimeDifference targetDate={created_at} />{' '}
-    //             </span>
-    //         ),
-    //     },
-    //     {
-    //         title: 'Narxi',
-    //         dataIndex: 'discount_price',
-    //         key: 'address',
-    //         render: (price) => (
-    //             <span>
-    //                 <i className="fa-solid fa-coins text-warning"></i>{' '}
-    //                 {+price == 0 ? 'Bepul' : addPeriodToThousands(price)}
-    //             </span>
-    //         ),
-    //     },
-    //     {
-    //         title: 'Holat',
-    //         dataIndex: 'data_status',
-    //         key: 'address',
-    //         render: (datastatus) =>
-    //             datastatus?.status === 'moderation' ? (
-    //                 <span>
-    //                     <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-    //                     Moderatsiya
-    //                 </span>
-    //             ) : datastatus?.status === 'approved' ? (
-    //                 <span>
-    //                     <i className="fa-solid text-success fa-circle-check"></i>{' '}
-    //                     Tasdiqlangan
-    //                 </span>
-    //             ) : datastatus?.status === 'cancelled' ? (
-    //                 <Tooltip title={datastatus?.reason}>
-    //                     <span style={{ cursor: 'pointer' }}>
-    //                         <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-    //                         Bekor qilingan{' '}
-    //                     </span>
-    //                 </Tooltip>
-    //             ) : datastatus?.status === 'Arxivlangan' ? (
-    //                 <span>
-    //                     <i className="fa-solid fa-inbox text-danger"></i>{' '}
-    //                     Arxivlangan
-    //                 </span>
-    //             ) : (
-    //                 <></>
-    //             ),
-    //     },
-
-    //     {
-    //         title: 'Harakatlar',
-    //         dataIndex: 'id',
-    //         key: 'address',
-    //         render: (id) => (
-    //             <div>
-    //                 <a data-bs-target="#staticBackdrop" data-bs-toggle="modal">
-    //                     <i
-    //                         className="fa-solid fa-eye text-success-emphasis mx-3"
-    //                         onClick={() => showModal(id)}></i>
-    //                 </a>
-    //                 <Link href={'#'}>
-    //                     <a>
-    //                         <i
-    //                             className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
-    //                             onClick={() =>
-    //                                 handleClickIdEditProducts(id)
-    //                             }></i>
-    //                     </a>
-    //                 </Link>
-    //             </div>
-    //         ),
-    //     },
-    // ];
+    const columns = [
+        {
+            title: 'Nomi',
+            dataIndex: 'title',
+            key: 'title',
+            render: (title) => (
+                <span className="truncate whitespace-nowrap "> {title}</span>
+            ),
+        },
+        {
+            title: 'Qabul qiluvchi',
+            dataIndex: 'receivers',
+            key: 'user',
+            render: (receivers) => (
+                <span className="truncate whitespace-nowrap ">
+                    {' '}
+                    {receivers}
+                </span>
+            ),
+        },
+        {
+            title: 'Yuborilgan sana',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => (
+                <span>
+                    {' '}
+                    <i className=" text-primary-emphasis fa-solid fa-layer-group"></i>{' '}
+                    {created_at}
+                </span>
+            ),
+        },
+        {
+            title: 'Sotuvchi',
+            dataIndex: 'seller',
+            key: 'address',
+            render: (body) => (
+                <div className="d-flex flex-column">
+                    <span> {body}</span>
+                </div>
+            ),
+        },
+    ];
 
     return (
         <section className="ps-my-account ps-page--account pb-5 p-0">
@@ -477,15 +383,14 @@ const EmailLists = () => {
                                 </Button>
                             </Form.Item>
                         </Form>
+                        <Table
+                            className="my-5"
+                            scroll={{ x: 1000 }}
+                            dataSource={notification}
+                            columns={columns}
+                            pagination={false}
+                        />
                     </div>
-                </div>
-                <div className="row">
-                    {/* <Table
-                                        scroll={{ x: 1700 }}
-                                        dataSource={data}
-                                        columns={columns}
-                                        pagination={false}
-                                    /> */}
                 </div>
             </div>
         </section>
