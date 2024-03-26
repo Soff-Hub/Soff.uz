@@ -27,6 +27,9 @@ const Posts = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Soff | Yangi mahsulot yaratishni tanlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
+                <div className="container">
+                    
+                </div>
             </div>
         </PageContainer>
     ) : user?.access ? (
