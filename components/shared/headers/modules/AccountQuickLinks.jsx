@@ -4,11 +4,13 @@ import Link from 'next/link';
 import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 const AccountQuickLinks = (props) => {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
+    const [profile, setProfile] = useState(null);
 
     const handleLogout = () => {
         const data = {
@@ -42,7 +44,6 @@ const AccountQuickLinks = (props) => {
                                 }}>
                                 <a className="d-flex align-items-center">
                                     <i class="fa-regular fa-handshake text-dark fs-4 me-2 "></i>
-                                    
                                     Buyurtma berish
                                 </a>
                             </span>
@@ -51,20 +52,20 @@ const AccountQuickLinks = (props) => {
                 </Badge.Ribbon>
             ) : item?.url == '#' ? (
                 <Badge.Ribbon text="Tez kunda" color="volcano">
-                <Card size="small">
-                    <li>
-                        <span
-                            style={{
-                                cursor: 'pointer',
-                            }}>
-                            <a className="d-flex align-items-center">
-                                <i class="fa-regular fa-handshake  text-dark fs-4 me-2"></i>
-                                Mening bitimlarim 
-                            </a>
-                        </span>
-                    </li>
-                </Card>
-            </Badge.Ribbon>
+                    <Card size="small">
+                        <li>
+                            <span
+                                style={{
+                                    cursor: 'pointer',
+                                }}>
+                                <a className="d-flex align-items-center">
+                                    <i class="fa-regular fa-handshake  text-dark fs-4 me-2"></i>
+                                    Mening bitimlarim
+                                </a>
+                            </span>
+                        </li>
+                    </Card>
+                </Badge.Ribbon>
             ) : (
                 <li key={item.text}>
                     <Link href={item.url}>
@@ -82,6 +83,19 @@ const AccountQuickLinks = (props) => {
         </>
     ));
 
+    async function ProfileUsers() {
+        const ItemsData = await GetRepository.getProfile(user?.access);
+        if (ItemsData) {
+            setProfile(ItemsData);
+        }
+    }
+
+    useEffect(() => {
+        ProfileUsers();
+    }, []);
+
+    console.log('user', profile);
+
     if (isLoggedIn === true) {
         return (
             <div className="ps-block--user-account">
@@ -92,8 +106,15 @@ const AccountQuickLinks = (props) => {
                             : '/account/myproducts'
                     }>
                     <a>
-                        {' '}
-                        <i className="icon-user"></i>{' '}
+                        {profile?.image ? (
+                            <img
+                                alt="soff"
+                                src={profile?.image}
+                                className="profile__image-client"
+                            />
+                        ) : (
+                            <i className="icon-user"></i>
+                        )}
                     </a>
                 </Link>
                 <div className="ps-block__content">
