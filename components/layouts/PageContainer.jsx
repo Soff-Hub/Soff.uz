@@ -101,7 +101,7 @@ export let accountSellerLink = [
     },
     {
         text: 'Yangi mahsulot',
-        url: '/account/myproducts/posts',
+        url: '/account/myproducts/product-selection',
         icon: 'fa-solid fa-circle-plus',
     },
     {

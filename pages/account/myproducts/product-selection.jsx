@@ -6,6 +6,7 @@ import Meta from '~/components/shared/headers/Meta';
 import Page404 from '~/pages/page/page-404';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
+import Link from 'next/link';
 
 const Posts = () => {
     const { user } = useSelector((state) => state.auth);
@@ -30,10 +31,20 @@ const Posts = () => {
                 <div className="container product-selection">
                     <div className="row w-100">
                         <div className="col-6 select-col">
-                            <div className="select-card file">File</div>
+                            <Link href="/account/myproducts/posts">
+                                <a>
+                                    <div className="select-card file">File</div>
+                                </a>
+                            </Link>
                         </div>
                         <div className="col-6 select-col">
-                            <div className="select-card audio">Audio</div>
+                            <Link href="/account/myproducts/audio-posts">
+                                <a>
+                                    <div className="select-card file">
+                                        Audio
+                                    </div>
+                                </a>
+                            </Link>
                         </div>
                     </div>
                 </div>
