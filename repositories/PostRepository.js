@@ -38,19 +38,19 @@ class PostRepository {
         return reponse;
     }
 
-    async postCartData(payload, token) {
-        const endPoint = 'customer/cart/';
-        const reponse = await Repository.post(
-            baseUrl + endPoint,
-            payload,
-            token
-        )
-            .then((response) => {
-                return response;
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }));
-        return reponse;
-    }
+    // async postCartData(payload, token) {
+    //     const endPoint = 'customer/cart/';
+    //     const reponse = await Repository.post(
+    //         baseUrl + endPoint,
+    //         payload,
+    //         token
+    //     )
+    //         .then((response) => {
+    //             return response;
+    //         })
+    //         .catch((error) => ({ error: JSON.stringify(error) }));
+    //     return reponse;
+    // }
 
     async getCartData(token) {
         const endPoint = 'customer/cart-list/';
