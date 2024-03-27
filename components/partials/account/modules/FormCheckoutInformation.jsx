@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from 'antd';
 import { useSelector } from 'react-redux';
-import PostRepository from '~/repositories/PostRepository';
-import ClickRepository from '~/repositories/ClickRepository';
-import { BeatLoader } from 'react-spinners';
-import Router from 'next/router';
-import useCart from '~/hooks/useCart';
-import Image from 'next/image';
 import CreditCard2 from '../CreditCard2';
 
 function FormCheckoutInformation() {
