@@ -1100,113 +1100,123 @@ const AudioPosts = () => {
                                 items={items}
                                 onChange={onChangeTabs}
                             /> */}
-                             <form
-                    onSubmit={handleClickPosts}
-                    style={{ position: 'relative', width: '100%' }}
-                    id="FormPostsMyProducts"
-                    className=" col-md-12 pb-5">
-                    <div className="row">
-                        <p className="eslatma">
-                            <i class="fa-solid fa-circle-exclamation"></i>{' '}
-                            <span>
-                                {' '}
-                                Audio yuklash test rejimida ishlamoqda{' '}
-                            </span>{' '}
-                        </p>
-                    </div>
-                    <div className="row   mt-3">
-                        <div className="col-md-4  d-flex justify-content-between p-0 ">
-                            <h4 className=" p-0">Yangi mahsulot </h4>
-                        </div>
-                    </div>
+                            <form
+                                onSubmit={handleClickPosts}
+                                style={{ position: 'relative', width: '100%' }}
+                                id="FormPostsMyProducts"
+                                className=" col-md-12 pb-5">
+                                <div className="row">
+                                    <p className="eslatma">
+                                        <i class="fa-solid fa-circle-exclamation"></i>{' '}
+                                        <span>
+                                            {' '}
+                                            Audio yuklash test rejimida
+                                            ishlamoqda{' '}
+                                        </span>{' '}
+                                    </p>
+                                </div>
+                                <div className="row   mt-3">
+                                    <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                        <h4 className=" p-0">
+                                            Yangi mahsulot{' '}
+                                        </h4>
+                                    </div>
+                                </div>
 
-                    <div className="row   mt-3">
-                        <div className="col-md-4  d-flex justify-content-between p-0 ">
-                            <p>Mahsulot nomi: *</p>
-                            <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                            </Tooltip>
-                        </div>
-                        <input
-                            required
-                            type="text"
-                            className="form-control  rounded-3 col-md-8 mb-2"
-                            name="title"
-                            onChange={(e) => setTitle(e.target.value)}
-                        />
-                    </div>
-                    <div className="row ">
-                        <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                            <p>Mahsulot: *</p>{' '}
-                            <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdag video bo’lishi mumkin: .mp4, .mov, .avi, .wmv, .avchd, .webm, .flv">
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                            </Tooltip>
-                        </div>
-                        {/* <div className="row"> */}
-                        <label
-                            className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
-                            style={{
-                                backgroundColor: '#F1F1F1',
-                                border: '1px dashed green',
-                                width: '100%',
-                            }}>
-                            {livePosterAudio === '' ? (
-                                <span
-                                    className="d-flex flex-column align-items-center"
-                                    style={{ cursor: 'pointer' }}>
-                                    {loadingAudio ? (
-                                        // <span className="d-flex justify-content-center">
-                                        //     <ClipLoader
-                                        //         size={25}
-                                        //         color="#36d7b7"
-                                        //     />
-                                        // </span>
-                                        <Tooltip title="Mahsulot yuklash davom etmoqda">
-                                            <Progress
-                                                percent={socket?.progress}
-                                                success={{
-                                                    percent: 30,
-                                                }}
-                                            />
+                                <div className="row   mt-3">
+                                    <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                        <p>Mahsulot nomi: *</p>
+                                        <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                         </Tooltip>
-                                    ) : (
-                                        <span
-                                            className="d-flex flex-column align-items-center "
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}>
-                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                            <span>
-                                                Mahsulot (audio) yuklash uchun
-                                                ushbu hududga bosing.
+                                    </div>
+                                    <input
+                                        required
+                                        type="text"
+                                        className="form-control  rounded-3 col-md-8 mb-2"
+                                        name="title"
+                                        onChange={(e) =>
+                                            setTitle(e.target.value)
+                                        }
+                                    />
+                                </div>
+                                <div className="row ">
+                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                        <p>Mahsulot: *</p>{' '}
+                                        <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdag video bo’lishi mumkin: .mp4, .mov, .avi, .wmv, .avchd, .webm, .flv">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+                                    {/* <div className="row"> */}
+                                    <label
+                                        className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
+                                        style={{
+                                            backgroundColor: '#F1F1F1',
+                                            border: '1px dashed green',
+                                            width: '100%',
+                                        }}>
+                                        {livePosterAudio === '' ? (
+                                            <span
+                                                className="d-flex flex-column align-items-center"
+                                                style={{ cursor: 'pointer' }}>
+                                                {loadingAudio ? (
+                                                    // <span className="d-flex justify-content-center">
+                                                    //     <ClipLoader
+                                                    //         size={25}
+                                                    //         color="#36d7b7"
+                                                    //     />
+                                                    // </span>
+                                                    <Tooltip title="Mahsulot yuklash davom etmoqda">
+                                                        <Progress
+                                                            percent={
+                                                                socket?.progress
+                                                            }
+                                                            success={{
+                                                                percent: 30,
+                                                            }}
+                                                        />
+                                                    </Tooltip>
+                                                ) : (
+                                                    <span
+                                                        className="d-flex flex-column align-items-center "
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                        <span>
+                                                            Mahsulot (audio)
+                                                            yuklash uchun ushbu
+                                                            hududga bosing.
+                                                        </span>
+                                                    </span>
+                                                )}
                                             </span>
-                                        </span>
-                                    )}
-                                </span>
-                            ) : (
-                                <span
-                                    className="d-flex flex-column align-items-center"
-                                    style={{ cursor: 'pointer' }}>
-                                    <span>
-                                        {' '}
-                                        Siz audio yukladingiz{' '}
-                                        <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                    </span>
-                                </span>
-                            )}
-                            <input
-                                required
-                                type="file"
-                                onChange={(e) =>
-                                    setFileImgAudio(e.target.files[0])
-                                }
-                                accept="audio/*"
-                            />
-                            {/* {completed === 0 ? (
+                                        ) : (
+                                            <span
+                                                className="d-flex flex-column align-items-center"
+                                                style={{ cursor: 'pointer' }}>
+                                                <span>
+                                                    {' '}
+                                                    Siz audio yukladingiz{' '}
+                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                </span>
+                                            </span>
+                                        )}
+                                        <input
+                                            required
+                                            type="file"
+                                            onChange={(e) =>
+                                                setFileImgAudio(
+                                                    e.target.files[0]
+                                                )
+                                            }
+                                            accept="audio/*"
+                                        />
+                                        {/* {completed === 0 ? (
                                 <></>
                             ) : (
                                 <div className=" my-2">
@@ -1221,207 +1231,219 @@ const AudioPosts = () => {
                                     />
                                 </div>
                             )} */}
-                        </label>
+                                    </label>
 
-                        {/* </div> */}
-                    </div>
+                                    {/* </div> */}
+                                </div>
 
-                    <div className="row mb-3">
-                        <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                            <p>Mahsulot rasmi: *</p>{' '}
-                            <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin. Bu rasm quyidagi turda bo’lishi mumkin: .png , .jpg">
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                            </Tooltip>
-                        </div>
-                        <div
-                            className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
-                            style={{
-                                backgroundColor: '#F1F1F1',
-                                border: '1px dashed green',
-                                height: '100px',
-                            }}>
-                            <label
-                                style={{
-                                    width: '50px',
-                                    cursor: 'pointer',
-                                }}>
-                                <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                                <input
-                                    type="file"
-                                    onChange={(e) => LiveImage(e)}
-                                    accept="image/*"
-                                    style={{ width: '20px' }}
-                                />
-                            </label>
-                            <div
-                                className="overflow-x-scroll  d-flex  gap-1
+                                <div className="row mb-3">
+                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                        <p>Mahsulot rasmi: *</p>{' '}
+                                        <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin. Bu rasm quyidagi turda bo’lishi mumkin: .png , .jpg">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+                                    <div
+                                        className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
+                                        style={{
+                                            backgroundColor: '#F1F1F1',
+                                            border: '1px dashed green',
+                                            height: '100px',
+                                        }}>
+                                        <label
+                                            style={{
+                                                width: '50px',
+                                                cursor: 'pointer',
+                                            }}>
+                                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                                            <input
+                                                type="file"
+                                                onChange={(e) => LiveImage(e)}
+                                                accept="image/*"
+                                                style={{ width: '20px' }}
+                                            />
+                                        </label>
+                                        <div
+                                            className="overflow-x-scroll  d-flex  gap-1
                        "
-                                style={{ width: '430px' }}>
-                                {!livePosterFile?.images ? (
-                                    <span
-                                        className="d-flex flex-column align-items-center mt-4 mx-5"
-                                        style={{ cursor: 'pointer' }}>
-                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                        <span className="text-center">
-                                            {' '}
-                                            Rasmini yuklash uchun ushbu hududga
-                                            bosing.{' '}
+                                            style={{ width: '430px' }}>
+                                            {!livePosterFile?.images ? (
+                                                <span
+                                                    className="d-flex flex-column align-items-center mt-4 mx-5"
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                    }}>
+                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                    <span className="text-center">
+                                                        {' '}
+                                                        Rasmini yuklash uchun
+                                                        ushbu hududga bosing.{' '}
+                                                    </span>
+                                                </span>
+                                            ) : (
+                                                livePosterFile?.images?.map(
+                                                    (item, i) =>
+                                                        item.id ===
+                                                        fileImgFileID ? (
+                                                            <img
+                                                                src={
+                                                                    item.image_url
+                                                                }
+                                                                alt=" "
+                                                                key={i}
+                                                                style={{
+                                                                    display:
+                                                                        'block',
+                                                                    border: '2px solid red',
+                                                                    filter: 'blur(1px)',
+                                                                    cursor: 'not-allowed',
+                                                                }}
+                                                            />
+                                                        ) : (
+                                                            <img
+                                                                className="mx-1 "
+                                                                onClick={() => {
+                                                                    setLiveFile(
+                                                                        item?.image_url
+                                                                    ),
+                                                                        setFileImgFileID(
+                                                                            item?.id
+                                                                        );
+                                                                }}
+                                                                src={
+                                                                    item?.image_url
+                                                                }
+                                                                alt=" "
+                                                                key={i}
+                                                                style={{
+                                                                    display:
+                                                                        'block',
+                                                                    cursor: 'pointer',
+                                                                }}
+                                                            />
+                                                        )
+                                                )
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className=" row ">
+                                    <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
+                                        <p>Teglar:</p>{' '}
+                                        <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+                                    <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
+                                        <Select
+                                            mode="tags"
+                                            style={{ width: '100%' }}
+                                            onChange={handleChange}>
+                                            {children}
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className=" row  mt-2">
+                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                        <p>Kategoriya: *</p>{' '}
+                                        <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+                                    <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
+                                        <Select
+                                            mode="select"
+                                            showSearch
+                                            allowClear
+                                            style={{
+                                                width: '100%',
+                                                height: '47px',
+                                            }}
+                                            onChange={onChange}
+                                            onSearch={onSearch}>
+                                            {options}
+                                        </Select>
+                                    </div>
+                                </div>
+                                <div className="row mt-3">
+                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                        <p>Mahsulot sotish narxi: *</p>{' '}
+                                        <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+                                    <Checkbox
+                                        defaultChecked={free}
+                                        className="col-md-2 d-flex align-items-center justify-content-start px-0 py-2"
+                                        onChange={handleFreeChange}>
+                                        Bepul
+                                    </Checkbox>
+                                    <input
+                                        required
+                                        type={narxNomi ? 'text' : 'number'}
+                                        className="form-control  rounded-3 col-md-6"
+                                        name="price"
+                                        disabled={free}
+                                        value={taxminiyNarx}
+                                        onChange={(e) => (
+                                            setNarxNomi(false),
+                                            setTaxminiyNarx(e.target.value),
+                                            setNarx(e.target.value)
+                                        )}
+                                    />
+                                </div>
+
+                                <div className="  row mt-3">
+                                    <div className="col-md-4 d-flex justify-content-between p-0">
+                                        <p>Mahsulot to’liq tavsifi: </p>{' '}
+                                        <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+                                    <div className=" p-0 rounded-3 col-md-8">
+                                        <CKeditor
+                                            name="description"
+                                            onChange={(data) => {
+                                                setFullData(data);
+                                            }}
+                                            editorLoaded={editorLoaded}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div
+                                    className="d-flex justify-content-end mt-4 "
+                                    style={{ transform: 'translateX(16px)' }}>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success py-3 ">
+                                        <span className="fs-4 px-5">
+                                            Mahsulot qo'shish{' '}
+                                            <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
                                         </span>
+                                    </button>
+                                </div>
+                                <div className="mahsulotingiz">
+                                    <span
+                                        className="fixed-btn"
+                                        type="button"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight">
+                                        <i className="fa-solid fa-id-card fa-beat fs-1"></i>
                                     </span>
-                                ) : (
-                                    livePosterFile?.images?.map((item, i) =>
-                                        item.id === fileImgFileID ? (
-                                            <img
-                                                src={item.image_url}
-                                                alt=" "
-                                                key={i}
-                                                style={{
-                                                    display: 'block',
-                                                    border: '2px solid red',
-                                                    filter: 'blur(1px)',
-                                                    cursor: 'not-allowed',
-                                                }}
-                                            />
-                                        ) : (
-                                            <img
-                                                className="mx-1 "
-                                                onClick={() => {
-                                                    setLiveFile(
-                                                        item?.image_url
-                                                    ),
-                                                        setFileImgFileID(
-                                                            item?.id
-                                                        );
-                                                }}
-                                                src={item?.image_url}
-                                                alt=" "
-                                                key={i}
-                                                style={{
-                                                    display: 'block',
-                                                    cursor: 'pointer',
-                                                }}
-                                            />
-                                        )
-                                    )
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className=" row ">
-                        <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
-                            <p>Teglar:</p>{' '}
-                            <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                            </Tooltip>
-                        </div>
-                        <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
-                            <Select
-                                mode="tags"
-                                style={{ width: '100%' }}
-                                onChange={handleChange}>
-                                {children}
-                            </Select>
-                        </div>
-                    </div>
-                    <div className=" row  mt-2">
-                        <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                            <p>Kategoriya: *</p>{' '}
-                            <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                            </Tooltip>
-                        </div>
-                        <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
-                            <Select
-                                mode="select"
-                                showSearch
-                                allowClear
-                                style={{
-                                    width: '100%',
-                                    height: '47px',
-                                }}
-                                onChange={onChange}
-                                onSearch={onSearch}>
-                                {options}
-                            </Select>
-                        </div>
-                    </div>
-                    <div className="row mt-3">
-                        <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                            <p>Mahsulot sotish narxi: *</p>{' '}
-                            <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                            </Tooltip>
-                        </div>
-                        <Checkbox
-                            defaultChecked={free}
-                            className="col-md-2 d-flex align-items-center justify-content-start px-0 py-2"
-                            onChange={handleFreeChange}>
-                            Bepul
-                        </Checkbox>
-                        <input
-                            required
-                            type={narxNomi ? 'text' : 'number'}
-                            className="form-control  rounded-3 col-md-6"
-                            name="price"
-                            disabled={free}
-                            value={taxminiyNarx}
-                            onChange={(e) => (
-                                setNarxNomi(false),
-                                setTaxminiyNarx(e.target.value),
-                                setNarx(e.target.value)
-                            )}
-                        />
-                    </div>
-
-                    <div className="  row mt-3">
-                        <div className="col-md-4 d-flex justify-content-between p-0">
-                            <p>Mahsulot to’liq tavsifi: </p>{' '}
-                            <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
-                                <i
-                                    style={{ cursor: 'pointer' }}
-                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                            </Tooltip>
-                        </div>
-                        <div className=" p-0 rounded-3 col-md-8">
-                            <CKeditor
-                                name="description"
-                                onChange={(data) => {
-                                    setFullData(data);
-                                }}
-                                editorLoaded={editorLoaded}
-                            />
-                        </div>
-                    </div>
-
-                    <div
-                        className="d-flex justify-content-end mt-4 "
-                        style={{ transform: 'translateX(16px)' }}>
-                        <button type="submit" className="btn btn-success py-3 ">
-                            <span className="fs-4 px-5">
-                                Mahsulot qo'shish{' '}
-                                <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
-                            </span>
-                        </button>
-                    </div>
-                    <div className="mahsulotingiz">
-                        <span
-                            className="fixed-btn"
-                            type="button"
-                            data-bs-toggle="offcanvas"
-                            data-bs-target="#offcanvasRight"
-                            aria-controls="offcanvasRight">
-                            <i className="fa-solid fa-id-card fa-beat fs-1"></i>
-                        </span>
-                    </div>
-                </form>
+                                </div>
+                            </form>
                         </div>
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
