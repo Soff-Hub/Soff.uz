@@ -18,12 +18,6 @@ import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudi
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import Link from 'next/link';
-import { baseUrl } from '~/reositoriy-admin/Repository';
-// import EmojiPicker from 'emoji-picker-react';
-// import TextareaAutosize from 'react-textarea-autosize';
-import { useMemo } from 'react';
-import dynamic from 'next/dynamic';
-// import { Dante } from 'dante3';
 
 const category_id = [];
 
@@ -454,65 +448,7 @@ const AudioPosts = () => {
         }
     }
 
-    async function PostVideoPoster() {
-        if (fileImgVideo) {
-            const progresInterval = setInterval(() => {
-                if (maxCompleted <= completed) {
-                    clearInterval(progresInterval);
-                } else {
-                    setCompleted((completed += 1));
-                }
-            }, 1000);
-            setLiveFile('');
-            setLivePosterVideo('');
-            const formData = new FormData();
-            setLoadingVideo(true);
-            formData.append('file', fileImgVideo);
-            formData.append('content_type', 'video');
-            const ItemsData = await PostsRepository.PostsMyProductsPoster(
-                formData,
-                user?.access
-            );
-
-            if (ItemsData?.status === 201) {
-                clearInterval(progresInterval);
-                setCompleted(100);
-                setLiveFile('');
-                setLivePosterVideo(ItemsData);
-                setVideoPost(ItemsData);
-                // if (progress == 100) {
-                // setTimeout(() => {
-                setProgress(0);
-                // }, 1000);
-                // }
-                const modal = Modal.success({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: "Yangi video qo'shdingiz ",
-                });
-            } else {
-                if (progress == 100) {
-                    setTimeout(() => {
-                        setProgress(0);
-                    }, 2000);
-                }
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik!',
-                    content: `${
-                        ItemsData?.status === 400
-                            ? ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                            : ItemsData?.status === 413
-                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                            : "Video mahsulot qo'sha olmadingiz "
-                    }`,
-                });
-            }
-            setLoadingVideo(false);
-        }
-    }
+ 
 
     async function PostAudioPoster() {
         if (fileImgAudio) {
@@ -619,12 +555,7 @@ const AudioPosts = () => {
         GetItemsCategoryLists();
     }, []);
 
-    useEffect(() => {
-        PostFilePoster();
-    }, [fileImgFile]);
-    useEffect(() => {
-        PostVideoPoster();
-    }, [fileImgVideo]);
+   
     useEffect(() => {
         PostAudioPoster();
     }, [fileImgAudio]);
@@ -869,7 +800,7 @@ const AudioPosts = () => {
                                         <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                         <span className="text-center">
                                             {' '}
-                                            Rasmini yuklash uchun ushbu hududga
+                                            Mahsulot rasmini yuklash uchun ushbu hududga
                                             bosing.{' '}
                                         </span>
                                     </span>
