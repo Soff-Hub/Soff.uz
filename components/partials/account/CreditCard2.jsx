@@ -247,7 +247,7 @@ const CreditCard2 = ({ document }) => {
     const items = [
         {
             key: '1',
-            label: "Karta ma'lumotlari bilan to'lov",
+            label: "Karta raqam orqali",
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
@@ -379,7 +379,7 @@ const CreditCard2 = ({ document }) => {
         },
         {
             key: '2',
-            label: "Telefon raqam orqali to'lov",
+            label: "Telefon raqam orqali",
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
