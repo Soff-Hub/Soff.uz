@@ -1,35 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { Modal } from 'antd';
 import { useSelector } from 'react-redux';
-import PostRepository from '~/repositories/PostRepository';
-import ClickRepository from '~/repositories/ClickRepository';
-import { BeatLoader } from 'react-spinners';
-import Router from 'next/router';
-import useCart from '~/hooks/useCart';
-import Image from 'next/image';
 import CreditCard2 from '../CreditCard2';
 
 function FormCheckoutInformation() {
     const select = useSelector((state) => state.auth.user?.access);
     const cartData = useSelector((state) => state.ecomerce.cartDataItems);
-    const [card, setCard] = useState([]);
     const [data, setData] = useState([])
 
 
-    const GetCard = async () => {
-        const config = {
-            headers: {
-                Authorization: `Bearer ${select} `,
-            },
-        };
-        const respons = await PostRepository.getCartData(config);
-        setTimeout(() => {
-            setCard(respons?.results?.[0]?.documents);
-        }, 1000);
-    };
-
     useEffect(() => {
-        select && GetCard();
+        select && 
         setData(cartData);
     }, [cartData]);
 

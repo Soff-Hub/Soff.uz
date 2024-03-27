@@ -38,19 +38,19 @@ class PostRepository {
         return reponse;
     }
 
-    async postCartData(payload, token) {
-        const endPoint = 'customer/cart/';
-        const reponse = await Repository.post(
-            baseUrl + endPoint,
-            payload,
-            token
-        )
-            .then((response) => {
-                return response;
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }));
-        return reponse;
-    }
+    // async postCartData(payload, token) {
+    //     const endPoint = 'customer/cart/';
+    //     const reponse = await Repository.post(
+    //         baseUrl + endPoint,
+    //         payload,
+    //         token
+    //     )
+    //         .then((response) => {
+    //             return response;
+    //         })
+    //         .catch((error) => ({ error: JSON.stringify(error) }));
+    //     return reponse;
+    // }
 
     async getCartData(token) {
         const endPoint = 'customer/cart-list/';
@@ -104,6 +104,27 @@ class PostRepository {
                 return response.data;
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
+    }
+    async postClickCardNumber(documents, number, token) {
+        const endPoint = `seller/payment/create/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            data: {
+                documents: documents,
+                phone_number: number
+            },
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        })
+            .then((response) => {
+                return response;
+            })
+            .catch((error) => {
+                return error.response
+            } );
         return response;
     }
     async postClickCard(documents, card_number , expire_date, token) {

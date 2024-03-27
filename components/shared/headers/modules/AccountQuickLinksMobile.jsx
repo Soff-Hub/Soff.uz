@@ -5,11 +5,15 @@ import { Badge, Card, Dropdown, Menu, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import Router from 'next/router';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 function AccountQuickLinks() {
-    const { accountLinks } = useSelector((state) => state.auth);
+    const { accountLinks, user } = useSelector((state) => state.auth);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const dispatch = useDispatch();
+    const [profile, setProfile] = useState(null);
 
     const handleLogout = () => {
         const data = {
@@ -41,7 +45,7 @@ function AccountQuickLinks() {
                                         <a>
                                             {' '}
                                             <span>
-                                            <i class="fa-regular fa-handshake"></i>{' '}
+                                                <i class="fa-regular fa-handshake"></i>{' '}
                                             </span>{' '}
                                             Mening bitimlarim
                                         </a>
@@ -53,11 +57,11 @@ function AccountQuickLinks() {
                         <Badge.Ribbon text="Tez kunda" color="volcano">
                             <Card size="small">
                                 <Menu.Item key={link.url}>
-                                    <Link href='#'>
+                                    <Link href="#">
                                         <a>
                                             {' '}
                                             <span>
-                                            <i class="fa-regular fa-handshake"></i>{' '}
+                                                <i class="fa-regular fa-handshake"></i>{' '}
                                             </span>{' '}
                                             Buyurtma berish
                                         </a>
@@ -65,7 +69,7 @@ function AccountQuickLinks() {
                                 </Menu.Item>
                             </Card>
                         </Badge.Ribbon>
-                    )        : (
+                    ) : (
                         <Menu.Item key={link.url}>
                             <Link href={link.url}>
                                 <a>
@@ -90,10 +94,31 @@ function AccountQuickLinks() {
         </Menu>
     );
 
+    async function ProfileUsers(token) {
+        const ItemsData = await GetRepository.getProfile(token);
+        if (ItemsData) {
+            setProfile(ItemsData);
+        }
+    }
+
+    useEffect(() => {
+        if (user?.access) {
+            ProfileUsers(user?.access);
+        }
+    }, [user?.access]);
+
     return (
         <Dropdown overlay={menu} placement="bottomLeft">
             <a href="#" className="header__extra ps-user--mobile">
-                <i className="icon-user"></i>
+                {profile?.image ? (
+                    <img
+                        alt="soff"
+                        src={profile?.image}
+                        className="profile__image-client"
+                    />
+                ) : (
+                    <i className="icon-user"></i>
+                )}
             </a>
         </Dropdown>
     );
