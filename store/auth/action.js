@@ -12,7 +12,8 @@ export const actionTypes = {
     TOP_CATEGORY_LISTS: 'TOP_CATEGORY_LISTS',
     CATEGORY: 'CATEGORY',
     CATEGORY_SLUG:'CATEGORY_SLUG',
-    BEGINROLE: 'BEGINROLE'
+    BEGINROLE: 'BEGINROLE',
+    IMAGE:'IMAGE'
 };
 
 export function begin(payload) {
@@ -30,6 +31,10 @@ export function loginSuccess({ user }) {
 
 export function logOut() {
     return { type: actionTypes.LOGOUT };
+}
+
+export function profileImage(payload) {
+    return { type: actionTypes.IMAGE, payload };
 }
 
 export function logOutSuccess() {
