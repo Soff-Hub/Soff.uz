@@ -165,7 +165,7 @@ import { useSelector } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
 import { v4 as uuidv4 } from 'uuid';
 import PostRepository from '~/repositories/PostRepository';
-// import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
+import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
 import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
 
 export async function getServerSideProps(context) {
@@ -277,12 +277,12 @@ const ProductDefaultPage = ({ product, similar }) => {
                                 ) : product?.document?.content_type ===
                                   'video' ? (
                                     <div className="">
-                                        {/* <ProductVideoDetailFullWidth
+                                        <ProductVideoDetailFullWidth
                                             product={product}
                                             document={document}
                                             views={views}
                                         
-                                        /> */}
+                                        />
                                     </div>
                                 ) :  product?.document?.content_type ===
                                 'audio' ? 
