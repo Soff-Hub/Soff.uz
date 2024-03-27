@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Modal } from 'antd';
-import ClickCard from './clickCard';
+import { Modal, Tabs } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
@@ -25,6 +24,14 @@ const CreditCard2 = ({ document }) => {
     const [resDataCode, setResDataCode] = useState(null);
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
+    const [tab, setTab] = useState(false)
+
+  
+    const handleChange = (e) => {
+      setPhone(e.target.value)
+    };
+
+
     profileCard.forEach((item) => {
         item.credit_card = String(item.credit_card).replace(
             /(\d{4})(?=\d)/g,
@@ -50,6 +57,29 @@ const CreditCard2 = ({ document }) => {
         SetNumber('●●●● ●●●● ●●●● ●●●●');
     };
 
+    async function handleClickCardPostsNumber(e) {
+        e.preventDefault();
+        setMessage(false);
+        const ItemsData = await PostRepository.postClickCardNumber(
+            document,
+            phone,
+            user?.access
+        );
+        if (ItemsData?.status === 201) {
+            setMessage(true);
+           
+        } else {
+            setMessage(true);
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatli emas',
+                content: ItemsData?.data?.msg,
+            });
+            modal.update;
+        }
+
+        getItemsSellerCardList();
+    }
     async function handleClickCardPosts(e) {
         e.preventDefault();
         setMessage(false);
@@ -129,8 +159,6 @@ const CreditCard2 = ({ document }) => {
                 content: `${dataNews?.data?.msg}`,
             });
 
-          
-
             if (user?.role === 'seller') {
                 Router.push('/account/sellerproducts');
             } else {
@@ -140,17 +168,16 @@ const CreditCard2 = ({ document }) => {
                 removeAll();
             }
             if (dataNews?.data?.file_url) {
-                handleDownload(dataNews?.data?.file_url)
+                handleDownload(dataNews?.data?.file_url);
             }
         }
     }
 
     const handleDownload = (url) => {
         if (typeof window !== 'undefined') {
-            const URL = url
-            window.location.href = URL
+            const URL = url;
+            window.location.href = URL;
         }
-
     };
 
     useEffect(() => {
@@ -214,127 +241,189 @@ const CreditCard2 = ({ document }) => {
         setNumberDate(formattedValue);
     };
 
-    return (
-        <div className="row   mx-auto m-0">
-            <div className=" px-4 rounded click-b">
-                <div
-                    id="Card2"
-                    className={
-                        numberCard === 9860
-                            ? 'BackImg'
-                            : numberCard === 8600
-                            ? 'BackImg2'
-                            : numberCard === 5614
-                            ? 'BackImg2'
-                            : numberCard === 5555
-                            ? 'BackImg4 '
-                            : numberCard === 6262
-                            ? 'BackImg2'
-                            : numberCard === 4545
-                            ? 'BackImg3'
-                            : numberCard === 6565
-                            ? 'BackImg3'
-                            : 'BackImg1'
-                    }>
-                    <div className=" px-5">
-                        <h5 className="cardText cardColorHumo  colCard2">
-                            {number}
-                        </h5>
+    const onChange = (key) => {
+        setTab(key)
+    };
+    const items = [
+        {
+            key: '1',
+            label: "Karta raqam orqali",
+            children: (
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
+                        <div
+                            id="Card2"
+                            className={
+                                numberCard === 9860
+                                    ? 'BackImg'
+                                    : numberCard === 8600
+                                    ? 'BackImg2'
+                                    : numberCard === 5614
+                                    ? 'BackImg2'
+                                    : numberCard === 5555
+                                    ? 'BackImg4 '
+                                    : numberCard === 6262
+                                    ? 'BackImg2'
+                                    : numberCard === 4545
+                                    ? 'BackImg3'
+                                    : numberCard === 6565
+                                    ? 'BackImg3'
+                                    : 'BackImg1'
+                            }>
+                            <div className=" px-5">
+                                <h5 className="cardText cardColorHumo  colCard2">
+                                    {number}
+                                </h5>
+                            </div>
+                        </div>
+                        <div>
+                            <form
+                                onSubmit={handleClickCardPosts}
+                                className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                                <div className="col-md-8 col-sm-8 click-form-item">
+                                    <span style={{ display: 'block' }}>
+                                        Karta raqam
+                                    </span>
+                                    <label htmlFor="ccn">
+                                        <i class="fa-regular fa-credit-card i"></i>
+                                        <input
+                                            required
+                                            id="ccn"
+                                            type="tel"
+                                            className="form-control rounded-3 card__number "
+                                            inputMode="numeric"
+                                            pattern="[0-9\s]{13,19}"
+                                            autoComplete="cc-number"
+                                            maxLength="19"
+                                            placeholder="0000 0000 0000 0000"
+                                            value={formattedCardNumber}
+                                            onChange={handleCardNumberChange}
+                                        />
+                                    </label>
+                                </div>
+                                <div className="col-md-4 col-sm-4 click-form-item">
+                                    <label>
+                                        <i class="fa-regular fa-calendar-days"></i>
+                                        <input
+                                            required
+                                            id="ccn"
+                                            className="form-control rounded-3 card__number"
+                                            inputMode="numeric"
+                                            autoComplete="cc-number"
+                                            maxLength="5"
+                                            placeholder="MM/YY"
+                                            value={numberDate}
+                                            onChange={handleCardNumberDate}
+                                        />
+                                    </label>
+                                </div>
+                                <div className="col-12 p-0 px-4 my-3">
+                                    {message ? (
+                                        <button
+                                            type="submit"
+                                            className="ps-btn w-100 text-center btn_color">
+                                            Davom etish
+                                        </button>
+                                    ) : (
+                                        <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                            <BeatLoader color="#fff" />
+                                        </button>
+                                    )}
+                                </div>
+                            </form>
+                        </div>
+                        {/* <button onClick={() => handleDownload('https://api.soff.uz//media/documents/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC_%D0%B8%D1%88%D0%B8.doc')} > download</button> */}
+                    </div>
+
+                    <Modal
+                        width={500}
+                        title={'Kodni kiriting!'}
+                        centered
+                        open={open}
+                        onOk={handleSubmitCode}
+                        onCancel={handleCancale}
+                        okButtonProps={{
+                            style: { backgroundColor: 'green', color: 'white' },
+                        }}
+                        okText={
+                            buttonOk ? (
+                                <BeatLoader color="#fff" />
+                            ) : (
+                                "To'lov qilish"
+                            )
+                        }
+                        cancelText="Orqaga">
+                        <>
+                            <p>
+                                Kod quyidagi raqamga yuborildi:
+                                {resData?.data?.phone_number}
+                            </p>
+                            <input
+                                onChange={(e) => setCode(e.target.value)}
+                                type="tel"
+                                placeholder="000000"
+                                maxLength={6}
+                                className="form-control text-center rounded-3 fs-3"
+                            />
+                            <strong className="text-danger">
+                                {formattedTime}
+                            </strong>
+                            <p className="text-danger">
+                                {resDataCode?.data?.msg?.[0] == 'Parol xato' &&
+                                    resDataCode?.data?.msg}
+                            </p>
+                        </>
+                    </Modal>
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: "Telefon raqam orqali",
+            children: (
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsNumber}
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                            <div className="col-md-12 col-sm-12 click-form-item">
+                                <span style={{ display: 'block' }}>
+                                    Telefon raqam 
+                                </span>
+                                <label htmlFor="ccn">
+                                    <i class="fa-solid fa-user i"></i> 
+                                    <input
+                                        id="ccn"
+                                        type="text"
+                                        className="form-control rounded-3 card__number "
+                                        autoComplete="cc-tel"
+                                        maxLength="13"
+                                        placeholder="+998 00 000 00 00"
+                                        value={phone}
+                                        onChange={handleChange}
+                                    />
+                                </label>
+                            </div>
+                            <div className="col-12 p-0 px-4 my-3">
+                                {message ? (
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 text-center btn_color">
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <div>
-                    <form
-                        onSubmit={handleClickCardPosts}
-                        className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                        <div className="col-md-8 col-sm-8 click-form-item">
-                            <span style={{ display: 'block' }}>
-                                Karta raqam
-                            </span>
-                            <label htmlFor="ccn">
-                                <i class="fa-regular fa-credit-card i"></i>
-                                <input
-                                    required
-                                    id="ccn"
-                                    type="tel"
-                                    className="form-control rounded-3 card__number "
-                                    inputMode="numeric"
-                                    pattern="[0-9\s]{13,19}"
-                                    autoComplete="cc-number"
-                                    maxLength="19"
-                                    placeholder="0000 0000 0000 0000"
-                                    value={formattedCardNumber}
-                                    onChange={handleCardNumberChange}
-                                />
-                            </label>
-                        </div>
-                        <div className="col-md-4 col-sm-4 click-form-item">
-                            <label>
-                                <i class="fa-regular fa-calendar-days"></i>
-                                <input
-                                    required
-                                    id="ccn"
-                                    className="form-control rounded-3 card__number"
-                                    inputMode="numeric"
-                                    autoComplete="cc-number"
-                                    maxLength="5"
-                                    placeholder="MM/YY"
-                                    value={numberDate}
-                                    onChange={handleCardNumberDate}
-                                />
-                            </label>
-                        </div>
-                        <div className="col-12 p-0 px-4 my-3">
-                            {message ? (
-                                <button
-                                    type="submit"
-                                    className="ps-btn w-100 text-center btn_color">
-                                    Davom etish
-                                </button>
-                            ) : (
-                                <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                                    <BeatLoader color="#fff" />
-                                </button>
-                            )}
-                        </div>
-                    </form>
-                </div>
-                {/* <button onClick={() => handleDownload('https://api.soff.uz//media/documents/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC_%D0%B8%D1%88%D0%B8.doc')} > download</button> */}
-            </div>
+            ),
+        },
+    ];
 
-            <Modal
-                width={500}
-                title={'Kodni kiriting!'}
-                centered
-                open={open}
-                onOk={handleSubmitCode}
-                onCancel={handleCancale}
-                okButtonProps={{
-                    style: { backgroundColor: 'green', color: 'white' },
-                }}
-                okText={
-                    buttonOk ? <BeatLoader color="#fff" /> : "To'lov qilish"
-                }
-                cancelText="Orqaga">
-                <>
-                    <p>
-                        Kod quyidagi raqamga yuborildi:
-                        {resData?.data?.phone_number}
-                    </p>
-                    <input
-                        onChange={(e) => setCode(e.target.value)}
-                        type="tel"
-                        placeholder="000000"
-                        maxLength={6}
-                        className="form-control text-center rounded-3 fs-3"
-                    />
-                    <strong className="text-danger">{formattedTime}</strong>
-                    <p className="text-danger">
-                        {resDataCode?.data?.msg?.[0] == 'Parol xato' &&
-                            resDataCode?.data?.msg}
-                    </p>
-                </>
-            </Modal>
-        </div>
-    );
+    return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />;
 };
 export default CreditCard2;

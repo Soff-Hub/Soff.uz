@@ -185,7 +185,7 @@ const PostsProductsEdit = () => {
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
-        Router.push('/account/products');
+        Router.push(`/account/products?page=${Router.query.page}`);
 
     }
     const dataStatus = [

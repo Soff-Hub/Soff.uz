@@ -25,7 +25,7 @@ const HeaderElectronic = ({kk}) => {
             `seller/admin/category-parent/`
         );
         if (responseData) {
-            dispatch(Category_Lists(responseData.data.results));
+            dispatch(Category_Lists(responseData?.data?.results));
         }
     }
 

@@ -60,7 +60,7 @@ function ElectronicTopCategories() {
                             </div>
                             <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
                                 <h4 className="text-truncate text-uppercase">
-                                    {category.name}
+                                    {category.name} 
                                 </h4>
                             </div>
                         </div>

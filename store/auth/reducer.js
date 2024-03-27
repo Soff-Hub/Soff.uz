@@ -64,6 +64,9 @@ function reducer(state = initState, actions) {
                 ...{ shop: actions.payload },
             };
 
+        case actionTypes.IMAGE:
+            console.log('reducer ishladi', actions.payload);
+            
         case actionTypes.CATEGORY_LISTS:
             return { ...state, ...{ category_lists: actions.payload } };
 
