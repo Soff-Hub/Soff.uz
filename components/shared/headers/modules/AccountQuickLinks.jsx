@@ -31,17 +31,19 @@ const AccountQuickLinks = (props) => {
     
     const { isLoggedIn } = props;
 
-    // async function ProfileUsers() {
-    //     const ItemsData = await GetRepository.getProfile(user?.access);
-    //     if (ItemsData) {
-    //         setProfile(ItemsData);
-    //         dispatch(profileImage(ItemsData?.image))
-    //     }
-    // }
+    async function ProfileUsers(token) {
+        const ItemsData = await GetRepository.getProfile(token);
+        if (ItemsData) {
+            setProfile(ItemsData);
+        }
+    }
 
-    // useEffect(() => {
-    //     ProfileUsers();
-    // }, []);
+    useEffect(() => {
+        if (user?.access) {
+            ProfileUsers(user?.access);
+        }
+    }, [user?.access]);
+
 
     // View
     const linksView = accountLinks.map((item) => (
