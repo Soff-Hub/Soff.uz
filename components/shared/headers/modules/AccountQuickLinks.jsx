@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { logOut } from '~/store/auth/action';
+import { logOut, profileImage } from '~/store/auth/action';
 import { Badge, Card, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -28,8 +28,20 @@ const AccountQuickLinks = (props) => {
             dispatch(logOut());
         }
     };
-
+    
     const { isLoggedIn } = props;
+
+    async function ProfileUsers() {
+        const ItemsData = await GetRepository.getProfile(user?.access);
+        if (ItemsData) {
+            setProfile(ItemsData);
+            dispatch(profileImage(ItemsData?.image))
+        }
+    }
+
+    useEffect(() => {
+        ProfileUsers();
+    }, []);
 
     // View
     const linksView = accountLinks.map((item) => (
@@ -83,18 +95,7 @@ const AccountQuickLinks = (props) => {
         </>
     ));
 
-    async function ProfileUsers() {
-        const ItemsData = await GetRepository.getProfile(user?.access);
-        if (ItemsData) {
-            setProfile(ItemsData);
-        }
-    }
 
-    useEffect(() => {
-        ProfileUsers();
-    }, []);
-
-    console.log('user', profile);
 
     if (isLoggedIn === true) {
         return (
