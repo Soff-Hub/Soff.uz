@@ -3,8 +3,8 @@ import DefaultDescription from '~/components/elements/detail/description/Default
 import Router from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 import DefaultAudio from './thumbnail/DefaultAudio';
-import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInformation';
-import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppingActions';
+// import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInformation';
+// import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppingActions';
 import Link from 'next/link';
 
 const ProductAudioDetailFullWidth = ({
@@ -29,19 +29,19 @@ const ProductAudioDetailFullWidth = ({
                 <div className="row">
                     <div className="col-12">
                         <DefaultAudio product={product} />
-                        <ModuleAudioDetailTopInformation
+                        {/* <ModuleAudioDetailTopInformation
                             product={product}
                             views={views}
                             admin={false}
-                        />
+                        /> */}
                     </div>
                 </div>
                 <div className="price_and_tag">
-                    <ModuleAudioDetailShoppingActions
+                    {/* <ModuleAudioDetailShoppingActions
                         product={product}
                         document={document}
                         admin={admin}
-                    />
+                    /> */}
 
                     <>
                         {admin && ActiveTag}
