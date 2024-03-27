@@ -31,17 +31,17 @@ const AccountQuickLinks = (props) => {
     
     const { isLoggedIn } = props;
 
-    async function ProfileUsers() {
-        const ItemsData = await GetRepository.getProfile(user?.access);
-        if (ItemsData) {
-            setProfile(ItemsData);
-            dispatch(profileImage(ItemsData?.image))
-        }
-    }
+    // async function ProfileUsers() {
+    //     const ItemsData = await GetRepository.getProfile(user?.access);
+    //     if (ItemsData) {
+    //         setProfile(ItemsData);
+    //         dispatch(profileImage(ItemsData?.image))
+    //     }
+    // }
 
-    useEffect(() => {
-        ProfileUsers();
-    }, []);
+    // useEffect(() => {
+    //     ProfileUsers();
+    // }, []);
 
     // View
     const linksView = accountLinks.map((item) => (
