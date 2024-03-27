@@ -277,12 +277,12 @@ const ProductDefaultPage = ({ product, similar }) => {
                                 ) : product?.document?.content_type ===
                                   'video' ? (
                                     <div className="">
-                                        <ProductVideoDetailFullWidth
+                                        {/* <ProductVideoDetailFullWidth
                                             product={product}
                                             document={document}
                                             views={views}
                                         
-                                        />
+                                        /> */}
                                     </div>
                                 ) :  product?.document?.content_type ===
                                 'audio' ? 
@@ -295,11 +295,11 @@ const ProductDefaultPage = ({ product, similar }) => {
                             </div> :  product?.document?.content_type ===
                                 'article' ? 
                                 <div>
-                                <ProductAudioDetailFullWidth
+                                {/* <ProductAudioDetailFullWidth
                                     product={product}
                                     document={document}
                                     views={views}
-                                />
+                                /> */}
                             </div>
                                 : (
                                     <div className="ps-page__left">
