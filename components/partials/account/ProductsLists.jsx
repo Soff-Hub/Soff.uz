@@ -152,7 +152,7 @@ function ProductsLists() {
         );
         if (ItemsData) {
             dispatch(MyProductsEdit(ItemsData));
-            Router.push('/account/products/edit');
+            Router.push(`/account/products/edit?page=${router.query.page}`);
         }
     }
 
@@ -206,9 +206,8 @@ function ProductsLists() {
     };
 
     const handlePagination = (pageNum) => {
-        Router.push(`/account/products?page=${pageNum}`)
+        Router.push(`/account/products?page=${pageNum}`);
         setCurrPage(pageNum);
-       
     };
 
     useEffect(() => {
@@ -216,24 +215,10 @@ function ProductsLists() {
     }, []);
 
     useEffect(() => {
-        setCurrPage(router.query.page)
-       if (router.query.page) {
-        GetItemsProductsLists(
-            router.query.page ,
-            category_id,
-            dataValStatus,
-            dataFormat,
-            null,
-            dateArxiv,
-            search
-        );
-       }
-    }, [router.query.page])
-
-    useEffect(() => {
+        setCurrPage(router.query.page);
         if (router.query.page) {
             GetItemsProductsLists(
-                router.query.page  ,
+                router.query.page,
                 category_id,
                 dataValStatus,
                 dataFormat,
@@ -242,7 +227,28 @@ function ProductsLists() {
                 search
             );
         }
-    }, [category_id, dataValStatus, dataFormat, dateArxiv, searchDebounce, router.query.page]);
+    }, [router.query.page]);
+
+    useEffect(() => {
+        if (router.query.page) {
+            GetItemsProductsLists(
+                router.query.page,
+                category_id,
+                dataValStatus,
+                dataFormat,
+                null,
+                dateArxiv,
+                search
+            );
+        }
+    }, [
+        category_id,
+        dataValStatus,
+        dataFormat,
+        dateArxiv,
+        searchDebounce,
+        router.query.page,
+    ]);
 
     useEffect(() => {
         if (pid !== '/account/myproducts') {
@@ -385,7 +391,6 @@ function ProductsLists() {
             ),
         },
     ];
-
 
     console.log('pageCount => ', pageCount, 'currPage => ', currPage);
 
@@ -558,7 +563,7 @@ function ProductsLists() {
                                         defaultCurrent={router.query.page}
                                         total={pageCount}
                                         onChange={handlePagination}
-                                        showSizeChanger 
+                                        showSizeChanger
                                     />
                                 </div>
                             </div>
