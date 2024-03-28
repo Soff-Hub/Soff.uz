@@ -106,14 +106,14 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
-    async postClickCardNumber(documents, number, token) {
+    async postClickCardNumber(documents, token) {
         const endPoint = `seller/payment/create/`;
         const response = await Repository({
             url: baseUrl + endPoint,
             method: 'POST',
             data: {
                 documents: documents,
-                phone_number: number
+                provider:'click'
             },
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -136,6 +136,7 @@ class PostRepository {
                 documents: documents,
                 expire_date: expire_date,
                 card_number: card_number,
+                provider:'via_cart'
             },
             headers: {
                 Authorization: `Bearer ${token}`,

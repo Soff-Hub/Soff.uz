@@ -62,12 +62,12 @@ const CreditCard2 = ({ document }) => {
         setMessage(false);
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
-            phone,
             user?.access
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
-           
+            console.log('ree', ItemsData?.data?.url);
+            Router.push(ItemsData?.data?.url)
         } else {
             setMessage(true);
             const modal = Modal.error({
@@ -80,6 +80,8 @@ const CreditCard2 = ({ document }) => {
 
         getItemsSellerCardList();
     }
+
+
     async function handleClickCardPosts(e) {
         e.preventDefault();
         setMessage(false);
@@ -247,35 +249,11 @@ const CreditCard2 = ({ document }) => {
     const items = [
         {
             key: '1',
-            label: "Karta raqam orqali",
+            label: "Karta raqam orqali" ,
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
-                        <div
-                            id="Card2"
-                            className={
-                                numberCard === 9860
-                                    ? 'BackImg'
-                                    : numberCard === 8600
-                                    ? 'BackImg2'
-                                    : numberCard === 5614
-                                    ? 'BackImg2'
-                                    : numberCard === 5555
-                                    ? 'BackImg4 '
-                                    : numberCard === 6262
-                                    ? 'BackImg2'
-                                    : numberCard === 4545
-                                    ? 'BackImg3'
-                                    : numberCard === 6565
-                                    ? 'BackImg3'
-                                    : 'BackImg1'
-                            }>
-                            <div className=" px-5">
-                                <h5 className="cardText cardColorHumo  colCard2">
-                                    {number}
-                                </h5>
-                            </div>
-                        </div>
+                       
                         <div>
                             <form
                                 onSubmit={handleClickCardPosts}
