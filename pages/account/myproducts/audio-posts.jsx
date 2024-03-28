@@ -966,7 +966,7 @@ const AudioPosts = () => {
         if (user?.access) {
             // Agar user?.access mavjud bo'lsa
             const newSocket = new WebSocket(
-                `ws://192.168.1.17:8000/ws/document-progress/?token=${user?.access}`
+                `wss://api.soff.uz/ws/document-progress/?token=${user?.access}`
             );
 
             // Yangi WebSocket ulanishini yaratish
