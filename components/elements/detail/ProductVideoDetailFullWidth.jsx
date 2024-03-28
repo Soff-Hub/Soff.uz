@@ -6,7 +6,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 import DefaultVideo from './thumbnail/DefaultVideo';
-import ModuleVideoDetailTopInformation from './modules/ModuleVideoDetailTopInformation';
+// import ModuleVideoDetailTopInformation from './modules/ModuleVideoDetailTopInformation';
 
 const ProductVideoDetailFullWidth = ({
     product,
@@ -35,11 +35,11 @@ const ProductVideoDetailFullWidth = ({
                 <div className="row">
                     <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
                         <DefaultVideo product={product} />
-                        <ModuleVideoDetailTopInformation
+                        {/* <ModuleVideoDetailTopInformation
                             product={product}
                             views={views}
                             admin={admin}
-                            />
+                            /> */}
                     </div>
                     <div className="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
                         <ModuleProductDetailDescription
