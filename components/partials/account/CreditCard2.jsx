@@ -6,7 +6,6 @@ import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
-import Link from 'next/link';
 
 const CreditCard2 = ({ document }) => {
     const { user } = useSelector((state) => state.auth);
@@ -17,7 +16,6 @@ const CreditCard2 = ({ document }) => {
     const [message, setMessage] = useState(true);
     const [cardDate, setCardDate] = useState(null);
     const [open, setOpen] = useState(false);
-    const [openNumber, setOpenNumber] = useState(false);
     const [time, setTime] = useState(120);
     const [code, setCode] = useState(null);
     const [resData, setResData] = useState(null);
@@ -26,11 +24,13 @@ const CreditCard2 = ({ document }) => {
     const [resDataCode, setResDataCode] = useState(null);
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
-    const [tab, setTab] = useState(false);
+    const [tab, setTab] = useState(false)
 
+  
     const handleChange = (e) => {
-        setPhone(e.target.value);
+      setPhone(e.target.value)
     };
+
 
     profileCard.forEach((item) => {
         item.credit_card = String(item.credit_card).replace(
@@ -67,7 +67,7 @@ const CreditCard2 = ({ document }) => {
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
-            setOpenNumber(true);
+           
         } else {
             setMessage(true);
             const modal = Modal.error({
@@ -173,10 +173,6 @@ const CreditCard2 = ({ document }) => {
         }
     }
 
-    const modalNumber = () => {
-        SetNumber(true);
-    };
-
     const handleDownload = (url) => {
         if (typeof window !== 'undefined') {
             const URL = url;
@@ -205,9 +201,6 @@ const CreditCard2 = ({ document }) => {
     function handleCancale() {
         setOpen(false);
         setResData(null);
-    }
-    function handleCancaleNumberModal() {
-        setOpenNumber(false);
     }
 
     const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
@@ -249,12 +242,12 @@ const CreditCard2 = ({ document }) => {
     };
 
     const onChange = (key) => {
-        setTab(key);
+        setTab(key)
     };
     const items = [
         {
             key: '1',
-            label: 'Karta raqam orqali',
+            label: "Karta raqam orqali",
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
@@ -386,7 +379,7 @@ const CreditCard2 = ({ document }) => {
         },
         {
             key: '2',
-            label: 'Telefon raqam orqali',
+            label: "Telefon raqam orqali",
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
@@ -395,10 +388,10 @@ const CreditCard2 = ({ document }) => {
                             className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
                             <div className="col-md-12 col-sm-12 click-form-item">
                                 <span style={{ display: 'block' }}>
-                                    Telefon raqam
+                                    Telefon raqam 
                                 </span>
                                 <label htmlFor="ccn">
-                                    <i class="fa-solid fa-user i"></i>
+                                    <i class="fa-solid fa-user i"></i> 
                                     <input
                                         id="ccn"
                                         type="text"
@@ -426,168 +419,11 @@ const CreditCard2 = ({ document }) => {
                             </div>
                         </form>
                     </div>
-                    <Modal
-                        width={500}
-                        title={'Modal!'}
-                        centered
-                        open={openNumber}
-                        onOk={modalNumber}
-                        onCancel={handleCancaleNumberModal}
-                        okButtonProps={{
-                            style: { backgroundColor: 'green', color: 'white' },
-                        }}
-                        okText={{
-                            style: { display: 'none' },
-                        }}
-                        cancelText="Orqaga">
-                        <>
-                            <p>Kod quyidagi raqamga yuborildi:</p>
-                        </>
-                    </Modal>
                 </div>
             ),
         },
     ];
-    // <Tabs defaultActiveKey="1" items={items} onChange={onChange} />;
 
-    return (
-        <div className="row   mx-auto m-0">
-            <div className=" px-4 rounded click-b">
-                <div
-                    id="Card2"
-                    className={
-                        numberCard === 9860
-                            ? 'BackImg'
-                            : numberCard === 8600
-                            ? 'BackImg2'
-                            : numberCard === 5614
-                            ? 'BackImg2'
-                            : numberCard === 5555
-                            ? 'BackImg4 '
-                            : numberCard === 6262
-                            ? 'BackImg2'
-                            : numberCard === 4545
-                            ? 'BackImg3'
-                            : numberCard === 6565
-                            ? 'BackImg3'
-                            : 'BackImg1'
-                    }>
-                    <div className=" px-5">
-                        <h5 className="cardText cardColorHumo  colCard2">
-                            {number}
-                        </h5>
-                    </div>
-                </div>
-                <div>
-                    <form
-                        onSubmit={handleClickCardPosts}
-                        className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                        <div className="col-md-8 col-sm-8 click-form-item">
-                            <span style={{ display: 'block' }}>
-                                Karta raqam
-                            </span>
-                            <label htmlFor="ccn">
-                                <i class="fa-regular fa-credit-card i"></i>
-                                <input
-                                    required
-                                    id="ccn"
-                                    type="tel"
-                                    className="form-control rounded-3 card__number "
-                                    inputMode="numeric"
-                                    pattern="[0-9\s]{13,19}"
-                                    autoComplete="cc-number"
-                                    maxLength="19"
-                                    placeholder="0000 0000 0000 0000"
-                                    value={formattedCardNumber}
-                                    onChange={handleCardNumberChange}
-                                />
-                            </label>
-                        </div>
-                        <div className="col-md-4 col-sm-4 click-form-item">
-                            <label>
-                                <i class="fa-regular fa-calendar-days"></i>
-                                <input
-                                    required
-                                    id="ccn"
-                                    className="form-control rounded-3 card__number"
-                                    inputMode="numeric"
-                                    autoComplete="cc-number"
-                                    maxLength="5"
-                                    placeholder="MM/YY"
-                                    value={numberDate}
-                                    onChange={handleCardNumberDate}
-                                />
-                            </label>
-                        </div>
-                        <div className="col-12 p-0 px-4 my-3">
-                            {message ? (
-                                <button
-                                    type="submit"
-                                    className="ps-btn w-100 text-center btn_color">
-                                    Davom etish
-                                </button>
-                            ) : (
-                                <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                                    <BeatLoader color="#fff" />
-                                </button>
-                            )}
-                        </div>
-                        <div className="col-12 p-0 px-4 my-3">
-                            <div className="or_google">
-                                <span></span>
-                                <span>yoki </span>
-                                <span></span>
-                            </div>
-                            <div
-                                className="my-3 d-flex justify-content-center p-3 rounded "
-                                style={{
-                                    border: '1px solid #00A44F',
-                                    color: '#00A44F',
-                                }}>
-                                <Link href="#">
-                                    Havola orqali to'lov qiling
-                                </Link>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                {/* <button onClick={() => handleDownload('https://api.soff.uz//media/documents/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC_%D0%B8%D1%88%D0%B8.doc')} > download</button> */}
-            </div>
-
-            <Modal
-                width={500}
-                title={'Kodni kiriting!'}
-                centered
-                open={open}
-                onOk={handleSubmitCode}
-                onCancel={handleCancale}
-                okButtonProps={{
-                    style: { backgroundColor: 'green', color: 'white' },
-                }}
-                okText={
-                    buttonOk ? <BeatLoader color="#fff" /> : "To'lov qilish"
-                }
-                cancelText="Orqaga">
-                <>
-                    <p>
-                        Kod quyidagi raqamga yuborildi:
-                        {resData?.data?.phone_number}
-                    </p>
-                    <input
-                        onChange={(e) => setCode(e.target.value)}
-                        type="tel"
-                        placeholder="000000"
-                        maxLength={6}
-                        className="form-control text-center rounded-3 fs-3"
-                    />
-                    <strong className="text-danger">{formattedTime}</strong>
-                    <p className="text-danger">
-                        {resDataCode?.data?.msg?.[0] == 'Parol xato' &&
-                            resDataCode?.data?.msg}
-                    </p>
-                </>
-            </Modal>
-        </div>
-    );
+    return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />;
 };
 export default CreditCard2;
