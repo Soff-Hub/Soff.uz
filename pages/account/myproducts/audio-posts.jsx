@@ -811,7 +811,7 @@ const AudioPosts = () => {
                                                     e.target.files[0]
                                                 )
                                             }
-                                            accept="audio/*"
+                                            accept=".mp3*"
                                         />
                                         {/* {completed === 0 ? (
                                 <></>
