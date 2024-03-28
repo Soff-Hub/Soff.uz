@@ -21,14 +21,32 @@
 
             .select-card {
                 text-align: center;
-                max-width: 200px;
-                width: 100%;
-                border-radius: 15px;
+                border-radius: 5px;
                 box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
-                padding: 20px;
+                padding: 20px 40px;
                 border: 1px solid #cccccc9d;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: start;
+                gap: 10px;
                 transition: all 0.5s;
+                i{
+                    transition: all 0.9s;
+                    font-size: 60px;
+                    color: #b6b3b3;
+                }
+                span{
+                    font-size: 17px;
+                    font-weight: 600;
+                }
+
+
                 &:hover {
+                    i{
+                        color: $color-1st;
+                        opacity: .8;
+                    }
                     cursor: pointer;
                     box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
                 }
