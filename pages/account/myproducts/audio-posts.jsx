@@ -591,14 +591,13 @@ const AudioPosts = () => {
                 console.log('WebSocket progress ulanishi amalga oshirildi.');
             };
 
-            // // Xabarlarni qabul qilish uchun funksiya
-            // if (newSocket) {
-            //     newSocket.onmessage = function (event) {
-            //         console.log('socketttt', JSON.parse(event.data).progress);
-            //         progrees = JSON.parse(event.data).progress
-            //         // setSocket(progrees);
-            //     };
-            // }
+            // Xabarlarni qabul qilish uchun funksiya
+            if (newSocket) {
+                newSocket.onmessage = function (event) {
+                    console.log('socketttt', JSON.parse(event.data).progress);
+                    setProgress(JSON.parse(event.data).progress)
+                };
+            }
 
             // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
@@ -613,16 +612,16 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-    useEffect(() => {
-        if (socket) {
-            socket.addEventListener('message', (event) => {
-                console.log('socket 1 => ', JSON.parse(event.data).progress);
-                // setTimeout(() => {
-                setProgress(JSON.parse(event.data).progress);
-                // }, 1000);
-            });
-        }
-    }, [socket]);
+    // useEffect(() => {
+    //     if (socket) {
+    //         socket?.addEventListener('message', (event) => {
+    //             console.log('socket 1 => ', JSON.parse(event.data).progress);
+    //             // setTimeout(() => {
+    //             setProgress(JSON.parse(event.data).progress);
+    //             // }, 1000);
+    //         });
+    //     }
+    // }, [socket]);
 
     const items = [
         {
@@ -993,6 +992,38 @@ const AudioPosts = () => {
             };
         }
     }, [user?.access]);
+
+
+    // useEffect(() => {
+    //     if (user?.access) {
+    //         // Agar user?.access mavjud bo'lsa
+    //         const newSocket = new WebSocket(
+    //             `wss://api.soff.uz/ws/user-notification/?token=${user?.access}`
+    //         );
+
+    //         // Yangi WebSocket ulanishini yaratish
+    //         newSocket.onopen = function () {};
+
+    //         // Xabarlarni qabul qilish uchun funksiya
+    //         if (newSocket) {
+    //             newSocket.onmessage = function (event) {
+    //                 setSocket(JSON.parse(event.data));
+    //             };
+    //         }
+
+    //         // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
+    //         newSocket.onerror = function (error) {
+    //             console.error('WebSocket xatosi:', error);
+    //         };
+
+    //         // useEffect funksiyasiga qaytariladigan cleanup funksiya
+    //         return () => {
+    //             // WebSocket ulanishini yopish
+    //             newSocket.close();
+    //         };
+    //     }
+    // }, [user?.access]);
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
