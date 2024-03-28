@@ -16,6 +16,7 @@ const CreditCard2 = ({ document }) => {
     const [message, setMessage] = useState(true);
     const [cardDate, setCardDate] = useState(null);
     const [open, setOpen] = useState(false);
+    const [openNumber, setOpenNumber] = useState(false);
     const [time, setTime] = useState(120);
     const [code, setCode] = useState(null);
     const [resData, setResData] = useState(null);
@@ -67,7 +68,7 @@ const CreditCard2 = ({ document }) => {
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
-           
+           setOpenNumber(true)
         } else {
             setMessage(true);
             const modal = Modal.error({
@@ -173,6 +174,10 @@ const CreditCard2 = ({ document }) => {
         }
     }
 
+    const modalNumber = () => {
+        SetNumber(true)
+    }
+
     const handleDownload = (url) => {
         if (typeof window !== 'undefined') {
             const URL = url;
@@ -201,6 +206,9 @@ const CreditCard2 = ({ document }) => {
     function handleCancale() {
         setOpen(false);
         setResData(null);
+    }
+    function handleCancaleNumberModal() {
+        setOpenNumber(false)
     }
 
     const formattedTime = new Date(time * 1000).toISOString().substr(14, 5);
@@ -419,6 +427,28 @@ const CreditCard2 = ({ document }) => {
                             </div>
                         </form>
                     </div>
+                    <Modal
+                        width={500}
+                        title={'Modal!'}
+                        centered
+                        open={openNumber}
+                        onOk={modalNumber}
+                        onCancel={handleCancaleNumberModal}
+                        okButtonProps={{
+                            style: { backgroundColor: 'green', color: 'white' },
+                        }}
+                        okText={
+                          {
+                            style: {display:'none'}
+                          }
+                        }
+                        cancelText="Orqaga">
+                        <>
+                            <p>
+                                Kod quyidagi raqamga yuborildi:
+                            </p>
+                        </>
+                    </Modal>
                 </div>
             ),
         },

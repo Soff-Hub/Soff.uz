@@ -84,6 +84,8 @@ class GetRepository {
         return reponse;
     }
     async getShopsProducts(
+        offset,
+        limit,
         page,
         category,
         dataValStatus,
@@ -91,7 +93,7 @@ class GetRepository {
         id,
         arxiv,
         search,
-        token
+        token,
     ) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
@@ -99,7 +101,7 @@ class GetRepository {
             date || ''
         }&status=${dataValStatus || ''}&arxiv=${arxiv || ''}&search=${
             search || ''
-        }`;
+        }&offset=${offset}&limit=${limit}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
