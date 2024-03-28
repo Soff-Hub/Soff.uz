@@ -33,7 +33,10 @@ const Posts = () => {
                         <div className="col-6 select-col">
                             <Link href="/account/myproducts/posts">
                                 <a>
-                                    <div className="select-card file">File</div>
+                                    <div className="select-card file">
+                                    <i class="fa-regular fa-folder-open"></i>
+                                        <span>File</span>
+                                    </div>
                                 </a>
                             </Link>
                         </div>
@@ -41,7 +44,8 @@ const Posts = () => {
                             <Link href="/account/myproducts/audio-posts">
                                 <a>
                                     <div className="select-card file">
-                                        Audio
+                                        <i class="fa-solid fa-music"></i>
+                                        <span> Audio</span>
                                     </div>
                                 </a>
                             </Link>
