@@ -28,15 +28,15 @@ export default function DefaultAudio({ product }) {
         setDuration(audioPlayer.duration);
     };
 
-    // useEffect(() => {
-    //     const audioPlayer = audioRef.current;
+    useEffect(() => {
+        const audioPlayer = audioRef.current;
 
-    //     audioPlayer.addEventListener('timeupdate', updateTime);
+        audioPlayer.addEventListener('timeupdate', updateTime);
 
-    //     return () => {
-    //         audioPlayer.removeEventListener('timeupdate', updateTime);
-    //     };
-    // }, []);
+        return () => {
+            audioPlayer.removeEventListener('timeupdate', updateTime);
+        };
+    }, []);
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -84,24 +84,10 @@ export default function DefaultAudio({ product }) {
                     <span>{product?.document?.file_size}</span>
                 </div>
                 <p className="audio_acteg">{product?.category?.name}</p>
-                {/* <div className="audio_content">
-                    <div className="audio_play" onClick={togglePlay}>
-                        {isPlaying ? (
-                            <i class="fa-solid fa-pause"></i>
-                        ) : (
-                            <i class="fa-solid fa-play"></i>
-                        )}
-                    </div>
-                    <div className="audio_player">
-                        <ScaleLoader fontSiza="40px" color="#fff" />
-                        <ScaleLoader fontSiza="40px" color="#fff" />
-                    </div>
-                    <div>
-                        <span>{formatTime(currentTime)}</span> /{' '}
-                        <span>{product?.document?.content_duration}</span>
-                    </div>
-                </div> */}
-
+                <div className='d-xl-flex d-xxl-flex d-lg-flex d-md-block  align-items-center gap-5 mb-3' >
+                    <span className='d-md-block d-block d-sm-block d-xxl-inline d-xl-inline d-lg-inline' > Davomiyligi {" "} {product?.document?.content_duration}</span>
+                    <span style={{color:'#F4CA16'}} >Batafsil eshitish uchun sotib oling</span>
+                </div>
              <div className='audio-detail-container'>
              <audio
                     id="audioPlayer"
@@ -122,13 +108,7 @@ export default function DefaultAudio({ product }) {
                     <span></span>
                 </div>
              </div>
-                {/* <iframe
-                    title="Audio Player"
-                    width="300"
-                    height="50"
-                    src={product?.document?.short_content_url}
-                    frameBorder="0"
-                    allow="autoplay encrypted-media"></iframe> */}
+               
             </div>
         </div>
     );
