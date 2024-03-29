@@ -16,6 +16,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                                   width="270px"
                                   height="350px"
                                   style={{ objectFit: 'contain' }}
+                                  
                                   detail={true}
                               />
                           ))
