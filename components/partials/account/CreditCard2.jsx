@@ -62,12 +62,12 @@ const CreditCard2 = ({ document }) => {
         setMessage(false);
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
-            phone,
             user?.access
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
-           
+            console.log('ree', ItemsData?.data?.url);
+            Router.push(ItemsData?.data?.url)
         } else {
             setMessage(true);
             const modal = Modal.error({
@@ -80,6 +80,8 @@ const CreditCard2 = ({ document }) => {
 
         getItemsSellerCardList();
     }
+
+
     async function handleClickCardPosts(e) {
         e.preventDefault();
         setMessage(false);
@@ -247,35 +249,13 @@ const CreditCard2 = ({ document }) => {
     const items = [
         {
             key: '1',
-            label: "Karta raqam orqali",
+            label: <div className='click'>
+                <img src="/static/img/uzcard_humo.png" alt="" />
+            </div> ,
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
-                        <div
-                            id="Card2"
-                            className={
-                                numberCard === 9860
-                                    ? 'BackImg'
-                                    : numberCard === 8600
-                                    ? 'BackImg2'
-                                    : numberCard === 5614
-                                    ? 'BackImg2'
-                                    : numberCard === 5555
-                                    ? 'BackImg4 '
-                                    : numberCard === 6262
-                                    ? 'BackImg2'
-                                    : numberCard === 4545
-                                    ? 'BackImg3'
-                                    : numberCard === 6565
-                                    ? 'BackImg3'
-                                    : 'BackImg1'
-                            }>
-                            <div className=" px-5">
-                                <h5 className="cardText cardColorHumo  colCard2">
-                                    {number}
-                                </h5>
-                            </div>
-                        </div>
+                       
                         <div>
                             <form
                                 onSubmit={handleClickCardPosts}
@@ -379,31 +359,16 @@ const CreditCard2 = ({ document }) => {
         },
         {
             key: '2',
-            label: "Telefon raqam orqali",
+            label: <div className='click'>
+            <img src="/static/img/click.png" alt="" />
+        </div>,
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
                         <form
                             onSubmit={handleClickCardPostsNumber}
                             className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                            <div className="col-md-12 col-sm-12 click-form-item">
-                                <span style={{ display: 'block' }}>
-                                    Telefon raqam 
-                                </span>
-                                <label htmlFor="ccn">
-                                    <i class="fa-solid fa-user i"></i> 
-                                    <input
-                                        id="ccn"
-                                        type="text"
-                                        className="form-control rounded-3 card__number "
-                                        autoComplete="cc-tel"
-                                        maxLength="13"
-                                        placeholder="+998 00 000 00 00"
-                                        value={phone}
-                                        onChange={handleChange}
-                                    />
-                                </label>
-                            </div>
+                           
                             <div className="col-12 p-0 px-4 my-3">
                                 {message ? (
                                     <button
