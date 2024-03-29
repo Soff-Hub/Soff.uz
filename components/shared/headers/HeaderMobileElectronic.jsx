@@ -11,14 +11,16 @@ class HeaderMobileElectronic extends Component {
     render() {
         return (
             <header className="header header--mobile electronic">
-              
                 <div className="navigation--mobile">
                     <div className="navigation__left">
                         <Link href="/">
                             <a className="ps-logo">
-                                 <NextImageCard
-                             url="/static/img/soff/soff_green_white.png" clasS='logoo' width='100px' height='40px' />
-
+                                <NextImageCard
+                                    url="/static/img/soff/soff_green_white.png"
+                                    clasS="logoo"
+                                    width="100px"
+                                    height="40px"
+                                />
                             </a>
                         </Link>
                     </div>

@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Category_Lists, TopCategory_Lists } from '~/store/auth/action';
 import NextImageCard from '~/components/nextImagecard';
 
-const HeaderElectronic = ({kk}) => {
+const HeaderElectronic = ({ kk }) => {
     const {
         category_lists: categoryData,
         top_category_lists: topCategoryData,
@@ -61,8 +61,12 @@ const HeaderElectronic = ({kk}) => {
                                     src="/static/img/soff/soff_green_white.png"
                                     alt="soff"
                                 /> */}
-                            <NextImageCard
-                             url="/static/img/soff/soff_green_white.png" clasS='logoo' width='200px' height='60px' />
+                                <NextImageCard
+                                    url="/static/img/soff/soff_green_white.png"
+                                    clasS="logoo"
+                                    width="200px"
+                                    height="60px"
+                                />
                             </a>
                         </Link>
                         <div className="menu--product-categories">
@@ -84,7 +88,6 @@ const HeaderElectronic = ({kk}) => {
                     <div className="header__content-right">
                         <ElectronicHeaderActions />
                     </div>
-                   
                 </div>
             </div>
             <nav className="navigation">
@@ -101,12 +104,13 @@ const HeaderElectronic = ({kk}) => {
 
 export default HeaderElectronic;
 
-
 export async function getServerSideProps() {
     try {
         const request = await fetch(baseUrl + 'seller/admin/category-parent/');
         if (!request.ok) {
-            throw new Error('Request to the API failed with status ' + request.status);
+            throw new Error(
+                'Request to the API failed with status ' + request.status
+            );
         }
         const categoryResponse = await request.json();
 
@@ -124,4 +128,3 @@ export async function getServerSideProps() {
         };
     }
 }
-

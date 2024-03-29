@@ -11,7 +11,9 @@ export default function useProduct() {
                 <>
                     <LazyLoad>
                         {payload?.poster_url ? (
-                            <div style={{ overflow: 'hidden' }} className='responsive-image-card text-center'>
+                            <div
+                                style={{ overflow: 'hidden' }}
+                                className="responsive-image-card text-center">
                                 {/* <div
                                     style={{
                                         backgroundImage: `url(${payload?.poster_url})`,
@@ -20,7 +22,13 @@ export default function useProduct() {
                                         backgroundPosition: 'center',
                                     }}
                                     className="products-image1 m-0"></div> */}
-                                <NextImageCard url={payload?.poster_url} clasS='products-image1 m-0 ' width='70px' height='70px' />
+                                <NextImageCard
+                                    url={payload?.poster_url}
+                                    clasS="products-image1 m-0 "
+                                    width="70px"
+                                    height="70px"
+                                    payload={payload}
+                                />
                             </div>
                         ) : (
                             <div
@@ -40,24 +48,37 @@ export default function useProduct() {
             if (payload.sale_price) {
                 view = (
                     <p className="ps-product__price sale">
-                        {payload.discount_price !== 0 ? <>
-                            {formatCurrency(payload.sale_price)}
-                            <span> so'm</span>
-                            <del className="ml-2">
-                                {formatCurrency(payload.price)}
+                        {payload.discount_price !== 0 ? (
+                            <>
+                                {formatCurrency(payload.sale_price)}
                                 <span> so'm</span>
-                            </del>
-                        </> : <p className='free-product-text free-product-text_search'>Bepul mahsulot</p>}
-
+                                <del className="ml-2">
+                                    {formatCurrency(payload.price)}
+                                    <span> so'm</span>
+                                </del>
+                            </>
+                        ) : (
+                            <p className="free-product-text free-product-text_search">
+                                Bepul mahsulot
+                            </p>
+                        )}
                     </p>
                 );
             } else {
                 view = (
                     <p className="ps-product__price">
-                        {payload.discount_price === 0 ? <>
-                            <p className='free-product-text free-product-text_search'>Bepul mahsulot</p>
-                        </> : <>{formatCurrency(payload.price)} <span> so'm</span></>}
-
+                        {payload.discount_price === 0 ? (
+                            <>
+                                <p className="free-product-text free-product-text_search">
+                                    Bepul mahsulot
+                                </p>
+                            </>
+                        ) : (
+                            <>
+                                {formatCurrency(payload.price)}{' '}
+                                <span> so'm</span>
+                            </>
+                        )}
                     </p>
                 );
             }
