@@ -226,7 +226,7 @@ class GetRepository {
         return reponse;
     }
     async getAllCategoryLists(search) {
-        const endPoint = `admin/category-children/?search=${search || ''}`;
+        const endPoint = `admin/category-children/audio?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
