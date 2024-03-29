@@ -9,40 +9,21 @@ import useCart from '~/hooks/useCart';
 
 const CreditCard2 = ({ document }) => {
     const { user } = useSelector((state) => state.auth);
-    const [number, SetNumber] = useState('●●●● ●●●● ●●●● ●●●●');
-    const [numberCard, SetNumberCard] = useState(null);
     const [numberCardVal, SetNumberCardVal] = useState(null);
-    const [profileCard, setProfileCard] = useState([]);
     const [message, setMessage] = useState(true);
     const [cardDate, setCardDate] = useState(null);
     const [open, setOpen] = useState(false);
     const [time, setTime] = useState(120);
     const [code, setCode] = useState(null);
     const [resData, setResData] = useState(null);
-    const [phone, setPhone] = useState('');
     const [cart, setCart] = useState(0);
     const [resDataCode, setResDataCode] = useState(null);
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
-    const [tab, setTab] = useState(false)
-
-  
-    const handleChange = (e) => {
-      setPhone(e.target.value)
-    };
-
-
-    profileCard.forEach((item) => {
-        item.credit_card = String(item.credit_card).replace(
-            /(\d{4})(?=\d)/g,
-            '$1 '
-        );
-    });
+    const [tab, setTab] = useState(false);
 
     const numberTyper = (value) => {
         SetNumberCardVal(value);
-        const firstFourNumbers = value.slice(0, 4);
-        SetNumberCard(Number(firstFourNumbers));
         if (!value == 0) {
             let numberPlaceholder = '';
             for (let i = 0; i < 16; i++) {
@@ -51,23 +32,22 @@ const CreditCard2 = ({ document }) => {
                 }
                 numberPlaceholder += value[i] || '●';
             }
-            return SetNumber(numberPlaceholder);
         }
 
-        SetNumber('●●●● ●●●● ●●●● ●●●●');
     };
 
-    async function handleClickCardPostsNumber(e) {
+    async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
+            'click',
             user?.access
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
             console.log('ree', ItemsData?.data?.url);
-            Router.push(ItemsData?.data?.url)
+            Router.push(ItemsData?.data?.url);
         } else {
             setMessage(true);
             const modal = Modal.error({
@@ -78,9 +58,30 @@ const CreditCard2 = ({ document }) => {
             modal.update;
         }
 
-        getItemsSellerCardList();
     }
+    async function handleClickCardPostsPayme(e) {
+        e.preventDefault();
+        setMessage(false);
+        const ItemsData = await PostRepository.postClickCardNumber(
+            document,
+            'payme',
+            user?.access
+        );
+        if (ItemsData?.status === 201) {
+            setMessage(true);
+            console.log('ree', ItemsData?.data?.url);
+            Router.push(ItemsData?.data?.url);
+        } else {
+            setMessage(true);
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatli emas',
+                content: ItemsData?.data?.msg,
+            });
+            modal.update;
+        }
 
+    }
 
     async function handleClickCardPosts(e) {
         e.preventDefault();
@@ -94,7 +95,6 @@ const CreditCard2 = ({ document }) => {
         if (ItemsData?.status === 201) {
             setMessage(true);
             setOpen(true);
-            setPhone(ItemsData.data.phone);
             setCart(ItemsData.data.cart);
             setResData(ItemsData);
         } else {
@@ -111,21 +111,7 @@ const CreditCard2 = ({ document }) => {
             modal.update;
         }
 
-        getItemsSellerCardList();
     }
-
-    async function getItemsSellerCardList() {
-        const Items = await GetRepository.getProfileArizaCardLists(
-            user?.access
-        );
-        if (Items?.results) {
-            setProfileCard(Items?.results);
-        }
-    }
-
-    useEffect(() => {
-        getItemsSellerCardList();
-    }, []);
 
     async function handleSubmitCode() {
         setButtonOk(true);
@@ -244,18 +230,19 @@ const CreditCard2 = ({ document }) => {
     };
 
     const onChange = (key) => {
-        setTab(key)
+        setTab(key);
     };
     const items = [
         {
             key: '1',
-            label: <div className='click'>
-                <img src="/static/img/uzcard_humo.png" alt="" />
-            </div> ,
+            label: (
+                <div className="click">
+                    <img src="/static/img/uzcard_humo.png" alt="" />
+                </div>
+            ),
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
-                       
                         <div>
                             <form
                                 onSubmit={handleClickCardPosts}
@@ -359,16 +346,48 @@ const CreditCard2 = ({ document }) => {
         },
         {
             key: '2',
-            label: <div className='click'>
-            <img src="/static/img/click.png" alt="" />
-        </div>,
+            label: (
+                <div className="click">
+                    <img src="/static/img/click.png" alt="" />
+                </div>
+            ),
             children: (
                 <div className="row   mx-auto m-0">
                     <div className=" px-4 rounded click-b">
                         <form
-                            onSubmit={handleClickCardPostsNumber}
+                            onSubmit={handleClickCardPostsclick}
                             className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                           
+                            <div className="col-12 p-0 px-4 my-3">
+                                {message ? (
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 text-center btn_color">
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            ),
+        },
+        {
+            key: '3',
+            label: (
+                <div className="click">
+                    <img src="/static/img/soff/paymee-r.png" alt="" />
+                </div>
+            ),
+            children: (
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsPayme}
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
                             <div className="col-12 p-0 px-4 my-3">
                                 {message ? (
                                     <button
