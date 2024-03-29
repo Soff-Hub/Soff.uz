@@ -11,7 +11,7 @@ function FormCheckoutInformationOne() {
 
     return (
         <div className="tolov-usullari">
-            <h3 className='tolov-usullari-h3' style={{ fontWeight: '600', margin: '0' , padding: '0 15px' }}>To'lov ma'lumotlari</h3>
+            <h3 className='tolov-usullari-h3' style={{ fontWeight: '600', margin: '0' , padding: '0 15px' }}>To'lov turini tanlang</h3>
             <div className="d-flex aligin-content-center  rounded-5 px-3">
                 <CreditCard2 document={arr} />
             </div>

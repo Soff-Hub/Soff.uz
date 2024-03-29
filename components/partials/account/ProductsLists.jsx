@@ -82,6 +82,8 @@ function ProductsLists() {
         search
     ) {
         const ItemsData = await GetRepository.getShopsProducts(
+            null,
+            null,
             page,
             category,
             dataValStatus,
@@ -93,7 +95,6 @@ function ProductsLists() {
         );
         setPageCount(ItemsData?.count);
         setData([...ItemsData?.results]);
-        console.log('itemsdata', ItemsData);
     }
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryLists();
@@ -128,6 +129,8 @@ function ProductsLists() {
             null,
             null,
             null,
+            null,
+            null,
             item,
             null,
             search,
@@ -141,6 +144,8 @@ function ProductsLists() {
 
     async function handleClickIdEditProducts(productsItems) {
         const ItemsData = await GetRepository.getShopsProducts(
+            null,
+            null,
             null,
             null,
             null,
@@ -205,9 +210,10 @@ function ProductsLists() {
         }
     };
 
-    const handlePagination = (pageNum) => {
+    const handlePagination = (pageNum, count) => {
         Router.push(`/account/products?page=${pageNum}`);
         setCurrPage(pageNum);
+        console.log('paganation', pageNum, count);
     };
 
     useEffect(() => {
@@ -392,8 +398,6 @@ function ProductsLists() {
         },
     ];
 
-    console.log('pageCount => ', pageCount, 'currPage => ', currPage);
-
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -564,6 +568,8 @@ function ProductsLists() {
                                         total={pageCount}
                                         onChange={handlePagination}
                                         showSizeChanger
+                                        // hideOnSinglePage={false}
+                                        
                                     />
                                 </div>
                             </div>
