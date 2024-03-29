@@ -354,7 +354,7 @@ const Posts = () => {
                             required
                             type="file"
                             onChange={(e) => setFileImgFile(e.target.files[0])}
-                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt,.txt,.pdf"
                         />
                     </label>
                     <div
@@ -670,7 +670,7 @@ const Posts = () => {
                             required
                             type="file"
                             onChange={(e) => (setFileImgFile(e.target.files[0]), console.log("product"))}
-                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .txt,.pdf"
                         />
                     </label>
                    
