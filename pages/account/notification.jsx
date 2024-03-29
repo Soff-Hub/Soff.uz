@@ -8,7 +8,7 @@ import NotificationList from '~/components/partials/account/NotificationList';
 const Notification = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Bosh sahifa',
             url: '/',
         },
         {
