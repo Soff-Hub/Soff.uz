@@ -28,15 +28,15 @@ export default function DefaultAudio({ product }) {
         setDuration(audioPlayer.duration);
     };
 
-    useEffect(() => {
-        const audioPlayer = audioRef.current;
+    // useEffect(() => {
+    //     const audioPlayer = audioRef.current;
 
-        audioPlayer.addEventListener('timeupdate', updateTime);
+    //     audioPlayer.addEventListener('timeupdate', updateTime);
 
-        return () => {
-            audioPlayer.removeEventListener('timeupdate', updateTime);
-        };
-    }, []);
+    //     return () => {
+    //         audioPlayer.removeEventListener('timeupdate', updateTime);
+    //     };
+    // }, []);
 
     const formatTime = (seconds) => {
         const minutes = Math.floor(seconds / 60);
@@ -45,13 +45,13 @@ export default function DefaultAudio({ product }) {
             remainingSeconds < 10 ? '0' : ''
         }${remainingSeconds}`;
     };
-    
+    console.log('product', product);
     return (
         <div
             style={{
                 backgroundImage: `url(/static/img/audio_fon.jpg)`,
                 width: '100%',
-                heigh:'100%',
+                heigh: '100%',
                 backgroundPositionX: '80%',
                 backgroundPositionY: 'center',
                 margin: '0 auto',
@@ -84,7 +84,7 @@ export default function DefaultAudio({ product }) {
                     <span>{product?.document?.file_size}</span>
                 </div>
                 <p className="audio_acteg">{product?.category?.name}</p>
-                <div className="audio_content">
+                {/* <div className="audio_content">
                     <div className="audio_play" onClick={togglePlay}>
                         {isPlaying ? (
                             <i class="fa-solid fa-pause"></i>
@@ -100,11 +100,11 @@ export default function DefaultAudio({ product }) {
                         <span>{formatTime(currentTime)}</span> /{' '}
                         <span>{product?.document?.content_duration}</span>
                     </div>
-                </div>
+                </div> */}
 
                 <audio
                     id="audioPlayer"
-                    style={{ display: 'none' }}
+                    // style={{ display: 'none' }}
                     ref={audioRef}
                     controls>
                     <source
@@ -116,6 +116,13 @@ export default function DefaultAudio({ product }) {
                     />
                     Your browser does not support the audio element.
                 </audio>
+                {/* <iframe
+                    title="Audio Player"
+                    width="300"
+                    height="50"
+                    src={product?.document?.short_content_url}
+                    frameBorder="0"
+                    allow="autoplay encrypted-media"></iframe> */}
             </div>
         </div>
     );

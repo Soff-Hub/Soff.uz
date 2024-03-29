@@ -15,18 +15,17 @@ export default function NextImageCard({
         return src;
     };
 
-    const [up, setUp] = useState(true);
+    const [up , setUp] = useState(true)
 
     const handleUp = () => {
-        setUp(false);
-    };
+        setUp(false)
+    }
 
     useEffect(() => {
         setTimeout(() => {
-            setUp(false);
+            setUp(false)
         }, 3000);
-    }, [up]);
-    console.log('payload', payload, url);
+    }, [up])
 
     return (
         <div
@@ -66,9 +65,7 @@ export default function NextImageCard({
                     />
                 </>
             ) : detail ? (
-                <div
-                    onClick={() => handleUp()}
-                    className={` ${up && 'product_priview'} `}>
+                <div onClick={() => handleUp()} className={` ${up && 'product_priview' } `}>
                     <Image
                         src={url}
                         width={width}
@@ -78,11 +75,12 @@ export default function NextImageCard({
                         className={clasS}
                         objectFit="contain"
                     />
-                    {up && (
-                        <div className="up">
-                            <i class="fa-solid fa-angles-up fa-bounce"></i>
-                        </div>
-                    )}
+                    {
+                        up &&
+                    <div className="up">
+                        <i class="fa-solid fa-angles-up fa-bounce"></i>
+                    </div>
+                    }
                 </div>
             ) : (
                 <Image
