@@ -102,7 +102,8 @@ export default function DefaultAudio({ product }) {
                     </div>
                 </div> */}
 
-                <audio
+             <div className='audio-detail-container'>
+             <audio
                     id="audioPlayer"
                     // style={{ display: 'none' }}
                     ref={audioRef}
@@ -113,9 +114,14 @@ export default function DefaultAudio({ product }) {
                             '.',
                             ''
                         )}`}
+                        defaultValue={product?.document?.short_content_url}
                     />
                     Your browser does not support the audio element.
                 </audio>
+                <div className='audio-none' >
+                    <span></span>
+                </div>
+             </div>
                 {/* <iframe
                     title="Audio Player"
                     width="300"

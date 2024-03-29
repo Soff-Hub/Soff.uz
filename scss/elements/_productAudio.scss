@@ -115,9 +115,24 @@
 }
 
 
-// #audioPlayer{
-//     background-color: red;
-// }
+#audioPlayer{
+    height: 25px;    
+}
+
+.audio-detail-container{
+    position: relative;
+    width: 450px;
+    .audio-none{
+        position: absolute;
+        height: 25px;
+        min-width: 100px;
+        width: 50%;
+        background-color: #fff;
+        right: 0;
+        top: 0;
+        border-top-right-radius: 15px;
+    }
+}
 
 
 @media screen and (max-width: '1200px'){
