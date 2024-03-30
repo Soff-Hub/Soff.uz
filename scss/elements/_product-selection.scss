@@ -1,23 +1,14 @@
 .product-selection {
-    height: 50vh;
+    height: 60vh;
     display: flex;
     align-items: center;
     justify-content: center;
     .select-col {
-        &:first-child {
-            a {
-                justify-content: end;
-            }
-        }
-        &:nth-child(2) {
-            a {
-                justify-content: start;
-            }
-        }
         a {
             width: 100%;
             display: flex;
             align-items: center;
+            justify-content: center;
 
             .select-card {
                 text-align: center;
@@ -53,4 +44,55 @@
             }
         }
     }
+}
+
+
+@media screen and (max-width: 768px) {
+    .product-selection {
+        height: 80vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .select-col {
+            a {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+    
+                .select-card {
+                    text-align: center;
+                    border-radius: 5px;
+                    box-shadow: rgba(0, 0, 0, 0.2) 0px 60px 40px -7px;
+                    padding: 20px 40px;
+                    border: 1px solid #cccccc9d;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: start;
+                    gap: 10px;
+                    transition: all 0.5s;
+                    i{
+                        transition: all 0.9s;
+                        font-size: 40px;
+                        color: #b6b3b3;
+                    }
+                    span{
+                        font-size: 17px;
+                        font-weight: 600;
+                    }
+    
+    
+                    &:hover {
+                        i{
+                            color: $color-1st;
+                            opacity: .8;
+                        }
+                        cursor: pointer;
+                        box-shadow: rgba(0, 0, 0, 0.4) 0px 30px 90px;
+                    }
+                }
+            }
+        }
+    } 
 }

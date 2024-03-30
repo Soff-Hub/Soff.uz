@@ -49,7 +49,7 @@ const Posts = () => {
             url: '/',
         },
         {
-            text: 'Mahsulot qo’shish',
+            text: 'Web site shablonlarini qo’shish',
         },
     ];
 
@@ -276,7 +276,6 @@ const Posts = () => {
 
         return formattedNumber;
     }
-    
 
     const chegirma = (foiz) => {
         if (narx) {
@@ -303,257 +302,6 @@ const Posts = () => {
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);
-
-    const items = [
-        {
-            key: '1',
-            label: 'Hujjat (File)',
-            children: (
-                <div className="row">
-                    <label
-                        className="add-product-user-image d-flex flex-column justify-content-center col-md-12 align-content-center form-control py-5 rounded-3 text-truncate"
-                        style={{
-                            backgroundColor: '#F1F1F1',
-                            border: '1px dashed green',
-                            width: '100%',
-                        }}>
-                        {livePosterFile === '' ? (
-                            <span
-                                className="d-flex flex-column align-items-center"
-                                style={{ cursor: 'pointer' }}>
-                                {loading ? (
-                                    <span className="d-flex justify-content-center">
-                                        <ClipLoader size={25} color="#36d7b7" />
-                                    </span>
-                                ) : (
-                                    <span
-                                        className="d-flex flex-column align-items-center "
-                                        style={{
-                                            cursor: 'pointer',
-                                        }}>
-                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                        <span>
-                                            Rasmni  yuklash uchun faylni ushbu hududga
-                                            bosing.
-                                        </span>
-                                    </span>
-                                )}
-                            </span>
-                        ) : (
-                            <span
-                                className="d-flex flex-column align-items-center"
-                                style={{ cursor: 'pointer' }}>
-                                <span>
-                                    {' '}
-                                    Siz mahsulot yukladingiz{' '}
-                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                </span>
-                            </span>
-                        )}
-                        <input
-                            required
-                            type="file"
-                            onChange={(e) => setFileImgFile(e.target.files[0])}
-                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt,.txt,.pdf"
-                        />
-                    </label>
-                    <div
-                        className="add-product-user-image d-flex justify-content-between col-md-12  form-control pt-2 rounded-3"
-                        style={{
-                            backgroundColor: '#F1F1F1',
-                            border: '1px dashed green',
-                            height: '100px',
-                        }}>
-                        <label
-                            style={{
-                                width: '50px',
-                                cursor: 'pointer',
-                            }}>
-                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                            <input
-                                type="file"
-                                onChange={(e) => LiveImage(e)}
-                                accept="image/*"
-                                style={{ width: '20px' }}
-                            />
-                        </label>
-                        <div
-                            className="overflow-x-scroll  d-flex  gap-1
-                                   "
-                            style={{ width: '430px' }}>
-                            {!livePosterFile?.images ? (
-                                <span
-                                    className="d-flex flex-column align-items-center mt-4 mx-5"
-                                    style={{ cursor: 'pointer' }}>
-                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                    <span className='text-center' >
-                                        {' '}
-                                      Rasmini yuklash uchun ushbu hududga
-                                        bosing.{' '}
-                                    </span>
-                                </span>
-                            ) : (
-                                livePosterFile?.images?.map((item, i) =>
-                                    item.id === fileImgFileID ? (
-                                        <img
-                                            src={item.image_url}
-                                            alt=" "
-                                            key={i}
-                                            style={{
-                                                display: 'block',
-                                                border: '2px solid red',
-                                                filter: 'blur(1px)',
-                                                cursor: 'not-allowed',
-                                            }}
-                                        />
-                                    ) : (
-                                        <img
-                                            className="mx-1 "
-                                            onClick={() => {
-                                                setLiveFile(item?.image_url),
-                                                    setFileImgFileID(item?.id);
-                                            }}
-                                            src={item?.image_url}
-                                            alt=" "
-                                            key={i}
-                                            style={{
-                                                display: 'block',
-                                                cursor: 'pointer',
-                                            }}
-                                        />
-                                    )
-                                )
-                            )}
-                        </div>
-                    </div>
-                </div>
-            ),
-        },
-        {
-            key: '2',
-            label: 'Video',
-            children: (
-                <div className="row">
-                    <label
-                        className="add-product-user-image d-flex flex-column justify-content-center col-md-12 align-content-center form-control py-5 rounded-3 text-truncate"
-                        style={{
-                            backgroundColor: '#F1F1F1',
-                            border: '1px dashed green',
-                            width: '100%',
-                        }}>
-                        {livePosterFile === '' ? (
-                            <span
-                                className="d-flex flex-column align-items-center"
-                                style={{ cursor: 'pointer' }}>
-                                {loading ? (
-                                    <span className="d-flex justify-content-center">
-                                        <ClipLoader size={25} color="#36d7b7" />
-                                    </span>
-                                ) : (
-                                    <span
-                                        className="d-flex flex-column align-items-center "
-                                        style={{
-                                            cursor: 'pointer',
-                                        }}>
-                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                        <span>
-                                            Faylni yuklash uchun ushbu hududga
-                                            bosing.
-                                        </span>
-                                    </span>
-                                )}
-                            </span>
-                        ) : (
-                            <span
-                                className="d-flex flex-column align-items-center"
-                                style={{ cursor: 'pointer' }}>
-                                <span>
-                                    {' '}
-                                    Siz mahsulot yukladingiz{' '}
-                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                </span>
-                            </span>
-                        )}
-                        <input
-                            required
-                            type="file"
-                            onChange={(e) => setFileImgFile(e.target.files[0])}
-                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf"
-                        />
-                    </label>
-                    <div
-                        className="add-product-user-image d-flex justify-content-between col-md-12  form-control pt-2 rounded-3"
-                        style={{
-                            backgroundColor: '#F1F1F1',
-                            border: '1px dashed green',
-                            height: '100px',
-                        }}>
-                        <label
-                            style={{
-                                width: '50px',
-                                cursor: 'pointer',
-                            }}>
-                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                            <input
-                                type="file"
-                                onChange={(e) => LiveImage(e)}
-                                accept="image/*"
-                                style={{ width: '20px' }}
-                            />
-                        </label>
-                        <div
-                            className="overflow-x-scroll  d-flex  gap-1
-                                   "
-                            style={{ width: '430px' }}>
-                            {!livePosterFile?.images ? (
-                                <span
-                                    className="d-flex flex-column align-items-center mt-4 mx-5"
-                                    style={{ cursor: 'pointer' }}>
-                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                    <span className='text-center' >
-                                        {' '}
-                                      Rasmini yuklash uchun ushbu hududga
-                                        bosing.{' '}
-                                    </span>
-                                </span>
-                            ) : (
-                                livePosterFile?.images?.map((item, i) =>
-                                    item.id === fileImgFileID ? (
-                                        <img
-                                            src={item.image_url}
-                                            alt=" "
-                                            key={i}
-                                            style={{
-                                                display: 'block',
-                                                border: '2px solid red',
-                                                filter: 'blur(1px)',
-                                                cursor: 'not-allowed',
-                                            }}
-                                        />
-                                    ) : (
-                                        <img
-                                            className="mx-1 "
-                                            onClick={() => {
-                                                setLiveFile(item?.image_url),
-                                                    setFileImgFileID(item?.id);
-                                            }}
-                                            src={item?.image_url}
-                                            alt=" "
-                                            key={i}
-                                            style={{
-                                                display: 'block',
-                                                cursor: 'pointer',
-                                            }}
-                                        />
-                                    )
-                                )
-                            )}
-                        </div>
-                    </div>
-                </div>
-            ),
-        }
-    ];
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -601,7 +349,7 @@ const Posts = () => {
 
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                    <p>Mahsulot nomi: *</p>
+                                    <p>Web shablon nomi: *</p>
                                     <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -616,65 +364,87 @@ const Posts = () => {
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
+                            <div className="row">
+                                <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                    <p>Web saytning demo linki: *</p>
+                                    <Tooltip title="Mijozlarga ko’rsatiladigan web shabloningizni linkini bu yerga joylashingiz zarur. Foydalanuvchi web shablon bilan tanishib chiqishi uchun">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                    </Tooltip>
+                                </div>
+                                <input
+                                    required
+                                    type="url"
+                                    className="form-control  rounded-3 col-md-8 mb-2"
+                                    name="title"
+                                    onChange={(e) => setTitle(e.target.value)}
+                                />
+                            </div>
                             <div className="row ">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Mahsulot: *</p>{' '}
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
+                                    <p>Web shablon: *</p>{' '}
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                {/* <div className="row"> */}
-                    <label
-                        className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
-                        style={{
-                            backgroundColor: '#F1F1F1',
-                            border: '1px dashed green',
-                            width: '100%',
-                        }}>
-                        {livePosterFile === '' ? (
-                            <span
-                                className="d-flex flex-column align-items-center"
-                                style={{ cursor: 'pointer' }}>
-                                {loading ? (
-                                    <span className="d-flex justify-content-center">
-                                        <ClipLoader size={25} color="#36d7b7" />
-                                    </span>
-                                ) : (
-                                    <span
-                                        className="d-flex flex-column align-items-center "
-                                        style={{
-                                            cursor: 'pointer',
-                                        }}>
-                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                        <span>
-                                            Faylni  yuklash uchun ushbu hududga
-                                            bosing.
+                                <label
+                                    className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
+                                    style={{
+                                        backgroundColor: '#F1F1F1',
+                                        border: '1px dashed green',
+                                        width: '100%',
+                                    }}>
+                                    {livePosterFile === '' ? (
+                                        <span
+                                            className="d-flex flex-column align-items-center"
+                                            style={{ cursor: 'pointer' }}>
+                                            {loading ? (
+                                                <span className="d-flex justify-content-center">
+                                                    <ClipLoader
+                                                        size={25}
+                                                        color="#36d7b7"
+                                                    />
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    className="d-flex flex-column align-items-center "
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                    }}>
+                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                    <span>
+                                                        Web shablon faylini yuklash uchun
+                                                        ushbu hududga bosing.
+                                                    </span>
+                                                </span>
+                                            )}
                                         </span>
-                                    </span>
-                                )}
-                            </span>
-                        ) : (
-                            <span
-                                className="d-flex flex-column align-items-center"
-                                style={{ cursor: 'pointer' }}>
-                                <span>
-                                    {' '}
-                                    Siz mahsulot yukladingiz{' '}
-                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                </span>
-                            </span>
-                        )}
-                        <input
-                            required
-                            type="file"
-                            onChange={(e) => (setFileImgFile(e.target.files[0]), console.log("product"))}
-                            accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .txt,.pdf"
-                        />
-                    </label>
-                   
-                {/* </div> */}
+                                    ) : (
+                                        <span
+                                            className="d-flex flex-column align-items-center"
+                                            style={{ cursor: 'pointer' }}>
+                                            <span>
+                                                {' '}
+                                                Siz web shabloningizni yukladingiz{' '}
+                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                            </span>
+                                        </span>
+                                    )}
+                                    <input
+                                        required
+                                        type="file"
+                                        onChange={(e) => (
+                                            setFileImgFile(e.target.files[0]),
+                                            console.log('product')
+                                        )}
+                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .txt,.pdf"
+                                    />
+                                </label>
+
+                                {/* </div> */}
                                 {/* <div className=" rounded-3 col-md-8 mb-2">
                                     <Tabs
                                         defaultActiveKey="1"
@@ -685,7 +455,7 @@ const Posts = () => {
                             </div>
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Mahsulot rasmi: *</p>{' '}
+                                    <p>Web shablon posteri: *</p>{' '}
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -693,75 +463,84 @@ const Posts = () => {
                                     </Tooltip>
                                 </div>
                                 <div
-                        className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
-                        style={{
-                            backgroundColor: '#F1F1F1',
-                            border: '1px dashed green',
-                            height: '100px',
-                        }}>
-                        <label
-                            style={{
-                                width: '50px',
-                                cursor: 'pointer',
-                            }}>
-                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                            <input
-                                type="file"
-                                onChange={(e) => LiveImage(e)}
-                                accept="image/*"
-                                style={{ width: '20px' }}
-                            />
-                        </label>
-                        <div
-                            className="overflow-x-scroll  d-flex  gap-1
+                                    className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
+                                    style={{
+                                        backgroundColor: '#F1F1F1',
+                                        border: '1px dashed green',
+                                        height: '100px',
+                                    }}>
+                                    <label
+                                        style={{
+                                            width: '50px',
+                                            cursor: 'pointer',
+                                        }}>
+                                        <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => LiveImage(e)}
+                                            accept="image/*"
+                                            style={{ width: '20px' }}
+                                        />
+                                    </label>
+                                    <div
+                                        className="overflow-x-scroll  d-flex  gap-1
                                    "
-                            style={{ width: '430px' }}>
-                            {!livePosterFile?.images ? (
-                                <span
-                                    className="d-flex flex-column align-items-center mt-4 mx-5"
-                                    style={{ cursor: 'pointer' }}>
-                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                    <span className='text-center' >
-                                        {' '}
-                                      Rasmini yuklash uchun ushbu hududga
-                                        bosing.{' '}
-                                    </span>
-                                </span>
-                            ) : (
-                                livePosterFile?.images?.map((item, i) =>
-                                    item.id === fileImgFileID ? (
-                                        <img
-                                            src={item.image_url}
-                                            alt=" "
-                                            key={i}
-                                            style={{
-                                                display: 'block',
-                                                border: '2px solid red',
-                                                filter: 'blur(1px)',
-                                                cursor: 'not-allowed',
-                                            }}
-                                        />
-                                    ) : (
-                                        <img
-                                            className="mx-1 "
-                                            onClick={() => {
-                                                setLiveFile(item?.image_url),
-                                                    setFileImgFileID(item?.id);
-                                            }}
-                                            src={item?.image_url}
-                                            alt=" "
-                                            key={i}
-                                            style={{
-                                                display: 'block',
-                                                cursor: 'pointer',
-                                            }}
-                                        />
-                                    )
-                                )
-                            )}
-                        </div>
-                    </div>
-                                
+                                        style={{ width: '430px' }}>
+                                        {!livePosterFile?.images ? (
+                                            <span
+                                                className="d-flex flex-column align-items-center mt-4 mx-5"
+                                                style={{ cursor: 'pointer' }}>
+                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                <span className="text-center">
+                                                    {' '}
+                                                    Poster yuklash uchun ushbu
+                                                    hududga bosing.{' '}
+                                                </span>
+                                            </span>
+                                        ) : (
+                                            livePosterFile?.images?.map(
+                                                (item, i) =>
+                                                    item.id ===
+                                                    fileImgFileID ? (
+                                                        <img
+                                                            src={item.image_url}
+                                                            alt=" "
+                                                            key={i}
+                                                            style={{
+                                                                display:
+                                                                    'block',
+                                                                border: '2px solid red',
+                                                                filter: 'blur(1px)',
+                                                                cursor: 'not-allowed',
+                                                            }}
+                                                        />
+                                                    ) : (
+                                                        <img
+                                                            className="mx-1 "
+                                                            onClick={() => {
+                                                                setLiveFile(
+                                                                    item?.image_url
+                                                                ),
+                                                                    setFileImgFileID(
+                                                                        item?.id
+                                                                    );
+                                                            }}
+                                                            src={
+                                                                item?.image_url
+                                                            }
+                                                            alt=" "
+                                                            key={i}
+                                                            style={{
+                                                                display:
+                                                                    'block',
+                                                                cursor: 'pointer',
+                                                            }}
+                                                        />
+                                                    )
+                                            )
+                                        )}
+                                    </div>
+                                </div>
                             </div>
                             <div className=" row ">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
@@ -807,7 +586,7 @@ const Posts = () => {
                             </div>
                             <div className="row mt-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Mahsulot sotish narxi: *</p>{' '}
+                                    <p>Web shablon sotish narxi: *</p>{' '}
                                     <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -837,7 +616,7 @@ const Posts = () => {
 
                             <div className="  row mt-3">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
-                                    <p>Mahsulot to’liq tavsifi: </p>{' '}
+                                    <p>Web shablon to’liq tavsifi: </p>{' '}
                                     <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -862,7 +641,7 @@ const Posts = () => {
                                     type="submit"
                                     className="btn btn-success py-3 ">
                                     <span className="fs-4 px-5">
-                                        Mahsulot qo'shish{' '}
+                                    Web shablon qo'shish{' '}
                                         <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
                                     </span>
                                 </button>

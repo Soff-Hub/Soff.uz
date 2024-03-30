@@ -30,7 +30,7 @@ const Posts = () => {
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="container product-selection">
                     <div className="row w-100">
-                        <div className="col-6 select-col">
+                        <div className="col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 select-col">
                             <Link href="/account/myproducts/posts">
                                 <a>
                                     <div className="select-card file">
@@ -40,12 +40,22 @@ const Posts = () => {
                                 </a>
                             </Link>
                         </div>
-                        <div className="col-6 select-col">
+                        <div className="col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 select-col">
                             <Link href="/account/myproducts/audio-posts">
                                 <a>
                                     <div className="select-card file">
                                         <i class="fa-solid fa-music"></i>
                                         <span> Audio</span>
+                                    </div>
+                                </a>
+                            </Link>
+                        </div>
+                        <div className="col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 select-col">
+                            <Link href="/account/myproducts/template-posts">
+                                <a>
+                                    <div className="select-card file">
+                                    <i class="fa-solid fa-sitemap"></i>
+                                        <span>Web site shablon</span>
                                     </div>
                                 </a>
                             </Link>
