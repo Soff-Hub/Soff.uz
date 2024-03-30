@@ -49,12 +49,12 @@ const Posts = () => {
             url: '/',
         },
         {
-            text: 'Dizayn shablonlarini qo’shish',
+            text: 'Shablonlarini qo’shish',
         },
     ];
 
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryListsDesign();
         if (ItemsData) {
             setDataCategory(ItemsData);
         }
@@ -105,7 +105,7 @@ const Posts = () => {
     };
 
     const onSearch = async (value) => {
-        const ItemsData = await GetRepository.getAllCategoryLists(value);
+        const ItemsData = await GetRepository.getAllCategoryListsDesign(value);
         if (ItemsData) {
             setDataCategory(ItemsData);
         }
@@ -231,8 +231,7 @@ const Posts = () => {
             );
 
             if (
-                ItemsData?.status === 201 &&
-                ItemsData?.data?.images?.length > 0
+                ItemsData?.status === 201
             ) {
                 setLivePosterFile(ItemsData?.data);
                 setLiveFile2(ItemsData?.data);
@@ -349,7 +348,7 @@ const Posts = () => {
 
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                    <p>Dizayn shablon nomi: *</p>
+                                    <p>Shablon nomi: *</p>
                                     <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -366,7 +365,7 @@ const Posts = () => {
                             </div>
                             <div className="row ">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Dizayn shablon: *</p>{' '}
+                                    <p>Shablon: *</p>{' '}
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -399,9 +398,9 @@ const Posts = () => {
                                                     }}>
                                                     <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                     <span>
-                                                        Dizayn shablon faylini
-                                                        yuklash uchun ushbu
-                                                        hududga bosing.
+                                                        Shablon faylini yuklash
+                                                        uchun ushbu hududga
+                                                        bosing.
                                                     </span>
                                                 </span>
                                             )}
@@ -412,8 +411,7 @@ const Posts = () => {
                                             style={{ cursor: 'pointer' }}>
                                             <span>
                                                 {' '}
-                                                Siz dizayn shabloningizni
-                                                yukladingiz{' '}
+                                                Siz shabloningizni yukladingiz{' '}
                                                 <i className="fa-solid fa-circle-check text-success"></i>{' '}
                                             </span>
                                         </span>
@@ -431,7 +429,7 @@ const Posts = () => {
                             </div>
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Dizayn shablon posteri: *</p>{' '}
+                                    <p>Shablon posteri: *</p>{' '}
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -562,7 +560,7 @@ const Posts = () => {
                             </div>
                             <div className="row mt-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Dizayn shablon sotish narxi: *</p>{' '}
+                                    <p>Shablon sotish narxi: *</p>{' '}
                                     <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -592,7 +590,7 @@ const Posts = () => {
 
                             <div className="  row mt-3">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
-                                    <p>Dizayn shablon to’liq tavsifi: </p>{' '}
+                                    <p>Shablon to’liq tavsifi: </p>{' '}
                                     <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -617,7 +615,7 @@ const Posts = () => {
                                     type="submit"
                                     className="btn btn-success py-3 ">
                                     <span className="fs-4 px-5">
-                                        Dizayn shablon qo'shish{' '}
+                                        Shablon qo'shish{' '}
                                         <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
                                     </span>
                                 </button>
@@ -696,7 +694,7 @@ const Posts = () => {
                                           })
                                         : "To'ldirilmadi"}
                                 </p>
-                               
+
                                 <p className="live-card-p ">
                                     <strong> To'liq ma'lumot : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>
@@ -779,18 +777,8 @@ const Posts = () => {
                                                 : "To'ldirilmadi"}{' '}
                                         </span>
                                     </p>
-                                    {/* <p className="live-card-p">
-                                        <strong>Chegirmasi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {' '}
-                                            {discount
-                                                ? discount + '%'
-                                                : "To'ldirilmadi"}{' '}
-                                        </span>
-                                    </p> */}
                                     <p className="live-card-p">
                                         <strong>Taglari : </strong>
-                                        {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
                                                   (item, i) => {
