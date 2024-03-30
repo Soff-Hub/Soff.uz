@@ -35,8 +35,23 @@ const AccountQuickLinks = (props) => {
         const ItemsData = await GetRepository.getProfile(token);
         if (ItemsData) {
             setProfile(ItemsData);
+            if (Number(ItemsData?.status) == 403) {
+                handleLogoutToken();
+            }
         }
     }
+
+    const handleLogoutToken = () => {
+        const data = {
+            refresh: refresh,
+        };
+        const { logOutAuth } = useAuth();
+        const res = logOutAuth(data);
+
+        if (res) {
+            dispatch(logOut());
+        }
+    };
 
     useEffect(() => {
         if (user?.access) {
