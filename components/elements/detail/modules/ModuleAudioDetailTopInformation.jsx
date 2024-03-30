@@ -99,7 +99,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
     const copyVideoUrl = () => {
         const videoElement = document.getElementById('audioPlayer');
         if (videoElement) {
-            const videoUrl = videoElement.querySelector('source').src;
+            const videoUrl = `https://soff.uz/${pid}`;
             navigator.clipboard
                 .writeText(videoUrl)
                 .then(() => {
@@ -118,6 +118,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
         }
     };
 
+    console.log('router', 'soff.uz/'+ pid );
     return (
         <header>
             <Meta
@@ -210,7 +211,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                         ) : (
                             <>
                                 <i class="fa-solid fa-share-nodes"></i>
-                                ulashish
+                                ulashish 
                             </>
                         )}
                     </div>
