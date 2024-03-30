@@ -49,7 +49,7 @@ const Posts = () => {
             url: '/',
         },
         {
-            text: 'Web site shablonlarini qo’shish',
+            text: 'Dizayn shablonlarini qo’shish',
         },
     ];
 
@@ -317,7 +317,7 @@ const Posts = () => {
                         <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
                             {' '}
                             <i className="fa-solid fa-triangle-exclamation"></i>{' '}
-                            Hurmatli Sotuvchi mahsulot yuklayotganingizda
+                            Hurmatli Sotuvchi dizayn shablon yuklayotganingizda
                             mahsulot o'zingizni shaxsiy mahsulotingiz ekanligiga
                             ishonch hosil qiling. Aks holda o'sha
                             mahsulotingizni sotuvda ko'rinmasligi va profilingiz
@@ -349,7 +349,7 @@ const Posts = () => {
 
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                    <p>Web shablon nomi: *</p>
+                                    <p>Dizayn shablon nomi: *</p>
                                     <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -364,26 +364,9 @@ const Posts = () => {
                                     onChange={(e) => setTitle(e.target.value)}
                                 />
                             </div>
-                            <div className="row">
-                                <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                    <p>Web saytning demo linki: *</p>
-                                    <Tooltip title="Mijozlarga ko’rsatiladigan web shabloningizni linkini bu yerga joylashingiz zarur. Foydalanuvchi web shablon bilan tanishib chiqishi uchun">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                                    </Tooltip>
-                                </div>
-                                <input
-                                    required
-                                    type="url"
-                                    className="form-control  rounded-3 col-md-8 mb-2"
-                                    name="title"
-                                    onChange={(e) => setTitle(e.target.value)}
-                                />
-                            </div>
                             <div className="row ">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Web shablon: *</p>{' '}
+                                    <p>Dizayn shablon: *</p>{' '}
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -416,8 +399,9 @@ const Posts = () => {
                                                     }}>
                                                     <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                     <span>
-                                                        Web shablon faylini yuklash uchun
-                                                        ushbu hududga bosing.
+                                                        Dizayn shablon faylini
+                                                        yuklash uchun ushbu
+                                                        hududga bosing.
                                                     </span>
                                                 </span>
                                             )}
@@ -428,7 +412,8 @@ const Posts = () => {
                                             style={{ cursor: 'pointer' }}>
                                             <span>
                                                 {' '}
-                                                Siz web shabloningizni yukladingiz{' '}
+                                                Siz dizayn shabloningizni
+                                                yukladingiz{' '}
                                                 <i className="fa-solid fa-circle-check text-success"></i>{' '}
                                             </span>
                                         </span>
@@ -440,22 +425,13 @@ const Posts = () => {
                                             setFileImgFile(e.target.files[0]),
                                             console.log('product')
                                         )}
-                                        accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .txt,.pdf"
+                                        accept=".zip"
                                     />
                                 </label>
-
-                                {/* </div> */}
-                                {/* <div className=" rounded-3 col-md-8 mb-2">
-                                    <Tabs
-                                        defaultActiveKey="1"
-                                        items={items}
-                                        onChange={onChangeTabs}
-                                    />
-                                </div> */}
                             </div>
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Web shablon posteri: *</p>{' '}
+                                    <p>Dizayn shablon posteri: *</p>{' '}
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -586,7 +562,7 @@ const Posts = () => {
                             </div>
                             <div className="row mt-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Web shablon sotish narxi: *</p>{' '}
+                                    <p>Dizayn shablon sotish narxi: *</p>{' '}
                                     <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -616,7 +592,7 @@ const Posts = () => {
 
                             <div className="  row mt-3">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
-                                    <p>Web shablon to’liq tavsifi: </p>{' '}
+                                    <p>Dizayn shablon to’liq tavsifi: </p>{' '}
                                     <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -641,7 +617,7 @@ const Posts = () => {
                                     type="submit"
                                     className="btn btn-success py-3 ">
                                     <span className="fs-4 px-5">
-                                    Web shablon qo'shish{' '}
+                                        Dizayn shablon qo'shish{' '}
                                         <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
                                     </span>
                                 </button>
@@ -710,18 +686,8 @@ const Posts = () => {
                                             : "To'ldirilmadi"}{' '}
                                     </span>
                                 </p>
-                                {/* <p className="live-card-p">
-                                    <strong>Chegirmasi : </strong>{' '}
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {' '}
-                                        {discount
-                                            ? discount + '%'
-                                            : "To'ldirilmadi"}{' '}
-                                    </span>
-                                </p> */}
                                 <p className="live-card-p">
                                     <strong>Taglari : </strong>
-                                    {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
                                               return (
@@ -730,43 +696,7 @@ const Posts = () => {
                                           })
                                         : "To'ldirilmadi"}
                                 </p>
-                                <p className="live-card-p">
-                                    <span>
-                                        <strong className="fs-4">
-                                            Qisqa tavsif
-                                        </strong>
-                                        :{' '}
-                                    </span>
-                                    <ul
-                                        style={{ maxWidth: '150px' }}
-                                        className="">
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Betlar soni:{' '}
-                                            </strong>{' '}
-                                            {livePosterFile?.page_count
-                                                ? livePosterFile?.page_count +
-                                                  ' ' +
-                                                  'ta'
-                                                : ''}{' '}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Hajmi:{' '}
-                                            </strong>{' '}
-                                            {livePosterFile?.file_size}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Turi:{' '}
-                                            </strong>{' '}
-                                            {livePosterFile?.file_type}
-                                        </li>
-                                    </ul>
-                                </p>
+                               
                                 <p className="live-card-p ">
                                     <strong> To'liq ma'lumot : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>
