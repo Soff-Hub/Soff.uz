@@ -43,7 +43,6 @@ const EmailLists = () => {
         : '';
     const dataFormat = date ? `${dateFormat0}&to_date=${dateFormat1}` : '';
 
-    // console.log('date', dataFormat);
 
     async function GetItemsEmail() {
         if (text) {
