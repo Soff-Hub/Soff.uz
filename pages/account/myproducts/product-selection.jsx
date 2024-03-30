@@ -51,11 +51,11 @@ const Posts = () => {
                             </Link>
                         </div>
                         <div className="col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 select-col">
-                            <Link href="/account/myproducts/template-posts">
+                            <Link href="/account/myproducts/design-template-posts">
                                 <a>
                                     <div className="select-card file">
-                                    <i class="fa-solid fa-sitemap"></i>
-                                        <span>Web site shablon</span>
+                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                        <span>Web design</span>
                                     </div>
                                 </a>
                             </Link>
