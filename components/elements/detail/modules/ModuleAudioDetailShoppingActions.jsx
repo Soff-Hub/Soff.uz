@@ -1,3 +1,4 @@
+'use client'
 import React, { useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
@@ -5,7 +6,7 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { fileDownloader, fileDownloaderSale } from '~/utilities/common-helpers';
+import { audioDownloaderSale, fileDownloader, fileDownloaderSale } from '~/utilities/common-helpers';
 
 const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
     const { setCartOneItem } = useCart();
@@ -90,7 +91,26 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                         {product?.discount_price > 0 ? (
                             <>
                                 {document?.file_url ? (
-                                    <a
+                                    (<>{
+                                        product?.document?.content_type === "audio" ? 
+                                        <a
+                                        style={{
+                                            cursor: `${
+                                                admin
+                                                    ? 'not-allowed'
+                                                    : 'pointer'
+                                            }`,
+                                        }}
+                                        className="ps-btn ps-btn--black max-class"
+                                        href="#"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            audioDownloaderSale(document);
+                                        }}>
+                                        Yuklab olish
+                                    </a>
+                                        :
+                                        product?.document?.content_type === 'file' ?   <a
                                         style={{
                                             cursor: `${
                                                 admin
@@ -105,7 +125,8 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                             fileDownloaderSale(document);
                                         }}>
                                         Yuklab olish
-                                    </a>
+                                    </a> : ''
+                                    }</>)
                                 ) : (
                                     <>
                                         <a

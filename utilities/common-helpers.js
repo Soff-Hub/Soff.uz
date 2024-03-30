@@ -1,4 +1,4 @@
-import axios from 'axios'
+import axios from 'axios';
 
 export const stickyHeader = () => {
     let number =
@@ -30,12 +30,17 @@ export const generateTempArray = (maxItems) => {
 
 export const fileDownloader = (product) => {
     fetch(product.file_url)
-        .then(response => (response.blob()))
-        .then(blob => {
+        .then((response) => response.blob())
+        .then((blob) => {
             const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', `soff.uz-${product?.category?.name || product?.slug}.${product.file_url.split(".").at(-1)}`);
+            link.setAttribute(
+                'download',
+                `soff.uz-${
+                    product?.category?.name || product?.slug
+                }.${product.file_url.split('.').at(-1)}`
+            );
 
             link.style.display = 'none';
             document.body.appendChild(link);
@@ -45,20 +50,24 @@ export const fileDownloader = (product) => {
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
         })
-        .catch(error => console.error(error));
+        .catch((error) => console.error(error));
 
-
-    axios.post(`https://api.soff.uz/api/v1/seller/upload-count/`, { pk: product.id })
+    axios.post(`https://api.soff.uz/api/v1/seller/upload-count/`, {
+        pk: product.id,
+    });
 };
 
 export const fileDownloaderSale = (product) => {
     fetch(product.file_url)
-        .then(response => (response.blob()))
-        .then(blob => {
+        .then((response) => response.blob())
+        .then((blob) => {
             const url = window.URL.createObjectURL(new Blob([blob]));
             const link = document.createElement('a');
             link.href = url;
-            link.setAttribute('download', `soff.uz-${product.file_url.split(".").at(-1)}`);
+            link.setAttribute(
+                'download',
+                `soff.uz-${product.file_url.split('.').at(-1)}`
+            );
 
             link.style.display = 'none';
             document.body.appendChild(link);
@@ -68,9 +77,21 @@ export const fileDownloaderSale = (product) => {
             document.body.removeChild(link);
             window.URL.revokeObjectURL(url);
         })
-        .catch(error => console.error(error));
-
+        .catch((error) => console.error(error));
 };
 
-
-
+export const audioDownloaderSale = async (product) => {
+    try {
+        const response = await fetch(product.file_url);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(new Blob([blob]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', `soff.uz-${product.file_url.split(".").at(-1)}`); // Name of your audio file
+        document.body.appendChild(link);
+        link.click();
+        link.parentNode.removeChild(link);
+    } catch (error) {
+        console.error('Error downloading audio:', error);
+    }
+};
