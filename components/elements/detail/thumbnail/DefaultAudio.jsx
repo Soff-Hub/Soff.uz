@@ -45,8 +45,6 @@ export default function DefaultAudio({ product }) {
     //         remainingSeconds < 10 ? '0' : ''
     //     }${remainingSeconds}`;
     // };
-    console.log('producte', product);
-    console.log('item');
     return (
         <div
             style={{
