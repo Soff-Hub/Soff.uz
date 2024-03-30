@@ -5,10 +5,14 @@ const ModuleProductDetailDescription = ({ product, views }) => {
         <div className="ps-product__desc">
             <strong className="fs-4"> Qisqa tavsif </strong>
             <ul style={{ listStyleType: 'revert' }}>
+                {
+                    product?.document?.page_count ?
                 <li>
                     <strong>Betlar soni : </strong> <div></div>{' '}
                     <span>{product?.document?.page_count} bet</span>
-                </li>
+                </li> : ''
+
+                }
                 <li>
                     <strong>Hajmi : </strong> <div></div>{' '}
                     <span>{product?.document?.file_size}</span>

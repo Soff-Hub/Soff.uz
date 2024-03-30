@@ -1,12 +1,12 @@
 import axios from 'axios';
-const baseDomain = 'http://192.168.1.20:8000/api/v1/'; // API for products
-// const baseDomain = 'http://75.119.147.222:8002/api/v1/'; 
-export const basePostUrl = 'http://192.168.1.20:8000'; // API for post
-// export const basePostUrl = 'http://75.119.147.222:8002'; 
-export const baseStoreURL = 'http://192.168.1.20:8000'; // API for vendor(store)
-// export const baseStoreURL = 'http://75.119.147.222:8002';
-export const baseUrlAuth = 'http://192.168.1.20:8000/'
-// export const baseUrlAuth = 'http://75.119.147.222:8002/'
+// const baseDomain = 'https://api.soff.uz/api/v1/'; // API for products
+const baseDomain = 'https://testapi.soff.uz/api/v1/'; 
+// export const basePostUrl = 'https://api.soff.uz'; // API for post
+export const basePostUrl = 'https://testapi.soff.uz'; 
+// export const baseStoreURL = 'https://api.soff.uz'; // API for vendor(store)
+export const baseStoreURL = 'https://testapi.soff.uz';
+// export const baseUrlAuth = 'https://api.soff.uz/'
+export const baseUrlAuth = 'https://testapi.soff.uz/'
 
 export const customHeaders = {
     Accept: 'application/json',

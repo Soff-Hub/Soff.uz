@@ -113,7 +113,7 @@ const AudioPosts = () => {
     };
 
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryListsAudio();
         if (ItemsData) {
             setDataCategory(ItemsData);
         }
@@ -165,7 +165,7 @@ const AudioPosts = () => {
     };
 
     const onSearch = async (value) => {
-        const ItemsData = await GetRepository.getAllCategoryLists(value);
+        const ItemsData = await GetRepository.getAllCategoryListsAudio(value);
         if (ItemsData) {
             setDataCategory(ItemsData);
         }

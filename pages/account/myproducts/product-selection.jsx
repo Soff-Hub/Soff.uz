@@ -40,7 +40,7 @@ const Posts = () => {
                                 </a>
                             </Link>
                         </div>
-                        <div className="col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 select-col">
+                        <div className="col-12 my-5 my-xxl-0 my-xl-0 my-lg-0 my-md-0 my-sm-5 col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 select-col">
                             <Link href="/account/myproducts/audio-posts">
                                 <a>
                                     <div className="select-card file">

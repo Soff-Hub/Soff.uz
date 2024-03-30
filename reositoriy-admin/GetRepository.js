@@ -226,7 +226,39 @@ class GetRepository {
         return reponse;
     }
     async getAllCategoryLists(search) {
+        const endPoint = `admin/category-children?search=${search || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getAllCategoryListsAudio(search) {
         const endPoint = `admin/category-children/audio?search=${search || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getAllCategoryListsDesign(search) {
+        const endPoint = `admin/category-children/templates?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
