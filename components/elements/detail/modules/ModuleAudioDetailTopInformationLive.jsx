@@ -112,7 +112,7 @@ const ModuleAudioDetailTopInformationLive = ({
                     </div>
                     <div className="video_send">
                         <i class="fa-solid fa-share-nodes"></i>
-                        ulashish
+                        ulashish 
                     </div>
 
                     <div className="product__top-information--price">
