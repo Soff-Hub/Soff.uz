@@ -5,47 +5,48 @@ import { ScaleLoader } from 'react-spinners';
 export default function DefaultAudio({ product }) {
     // product?.document?.short_content_url
     // `video/${product?.document?.file_type?.replace('.','' )}`
-    const [isPlaying, setIsPlaying] = useState(false);
+    // const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
-    const [currentTime, setCurrentTime] = useState(0);
-    const [duration, setDuration] = useState(0);
+    // const [currentTime, setCurrentTime] = useState(0);
+    // const [duration, setDuration] = useState(0);
 
-    const togglePlay = () => {
-        const audioPlayer = audioRef.current;
+    // const togglePlay = () => {
+    //     const audioPlayer = audioRef.current;
 
-        if (isPlaying) {
-            audioPlayer.pause();
-        } else {
-            audioPlayer.play();
-        }
+    //     if (isPlaying) {
+    //         audioPlayer.pause();
+    //     } else {
+    //         audioPlayer.play();
+    //     }
 
-        setIsPlaying(!isPlaying);
-    };
+    //     setIsPlaying(!isPlaying);
+    // };
 
-    const updateTime = () => {
-        const audioPlayer = audioRef.current;
-        setCurrentTime(audioPlayer.currentTime);
-        setDuration(audioPlayer.duration);
-    };
+    // const updateTime = () => {
+    //     const audioPlayer = audioRef.current;
+    //     setCurrentTime(audioPlayer.currentTime);
+    //     setDuration(audioPlayer.duration);
+    // };
 
-    useEffect(() => {
-        const audioPlayer = audioRef.current;
+    // useEffect(() => {
+    //     const audioPlayer = audioRef.current;
 
-        audioPlayer.addEventListener('timeupdate', updateTime);
+    //     audioPlayer.addEventListener('timeupdate', updateTime);
 
-        return () => {
-            audioPlayer.removeEventListener('timeupdate', updateTime);
-        };
-    }, []);
+    //     return () => {
+    //         audioPlayer.removeEventListener('timeupdate', updateTime);
+    //     };
+    // }, []);
 
-    const formatTime = (seconds) => {
-        const minutes = Math.floor(seconds / 60);
-        const remainingSeconds = Math.floor(seconds % 60);
-        return `${minutes}:${
-            remainingSeconds < 10 ? '0' : ''
-        }${remainingSeconds}`;
-    };
-    console.log('product', product);
+    // const formatTime = (seconds) => {
+    //     const minutes = Math.floor(seconds / 60);
+    //     const remainingSeconds = Math.floor(seconds % 60);
+    //     return `${minutes}:${
+    //         remainingSeconds < 10 ? '0' : ''
+    //     }${remainingSeconds}`;
+    // };
+    console.log('producte', product);
+    console.log('item');
     return (
         <div
             style={{
@@ -84,31 +85,35 @@ export default function DefaultAudio({ product }) {
                     <span>{product?.document?.file_size}</span>
                 </div>
                 <p className="audio_acteg">{product?.category?.name}</p>
-                <div className='d-xl-flex d-xxl-flex d-lg-flex d-md-block  align-items-center gap-5 mb-3' >
-                    <span className='d-md-block d-block d-sm-block d-xxl-inline d-xl-inline d-lg-inline' > Davomiyligi {" "} {product?.document?.content_duration}</span>
-                    <span style={{color:'#F4CA16'}} >Batafsil eshitish uchun sotib oling</span>
+                <div className="d-xl-flex d-xxl-flex d-lg-flex d-md-block  align-items-center gap-5 mb-3">
+                    <span className="d-md-block d-block d-sm-block d-xxl-inline d-xl-inline d-lg-inline">
+                        {' '}
+                        Davomiyligi {product?.document?.content_duration}
+                    </span>
+                    <span style={{ color: '#F4CA16' }}>
+                        Batafsil eshitish uchun sotib oling
+                    </span>
                 </div>
-             <div className='audio-detail-container'>
-             <audio
-                    id="audioPlayer"
-                    // style={{ display: 'none' }}
-                    ref={audioRef}
-                    controls>
-                    <source
-                        src={product?.document?.short_content_url}
-                        type={`audio/${product?.document?.file_type?.replace(
-                            '.',
-                            ''
-                        )}`}
-                        defaultValue={product?.document?.short_content_url}
-                    />
-                    Your browser does not support the audio element.
-                </audio>
-                <div className='audio-none' >
-                    <span></span>
+                <div className="audio-detail-container">
+                    <audio
+                        id="audioPlayer"
+                        // style={{ display: 'none' }}
+                        ref={audioRef}
+                        controls>
+                        <source
+                            src={product?.document?.short_content_url}
+                            type={`audio/${product?.document?.file_type?.replace(
+                                '.',
+                                ''
+                            )}`}
+                            defaultValue={product?.document?.short_content_url}
+                        />
+                        Your browser does not support the audio element.
+                    </audio>
+                    <div className="audio-none">
+                        <span></span>
+                    </div>
                 </div>
-             </div>
-               
             </div>
         </div>
     );
