@@ -39,6 +39,8 @@ export default function NextImageCard({
                     <div className="video_poster_fon">
                         <i className="fa-regular fa-circle-play"></i>
                     </div>
+                    {
+                        url &&
                     <Image
                         src={url}
                         width={width}
@@ -48,42 +50,30 @@ export default function NextImageCard({
                         className={clasS}
                         objectFit="cover"
                     />
+                    }
                 </>
             ) : payload?.document?.content_type === 'audio' ? (
                 <>
                     <div className="video_poster_fon">
                         <i className="fa-solid fa-music"></i>
                     </div>
-                    <Image
-                        src={url}
-                        width={width}
-                        height={height}
-                        alt={url}
-                        loader={loaderProp}
-                        className={clasS}
-                        objectFit="cover"
-                    />
+                   {
+                    url &&  <Image
+                    src={url}
+                    width={width}
+                    height={height}
+                    alt={url}
+                    loader={loaderProp}
+                    className={clasS}
+                    objectFit="cover"
+                />
+                   }
                 </>
             ) : detail ? (
                 <div onClick={() => handleUp()} className={` ${up && 'product_priview' } `}>
+                   {
+                    url &&
                     <Image
-                        src={url}
-                        width={width}
-                        height={height}
-                        alt={url}
-                        loader={loaderProp}
-                        className={clasS}
-                        objectFit="contain"
-                    />
-                    {
-                        up &&
-                    <div className="up">
-                        <i className="fa-solid fa-angles-up fa-bounce"></i>
-                    </div>
-                    }
-                </div>
-            ) : (
-                <Image
                     src={url}
                     width={width}
                     height={height}
@@ -92,6 +82,28 @@ export default function NextImageCard({
                     className={clasS}
                     objectFit="contain"
                 />
+                   }
+                    {
+                        up &&
+                    <div className="up">
+                        <i className="fa-solid fa-angles-up fa-bounce"></i>
+                    </div>
+                    }
+                </div>
+            ) : (
+               <>
+               {
+                url &&  <Image
+                src={url}
+                width={width}
+                height={height}
+                alt={url}
+                loader={loaderProp}
+                className={clasS}
+                objectFit="contain"
+            />
+               }
+               </>
             )}
         </div>
     );

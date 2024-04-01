@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import MediaRepository from '~/repositories/MediaRepository';
@@ -22,7 +21,7 @@ function ElectronicBanner() {
                 setBannerItems(responseData);
             }
         } catch (error) {
-            console.error("Error fetching banners: ", error);
+            console.error('Error fetching banners: ', error);
         }
     }
 
@@ -53,19 +52,21 @@ function ElectronicBanner() {
         }
     }, []);
 
-
     return (
         <>
-
             <section className="ps-home-banner">
                 <div className="container">
                     <div className="ps-section__left">
                         <div className="item banner-left-one">
                             {bannerItem?.[0]?.image ? (
-                                <Link href={`${bannerItem?.[0]?.url.replace('https://soff.uz', '')}`}>
+                                <Link
+                                    href={`${bannerItem?.[0]?.url.replace(
+                                        'https://soff.uz',
+                                        ''
+                                    )}`}>
                                     <a>
                                         <NextImage
-                                            url={bannerItem[0]?.image}
+                                            url={bannerItem?.[0]?.image}
                                             width="800px"
                                             height="370px"
                                         />
@@ -99,7 +100,11 @@ function ElectronicBanner() {
                     <div className="ps-section__right">
                         {bannerItem?.[1] ? (
                             <div className="banner-right">
-                                <Link href={`${bannerItem?.[1].url.replace('https://soff.uz', '')}`}>
+                                <Link
+                                    href={`${bannerItem?.[1]?.url?.replace(
+                                        'https://soff.uz',
+                                        ''
+                                    )}`}>
                                     <a className="ps-collection">
                                         <div
                                             style={{
@@ -112,7 +117,11 @@ function ElectronicBanner() {
                                         {/* <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' /> */}
                                     </a>
                                 </Link>
-                                <Link href={`${bannerItem?.[2].url.replace('https://soff.uz', '')}`}>
+                                <Link
+                                    href={`${bannerItem?.[2]?.url?.replace(
+                                        'https://soff.uz',
+                                        ''
+                                    )}`}>
                                     <a className="ps-collection">
                                         <div
                                             style={{
@@ -153,86 +162,8 @@ function ElectronicBanner() {
                     </div>
                 </div>
             </section>
-            {/* {modal ? (
-                <>
-                    <div
-                        onClick={closeBanner}
-                        className={
-                            modalClose
-                                ? 'modalBannerCarousel '
-                                : 'modalBanner2Carousel '
-                        }></div>
-                    <div
-                        className={
-                            modalClose
-                                ? ' bannerModal2Carousel  '
-                                : 'bannerModal3Carousel  '
-                        }>
-                        <div
-                            className="closeButton"
-                            style={{
-                                position: 'absolute',
-                                right: 0,
-                                top: ' -9px',
-                                zIndex: 1
-                            }}
-                        >
-                            <span
-                                className="fs-3"
-                                style={{ cursor: 'pointer' }}>
-                                <i
-                                    onClick={closeBanner}
-                                    className="fa-solid  fa-2x p-3 text-white fa-xmark"></i>{' '}
-                            </span>
-                        </div>
-                        <div className="iframe-containerCarousel">
-                            {modalClose ? (
-                                <>
-                                    <div className="modal-carousel-header">
-                                        <h3>Xush kelibsiz! 😊</h3>
-                                        <p>
-                                            Platformada qanday qilib daromad
-                                            topish mumkin ?
-                                        </p>
-                                    </div>
-                                    <HotTopic />
-                                </>
-                            ) : (
-                                <></>
-                            )}
-                        </div>
-                    </div>
-                </>
-            ) : (
-                <></>
-            )} */}
-            {/* {
-        category ?
-            <>
-                <div    onClick={CloseButton} className={modalClose ? "modalBanner " : "modalBanner2 "} >
-                </div>
-                <div className={modalClose ? " bannerModal2  " : "bannerModal3  "} > 
-                    <div className='closeButton'   style={{ position: "absolute", right: ("-50px"), top: ("-10px") }}>
-                        <span className='fs-3' style={{ cursor: "pointer" }}><i onClick={CloseButton} className="fa-solid  fa-2x p-3 text-white fa-xmark"></i> </span>
-                    </div>
-                    <div className="iframe-container" style={{border:'1px solid red'}}>
-                        {
-                            modalClose ?
-                            <iframe width="560" height="315" src="https://www.youtube.com/embed/SF5MuRFg-0I?si=G3Z1ZqUBSvAfUPJU" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                         :
-                         <></>
-                        }
-                    </div>
-
-
-                </div>
-            </>
-            :
-            <></>
-    } */}
         </>
     );
 }
 
 export default ElectronicBanner;
-

@@ -37,7 +37,7 @@ const CatalogTop = () => {
                                             style={{ overflow: 'hidden' }}>
                                             {category?.image ? (
                                                 <NextImageCard
-                                                    url={category.image}
+                                                    url={category?.image}
                                                     clasS="category-image"
                                                     width="280px"
                                                     height="280px"
@@ -48,21 +48,21 @@ const CatalogTop = () => {
                                         </div>
                                         <div className="ps-block__content">
                                             {
-                                                category.child.length > 0 ?
+                                                category?.child?.length > 0 ?
                                             <h4>
                                                 <Link
-                                                    href={`/category/${category.slug}`}>
-                                                    <a>{category.name}</a>
+                                                    href={`/category/${category?.slug}`}>
+                                                    <a>{category?.name}</a>
                                                 </Link>
                                             </h4>
                                                     :
                                                     <h4>
-                                                   {category.name}
+                                                   {category?.name}
                                                 </h4>  
                                             }
                                             <ul>
-                                                {category.child.length > 0 && category.id !== 46 && category.id !== 47 && category.id !== 55 ?
-                                                    category.child
+                                                {category?.child?.length > 0 && category?.id !== 46 && category?.id !== 47 && category?.id !== 55 ?
+                                                    category?.child
                                                         .slice(0, 3)
                                                         .map((link) => {
                                                             return (
@@ -72,11 +72,11 @@ const CatalogTop = () => {
                                                                             link
                                                                         }>
                                                                         <Link
-                                                                            href={`/category/${link.slug}`}
-                                                                            as={`/category/${link.slug}`}>
+                                                                            href={`/category/${link?.slug}`}
+                                                                            as={`/category/${link?.slug}`}>
                                                                             <a>
                                                                                 {
-                                                                                    link.name
+                                                                                    link?.name
                                                                                 }
                                                                             </a>
                                                                         </Link>

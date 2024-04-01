@@ -98,7 +98,7 @@ const HomeElectronicsPage = () => {
                 title={freeProducts.name}
                 data={freeProducts}
                 id={freeProducts.id}
-                // key={234}
+                key={234}
                 slug={freeProducts.slug}
             />
             {category?.length > 0 ? (
