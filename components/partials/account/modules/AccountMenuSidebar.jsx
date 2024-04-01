@@ -369,6 +369,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                             {link?.url === '#' ? (
                                 <>
                                     <Badge.Ribbon
+                                    key={link?.url}
                                         text="Tez kunda"
                                         color="volcano">
                                         <Card size="small">
@@ -389,7 +390,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     </Badge.Ribbon>
                                 </>
                             ) : link?.url === 'b' ? (
-                                <Badge.Ribbon text="Tez kunda" color="volcano">
+                                <Badge.Ribbon   key={link?.url} text="Tez kunda" color="volcano">
                                     <Card size="small">
                                         <li onClick={showModalCustomer}>
                                             <span

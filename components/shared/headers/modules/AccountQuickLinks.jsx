@@ -64,9 +64,9 @@ const AccountQuickLinks = (props) => {
     const linksView = accountLinks.map((item) => (
         <>
             {item?.url === 'b' ? (
-                <Badge.Ribbon text="Tez kunda" color="volcano">
+                <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
                     <Card size="small">
-                        <li>
+                        <li  >
                             <span
                                 style={{
                                     cursor: 'pointer',
@@ -76,11 +76,11 @@ const AccountQuickLinks = (props) => {
                                     Buyurtma berish
                                 </a>
                             </span>
-                        </li>
+                        </li >
                     </Card>
                 </Badge.Ribbon>
             ) : item?.url == '#' ? (
-                <Badge.Ribbon text="Tez kunda" color="volcano">
+                <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
                     <Card size="small">
                         <li>
                             <span

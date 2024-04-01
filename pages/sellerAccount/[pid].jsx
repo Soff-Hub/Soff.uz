@@ -366,7 +366,7 @@ const SellerAccount = ({ seller }) => {
                             <div className="inviter_user__container">
                                 {data?.inviter_users?.map((el, i) => (
                                     <>
-                                        <div className="inviter_user__items">
+                                        <div key={el?.full_name} className="inviter_user__items">
                                             <p>
                                                 {' '}
                                                 - {el.full_name} {'  '}
