@@ -31,7 +31,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    console.log('router', asPath);
     const showModalCustomer = () => {
         setIsModalOpenCustomer(true);
     };
