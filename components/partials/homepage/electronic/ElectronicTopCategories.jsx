@@ -13,7 +13,7 @@ function ElectronicTopCategories() {
                 `customer/category-month/`
             );
             if (responseData) {
-                setCategory(responseData.data.results);
+                setCategory(responseData?.data?.results);
             }
         } catch (error) {
             console.error("Error fetching categories: ", error);
@@ -25,18 +25,18 @@ function ElectronicTopCategories() {
     }, []);
 
     const memoizedCategory = useMemo(() => {
-        return category.map((category) => (
+        return category?.map((category) => (
             <div
                 className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
-                key={category.id}
+                key={category?.id}
             >
                 {/* <Meta
                     title={category.name}
                     image={category?.image}
                 /> */}
                 <Link
-                    href={`/category/${category.slug}`}
-                    as={`/category/${category.slug}`}
+                    href={`/category/${category?.slug}`}
+                    as={`/category/${category?.slug}`}
                 >
                     <a>
                         <div
@@ -52,7 +52,7 @@ function ElectronicTopCategories() {
                                 }}
                             >
                                 <NextImageCard
-                                    url={category.image}
+                                    url={category?.image}
                                     clasS='yaxshi-categoriyalar-image'
                                     width='100px'
                                     height='70px'
@@ -60,7 +60,7 @@ function ElectronicTopCategories() {
                             </div>
                             <div className="ps-block__content d-flex justify-content-center align-items-center my-1">
                                 <h4 className="text-truncate text-uppercase">
-                                    {category.name} 
+                                    {category?.name} 
                                 </h4>
                             </div>
                         </div>
@@ -69,6 +69,8 @@ function ElectronicTopCategories() {
             </div>
         ));
     }, [category]);
+
+    console.log('category', category);
 
     return (
         <div className="ps-top-categories">
@@ -80,7 +82,7 @@ function ElectronicTopCategories() {
                     </Link>
                 </h3>
                 <div className="yaxshi-categoriyalar">
-                    {category.length > 0 ? (
+                    {category?.length > 0 ? (
                         memoizedCategory
                     ) : (
                         <div className="yaxshi-categ-placholder-box">
