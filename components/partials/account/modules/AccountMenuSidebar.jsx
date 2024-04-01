@@ -306,7 +306,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                 {profile?.code ? (
                                     <>
                                         {copy ? (
-                                            <i class="fa-solid fa-check"></i>
+                                            <i className="fa-solid fa-check"></i>
                                         ) : (
                                             <i
                                                 style={{ cursor: 'pointer' }}
@@ -380,7 +380,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                                         cursor: 'pointer',
                                                     }}>
                                                     <a className="d-flex align-items-center">
-                                                        <i class="fa-regular fa-handshake"></i>
+                                                        <i className="fa-regular fa-handshake"></i>
                                                         Mening bitimlarim
                                                     </a>
                                                 </span>
@@ -397,7 +397,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                                     cursor: 'pointer',
                                                 }}>
                                                 <a className="d-flex align-items-center">
-                                                <i class="fa-regular fa-handshake"></i>
+                                                <i className="fa-regular fa-handshake"></i>
                                                     Buyurtma berish
                                                 </a>
                                             </span>

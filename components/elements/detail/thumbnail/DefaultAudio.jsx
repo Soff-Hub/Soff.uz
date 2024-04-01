@@ -77,7 +77,7 @@ export default function DefaultAudio({ product }) {
                     }}></div>
             </div>
             <div className="col-xxl-9 col-xl-9 xol-lg-9  col-md-8 col-sm-7 col-12 audio-col-8">
-                <marquee class="w-100 text-truncate">{product?.title} </marquee>
+                <marquee className="w-100 text-truncate">{product?.title} </marquee>
                 <div className="audio_child">
                     <span>{product?.document?.file_type}</span>
                     <span>{product?.document?.file_size}</span>

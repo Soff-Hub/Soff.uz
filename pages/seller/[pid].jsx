@@ -164,7 +164,7 @@ const SellerPage = ({ seller }) => {
                                 <div className="row justify-content-center">
                                     <div className="col-10 col-sm-6 col-md-4 my-3">
                                         <div className="d-flex align-items-center">
-                                            <i class="fa-regular fa-hard-drive fa-2x mr-4"></i>
+                                            <i className="fa-regular fa-hard-drive fa-2x mr-4"></i>
                                             <div>
                                                 <p className="h1">
                                                     {
@@ -180,7 +180,7 @@ const SellerPage = ({ seller }) => {
                                     </div>
                                     <div className="col-10 col-sm-6 col-md-4 my-3">
                                         <div className="d-flex align-items-center">
-                                            <i class="fa-regular fa-handshake fa-2x mr-4"></i>
+                                            <i className="fa-regular fa-handshake fa-2x mr-4"></i>
                                             <div>
                                                 <p className="h1">
                                                     {
@@ -196,7 +196,7 @@ const SellerPage = ({ seller }) => {
                                     </div>
                                     <div className="col-10 col-sm-6 col-md-4 my-3">
                                         <div className="d-flex align-items-center">
-                                            <i class="fa-regular fa-gem fa-2x mr-4"></i>
+                                            <i className="fa-regular fa-gem fa-2x mr-4"></i>
                                             <div>
                                                 <p className="h1">
                                                     {addPeriodToThousands(
@@ -214,14 +214,14 @@ const SellerPage = ({ seller }) => {
                                         className="text-white ps-btn w-100"
                                         onClick={showModal}>
                                         {' '}
-                                        <i class="fa-regular fa-pen-to-square"></i>{' '}
+                                        <i className="fa-regular fa-pen-to-square"></i>{' '}
                                         Buyurtma berish
                                     </button>
                                     <button
                                         className="text-white ps-btn w-100 donate-color-btn mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0"
                                         onClick={showModalDonate}>
                                         {' '}
-                                        <i class="fa-solid fa-hand-holding-medical"></i>{' '}
+                                        <i className="fa-solid fa-hand-holding-medical"></i>{' '}
                                         Qo'llab quvvatlash
                                     </button>
                                 </div>

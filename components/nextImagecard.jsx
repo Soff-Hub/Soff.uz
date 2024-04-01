@@ -37,7 +37,7 @@ export default function NextImageCard({
             {payload?.document?.content_type === 'video' ? (
                 <>
                     <div className="video_poster_fon">
-                        <i class="fa-regular fa-circle-play"></i>
+                        <i className="fa-regular fa-circle-play"></i>
                     </div>
                     <Image
                         src={url}
@@ -52,7 +52,7 @@ export default function NextImageCard({
             ) : payload?.document?.content_type === 'audio' ? (
                 <>
                     <div className="video_poster_fon">
-                        <i class="fa-solid fa-music"></i>
+                        <i className="fa-solid fa-music"></i>
                     </div>
                     <Image
                         src={url}
@@ -78,7 +78,7 @@ export default function NextImageCard({
                     {
                         up &&
                     <div className="up">
-                        <i class="fa-solid fa-angles-up fa-bounce"></i>
+                        <i className="fa-solid fa-angles-up fa-bounce"></i>
                     </div>
                     }
                 </div>

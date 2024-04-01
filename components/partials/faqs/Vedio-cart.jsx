@@ -39,7 +39,7 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                         <div className="image-color"></div>
                         <div className="play">
                             <i
-                                class="fa-solid fa-play fa-2xl"
+                                className="fa-solid fa-play fa-2xl"
                                 style={{
                                     color: '#ffffff',
                                     fontSize: '45px',

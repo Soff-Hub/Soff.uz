@@ -251,7 +251,7 @@ const CreditCard2 = ({ document }) => {
                                         Karta raqam
                                     </span>
                                     <label htmlFor="ccn">
-                                        <i class="fa-regular fa-credit-card i"></i>
+                                        <i className="fa-regular fa-credit-card i"></i>
                                         <input
                                             required
                                             id="ccn"
@@ -269,7 +269,7 @@ const CreditCard2 = ({ document }) => {
                                 </div>
                                 <div className="col-md-4 col-sm-4 click-form-item">
                                     <label>
-                                        <i class="fa-regular fa-calendar-days"></i>
+                                        <i className="fa-regular fa-calendar-days"></i>
                                         <input
                                             required
                                             id="ccn"

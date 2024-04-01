@@ -437,7 +437,7 @@ function Notifications() {
                                                                 botga o'ting
                                                             </h5>
                                                             {/* <i
-                                                                class="fa-brands fa-telegram fa-lg-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3 col-2"
+                                                                className="fa-brands fa-telegram fa-lg-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3 col-2"
                                                                 style={{
                                                                     color: '#6492e3',
                                                                 }}></i> */}

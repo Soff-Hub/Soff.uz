@@ -95,7 +95,7 @@ export default function DefaultAudioLive({
                 )}
             </div>
             <div className="col-xxl-9 col-xl-9 xol-lg-9  col-md-8 col-sm-7 col-12 audio-col-8">
-                <marquee class="w-100 text-truncate">
+                <marquee className="w-100 text-truncate">
                     {title ? title : "To'ldirilmadi"}{' '}
                 </marquee>
                 <div className="audio_child">
@@ -116,9 +116,9 @@ export default function DefaultAudioLive({
                 <div className="audio_content">
                     <div className="audio_play" onClick={togglePlay}>
                         {isPlaying ? (
-                            <i class="fa-solid fa-pause"></i>
+                            <i className="fa-solid fa-pause"></i>
                         ) : (
-                            <i class="fa-solid fa-play"></i>
+                            <i className="fa-solid fa-play"></i>
                         )}
                     </div>
                     <div className="audio_player">

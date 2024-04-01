@@ -86,7 +86,7 @@ const ModulePaymentOrderSummaryOne = () => {
                             <a>
                                 <div className="prevev_button">
                                     {' '}
-                                    <i class="fa-solid fa-angles-left"></i>{' '}
+                                    <i className="fa-solid fa-angles-left"></i>{' '}
                                     orqaga
                                 </div>
                             </a>

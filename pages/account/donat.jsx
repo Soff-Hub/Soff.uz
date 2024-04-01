@@ -208,7 +208,7 @@ const Donat = () => {
                             className="btn btn-success  w-100 p-3">
                             <span className="fs-4">
                                 Davom etish{' '}
-                                <i class="fa-solid fa-arrow-right"></i>
+                                <i className="fa-solid fa-arrow-right"></i>
                             </span>
                         </button>
                     </form>

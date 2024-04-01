@@ -704,7 +704,7 @@ const AudioPosts = () => {
                                 className=" col-md-12 pb-5">
                                 <div className="row">
                                     <p className="eslatma">
-                                        <i class="fa-solid fa-circle-exclamation"></i>{' '}
+                                        <i className="fa-solid fa-circle-exclamation"></i>{' '}
                                         <span>
                                             {' '}
                                             Audio yuklash test rejimida
@@ -1578,11 +1578,11 @@ const AudioPosts = () => {
                                                     </div>
                                                     <div className="views_video mt-1">
                                                         {' '}
-                                                        <i class="fa-solid fa-eye"></i>{' '}
+                                                        <i className="fa-solid fa-eye"></i>{' '}
                                                         <span>{1}</span>
                                                     </div>
                                                     <div className="video_send">
-                                                        <i class="fa-solid fa-share-nodes"></i>
+                                                        <i className="fa-solid fa-share-nodes"></i>
                                                         ulashish 
                                                     </div>
                                                 </div>

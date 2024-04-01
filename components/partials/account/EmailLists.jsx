@@ -270,7 +270,7 @@ const EmailLists = () => {
             render: (created_at) => (
                 <span>
                     {' '}
-                    <i class="fa-solid fa-calendar-days"></i>{' '}{" "}
+                    <i className="fa-solid fa-calendar-days"></i>{' '}{" "}
                     {created_at}
                 </span>
             ),

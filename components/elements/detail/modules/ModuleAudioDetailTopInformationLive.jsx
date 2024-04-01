@@ -107,11 +107,11 @@ const ModuleAudioDetailTopInformationLive = ({
                     </div>
                     <div className=" views_video  mt-1">
                         {' '}
-                        <i class="fa-solid fa-eye"></i>{' '}
+                        <i className="fa-solid fa-eye"></i>{' '}
                         <span>{views ? views : 0}</span>
                     </div>
                     <div className="video_send">
-                        <i class="fa-solid fa-share-nodes"></i>
+                        <i className="fa-solid fa-share-nodes"></i>
                         ulashish 
                     </div>
 

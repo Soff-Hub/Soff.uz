@@ -96,7 +96,7 @@ const ProductDetailQuickView = ({ product }) => {
                                 </div>
                                 <div className="views">
                                     {' '}
-                                    <i class="fa-solid fa-eye"></i>{' '}
+                                    <i className="fa-solid fa-eye"></i>{' '}
                                     <span>
                                         {document?.views
                                             ? document?.views
@@ -121,7 +121,7 @@ const ProductDetailQuickView = ({ product }) => {
                                 </div>
                                 <div className="views view-quik">
                                     {' '}
-                                    <i class="fa-solid fa-eye"></i>{' '}
+                                    <i className="fa-solid fa-eye"></i>{' '}
                                     <span>
                                         {document?.views
                                             ? document?.views
@@ -156,7 +156,7 @@ const ProductDetailQuickView = ({ product }) => {
                                     </div>
                                     <div className="views_audio">
                                         {' '}
-                                        <i class="fa-solid fa-eye"></i>{' '}
+                                        <i className="fa-solid fa-eye"></i>{' '}
                                         <span>
                                             {document?.views
                                                 ? document?.views
@@ -186,7 +186,7 @@ const ProductDetailQuickView = ({ product }) => {
                                 </div>
                                 <div className="views">
                                     {' '}
-                                    <i class="fa-solid fa-eye"></i>{' '}
+                                    <i className="fa-solid fa-eye"></i>{' '}
                                     <span>
                                         {document?.views
                                             ? document?.views

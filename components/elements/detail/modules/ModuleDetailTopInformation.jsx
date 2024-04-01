@@ -1,12 +1,11 @@
-
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 
 const ModuleDetailTopInformation = ({ product }) => {
-    const router = useRouter()
-    const pid = router.asPath
+    const router = useRouter();
+    const pid = router.asPath;
     const SellerPage = (e) => {
-        if (pid !== "/account/myproducts") {
+        if (pid !== '/account/myproducts') {
             Router.push(`/seller/${e}`);
             // setAdminModal(true)
         }
@@ -32,12 +31,11 @@ const ModuleDetailTopInformation = ({ product }) => {
 
     // Views
     let priceView;
-console.log('profile', product);
     if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
                 {+product.discount_price === 0 ? (
-                    <p >Bepul mahsulot</p>
+                    <p>Bepul mahsulot</p>
                 ) : product.discount === 0 ? (
                     <p>{addPeriodToThousands(product.discount_price)} so'm</p>
                 ) : (
@@ -80,7 +78,7 @@ console.log('profile', product);
                     <span className="input--label">muallif</span>
                     <div
                         className="product__top-information-account"
-                        style={{cursor:'pointer'}}
+                        style={{ cursor: 'pointer' }}
                         onClick={() => SellerPage(product?.seller?.id)}>
                         <div>
                             {product?.seller?.image ? (
@@ -97,7 +95,7 @@ console.log('profile', product);
                                     }}></i>
                             )}
                         </div>
-                        
+
                         {product?.seller?.first_name && (
                             <p>
                                 {product?.seller?.first_name}{' '}

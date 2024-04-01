@@ -53,7 +53,7 @@ const ShoppingCartScreen = () => {
                         />
                         <div className="ps-section__cart-actions">
                             <Link href="/">
-                                <a className="ps-btn btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} ><i class="fa-solid fa-angles-left"></i> Ortga</a>
+                                <a className="ps-btn btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} ><i className="fa-solid fa-angles-left"></i> Ortga</a>
                             </Link>
                         </div>
                     </div>
@@ -96,7 +96,7 @@ const ShoppingCartScreen = () => {
 
                         <div className="ps-section__cart-actions">
                             <Link href="/">
-                                <a className="ps-btn btn_color btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} > <i class="fa-solid fa-angles-left"></i> Ortga</a>
+                                <a className="ps-btn btn_color btn_color" style={{maxWidth:'120px', width:'100%', display:'flex', justifyContent:'center', alignItems:'center'}} > <i className="fa-solid fa-angles-left"></i> Ortga</a>
                             </Link>
                         </div>
                     </div>
