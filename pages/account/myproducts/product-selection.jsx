@@ -34,7 +34,7 @@ const Posts = () => {
                             <Link href="/account/myproducts/posts">
                                 <a>
                                     <div className="select-card file">
-                                    <i class="fa-regular fa-folder-open"></i>
+                                    <i className="fa-regular fa-folder-open"></i>
                                         <span>File</span>
                                     </div>
                                 </a>
@@ -44,7 +44,7 @@ const Posts = () => {
                             <Link href="/account/myproducts/audio-posts">
                                 <a>
                                     <div className="select-card file">
-                                        <i class="fa-solid fa-music"></i>
+                                        <i className="fa-solid fa-music"></i>
                                         <span> Audio</span>
                                     </div>
                                 </a>
@@ -54,7 +54,7 @@ const Posts = () => {
                             <Link href="/account/myproducts/design-template-posts">
                                 <a>
                                     <div className="select-card file">
-                                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                                    <i className="fa-solid fa-wand-magic-sparkles"></i>
                                         <span>Web design</span>
                                     </div>
                                 </a>

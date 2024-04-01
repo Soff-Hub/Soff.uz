@@ -419,7 +419,7 @@ function MyProductsLists() {
             render: (upload_count) => (
                 <span key={upload_count}>
                     {' '}
-                    <i class="fa-solid fa-download"></i> {upload_count}
+                    <i className="fa-solid fa-download"></i> {upload_count}
                 </span>
             ),
         },

@@ -29,7 +29,7 @@ const ElectronicHeaderActions = ({ auth }) => {
                     <Link href={`/account/notification`}>
                         <a className="yashil">
                             Yangiliklarni batafsil ko'rish{' '}
-                            <i class="fa-regular fa-hand-point-right"></i>
+                            <i className="fa-regular fa-hand-point-right"></i>
                         </a>
                     </Link>
                 </div>
@@ -83,13 +83,13 @@ const ElectronicHeaderActions = ({ auth }) => {
             {contextHolder}
             <Link href="/page/about-us">
                 <a className="header__extra">
-                    <i class="fa-regular fa-circle-question"></i>
+                    <i className="fa-regular fa-circle-question"></i>
                 </a>
             </Link>
             {user?.access && (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>
-                        <i class="fa-regular fa-bell fa-lg"></i>
+                        <i className="fa-regular fa-bell fa-lg"></i>
                         {socket?.count ? (
                             <span className="socket_navbar">
                                 {socket?.count}

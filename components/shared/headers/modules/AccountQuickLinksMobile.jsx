@@ -45,7 +45,7 @@ function AccountQuickLinks() {
                                         <a>
                                             {' '}
                                             <span>
-                                                <i class="fa-regular fa-handshake"></i>{' '}
+                                                <i className="fa-regular fa-handshake"></i>{' '}
                                             </span>{' '}
                                             Mening bitimlarim
                                         </a>
@@ -61,7 +61,7 @@ function AccountQuickLinks() {
                                         <a>
                                             {' '}
                                             <span>
-                                                <i class="fa-regular fa-handshake"></i>{' '}
+                                                <i className="fa-regular fa-handshake"></i>{' '}
                                             </span>{' '}
                                             Buyurtma berish
                                         </a>

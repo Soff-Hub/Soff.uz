@@ -199,17 +199,17 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                     </div>
                     <div className=" views_video  mt-1">
                         {' '}
-                        <i class="fa-solid fa-eye"></i>{' '}
+                        <i className="fa-solid fa-eye"></i>{' '}
                         <span>
                             {product?.view ? product?.view : views?.count}
                         </span>
                     </div>
                     <div className="video_send" onClick={() => copyVideoUrl()}>
                         {copy ? (
-                            <i class="fa-solid fa-check"></i>
+                            <i className="fa-solid fa-check"></i>
                         ) : (
                             <>
-                                <i class="fa-solid fa-share-nodes"></i>
+                                <i className="fa-solid fa-share-nodes"></i>
                                 ulashish 
                             </>
                         )}

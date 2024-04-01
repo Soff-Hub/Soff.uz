@@ -23,7 +23,7 @@ export default function Backtop({ setBackground , backtop }) {
                         <Link
                             href="/account/donat">
                             <a>
-                            <i class="fa-solid fa-hand-holding-hand"></i>
+                            <i className="fa-solid fa-hand-holding-hand"></i>
                             </a>
                         </Link>
                     </li>

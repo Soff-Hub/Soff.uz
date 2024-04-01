@@ -47,7 +47,7 @@ const ClickCard = ({ onChange, setCardDate }) => {
             <div className="col-md-8 col-sm-8 click-form-item">
                 <span style={{display:'block'}} >Karta raqam</span>
                 <label htmlFor="ccn">
-                    <i class="fa-regular fa-credit-card i"></i>
+                    <i className="fa-regular fa-credit-card i"></i>
                     <input
                         id="ccn"
                         type="tel"
@@ -64,7 +64,7 @@ const ClickCard = ({ onChange, setCardDate }) => {
             </div>
             <div className="col-md-4 col-sm-4 click-form-item">
                 <label>
-                    <i class="fa-regular fa-calendar-days"></i>
+                    <i className="fa-regular fa-calendar-days"></i>
                     <input
                         id="ccn"
                         type="tel"

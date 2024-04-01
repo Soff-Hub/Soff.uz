@@ -23,7 +23,7 @@ const Selection = () => {
                                 href={`${select ?  `/account/login?role=customer` : `/account/register-user`}`}>
                                 <a className="register-choose-button">
                                     <div>
-                                    <i class="fa-solid fa-user-tie fa-2xl"></i>
+                                    <i className="fa-solid fa-user-tie fa-2xl"></i>
                                     </div>
                                     <h3> Foydalanuvchi</h3>
                                 </a>
@@ -35,7 +35,7 @@ const Selection = () => {
                                 href={`${select ? `/account/login?role=seller` : '/account/register'}`}>
                                 <a className="register-choose-button">
                                     <div>
-                                    <i class="fa-solid fa-user-pen fa-2xl"></i>
+                                    <i className="fa-solid fa-user-pen fa-2xl"></i>
                                     </div>
                                     <h3> Sotuvchi</h3>
                                 </a>

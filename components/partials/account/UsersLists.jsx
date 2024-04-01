@@ -85,7 +85,7 @@ function AccountUserPages() {
             render: (id) => (
                 <Link href={`/customerAccount/${id}`}>
                     <a className="truncate whitespace-nowrap">
-                    <i class="fa-solid fa-eye"></i>
+                    <i className="fa-solid fa-eye"></i>
                     </a>
                 </Link>
             ),

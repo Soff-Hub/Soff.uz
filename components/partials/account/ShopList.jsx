@@ -47,7 +47,7 @@ function Notifications() {
             render: (id) => (
                 <Link href={`/sellerAccount/${id}`}>
                     <a className="truncate whitespace-nowrap">
-                    <i class="fa-solid fa-eye"></i>
+                    <i className="fa-solid fa-eye"></i>
                     </a>
                 </Link>
             ),
