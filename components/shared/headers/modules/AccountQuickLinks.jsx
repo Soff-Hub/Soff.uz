@@ -5,12 +5,14 @@ import { logOut, profileImage } from '~/store/auth/action';
 import { Badge, Card, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import Router, { useRouter } from 'next/router';
 
 const AccountQuickLinks = (props) => {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const [profile, setProfile] = useState(null);
+   const {asPath} = useRouter()
 
     const handleLogout = () => {
         const data = {
@@ -25,6 +27,21 @@ const AccountQuickLinks = (props) => {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz muvaffaqqiyatli chiqdingiz`,
             });
+            if (asPath == '/account/dashbord' ) {
+                Router.push('/account/selection')
+            }else if ('/account/myproducts') {
+                Router.push('/account/selection')
+            } else if ('/account/sellerproducts') {
+                Router.push('/account/selection')
+            }else if ('/account/myproducts/product-selection') {
+                Router.push('/account/selection')
+            }else if ('/account/orders') {
+                Router.push('/account/selection')
+            }else if ('/account/settings') {
+                Router.push('/account/selection')
+            }else if ('/account/application') {
+                Router.push('/account/selection')
+            }
             dispatch(logOut());
         }
     };

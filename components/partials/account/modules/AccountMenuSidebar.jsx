@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { BeatLoader } from 'react-spinners';
@@ -12,7 +12,7 @@ import { formatCurrency } from '~/utilities/product-helper';
 const AccountMenuSidebar = ({ data, renderProfile }) => {
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
-
+    const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
     const [profile, setProfile] = useState(null);
     const [webdata, setWebData] = useState(null);
@@ -23,15 +23,15 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     const [socket2, setSocket2] = useState(null);
     const [loading, setLoading] = useState(false);
     const [copy, setCopy] = useState(false);
-
     const [socketApplication, setSocketApplication] = useState(null);
     const [applicationData, setApplicationData] = useState(null);
-
+    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCustomer, setIsModalOpenCustomer] = useState(false);
     const showModal = () => {
         setIsModalOpen(true);
     };
+    console.log('router', asPath);
     const showModalCustomer = () => {
         setIsModalOpenCustomer(true);
     };
@@ -56,6 +56,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         const res = logOutAuth(data);
 
         if (res) {
+            Router.push('/account/dashbord')
             dispatch(logOut());
         }
     };
@@ -202,10 +203,11 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     }
 
-    const { asPath } = useRouter();
+   
     return (
         <aside className="ps-widget--account-dashboard">
             <div className="ps-widget__header  p-2 pb-4">
+                
                 {profile?.image ? (
                     <img src={`${profile?.image}`} className="profile__image" />
                 ) : (
