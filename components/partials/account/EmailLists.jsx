@@ -22,7 +22,6 @@ const EmailLists = () => {
     const [date, setDate] = useState(null);
     const [notification, setNotification] = useState(null);
     const OnChangeSelect = (event) => {
-        console.log('event', event);
         setEmail(event);
     };
 
@@ -92,7 +91,6 @@ const EmailLists = () => {
                     dataFormat
                 );
                 if (ItemsData?.status == 201) {
-                    console.log('datar', ItemsData);
                     const modal = Modal.success({
                         centered: true,
                         title: 'Muvaffaqqiyatli!',
@@ -151,7 +149,6 @@ const EmailLists = () => {
                     dataFormat
                 );
                 if (ItemsData?.status == 201) {
-                    console.log('data', ItemsData);
                     const modal = Modal.success({
                         centered: true,
                         title: 'Muvaffaqqiyatli!',
@@ -215,7 +212,6 @@ const EmailLists = () => {
         const ItemsData = await GetRepository.getNotificationList();
         if (ItemsData) {
             setNotification(ItemsData.results);
-            console.log('ItemsData', ItemsData.results);
         }
     };
 

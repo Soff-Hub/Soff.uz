@@ -208,7 +208,6 @@ class Register extends Component {
         // referal
         const { pid } = router.query;
 
-        console.log('his.props.url', this.props.router.query.pid);
 
         return (
             <div className="ps-my-account">

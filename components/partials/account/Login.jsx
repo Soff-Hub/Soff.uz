@@ -44,11 +44,9 @@ class Login extends Component {
     };
 
     handleLoginSubmit = async (e) => {
-        console.log('login', e);
         this.setState({ report: false });
         const { loginUser } = useAuth();
         const user = await loginUser(e);
-        console.log('login user', user);
         if (user) {
             if (user.status >= 400) {
                 this.setState({ report: true });

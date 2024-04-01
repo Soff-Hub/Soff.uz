@@ -122,26 +122,18 @@ export default function TopSellersTable() {
         const ItemsData = await PostRepository.getTopSeller(e, select);
         if (ItemsData) {
             setSellerData(ItemsData?.data?.results);
-            console.log(ItemsData?.data?.results);
         }
     };
 
     const handleSelect = async (value) => {
-        console.log('value', value.target.value);
-        // setSearch(e);
         const ItemsData = await PostRepository.getTopSeller(
             search,
             value.target.value
         );
         if (ItemsData) {
             setSellerData(ItemsData?.data?.results);
-            console.log(ItemsData?.data?.results);
         }
     };
-
-    // const navigateSeller = (e) => {
-    //     console.log('e', e);
-    // };
 
     return (
         <div className="top-sellers">

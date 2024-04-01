@@ -1,6 +1,5 @@
-import ReCAPTCHA from 'react-google-recaptcha';
 import { verifyCaptcha } from './ServerActions';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 
 const CaptchaForm = () => {
     const recaptchaRef = useRef(null);
@@ -15,9 +14,6 @@ const CaptchaForm = () => {
             .catch(() => setIsverified(false));
     }
 
-    useEffect(() => {
-        console.log('captcha ishladi', isVerified);
-    }, [isVerified]);
 
     return (
         <div>

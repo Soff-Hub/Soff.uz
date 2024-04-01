@@ -54,10 +54,8 @@ const SellerPage = ({ seller }) => {
 
     const handlePagination = async (e) => {
         setPage(e);
-        console.log(e);
         const respons = await ProductRepository.getSellerProductSlug(pid, e);
         if (respons) {
-            console.log(respons.data);
             setData(respons.data);
         }
     };
@@ -98,7 +96,7 @@ const SellerPage = ({ seller }) => {
             getSellerUser(pid);
         }
     }, [pid]);
-    console.log('data', sellerr);
+
     // let productView = <SkeletonProductDetail />;
     return (
         <PageContainer>

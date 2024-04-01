@@ -56,7 +56,6 @@ function ApplicationLists() {
             setData2([...ItemsData.results]);
             setPageCount1(ItemsData?.count);
         }
-        console.log(ItemsData?.results);
         getItemsSellerTaklif(currPage)
     }
 

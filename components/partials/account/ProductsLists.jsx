@@ -213,7 +213,6 @@ function ProductsLists() {
     const handlePagination = (pageNum, count) => {
         Router.push(`/account/products?page=${pageNum}`);
         setCurrPage(pageNum);
-        console.log('paganation', pageNum, count);
     };
 
     useEffect(() => {
