@@ -23,7 +23,6 @@ const ModuleAudioDetailTopInformationLive = ({
 
         return formattedNumber;
     }
-    console.log('profile', product);
     // Views
     let priceView;
 

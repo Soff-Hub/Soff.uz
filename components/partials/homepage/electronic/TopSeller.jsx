@@ -19,8 +19,8 @@ function TopSellers() {
         <Swiper
             spaceBetween={50}
             slidesPerView={6}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
+            // onSlideChange={() => console.log('slide change')}
+            // onSwiper={(swiper) => console.log(swiper)}
             pagination={{
                 dynamicBullets: true,
             }}

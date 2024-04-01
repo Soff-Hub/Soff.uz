@@ -48,7 +48,6 @@ export default function DefaultAudioLive({
             remainingSeconds < 10 ? '0' : ''
         }${remainingSeconds}`;
     };
-    console.log('Live audio', product?.data?.short_content);
 
     return (
         <div

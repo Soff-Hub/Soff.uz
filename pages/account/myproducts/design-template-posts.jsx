@@ -420,8 +420,7 @@ const Posts = () => {
                                         required
                                         type="file"
                                         onChange={(e) => (
-                                            setFileImgFile(e.target.files[0]),
-                                            console.log('product')
+                                            setFileImgFile(e.target.files[0])
                                         )}
                                         accept=".zip"
                                     />

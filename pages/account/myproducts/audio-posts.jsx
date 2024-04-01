@@ -359,55 +359,6 @@ const AudioPosts = () => {
                 formData,
                 user?.access
             );
-
-            //   const respons = await fetch(
-            //         `${baseUrl}product-create-first/`,
-            //         {
-
-            //         method: 'POST',
-            //         body: formData,
-            //         headers: {
-            //             Authorization: `Bearer ${user?.access}`,
-            //         },
-            //     })
-            //     .then(res => {
-            //         const contentLength = res.headers.get('content-length')
-            //         console.log('contentLength', contentLength);
-            //         let loaded = 0
-
-            //         return new Response(
-            //             new ReadableStream({
-            //                 start(controller) {
-            //                    const reader =  res.body.getReader()
-
-            //                     read()
-            //                    function read() {
-            //                     reader.read()
-            //                     .then((progressEvent) => {
-            //                         if (progressEvent.done === true) {
-            //                             controller.close();
-            //                             return;
-            //                         }
-            //                         loaded += progressEvent.value.byteLength;
-            //                         console.log(Math.round((loaded/contentLength)*100)+"%");
-            //                         controller.enqueue(progressEvent.value)
-            //                         read()
-            //                     })
-
-            //                    }
-
-            //                 }
-            //             })
-            //         )
-
-            //     })
-            //     .then(res => res.blob())
-            //     .then(blob => {
-            //         const url = URL.createObjectURL(blob);
-            //         const img = new Image();
-            //         img.src = url
-            //         console.log("img", img);
-            //     })
             if (
                 ItemsData?.status === 201 &&
                 ItemsData?.data?.images?.length > 0
@@ -566,12 +517,8 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-    const OnEditor = (value) => {
-        console.log('editor', value);
-        setArticle(value);
-    };
+  
 
-    console.log('socket 2 ==> ', progress);
     let progrees = 0;
     useEffect(() => {
         if (user?.access) {
@@ -588,13 +535,13 @@ const AudioPosts = () => {
 
             // Yangi WebSocket ulanishini yaratish
             newSocket.onopen = function () {
-                console.log('WebSocket progress ulanishi amalga oshirildi.');
+                // console.log('WebSocket progress ulanishi amalga oshirildi.');
             };
 
             // Xabarlarni qabul qilish uchun funksiya
             if (newSocket) {
                 newSocket.onmessage = function (event) {
-                    console.log('socketttt', JSON.parse(event.data).progress);
+                    // console.log('socketttt', JSON.parse(event.data).progress);
                     setProgress(JSON.parse(event.data).progress)
                 };
             }
@@ -634,7 +581,7 @@ const AudioPosts = () => {
 
             // Yangi WebSocket ulanishini yaratish
             newSocket.onopen = function () {
-                console.log('WebSocket progress ulanishi amalga oshirildi.');
+                // console.log('WebSocket progress ulanishi amalga oshirildi.');
             };
 
             // Xabarlarni qabul qilish uchun funksiya

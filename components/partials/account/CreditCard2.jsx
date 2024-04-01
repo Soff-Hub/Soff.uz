@@ -46,7 +46,6 @@ const CreditCard2 = ({ document }) => {
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
-            console.log('ree', ItemsData?.data?.url);
             Router.push(ItemsData?.data?.url);
         } else {
             setMessage(true);

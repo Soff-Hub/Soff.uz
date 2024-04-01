@@ -11,7 +11,6 @@ const CatalogTop = () => {
     const getCategoryData = async () => {
         const res = await ProductRepository.getMoreTopCategorys();
         if (res) {
-            console.log(res.results);
             setData(res.results);
         }
     };
@@ -19,7 +18,6 @@ const CatalogTop = () => {
     useEffect(() => {
         getCategoryData();
     }, []);
-console.log('category', data);
     return (
         <div className="ps-top-categories">
             <div className=" container row">

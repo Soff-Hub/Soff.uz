@@ -25,8 +25,9 @@ export default () => {
             controller={{ control: Swiper }}
             pagination={{ clickable: true }}
             // scrollbar={{ draggable: true }}
-            onSwiper={(swiper) => console.log(swiper)}
-            onSlideChange={() => console.log('slide change')}>
+            // onSwiper={(swiper) => console.log(swiper)}
+            // onSlideChange={() => console.log('slide change')}
+        >
             {data?.map((el) => (
                 <SwiperSlide>
                     <div

@@ -13,7 +13,6 @@ export default function NotificationList() {
         const respons = await GetRepository.getNotificationData(token);
         if (respons) {
             setNotification(respons.results);
-            console.log(respons.results);
         }
     };
 
