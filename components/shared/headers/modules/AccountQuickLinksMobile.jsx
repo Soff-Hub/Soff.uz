@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { logOut } from '../../../../store/auth/action';
 import { Badge, Card, Dropdown, Menu, Modal } from 'antd';
@@ -28,7 +28,7 @@ function AccountQuickLinks() {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz muvaffaqqiyatli chiqdingiz`,
             });
-            Router.push('/');
+            Router.push('/account/selection');
             dispatch(logOut());
         }
     };
