@@ -399,8 +399,6 @@ const AudioPosts = () => {
         }
     }
 
- 
-
     async function PostAudioPoster() {
         if (fileImgAudio) {
             const progresInterval = setInterval(() => {
@@ -506,7 +504,6 @@ const AudioPosts = () => {
         GetItemsCategoryLists();
     }, []);
 
-   
     useEffect(() => {
         PostAudioPoster();
     }, [fileImgAudio]);
@@ -516,8 +513,6 @@ const AudioPosts = () => {
             ProfileUsers();
         }
     }, [user?.access]);
-
-  
 
     let progrees = 0;
     useEffect(() => {
@@ -542,7 +537,7 @@ const AudioPosts = () => {
             if (newSocket) {
                 newSocket.onmessage = function (event) {
                     // console.log('socketttt', JSON.parse(event.data).progress);
-                    setProgress(JSON.parse(event.data).progress)
+                    setProgress(JSON.parse(event.data).progress);
                 };
             }
 
@@ -569,8 +564,6 @@ const AudioPosts = () => {
     //         });
     //     }
     // }, [socket]);
-
-  
 
     useEffect(() => {
         if (user?.access) {
@@ -603,9 +596,6 @@ const AudioPosts = () => {
             };
         }
     }, [user?.access]);
-
-
-
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -649,7 +639,7 @@ const AudioPosts = () => {
                                 style={{ position: 'relative', width: '100%' }}
                                 id="FormPostsMyProducts"
                                 className=" col-md-12 pb-5">
-                                <div className="row">
+                                {/* <div className="row">
                                     <p className="eslatma">
                                         <i className="fa-solid fa-circle-exclamation"></i>{' '}
                                         <span>
@@ -658,7 +648,7 @@ const AudioPosts = () => {
                                             ishlamoqda{' '}
                                         </span>{' '}
                                     </p>
-                                </div>
+                                </div> */}
                                 <div className="row   mt-3">
                                     <div className="col-md-4  d-flex justify-content-between p-0 ">
                                         <h4 className=" p-0">
@@ -758,32 +748,14 @@ const AudioPosts = () => {
                                                     e.target.files[0]
                                                 )
                                             }
-                                            accept="audio/mpeg3"
+                                            accept="audio/mp3"
                                         />
-                                        {/* {completed === 0 ? (
-                                <></>
-                            ) : (
-                                <div className=" my-2">
-                                    <ProgressBar
-                                        completed={completed}
-                                        maxCompleted={maxCompleted}
-                                        width="100%"
-                                        height="11px"
-                                        labelSize="10px"
-                                        bgColor="#00A44F"
-                                        animateOnRender={true}
-                                    />
-                                </div>
-                            )} */}
                                     </label>
-
-                                    {/* </div> */}
                                 </div>
-
                                 <div className="row mb-3">
                                     <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                         <p>Audio posteri: *</p>{' '}
-                                        <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin. Bu rasm quyidagi turda bo’lishi mumkin: .png , .jpg">
+                                        <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin">
                                             <i
                                                 style={{ cursor: 'pointer' }}
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -1012,6 +984,7 @@ const AudioPosts = () => {
                                                             'center',
                                                     }}>
                                                     <audio
+                                                        type="audio/.mp3"
                                                         controls
                                                         src={
                                                             audioPost?.data
@@ -1530,7 +1503,7 @@ const AudioPosts = () => {
                                                     </div>
                                                     <div className="video_send">
                                                         <i className="fa-solid fa-share-nodes"></i>
-                                                        ulashish 
+                                                        ulashish
                                                     </div>
                                                 </div>
                                             </div>
