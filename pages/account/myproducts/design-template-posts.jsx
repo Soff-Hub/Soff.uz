@@ -230,15 +230,13 @@ const Posts = () => {
                 user?.access
             );
 
-            if (
-                ItemsData?.status === 201
-            ) {
+            if (ItemsData?.status === 201) {
                 setLivePosterFile(ItemsData?.data);
                 setLiveFile2(ItemsData?.data);
                 const modal = Modal.success({
                     centered: true,
                     title: 'Muvaffaqqiyatli!',
-                    content: "Yangi file qo'shdingiz ",
+                    content: "Yangi .zip file qo'shdingiz ",
                 });
             } else {
                 const modal = Modal.error({
@@ -316,7 +314,7 @@ const Posts = () => {
                         <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
                             {' '}
                             <i className="fa-solid fa-triangle-exclamation"></i>{' '}
-                            Hurmatli Sotuvchi dizayn shablon yuklayotganingizda
+                            Hurmatli Sotuvchi shablon yuklayotganingizda
                             mahsulot o'zingizni shaxsiy mahsulotingiz ekanligiga
                             ishonch hosil qiling. Aks holda o'sha
                             mahsulotingizni sotuvda ko'rinmasligi va profilingiz
@@ -365,7 +363,7 @@ const Posts = () => {
                             </div>
                             <div className="row ">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Shablon: *</p>{' '}
+                                    <p>Shablon fayli: *</p>{' '}
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}
@@ -419,9 +417,9 @@ const Posts = () => {
                                     <input
                                         required
                                         type="file"
-                                        onChange={(e) => (
+                                        onChange={(e) =>
                                             setFileImgFile(e.target.files[0])
-                                        )}
+                                        }
                                         accept=".zip"
                                     />
                                 </label>
@@ -429,7 +427,7 @@ const Posts = () => {
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Shablon posteri: *</p>{' '}
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
+                                    <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin">
                                         <i
                                             style={{ cursor: 'pointer' }}
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>

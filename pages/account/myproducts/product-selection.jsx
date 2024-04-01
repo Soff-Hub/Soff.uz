@@ -28,19 +28,19 @@ const Posts = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Soff | Yangi mahsulot yaratishni tanlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <div className="container product-selection">
-                    <div className="row w-100">
-                        <div className="col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 select-col">
+                <div className="product-selection">
+                    <div className="d-flex flex-wrap justify-content-center align-content-center gap-5 w-100">
+                        <div className=" select-col">
                             <Link href="/account/myproducts/posts">
                                 <a>
                                     <div className="select-card file">
-                                    <i className="fa-regular fa-folder-open"></i>
+                                        <i className="fa-regular fa-folder-open"></i>
                                         <span>File</span>
                                     </div>
                                 </a>
                             </Link>
                         </div>
-                        <div className="col-12 my-5 my-xxl-0 my-xl-0 my-lg-0 my-md-0 my-sm-5 col-xxl-4 col-xl-4 col-lg-4 col-md-6 col-sm-12 select-col">
+                        <div className=" select-col">
                             <Link href="/account/myproducts/audio-posts">
                                 <a>
                                     <div className="select-card file">
@@ -50,11 +50,11 @@ const Posts = () => {
                                 </a>
                             </Link>
                         </div>
-                        <div className="col-12 col-xxl-4 col-xl-4 col-lg-4 col-md-12 col-sm-12 select-col">
+                        <div className=" select-col">
                             <Link href="/account/myproducts/design-template-posts">
                                 <a>
                                     <div className="select-card file">
-                                    <i className="fa-solid fa-wand-magic-sparkles"></i>
+                                        <i className="fa-solid fa-wand-magic-sparkles"></i>
                                         <span>Shablonlar</span>
                                     </div>
                                 </a>
