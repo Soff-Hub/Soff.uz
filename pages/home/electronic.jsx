@@ -90,7 +90,7 @@ const HomeElectronicsPage = () => {
                 title={topSellers.name}
                 data={topSellers}
                 id={topSellers.id}
-                key={235}
+                // key={235}
                 slug={topSellers.slug}
             />
             <ElectronicProductGroupWithCarousel
@@ -98,7 +98,7 @@ const HomeElectronicsPage = () => {
                 title={freeProducts.name}
                 data={freeProducts}
                 id={freeProducts.id}
-                key={234}
+                // key={234}
                 slug={freeProducts.slug}
             />
             {category?.length > 0 ? (

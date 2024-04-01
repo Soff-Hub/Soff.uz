@@ -72,7 +72,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
             <div className="ps-block__content">
                 { ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
                     ecomerce.cartDataItems?.map((el, i) => (
-                        <figure>
+                        <figure key={el?.slug}>
                             <p>Mahsulot</p>
                             <div className="my-2">
                                 <Link href={`/product/${el?.slug}`}>
