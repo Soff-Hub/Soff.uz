@@ -55,7 +55,7 @@ const Posts = () => {
                                 <a>
                                     <div className="select-card file">
                                     <i className="fa-solid fa-wand-magic-sparkles"></i>
-                                        <span>Web design</span>
+                                        <span>Shablonlar</span>
                                     </div>
                                 </a>
                             </Link>
