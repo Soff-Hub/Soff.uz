@@ -680,7 +680,7 @@ const Posts = () => {
                             </div>
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Mahsulot rasmi: *</p>{' '}
+                                    <p>Mahsulot rasmi: *</p>
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
                                         <i
                                             style={{ cursor: 'pointer' }}

@@ -40,6 +40,7 @@ const PostsProductsEdit = () => {
             text: 'Mahsulotni tahrirlash',
         },
     ];
+    
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
