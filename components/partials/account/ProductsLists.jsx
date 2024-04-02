@@ -182,31 +182,50 @@ function ProductsLists() {
 
         return formattedNumber;
     }
-
+// console.log('fileContent', deleteIdView?.document);
     const handleButtonClickViewProducts = async () => {
-        try {
-            setLoading2(true);
-            const fileContent = deleteIdView?.document;
-            const response = await Axios.get(fileContent?.file_url, {
-                responseType: 'blob',
-            });
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download =
-                deleteIdView.title +
-                '.' +
-                fileContent.file_url.split('.')[
-                    fileContent.file_url?.split('.').length - 1
-                ];
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            setLoading2(false);
-        } catch (error) {
-            console.error('Error downloading file: ', error);
-            setLoading2(false);
+        if (deleteIdView?.document?.content_type === 'file') {
+            try {
+                setLoading2(true);
+                const fileContent = deleteIdView?.document;
+                const response = await Axios.get(fileContent?.file_url, {
+                    responseType: 'blob',
+                });
+    
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const a = document.createElement('a');
+                a.href = url;
+                a.download =
+                    deleteIdView.title +
+                    '.' +
+                    fileContent.file_url.split('.')[
+                        fileContent.file_url?.split('.').length - 1
+                    ];
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                setLoading2(false);
+            } catch (error) {
+                console.error('Error downloading file: ', error);
+                setLoading2(false);
+            }
+        }else if(deleteIdView?.document?.content_type === 'audio'){
+            try {
+                console.log('deleteIdView:', deleteIdView);
+                console.log('fileContent?.file_url:',  deleteIdView?.document?.file_url);
+            
+                const response = await fetch('https://testapi.soff.uz//media/documents/soff_2762_4_5925005816892494107.mp3');
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(new Blob([blob]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `soff.uz-${deleteIdView?.document?.file_url.split(".").at(-1)}`); // Name of your audio file
+                document.body.appendChild(link);
+                link.click();
+                link.parentNode.removeChild(link);
+            } catch (error) {
+                console.error('Error downloading audio:', error);
+            }
         }
     };
 
