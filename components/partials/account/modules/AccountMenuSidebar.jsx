@@ -302,7 +302,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     style={{ cursor: 'pointer' }}
                                     className="fa-regular fa-circle-question mt-2"></i>
                             </Tooltip>
-                            <span>
+                            <span style={{overflow:'hidden'}}>
                                 Taklif havolani olish{' '}
                                 {profile?.code ? (
                                     <>

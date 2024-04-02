@@ -222,7 +222,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                 alignItems: 'flex-start',
                                 gap: 20,
                             }}>
-                            <span>
+                            <span style={{overflow:'hidden'}}>
                                 Taklif havolani olish{' '}
                                 {profile?.code ? (
                                     <>
