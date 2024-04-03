@@ -809,7 +809,7 @@ function MyProductsLists() {
                                     type="button"
                                     className="btn-close"
                                     data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
+                                    aria-label="Close" onClick={() => setView(null)} ></button>
                             </div>
                             <div className="ps-container">
                                 {!loading ? (
@@ -942,7 +942,7 @@ function MyProductsLists() {
                                                             </strong>
                                                         </div>
                                                         <ModuleDetailTopInformation
-                                                            product={View}
+                                                            product={View ? View : ''}
                                                         />
                                                         <ModuleProductDetailDescription
                                                             product={View}
