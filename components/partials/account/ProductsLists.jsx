@@ -20,18 +20,12 @@ import Router, { useRouter } from 'next/router';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudioLive';
+import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
+import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 
 function ProductsLists() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    // const showModal = () => {
-    //   setIsModalOpen(true);
-    // };
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
 
     const dispatch = useDispatch();
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -50,8 +44,14 @@ function ProductsLists() {
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 800);
     const [adminModal, setAdminModal] = useState(false);
+    const [audioF, setAudioFIle] = useState(null);
     const router = useRouter();
     const pid = router.asPath;
+
+    const handleCancel = () => {
+        setIsModalOpen(false);
+        setAudioFIle(null)
+    };
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
@@ -139,6 +139,7 @@ function ProductsLists() {
         if (ItemsData?.title) {
             setDeleteIdView(ItemsData);
             setLoading(false);
+            setAudioFIle(ItemsData?.document?.file_url)
         }
     }
 
@@ -182,7 +183,7 @@ function ProductsLists() {
 
         return formattedNumber;
     }
-// console.log('fileContent', deleteIdView?.document);
+    // console.log('fileContent', deleteIdView?.document);
     const handleButtonClickViewProducts = async () => {
         if (deleteIdView?.document?.content_type === 'file') {
             try {
@@ -191,8 +192,10 @@ function ProductsLists() {
                 const response = await Axios.get(fileContent?.file_url, {
                     responseType: 'blob',
                 });
-    
-                const url = window.URL.createObjectURL(new Blob([response.data]));
+
+                const url = window.URL.createObjectURL(
+                    new Blob([response.data])
+                );
                 const a = document.createElement('a');
                 a.href = url;
                 a.download =
@@ -209,17 +212,27 @@ function ProductsLists() {
                 console.error('Error downloading file: ', error);
                 setLoading2(false);
             }
-        }else if(deleteIdView?.document?.content_type === 'audio'){
+        } else if (deleteIdView?.document?.content_type === 'audio') {
             try {
                 console.log('deleteIdView:', deleteIdView);
-                console.log('fileContent?.file_url:',  deleteIdView?.document?.file_url);
-            
-                const response = await fetch('https://testapi.soff.uz//media/documents/soff_2762_4_5925005816892494107.mp3');
+                console.log(
+                    'fileContent?.file_url:',
+                    deleteIdView?.document?.file_url
+                );
+
+                const response = await fetch(
+                    'https://testapi.soff.uz//media/documents/soff_2762_4_5925005816892494107.mp3'
+                );
                 const blob = await response.blob();
                 const url = window.URL.createObjectURL(new Blob([blob]));
                 const link = document.createElement('a');
                 link.href = url;
-                link.setAttribute('download', `soff.uz-${deleteIdView?.document?.file_url.split(".").at(-1)}`); // Name of your audio file
+                link.setAttribute(
+                    'download',
+                    `soff.uz-${deleteIdView?.document?.file_url
+                        .split('.')
+                        .at(-1)}`
+                ); // Name of your audio file
                 document.body.appendChild(link);
                 link.click();
                 link.parentNode.removeChild(link);
@@ -416,6 +429,8 @@ function ProductsLists() {
         },
     ];
 
+console.log(audioF);
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -587,7 +602,6 @@ function ProductsLists() {
                                         onChange={handlePagination}
                                         showSizeChanger
                                         // hideOnSinglePage={false}
-                                        
                                     />
                                 </div>
                             </div>
@@ -601,134 +615,252 @@ function ProductsLists() {
                     footer={null}
                     width={1024}
                     open={isModalOpen}
-                    onOk={handleOk}
                     onCancel={handleCancel}
-                    okButtonProps={{ style: { display: 'none' } }}
-                    cancelButtonProps={{ style: { display: 'none' } }}>
+                    maskClosable={false}
+                    >
+
+
                     {!loading ? (
                         <div className="ps-container">
-                            <div className="ps-product--detail ps-product--fullwidth">
-                                <div className="ps-product__header ">
-                                    <ThumbnailDefault product={deleteIdView} />
-                                    <div className="ps-product__info">
-                                        <div className="mb-4">
-                                            <strong className="text-danger pb-5">
-                                                {deleteIdView?.reason}
-                                            </strong>
+                            {deleteIdView?.document?.content_type ===
+                            'audio' ? (
+                                <div className="row">
+                                    <div className="col-12">
+                                        <DefaultAudioLive
+                                            product={deleteIdView ? deleteIdView : ''}
+                                            liveFile={deleteIdView?.poster}
+                                            title={deleteIdView?.title}
+                                            categoryName={deleteIdView?.category?.name}
+                                            audioUrl={audioF}
+                                        />
+                                        <ModuleAudioDetailTopInformationLive
+                                            product={deleteIdView ? deleteIdView : ""}
+                                            views={0}
+                                            admin={true}
+                                            taxminiyNarx={deleteIdView?.price}
+                                        />
+                                        <div className="price_and_tag">
+                                            <ModuleAudioDetailShoppingActionsLive
+                                                admin={true}
+                                                // free={free}
+                                            />
+
+                                            <>
+                                                {
+                                                    <div className="">
+                                                        <p>Tezkor teglar</p>
+                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                            {deleteIdView?.tag?.length >
+                                                                0 &&
+                                                                deleteIdView?.tag?.map(
+                                                                    (
+                                                                        item,
+                                                                        i
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                            className="m-2 tag-product">
+                                                                            <Link
+                                                                                href="#"
+                                                                                as="#">
+                                                                                <a>
+                                                                                    {' '}
+                                                                                    #
+                                                                                    {
+                                                                                        item?.name
+                                                                                    }{' '}
+                                                                                </a>
+                                                                            </Link>
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </>
                                         </div>
-                                        <ModuleDetailTopInformation
-                                            setAdminModal={setAdminModal}
-                                            product={deleteIdView}
-                                        />
-                                        <ModuleProductDetailDescription
-                                            product={deleteIdView}
-                                        />
-                                        <div className="ps-product__shoppin row-gap-3 d-xl-flex d-lg-flex gap-3 align-items-center ">
+                                    </div>
+
+                                    <div className="ps-product__content ps-tab-root mb-5">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
+                                                <div className="ps-document">
+                                                    {deleteIdView?.description
+                                                        ? parse(
+                                                              deleteIdView?.description
+                                                          )
+                                                        : "To'ldirilmadi"}
+                                                </div>
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+
+                                    <div className="d-flex justify-content-end p-5 ">
+                                        {loading2 ? (
                                             <button
-                                                className="ps-btn text-white w-100"
+                                                className="btn btn-success  p-2 px-5 fs-4 "
                                                 style={{
+                                                    width: '179px',
                                                     cursor: 'not-allowed',
                                                 }}>
-                                                Savatga qo'shish
+                                                <div
+                                                    className="spinner-border "
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
                                             </button>
+                                        ) : (
                                             <button
-                                                className="ps-btn w-100 text-white mt-3 mt-xl-0 mt-lg-0"
-                                                style={{
-                                                    cursor: 'not-allowed',
-                                                }}>
-                                                Sotib olish
+                                                onClick={
+                                                    handleButtonClickViewProducts
+                                                }
+                                                className="btn btn-success p-2 px-5 fs-4 ">
+                                                <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                <span className="fs-3">
+                                                    File ochish
+                                                </span>
                                             </button>
-                                            <div className="ps-product__actions">
-                                                <a
+                                        )}
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="ps-product--detail ps-product--fullwidth">
+                                    <div className="ps-product__header ">
+                                        <ThumbnailDefault
+                                            product={deleteIdView}
+                                        />
+                                        <div className="ps-product__info">
+                                            <div className="mb-4">
+                                                <strong className="text-danger pb-5">
+                                                    {deleteIdView?.reason}
+                                                </strong>
+                                            </div>
+                                            <ModuleDetailTopInformation
+                                                setAdminModal={setAdminModal}
+                                                product={deleteIdView}
+                                            />
+                                            <ModuleProductDetailDescription
+                                                product={deleteIdView}
+                                            />
+                                            <div className="ps-product__shoppin row-gap-3 d-xl-flex d-lg-flex gap-3 align-items-center ">
+                                                <button
+                                                    className="ps-btn text-white w-100"
                                                     style={{
                                                         cursor: 'not-allowed',
                                                     }}>
-                                                    <i
-                                                        className={`icon-heart fs-2`}></i>
-                                                </a>
+                                                    Savatga qo'shish
+                                                </button>
+                                                <button
+                                                    className="ps-btn w-100 text-white mt-3 mt-xl-0 mt-lg-0"
+                                                    style={{
+                                                        cursor: 'not-allowed',
+                                                    }}>
+                                                    Sotib olish
+                                                </button>
+                                                <div className="ps-product__actions">
+                                                    <a
+                                                        style={{
+                                                            cursor: 'not-allowed',
+                                                        }}>
+                                                        <i
+                                                            className={`icon-heart fs-2`}></i>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                            {deleteIdView?.active_tag?.length >
-                                            0 ? (
-                                                <p>
-                                                    {' '}
-                                                    <strong>
-                                                        Aktiv teglar:{' '}
-                                                    </strong>{' '}
-                                                    {deleteIdView?.active_tag?.map(
-                                                        (item) => (
-                                                            <span key={item.id}>
-                                                                #{item.name}{' '}
-                                                            </span>
-                                                        )
-                                                    )}{' '}
-                                                </p>
-                                            ) : (
-                                                <></>
-                                            )}
-                                        </div>
-                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                            {deleteIdView?.deactive_tag
-                                                ?.length > 0 ? (
-                                                <p>
-                                                    {' '}
-                                                    <strong>
-                                                        Aktiv emas teglar:{' '}
-                                                    </strong>{' '}
-                                                    {deleteIdView?.deactive_tag?.map(
-                                                        (item) => (
-                                                            <span key={item.id}>
-                                                                #{item.name}{' '}
-                                                            </span>
-                                                        )
-                                                    )}{' '}
-                                                </p>
-                                            ) : (
-                                                <></>
-                                            )}
+                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                {deleteIdView?.active_tag
+                                                    ?.length > 0 ? (
+                                                    <p>
+                                                        {' '}
+                                                        <strong>
+                                                            Aktiv teglar:{' '}
+                                                        </strong>{' '}
+                                                        {deleteIdView?.active_tag?.map(
+                                                            (item) => (
+                                                                <span
+                                                                    key={
+                                                                        item.id
+                                                                    }>
+                                                                    #{item.name}{' '}
+                                                                </span>
+                                                            )
+                                                        )}{' '}
+                                                    </p>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </div>
+                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                {deleteIdView?.deactive_tag
+                                                    ?.length > 0 ? (
+                                                    <p>
+                                                        {' '}
+                                                        <strong>
+                                                            Aktiv emas teglar:{' '}
+                                                        </strong>{' '}
+                                                        {deleteIdView?.deactive_tag?.map(
+                                                            (item) => (
+                                                                <span
+                                                                    key={
+                                                                        item.id
+                                                                    }>
+                                                                    #{item.name}{' '}
+                                                                </span>
+                                                            )
+                                                        )}{' '}
+                                                    </p>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="ps-product__content ps-tab-root">
-                                    <Tabs defaultActiveKey="1">
-                                        <TabPane tab="Izoh" key="1">
-                                            <PartialDescription
-                                                product={deleteIdView}
-                                            />
-                                        </TabPane>
-                                    </Tabs>
-                                </div>
-                                <div className="d-flex justify-content-end ">
-                                    {loading2 ? (
-                                        <button
-                                            className="btn btn-success  p-2 px-5 fs-4 "
-                                            style={{
-                                                width: '179px',
-                                                cursor: 'not-allowed',
-                                            }}>
-                                            <div
-                                                className="spinner-border "
-                                                role="status">
-                                                <span className="visually-hidden">
-                                                    Loading...
+                                    <div className="ps-product__content ps-tab-root">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane tab="Izoh" key="1">
+                                                <PartialDescription
+                                                    product={deleteIdView}
+                                                />
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                    <div className="d-flex justify-content-end ">
+                                        {loading2 ? (
+                                            <button
+                                                className="btn btn-success  p-2 px-5 fs-4 "
+                                                style={{
+                                                    width: '179px',
+                                                    cursor: 'not-allowed',
+                                                }}>
+                                                <div
+                                                    className="spinner-border "
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={
+                                                    handleButtonClickViewProducts
+                                                }
+                                                className="btn btn-success p-2 px-5 fs-4 ">
+                                                <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                <span className="fs-3">
+                                                    File ochish
                                                 </span>
-                                            </div>
-                                        </button>
-                                    ) : (
-                                        <button
-                                            onClick={
-                                                handleButtonClickViewProducts
-                                            }
-                                            className="btn btn-success p-2 px-5 fs-4 ">
-                                            <i className="fa-solid fa-download mx-1"></i>{' '}
-                                            <span className="fs-3">
-                                                File ochish
-                                            </span>
-                                        </button>
-                                    )}
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     ) : (
                         <div className="ps-container">
