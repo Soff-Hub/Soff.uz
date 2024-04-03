@@ -68,10 +68,10 @@ const ModuleAudioDetailTopInformationLive = ({
                         className="product__top-information-account"
                         style={{ cursor: 'pointer' }}>
                         <div>
-                            {product?.image ? (
+                            {product?.image || product?.seller?.image ? (
                                 <img
                                     alt="soff"
-                                    src={product?.image}
+                                    src={product?.image || product?.seller?.image}
                                     className="profile__image-client"
                                 />
                             ) : (

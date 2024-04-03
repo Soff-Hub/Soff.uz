@@ -816,7 +816,6 @@ function MyProductsLists() {
                                     aria-label="Close"></button>
                             </div>
 
-                            {/* ghhghh */}
                             <div className="ps-container">
                                 {!loading ? (
                                     <div className="row">
@@ -891,7 +890,7 @@ function MyProductsLists() {
                                             </Tabs>
                                         </div>
 
-                                        <div className="d-flex justify-content-end px-5 ">
+                                        <div className="d-flex justify-content-end p-5 ">
                                             {loading2 ? (
                                                 <button
                                                     className="btn btn-success  p-2 px-5 fs-4 "
