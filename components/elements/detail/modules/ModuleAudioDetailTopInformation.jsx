@@ -49,15 +49,15 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
     if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
-                {+product.discount_price === 0 ? (
+                {+product?.discount_price === 0 ? (
                     <p>Bepul mahsulot</p>
-                ) : product.discount === 0 ? (
-                    <p>{addPeriodToThousands(product.discount_price)} so'm</p>
+                ) : product?.discount === 0 ? (
+                    <p>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
                     <>
-                        <del>{addPeriodToThousands(product.price)} so'm</del>
+                        <del>{addPeriodToThousands(product?.price)} so'm</del>
                         <p>
-                            {addPeriodToThousands(product.discount_price)}
+                            {addPeriodToThousands(product?.discount_price)}
                             so'm
                         </p>
                     </>
@@ -70,7 +70,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                 {+product.discount_price === 0 ? (
                     <p>Bepul mahsulot</p>
                 ) : product.discount === 0 ? (
-                    <p>{addPeriodToThousands(product.discount_price)} so'm</p>
+                    <p>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
                     <>
                         <del>{addPeriodToThousands(product.price)} so'm</del>
