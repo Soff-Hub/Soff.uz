@@ -54,18 +54,16 @@ function MyProductsLists() {
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
-        ? `${date[0]?.$y}-${
-              `${date[0].$M + 1}`.length === 1
-                  ? `0${date[0].$M + 1}`
-                  : date[0].$M + 1
-          }-${date[0].$D}`
+        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
+            ? `0${date[0].$M + 1}`
+            : date[0].$M + 1
+        }-${date[0].$D}`
         : '';
     const dateFormat1 = date
-        ? `${date[1]?.$y}-${
-              `${date[1].$M + 1}`.length === 1
-                  ? `0${date[1].$M + 1}`
-                  : date[1].$M + 1
-          }-${date[1].$D}`
+        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
+            ? `0${date[1].$M + 1}`
+            : date[1].$M + 1
+        }-${date[1].$D}`
         : '';
     const dataFormat = date
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
@@ -270,7 +268,7 @@ function MyProductsLists() {
         try {
             setLoading4(true);
             const fileContent = data?.find((item) => item.id == ID);
-            const response = await axios.get(fileContent.file, {
+            const response = await axios.get(fileContent?.document?.file_url, {
                 responseType: 'blob',
             });
 
@@ -280,8 +278,8 @@ function MyProductsLists() {
             a.download =
                 fileContent.title +
                 '.' +
-                fileContent.file.split('.')[
-                    fileContent.file.split('.').length - 1
+                fileContent?.document?.file_url.split('.')[
+                fileContent?.document?.file_url?.split('.').length - 1
                 ];
             document.body.appendChild(a);
             a.click();
@@ -292,6 +290,9 @@ function MyProductsLists() {
             setLoading4(false);
         }
     };
+
+
+
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
@@ -320,7 +321,7 @@ function MyProductsLists() {
                 View.title +
                 '.' +
                 fileContent.file_url.split('.')[
-                    fileContent.file_url?.split('.').length - 1
+                fileContent.file_url?.split('.').length - 1
                 ];
             document.body.appendChild(a);
             a.click();
@@ -462,99 +463,99 @@ function MyProductsLists() {
 
         user?.role === 'seller'
             ? {
-                  title: 'Harakatlar',
-                  dataIndex: 'id',
-                  key: 'address',
-                  render: (id) => (
-                      <div>
-                          <a
-                              data-bs-target="#staticBackdropView"
-                              data-bs-toggle="modal">
-                              <i
-                                  className="fa-solid fa-eye text-success-emphasis mx-2"
-                                  onClick={() =>
-                                      handleClickView(
-                                          data.find((item) => item.id === id)
-                                      )
-                                  }></i>
-                          </a>
-                          {data.some(
-                              (el) =>
-                                  el.id == id &&
-                                  el.data_status?.status === 'moderation'
-                          ) ? (
-                              <Link href={'#'}>
-                                  <a>
-                                      <i
-                                          className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                                          onClick={() =>
-                                              handleClickIdEdit(id)
-                                          }></i>
-                                  </a>
-                              </Link>
-                          ) : data.some(
-                                (el) =>
-                                    el.id == id &&
-                                    el.data_status?.status === 'approved'
-                            ) ? (
-                              <a
-                                  data-bs-target="#exampleModalMyProductsPrice"
-                                  data-bs-toggle="modal"
-                                  onClick={() => handleClickIdEditModal(id)}>
-                                  <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
-                              </a>
-                          ) : data.some(
-                                (el) =>
-                                    el.id == id &&
-                                    el.data_status?.status === 'cancelled'
-                            ) ? (
-                              <Link href={'#'}>
-                                  <a>
-                                      <i
-                                          className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                                          onClick={() =>
-                                              handleClickIdEdit(id)
-                                          }></i>
-                                  </a>
-                              </Link>
-                          ) : (
-                              <></>
-                          )}
-                          <a
-                              data-bs-target="#exampleModalToggle"
-                              data-bs-toggle="modal">
-                              <i
-                                  className="fa-solid fa-trash-can text-danger mx-2"
-                                  onClick={() => setDeleteId(id)}></i>
-                          </a>
-                      </div>
-                  ),
-              }
+                title: 'Harakatlar',
+                dataIndex: 'id',
+                key: 'address',
+                render: (id) => (
+                    <div>
+                        <a
+                            data-bs-target="#staticBackdropView"
+                            data-bs-toggle="modal">
+                            <i
+                                className="fa-solid fa-eye text-success-emphasis mx-2"
+                                onClick={() =>
+                                    handleClickView(
+                                        data.find((item) => item.id === id)
+                                    )
+                                }></i>
+                        </a>
+                        {data.some(
+                            (el) =>
+                                el.id == id &&
+                                el.data_status?.status === 'moderation'
+                        ) ? (
+                            <Link href={'#'}>
+                                <a>
+                                    <i
+                                        className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
+                                        onClick={() =>
+                                            handleClickIdEdit(id)
+                                        }></i>
+                                </a>
+                            </Link>
+                        ) : data.some(
+                            (el) =>
+                                el.id == id &&
+                                el.data_status?.status === 'approved'
+                        ) ? (
+                            <a
+                                data-bs-target="#exampleModalMyProductsPrice"
+                                data-bs-toggle="modal"
+                                onClick={() => handleClickIdEditModal(id)}>
+                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
+                            </a>
+                        ) : data.some(
+                            (el) =>
+                                el.id == id &&
+                                el.data_status?.status === 'cancelled'
+                        ) ? (
+                            <Link href={'#'}>
+                                <a>
+                                    <i
+                                        className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
+                                        onClick={() =>
+                                            handleClickIdEdit(id)
+                                        }></i>
+                                </a>
+                            </Link>
+                        ) : (
+                            <></>
+                        )}
+                        <a
+                            data-bs-target="#exampleModalToggle"
+                            data-bs-toggle="modal">
+                            <i
+                                className="fa-solid fa-trash-can text-danger mx-2"
+                                onClick={() => setDeleteId(id)}></i>
+                        </a>
+                    </div>
+                ),
+            }
             : {
-                  title: 'Faylni yuklash  ',
-                  dataIndex: 'id',
-                  key: 'address',
-                  render: (id) => (
-                      <>
-                          {loading4 ? (
-                              <div
-                                  className="spinner-border mx-2 "
-                                  role="status"
-                                  style={{ cursor: 'not-allowed' }}>
-                                  <span className="visually-hidden">
-                                      Loading...
-                                  </span>
-                              </div>
-                          ) : (
-                              <a>
-                                  <i
-                                      className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                                      onClick={() => handleButtonClick(id)}></i>
-                              </a>
-                          )}
-                      </>
-                  ),
-              },
+                title: 'Faylni yuklash  ',
+                dataIndex: 'id',
+                key: 'address',
+                render: (id) => (
+                    <>
+                        {loading4 ? (
+                            <div
+                                className="spinner-border mx-2 "
+                                role="status"
+                                style={{ cursor: 'not-allowed' }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        ) : (
+                            <a>
+                                <i
+                                    className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
+                                    onClick={() => handleButtonClick(id)}></i>
+                            </a>
+                        )}
+                    </>
+                ),
+            },
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -681,7 +682,7 @@ function MyProductsLists() {
                                                             {options}
                                                         </Select>
                                                         {user?.role ===
-                                                        'seller' ? (
+                                                            'seller' ? (
                                                             <Select
                                                                 className="col-md-5 p-0"
                                                                 mode="select"
@@ -706,7 +707,7 @@ function MyProductsLists() {
                                                             <></>
                                                         )}
                                                         {user?.role ===
-                                                        'seller' ? (
+                                                            'seller' ? (
                                                             <select
                                                                 className="form-select col-md-6 fs-3 py-3 rounded-3"
                                                                 onChange={(e) =>
@@ -816,7 +817,7 @@ function MyProductsLists() {
                                 {!loading ? (
                                     <>
                                         {View?.document?.content_type ===
-                                        'audio' ? (
+                                            'audio' ? (
                                             <div className="row">
                                                 <div className="col-12">
                                                     <DefaultAudioLive
@@ -838,7 +839,7 @@ function MyProductsLists() {
                                                     <div className="price_and_tag">
                                                         <ModuleAudioDetailShoppingActionsLive
                                                             admin={true}
-                                                            // free={free}
+                                                        // free={free}
                                                         />
 
                                                         <>
@@ -892,8 +893,8 @@ function MyProductsLists() {
                                                             <div className="ps-document">
                                                                 {View?.description
                                                                     ? parse(
-                                                                          View?.description
-                                                                      )
+                                                                        View?.description
+                                                                    )
                                                                     : "To'ldirilmadi"}
                                                             </div>
                                                         </TabPane>
@@ -1137,7 +1138,7 @@ function MyProductsLists() {
                                 <span
                                     className={
                                         finalPrice < 1000 ||
-                                        products2?.discount_pric < 1000
+                                            products2?.discount_pric < 1000
                                             ? 'text-danger'
                                             : 'text-primary'
                                     }>

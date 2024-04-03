@@ -83,9 +83,9 @@ const ModuleAudioDetailTopInformationLive = ({
                             )}
                         </div>
                         {(product?.first_name || product?.seller?.first_name ) && (
-                            <p>
+                            <a href={`/seller/${product?.seller?.id}`}>
                                 {product?.first_name || product?.seller?.first_name} {product?.last_name || product?.seller?.last_name}
-                            </p>
+                            </a>
                         )}
                     </div>
                 </div>
