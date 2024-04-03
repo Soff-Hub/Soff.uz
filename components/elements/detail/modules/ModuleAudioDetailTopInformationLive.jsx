@@ -82,9 +82,9 @@ const ModuleAudioDetailTopInformationLive = ({
                                     }}></i>
                             )}
                         </div>
-                        {product?.first_name && (
+                        {(product?.first_name || product?.seller?.first_name ) && (
                             <p>
-                                {product?.first_name} {product?.last_name}
+                                {product?.first_name || product?.seller?.first_name} {product?.last_name || product?.seller?.last_name}
                             </p>
                         )}
                     </div>

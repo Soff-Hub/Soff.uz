@@ -22,7 +22,11 @@ import Router from 'next/router';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
+import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudioLive';
+import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
+import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 const { TabPane } = Tabs;
+var parse = require('html-react-parser');
 
 function MyProductsLists() {
     const [data, setData] = useState([]);
@@ -46,7 +50,7 @@ function MyProductsLists() {
     const [selectValStatus, setSelectValStatus] = useState('');
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
-    const [count, setCount] = useState('')
+    const [count, setCount] = useState('');
     const dispatch = useDispatch();
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
@@ -63,7 +67,9 @@ function MyProductsLists() {
                   : date[1].$M + 1
           }-${date[1].$D}`
         : '';
-    const dataFormat = date ? `${dateFormat0}&date_range_before=${dateFormat1}` : '';
+    const dataFormat = date
+        ? `${dateFormat0}&date_range_before=${dateFormat1}`
+        : '';
     const { accountLinks, user, products } = useSelector((state) => state.auth);
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
@@ -87,7 +93,7 @@ function MyProductsLists() {
         );
         if (ItemsData?.results) {
             setData(ItemsData?.results);
-            setCount(ItemsData?.count)
+            setCount(ItemsData?.count);
             setPageCount(ItemsData?.count);
             setCurrPage(page);
         }
@@ -550,6 +556,10 @@ function MyProductsLists() {
                   ),
               },
     ];
+
+
+    console.log('View', View);
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -750,7 +760,9 @@ function MyProductsLists() {
                                     </div>
                                     {user?.role === 'seller' ? (
                                         <>
-                                         <h4 className='ms-2 mb-4'>Jami mahsulotlar soni {count} ta </h4>
+                                            <h4 className="ms-2 mb-4">
+                                                Jami mahsulotlar soni {count} ta{' '}
+                                            </h4>
                                             <Table
                                                 dataSource={data}
                                                 scroll={{ x: 1500 }}
@@ -803,87 +815,83 @@ function MyProductsLists() {
                                     data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
+
+                            {/* ghhghh */}
                             <div className="ps-container">
                                 {!loading ? (
-                                    <div className="ps-product--detail ps-product--fullwidth">
-                                        <div className="ps-product__header ">
-                                            <ThumbnailDefault product={View} />
-                                            <div className="ps-product__info">
-                                                <div className="mb-4">
-                                                    <strong className="text-danger pb-5">
-                                                        {View?.reason}
-                                                    </strong>
-                                                </div>
-                                                <ModuleDetailTopInformation
-                                                    product={View}
+                                    <div className="row">
+                                        <div className="col-12">
+                                            <DefaultAudioLive
+                                                product={View}
+                                                liveFile={View?.poster}
+                                                title={View?.title}
+                                                categoryName={View?.category?.name}
+                                            />
+                                            <ModuleAudioDetailTopInformationLive
+                                                product={View}
+                                                views={0}
+                                                admin={true}
+                                                taxminiyNarx={View?.price}
+                                            />
+                                            <div className="price_and_tag">
+                                                <ModuleAudioDetailShoppingActionsLive
+                                                    admin={true}
+                                                    // free={free}
                                                 />
-                                                <ModuleProductDetailDescription
-                                                    product={View}
-                                                />
-                                                <div className="ps-product__shopping row-gap-3">
-                                                    <div>
-                                                        <button
-                                                            className="ps-btn ps-btn--black"
-                                                            style={{
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            Savatga qo'shish
-                                                        </button>
-                                                        <button
-                                                            className="ps-btn"
-                                                            style={{
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            Sotib olish
-                                                        </button>
-                                                    </div>
-                                                    <div className="ps-product__actions">
-                                                        <a
-                                                            style={{
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            <i
-                                                                className={`icon-heart`}></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <p>Tezkor teglar</p>
-                                                <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                    {View?.tag?.length > 0 &&
-                                                        View?.tag.map(
-                                                            (item, i) => (
-                                                                <div
-                                                                    key={i}
-                                                                    className="m-2 tag-product">
-                                                                    <Link
-                                                                        href="#"
-                                                                        as="#">
-                                                                        <a>
-                                                                            {' '}
-                                                                            #
-                                                                            {
-                                                                                item.name
-                                                                            }{' '}
-                                                                        </a>
-                                                                    </Link>
-                                                                </div>
-                                                            )
-                                                        )}
-                                                </div>
+
+                                                <>
+                                                    {
+                                                        <div className="">
+                                                            <p>Tezkor teglar</p>
+                                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                                {View?.tag?.length >
+                                                                    0 &&
+                                                                    View?.tag?.map(
+                                                                        (
+                                                                            item,
+                                                                            i
+                                                                        ) => (
+                                                                            <div
+                                                                                key={
+                                                                                    i
+                                                                                }
+                                                                                className="m-2 tag-product">
+                                                                                <Link
+                                                                                    href="#"
+                                                                                    as="#">
+                                                                                    <a>
+                                                                                        {' '}
+                                                                                        #
+                                                                                        {
+                                                                                            item?.name
+                                                                                        }{' '}
+                                                                                    </a>
+                                                                                </Link>
+                                                                            </div>
+                                                                        )
+                                                                    )}
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </>
                                             </div>
                                         </div>
-                                        <div className="ps-product__content ps-tab-root">
+
+                                        <div className="ps-product__content ps-tab-root mb-5">
                                             <Tabs defaultActiveKey="1">
                                                 <TabPane
                                                     tab="Mahsulot to’liq tavsifi"
                                                     key="1">
-                                                    <PartialDescription
-                                                        product={View}
-                                                    />
+                                                    <div className="ps-document">
+                                                        {View?.description
+                                                            ? parse(View?.description)
+                                                            : "To'ldirilmadi"}
+                                                    </div>
                                                 </TabPane>
                                             </Tabs>
                                         </div>
-                                        <div className="d-flex justify-content-end ">
+
+                                        <div className="d-flex justify-content-end px-5 ">
                                             {loading2 ? (
                                                 <button
                                                     className="btn btn-success  p-2 px-5 fs-4 "
@@ -912,6 +920,7 @@ function MyProductsLists() {
                                                 </button>
                                             )}
                                         </div>
+
                                     </div>
                                 ) : (
                                     <div
