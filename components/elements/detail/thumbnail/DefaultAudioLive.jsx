@@ -7,6 +7,7 @@ export default function DefaultAudioLive({
     liveFile,
     title,
     categoryName,
+    audioUrl
 }) {
     // product?.document?.short_content_url
     // `video/${product?.document?.file_type?.replace('.','' )}`
@@ -47,6 +48,8 @@ export default function DefaultAudioLive({
             remainingSeconds < 10 ? '0' : ''
         }${remainingSeconds}`;
     };
+
+    console.log(audioUrl);
 
     return (
         <div
@@ -150,7 +153,7 @@ export default function DefaultAudioLive({
                     <div className="audio-detail-container">
                     <audio id="audioPlayer" controls>
                         <source
-                            src={product.document?.file_url}
+                            src={audioUrl}
                             type={`audio/${product?.document?.file_type?.replace(
                                 '.',
                                 ''
