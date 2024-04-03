@@ -1,50 +1,9 @@
-import React, { useRef, useState } from 'react';
-import { useEffect } from 'react';
-import { ScaleLoader } from 'react-spinners';
+import React, { useRef } from 'react';
 
-export default function DefaultAudio({ product }) {
-    // product?.document?.short_content_url
-    // `video/${product?.document?.file_type?.replace('.','' )}`
-    // const [isPlaying, setIsPlaying] = useState(false);
+export default function DefaultAudio({ product, document }) {
     const audioRef = useRef(null);
-    // const [currentTime, setCurrentTime] = useState(0);
-    // const [duration, setDuration] = useState(0);
+    console.log('url', document);
 
-    // const togglePlay = () => {
-    //     const audioPlayer = audioRef.current;
-
-    //     if (isPlaying) {
-    //         audioPlayer.pause();
-    //     } else {
-    //         audioPlayer.play();
-    //     }
-
-    //     setIsPlaying(!isPlaying);
-    // };
-
-    // const updateTime = () => {
-    //     const audioPlayer = audioRef.current;
-    //     setCurrentTime(audioPlayer.currentTime);
-    //     setDuration(audioPlayer.duration);
-    // };
-
-    // useEffect(() => {
-    //     const audioPlayer = audioRef.current;
-
-    //     audioPlayer.addEventListener('timeupdate', updateTime);
-
-    //     return () => {
-    //         audioPlayer.removeEventListener('timeupdate', updateTime);
-    //     };
-    // }, []);
-
-    // const formatTime = (seconds) => {
-    //     const minutes = Math.floor(seconds / 60);
-    //     const remainingSeconds = Math.floor(seconds % 60);
-    //     return `${minutes}:${
-    //         remainingSeconds < 10 ? '0' : ''
-    //     }${remainingSeconds}`;
-    // };
     return (
         <div
             style={{
@@ -77,7 +36,9 @@ export default function DefaultAudio({ product }) {
                     }}></div>
             </div>
             <div className="col-xxl-9 col-xl-9 xol-lg-9  col-md-8 col-sm-7 col-12 audio-col-8">
-                <marquee className="w-100 text-truncate">{product?.title} </marquee>
+                <marquee className="w-100 text-truncate">
+                    {product?.title}{' '}
+                </marquee>
                 <div className="audio_child">
                     <span>{product?.document?.file_type}</span>
                     <span>{product?.document?.file_size}</span>
@@ -88,30 +49,48 @@ export default function DefaultAudio({ product }) {
                         {' '}
                         Davomiyligi {product?.document?.content_duration}
                     </span>
-                    <span style={{ color: '#F4CA16' }}>
-                        Batafsil eshitish uchun sotib oling
-                    </span>
+                    {document?.file_url ? (
+                        ''
+                    ) : (
+                        <span style={{ color: '#F4CA16' }}>
+                            Batafsil eshitish uchun sotib oling
+                        </span>
+                    )}
                 </div>
-                <div className="audio-detail-container">
-                    <audio
-                        id="audioPlayer"
-                        // style={{ display: 'none' }}
-                        ref={audioRef}
-                        controls>
-                        <source
-                            src={product?.document?.short_content_url}
-                            type={`audio/${product?.document?.file_type?.replace(
-                                '.',
-                                ''
-                            )}`}
-                            defaultValue={product?.document?.short_content_url}
-                        />
-                        Your browser does not support the audio element.
-                    </audio>
-                    <div className="audio-none">
-                        <span></span>
+                {document?.file_url ? (
+                    <div className="audio-detail-container">
+                        <audio id="audioPlayer" controls>
+                            <source
+                                src={document?.file_url}
+                                type={`audio/${product?.document?.file_type?.replace(
+                                    '.',
+                                    ''
+                                )}`}
+                                defaultValue={document?.file_url}
+                            />
+                            Your browser does not support the audio element.
+                        </audio>
                     </div>
-                </div>
+                ) : (
+                    <div className="audio-detail-container">
+                        <audio id="audioPlayer" ref={audioRef} controls>
+                            <source
+                                src={product?.document?.short_content_url}
+                                type={`audio/${product?.document?.file_type?.replace(
+                                    '.',
+                                    ''
+                                )}`}
+                                defaultValue={
+                                    product?.document?.short_content_url
+                                }
+                            />
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div className="audio-none">
+                            <span></span>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -222,7 +222,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                 alignItems: 'flex-start',
                                 gap: 20,
                             }}>
-                            <span style={{overflow:'hidden'}}>
+                            <span style={{ overflow: 'hidden' }}>
                                 Taklif havolani olish{' '}
                                 {profile?.code ? (
                                     <>
@@ -283,7 +283,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                     onCancel={handleCancelCustomer}
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
-                   <p>Tez kunda!</p>
+                    <p>Tez kunda!</p>
                     <p>
                         Xurmatli Soff.uz foyalanuvchisi, siz bu yerda Sotuvchiga
                         mahsulot yoki xizmat buyurtmasini berishingiz mumkin
@@ -303,7 +303,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                                     cursor: 'pointer',
                                                 }}>
                                                 <a className="d-flex align-items-center">
-                                                <i className="fa-regular fa-handshake"></i>
+                                                    <i className="fa-regular fa-handshake"></i>
                                                     Buyurtma berish
                                                 </a>
                                             </span>

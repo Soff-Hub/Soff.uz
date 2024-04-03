@@ -82,7 +82,7 @@ export const fileDownloaderSale = (product) => {
 
 export const audioDownloaderSale = async (product) => {
     try {
-        const response = await fetch(product.file_url);
+        const response = await fetch(product?.file_url);
         const blob = await response.blob();
         const url = window.URL.createObjectURL(new Blob([blob]));
         const link = document.createElement('a');
