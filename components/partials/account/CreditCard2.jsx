@@ -103,8 +103,8 @@ const CreditCard2 = ({ document }) => {
                 content: ItemsData?.data?.expire_date
                     ? ' Karta amal qilish muddatini kiriting'
                     : ItemsData?.data?.card_number
-                    ? "Karta raqamini to'g'ri kiriting"
-                    : ItemsData?.data?.msg,
+                        ? "Karta raqamini to'g'ri kiriting"
+                        : ItemsData?.data?.msg,
             });
             modal.update;
         }
@@ -154,17 +154,29 @@ const CreditCard2 = ({ document }) => {
                 removeAll();
             }
             if (dataNews?.data?.file_url) {
-                handleDownload(dataNews?.data?.file_url);
+                handleButtonClick(dataNews?.data?.file_url)
             }
         }
     }
 
-    const handleDownload = (url) => {
-        if (typeof window !== 'undefined') {
-            const URL = url;
-            window.location.href = URL;
+    const handleButtonClick = async (fileContent) => {
+        try {
+            const response = await axios.get(fileContent, {
+                responseType: 'blob',
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = "musis"
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading file: ', error);
         }
     };
+
 
     useEffect(() => {
         if (resData?.status === 201) {
@@ -297,7 +309,6 @@ const CreditCard2 = ({ document }) => {
                                 </div>
                             </form>
                         </div>
-                        {/* <button onClick={() => handleDownload('https://api.soff.uz//media/documents/%D0%94%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC_%D0%B8%D1%88%D0%B8.doc')} > download</button> */}
                     </div>
 
                     <Modal
