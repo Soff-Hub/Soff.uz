@@ -137,7 +137,7 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                                         : 'pointer'
                                                 }`,
                                             }}
-                                            className="ps-btn ps-btn--black max-class"
+                                            className="ps-btn ps-btn--black max-clas"
                                             href="#"
                                             onClick={(e) =>
                                                 handleAddItemToCart(e)
@@ -152,7 +152,7 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                                         : 'pointer'
                                                 }`,
                                             }}
-                                            className="ps-btn max-class"
+                                            className="ps-btn max-clas"
                                             href="#"
                                             onClick={(e) => handleBuynow(e)}>
                                             1 klikda sotib oling
