@@ -159,6 +159,8 @@ const CreditCard2 = ({ document }) => {
         }
     }
 
+  
+
     const handleButtonClick = async (fileContent) => {
         try {
             const response = await axios.get(fileContent, {
@@ -168,14 +170,22 @@ const CreditCard2 = ({ document }) => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download = "musis"
+            a.download =
+                "Audio" +
+                '.' +
+                fileContent?.split('.')[
+                fileContent?.split('.').length - 1
+                ];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
+
         } catch (error) {
             console.error('Error downloading file: ', error);
+    
         }
     };
+
 
 
     useEffect(() => {

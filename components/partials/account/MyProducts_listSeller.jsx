@@ -101,7 +101,7 @@ function MyProductsListsSeller() {
         try {
             setLoading2(true);
             const fileContent = data?.find((item) => item.id == ID);
-            const response = await axios.get(fileContent.file, {
+            const response = await axios.get(fileContent?.document?.file_url, {
                 responseType: 'blob',
             });
 
@@ -111,8 +111,8 @@ function MyProductsListsSeller() {
             a.download =
                 fileContent.title +
                 '.' +
-                fileContent.file.split('.')[
-                    fileContent.file.split('.').length - 1
+                fileContent?.document?.file_url.split('.')[
+                fileContent?.document?.file_url?.split('.').length - 1
                 ];
             document.body.appendChild(a);
             a.click();
