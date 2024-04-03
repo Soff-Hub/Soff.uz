@@ -14,7 +14,6 @@ export default function DefaultAudioLive({
     const audioRef = useRef(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-
     const togglePlay = () => {
         const audioPlayer = audioRef.current;
 
@@ -99,46 +98,75 @@ export default function DefaultAudioLive({
                 </marquee>
                 <div className="audio_child">
                     <span>
-                        {product?.data?.file_type
-                            ? product?.data?.file_type
+                        {product?.data?.file_type || product?.document?.file_type
+                            ? product?.data?.file_type || product?.document?.file_type
                             : "To'ldirilmadi"}
                     </span>
                     <span>
-                        {product?.data?.file_size
-                            ? product?.data?.file_size
+                        {product?.data?.file_size || product?.document?.file_size
+                            ? product?.data?.file_size || product?.document?.file_size
                             : "To'ldirilmadi"}
                     </span>
                 </div>
                 <p className="audio_acteg">
                     {categoryName ? categoryName : "To'ldirilmadi"}
                 </p>
-                <div className="audio_content">
-                    <div className="audio_play" onClick={togglePlay}>
-                        {isPlaying ? (
-                            <i className="fa-solid fa-pause"></i>
-                        ) : (
-                            <i className="fa-solid fa-play"></i>
-                        )}
-                    </div>
-                    <div className="audio_player">
-                        <ScaleLoader fontSiza="40px" color="#fff" />
-                        <ScaleLoader fontSiza="40px" color="#fff" />
-                    </div>
-                    <div>
-                        <span>{formatTime(currentTime)}</span> /{' '}
-                        <span>
-                            {product?.data?.content_duration
-                                ? product?.data?.content_duration
-                                : "To'ldirilmadi"}
+                <div className="d-xl-flex d-xxl-flex d-lg-flex d-md-block  align-items-center gap-5 mb-3">
+                    <span className="d-md-block d-block d-sm-block d-xxl-inline d-xl-inline d-lg-inline">
+                        {' '}
+                        Davomiyligi {product?.document?.content_duration || product?.data?.content_duration}
+                    </span>
+                    {document?.file_url ? (
+                        ''
+                    ) : (
+                        <span style={{ color: '#F4CA16' }}>
+                            Batafsil eshitish uchun sotib oling
                         </span>
-                    </div>
+                    )}
                 </div>
+                {product?.data?.content_duration ? (
+                    <div className="audio_content">
+                        <div className="audio_play" onClick={togglePlay}>
+                            {isPlaying ? (
+                                <i className="fa-solid fa-pause"></i>
+                            ) : (
+                                <i className="fa-solid fa-play"></i>
+                            )}
+                        </div>
+                        <div className="audio_player">
+                            <ScaleLoader fontSiza="40px" color="#fff" />
+                            <ScaleLoader fontSiza="40px" color="#fff" />
+                        </div>
+                        <div>
+                            <span>{formatTime(currentTime)}</span> /{' '}
+                            <span>
+                                {product?.data?.content_duration || product?.document?.content_duration
+                                    ? product?.data?.content_duration || product?.document?.content_duration
+                                    : "To'ldirilmadi"}
+                            </span>
+                        </div>
+                    </div>
+                ) : (
+                    <div className="audio-detail-container">
+                    <audio id="audioPlayer" controls>
+                        <source
+                            src={product.document?.file_url}
+                            type={`audio/${product?.document?.file_type?.replace(
+                                '.',
+                                ''
+                            )}`}
+                            defaultValue={product?.document?.file_url}
+                        />
+                        Your browser does not support the audio element.
+                    </audio>
+                </div>
+                )}
 
                 <audio
                     id="audioPlayer"
                     style={{ display: 'none' }}
                     ref={audioRef}
-                        src={product?.data?.short_content}
+                    src={product?.data?.short_content}
                     controls>
                     Your browser does not support the audio element.
                 </audio>
