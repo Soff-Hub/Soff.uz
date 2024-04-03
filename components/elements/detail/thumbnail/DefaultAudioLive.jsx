@@ -7,7 +7,6 @@ export default function DefaultAudioLive({
     liveFile,
     title,
     categoryName,
-    audioUrl
 }) {
     // product?.document?.short_content_url
     // `video/${product?.document?.file_type?.replace('.','' )}`
@@ -15,6 +14,7 @@ export default function DefaultAudioLive({
     const audioRef = useRef(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
+console.log('title', title);
     const togglePlay = () => {
         const audioPlayer = audioRef.current;
 
@@ -48,8 +48,6 @@ export default function DefaultAudioLive({
             remainingSeconds < 10 ? '0' : ''
         }${remainingSeconds}`;
     };
-
-    console.log(audioUrl);
 
     return (
         <div
@@ -153,7 +151,7 @@ export default function DefaultAudioLive({
                     <div className="audio-detail-container">
                     <audio id="audioPlayer" controls>
                         <source
-                            src={audioUrl}
+                            src={product.document?.file_url}
                             type={`audio/${product?.document?.file_type?.replace(
                                 '.',
                                 ''
