@@ -6,9 +6,11 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { audioDownloaderSale, fileDownloader, fileDownloaderSale } from '~/utilities/common-helpers';
+import { audioDownloaderSale} from '~/utilities/common-helpers';
 
 const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
+ 
+
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
@@ -77,65 +79,60 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                     <p></p>
                 </Modal>
                 <div
-                    className={`ps-product__shopping ${
-                        product?.document?.content_type === 'video'
+                    className={`ps-product__shopping ${product?.document?.content_type === 'video'
                             ? 'video_action quek_video_button '
                             : 'audio_action'
-                    }  `}>
+                        }  `}>
                     <div
-                        className={`btn--container ${
-                            product?.document?.content_type === 'audio'
+                        className={`btn--container ${product?.document?.content_type === 'audio'
                                 ? 'audio_btn'
                                 : ''
-                        } `}>
+                            } `}>
                         {product?.discount_price > 0 ? (
                             <>
                                 {document?.file_url ? (
                                     (<>{
-                                        product?.document?.content_type === "audio" ? 
-                                        <a
-                                        style={{
-                                            cursor: `${
-                                                admin
-                                                    ? 'not-allowed'
-                                                    : 'pointer'
-                                            }`,
-                                        }}
-                                        className="ps-btn ps-btn--black max-class"
-                                        href="#"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            audioDownloaderSale(document);
-                                        }}>
-                                        Yuklab olish
-                                    </a>
-                                        :
-                                        product?.document?.content_type === 'file' ?   <a
-                                        style={{
-                                            cursor: `${
-                                                admin
-                                                    ? 'not-allowed'
-                                                    : 'pointer'
-                                            }`,
-                                        }}
-                                        className="ps-btn ps-btn--black max-class"
-                                        href="#"
-                                        onClick={(e) => {
-                                            e.preventDefault();
-                                            fileDownloaderSale(document);
-                                        }}>
-                                        Yuklab olish
-                                    </a> : ''
+                                        product?.document?.content_type === "audio" ?
+                                            <a
+                                                style={{
+                                                    cursor: `${admin
+                                                            ? 'not-allowed'
+                                                            : 'pointer'
+                                                        }`,
+                                                }}
+                                                className="ps-btn ps-btn--black max-class"
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    audioDownloaderSale(document, product);
+                                                }}>
+                                                Yuklab olish
+                                            </a>
+                                            :
+                                            product?.document?.content_type === 'file' ? <a
+                                                style={{
+                                                    cursor: `${admin
+                                                            ? 'not-allowed'
+                                                            : 'pointer'
+                                                        }`,
+                                                }}
+                                                className="ps-btn ps-btn--black max-class"
+                                                href="#"
+                                                onClick={(e) => {
+                                                    e.preventDefault();
+                                                    audioDownloaderSale(document, product);
+                                                }}>
+                                                Yuklab olish
+                                            </a> : ''
                                     }</>)
                                 ) : (
                                     <>
                                         <a
                                             style={{
-                                                cursor: `${
-                                                    admin
+                                                cursor: `${admin
                                                         ? 'not-allowed'
                                                         : 'pointer'
-                                                }`,
+                                                    }`,
                                             }}
                                             className="ps-btn ps-btn--black max-clas"
                                             href="#"
@@ -146,11 +143,10 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                         </a>
                                         <a
                                             style={{
-                                                cursor: `${
-                                                    admin
+                                                cursor: `${admin
                                                         ? 'not-allowed'
                                                         : 'pointer'
-                                                }`,
+                                                    }`,
                                             }}
                                             className="ps-btn max-clas"
                                             href="#"
@@ -163,15 +159,14 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                         ) : (
                             <a
                                 style={{
-                                    cursor: `${
-                                        admin ? 'not-allowed' : 'pointer'
-                                    }`,
+                                    cursor: `${admin ? 'not-allowed' : 'pointer'
+                                        }`,
                                 }}
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    fileDownloader(product);
+                                    audioDownloaderSale(document, product);
                                 }}>
                                 Bepul yuklab olish
                             </a>
@@ -184,20 +179,18 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                     href="#"
                                     onClick={(e) => handleAddItemToWishlist(e)}
                                     style={{
-                                        cursor: `${
-                                            admin ? 'not-allowed' : 'pointer'
-                                        }`,
+                                        cursor: `${admin ? 'not-allowed' : 'pointer'
+                                            }`,
                                     }}>
                                     <i
-                                        className={`${
-                                            wishlist?.some(
-                                                (item) =>
-                                                    Number(item.id) ===
-                                                    Number(product.id)
-                                            )
+                                        className={`${wishlist?.some(
+                                            (item) =>
+                                                Number(item.id) ===
+                                                Number(product.id)
+                                        )
                                                 ? 'fa-solid fa-heart text-danger'
                                                 : 'icon-heart'
-                                        } `}></i>
+                                            } `}></i>
                                 </a>
                             </div>
                         </div>

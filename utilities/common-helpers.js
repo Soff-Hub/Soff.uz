@@ -1,3 +1,4 @@
+import Axios from 'axios';
 import axios from 'axios';
 
 export const stickyHeader = () => {
@@ -25,73 +26,28 @@ export const generateTempArray = (maxItems) => {
     return result;
 };
 
-// console.log(product);
-// console.log(product.poster_url.split("/").at(-1));
 
-export const fileDownloader = (product) => {
-    fetch(product.file_url)
-        .then((response) => response.blob())
-        .then((blob) => {
-            const url = window.URL.createObjectURL(new Blob([blob]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute(
-                'download',
-                `soff.uz-${
-                    product?.category?.name || product?.slug
-                }.${product.file_url.split('.').at(-1)}`
-            );
 
-            link.style.display = 'none';
-            document.body.appendChild(link);
+export const audioDownloaderSale = async (file, product) => {
 
-            link.click();
-
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        })
-        .catch((error) => console.error(error));
-
-    axios.post(`https://api.soff.uz/api/v1/seller/upload-count/`, {
-        pk: product.id,
-    });
-};
-
-export const fileDownloaderSale = (product) => {
-    fetch(product.file_url)
-        .then((response) => response.blob())
-        .then((blob) => {
-            const url = window.URL.createObjectURL(new Blob([blob]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute(
-                'download',
-                `soff.uz-${product.file_url.split('.').at(-1)}`
-            );
-
-            link.style.display = 'none';
-            document.body.appendChild(link);
-
-            link.click();
-
-            document.body.removeChild(link);
-            window.URL.revokeObjectURL(url);
-        })
-        .catch((error) => console.error(error));
-};
-
-export const audioDownloaderSale = async (product) => {
     try {
-        const response = await fetch(product?.file_url);
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(new Blob([blob]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', `soff.uz-${product.file_url.split(".").at(-1)}`); // Name of your audio file
-        document.body.appendChild(link);
-        link.click();
-        link.parentNode.removeChild(link);
+        const response = await Axios.get(file?.file_url, {
+            responseType: 'blob',
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const a = document.createElement('a');
+        a.href = url;
+        a.download =
+            'soff.uz -' + product?.title  +
+            '.' +
+            file?.file_url.split('.')[
+                file?.file_url?.split('.').length - 1
+            ];
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
     } catch (error) {
-        console.error('Error downloading audio:', error);
+        console.error('Error downloading file: ', error);
     }
 };
