@@ -5,7 +5,7 @@ import ProductCart from '~/components/elements/products/ProductCart';
 import { Modal } from 'antd';
 import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
-import { fileDownloader } from '~/utilities/common-helpers';
+import { audioDownloaderSale } from '~/utilities/common-helpers';
 
 const Wishlist = ({ ecomerce }) => {
     const { removeSavedItem } = useWishlist();
@@ -13,6 +13,8 @@ const Wishlist = ({ ecomerce }) => {
 
     const { wishlist } = useSelector((state) => state.ecomerce);
     const { setAllSaved } = useWishlist();
+
+    console.log(wishlist);
 
     useEffect(() => {
         if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {
@@ -137,7 +139,7 @@ const Wishlist = ({ ecomerce }) => {
                                                     href=""
                                                     onClick={(e) => {
                                                         e.preventDefault()
-                                                        fileDownloader(product)
+                                                        audioDownloaderSale(product, product)
                                                     }}>
                                                     Yuklab olish
                                                 </a>

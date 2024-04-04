@@ -14,7 +14,7 @@ export default function DefaultAudioLive({
     const audioRef = useRef(null);
     const [currentTime, setCurrentTime] = useState(0);
     const [duration, setDuration] = useState(0);
-console.log('title', title);
+    
     const togglePlay = () => {
         const audioPlayer = audioRef.current;
 
@@ -151,7 +151,7 @@ console.log('title', title);
                     <div className="audio-detail-container">
                     <audio id="audioPlayer" controls>
                         <source
-                            src={product.document?.file_url}
+                            src={product?.document?.file_url}
                             type={`audio/${product?.document?.file_type?.replace(
                                 '.',
                                 ''

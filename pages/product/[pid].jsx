@@ -55,15 +55,13 @@ const ProductDefaultPage = ({ product, similar }) => {
     const { user } = useSelector((state) => state.auth);
 
     async function getDocument() {
-        const responsDocumentFile = await ProductRepository.getProductFileSlug(
+        const responseDocumentFile = await ProductRepository.getProductFileSlug(
             pid,
             user?.access,
-            localStorage.getItem('uuid')
-                ? localStorage.getItem('uuid')
-                : uuidv4()
+            localStorage.getItem('uuid') || uuidv4()
         );
-        if (responsDocumentFile) {
-            setDocument(responsDocumentFile);
+        if (responseDocumentFile && responseDocumentFile !== document) {
+            setDocument(responseDocumentFile);
         }
     }
 
@@ -75,10 +73,11 @@ const ProductDefaultPage = ({ product, similar }) => {
     }
 
     useEffect(() => {
-        if (user?.access) {
+        if (user?.access && pid) {
             getDocument();
         }
-    }, [user?.access]);
+    }, [user?.access, pid]);
+
     useEffect(() => {
         localStorage.getItem('uuid')
             ? ''
@@ -99,6 +98,9 @@ const ProductDefaultPage = ({ product, similar }) => {
             text: product?.title ? product?.title : 'Loading...',
         },
     ];
+
+
+
 
     return (
         <>
@@ -124,37 +126,37 @@ const ProductDefaultPage = ({ product, similar }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                  'video' ? (
+                                    'video' ? (
                                     <div className="">
                                         <ProductVideoDetailFullWidth
                                             product={product}
                                             document={document}
                                             views={views}
-                                        
+
                                         />
                                     </div>
-                                ) :  product?.document?.content_type ===
-                                'audio' ? 
-                                <div className="">
-                                <ProductAudioDetailFullWidth
-                                    product={product}
-                                    document={document}
-                                    views={views}
-                                />
-                            </div> :  product?.document?.content_type ===
-                                'article' ? 
-                                <div>
-                                {/* <ProductAudioDetailFullWidth
+                                ) : product?.document?.content_type ===
+                                    'audio' ?
+                                    <div className="">
+                                        <ProductAudioDetailFullWidth
+                                            product={product}
+                                            document={document}
+                                            views={views}
+                                        />
+                                    </div> : product?.document?.content_type ===
+                                        'article' ?
+                                        <div>
+                                            {/* <ProductAudioDetailFullWidth
                                     product={product}
                                     document={document}
                                     views={views}
                                 /> */}
-                            </div>
-                                : (
-                                    <div className="ps-page__left">
-                                        <SkeletonProductDetail />
-                                    </div>
-                                )}
+                                        </div>
+                                        : (
+                                            <div className="ps-page__left">
+                                                <SkeletonProductDetail />
+                                            </div>
+                                        )}
                             </div>
 
                             {similar?.length > 0 ? (

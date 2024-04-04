@@ -5,14 +5,14 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { fileDownloader, fileDownloaderSale } from '~/utilities/common-helpers';
+import { audioDownloaderSale} from '~/utilities/common-helpers';
 
 const ModuleDetailShoppingActions = ({ product, document }) => {
+
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
-    const statee = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
     const showModal = () => {
         setOpen(true);
@@ -51,6 +51,8 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
         }
     };
 
+
+
     if (true) {
         return (
             <>
@@ -85,7 +87,7 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
                                     href="#"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        fileDownloaderSale(document);
+                                        audioDownloaderSale(document, product);
                                     }}>
                                     Yuklab olish
                                 </a>
@@ -112,7 +114,7 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
                             href="#"
                             onClick={(e) => {
                                 e.preventDefault();
-                                fileDownloader(product);
+                                 audioDownloaderSale(product, product);
                             }}>
                             Bepul yuklab olish
                         </a>

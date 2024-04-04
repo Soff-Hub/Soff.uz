@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Modal, Tabs } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
+import { audioDownloaderSale } from '~/utilities/common-helpers';
+import ProductRepository from '~/repositories/ProductRepository';
 
-const CreditCard2 = ({ document }) => {
+const CreditCard2 = ({ document}) => {
     const { user } = useSelector((state) => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
@@ -21,6 +22,18 @@ const CreditCard2 = ({ document }) => {
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
+    const { id } = Router.query;
+    const [data, setData] = useState(null);
+
+    const getOneProductData = async () => {
+        const res = await ProductRepository.postCartData([id]);
+        setData(res?.data?.data?.[0]);
+    };
+
+    useEffect(() => {
+        getOneProductData();
+    }, [id]);
+
 
     const numberTyper = (value) => {
         SetNumberCardVal(value);
@@ -81,6 +94,7 @@ const CreditCard2 = ({ document }) => {
 
     }
 
+
     async function handleClickCardPosts(e) {
         e.preventDefault();
         setMessage(false);
@@ -110,6 +124,7 @@ const CreditCard2 = ({ document }) => {
         }
 
     }
+  
 
     async function handleSubmitCode() {
         setButtonOk(true);
@@ -153,40 +168,12 @@ const CreditCard2 = ({ document }) => {
             if (document?.length > 1) {
                 removeAll();
             }
-            if (dataNews?.data?.file_url) {
-                handleButtonClick(dataNews?.data?.file_url)
+            if (dataNews?.data) {
+                audioDownloaderSale(dataNews?.data, data?.title)
             }
         }
     }
-
   
-
-    const handleButtonClick = async (fileContent) => {
-        try {
-            const response = await axios.get(fileContent, {
-                responseType: 'blob',
-            });
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download =
-                "Audio" +
-                '.' +
-                fileContent?.split('.')[
-                fileContent?.split('.').length - 1
-                ];
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-
-        } catch (error) {
-            console.error('Error downloading file: ', error);
-    
-        }
-    };
-
-
 
     useEffect(() => {
         if (resData?.status === 201) {

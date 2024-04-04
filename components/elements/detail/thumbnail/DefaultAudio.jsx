@@ -1,8 +1,8 @@
-import React, { useRef } from 'react';
+import React from 'react';
 
 export default function DefaultAudio({ product, document }) {
-    const audioRef = useRef(null);
-    console.log('url', document);
+  
+   
 
     return (
         <div
@@ -73,7 +73,7 @@ export default function DefaultAudio({ product, document }) {
                     </div>
                 ) : (
                     <div className="audio-detail-container">
-                        <audio id="audioPlayer" ref={audioRef} controls>
+                        <audio id="audioPlayer"  controls>
                             <source
                                 src={product?.document?.short_content_url}
                                 type={`audio/${product?.document?.file_type?.replace(
