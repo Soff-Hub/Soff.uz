@@ -77,6 +77,7 @@ const ProductDefaultPage = ({ product, similar }) => {
             getDocument();
         }
     }, [user?.access, pid]);
+    
 
     useEffect(() => {
         localStorage.getItem('uuid')

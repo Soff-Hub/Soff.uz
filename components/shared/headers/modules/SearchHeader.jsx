@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
-import { Spin } from 'antd';
+import { Select, Spin } from 'antd';
 
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import PostRepository from '~/repositories/PostRepository';
@@ -30,6 +30,7 @@ const SearchHeader = () => {
     const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 1000);
+    const [selectFile, setSelectFile]= useState('Barchasi')
 
     function handleClearKeyword() {
         setKeyword('');
@@ -47,8 +48,8 @@ const SearchHeader = () => {
         // getSearchData();
         if (debouncedSearchTerm) {
             setLoading(true);
-            if (keyword) {
-                const products = PostRepository.postSearchFilter(keyword);
+            if (keyword || selectFile) {
+                const products = PostRepository.postSearchFilter(keyword, selectFile);
 
                 products.then((result) => {
                     setLoading(false);
@@ -66,7 +67,7 @@ const SearchHeader = () => {
             setLoading(false);
             setIsSearch(false);
         }
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm,selectFile]);
 
     // Views
     let productItemsView,
@@ -105,6 +106,7 @@ const SearchHeader = () => {
         );
     }
 
+
     return (
         <form
             className="ps-form--quick-search"
@@ -112,7 +114,40 @@ const SearchHeader = () => {
             action="/"
             onSubmit={handleSubmit}
             onBlur={handleClearKeyword}
-            >
+        >
+
+            <Select
+                defaultValue={[selectFile]}
+                placeholder="Barchasi"
+                className='searchFilterSelect'
+                onChange={(e)=>setSelectFile(e)}
+
+                style={{
+                    flex: 1,
+                    minWidth: "100px",
+                    height: "42px",
+                   
+                }}
+                options={[
+                    {
+                        value: '',
+                        label: 'Barchasi',
+                    },
+                    {
+                        value: 'file',
+                        label: 'File',
+                    },
+                    {
+                        value: 'audio',
+                        label: 'Audio',
+                    },
+                    {
+                        value: 'shablon',
+                        label: 'Shablon',
+                    },
+                ]}
+            />
+            
 
             <div className="ps-form__input">
                 <input
@@ -120,7 +155,7 @@ const SearchHeader = () => {
                     className="form-control"
                     type="text"
                     value={keyword}
-                    placeholder="Izlash"
+                    placeholder="Qidiruv..."
                     onChange={(e) => setKeyword(e.target.value)}
                 />
                 {clearTextView}
@@ -128,6 +163,7 @@ const SearchHeader = () => {
             </div>
 
             <button onClick={handleSubmit}>Qidiruv</button>
+
             <div
                 className={`ps-panel--search-result${isSearch ? ' active ' : ''
                     }`}>
