@@ -6,7 +6,6 @@ import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
 import { audioDownloaderSale } from '~/utilities/common-helpers';
-import ProductRepository from '~/repositories/ProductRepository';
 
 const CreditCard2 = ({ document}) => {
     const { user } = useSelector((state) => state.auth);
@@ -22,17 +21,9 @@ const CreditCard2 = ({ document}) => {
     const { removeAll } = useCart();
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
-    const { id } = Router.query;
-    const [data, setData] = useState(null);
 
-    const getOneProductData = async () => {
-        const res = await ProductRepository.postCartData([id]);
-        setData(res?.data?.data?.[0]);
-    };
+    const [data, setData] = useState({title:"documents"});
 
-    useEffect(() => {
-        getOneProductData();
-    }, [id]);
 
 
     const numberTyper = (value) => {
@@ -235,6 +226,8 @@ const CreditCard2 = ({ document}) => {
         setCardDate(inputValue);
         setNumberDate(formattedValue);
     };
+
+ console.log(data);
 
     const onChange = (key) => {
         setTab(key);
