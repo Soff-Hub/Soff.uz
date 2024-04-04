@@ -16,9 +16,9 @@ class PostRepository {
         return reponse;
     }
 
-    async postSearchFilter(payload) {
+    async postSearchFilter(payload, file) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?search=${payload ? payload : ''}`
+            `${baseUrl}customer/documents/?search=${payload ? payload : ''}&document_type=${file ? file : ''}`
         )
             .then((response) => {
                 return response.data;

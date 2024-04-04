@@ -706,3 +706,14 @@
     }
 }
 
+
+.searchFilterSelect{
+.ant-select-selector{
+    border: none !important;
+    border-radius: 0 !important;
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+    border-right: 0.5px solid rgb(211, 209, 209) !important;
+}
+}
+
