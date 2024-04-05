@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import ProductCart from '~/components/elements/products/ProductCart';
 
@@ -10,6 +10,7 @@ import { audioDownloaderSale } from '~/utilities/common-helpers';
 const Wishlist = ({ ecomerce }) => {
     const { removeSavedItem } = useWishlist();
     const { setCartOneItem } = useCart();
+    const [loading, setLoading] = useState(false);
 
     const { wishlist } = useSelector((state) => state.ecomerce);
     const { setAllSaved } = useWishlist();
@@ -135,13 +136,31 @@ const Wishlist = ({ ecomerce }) => {
                                                 </a>
                                             ) : (
                                                 <a
+                                                    style={{
+                                                        cursor: `${admin
+                                                            ? 'not-allowed'
+                                                            : 'pointer'
+                                                            }`,
+                                                    }}
                                                     className="ps-btn d-inline-block"
                                                     href=""
-                                                    onClick={(e) => {
-                                                        e.preventDefault()
-                                                        audioDownloaderSale(product, product)
+                                                    onClick={async (e) => {
+                                                        e.preventDefault();
+                                                        setLoading(true)
+                                                        await audioDownloaderSale(product, product);
+                                                        setLoading(false)
                                                     }}>
-                                                    Yuklab olish
+                                                    {!loading ? "Bepul yuklab olish" :
+                                                        <div style={{ minWidth: "108px" }}>
+                                                            <div
+                                                                className="spinner-border"
+                                                                role="status">
+                                                                <span className="visually-hidden">
+                                                                    Loading...
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    }
                                                 </a>
                                             )
                                         }

@@ -5,15 +5,17 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { audioDownloaderSale} from '~/utilities/common-helpers';
+import { audioDownloaderSale } from '~/utilities/common-helpers';
 
-const ModuleDetailShoppingActions = ({product}) => {
+const ModuleDetailShoppingActions = ({ product }) => {
 
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    
     const showModal = () => {
         setOpen(true);
     };
@@ -78,60 +80,95 @@ const ModuleDetailShoppingActions = ({product}) => {
                     <p></p>
                 </Modal>
                 <div className="ps-product__shopping">
-                  <div>
-                  {product?.discount_price > 0 ? (
-                        <>
-                            {product?.file_url !=="No" ? (
-                                <a
-                                    className="ps-btn ps-btn--black max-class"
-                                    href="#"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        audioDownloaderSale(product, product);
-                                    }}>
-                                    Yuklab olish
-                                </a>
-                            ) : (
-                                <>
+                    <div>
+                        {product?.discount_price > 0 ? (
+                            <>
+                                {product?.file_url !== "No" ? (
                                     <a
+                                        style={{
+                                            cursor: `${admin
+                                                ? 'not-allowed'
+                                                : 'pointer'
+                                                }`,
+                                        }}
                                         className="ps-btn ps-btn--black max-class"
                                         href="#"
-                                        onClick={(e) => handleAddItemToCart(e)}>
-                                        Savatga qo'shish
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            setLoading(true)
+                                            await audioDownloaderSale(product, product);
+                                            setLoading(false)
+                                        }}>
+                                        {!loading ? "Yuklab olish" :
+                                            <div style={{ minWidth: "108px" }}>
+                                                <div
+                                                    className="spinner-border"
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        }
                                     </a>
-                                    <a
-                                        className="ps-btn max-class"
-                                        href="#"
-                                        onClick={(e) => handleBuynow(e)}>
-                                        1 klikda sotib oling
-                                    </a>
-                                </>
-                            )}
-                        </>
-                    ) : (
-                        <a
-                            className="ps-btn ps-btn--black max-class"
-                            href="#"
-                            onClick={(e) => {
-                                e.preventDefault();
-                                 audioDownloaderSale(product, product);
-                            }}>
-                            Bepul yuklab olish
-                        </a>
-                    )}
-                  </div>
+                                ) : (
+                                    <>
+                                        <a
+                                            className="ps-btn ps-btn--black max-class"
+                                            href="#"
+                                            onClick={(e) => handleAddItemToCart(e)}>
+                                            Savatga qo'shish
+                                        </a>
+                                        <a
+                                            className="ps-btn max-class"
+                                            href="#"
+                                            onClick={(e) => handleBuynow(e)}>
+                                            1 klikda sotib oling
+                                        </a>
+                                    </>
+                                )}
+                            </>
+                        ) : (
+                            <a
+                                style={{
+                                    cursor: `${admin
+                                        ? 'not-allowed'
+                                        : 'pointer'
+                                        }`,
+                                }}
+                                className="ps-btn ps-btn--black max-class"
+                                href="#"
+                                onClick={async (e) => {
+                                    e.preventDefault();
+                                    setLoading(true)
+                                    await audioDownloaderSale(product, product);
+                                    setLoading(false)
+                                }}>
+                                {!loading ? "Bepul yuklab olish" :
+                                    <div style={{ minWidth: "108px" }}>
+                                        <div
+                                            className="spinner-border"
+                                            role="status">
+                                            <span className="visually-hidden">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+                            </a>
+                        )}
+                    </div>
                     <div className="ps-product__actions">
                         <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
                             <i
-                                className={`${
-                                    wishlist?.some(
-                                        (item) =>
-                                            Number(item.id) ===
-                                            Number(product.id)
-                                    )
-                                        ? 'fa-solid fa-heart text-danger'
-                                        : 'icon-heart'
-                                } `}></i>
+                                className={`${wishlist?.some(
+                                    (item) =>
+                                        Number(item.id) ===
+                                        Number(product.id)
+                                )
+                                    ? 'fa-solid fa-heart text-danger'
+                                    : 'icon-heart'
+                                    } `}></i>
                         </a>
                     </div>
                 </div>

@@ -41,6 +41,7 @@ const Posts = () => {
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
     const [free, setFree] = useState(false);
 
     const breadCrumb = [
@@ -179,7 +180,7 @@ const Posts = () => {
 
     async function handleClickPosts(e) {
         e.preventDefault();
-
+        setLoading2(true);
         const formData = new FormData();
         formData.append('title', title);
         if (free) {
@@ -216,6 +217,8 @@ const Posts = () => {
                 content: patchItems?.data.msg,
             });
         }
+        setLoading2(false);
+
     }
 
     async function PostFilePoster() {
@@ -472,7 +475,7 @@ const Posts = () => {
                                             livePosterFile?.images?.map(
                                                 (item, i) =>
                                                     item.id ===
-                                                    fileImgFileID ? (
+                                                        fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
@@ -608,14 +611,32 @@ const Posts = () => {
                             <div
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
-                                <button
-                                    type="submit"
-                                    className="btn btn-success py-3 ">
-                                    <span className="fs-4 px-5">
-                                        Shablon qo'shish{' '}
-                                        <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
-                                    </span>
-                                </button>
+
+                                {loading2 ?
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success py-3 " style={{minWidth:"235px"}}>
+                                        <div
+                                            className="spinner-border"
+                                            role="status">
+                                            <span className="visually-hidden">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                    </button> :
+
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success py-3 ">
+                                        <span className="fs-4 px-5">
+                                            Shablon qo'shish{' '}
+                                            <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
+                                        </span>
+                                    </button>
+                                }
+
+
+
                             </div>
                             <div className="mahsulotingiz">
                                 <span
@@ -667,8 +688,8 @@ const Posts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                      removePrefix(taxminiyNarx)
-                                                  ) + "so'm"
+                                                    removePrefix(taxminiyNarx)
+                                                ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -685,10 +706,10 @@ const Posts = () => {
                                     <strong>Taglari : </strong>
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                              return (
-                                                  <span key={i}>#{item} </span>
-                                              );
-                                          })
+                                            return (
+                                                <span key={i}>#{item} </span>
+                                            );
+                                        })
                                         : "To'ldirilmadi"}
                                 </p>
 
@@ -758,10 +779,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -778,14 +799,14 @@ const Posts = () => {
                                         <strong>Taglari : </strong>
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              #{item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            #{item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -805,8 +826,8 @@ const Posts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                      ' ' +
-                                                      'ta'
+                                                    ' ' +
+                                                    'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -900,10 +921,10 @@ const Posts = () => {
                                                     {' '}
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                              removePrefix(
-                                                                  taxminiyNarx
-                                                              )
-                                                          ) + "so'm"
+                                                            removePrefix(
+                                                                taxminiyNarx
+                                                            )
+                                                        ) + "so'm"
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>
@@ -928,8 +949,8 @@ const Posts = () => {
                                                             </strong>{' '}
                                                             {livePosterFile?.page_count
                                                                 ? livePosterFile?.page_count +
-                                                                  ' ' +
-                                                                  'ta'
+                                                                ' ' +
+                                                                'ta'
                                                                 : ''}{' '}
                                                         </li>
                                                         <li>
@@ -958,8 +979,8 @@ const Posts = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : livePosterFile
-                                                                      ?.category
-                                                                      ?.name}
+                                                                    ?.category
+                                                                    ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>

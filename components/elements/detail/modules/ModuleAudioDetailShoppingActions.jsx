@@ -16,6 +16,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
     const Router = useRouter();
     const statee = useSelector((state) => state.auth);
     const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     const showModal = () => {
         setOpen(true);
     };
@@ -100,11 +101,23 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                             }}
                                             className="ps-btn ps-btn--black max-class"
                                             href="#"
-                                            onClick={(e) => {
+                                            onClick={async (e) => {
                                                 e.preventDefault();
-                                                audioDownloaderSale(product, product);
+                                                setLoading(true)
+                                                await audioDownloaderSale(product, product);
+                                                setLoading(false)
                                             }}>
-                                            Yuklab olish
+                                            {!loading ? "Yuklab olish" :
+                                                <div style={{ minWidth: "108px" }}>
+                                                    <div
+                                                        className="spinner-border"
+                                                        role="status">
+                                                        <span className="visually-hidden">
+                                                            Loading...
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            }
                                         </a>
                                     )
                                 ) : (
@@ -141,17 +154,33 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                         ) : (
                             <a
                                 style={{
-                                    cursor: `${admin ? 'not-allowed' : 'pointer'
+                                    cursor: `${admin
+                                        ? 'not-allowed'
+                                        : 'pointer'
                                         }`,
                                 }}
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"
-                                onClick={(e) => {
+                                onClick={async (e) => {
                                     e.preventDefault();
-                                    audioDownloaderSale(product, product);
+                                    setLoading(true)
+                                    await audioDownloaderSale(product, product);
+                                    setLoading(false)
                                 }}>
-                                Bepul yuklab olish
+                                {!loading ? "Bepul yuklab olish" :
+                                    <div style={{ minWidth: "108px" }}>
+                                        <div
+                                            className="spinner-border"
+                                            role="status">
+                                            <span className="visually-hidden">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
                             </a>
+
+
                         )}
                     </div>
                     {product?.document?.content_type === 'audio' && (
