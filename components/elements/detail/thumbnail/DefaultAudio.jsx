@@ -2,6 +2,8 @@ import React from 'react';
 
 export default function DefaultAudio({ product }) {
 
+    console.log(product);
+
 
     return (
         <div
@@ -47,47 +49,24 @@ export default function DefaultAudio({ product }) {
                         {' '}
                         Davomiyligi {product?.document?.content_duration}
                     </span>
-                    {product?.file_url ? (
-                        ''
-                    ) : (
+                    {product?.file_url==='No' ? (
                         <span style={{ color: '#F4CA16' }}>
                             Batafsil eshitish uchun sotib oling
                         </span>
+                    ) : (
+                        ''
                     )}
                 </div>
 
-                {product?.file_url ? (
+                {product?.file_url==='No' ? (
                     <div className="audio-detail-container">
-                        <audio id="audioPlayer" controls>
-                            <source
-                                src={product?.file_url}
-                                type={`audio/${product?.document?.file_type?.replace(
-                                    '.',
-                                    ''
-                                )}`}
-                                defaultValue={product?.file_url}
-                            />
-                            Your browser does not support the audio element.
+                        <audio id="audioPlayer" controls src={product?.document?.short_content_url}>
                         </audio>
                     </div>
                 ) : (
                     <div className="audio-detail-container">
-                        <audio id="audioPlayer" controls>
-                            <source
-                                src={product?.document?.short_content_url}
-                                type={`audio/${product?.document?.file_type?.replace(
-                                    '.',
-                                    ''
-                                )}`}
-                                defaultValue={
-                                    product?.document?.short_content_url
-                                }
-                            />
-                            Your browser does not support the audio element.
+                        <audio id="audioPlayer" controls src={product?.file_url} >
                         </audio>
-                        <div className="audio-none">
-                            <span></span>
-                        </div>
                     </div>
 
                 )}
