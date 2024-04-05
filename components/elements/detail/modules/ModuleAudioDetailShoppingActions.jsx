@@ -6,7 +6,7 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { audioDownloaderSale} from '~/utilities/common-helpers';
+import { audioDownloaderSale } from '~/utilities/common-helpers';
 
 const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
 
@@ -79,58 +79,41 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                 </Modal>
                 <div
                     className={`ps-product__shopping ${product?.document?.content_type === 'video'
-                            ? 'video_action quek_video_button '
-                            : 'audio_action'
+                        ? 'video_action quek_video_button '
+                        : 'audio_action'
                         }  `}>
                     <div
                         className={`btn--container ${product?.document?.content_type === 'audio'
-                                ? 'audio_btn'
-                                : ''
+                            ? 'audio_btn'
+                            : ''
                             } `}>
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.file_url ? (
-                                    (<>{
-                                        product?.document?.content_type === "audio" ?
-                                            <a
-                                                style={{
-                                                    cursor: `${admin
-                                                            ? 'not-allowed'
-                                                            : 'pointer'
-                                                        }`,
-                                                }}
-                                                className="ps-btn ps-btn--black max-class"
-                                                href="#"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    audioDownloaderSale(product, product);
-                                                }}>
-                                                Yuklab olish
-                                            </a>
-                                            :
-                                            product?.document?.content_type === 'file' ? <a
-                                                style={{
-                                                    cursor: `${admin
-                                                            ? 'not-allowed'
-                                                            : 'pointer'
-                                                        }`,
-                                                }}
-                                                className="ps-btn ps-btn--black max-class"
-                                                href="#"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    audioDownloaderSale(product, product);
-                                                }}>
-                                                Yuklab olish
-                                            </a> : ''
-                                    }</>)
+                                {product?.file_url !== "No" ? (
+                                    (
+                                        <a
+                                            style={{
+                                                cursor: `${admin
+                                                    ? 'not-allowed'
+                                                    : 'pointer'
+                                                    }`,
+                                            }}
+                                            className="ps-btn ps-btn--black max-class"
+                                            href="#"
+                                            onClick={(e) => {
+                                                e.preventDefault();
+                                                audioDownloaderSale(product, product);
+                                            }}>
+                                            Yuklab olish
+                                        </a>
+                                    )
                                 ) : (
                                     <>
                                         <a
                                             style={{
                                                 cursor: `${admin
-                                                        ? 'not-allowed'
-                                                        : 'pointer'
+                                                    ? 'not-allowed'
+                                                    : 'pointer'
                                                     }`,
                                             }}
                                             className="ps-btn ps-btn--black max-clas"
@@ -143,8 +126,8 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                         <a
                                             style={{
                                                 cursor: `${admin
-                                                        ? 'not-allowed'
-                                                        : 'pointer'
+                                                    ? 'not-allowed'
+                                                    : 'pointer'
                                                     }`,
                                             }}
                                             className="ps-btn max-clas"
@@ -187,8 +170,8 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                 Number(item.id) ===
                                                 Number(product.id)
                                         )
-                                                ? 'fa-solid fa-heart text-danger'
-                                                : 'icon-heart'
+                                            ? 'fa-solid fa-heart text-danger'
+                                            : 'icon-heart'
                                             } `}></i>
                                 </a>
                             </div>

@@ -1,16 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal } from 'antd';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import ProductDetailQuickView from '~/components/elements/detail/ProductDetailQuickView';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import Router from 'next/router';
+import { baseUrl } from '~/repositories/Repository';
+import axios from 'axios'
 
 const ModuleProductActions = ({ product }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const [open, setOpen] = useState(false);
+    const [productView, setProduct] = useState([]);
+    const { user } = useSelector((state) => state.auth);
+
     const showModal = () => {
         setOpen(true);
     };
@@ -19,7 +24,7 @@ const ModuleProductActions = ({ product }) => {
     };
     const hideModalOk = () => {
         setOpen(false);
-        Router.push('/account/shopping-cart')
+        Router.push('/account/shopping-cart');
     };
 
     function handleAddItemToCart(e) {
@@ -41,10 +46,27 @@ const ModuleProductActions = ({ product }) => {
         }
     }
 
-    const handleShowQuickView = (e) => {
+
+    async function getProducts(e) {
         e.preventDefault();
-        setIsQuickView(true);
-    };
+        try {
+            const token = user?.access;
+            const response = await axios.get(
+                baseUrl + `customer/documents/${product?.slug}/`,
+                {
+                    headers: {
+                        Authorization: token ? `Bearer ${token}` : '',
+                    },
+                }
+            );
+
+            setProduct(response?.data);
+            setIsQuickView(true);
+        } catch (error) {
+            console.error('Error fetching document:', error);
+        }
+    }
+
 
     const handleHideQuickView = async (e) => {
         e.preventDefault();
@@ -60,13 +82,16 @@ const ModuleProductActions = ({ product }) => {
                 onOk={hideModalOk}
                 onCancel={hideModal}
                 okText="Savatga o'tish"
-                cancelButtonProps={{style:{
-                    color:'#000'
-                }}}
-                okButtonProps={{style:{
-                    color:'#fff',
-                }}}
-                
+                cancelButtonProps={{
+                    style: {
+                        color: '#000',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        color: '#fff',
+                    },
+                }}
                 cancelText="Xaridlarni davom etirish">
                 <p></p>
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
@@ -89,7 +114,7 @@ const ModuleProductActions = ({ product }) => {
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Ko'proq ko'rish"
-                        onClick={handleShowQuickView}>
+                        onClick={getProducts}>
                         <i className="icon-eye"></i>
                     </a>
                 </li>
@@ -119,7 +144,7 @@ const ModuleProductActions = ({ product }) => {
                     open={isQuickView}
                     closeIcon={<i className="icon icon-cross2"></i>}>
                     <h3>Tezkor ko'rish</h3>
-                    <ProductDetailQuickView product={product} />
+                    <ProductDetailQuickView product={productView} />
                 </Modal>
             </ul>
         </>

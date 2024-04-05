@@ -31,6 +31,7 @@ const HomeElectronicsPage = () => {
 
     async function getFreeDocuments() {
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
+        
         setFreeProducts({
             id: 999999999999999,
             name: "Bepul mahsulotlar",
@@ -78,7 +79,7 @@ const HomeElectronicsPage = () => {
     const memoizedBanner = useMemo(() => {
         return <ElectronicBanner />;
     }, []);
-
+    
     return (
         <main id="homepage-7">
             <Meta title="Soff | Barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />

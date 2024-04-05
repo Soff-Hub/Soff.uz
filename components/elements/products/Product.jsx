@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import ModuleProductActions from '~/components/elements/products/modules/ModuleProductActions';
 import useProduct from '~/hooks/useProduct';
-import Image from 'next/image';
+
 
 const Product = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
@@ -22,6 +22,7 @@ const Product = ({ product }) => {
                 : formattedIntegerPart;
 
         return formattedNumber;
+        
     }
     return (
         <div className="ps-product">

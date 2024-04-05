@@ -2,8 +2,6 @@ import React from 'react';
 
 export default function DefaultAudio({ product }) {
 
-    console.log(product);
-
 
     return (
         <div
@@ -62,6 +60,9 @@ export default function DefaultAudio({ product }) {
                     <div className="audio-detail-container">
                         <audio id="audioPlayer" controls src={product?.document?.short_content_url}>
                         </audio>
+                        <div className="audio-none">
+                            <span></span>
+                        </div>
                     </div>
                 ) : (
                     <div className="audio-detail-container">
