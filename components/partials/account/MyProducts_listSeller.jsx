@@ -21,18 +21,16 @@ function MyProductsListsSeller() {
     const [loading2, setLoading2] = useState(false);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
-        ? `${date[0]?.$y}-${
-              `${date[0].$M + 1}`.length === 1
-                  ? `0${date[0].$M + 1}`
-                  : date[0].$M + 1
-          }-${date[0].$D}`
+        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
+            ? `0${date[0].$M + 1}`
+            : date[0].$M + 1
+        }-${date[0].$D}`
         : '';
     const dateFormat1 = date
-        ? `${date[1]?.$y}-${
-              `${date[1].$M + 1}`.length === 1
-                  ? `0${date[1].$M + 1}`
-                  : date[1].$M + 1
-          }-${date[1].$D}`
+        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
+            ? `0${date[1].$M + 1}`
+            : date[1].$M + 1
+        }-${date[1].$D}`
         : '';
     const dataFormat = date ? `${dateFormat0}&end_date=${dateFormat1}` : '';
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -97,11 +95,13 @@ function MyProductsListsSeller() {
 
         return formattedNumber;
     }
+
+
     const handleButtonClick = async (ID) => {
         try {
             setLoading2(true);
             const fileContent = data?.find((item) => item.id == ID);
-            const response = await axios.get(fileContent?.document?.file_url, {
+            const response = await axios.get(fileContent?.file, {
                 responseType: 'blob',
             });
 
@@ -111,8 +111,8 @@ function MyProductsListsSeller() {
             a.download =
                 fileContent.title +
                 '.' +
-                fileContent?.document?.file_url.split('.')[
-                fileContent?.document?.file_url?.split('.').length - 1
+                fileContent?.file.split('.')[
+                fileContent?.file?.split('.').length - 1
                 ];
             document.body.appendChild(a);
             a.click();
@@ -124,6 +124,8 @@ function MyProductsListsSeller() {
         }
     };
 
+
+
     useEffect(() => {
         GetItemsCategory();
     }, []);
@@ -131,27 +133,22 @@ function MyProductsListsSeller() {
         GetItemsProducts(currPage, dataValCat, dataFormat);
     }, [dataValCat, dataFormat, searchDebounce]);
 
+
+
     const columns = [
         {
             title: 'Mahsulot',
             dataIndex: 'id',
-            key: 'address',
+            key: 'id',
             render: (id) => (
                 <>
-                    {loading2 ? (
-                        <div
-                            className="spinner-border mx-2 "
-                            role="status"
-                            style={{ cursor: 'not-allowed' }}>
-                            <span className="visually-hidden">Loading...</span>
-                        </div>
-                    ) : (
-                        <a>
-                            <i
-                                className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                                onClick={() => handleButtonClick(id)}></i>
-                        </a>
-                    )}
+
+                    <a>
+                        <i
+                            className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
+                            onClick={() => handleButtonClick(id)}></i>
+                    </a>
+
                 </>
             ),
         },
@@ -221,6 +218,8 @@ function MyProductsListsSeller() {
             ),
         },
     ];
+
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">

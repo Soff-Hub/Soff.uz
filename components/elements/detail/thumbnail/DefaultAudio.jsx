@@ -1,8 +1,7 @@
 import React from 'react';
 
-export default function DefaultAudio({ product, document }) {
-   
-   
+export default function DefaultAudio({ product }) {
+
 
     return (
         <div
@@ -22,11 +21,10 @@ export default function DefaultAudio({ product, document }) {
                 <div
                     className="audio__poster"
                     style={{
-                        backgroundImage: `url( ${
-                            product?.poster_url
-                                ? product?.poster_url
-                                : 'https://png.pngtree.com/background/20230612/original/pngtree-colorful-musical-notes-and-music-notes-picture-image_3176403.jpg'
-                        } )`,
+                        backgroundImage: `url( ${product?.poster_url
+                            ? product?.poster_url
+                            : 'https://png.pngtree.com/background/20230612/original/pngtree-colorful-musical-notes-and-music-notes-picture-image_3176403.jpg'
+                            } )`,
                         borderRadius: '5px',
                         backgroundPositionX: 'center',
                         backgroundPositionY: 'center',
@@ -49,7 +47,7 @@ export default function DefaultAudio({ product, document }) {
                         {' '}
                         Davomiyligi {product?.document?.content_duration}
                     </span>
-                    {document?.file_url ? (
+                    {product?.file_url ? (
                         ''
                     ) : (
                         <span style={{ color: '#F4CA16' }}>
@@ -57,23 +55,24 @@ export default function DefaultAudio({ product, document }) {
                         </span>
                     )}
                 </div>
-                {document?.file_url ? (
+
+                {product?.file_url ? (
                     <div className="audio-detail-container">
                         <audio id="audioPlayer" controls>
                             <source
-                                src={document?.file_url}
+                                src={product?.file_url}
                                 type={`audio/${product?.document?.file_type?.replace(
                                     '.',
                                     ''
                                 )}`}
-                                defaultValue={document?.file_url}
+                                defaultValue={product?.file_url}
                             />
                             Your browser does not support the audio element.
                         </audio>
                     </div>
                 ) : (
                     <div className="audio-detail-container">
-                        <audio id="audioPlayer"  controls>
+                        <audio id="audioPlayer" controls>
                             <source
                                 src={product?.document?.short_content_url}
                                 type={`audio/${product?.document?.file_type?.replace(
@@ -90,6 +89,7 @@ export default function DefaultAudio({ product, document }) {
                             <span></span>
                         </div>
                     </div>
+
                 )}
             </div>
         </div>

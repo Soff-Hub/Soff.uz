@@ -8,8 +8,7 @@ import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
 import { audioDownloaderSale} from '~/utilities/common-helpers';
 
-const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
- 
+const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
 
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -90,7 +89,7 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                             } `}>
                         {product?.discount_price > 0 ? (
                             <>
-                                {document?.file_url ? (
+                                {product?.file_url ? (
                                     (<>{
                                         product?.document?.content_type === "audio" ?
                                             <a
@@ -104,7 +103,7 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    audioDownloaderSale(document, product);
+                                                    audioDownloaderSale(product, product);
                                                 }}>
                                                 Yuklab olish
                                             </a>
@@ -120,7 +119,7 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                                 href="#"
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    audioDownloaderSale(document, product);
+                                                    audioDownloaderSale(product, product);
                                                 }}>
                                                 Yuklab olish
                                             </a> : ''
@@ -166,7 +165,7 @@ const ModuleAudioDetailShoppingActions = ({ product, document, admin }) => {
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault();
-                                    audioDownloaderSale(document, product);
+                                    audioDownloaderSale(product, product);
                                 }}>
                                 Bepul yuklab olish
                             </a>

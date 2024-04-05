@@ -7,7 +7,7 @@ import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
 import { audioDownloaderSale} from '~/utilities/common-helpers';
 
-const ModuleDetailShoppingActions = ({ product, document }) => {
+const ModuleDetailShoppingActions = ({product}) => {
 
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -81,13 +81,13 @@ const ModuleDetailShoppingActions = ({ product, document }) => {
                   <div>
                   {product?.discount_price > 0 ? (
                         <>
-                            {document?.file_url ? (
+                            {product?.file_url ? (
                                 <a
                                     className="ps-btn ps-btn--black max-class"
                                     href="#"
                                     onClick={(e) => {
                                         e.preventDefault();
-                                        audioDownloaderSale(document, product);
+                                        audioDownloaderSale(product, product);
                                     }}>
                                     Yuklab olish
                                 </a>
