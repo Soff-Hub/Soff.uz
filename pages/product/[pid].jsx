@@ -35,7 +35,6 @@ const ProductDefaultPage = () => {
                 {
                     headers: {
                         Authorization: token ? `Bearer ${token}` : '',
-                        Uuid: uuid
                     },
 
                 }
@@ -56,8 +55,7 @@ const ProductDefaultPage = () => {
                 baseUrl + `customer/similar/${pid}/`,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`,
-                        uuid: uuid
+                        Authorization: token ? `Bearer ${token}` : '',
                     },
 
                 }
@@ -81,22 +79,25 @@ const ProductDefaultPage = () => {
     }
 
     useEffect(() => {
-
-        getProducts();
-        getProductSimiller();
+        if (pid) {
+            getProducts();
+            getProductSimiller();
+        }
 
     }, [user?.access, pid]);
 
 
     useEffect(() => {
-        localStorage.getItem('uuid')
-            ? ''
-            : localStorage.setItem('uuid', uuidv4());
-        getUUID(
+        if (pid) {
             localStorage.getItem('uuid')
-                ? localStorage.getItem('uuid')
-                : uuidv4()
-        );
+                ? ''
+                : localStorage.setItem('uuid', uuidv4());
+            getUUID(
+                localStorage.getItem('uuid')
+                    ? localStorage.getItem('uuid')
+                    : uuidv4()
+            );
+        }
     }, []);
 
     const breadCrumb = [
