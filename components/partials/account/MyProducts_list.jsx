@@ -626,7 +626,7 @@ function MyProductsLists() {
                                         {user?.role === 'seller' ? (
                                             <Link
                                                 href={
-                                                    '/account/myproducts/posts'
+                                                    '/account/myproducts/product-selection'
                                                 }>
                                                 <button className="  btn btn-success col-md-3 py-3 ">
                                                     <span className="fs-4">
