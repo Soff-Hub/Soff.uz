@@ -81,7 +81,7 @@ const ModuleDetailShoppingActions = ({product}) => {
                   <div>
                   {product?.discount_price > 0 ? (
                         <>
-                            {product?.file_url ? (
+                            {product?.file_url !=="No" ? (
                                 <a
                                     className="ps-btn ps-btn--black max-class"
                                     href="#"

@@ -60,6 +60,8 @@ const ProductDetailQuickView = ({ product }) => {
                 : uuidv4()
         );
     }, []);
+
+
     return (
         <>
             {product?.document?.content_type === 'video' ? (
@@ -72,7 +74,6 @@ const ProductDetailQuickView = ({ product }) => {
             ) : product?.document?.content_type === 'audio' ? (
                 <ProductAudioDetailFullWidth
                     product={product}
-                    document={document}
                     views={views}
                 />
             ) : (
@@ -132,6 +133,8 @@ const ProductDetailQuickView = ({ product }) => {
                         ) : product?.document?.content_type === 'audio' ? (
                             <div className="audio-ramka">
                                 <div className="ps-wrapper">
+
+
                                     <div
                                         className="audio_ramka"
                                         style={{
@@ -154,6 +157,8 @@ const ProductDetailQuickView = ({ product }) => {
                                                     ?.short_content_url
                                             }></audio>
                                     </div>
+
+
                                     <div className="views_audio">
                                         {' '}
                                         <i className="fa-solid fa-eye"></i>{' '}
