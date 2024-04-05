@@ -8,7 +8,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 
-const ProductDetailFullwidth = ({ product, document, views }) => {
+const ProductDetailFullwidth = ({ product, views }) => {
     const [tag, setTag] = useState([]);
 
     const searchTag = (e) => {
@@ -36,7 +36,6 @@ const ProductDetailFullwidth = ({ product, document, views }) => {
                         />
                         <ModuleDetailShoppingActions
                             product={product}
-                            document={document}
                         />
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">

@@ -14,7 +14,7 @@ const Wishlist = ({ ecomerce }) => {
     const { wishlist } = useSelector((state) => state.ecomerce);
     const { setAllSaved } = useWishlist();
 
-    console.log(wishlist);
+
 
     useEffect(() => {
         if (wishlist.length !== JSON.parse(localStorage.getItem('wishlist'))) {

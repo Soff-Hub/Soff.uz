@@ -9,7 +9,6 @@ import Link from 'next/link';
 
 const ProductAudioDetailFullWidth = ({
     product,
-    document,
     views,
     admin,
     ActiveTag,
@@ -28,7 +27,7 @@ const ProductAudioDetailFullWidth = ({
             <div className="ps-product--detail ">
                 <div className="row">
                     <div className="col-12">
-                        <DefaultAudio document={document} product={product} />
+                        <DefaultAudio  product={product} />
                         <ModuleAudioDetailTopInformation
                             product={product}
                             views={views}
@@ -39,7 +38,6 @@ const ProductAudioDetailFullWidth = ({
                 <div className="price_and_tag">
                     <ModuleAudioDetailShoppingActions
                         product={product}
-                        document={document}
                         admin={admin}
                     />
 

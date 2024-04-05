@@ -3,7 +3,6 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
-
 import Meta from '~/components/shared/headers/Meta';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import { baseUrl } from '~/repositories/Repository';
@@ -11,59 +10,68 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import ProductRepository from '~/repositories/ProductRepository';
 import { v4 as uuidv4 } from 'uuid';
 import PostRepository from '~/repositories/PostRepository';
 import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
 import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
+import axios from 'axios'
 
-export async function getServerSideProps(context) {
-    try {
-        const request = await fetch(
-            baseUrl + `customer/documents/${context.query.pid}/`
-        );
-        const product = await request.json();
 
-        const SimilarRes = await fetch(
-            baseUrl + `customer/similar/${context.query.pid}/`
-        );
-        const similar = await SimilarRes.json();
-
-        return {
-            props: {
-                product,
-                similar,
-            },
-        };
-    } catch (error) {
-        console.error('Error fetching data:', error);
-
-        return {
-            props: {
-                product: null,
-                similar: null,
-            },
-        };
-    }
-}
-
-const ProductDefaultPage = ({ product, similar }) => {
+const ProductDefaultPage = () => {
     const router = useRouter();
     const { pid } = router.query;
     const [views, setViews] = useState(null);
-    const [document, setDocument] = useState('');
+    const [product, setProduct] = useState([]);
+    const [similar, setSimilar] = useState([]);
+
     const { user } = useSelector((state) => state.auth);
 
-    async function getDocument() {
-        const responseDocumentFile = await ProductRepository.getProductFileSlug(
-            pid,
-            user?.access,
-            localStorage.getItem('uuid') || uuidv4()
-        );
-        if (responseDocumentFile && responseDocumentFile !== document) {
-            setDocument(responseDocumentFile);
+    async function getProducts() {
+        try {
+            const token = user?.access;
+            const uuid = localStorage.getItem('uuid') || uuidv4();
+            const response = await axios.get(
+                baseUrl + `customer/documents/${pid}/`,
+                {
+                    headers: {
+                        Authorization: token ? `Bearer ${token}` : '',
+                        Uuid: uuid
+                    },
+
+                }
+            );
+
+            setProduct(response?.data);
+
+        } catch (error) {
+            console.error('Error fetching document:', error);
         }
     }
+
+    async function getProductSimiller() {
+        try {
+            const token = user?.access;
+            const uuid = localStorage.getItem('uuid') || uuidv4();
+            const response = await axios.get(
+                baseUrl + `customer/similar/${pid}/`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        uuid: uuid
+                    },
+
+                }
+            );
+
+            const responseDocumentFile = response.data;
+            setSimilar(responseDocumentFile);
+
+        } catch (error) {
+            console.error('Error fetching document:', error);
+        }
+    }
+
+
 
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
@@ -73,11 +81,12 @@ const ProductDefaultPage = ({ product, similar }) => {
     }
 
     useEffect(() => {
-        if (user?.access && pid) {
-            getDocument();
-        }
+
+        getProducts();
+        getProductSimiller();
+
     }, [user?.access, pid]);
-    
+
 
     useEffect(() => {
         localStorage.getItem('uuid')
@@ -122,7 +131,6 @@ const ProductDefaultPage = ({ product, similar }) => {
                                     <div className="ps-page__left">
                                         <ProductDetailFullwidth
                                             product={product}
-                                            document={document}
                                             views={views}
                                         />
                                     </div>
@@ -131,7 +139,6 @@ const ProductDefaultPage = ({ product, similar }) => {
                                     <div className="">
                                         <ProductVideoDetailFullWidth
                                             product={product}
-                                            document={document}
                                             views={views}
 
                                         />
@@ -141,7 +148,6 @@ const ProductDefaultPage = ({ product, similar }) => {
                                     <div className="">
                                         <ProductAudioDetailFullWidth
                                             product={product}
-                                            document={document}
                                             views={views}
                                         />
                                     </div> : product?.document?.content_type ===

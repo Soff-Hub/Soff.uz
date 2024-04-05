@@ -6,11 +6,9 @@ import Link from 'next/link';
 import Router from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 import DefaultVideo from './thumbnail/DefaultVideo';
-// import ModuleVideoDetailTopInformation from './modules/ModuleVideoDetailTopInformation';
 
 const ProductVideoDetailFullWidth = ({
     product,
-    document,
     views,
     admin,
     ActiveTag,
@@ -48,7 +46,6 @@ const ProductVideoDetailFullWidth = ({
                         />
                         <ModuleDetailShoppingActions
                             product={product}
-                            document={document}
                             admin={admin}
                         />
                         {admin && ActiveTag}
