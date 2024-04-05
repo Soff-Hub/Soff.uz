@@ -163,12 +163,14 @@ function MyProductsListsSeller() {
                 <div>
                     {data?.poster_url ? (
                         <Link href={`/product/${data?.slug}`} className='cursor-pointer'>
-                            <NextImageCard
-                                url={data?.poster_url}
-                                clasS="rounded-3 mb-2"
-                                width="54px"
-                                height="54px"
-                            />
+                            <a>
+                                <NextImageCard
+                                    url={data?.poster_url}
+                                    clasS="rounded-3 mb-2"
+                                    width="54px"
+                                    height="54px"
+                                />
+                            </a>
                         </Link>
                     ) : (
                         <i className="fa-solid fa-image fa-2x"></i>

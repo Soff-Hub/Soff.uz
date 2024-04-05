@@ -159,9 +159,6 @@ const CreditCard2 = ({ document}) => {
             if (document?.length > 1) {
                 removeAll();
             }
-            if (dataNews?.data) {
-                audioDownloaderSale(dataNews?.data, data?.title)
-            }
         }
     }
   
@@ -227,7 +224,7 @@ const CreditCard2 = ({ document}) => {
         setNumberDate(formattedValue);
     };
 
- console.log(data);
+
 
     const onChange = (key) => {
         setTab(key);

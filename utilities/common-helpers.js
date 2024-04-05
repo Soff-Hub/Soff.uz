@@ -47,7 +47,9 @@ export const audioDownloaderSale = async (file, product) => {
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
+        return true
     } catch (error) {
         console.error('Error downloading file: ', error);
+        return Promise.reject(error)
     }
 };
