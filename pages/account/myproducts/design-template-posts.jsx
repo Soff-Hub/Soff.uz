@@ -398,7 +398,7 @@ const Posts = () => {
                                                     <span>
                                                         Shablon faylini yuklash
                                                         uchun ushbu hududga
-                                                        bosing.
+                                                        bosing (.zip).
                                                     </span>
                                                 </span>
                                             )}

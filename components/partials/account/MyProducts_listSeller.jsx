@@ -9,6 +9,7 @@ import CalculateTimeDifference from './DateFormatter';
 import axios from 'axios';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
+import Link from "next/link"
 
 function MyProductsListsSeller() {
     const [data, setData] = useState([]);
@@ -135,6 +136,8 @@ function MyProductsListsSeller() {
 
 
 
+
+
     const columns = [
         {
             title: 'Mahsulot',
@@ -154,17 +157,19 @@ function MyProductsListsSeller() {
         },
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
-            key: 'name',
-            render: (poster_url) => (
+            dataIndex: 'data',
+            key: 'data',
+            render: (data) => (
                 <div>
-                    {poster_url ? (
-                        <NextImageCard
-                            url={poster_url}
-                            clasS="rounded-3 mb-2"
-                            width="54px"
-                            height="54px"
-                        />
+                    {data?.poster_url ? (
+                        <Link href={`/product/${data?.slug}`} className='cursor-pointer'>
+                            <NextImageCard
+                                url={data?.poster_url}
+                                clasS="rounded-3 mb-2"
+                                width="54px"
+                                height="54px"
+                            />
+                        </Link>
                     ) : (
                         <i className="fa-solid fa-image fa-2x"></i>
                     )}
