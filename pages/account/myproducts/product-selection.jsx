@@ -43,6 +43,9 @@ const Posts = () => {
     }, [])
 
 
+
+
+
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -65,45 +68,52 @@ const Posts = () => {
                                     <div className='slider'>
                                         <div className='slide-track'>
                                             {
-                                                category?.docs?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.docs?.slice(0, Math.floor(category?.docs?.length / 3))?.map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
+
                                         </div>
-                                     
+
                                     </div>
 
                                     <div className='slider2'>
                                         <div className='slide-track2'>
                                             {
-                                                category?.docs?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.docs?.slice((Math.floor(category?.docs?.length / 3) + 1), (Math.floor(category?.docs?.length / 3)) * 2).map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
                                     </div>
-                                    
+
                                     <div className='slider3'>
                                         <div className='slide-track3'>
                                             {
-                                                category?.docs?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.docs?.slice(((Math.floor(category?.docs?.length / 3) * 2) + 1), (Math.floor(category?.docs?.length / 3)) * 3)?.map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </a>
@@ -120,45 +130,51 @@ const Posts = () => {
                                     <div className='slider'>
                                         <div className='slide-track'>
                                             {
-                                                category?.audio?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.audio?.slice(0, Math.floor(category?.audio?.length / 3))?.map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
-                                     
+
                                     </div>
 
                                     <div className='slider2'>
                                         <div className='slide-track2'>
-                                            {
-                                                category?.audio?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                        {
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.audio?.slice((Math.floor(category?.audio?.length / 3) + 1), (Math.floor(category?.audio?.length / 3)) * 2).map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
                                     </div>
-                                    
+
                                     <div className='slider3'>
                                         <div className='slide-track3'>
-                                            {
-                                                category?.audio?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                        {
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.audio?.slice(((Math.floor(category?.audio?.length / 3) * 2) + 1), (Math.floor(category?.audio?.length / 3)) * 3)?.map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </a>
@@ -175,46 +191,52 @@ const Posts = () => {
                                     </div>
                                     <div className='slider'>
                                         <div className='slide-track'>
-                                            {
-                                                category?.template?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                        {
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.template?.slice(0, Math.floor(category?.template?.length / 3))?.map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
-                                     
+
                                     </div>
 
                                     <div className='slider2'>
                                         <div className='slide-track2'>
-                                            {
-                                                category?.template?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                        {
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.template?.slice((Math.floor(category?.template?.length / 3) + 1), (Math.floor(category?.template?.length / 3)) * 2).map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
                                     </div>
-                                    
+
                                     <div className='slider3'>
                                         <div className='slide-track3'>
-                                            {
-                                                category?.template?.map((item, index) => (
-                                                    <Button key={index} >
-                                                        {item?.name}
-                                                    </Button>
+                                        {
+                                                Array(40).fill(0).map((_) => (
+                                                    category?.template?.slice(((Math.floor(category?.template?.length / 3) * 2) + 1), (Math.floor(category?.template?.length / 3)) * 3)?.map((item, index) => (
+                                                        <Button key={index} >
+                                                            {item?.name}
+                                                        </Button>
 
+                                                    ))
                                                 ))
                                             }
 
                                         </div>
-                                       
+
                                     </div>
                                 </div>
                             </a>

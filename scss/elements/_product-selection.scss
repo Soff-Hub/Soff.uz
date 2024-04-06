@@ -50,7 +50,7 @@
                         animation: scroll 80s linear infinite;
                         display: flex;
                         width: calc(250px * 18);
-                         height: 25px !important;
+                        height: 25px !important;
                     }
 
                     .slide-track:hover {
@@ -91,7 +91,7 @@
                         animation: scroll2 80s linear infinite;
                         display: flex;
                         width: calc(250px * 18);
-                         height: 25px !important;
+                        height: 25px !important;
                     }
 
                     .slide-track2:hover {
@@ -129,10 +129,10 @@
                     position: relative;
 
                     .slide-track3 {
-                        animation: scroll3 80s linear infinite;
+                        animation: scroll 80s linear infinite;
                         display: flex;
                         width: calc(250px * 18);
-                         height: 25px !important;
+                        height: 25px !important;
                     }
 
                     .slide-track3:hover {
@@ -247,22 +247,13 @@
                     0% {
                         transform: translateX(calc(-250px * 9));
                     }
-                    
+
                     100% {
                         transform: translateX(0);
                     }
                 }
 
-                @keyframes scroll3 {
-                    0% {
-                        transform: translateX(-100px);
-                    }
-                    
-                    100% {
-                        transform: translateX(calc(-250px * 9));
-                    }
-                }
-                
+
 
                 i {
                     transition: all 0.9s;
