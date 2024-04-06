@@ -7,7 +7,7 @@ import Page404 from '~/pages/page/page-404';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Link from 'next/link';
-import { Button } from "antd"
+import { Button, Tooltip } from "antd"
 import axios from 'axios'
 import { baseUrl } from '~/repositories/Repository';
 
@@ -77,129 +77,51 @@ const Posts = () => {
                     </div> :
 
                         <>
-                            <h2 className='text-center products_title'>Mahsulot turini tanlang</h2>
+                            <h2 className='text-center products_title'> Qanday mahsulot yuklamoqchisiz?</h2>
                             <div className="product-selection" >
 
                                 <div className="select-col  ">
                                     <Link href="/account/myproducts/posts">
                                         <a>
-                                            <div className="select-card file">
-                                                <div className='d-flex flex-column'>
+                                            <div className="select-card">
+
+                                                <Tooltip
+                                                    className='toltip'
+                                                    title={category?.file?.map(item => (item)).join(', ')}
+                                                    overlayStyle={{ minWidth: "350px" }}
+                                                    color='rgb(31 41 55)'
+                                                >
+                                                    <i
+                                                        style={{ cursor: 'pointer', fontSize: "20px" }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+
+                                                </Tooltip>
+
+                                                <div className='d-flex flex-column  gap-3'>
                                                     <i className="fa-regular fa-folder-open"></i>
-                                                    <span>File</span>
-                                                </div>
-
-                                                <div className='slider'>
-                                                    <div className='slide-track'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.docs?.slice(0, Math.floor(category?.docs?.length / 3))?.map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div className='slider2'>
-                                                    <div className='slide-track2'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.docs?.slice((Math.floor(category?.docs?.length / 3) + 1), (Math.floor(category?.docs?.length / 3)) * 2).map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
-                                                </div>
-
-                                                <div className='slider3'>
-                                                    <div className='slide-track3'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.docs?.slice(((Math.floor(category?.docs?.length / 3) * 2) + 1), (Math.floor(category?.docs?.length / 3)) * 3)?.map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
-
+                                                    <span>Fayl mahsulotlar</span>
                                                 </div>
                                             </div>
                                         </a>
                                     </Link>
                                 </div>
-                                <div className=" select-col  ">
+                                <div className="select-col ">
                                     <Link href="/account/myproducts/audio-posts">
                                         <a>
-                                            <div className="select-card file">
-                                                <div className='d-flex flex-column '>
+                                            <div className="select-card ">
+                                                <Tooltip className='toltip'
+                                                    title={category?.audio?.map(item => (item)).join(', ')}
+                                                    overlayStyle={{ minWidth: "350px" }}
+                                                    color='rgb(31 41 55)' >
+                                                    <i
+                                                        style={{ cursor: 'pointer', fontSize: "20px" }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                </Tooltip>
+                                                <div className='d-flex flex-column gap-3'>
                                                     <i className="fa-solid fa-music"></i>
-                                                    <span> Audio</span>
-                                                </div>
-                                                <div className='slider'>
-                                                    <div className='slide-track'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.audio?.slice(0, Math.floor(category?.audio?.length / 3))?.map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
-
+                                                    <span> Audio materiallar</span>
                                                 </div>
 
-                                                <div className='slider2'>
-                                                    <div className='slide-track2'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.audio?.slice((Math.floor(category?.audio?.length / 3) + 1), (Math.floor(category?.audio?.length / 3)) * 2).map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
-                                                </div>
-
-                                                <div className='slider3'>
-                                                    <div className='slide-track3'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.audio?.slice(((Math.floor(category?.audio?.length / 3) * 2) + 1), (Math.floor(category?.audio?.length / 3)) * 3)?.map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
-
-                                                </div>
                                             </div>
                                         </a>
                                     </Link>
@@ -207,59 +129,19 @@ const Posts = () => {
                                 <div className=" select-col  ">
                                     <Link href="/account/myproducts/design-template-posts">
                                         <a>
-                                            <div className="select-card file">
-                                                <div className='d-flex flex-column'>
+                                            <div className="select-card">
+
+                                                <Tooltip className='toltip'
+                                                    title={category?.shablon?.map(item => (item)).join(', ')}
+                                                    overlayStyle={{ minWidth: "350px" }}
+                                                    color='rgb(31 41 55)' >
+                                                    <i
+                                                        style={{ cursor: 'pointer', fontSize: "20px" }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                </Tooltip>
+                                                <div className='d-flex flex-column gap-3'>
                                                     <i className="fa-solid fa-wand-magic-sparkles"></i>
-                                                    <span>Shablonlar</span>
-
-                                                </div>
-                                                <div className='slider'>
-                                                    <div className='slide-track'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.template?.slice(0, Math.floor(category?.template?.length / 3))?.map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
-
-                                                </div>
-
-                                                <div className='slider2'>
-                                                    <div className='slide-track2'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.template?.slice((Math.floor(category?.template?.length / 3) + 1), (Math.floor(category?.template?.length / 3)) * 2).map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
-                                                </div>
-
-                                                <div className='slider3'>
-                                                    <div className='slide-track3'>
-                                                        {
-                                                            Array(40).fill(0).map((_) => (
-                                                                category?.template?.slice(((Math.floor(category?.template?.length / 3) * 2) + 1), (Math.floor(category?.template?.length / 3)) * 3)?.map((item, index) => (
-                                                                    <Button key={index} >
-                                                                        {item?.name}
-                                                                    </Button>
-
-                                                                ))
-                                                            ))
-                                                        }
-
-                                                    </div>
+                                                    <span>Tayyor shablonlar</span>
 
                                                 </div>
                                             </div>
