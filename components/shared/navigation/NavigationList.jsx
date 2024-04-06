@@ -6,7 +6,7 @@ import PanelCartMobile from '../panel/PanelCartMobile';
 import PanelSearch from '../panel/PanelSearch';
 import PanelCategories from '../panel/PanelCategories';
 import { useState } from 'react';
-import Link from 'next/link';
+
 
 function NavigationList() {
     const [menuDrawer, setMenuDrawer] = useState(false);
@@ -137,6 +137,8 @@ function NavigationList() {
                     </div>
                 </div>
             </Drawer>
+
+
             <div className="navigation__content">
                 <a
                     className={`navigation__item ${
@@ -164,6 +166,8 @@ function NavigationList() {
                     <span> Savat</span>
                 </a>
             </div>
+
+
         </div>
     );
 }
