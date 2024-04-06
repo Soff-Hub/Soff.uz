@@ -5,7 +5,8 @@
 .yashil {
     color: $color-1st;
 }
-.btn_color{
+
+.btn_color {
     color: #fff !important;
 }
 
@@ -198,14 +199,15 @@
     display: block;
 }
 
-.yuborish{
+.yuborish {
     color: #fff !important;
-    &:hover{
+
+    &:hover {
         background-color: #000 !important;
     }
 }
 
-.ps-product__content--search{
+.ps-product__content--search {
     max-width: 420px;
     width: 100%;
 }
@@ -579,7 +581,7 @@
         display: flex;
         flex-flow: row nowrap;
 
-        > * {
+        >* {
             width: 100%;
         }
 
@@ -1225,6 +1227,7 @@
 }
 
 @media screen and (max-width: 370px) {
+
     // .home-card{
     //     max-width: 160px;
     //     min-width: 160px;
@@ -1673,10 +1676,12 @@
     height: 500px;
     overflow-y: scroll;
 }
+
 .colCard2 {
     position: absolute;
     top: 71%;
 }
+
 .colCard {
     position: absolute;
     top: 45%;
@@ -1744,6 +1749,7 @@
         top: 20%;
         left: -100%;
     }
+
     .colCard {
         position: absolute;
         top: 52%;
@@ -1845,14 +1851,14 @@
 }
 
 
-@media (min-width: 859px){
+@media (min-width: 859px) {
     .colCard {
         top: 43%;
     }
-} 
+}
 
 @media screen and (max-width: 768px) {
-    .tolov-usullari{
+    .tolov-usullari {
         margin-top: 30px !important;
     }
 }
@@ -1911,11 +1917,13 @@
         top: ' -9px';
         z-index: 1;
     }
+
     .bannerModal2Carousel {
         top: 25%;
         left: 14%;
         max-width: 300px;
     }
+
     .colCard2 {
         position: absolute;
         top: 81%;
@@ -1959,6 +1967,7 @@
         right: 0;
         top: ' -9px';
     }
+
     .click-b {
         max-width: 400px;
         width: 100%;
@@ -2009,6 +2018,7 @@
         right: 0;
         top: ' -9px';
     }
+
     .click-b {
         max-width: 300px;
         width: 100%;
@@ -2045,5 +2055,21 @@
 @media only screen and (max-width: 768px) {
     .dashboard-div {
         display: none;
+    }
+}
+
+
+
+.selected-img {
+    
+    span {
+        background-color: rgba(255, 255, 255, 0.7);
+        display: block;
+        width: 80px;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
     }
 }
