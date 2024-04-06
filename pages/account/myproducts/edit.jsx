@@ -30,6 +30,11 @@ const PostsMyProducts = () => {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
     const [free, setFree] = useState(false)
+    const [disabled, setDeisabled] = useState(false);
+
+    const [customePoster, setCustomePoster] = useState([...products.document.images])
+    const [customeFile, setCustomeFile] = useState(null)
+
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
@@ -64,13 +69,15 @@ const PostsMyProducts = () => {
         );
     }
 
-
+    console.log(customePoster.filter(el => el?.custome !== true));
+    console.log(customeFile);
 
     async function handleClickPostsEdit(e) {
         e.preventDefault()
 
         if (title || taxminiyNarx || tagSearchResult || category_id[0]) {
             const formData = new FormData();
+            setDeisabled(true)
             if (title) {
                 formData.append('title', title);
             }
@@ -89,6 +96,34 @@ const PostsMyProducts = () => {
             if (tagSearchResult) {
                 formData.append('tags', tagSearchResult)
             }
+
+            const customePosters = customePoster.filter(el => el.custome).map(el => el.file)
+            const oldPosters = customePoster.filter(el => el?.custome !== true).map(el => el.id)
+
+            if (customePosters.length > 0) {
+                for (const file of customePosters) {
+                    formData.append('images', file)
+                }
+            }
+
+            if (oldPosters.length > 0) {
+                for (const file of oldPosters) {
+                    formData.append('images_id', file)
+                }
+            }
+
+            if (customeFile?.file) {
+                formData.append('poster', customeFile.file)
+            } else {
+                if (customeFile) {
+                    formData.append('poster_id', customeFile.id)
+                }
+            }
+
+
+
+
+
             const patchItems = await PatchRepository.getMyProductsPatch(formData, products?.id, user?.access);
             if (patchItems?.status == 202) {
                 Router.push('/account/myproducts');
@@ -101,12 +136,14 @@ const PostsMyProducts = () => {
                 setTagSearchResult(null)
                 setTitle(null)
                 setTaxminiyNarx(null)
+                setDeisabled(false)
             } else {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
                     content: patchItems?.data.msg,
                 });
+                setDeisabled(false)
             }
 
         }
@@ -173,6 +210,23 @@ const PostsMyProducts = () => {
     };
 
 
+
+    function LiveImage(e) {
+        const img = window.URL.createObjectURL(e.target.files[0]);
+        // setCustomePoster(img);
+
+        if(customePoster.length <= 8) {
+            setCustomePoster([{ id: new Date().getTime(), image_url: img, file: e.target.files[0], custome: true }, ...customePoster]);
+        } else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Xatolik",
+                content: "8 tarasmdan ko'p yuklay olmaysiz",
+            });
+        }
+    }
+
+
     useEffect(() => {
         if (products?.price === 0) {
             setFree(true)
@@ -181,6 +235,7 @@ const PostsMyProducts = () => {
         setEditorLoaded(true);
         GetItemsCategoryLists();
     }, []);
+
 
 
 
@@ -250,6 +305,105 @@ const PostsMyProducts = () => {
                                 </div>
 
                             </div>
+
+
+                            <div className="row mb-3">
+                                <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                    <p>Mahsulot rasmi: *</p>
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: .jpeg yoki .jpg, .png, .psd, .svg">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
+                                <div
+                                    className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
+                                    style={{
+                                        backgroundColor: '#F1F1F1',
+                                        border: `1px dashed green`,
+                                        height: '100px',
+                                    }}>
+                                    <label
+                                        style={{
+                                            width: '50px',
+                                            cursor: 'pointer',
+                                        }}>
+                                        <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                                        <input
+                                            type="file"
+                                            onChange={(e) => LiveImage(e)}
+                                            accept="image/*"
+                                            style={{ width: '20px' }}
+                                        />
+                                    </label>
+                                    <div
+                                        className="overflow-x-scroll  d-flex  gap-1"
+                                        style={{ width: '430px' }}>
+                                        {!customePoster?.length > 0 ? (
+                                            <span
+                                                className="d-flex flex-column align-items-center mt-4 mx-5"
+                                                style={{ cursor: 'pointer' }}>
+                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                <span className="text-center">
+                                                    {' '}
+                                                    {false ? "Ilitmos kamida 3ta rasmini yuklang." : "Rasmini yuklash uchun ushbu hududga bosing."}
+                                                    {' '}
+                                                </span>
+                                            </span>
+                                        ) : (
+                                            customePoster?.map(
+                                                (item, i) =>
+                                                    customeFile?.image_url === item.image_url ? (
+                                                        <div
+                                                            className='selected-img'
+                                                            style={{
+                                                                display:
+                                                                    'block',
+                                                                border: `1px solid red`,
+                                                                // filter: 'blur(1px)',
+                                                                cursor: 'default',
+                                                                padding: 1,
+                                                                width: '80px',
+                                                                backgroundImage: `url(${item.image_url})`,
+                                                                backgroundPosition: 'center',
+                                                                backgroundSize: '100%'
+                                                            }}
+                                                            alt=""
+                                                            key={i}
+                                                        >
+                                                            <span
+                                                                onClick={() => {
+                                                                    setCustomePoster((c) => ([...c.filter(el => el.image_url !== item.image_url)]))
+                                                                    setCustomeFile(null)
+                                                                }}
+                                                            >
+                                                                <img src="/static/img/delete.png" alt="" width={20} />
+                                                            </span>
+                                                        </div>
+                                                    ) : (
+                                                        <img
+                                                            className="mx-1 "
+                                                            onClick={() => {
+                                                                setCustomeFile(item)
+                                                            }}
+                                                            src={
+                                                                item?.image_url
+                                                            }
+                                                            alt=" "
+                                                            key={i}
+                                                            style={{
+                                                                display:
+                                                                    'block',
+                                                                cursor: 'pointer',
+                                                            }}
+                                                        />
+                                                    )
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+
                             <div className='row'>
                                 <div className='col-md-4 mt-2 d-flex justify-content-between p-0'><p>Mahsulot sotish narxi: *</p> <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi."  ><i style={{ cursor: "pointer" }} className="fa-regular fa-circle-question px-4 mt-2"></i></Tooltip></div>
                                 <Checkbox checked={free} className='col-md-2 d-flex align-items-center justify-content-start px-0 py-2' onChange={handleFreeChange}>Bepul</Checkbox>
@@ -302,7 +456,7 @@ const PostsMyProducts = () => {
                         </form>
                         <div className="card rounded-3 col-md-4 p-3 cardResponsive " style={{ maxWidth: "370px", }}>
                             <div className="image rounded mb-3" >
-                                <img src={products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />
+                                <img src={customeFile?.image_url || products.poster} alt="doc" className='mb-4 border' style={{ objectFit: "cover" }} />
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
