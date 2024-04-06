@@ -41,6 +41,7 @@ const Posts = () => {
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
+    const [disabled, setDeisabled] = useState(false);
     const [free, setFree] = useState(false);
     const [uploadPoster, setUploadPoster] = useState(false)
     const [customePoster, setCustomePoster] = useState(false)
@@ -182,6 +183,7 @@ const Posts = () => {
 
     async function handleClickPosts(e) {
         e.preventDefault();
+        setDeisabled
 
         const formData = new FormData();
         formData.append('title', title);
@@ -237,6 +239,7 @@ const Posts = () => {
     async function PostFilePoster() {
         if (fileImgFile) {
             setLiveFile('');
+            setDeisabled(true)
             setLivePosterFile('');
             const formData = new FormData();
             setLoading(true);
@@ -264,12 +267,14 @@ const Posts = () => {
                     title: 'Muvaffaqqiyatli!',
                     content: "Yangi file qo'shdingiz ",
                 });
+                setDeisabled(false)
             } else {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
                     content: "File mahsulot qo'sha olmadingiz ",
                 });
+                setDeisabled(false)
             }
             setLoading(false);
         }
@@ -463,7 +468,7 @@ const Posts = () => {
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot rasmi: *</p>
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .xlsx, .ppt, .pdf, .jpeg yoki .jpg, .png, .psd, .svg, html, .txt, .mp4, mp3, .zip.">
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .psd, .svg">
                                         <i
                                             style={{ cursor: 'pointer' }}
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -646,6 +651,7 @@ const Posts = () => {
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
+                                    disabled={disabled}
                                     type="submit"
                                     className="btn btn-success py-3 ">
                                     <span className="fs-4 px-5">
