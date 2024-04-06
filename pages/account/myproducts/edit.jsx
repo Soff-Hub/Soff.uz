@@ -32,7 +32,7 @@ const PostsMyProducts = () => {
     const [free, setFree] = useState(false)
     const [disabled, setDeisabled] = useState(false);
 
-    const [customePoster, setCustomePoster] = useState([...products.document.images])
+    const [customePoster, setCustomePoster] = useState([])
     const [customeFile, setCustomeFile] = useState(null)
 
     const breadCrumb = [
@@ -44,6 +44,13 @@ const PostsMyProducts = () => {
             text: "Mahsulotni tahrirlash",
         },
     ];
+
+    useEffect(() => {
+        if (products && products.document && products.document.images) {
+            setCustomePoster([...products.document.images]);
+        }
+    }, [products]);
+    
 
     const Option = Select.Option;
 
@@ -69,8 +76,7 @@ const PostsMyProducts = () => {
         );
     }
 
-    console.log(customePoster.filter(el => el?.custome !== true));
-    console.log(customeFile);
+
 
     async function handleClickPostsEdit(e) {
         e.preventDefault()
