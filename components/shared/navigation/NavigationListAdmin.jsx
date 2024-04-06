@@ -59,6 +59,9 @@ function NavigationListAdmin() {
                     </div>
                 </div>
             </Drawer>
+
+
+
             <Drawer
                 className="ps-panel--mobile"
                 placement="right"
@@ -82,6 +85,8 @@ function NavigationListAdmin() {
                     </div>
                 </div>
             </Drawer>
+
+
             <div className="navigation__content">
                 <a
                     className={`navigation__item`}
@@ -110,6 +115,7 @@ function NavigationListAdmin() {
                     <span>Menu</span>
                 </a>
             </div>
+            
         </div>
     );
 }

@@ -170,7 +170,7 @@ function MyProductsListsSeller() {
             render: (image) => (
                 <div>
                     {image?.poster_url ? (
-                        <Link href={`/product/${image?.slug}`} className='cursor-pointer'>
+                        <Link href={image?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${image?.slug}`} className='cursor-pointer'>
                             <a>
                                 <NextImageCard
                                     url={image?.poster_url}
@@ -193,7 +193,7 @@ function MyProductsListsSeller() {
             width: 300,
             render: (name) => (
 
-                <Link href={`/product/${name?.slug}`} >
+                <Link href={name?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${name?.slug}`} >
 
                     <a>
                         <span className="truncate whitespace-nowrap"> {name?.title}</span>

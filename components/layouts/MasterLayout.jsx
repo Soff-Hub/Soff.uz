@@ -12,8 +12,6 @@ import NavigationListCustomer from '../shared/navigation/NavigationListCustomer'
 import Backtop from '../elements/backTop';
 
 const MasterLayout = ({ children }) => {
-    const dispatch = useDispatch();
-    const [cookies] = useCookies(['cart', 'compare', 'wishlist']);
     const { accountLinks, user } = useSelector((state) => state.auth);
     const router = useRouter();
     const { pathname } = router;
@@ -34,11 +32,13 @@ const MasterLayout = ({ children }) => {
         initEcomerceValues();
     }, []);
 
+
+
     return (
         <>
             {children}
             <PageLoader />
-            {accountLinks.some((el) => el.url === pathname) ? (
+            {accountLinks.some((el) => el.url === pathname) || accountLinks.some((el) => el.url === pathname + "?page=1") ? (
                 user?.role === 'admin' ? (
                     <NavigationListAdmin />
                 ) : user?.role === 'seller' ? (
