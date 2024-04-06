@@ -140,39 +140,56 @@ function ApplicationLists() {
     }
 
     async function handleClickAriza() {
-        if (dataCardModalImg || dataCardModalStatus || dataCardModalDes) {
-            const formData = new FormData();
-            if (dataCardModalImg) {
-                formData.append("receipt", dataCardModalImg)
-            }
-            if (dataCardModalStatus) {
-                formData.append("status", dataCardModalStatus)
-            }
-            if (dataCardModalDes) {
-                formData.append("description", dataCardModalDes)
-            }
+        try {
+            if (dataCardModalImg || dataCardModalStatus || dataCardModalDes) {
+                const formData = new FormData();
+                if (dataCardModalImg) {
+                    formData.append("receipt", dataCardModalImg)
+                }
+                if (dataCardModalStatus) {
+                    formData.append("status", dataCardModalStatus)
+                }
+                if (dataCardModalDes) {
+                    formData.append("description", dataCardModalDes)
+                }
 
-            const Items = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
-            const modal = Modal.success({
+                const response = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
+
+                if (response || response?.status === 201 || response?.status==200) {
+                    const modal = Modal.success({
+                        centered: true,
+                        title: 'Muvaffaqqiyatli!',
+                        content: "Siz malumotlarni o'zgartirdingiz",
+                    });
+
+                    // Reload the data after successful update
+                    getItemsSellerAdmin(1, dataCat);
+                    setDataCardModalStatus(null);
+                    setDataCardModalDes(null);
+                    setDataCardModalImg(null);
+                } else {
+                    throw new Error("An error occurred while updating data");
+                }
+            } else {
+                const modal = Modal.info({
+                    centered: true,
+                    title: "Qayta urinib ko'ring",
+                    content: "O'zgartirish uchun malumot kiritilmadi",
+                });
+            }
+        } catch (error) {
+            console.log(error);
+            // Display error message to the user
+            const modal = Modal.error({
                 centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
-
-            getItemsSellerAdmin(1, dataCat);
-            setDataCardModalStatus(null)
-            setDataCardModalDes(null)
-            setDataCardModalImg(null)
-        }
-        else {
-            const modal = Modal.info({
-                centered: true,
-                title: "Qayta urinib ko'ring",
-                content: "O'zgartirish uchun malumot kiritilmadi ",
+                title: "Xatolik",
+                content: "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
             });
         }
-
     }
+
+
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
