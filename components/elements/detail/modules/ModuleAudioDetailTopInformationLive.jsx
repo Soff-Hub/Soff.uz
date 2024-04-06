@@ -33,7 +33,7 @@ const ModuleAudioDetailTopInformationLive = ({
                     <p>Bepul mahsulot</p>
                 ) : (
                     <>
-                        <p>
+                        <p className='m-0 p-0' style={{ fontWeight: "bold" }}>
                             {addPeriodToThousands(taxminiyNarx)}
                             so'm
                         </p>
@@ -43,11 +43,9 @@ const ModuleAudioDetailTopInformationLive = ({
         );
     } else {
         priceView = (
-            <h4 className="ps-product__price">
-                <>
-                    <p>0 so'm</p>
-                </>
-            </h4>
+            <>
+                <p className='m-0 p-0' style={{ fontWeight: "bold" }} >0 so'm</p>
+            </>
         );
     }
 
@@ -82,7 +80,7 @@ const ModuleAudioDetailTopInformationLive = ({
                                     }}></i>
                             )}
                         </div>
-                        {(product?.first_name || product?.seller?.first_name ) && (
+                        {(product?.first_name || product?.seller?.first_name) && (
                             <a href={`/seller/${product?.seller?.id}`}>
                                 {product?.first_name || product?.seller?.first_name} {product?.last_name || product?.seller?.last_name}
                             </a>
@@ -97,11 +95,10 @@ const ModuleAudioDetailTopInformationLive = ({
                                 cursor: `${admin ? 'not-allowed' : 'pointer'}`,
                             }}>
                             <i
-                                className={`${
-                                    !admin
-                                        ? 'fa-solid fa-heart text-danger'
-                                        : 'icon-heart'
-                                } `}></i>
+                                className={`${!admin
+                                    ? 'fa-solid fa-heart text-danger'
+                                    : 'icon-heart'
+                                    } `}></i>
                         </a>
                     </div>
                     <div className=" views_video  mt-1">
@@ -109,12 +106,14 @@ const ModuleAudioDetailTopInformationLive = ({
                         <i className="fa-solid fa-eye"></i>{' '}
                         <span>{views ? views : 0}</span>
                     </div>
-                    <div className="video_send">
+                    <div className="video_send" style={{
+                        cursor: `${admin ? 'not-allowed' : 'pointer'}`,
+                    }}  >
                         <i className="fa-solid fa-share-nodes"></i>
-                        ulashish 
+                        ulashish
                     </div>
 
-                    <div className="product__top-information--price">
+                    <div className="video_send">
                         {priceView}
                     </div>
                 </div>

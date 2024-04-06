@@ -720,9 +720,7 @@ const AudioPosts = () => {
                                                         }}>
                                                         <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                         <span>
-                                                            Mahsulot (audio)
-                                                            yuklash uchun ushbu
-                                                            hududga bosing.
+                                                        Mahsulot (audio) yuklash uchun ushbu hududga bosing (mp3)
                                                         </span>
                                                     </span>
                                                 )}
