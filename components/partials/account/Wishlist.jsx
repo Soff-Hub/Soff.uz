@@ -136,12 +136,7 @@ const Wishlist = ({ ecomerce }) => {
                                                 </a>
                                             ) : (
                                                 <a
-                                                    style={{
-                                                        cursor: `${admin
-                                                            ? 'not-allowed'
-                                                            : 'pointer'
-                                                            }`,
-                                                    }}
+                                                    style={{ cursor: 'pointer',minWidth: "172px" }}
                                                     className="ps-btn d-inline-block"
                                                     href=""
                                                     onClick={async (e) => {
@@ -151,7 +146,7 @@ const Wishlist = ({ ecomerce }) => {
                                                         setLoading(false)
                                                     }}>
                                                     {!loading ? "Bepul yuklab olish" :
-                                                        <div style={{ minWidth: "108px" }}>
+                                                        <div >
                                                             <div
                                                                 className="spinner-border"
                                                                 role="status">

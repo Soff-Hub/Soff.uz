@@ -15,7 +15,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
     const Router = useRouter();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    
+
     const showModal = () => {
         setOpen(true);
     };
@@ -86,10 +86,9 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                 {product?.file_url !== "No" ? (
                                     <a
                                         style={{
-                                            cursor: `${admin
-                                                ? 'not-allowed'
-                                                : 'pointer'
-                                                }`,
+                                            cursor: 'pointer',
+                                            minWidth:"150px"
+                                            ,
                                         }}
                                         className="ps-btn ps-btn--black max-class"
                                         href="#"
@@ -100,7 +99,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                             setLoading(false)
                                         }}>
                                         {!loading ? "Yuklab olish" :
-                                            <div style={{ minWidth: "108px" }}>
+                                            <div>
                                                 <div
                                                     className="spinner-border"
                                                     role="status">
@@ -130,12 +129,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                             </>
                         ) : (
                             <a
-                                style={{
-                                    cursor: `${admin
-                                        ? 'not-allowed'
-                                        : 'pointer'
-                                        }`,
-                                }}
+                                style={{ cursor: 'pointer', minWidth: "212px" }}
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"
                                 onClick={async (e) => {
@@ -145,7 +139,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                     setLoading(false)
                                 }}>
                                 {!loading ? "Bepul yuklab olish" :
-                                    <div style={{ minWidth: "108px" }}>
+                                    <div>
                                         <div
                                             className="spinner-border"
                                             role="status">
