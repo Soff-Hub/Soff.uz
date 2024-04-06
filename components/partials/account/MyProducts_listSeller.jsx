@@ -19,7 +19,7 @@ function MyProductsListsSeller() {
     const [date, setDate] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
-    const [loading2, setLoading2] = useState(false);
+    const [loading2, setLoading2] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
         ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
@@ -100,7 +100,7 @@ function MyProductsListsSeller() {
 
     const handleButtonClick = async (ID) => {
         try {
-            setLoading2(true);
+            setLoading2(ID);
             const fileContent = data?.find((item) => item.id == ID);
             const response = await axios.get(fileContent?.file, {
                 responseType: 'blob',
@@ -118,10 +118,10 @@ function MyProductsListsSeller() {
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
-            setLoading2(false);
+            setLoading2(null);
         } catch (error) {
             console.error('Error downloading file: ', error);
-            setLoading2(false);
+            setLoading2(null);
         }
     };
 
@@ -145,27 +145,35 @@ function MyProductsListsSeller() {
             key: 'id',
             render: (id) => (
                 <>
-
-                    <a>
-                        <i
-                            className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                            onClick={() => handleButtonClick(id)}></i>
-                    </a>
+                    {
+                        id !== loading2 ?
+                            <a>
+                                <i
+                                    className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
+                                    onClick={() => handleButtonClick(id)}></i>
+                            </a>
+                            :
+                            <div className="spinner-border" role="status">
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                    }
 
                 </>
             ),
         },
         {
             title: 'Rasm',
-            dataIndex: 'data',
-            key: 'data',
-            render: (data) => (
+            dataIndex: 'image',
+            key: 'image',
+            render: (image) => (
                 <div>
-                    {data?.poster_url ? (
-                        <Link href={`/product/${data?.slug}`} className='cursor-pointer'>
+                    {image?.poster_url ? (
+                        <Link href={`/product/${image?.slug}`} className='cursor-pointer'>
                             <a>
                                 <NextImageCard
-                                    url={data?.poster_url}
+                                    url={image?.poster_url}
                                     clasS="rounded-3 mb-2"
                                     width="54px"
                                     height="54px"
@@ -180,11 +188,17 @@ function MyProductsListsSeller() {
         },
         {
             title: 'Nomi',
-            dataIndex: 'title',
+            dataIndex: 'name',
             key: 'age',
             width: 300,
-            render: (title) => (
-                <span className="truncate whitespace-nowrap"> {title}</span>
+            render: (name) => (
+
+                <Link href={`/product/${name?.slug}`} >
+
+                    <a>
+                        <span className="truncate whitespace-nowrap"> {name?.title}</span>
+                    </a>
+                </Link>
             ),
         },
         {

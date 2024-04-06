@@ -351,35 +351,30 @@ function MyProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
-            key: 'name',
-            render: (poster_url) => (
+            dataIndex: 'image',
+            key: 'image',
+            render: (image) => (
                 <div>
-                    {poster_url ? (
+                    {image?.poster_url ? (
                         <NextImageCard
-                            url={poster_url}
+                            url={image?.poster_url}
                             clasS="rounded-3 mb-2"
                             width="54px"
                             height="54px"
                         />
                     ) : (
-                        <i
-                            key={poster_url}
-                            className="fa-solid fa-image fa-2x"></i>
+                        <i className="fa-solid fa-image fa-2x"></i>
                     )}
                 </div>
             ),
         },
         {
             title: 'Nomi',
-            dataIndex: 'title',
+            dataIndex: 'name',
             key: 'age',
             width: 300,
-            render: (title) => (
-                <span key={title} className="truncate whitespace-nowrap">
-                    {' '}
-                    {title}
-                </span>
+            render: (name) => (
+                <span className="truncate whitespace-nowrap"> {name?.title}</span>
             ),
         },
         {
