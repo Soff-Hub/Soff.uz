@@ -260,8 +260,8 @@ const AudioPosts = () => {
             livePosterVideo?.data?.id
                 ? livePosterVideo?.data?.id
                 : livePosterAudio?.data?.id
-                ? livePosterAudio?.data?.id
-                : livePosterFile.id
+                    ? livePosterAudio?.data?.id
+                    : livePosterFile.id
         );
 
         const patchItems = await PatchRepository.getPatchPoster(
@@ -384,15 +384,14 @@ const AudioPosts = () => {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: `${
-                        ItemsData?.status === 400
+                    content: `${ItemsData?.status === 400
                             ? ItemsData?.data?.msg
                                 ? ItemsData?.data?.msg
                                 : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
                             : ItemsData?.status === 413
-                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                            : "File mahsulot qo'sha olmadingiz "
-                    }`,
+                                ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
+                                : "File mahsulot qo'sha olmadingiz "
+                        }`,
                 });
             }
             setLoading(false);
@@ -442,15 +441,14 @@ const AudioPosts = () => {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: `${
-                        ItemsData?.status === 400
+                    content: `${ItemsData?.status === 400
                             ? ItemsData?.data?.msg
                                 ? ItemsData?.data?.msg
                                 : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
                             : ItemsData?.status === 413
-                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
-                            : "Audio mahsulot qo'sha olmadingiz "
-                    }`,
+                                ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
+                                : "Audio mahsulot qo'sha olmadingiz "
+                        }`,
                 });
             }
             setLoadingAudio(false);
@@ -802,7 +800,7 @@ const AudioPosts = () => {
                                                 livePosterFile?.images?.map(
                                                     (item, i) =>
                                                         item.id ===
-                                                        fileImgFileID ? (
+                                                            fileImgFileID ? (
                                                             <img
                                                                 src={
                                                                     item.image_url
@@ -965,12 +963,11 @@ const AudioPosts = () => {
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
                             <div
-                                className={` ${
-                                    videoTab === 'audio' &&
-                                    audioPost?.data?.short_content
+                                className={` ${videoTab === 'audio' &&
+                                        audioPost?.data?.short_content
                                         ? 'image_audio mb-3'
                                         : 'image rounded mb-3'
-                                } `}>
+                                    } `}>
                                 <>
                                     {!liveFile ? (
                                         <>
@@ -1030,8 +1027,8 @@ const AudioPosts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                      removePrefix(taxminiyNarx)
-                                                  ) + "so'm"
+                                                    removePrefix(taxminiyNarx)
+                                                ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -1050,10 +1047,10 @@ const AudioPosts = () => {
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                              return (
-                                                  <span key={i}>#{item} </span>
-                                              );
-                                          })
+                                            return (
+                                                <span key={i}>#{item} </span>
+                                            );
+                                        })
                                         : "To'ldirilmadi"}
                                 </p>
                                 <p className="live-card-p">
@@ -1065,9 +1062,8 @@ const AudioPosts = () => {
                                     </span>
                                     <ul
                                         style={{
-                                            maxWidth: `${
-                                                videoTab ? '200px' : '150px'
-                                            }`,
+                                            maxWidth: `${videoTab ? '200px' : '150px'
+                                                }`,
                                         }}
                                         className="">
                                         <li>
@@ -1078,7 +1074,7 @@ const AudioPosts = () => {
                                             {livePosterAudio?.data
                                                 ?.content_duration
                                                 ? livePosterAudio?.data
-                                                      ?.content_duration
+                                                    ?.content_duration
                                                 : ' '}{' '}
                                         </li>
                                         <li>
@@ -1163,10 +1159,10 @@ const AudioPosts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -1193,14 +1189,14 @@ const AudioPosts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              #{item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            #{item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -1220,8 +1216,8 @@ const AudioPosts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                      ' ' +
-                                                      'ta'
+                                                    ' ' +
+                                                    'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -1750,8 +1746,8 @@ const AudioPosts = () => {
                                                         <div className="ps-document">
                                                             {Fulldata
                                                                 ? parse(
-                                                                      Fulldata
-                                                                  )
+                                                                    Fulldata
+                                                                )
                                                                 : "To'ldirilmadi"}
                                                         </div>
                                                     </TabPane>
@@ -1767,7 +1763,7 @@ const AudioPosts = () => {
                                                     <figure>
                                                         <div>
                                                             {videoTab ===
-                                                            'file' ? (
+                                                                'file' ? (
                                                                 <>
                                                                     {!liveFile ? (
                                                                         <img
@@ -1847,10 +1843,10 @@ const AudioPosts = () => {
                                                         {' '}
                                                         {taxminiyNarx
                                                             ? addPeriodToThousands(
-                                                                  removePrefix(
-                                                                      taxminiyNarx
-                                                                  )
-                                                              ) + "so'm"
+                                                                removePrefix(
+                                                                    taxminiyNarx
+                                                                )
+                                                            ) + "so'm"
                                                             : "To'ldirilmadi"}
                                                     </h4>
                                                 </header>
@@ -1865,44 +1861,44 @@ const AudioPosts = () => {
                                                         </span>
                                                         {videoTab ===
                                                             'file' && (
-                                                            <ul
-                                                                style={{
-                                                                    maxWidth:
-                                                                        '150px',
-                                                                }}
-                                                                className="">
-                                                                <li>
-                                                                    {' '}
-                                                                    <strong className="fs-4">
-                                                                        Betlar
-                                                                        soni:{' '}
-                                                                    </strong>{' '}
-                                                                    {livePosterFile?.page_count
-                                                                        ? livePosterFile?.page_count +
-                                                                          ' ' +
-                                                                          'ta'
-                                                                        : ''}{' '}
-                                                                </li>
-                                                                <li>
-                                                                    {' '}
-                                                                    <strong className="fs-4">
-                                                                        Hajmi:{' '}
-                                                                    </strong>{' '}
-                                                                    {
-                                                                        livePosterFile?.file_size
-                                                                    }
-                                                                </li>
-                                                                <li>
-                                                                    {' '}
-                                                                    <strong className="fs-4">
-                                                                        Turi:{' '}
-                                                                    </strong>{' '}
-                                                                    {
-                                                                        livePosterFile?.file_type
-                                                                    }
-                                                                </li>
-                                                            </ul>
-                                                        )}
+                                                                <ul
+                                                                    style={{
+                                                                        maxWidth:
+                                                                            '150px',
+                                                                    }}
+                                                                    className="">
+                                                                    <li>
+                                                                        {' '}
+                                                                        <strong className="fs-4">
+                                                                            Betlar
+                                                                            soni:{' '}
+                                                                        </strong>{' '}
+                                                                        {livePosterFile?.page_count
+                                                                            ? livePosterFile?.page_count +
+                                                                            ' ' +
+                                                                            'ta'
+                                                                            : ''}{' '}
+                                                                    </li>
+                                                                    <li>
+                                                                        {' '}
+                                                                        <strong className="fs-4">
+                                                                            Hajmi:{' '}
+                                                                        </strong>{' '}
+                                                                        {
+                                                                            livePosterFile?.file_size
+                                                                        }
+                                                                    </li>
+                                                                    <li>
+                                                                        {' '}
+                                                                        <strong className="fs-4">
+                                                                            Turi:{' '}
+                                                                        </strong>{' '}
+                                                                        {
+                                                                            livePosterFile?.file_type
+                                                                        }
+                                                                    </li>
+                                                                </ul>
+                                                            )}
                                                     </strong>
                                                     <ul></ul>
                                                 </div>
@@ -1933,7 +1929,7 @@ const AudioPosts = () => {
                                                 </div>
                                                 <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                     {tagSearchResult.length >
-                                                    0 ? (
+                                                        0 ? (
                                                         tagSearchResult?.map(
                                                             (item, i) => {
                                                                 return (

@@ -98,6 +98,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                     ? 'not-allowed'
                                                     : 'pointer'
                                                     }`,
+                                                    minWidth:"150px"
                                             }}
                                             className="ps-btn ps-btn--black max-class"
                                             href="#"
@@ -108,7 +109,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                 setLoading(false)
                                             }}>
                                             {!loading ? "Yuklab olish" :
-                                                <div style={{ minWidth: "108px" }}>
+                                                <div>
                                                     <div
                                                         className="spinner-border"
                                                         role="status">
@@ -158,6 +159,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                         ? 'not-allowed'
                                         : 'pointer'
                                         }`,
+                                        minWidth:"172px"
                                 }}
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"
@@ -168,7 +170,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                     setLoading(false)
                                 }}>
                                 {!loading ? "Bepul yuklab olish" :
-                                    <div style={{ minWidth: "108px" }}>
+                                    <div>
                                         <div
                                             className="spinner-border"
                                             role="status">

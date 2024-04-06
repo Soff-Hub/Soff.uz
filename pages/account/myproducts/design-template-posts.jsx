@@ -615,7 +615,7 @@ const Posts = () => {
                                 {loading2 ?
                                     <button
                                         type="submit"
-                                        className="btn btn-success py-3 " style={{minWidth:"235px"}}>
+                                        className="btn btn-success py-3 " style={{ minWidth: "235px" }}>
                                         <div
                                             className="spinner-border"
                                             role="status">
@@ -626,6 +626,7 @@ const Posts = () => {
                                     </button> :
 
                                     <button
+                                        disabled={loading}
                                         type="submit"
                                         className="btn btn-success py-3 ">
                                         <span className="fs-4 px-5">
