@@ -107,7 +107,7 @@ const ModuleAudioDetailTopInformationLive = ({
                         <span>{views ? views : 0}</span>
                     </div>
                     <div className="video_send" style={{
-                        cursor: `${admin ? 'not-allowed' : 'pointer'}`,
+                        display: `${admin ? 'none' : 'block'}`,
                     }}  >
                         <i className="fa-solid fa-share-nodes"></i>
                         ulashish
