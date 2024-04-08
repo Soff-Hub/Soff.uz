@@ -118,14 +118,15 @@ const ProductDefaultPage = () => {
         <>
             <PageContainer title={product ? product.title : 'Loading...'}>
                 <Head>
-                    <meta property="og:title" content={`Soff | ${product && product?.title}`} />
-                    <meta
-                        property="og:description"
-                        content="Soff | Soff online hujjatlar bazasi"
-                    />
-                    <meta property="og:image" content={product && product?.poster_url} />
-                    <meta property="og:site_name" content="Soff.uz" />
-                    <title>{product && product?.title}</title>
+                    {product && (
+                        <>
+                            <meta property="og:title" content={`Soff | ${product?.title}`} />
+                            <meta property="og:description" content="Soff | Soff online hujjatlar bazasi" />
+                            <meta property="og:image" content={product?.poster_url} />
+                            <meta property="og:site_name" content="Soff.uz" />
+                            <title>{product?.title}</title>
+                        </>
+                    )}
                     <meta
                         name="description"
                         content="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling."
