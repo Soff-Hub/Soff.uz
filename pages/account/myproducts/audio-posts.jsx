@@ -677,7 +677,7 @@ const AudioPosts = () => {
                                 <div className="row ">
                                     <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                         <p>Audio: *</p>{' '}
-                                        <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan audio. Mahsulotingiz quyidagi turdag video bo’lishi mumkin: .mp3">
+                                        <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan audio. Mahsulotingiz quyidagi turdag audio bo’lishi mumkin: .mp3">
                                             <i
                                                 style={{ cursor: 'pointer' }}
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -751,7 +751,7 @@ const AudioPosts = () => {
                                 <div className="row mb-3">
                                     <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                         <p>Audio posteri: *</p>{' '}
-                                        <Tooltip title="Mahsulotning saytdagi ko'rinishi uchun rasm yuklashingiz mumkin">
+                                        <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
                                             <i
                                                 style={{ cursor: 'pointer' }}
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
