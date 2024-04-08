@@ -3,7 +3,6 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import Product from '~/components/elements/products/Product';
 import ProductGroupGridItems from '~/components/partials/product/ProductGroupGridItems';
 import PageContainer from '~/components/layouts/PageContainer';
-import useGetProducts from '~/hooks/useGetProducts';
 import { useRouter } from 'next/router';
 import PostRepository from '~/repositories/PostRepository';
 import Meta from '~/components/shared/headers/Meta';
@@ -11,7 +10,6 @@ import Meta from '~/components/shared/headers/Meta';
 const SearchPage = () => {
     const [pageSize] = useState(100);
     const [keyword, setKeyword] = useState('');
-    const { productItems, loading, getProducts } = useGetProducts();
     const Router = useRouter();
     const { query } = Router;
     const [resultdata, setresultData] = useState([]);
@@ -49,6 +47,7 @@ const SearchPage = () => {
             text: 'Qidiruv natijalari',
         },
     ];
+    
     let shopItemsView, statusView;
     if (true) {
         if (resultdata) {

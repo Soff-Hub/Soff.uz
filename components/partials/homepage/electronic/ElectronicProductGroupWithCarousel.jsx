@@ -1,7 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import { generateTempArray } from '~/utilities/common-helpers';
-import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import Product from '~/components/elements/products/Product';
 
 const ElectronicProductGroupWithCarousel = ({
@@ -47,6 +45,7 @@ const ElectronicProductGroupWithCarousel = ({
                         </li>
                     </ul>
                 </div>
+                
                 <div className="ps-section__content">{productItemsView}</div>
             </div>
         </div>

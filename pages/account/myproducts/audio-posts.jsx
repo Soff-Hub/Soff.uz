@@ -24,8 +24,6 @@ const category_id = [];
 const AudioPosts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [fileImgFile, setFileImgFile] = useState(null);
-    const [fileImgVideo, setFileImgVideo] = useState(null);
     const [fileImgAudio, setFileImgAudio] = useState(null);
     const [fileImgFileID, setFileImgFileID] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
@@ -37,35 +35,21 @@ const AudioPosts = () => {
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
-    const [livePosterFile, setLivePosterFile] = useState('');
-    const [livePosterVideo, setLivePosterVideo] = useState('');
     const [livePosterAudio, setLivePosterAudio] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [liveFile, setLiveFile] = useState('');
     const [narx, setNarx] = useState('');
-    const [chegirmaTek, setChegirmaTek] = useState(true);
-    const [loading, setLoading] = useState(false);
-    const [loadingVideo, setLoadingVideo] = useState(false);
     const [loadingAudio, setLoadingAudio] = useState(false);
     const [free, setFree] = useState(false);
-    const [videoPost, setVideoPost] = useState(null);
     const [audioPost, setAudioPost] = useState(null);
-    const [videoTab, setVideoTab] = useState('audio');
     const [completed, setCompleted] = useState(0);
     const [profile, setProfile] = useState(null);
     const maxCompleted = 100;
     const [progress, setProgress] = useState(0);
-    const [emoje, setEmoje] = useState('');
-    const [emojeTrue, setEmojeTrue] = useState(false);
-    const [article, setArticle] = useState('');
-    const [articleTitle, setArticleTitle] = useState('');
     const [socket, setSocket] = useState(null);
 
-    // const Editor = useMemo(
-    //     () => dynamic(() => import('@/components/Editor'), { ssr: false }),
-    //     []
-    // );
+
 
     const breadCrumb = [
         {
@@ -81,36 +65,6 @@ const AudioPosts = () => {
         const ItemsData = await GetRepository.getProfile(user?.access);
         setProfile(ItemsData);
     }
-
-    const onChangeTabs = (key) => {
-        setSocket(0);
-        if (key === '2') {
-            setVideoTab('video');
-        } else if (key === '3') {
-            setVideoTab('audio');
-        } else if (key === '4') {
-            setVideoTab('article');
-        } else {
-            setVideoTab('file');
-        }
-        // setSocket(0);
-        // setCompleted(0);
-        // document.getElementById('FormPostsMyProducts').reset();
-        // setLiveFile('');
-        // setLivePosterFile('');
-        // setLivePosterVideo('');
-        // setLivePosterAudio('');
-
-        // setVideoPost('');
-        // setAudioPost('');
-
-        // setTitle('');
-        // setTaxminiyNarx('');
-        // setNarx('');
-        // setCategoryName('');
-        // setFullData('');
-        // setTagSearchResult([]);
-    };
 
     async function GetItemsCategoryLists() {
         const ItemsData = await GetRepository.getAllCategoryListsAudio();
@@ -237,6 +191,7 @@ const AudioPosts = () => {
             }
         }
     }
+
     async function handleClickPosts(e) {
         e.preventDefault();
 
@@ -282,119 +237,6 @@ const AudioPosts = () => {
                 title: 'Xatolik!',
                 content: patchItems?.data.msg,
             });
-        }
-    }
-
-    async function handleClickPostsArticle(e) {
-        e.preventDefault();
-
-        const formData = new FormData();
-        formData.append('tags', tagSearchResult);
-        formData.append('category', category_id[0]);
-        formData.append('title', emoje ? emoje + articleTitle : articleTitle);
-        formData.append('description', article);
-        formData.append('price', 0);
-
-        const patchItems = await PatchRepository.getPatchPoster(
-            formData,
-            user?.access
-        );
-        if (patchItems?.status === 201) {
-            Router.push('/account/myproducts');
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            });
-        } else {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: patchItems?.data.msg,
-            });
-        }
-    }
-
-    async function handleClickPostsArticle(e) {
-        e.preventDefault();
-
-        const formData = new FormData();
-        formData.append('tags', tagSearchResult);
-        formData.append('category', category_id[0]);
-        formData.append('title', emoje ? emoje + articleTitle : articleTitle);
-        formData.append('description', article);
-        formData.append('price', 0);
-
-        const patchItems = await PatchRepository.getPatchPoster(
-            formData,
-            user?.access
-        );
-        if (patchItems?.status === 201) {
-            Router.push('/account/myproducts');
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            });
-        } else {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: patchItems?.data.msg,
-            });
-        }
-    }
-
-    async function PostFilePoster() {
-        if (fileImgFile) {
-            setLiveFile('');
-            setLivePosterFile('');
-            const formData = new FormData();
-            setLoading(true);
-            formData.append('file', fileImgFile);
-            formData.append('content_type', 'file');
-            const ItemsData = await PostsRepository.PostsMyProductsPoster(
-                formData,
-                user?.access
-            );
-            if (
-                ItemsData?.status === 201 &&
-                ItemsData?.data?.images?.length > 0
-            ) {
-                setCompleted(100);
-                setLivePosterFile(ItemsData?.data);
-                if (progress == 100) {
-                    setTimeout(() => {
-                        setProgress(0);
-                    }, 1000);
-                }
-                const modal = Modal.success({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: "Yangi file qo'shdingiz ",
-                });
-            } else {
-                if (progress == 100) {
-                    setTimeout(() => {
-                        setProgress(0);
-                    }, 1000);
-                }
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik!',
-                    content: `${ItemsData?.status === 400
-                        ? ItemsData?.data?.msg
-                            ? ItemsData?.data?.msg
-                            : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                        : ItemsData?.status === 413
-                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                            : "File mahsulot qo'sha olmadingiz "
-                        }`,
-                });
-            }
-            setLoading(false);
         }
     }
 
@@ -512,7 +354,7 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-    let progrees = 0;
+
     useEffect(() => {
         if (user?.access) {
             setSocket(
@@ -552,16 +394,6 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-    // useEffect(() => {
-    //     if (socket) {
-    //         socket?.addEventListener('message', (event) => {
-    //             console.log('socket 1 => ', JSON.parse(event.data).progress);
-    //             // setTimeout(() => {
-    //             setProgress(JSON.parse(event.data).progress);
-    //             // }, 1000);
-    //         });
-    //     }
-    // }, [socket]);
 
     useEffect(() => {
         if (user?.access) {
@@ -615,6 +447,7 @@ const AudioPosts = () => {
                             mahsulotingizni sotuvda ko'rinmasligi va profilingiz
                             bloklab qo'yilishi mumkin. E'tiborli bo'ling!
                         </h5>
+
                         <div
                             className="col-md-4 m-0  d-flex justify-content-between p-0 "
                             style={{ maxWidth: '370px' }}>
@@ -626,27 +459,14 @@ const AudioPosts = () => {
                                 <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
                             </Button>
                         </div>
+
                         <div className={` rounded-3 col-md-8 mb-2`}>
-                            {/* <Tabs
-                                defaultActiveKey="1"
-                                items={items}
-                                onChange={onChangeTabs}
-                            /> */}
                             <form
                                 onSubmit={handleClickPosts}
                                 style={{ position: 'relative', width: '100%' }}
                                 id="FormPostsMyProducts"
                                 className=" col-md-12 pb-5">
-                                {/* <div className="row">
-                                    <p className="eslatma">
-                                        <i className="fa-solid fa-circle-exclamation"></i>{' '}
-                                        <span>
-                                            {' '}
-                                            Audio yuklash test rejimida
-                                            ishlamoqda{' '}
-                                        </span>{' '}
-                                    </p>
-                                </div> */}
+
                                 <div className="row   mt-3">
                                     <div className="col-md-4  d-flex justify-content-between p-0 ">
                                         <h4 className=" p-0">
@@ -683,7 +503,7 @@ const AudioPosts = () => {
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
                                         </Tooltip>
                                     </div>
-                                    {/* <div className="row"> */}
+
                                     <label
                                         className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
                                         style={{
@@ -696,12 +516,7 @@ const AudioPosts = () => {
                                                 className="d-flex flex-column align-items-center"
                                                 style={{ cursor: 'pointer' }}>
                                                 {loadingAudio ? (
-                                                    // <span className="d-flex justify-content-center">
-                                                    //     <ClipLoader
-                                                    //         size={25}
-                                                    //         color="#36d7b7"
-                                                    //     />
-                                                    // </span>
+
                                                     <Tooltip title="Mahsulot yuklash davom etmoqda">
                                                         <Progress
                                                             percent={
@@ -720,7 +535,7 @@ const AudioPosts = () => {
                                                         }}>
                                                         <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                         <span>
-                                                            Mahsulot (audio) yuklash uchun ushbu hududga bosing (mp3)
+                                                            Mahsulot (audio) yuklash uchun ushbu hududga bosing (.mp3)
                                                         </span>
                                                     </span>
                                                 )}
@@ -748,6 +563,7 @@ const AudioPosts = () => {
                                         />
                                     </label>
                                 </div>
+
                                 <div className="row mb-3">
                                     <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                         <p>Audio posteri: *</p>{' '}
@@ -757,90 +573,32 @@ const AudioPosts = () => {
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
                                         </Tooltip>
                                     </div>
-                                    <div
-                                        className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
+                                    <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
                                         style={{
                                             backgroundColor: '#F1F1F1',
                                             border: '1px dashed green',
-                                            height: '100px',
+                                            height: '61px',
                                         }}>
-                                        <label
+                                        <input
+                                            type="file"
+                                            onChange={(e) => LiveImage(e)}
+                                            accept="image/*"
+                                            style={{ width: '20px' }}
+                                        />
+                                        <span
+                                            className="d-flex flex-column align-items-center "
                                             style={{
-                                                width: '50px',
                                                 cursor: 'pointer',
                                             }}>
-                                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                                            <input
-                                                type="file"
-                                                onChange={(e) => LiveImage(e)}
-                                                accept="image/*"
-                                                style={{ width: '20px' }}
-                                            />
-                                        </label>
-                                        <div
-                                            className="overflow-x-scroll  d-flex  gap-1
-                       "
-                                            style={{ width: '430px' }}>
-                                            {!livePosterFile?.images ? (
-                                                <span
-                                                    className="d-flex flex-column align-items-center mt-4 mx-5"
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}>
-                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                    <span className="text-center">
-                                                        {' '}
-                                                        Rasmini yuklash uchun
-                                                        ushbu hududga bosing.{' '}
-                                                    </span>
-                                                </span>
-                                            ) : (
-                                                livePosterFile?.images?.map(
-                                                    (item, i) =>
-                                                        item.id ===
-                                                            fileImgFileID ? (
-                                                            <img
-                                                                src={
-                                                                    item.image_url
-                                                                }
-                                                                alt=" "
-                                                                key={i}
-                                                                style={{
-                                                                    display:
-                                                                        'block',
-                                                                    border: '2px solid red',
-                                                                    filter: 'blur(1px)',
-                                                                    cursor: 'not-allowed',
-                                                                }}
-                                                            />
-                                                        ) : (
-                                                            <img
-                                                                className="mx-1 "
-                                                                onClick={() => {
-                                                                    setLiveFile(
-                                                                        item?.image_url
-                                                                    ),
-                                                                        setFileImgFileID(
-                                                                            item?.id
-                                                                        );
-                                                                }}
-                                                                src={
-                                                                    item?.image_url
-                                                                }
-                                                                alt=" "
-                                                                key={i}
-                                                                style={{
-                                                                    display:
-                                                                        'block',
-                                                                    cursor: 'pointer',
-                                                                }}
-                                                            />
-                                                        )
-                                                )
-                                            )}
-                                        </div>
-                                    </div>
+                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                            <span>
+                                                Mahsulot rasmni yuklash uchun ushbu hududga bosing.
+                                            </span>
+                                        </span>
+                                    </label>
                                 </div>
+
+
                                 <div className=" row ">
                                     <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                         <p>Teglar:</p>{' '}
@@ -913,7 +671,7 @@ const AudioPosts = () => {
                                     />
                                 </div>
 
-                                <div className="  row mt-3">
+                                <div className="row mt-3">
                                     <div className="col-md-4 d-flex justify-content-between p-0">
                                         <p>Audio to’liq tavsifi: </p>{' '}
                                         <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
@@ -945,6 +703,7 @@ const AudioPosts = () => {
                                         </span>
                                     </button>
                                 </div>
+
                                 <div className="mahsulotingiz">
                                     <span
                                         className="fixed-btn"
@@ -961,11 +720,7 @@ const AudioPosts = () => {
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
                             <div
-                                className={` ${videoTab === 'audio' &&
-                                    audioPost?.data?.short_content
-                                    ? 'image_audio mb-3'
-                                    : 'image rounded mb-3'
-                                    } `}>
+                                className={` ${'image_audio mb-3'} `}>
                                 <>
                                     {!liveFile ? (
                                         <>
@@ -996,7 +751,7 @@ const AudioPosts = () => {
                                                         className="mb-4 "
                                                         style={{
                                                             objectFit: 'cover',
-                                                            width:"230px"
+                                                            width: "230px"
                                                         }}
                                                     />
                                                 </div>
@@ -1054,6 +809,7 @@ const AudioPosts = () => {
                                         })
                                         : "To'ldirilmadi"}
                                 </p>
+
                                 <p className="live-card-p">
                                     <span>
                                         <strong className="fs-4">
@@ -1062,10 +818,7 @@ const AudioPosts = () => {
                                         :{' '}
                                     </span>
                                     <ul
-                                        style={{
-                                            maxWidth: `${videoTab ? '200px' : '150px'
-                                                }`,
-                                        }}
+                                        style={{ maxWidth: "200px", }}
                                         className="">
                                         <li>
                                             {' '}
@@ -1094,6 +847,7 @@ const AudioPosts = () => {
                                         </li>
                                     </ul>
                                 </p>
+
                                 <p className="live-card-p ">
                                     <strong> To'liq ma'lumot : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>
@@ -1127,11 +881,7 @@ const AudioPosts = () => {
                                 <div className="image rounded mb-3">
                                     {!liveFile ? (
                                         <img
-                                            src={
-                                                livePosterFile?.images?.[0]
-                                                    ?.image_url ||
-                                                '/static/img/docCopy.png'
-                                            }
+                                            src={'/static/img/docCopy.png'}
                                             alt="doc"
                                             className="border mb-4"
                                             style={{ objectFit: 'cover' }}
@@ -1176,15 +926,7 @@ const AudioPosts = () => {
                                                 : "To'ldirilmadi"}{' '}
                                         </span>
                                     </p>
-                                    {/* <p className="live-card-p">
-                                        <strong>Chegirmasi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {' '}
-                                            {discount
-                                                ? discount + '%'
-                                                : "To'ldirilmadi"}{' '}
-                                        </span>
-                                    </p> */}
+
                                     <p className="live-card-p">
                                         <strong>Taglari : </strong>
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
@@ -1208,32 +950,32 @@ const AudioPosts = () => {
                                             :{' '}
                                         </span>
                                         <ul
-                                            style={{ maxWidth: '150px' }}
+                                            style={{ maxWidth: "150px", }}
                                             className="">
                                             <li>
                                                 {' '}
                                                 <strong className="fs-4">
-                                                    Betlar soni:{' '}
+                                                    Davomiyligi:{' '}
                                                 </strong>{' '}
-                                                {livePosterFile?.page_count
-                                                    ? livePosterFile?.page_count +
-                                                    ' ' +
-                                                    'ta'
-                                                    : ''}{' '}
+                                                {livePosterAudio?.data
+                                                    ?.content_duration
+                                                    ? livePosterAudio?.data
+                                                        ?.content_duration
+                                                    : ' '}{' '}
                                             </li>
                                             <li>
                                                 {' '}
                                                 <strong className="fs-4">
-                                                    Hajmi:{' '}
+                                                    Hajmi :{' '}
                                                 </strong>{' '}
-                                                {livePosterFile?.file_size}
+                                                {livePosterAudio?.data?.file_size}
                                             </li>
                                             <li>
                                                 {' '}
                                                 <strong className="fs-4">
-                                                    Turi:{' '}
+                                                    Turi :{' '}
                                                 </strong>{' '}
-                                                {livePosterFile?.file_type}
+                                                {livePosterAudio?.data?.file_type}
                                             </li>
                                         </ul>
                                     </p>
@@ -1250,6 +992,7 @@ const AudioPosts = () => {
                         </div>
                     </div>
                 </div>
+
                 <div
                     className="modal fade "
                     id="staticBackdrop"
@@ -1267,705 +1010,79 @@ const AudioPosts = () => {
                                     aria-label="Close"></button>
                             </div>
                             <div className="ps-container">
-                                {videoTab === 'audio' ? (
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <DefaultAudioLive
-                                                product={audioPost}
-                                                liveFile={liveFile}
-                                                title={title}
-                                                categoryName={categoryName}
-                                            />
-                                            <ModuleAudioDetailTopInformationLive
-                                                product={profile}
-                                                views={0}
+                                <div className="row">
+                                    <div className="col-12">
+                                        <DefaultAudioLive
+                                            product={audioPost}
+                                            liveFile={liveFile}
+                                            title={title}
+                                            categoryName={categoryName}
+                                        />
+                                        <ModuleAudioDetailTopInformationLive
+                                            product={profile}
+                                            views={0}
+                                            admin={true}
+                                            taxminiyNarx={taxminiyNarx}
+                                        />
+                                        <div className="price_and_tag">
+                                            <ModuleAudioDetailShoppingActionsLive
                                                 admin={true}
-                                                taxminiyNarx={taxminiyNarx}
+                                                free={free}
                                             />
-                                            <div className="price_and_tag">
-                                                <ModuleAudioDetailShoppingActionsLive
-                                                    admin={true}
-                                                    free={free}
-                                                />
 
-                                                <>
-                                                    {
-                                                        <div className="">
-                                                            <p>Tezkor teglar</p>
-                                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                                {tagSearchResult?.length >
-                                                                    0 &&
-                                                                    tagSearchResult?.map(
-                                                                        (
-                                                                            item,
-                                                                            i
-                                                                        ) => (
-                                                                            <div
-                                                                                key={
-                                                                                    i
-                                                                                }
-                                                                                className="m-2 tag-product">
-                                                                                <Link
-                                                                                    href="#"
-                                                                                    as="#">
-                                                                                    <a>
-                                                                                        {' '}
-                                                                                        #
-                                                                                        {
-                                                                                            item
-                                                                                        }{' '}
-                                                                                    </a>
-                                                                                </Link>
-                                                                            </div>
-                                                                        )
-                                                                    )}
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </>
-                                            </div>
-                                        </div>
-
-                                        <div className="ps-product__content ps-tab-root mb-5">
-                                            <Tabs defaultActiveKey="1">
-                                                <TabPane
-                                                    tab="Mahsulot to’liq tavsifi"
-                                                    key="1">
-                                                    <div className="ps-document">
-                                                        {Fulldata
-                                                            ? parse(Fulldata)
-                                                            : "To'ldirilmadi"}
-                                                    </div>
-                                                </TabPane>
-                                            </Tabs>
-                                        </div>
-                                    </div>
-                                ) : videoTab === 'video' ? (
-                                    <div className="row">
-                                        <div className="col-xl-8 col-lg-8 col-12">
-                                            {!liveFile ? (
-                                                <>
-                                                    {videoPost?.data
-                                                        ?.short_content ? (
-                                                        <div className="video_container">
-                                                            <div className="video_content">
-                                                                <video
-                                                                    id="videoPlayer"
-                                                                    className="video_iframe"
-                                                                    width="100%"
-                                                                    style={{
-                                                                        maxHeight:
-                                                                            '380px',
-                                                                    }}
-                                                                    controls>
-                                                                    <source
-                                                                        src={
-                                                                            videoPost
-                                                                                ?.data
-                                                                                ?.short_content
-                                                                        }
-                                                                        type={`video/${videoPost?.data?.file_type?.replace(
-                                                                            '.',
-                                                                            ''
-                                                                        )}`}
-                                                                    />
-                                                                    Your browser
-                                                                    does not
-                                                                    support the
-                                                                    video tag.
-                                                                </video>
-                                                            </div>
-                                                        </div>
-                                                    ) : (
-                                                        <img
-                                                            src={
-                                                                'https://kohantextilejournal.com/wp-content/uploads/2018/04/video-poster.jpg'
-                                                            }
-                                                            alt="docc"
-                                                            className="border mb-4 w-100"
-                                                            style={{
-                                                                objectFit:
-                                                                    'cover',
-                                                            }}
-                                                            height={350}
-                                                        />
-                                                    )}
-                                                </>
-                                            ) : (
-                                                <>
-                                                    {videoPost?.data
-                                                        ?.short_content ? (
-                                                        <div className="video_container">
-                                                            <div className="video_content">
-                                                                <video
-                                                                    id="videoPlayer"
-                                                                    className="video_iframe"
-                                                                    width="100%"
-                                                                    height="auto"
-                                                                    style={{
-                                                                        maxHeight:
-                                                                            '380px',
-                                                                    }}
-                                                                    controls
-                                                                    poster={
-                                                                        liveFile
-                                                                    }>
-                                                                    <source
-                                                                        src={
-                                                                            videoPost
-                                                                                ?.data
-                                                                                ?.short_content
-                                                                        }
-                                                                        type={`video/${videoPost?.data?.file_type?.replace(
-                                                                            '.',
-                                                                            ''
-                                                                        )}`}
-                                                                    />
-                                                                    Your browser
-                                                                    does not
-                                                                    support the
-                                                                    video tag.
-                                                                </video>
-                                                            </div>
-                                                        </div>
-                                                    ) : (
-                                                        <img
-                                                            src={liveFile}
-                                                            alt="docc"
-                                                            className="border mb-4 w-100"
-                                                            style={{
-                                                                objectFit:
-                                                                    'cover',
-                                                            }}
-                                                        />
-                                                    )}
-                                                </>
-                                            )}
-                                            <div
-                                                className={`product__top-information ${'video_user_information'} `}
-                                                style={{ width: '100%' }}>
-                                                <div>
-                                                    <div
-                                                        className="product__top-information-account"
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}>
-                                                        <div>
-                                                            {profile?.image ? (
-                                                                <img
-                                                                    alt="soff"
-                                                                    src={
-                                                                        profile?.image
-                                                                    }
-                                                                    className="profile__image-client"
-                                                                />
-                                                            ) : (
-                                                                <i
-                                                                    className=" fa-2x text-info fa-solid fa-circle-user"
-                                                                    style={{
-                                                                        fontSize:
-                                                                            '30px',
-                                                                    }}></i>
-                                                            )}
-                                                        </div>
-                                                        {profile?.first_name && (
-                                                            <p>
-                                                                {
-                                                                    profile?.first_name
-                                                                }{' '}
-                                                                {
-                                                                    profile?.last_name
-                                                                }
-                                                            </p>
-                                                        )}
-                                                    </div>
-                                                </div>
-                                                <div
-                                                    className={`${'video_send_container'}`}>
-                                                    <div
-                                                        className={`ps-product__actions heart_video `}>
-                                                        <a
-                                                            href="#"
-                                                            style={{
-                                                                cursor: `${'not-allowed'}`,
-                                                            }}>
-                                                            <i
-                                                                className={`${'icon-heart'} `}></i>
-                                                        </a>
-                                                    </div>
-                                                    <div className="views_video mt-1">
-                                                        {' '}
-                                                        <i className="fa-solid fa-eye"></i>{' '}
-                                                        <span>{1}</span>
-                                                    </div>
-                                                    <div className="video_send">
-                                                        <i className="fa-solid fa-share-nodes"></i>
-                                                        ulashish
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-xl-4 col-lg-4 col-12 d-flex flex-column gap-4 ">
-                                            <div className="ps-product--detail mb-0">
-                                                <div className="ps-product__desc">
-                                                    <strong className="fs-4">
-                                                        {' '}
-                                                        Qisqa tavsif{' '}
-                                                    </strong>
-                                                    {
-                                                        <ul
-                                                            style={{
-                                                                listStyleType:
-                                                                    'revert',
-                                                            }}>
-                                                            {
-                                                                <li>
-                                                                    <strong>
-                                                                        Davomiyligi
-                                                                        :{' '}
-                                                                    </strong>{' '}
-                                                                    <div></div>{' '}
-                                                                    <span>
-                                                                        {livePosterVideo
-                                                                            ?.data
-                                                                            ?.content_duration &&
-                                                                            livePosterVideo
-                                                                                ?.data
-                                                                                ?.content_duration}
-                                                                    </span>
-                                                                </li>
-                                                            }
-                                                            {
-                                                                <li>
-                                                                    <strong>
-                                                                        Sifati :{' '}
-                                                                    </strong>{' '}
-                                                                    <div></div>{' '}
-                                                                    <span>
-                                                                        {livePosterVideo
-                                                                            ?.data
-                                                                            ?.content_quality &&
-                                                                            livePosterVideo
-                                                                                ?.data
-                                                                                ?.content_quality}
-                                                                    </span>
-                                                                </li>
-                                                            }
-                                                            {
-                                                                <li>
-                                                                    <strong>
-                                                                        Turi :{' '}
-                                                                    </strong>{' '}
-                                                                    <div></div>{' '}
-                                                                    <span className="file_type-color">
-                                                                        {livePosterVideo
-                                                                            ?.data
-                                                                            ?.file_type &&
-                                                                            livePosterVideo
-                                                                                ?.data
-                                                                                ?.file_type}
-                                                                    </span>
-                                                                </li>
-                                                            }
-                                                            {
-                                                                <li>
-                                                                    <strong>
-                                                                        Hajmi :{' '}
-                                                                    </strong>{' '}
-                                                                    <div></div>{' '}
-                                                                    <span>
-                                                                        {livePosterVideo
-                                                                            ?.data
-                                                                            ?.file_size &&
-                                                                            livePosterVideo
-                                                                                ?.data
-                                                                                ?.file_size}
-                                                                    </span>
-                                                                </li>
-                                                            }
-                                                            {
-                                                                <li>
-                                                                    <strong>
-                                                                        {' '}
-                                                                        Kategoriyasi
-                                                                    </strong>{' '}
-                                                                    :{' '}
-                                                                    <div></div>{' '}
-                                                                    <span>
-                                                                        {' '}
-                                                                        {categoryName &&
-                                                                            categoryName}
-                                                                    </span>
-                                                                </li>
-                                                            }
-                                                            {
-                                                                <li>
-                                                                    <strong>
-                                                                        Xarid
-                                                                        qilishlar
-                                                                        soni :{' '}
-                                                                    </strong>{' '}
-                                                                    <div></div>{' '}
-                                                                    <span>
-                                                                        {0}
-                                                                    </span>
-                                                                </li>
-                                                            }
-                                                        </ul>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <div className="video--price-live">
-                                                <p>narxi</p>
-                                                <div className="">
-                                                    {taxminiyNarx ? (
-                                                        <div className="ps-product__price">
-                                                            <p>
-                                                                {addPeriodToThousands(
-                                                                    removePrefix(
-                                                                        taxminiyNarx
+                                            <>
+                                                {
+                                                    <div className="">
+                                                        <p>Tezkor teglar</p>
+                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                            {tagSearchResult?.length >
+                                                                0 &&
+                                                                tagSearchResult?.map(
+                                                                    (
+                                                                        item,
+                                                                        i
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                            className="m-2 tag-product">
+                                                                            <Link
+                                                                                href="#"
+                                                                                as="#">
+                                                                                <a>
+                                                                                    {' '}
+                                                                                    #
+                                                                                    {
+                                                                                        item
+                                                                                    }{' '}
+                                                                                </a>
+                                                                            </Link>
+                                                                        </div>
                                                                     )
                                                                 )}
-                                                                so'm
-                                                            </p>
                                                         </div>
-                                                    ) : free ? (
-                                                        <div className="ps-product__price">
-                                                            {' '}
-                                                            <p>
-                                                                Bepul mahsulot
-                                                            </p>
-                                                        </div>
-                                                    ) : (
-                                                        <div className="ps-product__price">
-                                                            <p>0 so'm</p>
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            </div>
-
-                                            <div className="ps-product__shopping video_action quek_video_button">
-                                                <div
-                                                    className={`btn--container  `}>
-                                                    {taxminiyNarx ? (
-                                                        <>
-                                                            <a
-                                                                style={{
-                                                                    cursor: `${'not-allowed'}`,
-                                                                    textAlign:
-                                                                        'center',
-                                                                }}
-                                                                className="ps-btn ps-btn--black max-class"
-                                                                href="#">
-                                                                Savatga qo'shish
-                                                            </a>
-                                                            <a
-                                                                style={{
-                                                                    cursor: `${'not-allowed'}`,
-                                                                    textAlign:
-                                                                        'center',
-                                                                }}
-                                                                className="ps-btn max-class"
-                                                                href="#">
-                                                                1 klikda sotib
-                                                                oling
-                                                            </a>
-                                                        </>
-                                                    ) : free ? (
-                                                        <a
-                                                            style={{
-                                                                cursor: `${'not-allowed'}`,
-                                                                textAlign:
-                                                                    'center',
-                                                            }}
-                                                            className="ps-btn ps-btn--black max-class"
-                                                            href="#">
-                                                            Bepul yuklab olish
-                                                        </a>
-                                                    ) : (
-                                                        <>
-                                                            <a
-                                                                style={{
-                                                                    cursor: `${'not-allowed'}`,
-                                                                    textAlign:
-                                                                        'center',
-                                                                }}
-                                                                className="ps-btn ps-btn--black max-class"
-                                                                href="#">
-                                                                Savatga qo'shish
-                                                            </a>
-                                                            <a
-                                                                style={{
-                                                                    cursor: `${'not-allowed'}`,
-                                                                    textAlign:
-                                                                        'center',
-                                                                }}
-                                                                className="ps-btn max-class"
-                                                                href="#">
-                                                                1 klikda sotib
-                                                                oling
-                                                            </a>
-                                                        </>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div>
-                                                <p className="mb-0">
-                                                    Tezkor teglar
-                                                </p>
-                                                <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                    {tagSearchResult?.length >
-                                                        0 &&
-                                                        tagSearchResult?.map(
-                                                            (item, i) => (
-                                                                <div
-                                                                    key={i}
-                                                                    className="m-2 tag-product">
-                                                                    <Link
-                                                                        href="#"
-                                                                        as="#">
-                                                                        <a>
-                                                                            {' '}
-                                                                            #
-                                                                            {
-                                                                                item
-                                                                            }{' '}
-                                                                        </a>
-                                                                    </Link>
-                                                                </div>
-                                                            )
-                                                        )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="col-12">
-                                            <div className="ps-product__content ps-tab-root mb-5">
-                                                <Tabs defaultActiveKey="1">
-                                                    <TabPane
-                                                        tab="Mahsulot to’liq tavsifi"
-                                                        key="1">
-                                                        <div className="ps-document">
-                                                            {Fulldata
-                                                                ? parse(
-                                                                    Fulldata
-                                                                )
-                                                                : "To'ldirilmadi"}
-                                                        </div>
-                                                    </TabPane>
-                                                </Tabs>
-                                            </div>
+                                                    </div>
+                                                }
+                                            </>
                                         </div>
                                     </div>
-                                ) : (
-                                    <div className="ps-product--detail ps-product--fullwidth">
-                                        <div className="ps-product__header ">
-                                            <div className="ps-product__thumbnail">
-                                                <div className="product_poster">
-                                                    <figure>
-                                                        <div>
-                                                            {videoTab ===
-                                                                'file' ? (
-                                                                <>
-                                                                    {!liveFile ? (
-                                                                        <img
-                                                                            src={
-                                                                                livePosterFile
-                                                                                    ?.images?.[0]
-                                                                                    ?.image_url ||
-                                                                                '/static/img/docCopy.png'
-                                                                            }
-                                                                            alt="doc"
-                                                                            className="border mb-4"
-                                                                            style={{
-                                                                                objectFit:
-                                                                                    'cover',
-                                                                            }}
-                                                                        />
-                                                                    ) : (
-                                                                        <img
-                                                                            src={
-                                                                                liveFile
-                                                                            }
-                                                                            alt="doc"
-                                                                            className="mb-4 border"
-                                                                            style={{
-                                                                                objectFit:
-                                                                                    'cover',
-                                                                            }}
-                                                                        />
-                                                                    )}
-                                                                </>
-                                                            ) : (
-                                                                <>
-                                                                    {!liveFile ? (
-                                                                        <img
-                                                                            src={
-                                                                                livePosterFile
-                                                                                    ?.images?.[0]
-                                                                                    ?.image_url ||
-                                                                                '/static/img/docCopy.png'
-                                                                            }
-                                                                            alt="doc"
-                                                                            className="border mb-4"
-                                                                            style={{
-                                                                                objectFit:
-                                                                                    'cover',
-                                                                            }}
-                                                                        />
-                                                                    ) : (
-                                                                        <img
-                                                                            src={
-                                                                                liveFile
-                                                                            }
-                                                                            alt="doc"
-                                                                            className="mb-4 border"
-                                                                            style={{
-                                                                                objectFit:
-                                                                                    'cover',
-                                                                            }}
-                                                                        />
-                                                                    )}
-                                                                </>
-                                                            )}
-                                                        </div>
-                                                    </figure>
-                                                </div>
-                                            </div>
 
-                                            <div className="ps-product__info">
-                                                <header>
-                                                    <h1>
-                                                        {' '}
-                                                        {title
-                                                            ? title
-                                                            : "To'ldirilmadi"}
-                                                    </h1>
-                                                    <h4>
-                                                        {' '}
-                                                        {taxminiyNarx
-                                                            ? addPeriodToThousands(
-                                                                removePrefix(
-                                                                    taxminiyNarx
-                                                                )
-                                                            ) + "so'm"
-                                                            : "To'ldirilmadi"}
-                                                    </h4>
-                                                </header>
-
-                                                <div className="ps-product__desc">
-                                                    <strong>
-                                                        <span>
-                                                            <strong className="fs-4">
-                                                                Qisqa tavsif
-                                                            </strong>
-                                                            :{' '}
-                                                        </span>
-                                                        {videoTab ===
-                                                            'file' && (
-                                                                <ul
-                                                                    style={{
-                                                                        maxWidth:
-                                                                            '150px',
-                                                                    }}
-                                                                    className="">
-                                                                    <li>
-                                                                        {' '}
-                                                                        <strong className="fs-4">
-                                                                            Betlar
-                                                                            soni:{' '}
-                                                                        </strong>{' '}
-                                                                        {livePosterFile?.page_count
-                                                                            ? livePosterFile?.page_count +
-                                                                            ' ' +
-                                                                            'ta'
-                                                                            : ''}{' '}
-                                                                    </li>
-                                                                    <li>
-                                                                        {' '}
-                                                                        <strong className="fs-4">
-                                                                            Hajmi:{' '}
-                                                                        </strong>{' '}
-                                                                        {
-                                                                            livePosterFile?.file_size
-                                                                        }
-                                                                    </li>
-                                                                    <li>
-                                                                        {' '}
-                                                                        <strong className="fs-4">
-                                                                            Turi:{' '}
-                                                                        </strong>{' '}
-                                                                        {
-                                                                            livePosterFile?.file_type
-                                                                        }
-                                                                    </li>
-                                                                </ul>
-                                                            )}
-                                                    </strong>
-                                                    <ul></ul>
+                                    <div className="ps-product__content ps-tab-root mb-5">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
+                                                <div className="ps-document">
+                                                    {Fulldata
+                                                        ? parse(Fulldata)
+                                                        : "To'ldirilmadi"}
                                                 </div>
-                                                <div className="ps-product__shopping row-gap-3">
-                                                    <button
-                                                        className="ps-btn ps-btn--black"
-                                                        style={{
-                                                            cursor: 'not-allowed',
-                                                        }}>
-                                                        Savatga qo'shish
-                                                    </button>
-                                                    <button
-                                                        className="ps-btn"
-                                                        style={{
-                                                            cursor: 'not-allowed',
-                                                        }}>
-                                                        Sotib olish
-                                                    </button>
-                                                    <div className="ps-product__actions">
-                                                        <a
-                                                            style={{
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            <i
-                                                                className={`icon-heart`}></i>
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                    {tagSearchResult.length >
-                                                        0 ? (
-                                                        tagSearchResult?.map(
-                                                            (item, i) => {
-                                                                return (
-                                                                    <span
-                                                                        className="mx-2"
-                                                                        key={i}>
-                                                                        {' '}
-                                                                        #{
-                                                                            item
-                                                                        }{' '}
-                                                                    </span>
-                                                                );
-                                                            }
-                                                        )
-                                                    ) : (
-                                                        <></>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="ps-product__content ps-tab-root">
-                                            <Tabs defaultActiveKey="1">
-                                                <TabPane
-                                                    tab="Mahsulot to’liq tavsifi"
-                                                    key="1">
-                                                    <div className="ps-document">
-                                                        {Fulldata
-                                                            ? parse(Fulldata)
-                                                            : "To'ldirilmadi"}
-                                                    </div>
-                                                </TabPane>
-                                            </Tabs>
-                                        </div>
+                                            </TabPane>
+                                        </Tabs>
                                     </div>
-                                )}
+                                </div>
+
                             </div>
                         </div>
                     </div>

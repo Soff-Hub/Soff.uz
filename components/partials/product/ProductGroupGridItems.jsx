@@ -45,6 +45,8 @@ const ProductGroupGridItems = ({
         }
     }
 
+
+    
     function handleSetColumns() {
         switch (columns) {
             case 2:
