@@ -15,6 +15,7 @@ import PostRepository from '~/repositories/PostRepository';
 import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
 import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
 import axios from 'axios'
+import Head from "next/head";
 
 
 const ProductDefaultPage = () => {
@@ -116,11 +117,20 @@ const ProductDefaultPage = () => {
     return (
         <>
             <PageContainer title={product ? product.title : 'Loading...'}>
-                <Meta
-                    title={`Soff | ${product?.title}`}
-                    image={product?.document?.images?.[0]?.image_url}
-                    description={`${product?.title} mahsulotni saytimizdan Soff.uz bepul yuklab yoki sotib olishingiz mumkin`}
-                />
+                <Head>
+                    <meta property="og:title" content={`Soff | ${product && product?.title}`} />
+                    <meta
+                        property="og:description"
+                        content="Soff | Soff online hujjatlar bazasi"
+                    />
+                    <meta property="og:image" content={product && product?.poster_url} />
+                    <meta property="og:site_name" content="Soff.uz" />
+                    <title>{product && product?.title}</title>
+                    <meta
+                        name="description"
+                        content="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling."
+                    />
+                </Head>
 
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
 
