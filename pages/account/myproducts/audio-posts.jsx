@@ -204,20 +204,13 @@ const AudioPosts = () => {
         }
         formData.append('description', Fulldata);
         formData.append('tags', tagSearchResult);
+        formData.append('document', livePosterAudio?.id);
         liveFile?.images?.[0]?.id
             ? formData.append('poster_id', liveFile?.images?.[0]?.id)
             : 'None',
             fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
             formData.append('category', category_id[0]);
-        formData.append(
-            'document',
-            livePosterVideo?.data?.id
-                ? livePosterVideo?.data?.id
-                : livePosterAudio?.data?.id
-                    ? livePosterAudio?.data?.id
-                    : livePosterFile.id
-        );
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
@@ -255,6 +248,7 @@ const AudioPosts = () => {
             setLoadingAudio(true);
             formData.append('file', fileImgAudio);
             formData.append('content_type', 'audio');
+            
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
                 formData,
                 user?.access
@@ -262,7 +256,7 @@ const AudioPosts = () => {
             if (ItemsData?.status === 201) {
                 clearInterval(progresInterval);
                 setCompleted(100);
-                setLivePosterAudio(ItemsData);
+                setLivePosterAudio(ItemsData?.data);
                 setAudioPost(ItemsData);
                 if (progress == 100) {
                     setTimeout(() => {
@@ -297,6 +291,8 @@ const AudioPosts = () => {
         }
     }
 
+    
+    
     function LiveImage(e) {
         setFileImgFileID('');
         setFileImgPoster(e.target.files[0]);
@@ -322,16 +318,6 @@ const AudioPosts = () => {
         return formattedNumber;
     }
 
-    const chegirma = (foiz) => {
-        if (narx) {
-            const chegirmaNarx = narx - (narx * foiz) / 100;
-            if (chegirmaNarx < 1000) {
-                setChegirmaTek(false);
-            } else {
-                setChegirmaTek(true);
-            }
-        }
-    };
 
     const handleFreeChange = (e) => {
         setFree(!free);
@@ -340,7 +326,6 @@ const AudioPosts = () => {
     useEffect(() => {
         GetItemsTag();
         setEditorLoaded(true);
-        chegirma();
         GetItemsCategoryLists();
     }, []);
 
@@ -427,6 +412,9 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
+
+
+    
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}

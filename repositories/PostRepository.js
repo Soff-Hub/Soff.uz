@@ -18,7 +18,7 @@ class PostRepository {
 
     async postSearchFilter(payload, file) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/documents/?search=${payload ? payload : ''}&document_type=${file ? file : ''}`
+            `${baseUrl}customer/search-documents/?search=${payload ? payload : ''}&type=${file ? file : ''}`
         )
             .then((response) => {
                 return response.data;
@@ -27,6 +27,7 @@ class PostRepository {
         return reponse;
     }
 
+    
     async getPostItemsByCategory(payload) {
         const reponse = await Repository.get(
             `${basePostUrl}/posts?title_contains=${payload}`
