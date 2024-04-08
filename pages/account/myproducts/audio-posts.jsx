@@ -385,12 +385,12 @@ const AudioPosts = () => {
                     centered: true,
                     title: 'Xatolik!',
                     content: `${ItemsData?.status === 400
+                        ? ItemsData?.data?.msg
                             ? ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                            : ItemsData?.status === 413
-                                ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                                : "File mahsulot qo'sha olmadingiz "
+                            : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
+                        : ItemsData?.status === 413
+                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
+                            : "File mahsulot qo'sha olmadingiz "
                         }`,
                 });
             }
@@ -442,12 +442,12 @@ const AudioPosts = () => {
                     centered: true,
                     title: 'Xatolik!',
                     content: `${ItemsData?.status === 400
+                        ? ItemsData?.data?.msg
                             ? ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                            : ItemsData?.status === 413
-                                ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
-                                : "Audio mahsulot qo'sha olmadingiz "
+                            : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
+                        : ItemsData?.status === 413
+                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
+                            : "Audio mahsulot qo'sha olmadingiz "
                         }`,
                 });
             }
@@ -677,7 +677,7 @@ const AudioPosts = () => {
                                 <div className="row ">
                                     <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                         <p>Audio: *</p>{' '}
-                                        <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdag video bo’lishi mumkin: .mp4, .mov, .avi, .wmv, .avchd, .webm, .flv">
+                                        <Tooltip title="Mijozlar to’lov qilganidan so’ng, yuklab olishlari mumkin bo’lgan audio. Mahsulotingiz quyidagi turdag video bo’lishi mumkin: .mp3">
                                             <i
                                                 style={{ cursor: 'pointer' }}
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -720,7 +720,7 @@ const AudioPosts = () => {
                                                         }}>
                                                         <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                         <span>
-                                                        Mahsulot (audio) yuklash uchun ushbu hududga bosing (mp3)
+                                                            Mahsulot (audio) yuklash uchun ushbu hududga bosing (mp3)
                                                         </span>
                                                     </span>
                                                 )}
@@ -962,9 +962,9 @@ const AudioPosts = () => {
                             style={{ maxWidth: '370px' }}>
                             <div
                                 className={` ${videoTab === 'audio' &&
-                                        audioPost?.data?.short_content
-                                        ? 'image_audio mb-3'
-                                        : 'image rounded mb-3'
+                                    audioPost?.data?.short_content
+                                    ? 'image_audio mb-3'
+                                    : 'image rounded mb-3'
                                     } `}>
                                 <>
                                     {!liveFile ? (
@@ -987,16 +987,19 @@ const AudioPosts = () => {
                                                         }></audio>
                                                 </div>
                                             ) : (
-                                                <img
-                                                    src={
-                                                        '/static/img/audio_null.png'
-                                                    }
-                                                    alt="doc"
-                                                    className="border mb-4 w-100"
-                                                    style={{
-                                                        objectFit: 'cover',
-                                                    }}
-                                                />
+                                                <div className='w-full d-flex justify-content-center '>
+                                                    <img
+                                                        src={
+                                                            '/static/img/audio_null.png'
+                                                        }
+                                                        alt="doc"
+                                                        className="mb-4 "
+                                                        style={{
+                                                            objectFit: 'cover',
+                                                            width:"230px"
+                                                        }}
+                                                    />
+                                                </div>
                                             )}
                                         </>
                                     ) : (

@@ -29,14 +29,7 @@ const ElectronicProductGroupWithCarousel = ({
         } else {
             productItemsView = <p>Mahsulot topilmadi</p>;
         }
-    } else {
-        const skeletons = generateTempArray(6).map((item, i) => (
-            <div key={i} className="col-xl-2 col-lg-3 col-sm-3 col-6">
-                <SkeletonProduct />
-            </div>
-        ));
-        productItemsView = <div className="row">{skeletons}</div>;
-    }
+    } 
 
     return (
         <div className="ps-product-list">

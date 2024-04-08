@@ -48,7 +48,7 @@ export default function NextImageCard({
                         alt={url}
                         loader={loaderProp}
                         className={clasS}
-                        objectFit="cover"
+                        objectFit="contain"
                     />
                     }
                 </>
@@ -65,7 +65,7 @@ export default function NextImageCard({
                     alt={url}
                     loader={loaderProp}
                     className={clasS}
-                    objectFit="cover"
+                    objectFit="contain"
                 />
                    }
                 </>
