@@ -655,16 +655,18 @@ const Posts = () => {
                             style={{ maxWidth: '370px' }}>
                             <div className="image rounded mb-3">
                                 {!liveFile ? (
-                                    <img
+                                  <div className='d-flex justify-content-center'>
+                                      <img
                                         src={
                                             livePosterFile?.images?.[0]
                                                 ?.image_url ||
-                                            '/static/img/docCopy.png'
+                                            '/static/img/shablon.png'
                                         }
                                         alt="doc"
-                                        className="border mb-4"
-                                        style={{ objectFit: 'cover' }}
+                                        className=" mb-4"
+                                        style={{ objectFit: 'cover', width:"250px" }}
                                     />
+                                  </div>
                                 ) : (
                                     <img
                                         src={liveFile}
