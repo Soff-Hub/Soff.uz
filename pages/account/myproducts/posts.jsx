@@ -468,7 +468,7 @@ const Posts = () => {
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot rasmi: *</p>
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .psd, .svg">
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
                                         <i
                                             style={{ cursor: 'pointer' }}
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
