@@ -3,7 +3,6 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import ProductDetailFullwidth from '~/components/elements/detail/ProductDetailFullwidth';
 import RelatedProduct from '~/components/partials/product/RelatedProduct';
 import PageContainer from '~/components/layouts/PageContainer';
-import Meta from '~/components/shared/headers/Meta';
 import SkeletonProductDetail from '~/components/elements/skeletons/SkeletonProductDetail';
 import { baseUrl } from '~/repositories/Repository';
 import { useEffect } from 'react';
@@ -18,7 +17,7 @@ import axios from 'axios'
 import Head from "next/head";
 
 
-const ProductDefaultPage = () => {
+const ProductDefaultPage = ({defaultProducts}) => {
     const router = useRouter();
     const { pid } = router.query;
     const [views, setViews] = useState(null);
@@ -30,7 +29,6 @@ const ProductDefaultPage = () => {
     async function getProducts() {
         try {
             const token = user?.access;
-            const uuid = localStorage.getItem('uuid') || uuidv4();
             const response = await axios.get(
                 baseUrl + `customer/documents/${pid}/`,
                 {
@@ -51,7 +49,6 @@ const ProductDefaultPage = () => {
     async function getProductSimiller() {
         try {
             const token = user?.access;
-            const uuid = localStorage.getItem('uuid') || uuidv4();
             const response = await axios.get(
                 baseUrl + `customer/similar/${pid}/`,
                 {
@@ -112,19 +109,17 @@ const ProductDefaultPage = () => {
     ];
 
 
-
-
     return (
         <>
-            <PageContainer title={product ? product.title : 'Loading...'}>
+            <PageContainer title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
                 <Head>
-                    {product && (
+                    {defaultProducts && (
                         <>
-                            <meta property="og:title" content={`Soff | ${product?.title}`} />
+                            <meta property="og:title" content={`Soff | ${defaultProducts?.title}`} />
                             <meta property="og:description" content="Soff | Soff online hujjatlar bazasi" />
-                            <meta property="og:image" content={product?.poster_url} />
+                            <meta property="og:image" content={defaultProducts?.poster_url} />
                             <meta property="og:site_name" content="Soff.uz" />
-                            <title>{product?.title}</title>
+                            <title>{defaultProducts?.title}</title>
                         </>
                     )}
                     <meta
@@ -193,6 +188,21 @@ const ProductDefaultPage = () => {
         </>
     );
 };
+
+
+export async function getServerSideProps({ query }) {
+    const resquest = await fetch(
+        baseUrl + `customer/documents/${query.pid}/`,
+    );
+    const defaultProducts = await resquest.json();
+
+    return {
+        props: {
+            defaultProducts,
+        },
+    };
+}
+
 
 export default ProductDefaultPage;
 
