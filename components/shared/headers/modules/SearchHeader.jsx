@@ -30,7 +30,7 @@ const SearchHeader = () => {
     const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 1000);
-    const [selectFile, setSelectFile]= useState('Barchasi')
+    const [selectFile, setSelectFile]= useState('')
 
     function handleClearKeyword() {
         setKeyword('');

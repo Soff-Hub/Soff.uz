@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import Product from '~/components/elements/products/Product';
-import ProductGroupGridItems from '~/components/partials/product/ProductGroupGridItems';
 import PageContainer from '~/components/layouts/PageContainer';
 import { useRouter } from 'next/router';
 import PostRepository from '~/repositories/PostRepository';
 import Meta from '~/components/shared/headers/Meta';
+import Link from "next/link";
 
 const SearchPage = () => {
-    const [pageSize] = useState(100);
+
     const [keyword, setKeyword] = useState('');
     const Router = useRouter();
     const { query } = Router;
@@ -44,48 +44,11 @@ const SearchPage = () => {
             url: '/',
         },
         {
-            text: 'Qidiruv natijalari',
+            text: 'Filter natijalari',
         },
     ];
-    
-    let shopItemsView, statusView;
-    if (true) {
-        if (resultdata) {
-            shopItemsView = (
-                <ProductGroupGridItems
-                    data={resultdata}
-                    columns={6}
-                    pageSize={pageSize}
-                />
-            );
-            if (resultdata) {
-                const items = resultdata?.map((item) => {
-                    return (
-                        <div className="col-md-3 col-sm-6 col-6" key={item.id}>
-                            <Product product={item} />
-                        </div>
-                    );
-                });
-                shopItemsView = (
-                    <div className="ps-product-items row">{items}</div>
-                );
-                statusView = (
-                    <p>
-                        <strong style={{ color: '#000' }}>
-                            {resultdata?.length}
-                        </strong> ta
-                        mahsulot(lar) topildi.
-                    </p>
-                );
-            } else {
-                shopItemsView = <p>Mahsulot(lar) topilmadi.</p>;
-            }
-        } else {
-            shopItemsView = <p>Mahsulot(lar) topilmadi.</p>;
-        }
-    } else {
-        statusView = <p>Qidiruv...</p>;
-    }
+
+
 
     return (
         <PageContainer title={`Search results for: "${keyword}" `}>
@@ -95,17 +58,38 @@ const SearchPage = () => {
                 />
                 <BreadCrumb breacrumb={breadcrumb} />
             </div>
-            <div className="container">
-                <div className="ps-shop ps-shop--search">
-                    <div className="container">
-                        <div className="ps-shop__header">
-                            <h1>
-                                <i>{keyword}</i> {keyword === '' ? "Qidirish uchun qiymat kiring" : "Bo'yicha qidiruv natijalari"}
-                            </h1>
-                        </div>
-                        <div className="ps-shop__content">
-                            {statusView}
-                            {shopItemsView}
+
+            <div className="ps-product-list">
+                <div className="container">
+
+                    <div className="mt-5 mb-5">
+                        <h3 >
+                            <i style={{ borderBottom: "2px solid black" }} >{keyword}</i> {keyword === '' ? "Qidirish uchun qiymat kiring" : "Bo'yicha qidiruv natijalari"}
+                        </h3>
+                    </div>
+
+                    <div className="ps-section__header">
+                        <h3 className='titleeeeeeee'>{"cvcxvf"}</h3>
+                        <ul className="ps-section__links">
+                            <li>
+                                <Link href={`/category/`}>
+                                    <a className='d-flex align-items-center gap-2'>
+                                        <span>Barchasini ko'rish</span>
+                                        <i className='fa-solid fa-angles-right fa-beat-fade'></i>
+                                    </a>
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="ps-section__content">
+                        <div className="d-flex align-content-center row">
+                            {
+                                resultdata?.slice(0, 6)?.map((item, index) => (
+                                    <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                        <Product product={item} />{' '}
+                                    </div>
+                                ))}
                         </div>
                     </div>
                 </div>
