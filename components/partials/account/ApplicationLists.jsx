@@ -107,7 +107,8 @@ function ApplicationLists() {
     async function getItemsSellerAdmin(page) {
         const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin");
         if (Items && user?.role === "admin") {
-            // setAllPrice(Items)
+            setAllPrice(Items?.total_amount?.amount__sum)
+            console.log('item', Items);
             return setDataAdmin([...Items.results]);
         }
         if (Items.results) {
@@ -588,7 +589,7 @@ function ApplicationLists() {
                                         user?.role === "admin" ?
                                             (<>
                                                 <div className='row g-3 mx-auto'>
-                                                    <h4 className='py-3 col-md-4'>{user?.role === "seller" ? "Arizalar" : "Arizalar Bo'limi"}</h4>
+                                                    <h4 className='py-3 col-md-5'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${allPrice} so'm `}</h4>
                                                     <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
                                                         <option className='fs-3' selected value="">Holatlar</option>
                                                         <option className='fs-3' value="moderation">Moderatsiya</option>
