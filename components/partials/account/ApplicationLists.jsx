@@ -37,6 +37,7 @@ function ApplicationLists() {
     const [textItemsId, setTextItemsId] = useState(null)
     const [loading, setLoading] = useState(true)
     const [date, setDate] = useState(null);
+    const [allPrice, setAllPrice] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
@@ -50,6 +51,7 @@ function ApplicationLists() {
             setProfile(ItemsData)
         }
     }
+
     async function ProfileUsersTextItems(page, dataFormat) {
         const ItemsData = await GetRepository.getTagTaklifLists(page, dataFormat, user?.access, user?.role === "admin");
         if (ItemsData?.results) {
@@ -83,6 +85,7 @@ function ApplicationLists() {
 
     }
 
+
     async function getItemsSeller(page) {
         const Items = await GetRepository.getProfileAriza(page, user?.access, user?.role === "admin");
         if (Items?.results) {
@@ -92,16 +95,20 @@ function ApplicationLists() {
         }
     }
 
+
     async function getItemsSellerCardList() {
         const Items = await GetRepository.getProfileArizaCardLists(user?.access);
         if (Items?.results) {
             setProfileCard(Items?.results)
         }
     }
+
+
     async function getItemsSellerAdmin(page) {
         const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin");
         if (Items && user?.role === "admin") {
-            return setDataAdmin([...Items]);
+            // setAllPrice(Items)
+            return setDataAdmin([...Items.results]);
         }
         if (Items.results) {
             setDataAdmin([...Items.results]);
