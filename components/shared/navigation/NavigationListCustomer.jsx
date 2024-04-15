@@ -24,7 +24,7 @@ function NavigationListCustomer() {
 
     const handleShowTagsDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/myproducts')
+        Router.push('/account/sellerproducts')
     };
 
 
