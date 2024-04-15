@@ -183,7 +183,20 @@ const Posts = () => {
 
     async function handleClickPosts(e) {
         e.preventDefault();
-        setDeisabled
+
+
+        if (customePoster && fileImgPoster?.length < 3) {
+            const modal = Modal.info({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content:
+                    "Mahsulot to'liq yuklanishi uchun mahsulot rasmi ga kamida 3ta rasm yuklashingiz kerak!",
+            });
+
+            return
+        }
+
+        setDeisabled(true)
 
         const formData = new FormData();
         formData.append('title', title);
@@ -201,13 +214,14 @@ const Posts = () => {
 
         // fileImgPoster ? formData.append('images', fileImgPoster) : 'None';
 
+
         if (customePoster) {
             customeFile ? formData.append('poster', customeFile) : formData.append('poster', fileImgPoster[0])
             for (const file of fileImgPoster) {
                 formData.append('images', file)
             }
         } else {
-            fileImgPoster ? formData.append('poster', fileImgPoster) : 'None';
+            fileImgPoster ? formData.append('poster', fileImgPoster[0]) : 'None';
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '';
         }
 
@@ -220,6 +234,7 @@ const Posts = () => {
         );
         if (patchItems?.status === 201) {
             Router.push('/account/myproducts');
+            setDeisabled(false)
             const modal = Modal.warning({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -227,10 +242,12 @@ const Posts = () => {
                     "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             });
         } else {
+            setDeisabled(false)
+            console.log(patchItems)
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: patchItems?.data.msg,
+                content: patchItems?.data?.msg || JSON.stringify(patchItems?.data.category),
             });
         }
 
