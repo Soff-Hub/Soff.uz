@@ -75,13 +75,13 @@ const SearchHeader = () => {
         loadingView,
         loadMoreView;
     if (!loading) {
-        if (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0) {
+        if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0)) {
             productItemsView = <p>Mahsulot topilmadi</p>;
         }
         else {
-            resultItems ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || []].map((product) => (
+            resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || []].map((product) => (
                 <ProductSearchResult product={product} key={product.id} />
-            )) : productItemsView = 'Mahsulot topilmadi'
+            )) : productItemsView = <p>Mahsulot topilmadi</p>
         }
 
         if (keyword !== '') {
