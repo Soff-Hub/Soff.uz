@@ -34,7 +34,7 @@ const ProductOnCart = ({ product, children }) => {
                 {title(product)}
                 <p>
                     <small>
-                        {+product.discount_price === 0 ? <p className='free-product-text'>Bepul mahsulot</p> : product.discount === 0 ? (
+                        {+product.discount_price === 0 ? <p className='free-product-text'>Bepul</p> : product.discount === 0 ? (
                             <p>{addPeriodToThousands(product.discount_price)} so'm</p>
                         ) : (
                             <>

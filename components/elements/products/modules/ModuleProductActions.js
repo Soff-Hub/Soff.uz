@@ -98,6 +98,7 @@ const ModuleProductActions = ({ product }) => {
                 <p></p>
             </Modal>
             <ul className="ps-product__actions">
+                
                 <li>
                     <a
                         href="#"
@@ -108,6 +109,7 @@ const ModuleProductActions = ({ product }) => {
                         <i className="icon-bag2"></i>
                     </a>
                 </li>
+
                 <li>
                     <a
                         href="#"
@@ -118,6 +120,7 @@ const ModuleProductActions = ({ product }) => {
                         <i className="icon-eye"></i>
                     </a>
                 </li>
+
                 <li>
                     <a
                         href="#"
@@ -136,6 +139,7 @@ const ModuleProductActions = ({ product }) => {
                             } `}></i>
                     </a>
                 </li>
+
                 <Modal
                     centeredwishlist
                     footer={null}

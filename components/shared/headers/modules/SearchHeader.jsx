@@ -30,7 +30,7 @@ const SearchHeader = () => {
     const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
     const debouncedSearchTerm = useDebounce(keyword, 1000);
-    const [selectFile, setSelectFile]= useState('')
+    const [selectFile, setSelectFile] = useState('')
 
     function handleClearKeyword() {
         setKeyword('');
@@ -41,7 +41,7 @@ const SearchHeader = () => {
     function handleSubmit(e) {
         e.preventDefault();
         if (keyword) {
-            Router.push(`/search?keyword=${keyword}`);
+            Router.push(`/search?keyword=${keyword}&type=${selectFile}`);
         }
     }
     useEffect(() => {
@@ -54,7 +54,7 @@ const SearchHeader = () => {
                 products.then((result) => {
                     setLoading(false);
                     setIsSearch(true);
-                    setResultItems(result?.results);
+                    setResultItems(result);
                 });
             } else {
                 setIsSearch(false);
@@ -67,7 +67,7 @@ const SearchHeader = () => {
             setLoading(false);
             setIsSearch(false);
         }
-    }, [debouncedSearchTerm,selectFile]);
+    }, [debouncedSearchTerm, selectFile]);
 
     // Views
     let productItemsView,
@@ -75,22 +75,15 @@ const SearchHeader = () => {
         loadingView,
         loadMoreView;
     if (!loading) {
-        if (resultItems && resultItems.length > 0) {
-            if (resultItems.length > 5) {
-                loadMoreView = (
-                    <div className="ps-panel__footer text-center">
-                        <Link href={`/search?keyword=${keyword}`}>
-                            <a>Hamma natijalarni ko'rish</a>
-                        </Link>
-                    </div>
-                );
-            }
-            productItemsView = resultItems.map((product) => (
-                <ProductSearchResult product={product} key={product.id} />
-            ));
-        } else {
+        if (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0) {
             productItemsView = <p>Mahsulot topilmadi</p>;
         }
+        else {
+            resultItems ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || []].map((product) => (
+                <ProductSearchResult product={product} key={product.id} />
+            )) : productItemsView = 'Mahsulot topilmadi'
+        }
+
         if (keyword !== '') {
             clearTextView = (
                 <span className="ps-form__action" onClick={handleClearKeyword}>
@@ -107,6 +100,7 @@ const SearchHeader = () => {
     }
 
 
+
     return (
         <form
             className="ps-form--quick-search"
@@ -120,13 +114,13 @@ const SearchHeader = () => {
                 defaultValue={[selectFile]}
                 placeholder="Barchasi"
                 className='searchFilterSelect'
-                onChange={(e)=>setSelectFile(e)}
+                onChange={(e) => setSelectFile(e)}
 
                 style={{
                     flex: 1,
                     minWidth: "100px",
                     height: "42px",
-                   
+
                 }}
                 options={[
                     {
@@ -142,12 +136,12 @@ const SearchHeader = () => {
                         label: 'Audio',
                     },
                     {
-                        value: 'shablon',
+                        value: 'template',
                         label: 'Shablon',
                     },
                 ]}
             />
-            
+
 
             <div className="ps-form__input">
                 <input

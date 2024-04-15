@@ -59,7 +59,7 @@ export default function useProduct() {
                             </>
                         ) : (
                             <p className="free-product-text free-product-text_search">
-                                Bepul mahsulot
+                                Bepul 
                             </p>
                         )}
                     </p>
@@ -70,7 +70,7 @@ export default function useProduct() {
                         {payload.discount_price === 0 ? (
                             <>
                                 <p className="free-product-text free-product-text_search">
-                                    Bepul mahsulot
+                                    Bepul
                                 </p>
                             </>
                         ) : (

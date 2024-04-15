@@ -6,6 +6,7 @@ import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
 import { audioDownloaderSale } from '~/utilities/common-helpers';
+import { message } from 'antd';
 
 const ModuleDetailShoppingActions = ({ product }) => {
 
@@ -15,6 +16,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
     const Router = useRouter();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [copy, setCopy] = useState(false);
 
     const showModal = () => {
         setOpen(true);
@@ -53,7 +55,40 @@ const ModuleDetailShoppingActions = ({ product }) => {
         }
     };
 
+    const [messageApi, contextHolder] = message.useMessage();
+    const infoSuccess = (url) => {
+        messageApi.success(
+            `Soff | Audio mahsulot dan nusxa ko\'chirildi (${url})`
+        );
+    };
+    const infoError = (url) => {
+        messageApi.error(
+            `Soff | Audio mahsulot dan nusxa ko\'chirilmadi (${url})`
+        );
+    };
 
+    const copyVideoUrl = () => {
+        const videoUrl = `https://soff.uz${Router?.asPath}`;
+        navigator.clipboard
+            .writeText(videoUrl)
+            .then(() => {
+                setCopy(true);
+                setTimeout(() => {
+                    setCopy(false);
+                }, 2500);
+                infoSuccess(videoUrl);
+                //   alert(`Video URL copied to clipboard! ${}`);
+            })
+            .catch((error) => {
+                infoError(error);
+                console.error('Error copying video URL: ', error);
+                // alert('Error copying video URL!');
+            });
+    };
+
+    const videoUrl = `https://soff.uz${Router?.asPath}`;
+
+    console.log(videoUrl);
 
     if (true) {
         return (
@@ -87,10 +122,11 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                     <a
                                         style={{
                                             cursor: 'pointer',
-                                            minWidth:"150px"
-                                            ,
+                                            minWidth: "150px",
+                                            fontSize: "14px"
+
                                         }}
-                                        className="ps-btn ps-btn--black max-class"
+                                        className="ps-btn ps-btn--black py-3"
                                         href="#"
                                         onClick={async (e) => {
                                             e.preventDefault();
@@ -113,14 +149,16 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn ps-btn--black max-class"
+                                            className="ps-btn ps-btn--black py-3"
                                             href="#"
+                                            style={{ fontSize: "14px" }}
                                             onClick={(e) => handleAddItemToCart(e)}>
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn max-class"
+                                            className="ps-btn py-3"
                                             href="#"
+                                            style={{ fontSize: "14px" }}
                                             onClick={(e) => handleBuynow(e)}>
                                             1 klikda sotib oling
                                         </a>
@@ -152,6 +190,20 @@ const ModuleDetailShoppingActions = ({ product }) => {
                             </a>
                         )}
                     </div>
+
+                    <div className="p-3 rounded-3 " style={{ backgroundColor: "#F1F1F1", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
+                        {copy ? (
+                            <div className='text-center'>
+                                <i className="fa-solid fa-check "></i>
+                            </div>
+                        ) : (
+                            <div style={{ cursor: "pointer" }} className='w-full d-flex justify-content-center align-items-center'>
+                                <i className="fa-solid fa-share-nodes " style={{ marginRight: "5px" }}></i>
+                                ulashish
+                            </div>
+                        )}
+                    </div>
+
                     <div className="ps-product__actions">
                         <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
                             <i

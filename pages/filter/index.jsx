@@ -5,9 +5,8 @@ import PageContainer from '~/components/layouts/PageContainer';
 import { useRouter } from 'next/router';
 import PostRepository from '~/repositories/PostRepository';
 import Meta from '~/components/shared/headers/Meta';
-import Link from "next/link";
 
-const SearchPage = () => {
+const FilterPages = () => {
 
     const [keyword, setKeyword] = useState('');
     const Router = useRouter();
@@ -15,11 +14,12 @@ const SearchPage = () => {
     const [resultdata, setresultData] = useState([]);
 
     async function getSearchData() {
-        const responseData = await PostRepository.postSearchFilter(query.keyword);
+        const responseData = await PostRepository.postSearchFilter(query.keyword, query?.type);
         if (responseData) {
-            setresultData(responseData?.results);
+            setresultData(responseData);
         }
     }
+
 
 
 
@@ -35,7 +35,7 @@ const SearchPage = () => {
     useEffect(() => {
         getSearchData();
         handleSetKeyword();
-    }, [query.keyword, query]);
+    }, [query.keyword, query?.type]);
 
 
     const breadcrumb = [
@@ -47,6 +47,7 @@ const SearchPage = () => {
             text: 'Filter natijalari',
         },
     ];
+
 
 
 
@@ -62,30 +63,25 @@ const SearchPage = () => {
             <div className="ps-product-list">
                 <div className="container">
 
-                    <div className="mt-5 mb-5">
-                        <h3 >
-                            <i style={{ borderBottom: "2px solid black" }} >{keyword}</i> {keyword === '' ? "Qidirish uchun qiymat kiring" : "Bo'yicha qidiruv natijalari"}
-                        </h3>
-                    </div>
-
-                    <div className="ps-section__header">
-                        <h3 className='titleeeeeeee'>{"cvcxvf"}</h3>
-                        <ul className="ps-section__links">
-                            <li>
-                                <Link href={`/category/`}>
-                                    <a className='d-flex align-items-center gap-2'>
-                                        <span>Barchasini ko'rish</span>
-                                        <i className='fa-solid fa-angles-right fa-beat-fade'></i>
-                                    </a>
-                                </Link>
-                            </li>
-                        </ul>
-                    </div>
 
                     <div className="ps-section__content">
                         <div className="d-flex align-content-center row">
-                            {
-                                resultdata?.slice(0,6)?.map((item, index) => (
+                            {resultdata?.file?.length > 0 &&
+                                resultdata?.file?.map((item, index) => (
+                                    <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                        <Product product={item} />{' '}
+                                    </div>
+                                ))}
+
+                            {resultdata?.audio?.length > 0 &&
+                                resultdata?.audio?.map((item, index) => (
+                                    <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                        <Product product={item} />{' '}
+                                    </div>
+                                ))}
+
+                            {resultdata?.template?.length > 0 &&
+                                resultdata?.template?.map((item, index) => (
                                     <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
                                         <Product product={item} />{' '}
                                     </div>
@@ -98,4 +94,4 @@ const SearchPage = () => {
     );
 };
 
-export default SearchPage;
+export default FilterPages;

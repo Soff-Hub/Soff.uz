@@ -643,8 +643,7 @@ function ProductsLists() {
                                                                                             href="#"
                                                                                             as="#">
                                                                                             <a>
-                                                                                                {' '}
-                                                                                                #
+                                                                                             
                                                                                                 {
                                                                                                     item?.name
                                                                                                 }{' '}

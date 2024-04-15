@@ -96,7 +96,7 @@ const Wishlist = ({ ecomerce }) => {
                                     <td>
                                         <span>
                                             {
-                                                +product.discount_price === 0 ? <p className='free-product-text'>Bepul mahsulot</p> : (
+                                                +product.discount_price === 0 ? <p className='free-product-text'>Bepul</p> : (
                                                     product?.discount === 0 ? (
                                                         <p>
                                                             {addPeriodToThousands(

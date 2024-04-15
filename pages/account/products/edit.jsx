@@ -751,7 +751,7 @@ const PostsProductsEdit = () => {
                                                         {products?.active_tag?.map(
                                                             (item) => (
                                                                 <span key={item.id}>
-                                                                    #{item.name}{' '}
+                                                                    {item.name}{' '}
                                                                 </span>
                                                             )
                                                         )}{' '}
@@ -769,7 +769,7 @@ const PostsProductsEdit = () => {
                                                         {products?.deactive_tag?.map(
                                                             (item) => (
                                                                 <span key={item.id}>
-                                                                    #{item.name}{' '}
+                                                                    {item.name}{' '}
                                                                 </span>
                                                             )
                                                         )}{' '}
