@@ -76,7 +76,7 @@ class Login extends Component {
                     ) {
                         Router.push('/account/dashbord');
                     } else if (user?.data?.role === 'customer') {
-                        Router.push('/account/myproducts');
+                        Router.push('/account/sellerproducts');
                     }
                 }
             }
@@ -121,7 +121,6 @@ class Login extends Component {
 
     render() {
         const { router } = this.props;
-        const { role } = router.query;
         return (
             <div className=" pb-5 " style={{ backgroundColor: '#f1f1f1' }}>
                 <div className="container">
