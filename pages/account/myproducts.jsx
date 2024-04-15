@@ -21,7 +21,7 @@ const MyProducts = () => {
     ];
     const { user } = useSelector(state => state.auth)
     return (
-        user?.role === 'seller' || user?.role === 'customer' ?
+        user?.role === 'seller' ?
             <PageContainer
                 footer={<FooterDefault />}
                 title="Recent Viewed Products">
