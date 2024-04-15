@@ -211,8 +211,13 @@ function MyProductsLists() {
 
     async function handleItemsEditProductsPosts() {
         if (ViewPriceDiscount) {
+            const formData = new FormData()
+            formData.append('price', ViewPriceDiscount?.price)
+            formData.append('discount', ViewPriceDiscount?.discount)
+
+
             const patchItems = await PatchRepository.getMyProductsPatch(
-                ViewPriceDiscount,
+                formData,
                 products2?.id,
                 user?.access
             );
@@ -933,11 +938,15 @@ function MyProductsLists() {
                                                         product={View}
                                                     />
                                                     <div className="ps-product__info">
-                                                        <div className="mb-4">
-                                                            <strong className="text-danger pb-5">
-                                                                {View?.reason}
-                                                            </strong>
-                                                        </div>
+                                                        {
+                                                            View?.status === 'cancelled' ? (
+                                                                <div className="mb-4">
+                                                                <strong className="text-danger pb-5">
+                                                                    {View?.reason}
+                                                                </strong>
+                                                            </div>
+                                                            ) : ''
+                                                        }
                                                         <ModuleDetailTopInformation
                                                             product={
                                                                 View ? View : ''
