@@ -131,11 +131,10 @@ export let accountSellerLink = [
     },
 ];
 export let cutomerAccountLink = [
-    {
-        text: 'Mening mahsulotlarim',
-        url: '/account/myproducts',
-        icon: 'fa-solid fa-shop-lock',
-        
+   {
+        text: 'Sotib olingan',
+        url: '/account/sellerproducts',
+        icon: 'fa-solid fa-bag-shopping',
     },
     {
         text: 'Yangiliklar',
