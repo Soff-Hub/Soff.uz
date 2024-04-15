@@ -805,7 +805,7 @@ const Posts = () => {
                                                 (item, i) => {
                                                     return (
                                                         <span key={i}>
-                                                            #{item}{' '}
+                                                            {item}{' '}
                                                         </span>
                                                     );
                                                 }
@@ -1023,7 +1023,7 @@ const Posts = () => {
                                                                     className="mx-2"
                                                                     key={i}>
                                                                     {' '}
-                                                                    #{item}{' '}
+                                                                    {item}{' '}
                                                                 </span>
                                                             );
                                                         }

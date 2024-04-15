@@ -18,6 +18,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
     useEffect(() => {
         setTag(product?.tag);
     }, []);
+
     return (
         <>
             <Meta
@@ -48,7 +49,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                                                     searchTag(item?.name)
                                                 }>
                                                 {' '}
-                                                #{item.name}{' '}
+                                                {item.name}{' '}
                                             </a>
                                         </Link>
                                     </div>

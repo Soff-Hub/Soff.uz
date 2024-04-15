@@ -7,17 +7,17 @@ const ModuleProductDetailDescription = ({ product, views }) => {
             <ul style={{ listStyleType: 'revert' }}>
                 {
                     product?.document?.page_count ?
-                <li>
+                <li style={{fontSize:"12px", padding:"5px 0"}} >
                     <strong>Betlar soni : </strong> <div></div>{' '}
                     <span>{product?.document?.page_count} bet</span>
                 </li> : ''
 
                 }
-                <li>
+                <li style={{fontSize:"12px", paddingBottom:"5px"}} >
                     <strong>Hajmi : </strong> <div></div>{' '}
                     <span>{product?.document?.file_size}</span>
                 </li>
-                <li>
+                <li style={{fontSize:"12px", paddingBottom:"5px"}} >
                     <strong>Turi : </strong> <div></div>{' '}
                     <span
                         className="file_type-color"
@@ -51,13 +51,13 @@ const ModuleProductDetailDescription = ({ product, views }) => {
                     </span>
                 </li>
                 {product?.category?.name && (
-                    <li>
+                    <li style={{fontSize:"12px", paddingBottom:"5px"}} >
                         <strong> Kategoriyasi</strong> : <div></div>{' '}
                         <span> {product?.category?.name}</span>
                     </li>
                 )}
                 {views?.approved > 0 && (
-                    <li>
+                    <li style={{fontSize:"12px", paddingBottom:"5px"}} >
                         <strong>Xarid qilishlar soni : </strong> <div></div>{' '}
                         <span>{views?.approved}</span>
                     </li>

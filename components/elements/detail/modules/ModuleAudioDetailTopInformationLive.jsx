@@ -30,7 +30,7 @@ const ModuleAudioDetailTopInformationLive = ({
         priceView = (
             <div className="ps-product__price sale">
                 {+taxminiyNarx === 0 ? (
-                    <p>Bepul mahsulot</p>
+                    <p>Bepul</p>
                 ) : (
                     <>
                         <p className='m-0 p-0' style={{ fontWeight: "bold" }}>

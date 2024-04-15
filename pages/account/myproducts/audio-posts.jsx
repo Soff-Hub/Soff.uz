@@ -792,7 +792,7 @@ const AudioPosts = () => {
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
                                             return (
-                                                <span key={i}>#{item} </span>
+                                                <span key={i}>{item} </span>
                                             );
                                         })
                                         : "To'ldirilmadi"}
@@ -923,7 +923,7 @@ const AudioPosts = () => {
                                                 (item, i) => {
                                                     return (
                                                         <span key={i}>
-                                                            #{item}{' '}
+                                                            {item}{' '}
                                                         </span>
                                                     );
                                                 }
@@ -1039,8 +1039,7 @@ const AudioPosts = () => {
                                                                                 href="#"
                                                                                 as="#">
                                                                                 <a>
-                                                                                    {' '}
-                                                                                    #
+                                                                                   
                                                                                     {
                                                                                         item
                                                                                     }{' '}

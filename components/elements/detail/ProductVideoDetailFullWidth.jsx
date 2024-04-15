@@ -66,7 +66,7 @@ const ProductVideoDetailFullWidth = ({
                                                             )
                                                         }>
                                                         {' '}
-                                                        #{item.name}{' '}
+                                                        {item.name}{' '}
                                                     </a>
                                                 </Link>
                                             </div>

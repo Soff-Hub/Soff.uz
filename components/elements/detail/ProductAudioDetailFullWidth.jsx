@@ -61,7 +61,7 @@ const ProductAudioDetailFullWidth = ({
                                                             )
                                                         }>
                                                         {' '}
-                                                        #{item.name}{' '}
+                                                        {item.name}{' '}
                                                     </a>
                                                 </Link>
                                             </div>
