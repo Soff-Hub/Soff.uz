@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
-// import Tab from '~/components/elements/tabs/tab';
+import { InputNumber } from 'primereact/inputnumber';
 
 const category_id = [];
 
@@ -126,6 +126,7 @@ const Posts = () => {
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
+
     for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
             <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
@@ -134,10 +135,13 @@ const Posts = () => {
 
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
-        if (text.startsWith(prefix)) {
-            return text.slice(prefix.length);
+        const prefixBoolen = text.toString()?.includes(prefix);
+        if (prefixBoolen) {
+            if (text?.startsWith(prefix)) {
+                return text?.slice(prefix.length);
+            }
         }
-        return text;
+        return text ? text : '';
     }
 
     async function handleChange(value) {
@@ -218,7 +222,6 @@ const Posts = () => {
             });
         }
         setLoading2(false);
-
     }
 
     async function PostFilePoster() {
@@ -475,7 +478,7 @@ const Posts = () => {
                                             livePosterFile?.images?.map(
                                                 (item, i) =>
                                                     item.id ===
-                                                        fileImgFileID ? (
+                                                    fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
@@ -573,7 +576,7 @@ const Posts = () => {
                                     onChange={handleFreeChange}>
                                     Bepul
                                 </Checkbox>
-                                <input
+                                {/* <input
                                     required
                                     type={narxNomi ? 'text' : 'number'}
                                     className="form-control  rounded-3 col-md-6"
@@ -584,6 +587,17 @@ const Posts = () => {
                                         setNarxNomi(false),
                                         setTaxminiyNarx(e.target.value),
                                         setNarx(e.target.value)
+                                    )}
+                                /> */}
+                                <InputNumber
+                                    required
+                                    disabled={free}
+                                    value={taxminiyNarx}
+                                    className="col-md-6 p-2 post-price"
+                                    onValueChange={(e) => (
+                                        setNarxNomi(false),
+                                        setTaxminiyNarx(e.value),
+                                        setNarx(e.value)
                                     )}
                                 />
                             </div>
@@ -611,11 +625,11 @@ const Posts = () => {
                             <div
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
-
-                                {loading2 ?
+                                {loading2 ? (
                                     <button
                                         type="submit"
-                                        className="btn btn-success py-3 " style={{ minWidth: "235px" }}>
+                                        className="btn btn-success py-3 "
+                                        style={{ minWidth: '235px' }}>
                                         <div
                                             className="spinner-border"
                                             role="status">
@@ -623,8 +637,8 @@ const Posts = () => {
                                                 Loading...
                                             </span>
                                         </div>
-                                    </button> :
-
+                                    </button>
+                                ) : (
                                     <button
                                         disabled={loading}
                                         type="submit"
@@ -634,10 +648,7 @@ const Posts = () => {
                                             <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
                                         </span>
                                     </button>
-                                }
-
-
-
+                                )}
                             </div>
                             <div className="mahsulotingiz">
                                 <span
@@ -655,18 +666,21 @@ const Posts = () => {
                             style={{ maxWidth: '370px' }}>
                             <div className="image rounded mb-3">
                                 {!liveFile ? (
-                                  <div className='d-flex justify-content-center'>
-                                      <img
-                                        src={
-                                            livePosterFile?.images?.[0]
-                                                ?.image_url ||
-                                            '/static/img/shablon.png'
-                                        }
-                                        alt="doc"
-                                        className=" mb-4"
-                                        style={{ objectFit: 'cover', width:"250px" }}
-                                    />
-                                  </div>
+                                    <div className="d-flex justify-content-center">
+                                        <img
+                                            src={
+                                                livePosterFile?.images?.[0]
+                                                    ?.image_url ||
+                                                '/static/img/shablon.png'
+                                            }
+                                            alt="doc"
+                                            className=" mb-4"
+                                            style={{
+                                                objectFit: 'cover',
+                                                width: '250px',
+                                            }}
+                                        />
+                                    </div>
                                 ) : (
                                     <img
                                         src={liveFile}
@@ -691,8 +705,8 @@ const Posts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                    removePrefix(taxminiyNarx)
-                                                ) + "so'm"
+                                                      removePrefix(taxminiyNarx)
+                                                  ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -709,10 +723,10 @@ const Posts = () => {
                                     <strong>Taglari : </strong>
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                            return (
-                                                <span key={i}>#{item} </span>
-                                            );
-                                        })
+                                              return (
+                                                  <span key={i}>#{item} </span>
+                                              );
+                                          })
                                         : "To'ldirilmadi"}
                                 </p>
 
@@ -782,10 +796,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                        removePrefix(
-                                                            taxminiyNarx
-                                                        )
-                                                    ) + "so'm"
+                                                          removePrefix(
+                                                              taxminiyNarx
+                                                          )
+                                                      ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -802,14 +816,14 @@ const Posts = () => {
                                         <strong>Taglari : </strong>
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                (item, i) => {
-                                                    return (
-                                                        <span key={i}>
-                                                            {item}{' '}
-                                                        </span>
-                                                    );
-                                                }
-                                            )
+                                                  (item, i) => {
+                                                      return (
+                                                          <span key={i}>
+                                                              {item}{' '}
+                                                          </span>
+                                                      );
+                                                  }
+                                              )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -829,8 +843,8 @@ const Posts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                    ' ' +
-                                                    'ta'
+                                                      ' ' +
+                                                      'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -924,10 +938,10 @@ const Posts = () => {
                                                     {' '}
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                            removePrefix(
-                                                                taxminiyNarx
-                                                            )
-                                                        ) + "so'm"
+                                                              removePrefix(
+                                                                  taxminiyNarx
+                                                              )
+                                                          ) + "so'm"
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>
@@ -952,8 +966,8 @@ const Posts = () => {
                                                             </strong>{' '}
                                                             {livePosterFile?.page_count
                                                                 ? livePosterFile?.page_count +
-                                                                ' ' +
-                                                                'ta'
+                                                                  ' ' +
+                                                                  'ta'
                                                                 : ''}{' '}
                                                         </li>
                                                         <li>
@@ -982,8 +996,8 @@ const Posts = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : livePosterFile
-                                                                    ?.category
-                                                                    ?.name}
+                                                                      ?.category
+                                                                      ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>
