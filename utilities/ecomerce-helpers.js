@@ -123,3 +123,30 @@ export function calculateAmount(obj) {
 
     // .toFixed(2);
 }
+
+
+
+export function formatCreditCardNumber(cardNumber) {
+    cardNumber = cardNumber.replace(/\s/g, '');
+
+    var formattedNumber = '';
+    for (var i = 0; i < cardNumber.length; i++) {
+        if (i > 0 && i % 4 === 0) {
+            formattedNumber += ' '; // probel qo'shish
+        }
+        formattedNumber += cardNumber[i];
+    }
+
+    return formattedNumber;
+}
+
+export function formatExpiryDate(expiryDate) {
+    // Yaroqlik muddatini kiritish formatini tekshirish
+    var dateRegex = /^(0[1-9]|1[0-2])(\d{2})$/;
+    if (!dateRegex.test(expiryDate)) {
+        return expiryDate
+    }
+
+    // Formatlangan yaroqlik muddatini qaytarish
+    return expiryDate.replace(/^(\d{2})(\d{2})$/, "$1/$2");
+}

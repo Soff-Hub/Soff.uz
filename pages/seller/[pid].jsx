@@ -8,6 +8,8 @@ import { Modal, Pagination } from 'antd';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
+import SellerProducts from '~/components/partials/seller/SellerProducts';
+import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 
 const SellerPage = ({ seller }) => {
     const [data, setData] = useState(seller);
@@ -18,6 +20,9 @@ const SellerPage = ({ seller }) => {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
+    const [tab, setTab] = useState('tab-1');
+
+
     const showModal = () => {
         setIsModalOpen(true);
     };
@@ -208,16 +213,27 @@ const SellerPage = ({ seller }) => {
                                     </div>
                                 </div>
                                 <div className="d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ">
+                                    <a
+                                        href='#products'
+                                        className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1' ? 'donate-color-btn' : ''}`} style={{ textDecoration: 'none' }}
+                                        onClick={() => setTab('tab-1')}
+                                    >
+                                        {' '}
+                                        <i className="fa-regular fa-pen-to-square"></i>{' '}
+                                        Mahsulotlari
+                                    </a>
                                     <button
-                                        className="text-white ps-btn w-100"
+                                        className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2' ? 'donate-color-btn' : ''}`}
                                         onClick={showModal}>
                                         {' '}
                                         <i className="fa-regular fa-pen-to-square"></i>{' '}
                                         Buyurtma berish
                                     </button>
                                     <button
-                                        className="text-white ps-btn w-100 donate-color-btn mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0"
-                                        onClick={showModalDonate}>
+                                        className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3' ? 'donate-color-btn' : ''}`}
+                                        // onClick={showModalDonate}
+                                        onClick={() => setTab('tab-3')}
+                                    >
                                         {' '}
                                         <i className="fa-solid fa-hand-holding-medical"></i>{' '}
                                         Qo'llab quvvatlash
@@ -227,32 +243,15 @@ const SellerPage = ({ seller }) => {
                         </div>
                     </div>
                 </div>
-                <div className="container" style={{ marginTop: '30px' }}>
-                    <div className="row">
-                        {data?.results?.map((item) => (
-                            <div
-                                className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
-                                key={item.id}>
-                                <Product product={item} />{' '}
-                            </div>
-                        ))}
-                    </div>
-                    {data?.count >= 40 && (
-                        <div className="text-center my-4">
-                            <Pagination
-                                total={data?.count}
-                                pageSize={40}
-                                responsive={true}
-                                showSizeChanger={false}
-                                current={page}
-                                showTotal={(total, range) =>
-                                    `${total} ta dan ${range[0]}-${range[1]} oralig'i `
-                                }
-                                onChange={(e) => handlePagination(e)}
-                            />
-                        </div>
-                    )}
-                </div>
+                {
+                    tab === 'tab-1' ? (
+                        <SellerProducts data={data} page={page} handlePagination={handlePagination} />
+                    ) : tab === 'tab-2' ? (
+                        <SellerProducts data={data} page={page} handlePagination={handlePagination} />
+                    ) : (
+                        <SellerDonateForm />
+                    )
+                }
             </div>
         </PageContainer>
     );
