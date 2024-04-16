@@ -13,6 +13,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
+import { InputNumber } from 'primereact/inputnumber';
 const category_id = [];
 
 const PostsMyProducts = () => {
@@ -81,7 +82,7 @@ const PostsMyProducts = () => {
             if (title) {
                 formData.append('title', title);
             }
-            if (free) {
+            if (free && !taxminiyNarx) {
                 formData.append('price', 0);
             } else {
                 formData.append('price', taxminiyNarx);
@@ -472,7 +473,7 @@ const PostsMyProducts = () => {
                                     onChange={handleFreeChange}>
                                     Bepul
                                 </Checkbox>
-                                <input
+                                {/* <input
                                     type="number"
                                     className="form-control  rounded-3 col-md-6 mb-3"
                                     name="price"
@@ -481,7 +482,14 @@ const PostsMyProducts = () => {
                                     onChange={(e) =>
                                         setTaxminiyNarx(e.target.value)
                                     }
-                                />
+                                /> */}
+
+                                  <InputNumber
+                                  disabled={free}
+                                  value={products?.price}
+                                  className="col-md-6 p-2 post-price"
+                                  onValueChange={(e) => setTaxminiyNarx(e.target.value)}
+                              />
                             </div>
                             <div className="row">
                                 <div className="col-md-4 d-flex justify-content-between p-0">

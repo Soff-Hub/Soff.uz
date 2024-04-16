@@ -15,7 +15,7 @@ import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
-// import Tab from '~/components/elements/tabs/tab';
+import { InputNumber } from 'primereact/inputnumber';
 
 const category_id = [];
 
@@ -43,9 +43,9 @@ const Posts = () => {
     const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
     const [free, setFree] = useState(false);
-    const [uploadPoster, setUploadPoster] = useState(false)
-    const [customePoster, setCustomePoster] = useState(false)
-    const [customeFile, setCustomeFile] = useState(null)
+    const [uploadPoster, setUploadPoster] = useState(false);
+    const [customePoster, setCustomePoster] = useState(false);
+    const [customeFile, setCustomeFile] = useState(null);
 
     const breadCrumb = [
         {
@@ -137,10 +137,13 @@ const Posts = () => {
 
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
-        if (text.startsWith(prefix)) {
-            return text.slice(prefix.length);
+        const prefixBoolen = text.toString()?.includes(prefix);
+        if (prefixBoolen) {
+            if (text?.startsWith(prefix)) {
+                return text?.slice(prefix.length);
+            }
         }
-        return text;
+        return text ? text : ''
     }
 
     async function handleChange(value) {
@@ -184,7 +187,6 @@ const Posts = () => {
     async function handleClickPosts(e) {
         e.preventDefault();
 
-
         if (customePoster && fileImgPoster?.length < 3) {
             const modal = Modal.info({
                 centered: true,
@@ -193,10 +195,10 @@ const Posts = () => {
                     "Mahsulot to'liq yuklanishi uchun mahsulot rasmi ga kamida 3ta rasm yuklashingiz kerak!",
             });
 
-            return
+            return;
         }
 
-        setDeisabled(true)
+        setDeisabled(true);
 
         const formData = new FormData();
         formData.append('title', title);
@@ -214,14 +216,17 @@ const Posts = () => {
 
         // fileImgPoster ? formData.append('images', fileImgPoster) : 'None';
 
-
         if (customePoster) {
-            customeFile ? formData.append('poster', customeFile) : formData.append('poster', fileImgPoster[0])
+            customeFile
+                ? formData.append('poster', customeFile)
+                : formData.append('poster', fileImgPoster[0]);
             for (const file of fileImgPoster) {
-                formData.append('images', file)
+                formData.append('images', file);
             }
         } else {
-            fileImgPoster ? formData.append('poster', fileImgPoster[0]) : 'None';
+            fileImgPoster
+                ? formData.append('poster', fileImgPoster[0])
+                : 'None';
             fileImgFileID ? formData.append('poster_id', fileImgFileID) : '';
         }
 
@@ -234,7 +239,7 @@ const Posts = () => {
         );
         if (patchItems?.status === 201) {
             Router.push('/account/myproducts');
-            setDeisabled(false)
+            setDeisabled(false);
             const modal = Modal.warning({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -242,21 +247,22 @@ const Posts = () => {
                     "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             });
         } else {
-            setDeisabled(false)
-            console.log(patchItems)
+            setDeisabled(false);
+            console.log(patchItems);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: patchItems?.data?.msg || JSON.stringify(patchItems?.data.category),
+                content:
+                    patchItems?.data?.msg ||
+                    JSON.stringify(patchItems?.data.category),
             });
         }
-
     }
 
     async function PostFilePoster() {
         if (fileImgFile) {
             setLiveFile('');
-            setDeisabled(true)
+            setDeisabled(true);
             setLivePosterFile('');
             const formData = new FormData();
             setLoading(true);
@@ -266,12 +272,10 @@ const Posts = () => {
                 user?.access
             );
 
-            if (
-                ItemsData?.status === 201
-            ) {
+            if (ItemsData?.status === 201) {
                 if (!ItemsData?.data?.images) {
-                    setUploadPoster(true)
-                    setCustomePoster(true)
+                    setUploadPoster(true);
+                    setCustomePoster(true);
                     setLivePosterFile({ ...ItemsData?.data, images: [] });
                     setLiveFile2({ ...ItemsData?.data, images: [] });
                 } else {
@@ -284,14 +288,14 @@ const Posts = () => {
                     title: 'Muvaffaqqiyatli!',
                     content: "Yangi file qo'shdingiz ",
                 });
-                setDeisabled(false)
+                setDeisabled(false);
             } else {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
                     content: "File mahsulot qo'sha olmadingiz ",
                 });
-                setDeisabled(false)
+                setDeisabled(false);
             }
             setLoading(false);
         }
@@ -299,18 +303,36 @@ const Posts = () => {
 
     function LiveImage(e) {
         setFileImgFileID('');
-        setFileImgPoster((c) => ([...c, e.target.files[0]]));
+        setFileImgPoster((c) => [...c, e.target.files[0]]);
         const img = window.URL.createObjectURL(e.target.files[0]);
         setLiveFile(img);
 
         if (uploadPoster) {
-            setLivePosterFile({ ...livePosterFile, images: livePosterFile?.images ? [...livePosterFile?.images, { id: new Date().getTime(), image_url: img, file: e.target.files[0] }] : [{ id: new Date().getTime(), image_url: img, file: e.target.files[0] }] });
+            setLivePosterFile({
+                ...livePosterFile,
+                images: livePosterFile?.images
+                    ? [
+                          ...livePosterFile?.images,
+                          {
+                              id: new Date().getTime(),
+                              image_url: img,
+                              file: e.target.files[0],
+                          },
+                      ]
+                    : [
+                          {
+                              id: new Date().getTime(),
+                              image_url: img,
+                              file: e.target.files[0],
+                          },
+                      ],
+            });
         } else {
             // setLivePosterFile({ ...livePosterFile, images: [{ id: new Date().getTime(), image_url: img }] });
         }
 
         if (livePosterFile?.images?.length >= 2) {
-            setUploadPoster(false)
+            setUploadPoster(false);
         }
     }
 
@@ -495,7 +517,14 @@ const Posts = () => {
                                     className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
                                     style={{
                                         backgroundColor: '#F1F1F1',
-                                        border: `1px dashed ${(livePosterFile?.images?.length < 3 && uploadPoster || livePosterFile?.images?.length < 3) ? 'red' : 'green'}`,
+                                        border: `1px dashed ${
+                                            (livePosterFile?.images?.length <
+                                                3 &&
+                                                uploadPoster) ||
+                                            livePosterFile?.images?.length < 3
+                                                ? 'red'
+                                                : 'green'
+                                        }`,
                                         height: '100px',
                                     }}>
                                     <label
@@ -522,15 +551,16 @@ const Posts = () => {
                                                 <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                 <span className="text-center">
                                                     {' '}
-                                                    {uploadPoster ? "Ilitmos kamida 3ta rasmini yuklang." : "Rasmini yuklash uchun ushbu hududga bosing."}
-                                                    {' '}
+                                                    {uploadPoster
+                                                        ? 'Ilitmos kamida 3ta rasmini yuklang.'
+                                                        : 'Rasmini yuklash uchun ushbu hududga bosing.'}{' '}
                                                 </span>
                                             </span>
                                         ) : (
                                             livePosterFile?.images?.map(
                                                 (item, i) =>
                                                     item.id ===
-                                                        fileImgFileID ? (
+                                                    fileImgFileID ? (
                                                         <img
                                                             src={item.image_url}
                                                             alt=" "
@@ -553,7 +583,9 @@ const Posts = () => {
                                                                 setFileImgFileID(
                                                                     item?.id
                                                                 );
-                                                                setCustomeFile(item?.file)
+                                                                setCustomeFile(
+                                                                    item?.file
+                                                                );
                                                             }}
                                                             src={
                                                                 item?.image_url
@@ -629,7 +661,7 @@ const Posts = () => {
                                     onChange={handleFreeChange}>
                                     Bepul
                                 </Checkbox>
-                                <input
+                                {/* <input
                                     required
                                     type={narxNomi ? 'text' : 'number'}
                                     className="form-control  rounded-3 col-md-6"
@@ -640,6 +672,18 @@ const Posts = () => {
                                         setNarxNomi(false),
                                         setTaxminiyNarx(e.target.value),
                                         setNarx(e.target.value)
+                                    )}
+                                /> */}
+
+                                <InputNumber
+                                    required
+                                    disabled={free}
+                                    value={taxminiyNarx}
+                                    className="col-md-6 p-2"
+                                    onValueChange={(e) => (
+                                        setNarxNomi(false),
+                                        setTaxminiyNarx(e.value),
+                                        setNarx(e.value)
                                     )}
                                 />
                             </div>
@@ -727,8 +771,8 @@ const Posts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                    removePrefix(taxminiyNarx)
-                                                ) + "so'm"
+                                                      removePrefix(taxminiyNarx)
+                                                  ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -755,10 +799,10 @@ const Posts = () => {
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                            return (
-                                                <span key={i}>#{item} </span>
-                                            );
-                                        })
+                                              return (
+                                                  <span key={i}>#{item} </span>
+                                              );
+                                          })
                                         : "To'ldirilmadi"}
                                 </p>
                                 <p className="live-card-p">
@@ -778,8 +822,8 @@ const Posts = () => {
                                             </strong>{' '}
                                             {livePosterFile?.page_count
                                                 ? livePosterFile?.page_count +
-                                                ' ' +
-                                                'ta'
+                                                  ' ' +
+                                                  'ta'
                                                 : ''}{' '}
                                         </li>
                                         <li>
@@ -864,10 +908,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                        removePrefix(
-                                                            taxminiyNarx
-                                                        )
-                                                    ) + "so'm"
+                                                          removePrefix(
+                                                              taxminiyNarx
+                                                          )
+                                                      ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -894,14 +938,14 @@ const Posts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                (item, i) => {
-                                                    return (
-                                                        <span key={i}>
-                                                            {item}{' '}
-                                                        </span>
-                                                    );
-                                                }
-                                            )
+                                                  (item, i) => {
+                                                      return (
+                                                          <span key={i}>
+                                                              {item}{' '}
+                                                          </span>
+                                                      );
+                                                  }
+                                              )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -921,8 +965,8 @@ const Posts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                    ' ' +
-                                                    'ta'
+                                                      ' ' +
+                                                      'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -1016,10 +1060,10 @@ const Posts = () => {
                                                     {' '}
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                            removePrefix(
-                                                                taxminiyNarx
-                                                            )
-                                                        ) + "so'm"
+                                                              removePrefix(
+                                                                  taxminiyNarx
+                                                              )
+                                                          ) + "so'm"
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>
@@ -1044,8 +1088,8 @@ const Posts = () => {
                                                             </strong>{' '}
                                                             {livePosterFile?.page_count
                                                                 ? livePosterFile?.page_count +
-                                                                ' ' +
-                                                                'ta'
+                                                                  ' ' +
+                                                                  'ta'
                                                                 : ''}{' '}
                                                         </li>
                                                         <li>
@@ -1074,8 +1118,8 @@ const Posts = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : livePosterFile
-                                                                    ?.category
-                                                                    ?.name}
+                                                                      ?.category
+                                                                      ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>
