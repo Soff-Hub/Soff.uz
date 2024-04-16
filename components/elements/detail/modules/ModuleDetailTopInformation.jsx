@@ -68,13 +68,14 @@ const ModuleDetailTopInformation = ({ product }) => {
             </h4>
         );
     }
+
     return (
         <header>
             <h1 className="product__name">
                 {product?.title !== undefined ? product?.title : ''}
             </h1>
             <div className="product__top-information">
-                <div>
+                <div className='w_fulls'>
                     <span className="input--label">muallif</span>
                     <div
                         className="product__top-information-account"
@@ -97,14 +98,14 @@ const ModuleDetailTopInformation = ({ product }) => {
                         </div>
 
                         {product?.seller?.first_name && (
-                            <p>
-                                {product?.seller?.first_name}{' '}
-                                {product?.seller?.last_name}
-                            </p>
+                            <div>
+                                <p>{product?.seller?.first_name}{' '}</p>
+                                <p> {product?.seller?.last_name}</p>
+                            </div>
                         )}
                     </div>
                 </div>
-                <div>
+                <div className='w_fulls2'  >
                     <span className="input--label">narxi</span>
                     <div className="product__top-information--price">
                         {priceView}

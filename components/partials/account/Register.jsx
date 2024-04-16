@@ -85,9 +85,9 @@ class Register extends Component {
         this.setState({ report: false });
         const url = this.props.url;
         const { registerUser } = useAuth();
-        
+
         if (this.props.router.query.pid || localStorage.getItem('referal')) {
-            const user = await registerUser(`auth/seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, e);   
+            const user = await registerUser(`auth/seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, e);
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ report: true });
@@ -113,8 +113,8 @@ class Register extends Component {
                     this.setState({ report: true });
                 }
             }
-        }else{
-            const user = await registerUser(url, e);   
+        } else {
+            const user = await registerUser(url, e);
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ report: true });
@@ -142,7 +142,7 @@ class Register extends Component {
 
         }
 
-      
+
     };
 
     handleChekked = () => {
@@ -201,7 +201,7 @@ class Register extends Component {
 
 
 
-   
+
     render() {
         const { router } = this.props;
         const { id } = router.query;
@@ -302,8 +302,8 @@ class Register extends Component {
                                                 type="password"
                                                 placeholder="Parolni takrorlash"
                                                 ref={(input) =>
-                                                    (this.password2Input =
-                                                        input)
+                                                (this.password2Input =
+                                                    input)
                                                 }
                                             />
                                         </Form.Item>
@@ -345,11 +345,11 @@ class Register extends Component {
                                                         disabled={true}
                                                         style={{
                                                             cursor: 'not-allowed',
-                                                            color:'#fff'
+                                                            color: '#fff'
                                                         }}
                                                         className="ps-btn ps-btn--fullwidth"
-                                                       
-                                                        >
+
+                                                    >
                                                         Ro'yxatdan o'tish
                                                     </button>
                                                 </Tooltip>
