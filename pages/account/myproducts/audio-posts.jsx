@@ -18,6 +18,7 @@ import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudi
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import Link from 'next/link';
+import { InputNumber } from 'primereact/inputnumber';
 
 const category_id = [];
 
@@ -48,8 +49,6 @@ const AudioPosts = () => {
     const maxCompleted = 100;
     const [progress, setProgress] = useState(0);
     const [socket, setSocket] = useState(null);
-
-
 
     const breadCrumb = [
         {
@@ -146,13 +145,18 @@ const AudioPosts = () => {
         );
     }
 
+
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
-        if (text.startsWith(prefix)) {
-            return text.slice(prefix.length);
+        const prefixBoolen = text.toString()?.includes(prefix);
+        if (prefixBoolen) {
+            if (text?.startsWith(prefix)) {
+                return text?.slice(prefix.length);
+            }
         }
-        return text;
+        return text ? text : ''
     }
+
 
     async function handleChange(value) {
         setTagSearchResult(value);
@@ -248,7 +252,7 @@ const AudioPosts = () => {
             setLoadingAudio(true);
             formData.append('file', fileImgAudio);
             formData.append('content_type', 'audio');
-            
+
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
                 formData,
                 user?.access
@@ -277,22 +281,21 @@ const AudioPosts = () => {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: `${ItemsData?.status === 400
-                        ? ItemsData?.data?.msg
+                    content: `${
+                        ItemsData?.status === 400
                             ? ItemsData?.data?.msg
-                            : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                        : ItemsData?.status === 413
+                                ? ItemsData?.data?.msg
+                                : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
+                            : ItemsData?.status === 413
                             ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
                             : "Audio mahsulot qo'sha olmadingiz "
-                        }`,
+                    }`,
                 });
             }
             setLoadingAudio(false);
         }
     }
 
-    
-    
     function LiveImage(e) {
         setFileImgFileID('');
         setFileImgPoster(e.target.files[0]);
@@ -318,7 +321,6 @@ const AudioPosts = () => {
         return formattedNumber;
     }
 
-
     const handleFreeChange = (e) => {
         setFree(!free);
     };
@@ -338,7 +340,6 @@ const AudioPosts = () => {
             ProfileUsers();
         }
     }, [user?.access]);
-
 
     useEffect(() => {
         if (user?.access) {
@@ -379,7 +380,6 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-
     useEffect(() => {
         if (user?.access) {
             // Agar user?.access mavjud bo'lsa
@@ -412,9 +412,6 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-
-
-    
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -454,7 +451,6 @@ const AudioPosts = () => {
                                 style={{ position: 'relative', width: '100%' }}
                                 id="FormPostsMyProducts"
                                 className=" col-md-12 pb-5">
-
                                 <div className="row   mt-3">
                                     <div className="col-md-4  d-flex justify-content-between p-0 ">
                                         <h4 className=" p-0">
@@ -504,7 +500,6 @@ const AudioPosts = () => {
                                                 className="d-flex flex-column align-items-center"
                                                 style={{ cursor: 'pointer' }}>
                                                 {loadingAudio ? (
-
                                                     <Tooltip title="Mahsulot yuklash davom etmoqda">
                                                         <Progress
                                                             percent={
@@ -523,7 +518,10 @@ const AudioPosts = () => {
                                                         }}>
                                                         <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                         <span>
-                                                            Mahsulot (audio) yuklash uchun ushbu hududga bosing (.mp3)
+                                                            Mahsulot (audio)
+                                                            yuklash uchun ushbu
+                                                            hududga bosing
+                                                            (.mp3)
                                                         </span>
                                                     </span>
                                                 )}
@@ -561,7 +559,8 @@ const AudioPosts = () => {
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
                                         </Tooltip>
                                     </div>
-                                    <label className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
+                                    <label
+                                        className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
                                         style={{
                                             backgroundColor: '#F1F1F1',
                                             border: '1px dashed green',
@@ -580,12 +579,12 @@ const AudioPosts = () => {
                                             }}>
                                             <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                             <span>
-                                                Mahsulot rasmni yuklash uchun ushbu hududga bosing.
+                                                Mahsulot rasmni yuklash uchun
+                                                ushbu hududga bosing.
                                             </span>
                                         </span>
                                     </label>
                                 </div>
-
 
                                 <div className=" row ">
                                     <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
@@ -644,7 +643,7 @@ const AudioPosts = () => {
                                         onChange={handleFreeChange}>
                                         Bepul
                                     </Checkbox>
-                                    <input
+                                    {/* <input
                                         required
                                         type={narxNomi ? 'text' : 'number'}
                                         className="form-control  rounded-3 col-md-6"
@@ -655,6 +654,17 @@ const AudioPosts = () => {
                                             setNarxNomi(false),
                                             setTaxminiyNarx(e.target.value),
                                             setNarx(e.target.value)
+                                        )}
+                                    /> */}
+                                    <InputNumber
+                                    required
+                                        disabled={free}
+                                        value={taxminiyNarx}
+                                        className="col-md-6 p-2"
+                                        onValueChange={(e) => (
+                                            setNarxNomi(false),
+                                            setTaxminiyNarx(e.value),
+                                            setNarx(e.value)
                                         )}
                                     />
                                 </div>
@@ -707,8 +717,7 @@ const AudioPosts = () => {
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
-                            <div
-                                className={` ${'image_audio mb-3'} `}>
+                            <div className={` ${'image_audio mb-3'} `}>
                                 <>
                                     {!liveFile ? (
                                         <>
@@ -730,7 +739,7 @@ const AudioPosts = () => {
                                                         }></audio>
                                                 </div>
                                             ) : (
-                                                <div className='w-full d-flex justify-content-center '>
+                                                <div className="w-full d-flex justify-content-center ">
                                                     <img
                                                         src={
                                                             '/static/img/audio_null.png'
@@ -739,7 +748,7 @@ const AudioPosts = () => {
                                                         className="mb-4 "
                                                         style={{
                                                             objectFit: 'cover',
-                                                            width: "230px"
+                                                            width: '230px',
                                                         }}
                                                     />
                                                 </div>
@@ -771,8 +780,8 @@ const AudioPosts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                    removePrefix(taxminiyNarx)
-                                                ) + "so'm"
+                                                      taxminiyNarx
+                                                  ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -791,10 +800,10 @@ const AudioPosts = () => {
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                            return (
-                                                <span key={i}>{item} </span>
-                                            );
-                                        })
+                                              return (
+                                                  <span key={i}>{item} </span>
+                                              );
+                                          })
                                         : "To'ldirilmadi"}
                                 </p>
 
@@ -806,7 +815,7 @@ const AudioPosts = () => {
                                         :{' '}
                                     </span>
                                     <ul
-                                        style={{ maxWidth: "200px", }}
+                                        style={{ maxWidth: '200px' }}
                                         className="">
                                         <li>
                                             {' '}
@@ -816,7 +825,7 @@ const AudioPosts = () => {
                                             {livePosterAudio?.data
                                                 ?.content_duration
                                                 ? livePosterAudio?.data
-                                                    ?.content_duration
+                                                      ?.content_duration
                                                 : ' '}{' '}
                                         </li>
                                         <li>
@@ -898,10 +907,10 @@ const AudioPosts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                        removePrefix(
-                                                            taxminiyNarx
-                                                        )
-                                                    ) + "so'm"
+                                                          removePrefix(
+                                                              taxminiyNarx
+                                                          )
+                                                      ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -920,14 +929,14 @@ const AudioPosts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                (item, i) => {
-                                                    return (
-                                                        <span key={i}>
-                                                            {item}{' '}
-                                                        </span>
-                                                    );
-                                                }
-                                            )
+                                                  (item, i) => {
+                                                      return (
+                                                          <span key={i}>
+                                                              {item}{' '}
+                                                          </span>
+                                                      );
+                                                  }
+                                              )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -938,7 +947,7 @@ const AudioPosts = () => {
                                             :{' '}
                                         </span>
                                         <ul
-                                            style={{ maxWidth: "150px", }}
+                                            style={{ maxWidth: '150px' }}
                                             className="">
                                             <li>
                                                 {' '}
@@ -948,7 +957,7 @@ const AudioPosts = () => {
                                                 {livePosterAudio?.data
                                                     ?.content_duration
                                                     ? livePosterAudio?.data
-                                                        ?.content_duration
+                                                          ?.content_duration
                                                     : ' '}{' '}
                                             </li>
                                             <li>
@@ -956,14 +965,20 @@ const AudioPosts = () => {
                                                 <strong className="fs-4">
                                                     Hajmi :{' '}
                                                 </strong>{' '}
-                                                {livePosterAudio?.data?.file_size}
+                                                {
+                                                    livePosterAudio?.data
+                                                        ?.file_size
+                                                }
                                             </li>
                                             <li>
                                                 {' '}
                                                 <strong className="fs-4">
                                                     Turi :{' '}
                                                 </strong>{' '}
-                                                {livePosterAudio?.data?.file_type}
+                                                {
+                                                    livePosterAudio?.data
+                                                        ?.file_type
+                                                }
                                             </li>
                                         </ul>
                                     </p>
@@ -1039,7 +1054,6 @@ const AudioPosts = () => {
                                                                                 href="#"
                                                                                 as="#">
                                                                                 <a>
-                                                                                   
                                                                                     {
                                                                                         item
                                                                                     }{' '}
@@ -1069,7 +1083,6 @@ const AudioPosts = () => {
                                         </Tabs>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
