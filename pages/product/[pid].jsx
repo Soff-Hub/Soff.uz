@@ -27,22 +27,24 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const { user } = useSelector((state) => state.auth);
 
     async function getProducts() {
-        try {
-            const token = user?.access;
-            const response = await axios.get(
-                baseUrl + `customer/documents/${pid}/`,
-                {
-                    headers: {
-                        Authorization: token ? `Bearer ${token}` : '',
-                    },
+        const token = user?.access;
+        if (token) {
+            try {
+                const response = await axios.get(
+                    baseUrl + `customer/documents/${pid}/`,
+                    {
+                        headers: {
+                            Authorization: token ? `Bearer ${token}` : '',
+                        },
 
-                }
-            );
+                    }
+                );
 
-            setProduct(response?.data);
+                setProduct(response?.data);
 
-        } catch (error) {
-            console.error('Error fetching document:', error);
+            } catch (error) {
+                console.error('Error fetching document:', error);
+            }
         }
     }
 
@@ -77,7 +79,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     }
 
     useEffect(() => {
-        if (pid) {
+        if (pid && user?.access) {
             getProducts();
             getProductSimiller();
         }
