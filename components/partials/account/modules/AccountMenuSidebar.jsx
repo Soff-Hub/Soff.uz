@@ -9,7 +9,7 @@ import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 
-const AccountMenuSidebar = ({ data, renderProfile, forwardedRef }) => {
+const AccountMenuSidebar = ({ data, renderProfile }) => {
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const { asPath } = useRouter();
@@ -205,7 +205,7 @@ const AccountMenuSidebar = ({ data, renderProfile, forwardedRef }) => {
    
     return (
         <aside className="ps-widget--account-dashboard">
-            <div ref={forwardedRef} className="ps-widget__header  p-2 pb-4">
+            <div className="ps-widget__header  p-2 pb-4">
                 
                 {profile?.image ? (
                     <img src={`${profile?.image}`} className="profile__image" />

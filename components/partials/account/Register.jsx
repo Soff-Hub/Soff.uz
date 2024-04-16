@@ -101,7 +101,6 @@ class Register extends Component {
                     this.props.dispatch(begin({ id: user.data.first }));
                     localStorage.setItem('token', user.data.access);
                     localStorage.setItem('via_', user?.data?.via_);
-                    localStorage.setItem('tour', true);
                     localStorage.setItem('data', JSON.stringify(e));
                     localStorage.removeItem("referal")
                     if (this.props.router.query.id) {
