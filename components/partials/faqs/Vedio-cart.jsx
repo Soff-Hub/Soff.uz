@@ -1,12 +1,13 @@
 import Head from 'next/head';
 import React from 'react';
 import { useState } from 'react';
+import ModalVideo from "react-modal-video"
 
 export default function VedioCart({ title, url, vedioUrl, id }) {
     const [modalClose, setModalClose] = useState(false);
-    function CloseButton() {
-        setModalClose(false);
-    }
+
+    const videoId = vedioUrl?.split("/").pop(); // Son parçayı alırız
+
 
     function haldleModalOpen() {
         setModalClose(true);
@@ -21,7 +22,7 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                 <meta name="author" content="Soff.uz soff" />
                 <meta name="robots" content="index, follow" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-               
+
             </Head>
             <div className="vedio-cart-container">
                 <div className="vedio-cart-content" onClick={haldleModalOpen}>
@@ -54,39 +55,8 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
                     </div>
                 </div>
             </div>
-            <div
-                onClick={CloseButton}
-                className={modalClose ? 'modalBanner ' : 'modalBanner2 '}></div>
-            <div className={modalClose ? ' bannerModal2  ' : 'bannerModal3  '}>
-                <div
-                    className="closeButton"
-                    style={{
-                        position: 'absolute',
-                        right: '-50px',
-                        top: '-10px',
-                    }}>
-                    <span className="fs-3" style={{ cursor: 'pointer' }}>
-                        <i
-                            onClick={CloseButton}
-                            className="fa-solid  fa-2x p-3 text-white fa-xmark"></i>{' '}
-                    </span>
-                </div>
-                <div className="iframe-container">
-                    {modalClose ? (
-                        <iframe
-                            width="560"
-                            height="315"
-                            src={`${vedioUrl}`}
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share; fullscreen"
-                            allowfullscreen
-                            ></iframe>
-                    ) : (
-                        <></>
-                    )}
-                </div>
-            </div>
+            <ModalVideo channel="youtube" autoplay isOpen={modalClose}
+                videoId={videoId} onClose={() => setModalClose(false)} />
         </div>
     );
 }
