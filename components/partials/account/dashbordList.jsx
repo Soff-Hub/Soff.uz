@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Pagination, Select, Table, Tour } from 'antd';
+import { Pagination, Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
@@ -24,34 +24,6 @@ function DashbordList() {
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear())
     const [month, setMonth] = useState(null)
-
-    const ref1 = useRef(null);
-    const ref2 = useRef(null);
-    const ref3 = useRef(null);
-    const [open, setOpen] = useState(true);
-    const steps = [
-      {
-        title: 'Dashboard ma\'lumotlari',
-        description: "Bu yerda siz butun davr mobaynida jami daromadingiz, oxirgi 30 kundagi daromadingiz, bugungi daromadingiz va yana jami buyurtmalar soni kabi ma'lumotlarga ega bo'lishingiz mumkin",
-        // cover: (
-        //   <img
-        //     alt="tour.png"
-        //     src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
-        //   />
-        // ),
-        target: () => ref1.current,
-      },
-      {
-        title: 'Foydalanuvchi ma\'lumotlari',
-        description: "Bu joyda sizni shaxsiy ma'lumotlaringiz joylashgan bo'lib uni xohlagan vaqtingizda o'zgartirishingiz mumkin",
-        target: () => ref2.current,
-      },
-      {
-        title: 'So\'ngi qilingan buyurtmalar',
-        description: "Bu joyda esa siz oxirgi marta qilingan buyurtmalar haqida bilib olishingiz mumkin",
-        target: () => ref3.current,
-      },
-    ];
 
     const { accountLinks, user} = useSelector(state => state.auth)
     // Birinchi marta kirgan bolsa id===0 bo'ladi , aks holda 1
@@ -294,7 +266,6 @@ function DashbordList() {
 
     return (
         <section className="ps-my-account ps-page--account p-0">
-             <Tour open={open} onClose={() => setOpen(false)} steps={steps} />
             <div className="container">
                 {
                     user?.role === "admin" ?
