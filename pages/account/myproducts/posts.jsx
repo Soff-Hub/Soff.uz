@@ -280,6 +280,7 @@ const Posts = () => {
                     setLiveFile2({ ...ItemsData?.data, images: [] });
                 } else {
                     setLivePosterFile(ItemsData?.data);
+                    setCustomePoster(false)
                     setLiveFile2(ItemsData?.data);
                 }
 
@@ -303,7 +304,8 @@ const Posts = () => {
 
     function LiveImage(e) {
         setFileImgFileID('');
-        setFileImgPoster((c) => [...c, e.target.files[0]]);
+        setCustomePoster(true)
+        setFileImgPoster((c) => ([...c, e.target.files[0]]));
         const img = window.URL.createObjectURL(e.target.files[0]);
         setLiveFile(img);
 
