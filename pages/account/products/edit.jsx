@@ -13,7 +13,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
-const category_id = []
+const category_id = [];
 
 const PostsProductsEdit = () => {
     const { TabPane } = Tabs;
@@ -40,7 +40,7 @@ const PostsProductsEdit = () => {
             text: 'Mahsulotni tahrirlash',
         },
     ];
-    
+
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
@@ -49,7 +49,7 @@ const PostsProductsEdit = () => {
             setDataCategory(ItemsData);
         }
     }
-
+    // console.log('products', products);
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
         if (ItemsData) {
@@ -63,12 +63,11 @@ const PostsProductsEdit = () => {
         }
     }
 
-    const resuslts1 = products?.active_tag?.map(item => item.name)
-    const resuslts2 = products?.deactive_tag?.map(item => item.name);
+    const resuslts1 = products?.active_tag?.map((item) => item.name);
+    const resuslts2 = products?.deactive_tag?.map((item) => item.name);
 
     const results = tagSearchResult?.concat(tagSearchResult1);
     const results3 = resuslts1?.concat(resuslts2);
-
 
     const childrenAktivmas = [];
     for (let i = 0; i < tegProductsLists?.length; i++) {
@@ -86,14 +85,13 @@ const PostsProductsEdit = () => {
         );
     }
     const onChange = async (e) => {
-        category_id.length = 0
-        setCategoryName(e)
+        category_id.length = 0;
+        setCategoryName(e);
         for (let j = 0; j < dataCategory.length; j++) {
             if (dataCategory[j].name === e) {
                 category_id.push(dataCategory[j].id);
             }
         }
-
     };
 
     const onSearch = async (value) => {
@@ -105,11 +103,7 @@ const PostsProductsEdit = () => {
     const options = [];
 
     for (const item of dataCategory) {
-        options.push(
-            <Option key={item.name} >
-                {item.name}
-            </Option>
-        );
+        options.push(<Option key={item.name}>{item.name}</Option>);
     }
 
     useEffect(() => {
@@ -121,8 +115,6 @@ const PostsProductsEdit = () => {
         GetItemsCategoryLists();
         GetItemsTagAktivmas();
     }, [user?.access]);
-
-
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -144,7 +136,13 @@ const PostsProductsEdit = () => {
 
     async function handleClickPostsEdit(e) {
         e.preventDefault();
-        if (title || category_id[0] || dataCatStatus || Fulldata || textAreaItems) {
+        if (
+            title ||
+            category_id[0] ||
+            dataCatStatus ||
+            Fulldata ||
+            textAreaItems
+        ) {
             const data = {};
             if (title) {
                 Object.assign(data, { title: title });
@@ -153,7 +151,7 @@ const PostsProductsEdit = () => {
                 Object.assign(data, { tags: results });
             }
             if (results3) {
-                Object.assign(data, { tags: results3 })
+                Object.assign(data, { tags: results3 });
             }
             if (category_id[0]) {
                 Object.assign(data, { category: category_id[0] });
@@ -172,14 +170,13 @@ const PostsProductsEdit = () => {
                 products?.id,
                 user?.access
             );
-            setFullData(null)
+            setFullData(null);
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
             });
-        }
-        else {
+        } else {
             const modal = Modal.info({
                 centered: true,
                 title: "Qayta urinib ko'ring",
@@ -187,7 +184,6 @@ const PostsProductsEdit = () => {
             });
         }
         Router.push(`/account/products?page=${Router.query.page}`);
-
     }
     const dataStatus = [
         {
@@ -204,15 +200,12 @@ const PostsProductsEdit = () => {
         },
     ];
 
-
     return user?.role === 'admin' ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
-                <Meta
-                    title={"Soff | Mahsulotni tahrirlash"}
-                />
+                <Meta title={'Soff | Mahsulotni tahrirlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
                     <div
@@ -282,28 +275,29 @@ const PostsProductsEdit = () => {
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
                                                     : item.status ===
-                                                        'cancelled'
-                                                        ? 'Bekor qilingan'
-                                                        : item.status === 'approved'
-                                                            ? 'Tasdiqlangan'
-                                                            : ''}
+                                                      'cancelled'
+                                                    ? 'Bekor qilingan'
+                                                    : item.status === 'approved'
+                                                    ? 'Tasdiqlangan'
+                                                    : ''}
                                             </option>
                                         ) : (
                                             <option value={item.status}>
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
                                                     : item.status ===
-                                                        'cancelled'
-                                                        ? 'Bekor qilingan'
-                                                        : item.status === 'approved'
-                                                            ? 'Tasdiqlangan'
-                                                            : ''}
+                                                      'cancelled'
+                                                    ? 'Bekor qilingan'
+                                                    : item.status === 'approved'
+                                                    ? 'Tasdiqlangan'
+                                                    : ''}
                                             </option>
                                         )
                                     )}
                                 </select>
                             </div>
-                            {(dataCatStatus === "cancelled" || products.status === "cancelled") ?
+                            {dataCatStatus === 'cancelled' ||
+                            products.status === 'cancelled' ? (
                                 <div className="row">
                                     <div className="col-md-4 d-flex justify-content-between p-0">
                                         <p>Holat to'g'risida sabab: *</p>{' '}
@@ -315,14 +309,19 @@ const PostsProductsEdit = () => {
                                     </div>
 
                                     <div className="col-md-8 p-0 mb-3">
-                                        <textarea defaultValue={products?.reason} onChange={(e) => setTextAreaItmes(e.target.value)} required rows={4} className='rounded w-100 border p-3 border-danger'>
-
-                                        </textarea>
+                                        <textarea
+                                            defaultValue={products?.reason}
+                                            onChange={(e) =>
+                                                setTextAreaItmes(e.target.value)
+                                            }
+                                            required
+                                            rows={4}
+                                            className="rounded w-100 border p-3 border-danger"></textarea>
                                     </div>
                                 </div>
-                                :
+                            ) : (
                                 <></>
-                            }
+                            )}
                             <div className="row">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                     <p>Aktiv teglar:</p>{' '}
@@ -337,9 +336,10 @@ const PostsProductsEdit = () => {
                                     mode="tags"
                                     onChange={(e) => setTagSearchResult(e)}
                                     defaultValue={
-                                        products?.active_tag
-                                        &&
-                                        products?.active_tag?.map((item) => item.name)
+                                        products?.active_tag &&
+                                        products?.active_tag?.map(
+                                            (item) => item.name
+                                        )
                                     }
                                     className="col-md-8 p-0 mb-3">
                                     {children}
@@ -358,10 +358,10 @@ const PostsProductsEdit = () => {
                                     mode="tags"
                                     onChange={(e) => setTagSearchResult2(e)}
                                     defaultValue={
-                                        products?.deactive_tag
-
-                                        &&
-                                        products?.deactive_tag?.map((item) => item.name)
+                                        products?.deactive_tag &&
+                                        products?.deactive_tag?.map(
+                                            (item) => item.name
+                                        )
                                     }
                                     className="col-md-8 p-0 mb-3">
                                     {childrenAktivmas}
@@ -380,16 +380,17 @@ const PostsProductsEdit = () => {
 
                                 <div className="rounded-3  mb-3 p-0 m-0 d-flex flex-column col-md-8">
                                     <Select
-                                        mode='select'
+                                        mode="select"
                                         showSearch
                                         allowClear
-                                        style={{ width: '100%', height: "47px" }}
+                                        style={{
+                                            width: '100%',
+                                            height: '47px',
+                                        }}
                                         onChange={onChange}
                                         onSearch={onSearch}
-                                        defaultValue={products?.category?.name}
-                                    >
+                                        defaultValue={products?.category?.name}>
                                         {options}
-
                                     </Select>
                                 </div>
                             </div>
@@ -475,7 +476,9 @@ const PostsProductsEdit = () => {
                                     </span>
                                     <span style={{ maxWidth: '150px' }}>
                                         {products?.active_tag?.map((item) => (
-                                            <span key={item.id}>#{item.name} </span>
+                                            <span key={item.id}>
+                                                #{item.name}{' '}
+                                            </span>
                                         ))}
                                     </span>
                                 </p>
@@ -491,12 +494,35 @@ const PostsProductsEdit = () => {
                                 </p>
                                 <p className="live-card-p">
                                     <span>
-                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
+                                        <strong className="fs-4">
+                                            Qisqa tavsif
+                                        </strong>
+                                        :{' '}
                                     </span>
-                                    <ul style={{ maxWidth: '150px' }} className=''>
-                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
-                                        <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
-                                        <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                    <ul
+                                        style={{ maxWidth: '150px' }}
+                                        className="">
+                                        <li>
+                                            {' '}
+                                            <strong className="fs-4">
+                                                Betlar soni:{' '}
+                                            </strong>{' '}
+                                            {products?.document?.page_count} ta
+                                        </li>
+                                        <li>
+                                            {' '}
+                                            <strong className="fs-4">
+                                                Hajmi:{' '}
+                                            </strong>{' '}
+                                            {products?.document?.file_size}
+                                        </li>
+                                        <li>
+                                            {' '}
+                                            <strong className="fs-4">
+                                                Turi:{' '}
+                                            </strong>{' '}
+                                            {products?.document?.file_type}
+                                        </li>
                                     </ul>
                                 </p>
                                 <p className="live-card-p">
@@ -510,8 +536,8 @@ const PostsProductsEdit = () => {
                                         {Fulldata
                                             ? parse(Fulldata)
                                             : products?.description
-                                                ? parse(products?.description)
-                                                : ''}
+                                            ? parse(products?.description)
+                                            : ''}
                                     </span>
                                 </p>
                             </div>
@@ -570,7 +596,9 @@ const PostsProductsEdit = () => {
                                         </span>
                                         <span style={{ maxWidth: '150px' }}>
                                             {products?.tag?.map((item) => (
-                                                <span key={item.id}>#{item.name} </span>
+                                                <span key={item.id}>
+                                                    #{item.name}{' '}
+                                                </span>
                                             ))}
                                         </span>
                                     </p>
@@ -586,12 +614,36 @@ const PostsProductsEdit = () => {
                                     </p>
                                     <p className="live-card-p">
                                         <span>
-                                            <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
+                                            <strong className="fs-4">
+                                                Qisqa tavsif
+                                            </strong>
+                                            :{' '}
                                         </span>
-                                        <ul style={{ maxWidth: '150px' }} className=''>
-                                            <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
-                                            <li> <strong className='fs-4'>Hajmi: </strong> {products?.document?.file_size}</li>
-                                            <li> <strong className='fs-4'>Turi: </strong> {products?.document?.file_type}</li>
+                                        <ul
+                                            style={{ maxWidth: '150px' }}
+                                            className="">
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Betlar soni:{' '}
+                                                </strong>{' '}
+                                                {products?.document?.page_count}{' '}
+                                                ta
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Hajmi:{' '}
+                                                </strong>{' '}
+                                                {products?.document?.file_size}
+                                            </li>
+                                            <li>
+                                                {' '}
+                                                <strong className="fs-4">
+                                                    Turi:{' '}
+                                                </strong>{' '}
+                                                {products?.document?.file_type}
+                                            </li>
                                         </ul>
                                     </p>
                                     <p className="live-card-p">
@@ -606,8 +658,8 @@ const PostsProductsEdit = () => {
                                             {Fulldata
                                                 ? parse(Fulldata)
                                                 : products?.description
-                                                    ? parse(products?.description)
-                                                    : ''}
+                                                ? parse(products?.description)
+                                                : ''}
                                         </span>
                                     </p>
                                 </div>
@@ -637,14 +689,17 @@ const PostsProductsEdit = () => {
                                         <div className="ps-product__thumbnail">
                                             <figure>
                                                 <div className="ps-wrapper">
-                                                    {products?.document?.images ? (
+                                                    {products?.document
+                                                        ?.images ? (
                                                         products?.document?.images.map(
                                                             (item) => (
                                                                 <img
                                                                     src={
                                                                         item.image_url
                                                                     }
-                                                                    key={item.id}
+                                                                    key={
+                                                                        item.id
+                                                                    }
                                                                     alt="doc"
                                                                     className="border mb-3 img-fluid"
                                                                 />
@@ -669,8 +724,8 @@ const PostsProductsEdit = () => {
                                                 <h4>
                                                     {products
                                                         ? addPeriodToThousands(
-                                                            products?.price
-                                                        )
+                                                              products?.price
+                                                          )
                                                         : '0'}{' '}
                                                     so'm
                                                 </h4>
@@ -692,12 +747,50 @@ const PostsProductsEdit = () => {
                                             <div className="ps-product__desc">
                                                 <strong>
                                                     <span>
-                                                        <strong className='fs-4'>Qisqa tavsif</strong>:{' '}
+                                                        <strong className="fs-4">
+                                                            Qisqa tavsif
+                                                        </strong>
+                                                        :{' '}
                                                     </span>
-                                                    <ul style={{ listStyleType: "revert" }}>
-                                                        <li> <strong className='fs-4'>Betlar soni: </strong> {products?.document?.page_count} ta</li>
-                                                        <li> <strong className='fs-4'>Hajmi: </strong>{products?.document?.file_size}</li>
-                                                        <li> <strong className='fs-4'>Turi: </strong>{products?.document?.file_type}</li>
+                                                    <ul
+                                                        style={{
+                                                            listStyleType:
+                                                                'revert',
+                                                        }}>
+                                                        <li>
+                                                            {' '}
+                                                            <strong className="fs-4">
+                                                                Betlar soni:{' '}
+                                                            </strong>{' '}
+                                                            {
+                                                                products
+                                                                    ?.document
+                                                                    ?.page_count
+                                                            }{' '}
+                                                            ta
+                                                        </li>
+                                                        <li>
+                                                            {' '}
+                                                            <strong className="fs-4">
+                                                                Hajmi:{' '}
+                                                            </strong>
+                                                            {
+                                                                products
+                                                                    ?.document
+                                                                    ?.file_size
+                                                            }
+                                                        </li>
+                                                        <li>
+                                                            {' '}
+                                                            <strong className="fs-4">
+                                                                Turi:{' '}
+                                                            </strong>
+                                                            {
+                                                                products
+                                                                    ?.document
+                                                                    ?.file_type
+                                                            }
+                                                        </li>
                                                         <li>
                                                             <strong>
                                                                 Kategoriyasi
@@ -705,15 +798,13 @@ const PostsProductsEdit = () => {
                                                             :{' '}
                                                             {categoryName
                                                                 ? categoryName
-                                                                : products?.category
-                                                                    ?.name}
+                                                                : products
+                                                                      ?.category
+                                                                      ?.name}
                                                         </li>
                                                     </ul>
-
                                                 </strong>
-                                                <ul>
-
-                                                </ul>
+                                                <ul></ul>
                                             </div>
                                             <div className="ps-product__shopping row-gap-3">
                                                 <button
@@ -742,7 +833,7 @@ const PostsProductsEdit = () => {
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 {products?.active_tag?.length >
-                                                    0 ? (
+                                                0 ? (
                                                     <p>
                                                         {' '}
                                                         <strong>
@@ -750,7 +841,10 @@ const PostsProductsEdit = () => {
                                                         </strong>{' '}
                                                         {products?.active_tag?.map(
                                                             (item) => (
-                                                                <span key={item.id}>
+                                                                <span
+                                                                    key={
+                                                                        item.id
+                                                                    }>
                                                                     {item.name}{' '}
                                                                 </span>
                                                             )
@@ -768,7 +862,10 @@ const PostsProductsEdit = () => {
                                                         </strong>{' '}
                                                         {products?.deactive_tag?.map(
                                                             (item) => (
-                                                                <span key={item.id}>
+                                                                <span
+                                                                    key={
+                                                                        item.id
+                                                                    }>
                                                                     {item.name}{' '}
                                                                 </span>
                                                             )
@@ -789,10 +886,10 @@ const PostsProductsEdit = () => {
                                                     {Fulldata
                                                         ? parse(Fulldata)
                                                         : products?.description
-                                                            ? parse(
-                                                                products?.description
-                                                            )
-                                                            : ''}
+                                                        ? parse(
+                                                              products?.description
+                                                          )
+                                                        : ''}
                                                 </div>
                                             </TabPane>
                                         </Tabs>
