@@ -26,6 +26,9 @@
             width: 100%;
         }
     }
+    .product__top-information--price{
+        min-width: 130px !important;
+    }
 }
 
 .input--label {
@@ -38,6 +41,7 @@
     padding: 12px;
     border-radius: 5px;
     text-align: center;
+    min-width: 170px;
     
     h4 {
         margin: 0 !important;
