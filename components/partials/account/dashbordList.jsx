@@ -28,7 +28,7 @@ function DashbordList() {
     const ref1 = useRef(null);
     const ref2 = useRef(null);
     const ref3 = useRef(null);
-    const [open, setOpen] = useState(true);
+    const [open, setOpen] = useState(false);
     const steps = [
       {
         title: 'Dashboard ma\'lumotlari',
@@ -104,15 +104,15 @@ function DashbordList() {
         setLoading(false)
     }
 
-    const handlePagination = (pageNum) => {
-        setCurrPage(pageNum)
-        GetItems(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
-    }
+    // const handlePagination = (pageNum) => {
+    //     setCurrPage(pageNum)
+    //     GetItems(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
+    // }
 
-    const handlePagination2 = (pageNum) => {
-        setCurrPage(pageNum)
-        GetItemsProductsOrders(pageNum)
-    }
+    // const handlePagination2 = (pageNum) => {
+    //     setCurrPage(pageNum)
+    //     GetItemsProductsOrders(pageNum)
+    // }
 
     const handleChangeYear = (value) => {
         setYear(+value)
@@ -126,6 +126,9 @@ function DashbordList() {
         GetItemsProducts()
         GetItemsProductsOrders(1)
         GetItemsProductsPopular()
+        if (localStorage.getItem('tour')) {
+            setOpen(true)
+        }
     }, [])
 
     const columns = [
@@ -401,7 +404,7 @@ function DashbordList() {
                             </div>
                         </div>
                         :
-                        <div className='pb-4  d-flex gap-3 overflow-x-scroll' >
+                        <div ref={ref1} className='pb-4  d-flex gap-3 overflow-x-scroll' >
                             <div>
                                 <div className=' bg-white py-5 px-4' style={{ width: "290px", height: "170px", borderRadius: "5px", boxShadow: "5px 5px 5px 0 rgb(0 0 0 / 0.1), 0 1px 2px -2px rgb(0 0 0 / 0.1)" }}>
                                     <div className='d-flex justify-content-between pb-4'>
@@ -487,7 +490,7 @@ function DashbordList() {
                 <div className="row pb-5 mt-5" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">
                         <div className="ps-page__left">
-                            <AccountMenuSidebar data={accountLinks} />
+                            <AccountMenuSidebar  forwardedRef={ref2} data={accountLinks} />
                         </div>
                     </div>
 
@@ -524,7 +527,7 @@ function DashbordList() {
 
                         {user?.role === "admin" && <div className="dashboard-div"><Example year={year} month={month} /></div>}
                         <div className='pb-5 mt-4'>
-                            <h4 className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
+                            <h4 ref={ref3}  className='bg-white m-0 text-center py-4'>So'nggi buyurtmalar</h4>
                             {
                                 user?.role == "admin" ?
                                     <>
