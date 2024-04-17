@@ -153,10 +153,10 @@ function Notifications() {
                     dataBsTarget="exampleModalMyProductsUserProfile"
                     onSubmited={handleClickEditUserProfile}
                 >
-                    <label htmlFor="file">
+                    {/* <label htmlFor="file">
                         Orqa fon rasmi
                         <input type="file" className='form-control py-4 rounded' id='file' name='file' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImageBag(e.target.files[0])} />
-                    </label>
+                    </label> */}
                     <label htmlFor="files">
                         Profle rasmi
                         <input type="file" className='form-control py-4 rounded' id='files' name='files' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImage(e.target.files[0])} />
