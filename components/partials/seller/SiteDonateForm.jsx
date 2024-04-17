@@ -7,7 +7,7 @@ import axios from 'axios';
 import { baseUrlCustomer } from '~/reositoriy-admin/Repository';
 
 
-export default function SellerDonateForm() {
+export default function SiteDonateForm() {
     const [name, setName] = useState('')
     const [amount, setAmount] = useState(5000)
     const [description, setDescription] = useState(null)
@@ -23,7 +23,7 @@ export default function SellerDonateForm() {
     const [reSend, setReSend] = useState(false)
     const [loading, setLoading] = useState(false);
 
-    const { query, push } = useRouter()
+    const { push } = useRouter()
 
 
     function reverseCountdown(minutes, seconds) {
@@ -73,7 +73,6 @@ export default function SellerDonateForm() {
                 amount,
                 description,
                 sponsor_info: name,
-                user: Number(query.pid),
                 provider: 'by_card'
             }
 
@@ -99,7 +98,6 @@ export default function SellerDonateForm() {
             }
 
             setLoading(false)
-
             return
         }
 
@@ -148,7 +146,6 @@ export default function SellerDonateForm() {
                 amount,
                 description,
                 sponsor_info: name,
-                user: Number(query.pid),
                 provider: paymentMethod
             }
 
@@ -166,6 +163,7 @@ export default function SellerDonateForm() {
             }
 
             setLoading(false)
+
             return
         }
     }
