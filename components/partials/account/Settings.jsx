@@ -1,42 +1,23 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CreditCard from './CreditCard';
-import { Modal, Tooltip } from 'antd';
+import { Modal } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import PostsRepository from '~/reositoriy-admin/PostsRepository';
-import { BeatLoader } from 'react-spinners';
-import Link from 'next/link';
-import ProfileImage from '~/components/elements/profileImage';
+import { Image } from 'antd';
+import ModalDeletePostEdit from './ModalPostEdit';
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [profileData, setProfileData] = useState({});
     const [renderProfile, setRenderProfile] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [loading1, setLoading1] = useState(false);
     const [profile, setProfile] = useState(null);
-    const [profilePassword, setProfilePassword] = useState(null);
-    const [profilePassword1, setProfilePassword2] = useState(null);
     const [image, setImage] = useState('');
-    const divRef = useRef(null);
-    const [copyIcon, setCopyIcon] = useState('fa-regular fa-copy');
+    const [imageBag, setImageBag] = useState('');
+   
 
-    const handleCopyClick = () => {
-        if (divRef.current) {
-            const textToCopy = divRef.current.innerText;
-            const tempInput = document.createElement('input');
-            document.body.appendChild(tempInput);
-            tempInput.value = textToCopy;
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            if (document.execCommand('copy')) {
-                setCopyIcon('fa-solid fa-check fa-beat');
-            }
-        }
-    };
+
 
     async function ProfileUsers() {
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -49,10 +30,7 @@ function Notifications() {
         ProfileUsers();
     }, [renderProfile]);
 
-    async function handleClickEdit(e) {
-        e.preventDefault();
-        setLoading(true);
-
+    async function handleClickEdit() {
         const formData = new FormData();
         formData.append(
             'first_name',
@@ -64,17 +42,11 @@ function Notifications() {
             'last_name',
             profileData?.last_name ? profileData?.last_name : profile?.last_name
         );
-        if (image?.originFileObj) {
-            formData.append('image', image?.originFileObj);
-        }
-
         const ItemsData = await PatchRepository.getPatchProfile(
             formData,
             user?.access
         );
         setRenderProfile(!renderProfile);
-        e.target.reset();
-        setLoading(false);
         if (ItemsData) {
             const modal = Modal.success({
                 centered: true,
@@ -85,32 +57,31 @@ function Notifications() {
         }
     }
 
-    async function handleClickEditChangePassword(e) {
-        e.preventDefault();
-        setLoading1(true);
-        const ItemsData = await PostsRepository.ChangePassword(
-            { old_password: profilePassword, new_password: profilePassword1 },
+    async function handleClickEditUserProfile() {
+        const formData = new FormData();
+        if (image || imageBag) {
+            formData.append('image', image);
+            formData.append('background_image', imageBag);
+        }
+
+        const ItemsData = await PatchRepository.getPatchProfile(
+            formData,
             user?.access
         );
         setRenderProfile(!renderProfile);
-        e.target.reset();
-        setLoading1(false);
-        if (ItemsData.status === 200) {
+
+        if (ItemsData) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: ItemsData?.data?.msg,
-            });
-            modal.update;
-        } else {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: ItemsData?.data?.msg,
+                content: `Sizning ma'lumotlaringiz o'zgartirildi`,
             });
             modal.update;
         }
     }
+
+
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -123,344 +94,116 @@ function Notifications() {
                             />
                         </div>
                     </div>
+
                     <div className="col-lg-8">
-                        <div className="ps-page__content">
-                            <div className="ps-section--account-setting ">
-                                <div className="ps-section__content">
-                                    {user?.role === 'admin' ||
-                                    user?.role === 'customer' ? (
-                                        <>
-                                            <div className="p-4 border rounded">
-                                                <h4>F.I.O ni o'zgartirish</h4>
-                                                <form
-                                                    className="row gap-4 row-gap-3 mx-auto "
-                                                    onSubmit={handleClickEdit}>
-                                                    <input
-                                                        type="text"
-                                                        defaultValue={
-                                                            profile?.first_name
-                                                        }
-                                                        required
-                                                        placeholder="Ismingiz"
-                                                        className="form-control rounded-3 col-md-3"
-                                                        onChange={(e) =>
-                                                            setProfileData(
-                                                                (prev) => ({
-                                                                    ...prev,
-                                                                    first_name:
-                                                                        e.target
-                                                                            .value,
-                                                                })
-                                                            )
-                                                        }
-                                                    />
-                                                    <input
-                                                        type="text"
-                                                        required
-                                                        defaultValue={
-                                                            profile?.last_name
-                                                        }
-                                                        placeholder="Familiyangiz"
-                                                        className="form-control rounded-3 col-md-3"
-                                                        onChange={(e) =>
-                                                            setProfileData(
-                                                                (prev) => ({
-                                                                    ...prev,
-                                                                    last_name:
-                                                                        e.target
-                                                                            .value,
-                                                                })
-                                                            )
-                                                        }
-                                                    />
+                        <div className="user_profile_container">
+                            <div className="user_profile_card"  style={{backgroundImage: `url(${profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif"})` }}>
 
-                                                    <div className="col-md-3 text-center">
-                                                        <ProfileImage
-                                                            setImage={setImage}
-                                                        />
-                                                    </div>
-
-                                                    <button
-                                                        style={{
-                                                            maxHeight: '50px',
-                                                        }}
-                                                        type="submit"
-                                                        className="btn btn-success py-3 col-md-2  ">
-                                                        {loading ? (
-                                                            <BeatLoader
-                                                                size={10}
-                                                                color="#fff"
-                                                            />
-                                                        ) : (
-                                                            <span className="fs-3">
-                                                                Saqlash
-                                                            </span>
-                                                        )}
-                                                    </button>
-                                                </form>
-                                            </div>
-                                            <div className="border p-4 rounded mt-4">
-                                                <h4>Parolni o'zgartirish</h4>
-                                                <form
-                                                    className="row gap-4 row-gap-3 mx-auto "
-                                                    onSubmit={
-                                                        handleClickEditChangePassword
-                                                    }>
-                                                    <input
-                                                        type="text"
-                                                        required
-                                                        placeholder="Eski parolni kiriting"
-                                                        className="form-control rounded-3 col-md-4"
-                                                        onChange={(e) =>
-                                                            setProfilePassword(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                    />
-                                                    <input
-                                                        type="text"
-                                                        required
-                                                        placeholder="Yangi parol kiriting"
-                                                        className="form-control rounded-3 col-md-4"
-                                                        onChange={(e) =>
-                                                            setProfilePassword2(
-                                                                e.target.value
-                                                            )
-                                                        }
-                                                    />
-
-                                                    <button
-                                                        type="submit"
-                                                        className="btn btn-success py-3 col-md-2  ">
-                                                        {loading1 ? (
-                                                            <BeatLoader
-                                                                size={10}
-                                                                color="#fff"
-                                                            />
-                                                        ) : (
-                                                            <span className="fs-3">
-                                                                O'zgartirish
-                                                            </span>
-                                                        )}
-                                                    </button>
-                                                </form>
-                                            </div>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <div
-                                                className="accordion accordion-flush "
-                                                id="accordionFlushExample">
-                                                <div className="accordion-item">
-                                                    <h2 className="accordion-header">
-                                                        <button
-                                                            className="accordion-button collapsed border px-4 "
-                                                            type="button"
-                                                            data-bs-toggle="collapse"
-                                                            data-bs-target="#flush-collapseOne"
-                                                            aria-expanded="false"
-                                                            aria-controls="flush-collapseOne">
-                                                            <h4 className="m-0 py-2">
-                                                                Ma'lumotlaringiz
-                                                            </h4>
-                                                        </button>
-                                                    </h2>
-                                                    <div
-                                                        id="flush-collapseOne"
-                                                        className="accordion-collapse collapse"
-                                                        data-bs-parent="#accordionFlushExample">
-                                                        <div className="accordion-body">
-                                                            <div className="p-4 border rounded">
-                                                                <h4>
-                                                                    F.I.O ni
-                                                                    o'zgartirish
-                                                                </h4>
-                                                                <form
-                                                                    className="row gap-4 row-gap-3 mx-auto d-flex aligin-center "
-                                                                    onSubmit={
-                                                                        handleClickEdit
-                                                                    }>
-                                                                    <input
-                                                                        type="text"
-                                                                        defaultValue={
-                                                                            profile?.first_name
-                                                                        }
-                                                                        required
-                                                                        placeholder="Ismingiz"
-                                                                        className="form-control rounded-3 col-md-3"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setProfileData(
-                                                                                (
-                                                                                    prev
-                                                                                ) => ({
-                                                                                    ...prev,
-                                                                                    first_name:
-                                                                                        e
-                                                                                            .target
-                                                                                            .value,
-                                                                                })
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        required
-                                                                        defaultValue={
-                                                                            profile?.last_name
-                                                                        }
-                                                                        placeholder="Familiyangiz"
-                                                                        className="form-control rounded-3 col-md-3"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setProfileData(
-                                                                                (
-                                                                                    prev
-                                                                                ) => ({
-                                                                                    ...prev,
-                                                                                    last_name:
-                                                                                        e
-                                                                                            .target
-                                                                                            .value,
-                                                                                })
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                    <div className="col-md-3 text-center">
-                                                                        <ProfileImage
-                                                                            setImage={
-                                                                                setImage
-                                                                            }
-                                                                        />
-                                                                    </div>
-
-                                                                    <button
-                                                                        style={{
-                                                                            maxHeight:
-                                                                                '50px',
-                                                                        }}
-                                                                        type="submit"
-                                                                        className="btn btn-success py-3 col-md-2  ">
-                                                                        {loading ? (
-                                                                            <BeatLoader
-                                                                                size={
-                                                                                    10
-                                                                                }
-                                                                                color="#fff"
-                                                                            />
-                                                                        ) : (
-                                                                            <span className="fs-3">
-                                                                                Saqlash
-                                                                            </span>
-                                                                        )}
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                            <div className="border p-4 rounded mt-4">
-                                                                <h4>
-                                                                    Parolni
-                                                                    o'zgartirish
-                                                                </h4>
-                                                                <form
-                                                                    className="row gap-4 row-gap-3 mx-auto "
-                                                                    onSubmit={
-                                                                        handleClickEditChangePassword
-                                                                    }>
-                                                                    <input
-                                                                        type="text"
-                                                                        required
-                                                                        placeholder="Eski parolni kiriting"
-                                                                        className="form-control rounded-3 col-md-4"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setProfilePassword(
-                                                                                e
-                                                                                    .target
-                                                                                    .value
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                    <input
-                                                                        type="text"
-                                                                        required
-                                                                        placeholder="Yangi parol kiriting"
-                                                                        className="form-control rounded-3 col-md-4"
-                                                                        onChange={(
-                                                                            e
-                                                                        ) =>
-                                                                            setProfilePassword2(
-                                                                                e
-                                                                                    .target
-                                                                                    .value
-                                                                            )
-                                                                        }
-                                                                    />
-                                                                    <button
-                                                                        type="submit"
-                                                                        className="btn btn-success py-3 col-md-2  ">
-                                                                        {loading1 ? (
-                                                                            <BeatLoader
-                                                                                size={
-                                                                                    10
-                                                                                }
-                                                                                color="#fff"
-                                                                            />
-                                                                        ) : (
-                                                                            <span className="fs-3">
-                                                                                O'zgartirish
-                                                                            </span>
-                                                                        )}
-                                                                    </button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div className="border pt-3 pl-2 mt-3">
-                                                <Link
-                                                    className="d-block"
-                                                    href="https://t.me/soff_uz_bot">
-                                                    <a target="_blank">
-                                                        <div className="d-flex justify-content-start">
-                                                            <h5
-                                                                className="fs-3 ms-2 "
-                                                                style={{
-                                                                    color: '#239AD6',
-                                                                }}>
-                                                                Taklif
-                                                                xavolasini olish
-                                                                uchun telegram
-                                                                botga o'ting
-                                                            </h5>
-                                                            {/* <i
-                                                                className="fa-brands fa-telegram fa-lg-beat fa-xl mt-4 mt-lg-3 mt-md-3 mt-sm-3 col-2"
-                                                                style={{
-                                                                    color: '#6492e3',
-                                                                }}></i> */}
-                                                        </div>
-                                                    </a>
-                                                </Link>
-                                            </div>
-                                        </>
-                                    )}
-                                    <div className="py-5">
-                                        {user?.role === 'seller' ? (
-                                            <CreditCard />
-                                        ) : (
-                                            <></>
-                                        )}
-                                    </div>
+                                <div className="profile_images_card"  >
+                                    <Image.PreviewGroup >
+                                        <Image
+                                            width={200}
+                                            src={`${profile?.image ? profile?.image : "/static/img/ozodbek.jpg"}`}
+                                        />
+                                    </Image.PreviewGroup>
                                 </div>
+                                <div className="image_icon" >
+                                    <a data-bs-target="#exampleModalMyProductsUserProfile"
+                                        data-bs-toggle="modal">
+                                        <i  className="fa-solid fa-camera-retro"></i>
+                                    </a>
+                                </div>
+                                <div className='edit_icon' style={{ cursor: "pointer" }}>
+                                    <a data-bs-target="#exampleModalMyProductsUserProfileName"
+                                        data-bs-toggle="modal">
+
+                                        <i class="fa-solid fa-pen"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div className='user_profile_body'>
+                                {
+                                    profile &&
+                                    <>
+                                        <h1>{profile?.first_name}  {profile?.last_name}</h1>
+                                        {
+                                            profile?.email &&
+                                            <p>{profile?.email}</p>
+                                        }
+                                        {
+                                            profile?.phone &&
+                                            <p>{profile?.phone}</p>
+                                        }
+                                    </>
+                                }
+                                <CreditCard />
                             </div>
                         </div>
                     </div>
                 </div>
+       
+
+                <ModalDeletePostEdit formID={"user-modal-profile"}
+                    dataBsTarget="exampleModalMyProductsUserProfile"
+                    onSubmited={handleClickEditUserProfile}
+                >
+                    <label htmlFor="file">
+                        Orqa fon rasmi
+                        <input type="file" className='form-control py-4 rounded' id='file' name='file' onChange={(e) => setImageBag(e.target.files[0])} />
+                    </label>
+                    <label htmlFor="files">
+                        Profle rasmi
+                        <input type="file" className='form-control py-4 rounded' id='files' name='files' onChange={(e) => setImage(e.target.files[0])} />
+                    </label>
+
+                </ModalDeletePostEdit>
+
+                <ModalDeletePostEdit formID={"user-modal-profile-name"}
+                    dataBsTarget="exampleModalMyProductsUserProfileName"
+                    onSubmited={handleClickEdit}
+                >
+                    <input
+                        type="text"
+                        defaultValue={
+                            profile?.first_name
+                        }
+                        required
+                        placeholder="Ismingiz"
+                        className="form-control rounded-3"
+                        onChange={(e) =>
+                            setProfileData(
+                                (prev) => ({
+                                    ...prev,
+                                    first_name:
+                                        e.target
+                                            .value,
+                                })
+                            )
+                        }
+                    />
+                    <input
+                        type="text"
+                        required
+                        defaultValue={
+                            profile?.last_name
+                        }
+                        placeholder="Familiyangiz"
+                        className="form-control rounded-3"
+                        onChange={(e) =>
+                            setProfileData(
+                                (prev) => ({
+                                    ...prev,
+                                    last_name:
+                                        e.target
+                                            .value,
+                                })
+                            )
+                        }
+                    />
+                </ModalDeletePostEdit>
+
             </div>
-        </section>
+        </section >
     );
 }
 export default Notifications;
