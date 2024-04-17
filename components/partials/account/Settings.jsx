@@ -15,7 +15,7 @@ function Notifications() {
     const [profile, setProfile] = useState(null);
     const [image, setImage] = useState('');
     const [imageBag, setImageBag] = useState('');
-   
+
 
 
 
@@ -59,8 +59,11 @@ function Notifications() {
 
     async function handleClickEditUserProfile() {
         const formData = new FormData();
-        if (image || imageBag) {
+        if (image) {
             formData.append('image', image);
+        }
+
+        if (imageBag) {
             formData.append('background_image', imageBag);
         }
 
@@ -69,6 +72,9 @@ function Notifications() {
             user?.access
         );
         setRenderProfile(!renderProfile);
+
+        setImageBag(null)
+        setImage(null)
 
         if (ItemsData) {
             const modal = Modal.success({
@@ -97,7 +103,7 @@ function Notifications() {
 
                     <div className="col-lg-8">
                         <div className="user_profile_container">
-                            <div className="user_profile_card"  style={{backgroundImage: `url(${profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif"})` }}>
+                            <div className="user_profile_card" style={{ backgroundImage: `url(${profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif"})` }}>
 
                                 <div className="profile_images_card"  >
                                     <Image.PreviewGroup >
@@ -110,7 +116,7 @@ function Notifications() {
                                 <div className="image_icon" >
                                     <a data-bs-target="#exampleModalMyProductsUserProfile"
                                         data-bs-toggle="modal">
-                                        <i  className="fa-solid fa-camera-retro"></i>
+                                        <i className="fa-solid fa-camera-retro"></i>
                                     </a>
                                 </div>
                                 <div className='edit_icon' style={{ cursor: "pointer" }}>
@@ -141,7 +147,7 @@ function Notifications() {
                         </div>
                     </div>
                 </div>
-       
+
 
                 <ModalDeletePostEdit formID={"user-modal-profile"}
                     dataBsTarget="exampleModalMyProductsUserProfile"
@@ -149,11 +155,11 @@ function Notifications() {
                 >
                     <label htmlFor="file">
                         Orqa fon rasmi
-                        <input type="file" className='form-control py-4 rounded' id='file' name='file' onChange={(e) => setImageBag(e.target.files[0])} />
+                        <input type="file" className='form-control py-4 rounded' id='file' name='file' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImageBag(e.target.files[0])} />
                     </label>
                     <label htmlFor="files">
                         Profle rasmi
-                        <input type="file" className='form-control py-4 rounded' id='files' name='files' onChange={(e) => setImage(e.target.files[0])} />
+                        <input type="file" className='form-control py-4 rounded' id='files' name='files' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImage(e.target.files[0])} />
                     </label>
 
                 </ModalDeletePostEdit>
