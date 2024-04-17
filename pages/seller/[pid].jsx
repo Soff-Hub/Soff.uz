@@ -152,7 +152,7 @@ const SellerPage = ({ seller }) => {
                                     <Image.PreviewGroup >
                                         <Image
                                             width={200}
-                                            src={`${sellerr?.seller?.image ? sellerr?.seller?.image : "/static/img/ozodbek.jpg"}`}
+                                            src={`${sellerr?.seller?.image ? sellerr?.seller?.image : "/static/img/ozodbek.png"}`}
                                         />
                                     </Image.PreviewGroup>
                                 </div>

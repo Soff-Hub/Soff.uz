@@ -103,7 +103,7 @@ function Notifications() {
                                     <Image.PreviewGroup >
                                         <Image
                                             width={200}
-                                            src={`${profile?.image ? profile?.image : "/static/img/ozodbek.jpg"}`}
+                                            src={`${profile?.image ? profile?.image : "/static/img/ozodbek.png"}`}
                                         />
                                     </Image.PreviewGroup>
                                 </div>
