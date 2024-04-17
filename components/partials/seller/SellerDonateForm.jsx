@@ -88,14 +88,15 @@ export default function SellerDonateForm() {
 
                 setOrder(resp.data?.order)
                 reverseCountdown(1, 59)
-
+                
             } catch (err) {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
                     content: err.response.data?.msg,
                 });
-
+                
+                setPaymentStep('card')
             }
 
             setLoading(false)
