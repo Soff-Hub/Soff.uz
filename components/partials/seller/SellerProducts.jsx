@@ -4,7 +4,7 @@ import { Pagination } from 'antd';
 
 export default function SellerProducts({ data = [], page, handlePagination }) {
     return (
-        <div className="container" style={{ marginTop: '30px' }} id='products'>
+        <div className="container"  id='products'>
             <div className="row">
                 {data?.results?.map((item) => (
                     <div

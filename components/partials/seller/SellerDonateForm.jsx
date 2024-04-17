@@ -180,7 +180,7 @@ export default function SellerDonateForm() {
     };
 
     return (
-        <div className="container" style={{ marginTop: '30px' }} id='products'>
+        <div className="container" id='products'>
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <div className="ps-tab active" id="register">
                     <form className="ps-form__content" onSubmit={handleSubmit}>

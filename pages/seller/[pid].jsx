@@ -165,7 +165,7 @@ const SellerPage = ({ seller }) => {
                                         <h1>{sellerr?.seller?.full_name} </h1>
 
 
-                                        <div  style={{transform:"translateY(-50px)"}} className="col-12 col-md-9 user_cardss">
+                                        <div   className="col-12 col-md-9 user_cardss">
                                             <div className="row justify-content-center">
                                                 <div className="col-10 col-sm-6 col-md-4 mt-3">
                                                     <div className="d-flex align-items-center">
