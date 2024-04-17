@@ -2063,7 +2063,7 @@
 
 
 .selected-img {
-    
+
     span {
         background-color: rgba(255, 255, 255, 0.7);
         display: block;
@@ -2073,5 +2073,85 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+    }
+}
+
+.user_profile_container {
+    width: 100%;
+    border-radius: 10px;
+
+    .user_profile_card {
+        width: 100%;
+        background-position: center center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        padding: 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 200px;
+        position: relative;
+        
+
+        .profile_images_card {
+            position: absolute;
+            bottom: -25%;
+
+            .ant-image-img {
+                width: 132px !important;
+                height: 132px !important;
+                border-radius: 50% !important;
+                border: 4px solid white;
+            }
+
+            .ant-image-mask {
+                width: 132px !important;
+                height: 132px !important;
+                border-radius: 50% !important;
+                border: 4px solid white;
+            }
+        }
+
+        .image_icon {
+            position: absolute;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+
+            i {
+                color: #06c;
+            }
+        }
+
+        .edit_icon {
+            position: absolute;
+            right: 20px;
+            bottom: -40px;
+        }
+
+    }
+
+    .user_profile_body {
+        width: 100%;
+        background-color: #fff;
+        padding: 60px 20px 20px 20px;
+
+
+
+        h1 {
+            font-size: 22px;
+            font-family: sans-serif;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        p {
+            margin: 0;
+        }
     }
 }
