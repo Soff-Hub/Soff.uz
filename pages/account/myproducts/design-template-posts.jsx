@@ -35,7 +35,7 @@ const Posts = () => {
     const [Fulldata, setFullData] = useState('');
     const [livePosterFile, setLivePosterFile] = useState('');
     const [categoryName, setCategoryName] = useState('');
-    const [fileImgPoster, setFileImgPoster] = useState('');
+    const [fileImgPoster, setFileImgPoster] = useState([]);
     const [liveFile, setLiveFile] = useState('');
     const [liveFile2, setLiveFile2] = useState('');
     const [narx, setNarx] = useState('');
@@ -43,6 +43,8 @@ const Posts = () => {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [free, setFree] = useState(false);
+    const [uploadPoster, setUploadPoster] = useState(false);
+    const [document, setDocument] = useState(null)
 
     const breadCrumb = [
         {
@@ -196,11 +198,13 @@ const Posts = () => {
         formData.append('tags', tagSearchResult);
         liveFile2?.images?.[0]?.id
             ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
-            : 'None',
-            fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
-            fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
-            formData.append('category', category_id[0]);
-        formData.append('document', livePosterFile?.id);
+            : 'None';
+        for (const img of fileImgPoster) {
+            formData.append('images', img)
+        }
+        fileImgFileID ? formData.append('poster', fileImgFileID.file) : formData.append('poster', fileImgPoster[0])
+        formData.append('category', category_id[0]);
+        formData.append('document', document?.id);
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
@@ -237,13 +241,15 @@ const Posts = () => {
             );
 
             if (ItemsData?.status === 201) {
-                setLivePosterFile(ItemsData?.data);
+                // setLivePosterFile(ItemsData?.data);
+                setDocument(ItemsData?.data)
                 setLiveFile2(ItemsData?.data);
                 const modal = Modal.success({
                     centered: true,
                     title: 'Muvaffaqqiyatli!',
                     content: "Yangi .zip file qo'shdingiz ",
                 });
+                setUploadPoster(true)
             } else {
                 const modal = Modal.error({
                     centered: true,
@@ -257,8 +263,9 @@ const Posts = () => {
 
     function LiveImage(e) {
         setFileImgFileID('');
-        setFileImgPoster(e.target.files[0]);
+        setFileImgPoster((c) => [...c, e.target.files[0]]);
         const img = window.URL.createObjectURL(e.target.files[0]);
+        setLivePosterFile(c => ([...c, { url: img, file: e.target.files[0] }]));
         setLiveFile(img);
     }
 
@@ -463,24 +470,25 @@ const Posts = () => {
                                         className="overflow-x-scroll  d-flex  gap-1
                                    "
                                         style={{ width: '430px' }}>
-                                        {!livePosterFile?.images ? (
+                                        {!livePosterFile?.length > 0 ? (
                                             <span
                                                 className="d-flex flex-column align-items-center mt-4 mx-5"
                                                 style={{ cursor: 'pointer' }}>
                                                 <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                 <span className="text-center">
                                                     {' '}
-                                                    Poster yuklash uchun ushbu
-                                                    hududga bosing.{' '}
+                                                    {uploadPoster
+                                                        ? 'Ilitmos kamida 3ta rasmini yuklang.'
+                                                        : 'Rasmini yuklash uchun ushbu hududga bosing.'}{' '}
                                                 </span>
                                             </span>
                                         ) : (
-                                            livePosterFile?.images?.map(
+                                            livePosterFile?.map(
                                                 (item, i) =>
-                                                    item.id ===
-                                                    fileImgFileID ? (
+                                                    item.file ===
+                                                        fileImgFileID.file ? (
                                                         <img
-                                                            src={item.image_url}
+                                                            src={item.url}
                                                             alt=" "
                                                             key={i}
                                                             style={{
@@ -493,17 +501,9 @@ const Posts = () => {
                                                         />
                                                     ) : (
                                                         <img
-                                                            className="mx-1 "
-                                                            onClick={() => {
-                                                                setLiveFile(
-                                                                    item?.image_url
-                                                                ),
-                                                                    setFileImgFileID(
-                                                                        item?.id
-                                                                    );
-                                                            }}
+                                                            className="mx-1"
                                                             src={
-                                                                item?.image_url
+                                                                item.url
                                                             }
                                                             alt=" "
                                                             key={i}
@@ -511,6 +511,10 @@ const Posts = () => {
                                                                 display:
                                                                     'block',
                                                                 cursor: 'pointer',
+                                                            }}
+                                                            onClick={() => {
+                                                                setFileImgFileID(item)
+                                                                setLiveFile(item.url)
                                                             }}
                                                         />
                                                     )
@@ -705,8 +709,8 @@ const Posts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                      removePrefix(taxminiyNarx)
-                                                  ) + "so'm"
+                                                    removePrefix(taxminiyNarx)
+                                                ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -723,10 +727,10 @@ const Posts = () => {
                                     <strong>Taglari : </strong>
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                              return (
-                                                  <span key={i}>#{item} </span>
-                                              );
-                                          })
+                                            return (
+                                                <span key={i}>#{item} </span>
+                                            );
+                                        })
                                         : "To'ldirilmadi"}
                                 </p>
 
@@ -796,10 +800,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -816,14 +820,14 @@ const Posts = () => {
                                         <strong>Taglari : </strong>
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              {item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            {item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -843,8 +847,8 @@ const Posts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                      ' ' +
-                                                      'ta'
+                                                    ' ' +
+                                                    'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -938,10 +942,10 @@ const Posts = () => {
                                                     {' '}
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                              removePrefix(
-                                                                  taxminiyNarx
-                                                              )
-                                                          ) + "so'm"
+                                                            removePrefix(
+                                                                taxminiyNarx
+                                                            )
+                                                        ) + "so'm"
                                                         : "To'ldirilmadi"}
                                                 </h4>
                                             </header>
@@ -966,8 +970,8 @@ const Posts = () => {
                                                             </strong>{' '}
                                                             {livePosterFile?.page_count
                                                                 ? livePosterFile?.page_count +
-                                                                  ' ' +
-                                                                  'ta'
+                                                                ' ' +
+                                                                'ta'
                                                                 : ''}{' '}
                                                         </li>
                                                         <li>
@@ -996,8 +1000,8 @@ const Posts = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : livePosterFile
-                                                                      ?.category
-                                                                      ?.name}
+                                                                    ?.category
+                                                                    ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>
