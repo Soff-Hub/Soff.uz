@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import { baseUrl } from '~/repositories/Repository';
-import Product from '~/components/elements/products/Product';
 import Meta from '~/components/shared/headers/Meta';
-import { Modal, Pagination } from 'antd';
+import { Modal } from 'antd';
 import { useState } from 'react';
+import { Image } from 'antd';
 import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
@@ -141,29 +141,37 @@ const SellerPage = ({ seller }) => {
                     biror bir mahsulotini sotib olishingiz mumkin.
                 </p>
             </Modal>
+
             <div className="ps-product-list mb-5">
                 <div className="seller-account-page">
                     <div className="container">
-                        <div className="document-seller-about my-5 row">
-                            <div className="text-center col-12 col-md-4">
-                                {sellerr?.seller?.image ? (
-                                    <img
-                                        alt="soff"
-                                        src={`${sellerr?.seller?.image}`}
-                                        className="profile__image"
-                                    />
-                                ) : (
-                                    <img
-                                        alt="soff"
-                                        src={`/static/img/user-none.jpg`}
-                                        className="profile__image"
-                                    />
-                                )}
+                        <div className="user_profile_container mt-5">
+                            <div className="user_profile_card" style={{ backgroundImage: `url(${sellerr?.seller?.background_image ? sellerr?.seller?.background_image : "/static/img/orqafon1.avif"})` }}>
+
+                                <div className="profile_images_card"  >
+                                    <Image.PreviewGroup >
+                                        <Image
+                                            width={200}
+                                            src={`${sellerr?.seller?.image ? sellerr?.seller?.image : "/static/img/ozodbek.jpg"}`}
+                                        />
+                                    </Image.PreviewGroup>
+                                </div>
+
                             </div>
-                            <div className="col-12 col-md-8">
-                                <p className="my-4 text-center text-md-left h1">
-                                    {sellerr?.seller?.full_name}
-                                </p>
+                            <div className='user_profile_body'>
+                                {
+                                    sellerr?.seller &&
+                                    <>
+                                        <h1>{sellerr?.seller?.full_name} </h1>
+                                       
+                                    </>
+                                }
+                            </div>
+                        </div>
+
+                        <div className="document-seller-about mb-5 row">
+
+                            <div className="col-12 col-md-12">
                                 <div className="row justify-content-center">
                                     <div className="col-10 col-sm-6 col-md-4 my-3">
                                         <div className="d-flex align-items-center">
@@ -240,7 +248,9 @@ const SellerPage = ({ seller }) => {
                                     </button>
                                 </div>
                             </div>
+
                         </div>
+
                     </div>
                 </div>
                 {

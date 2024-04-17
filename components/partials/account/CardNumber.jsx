@@ -21,8 +21,7 @@ const CreditCardInput = ({ onChange }) => {
         setFormattedCardNumber(formattedValue);
     };
     return (
-        <div className=' pt-3 pb-3 ' style={{maxWidth:"300px"}} >
-            <label  htmlFor="ccn">Karta raqam</label>
+        <div>
             <input
                 id="ccn"
                 type="tel"
@@ -34,6 +33,7 @@ const CreditCardInput = ({ onChange }) => {
                 placeholder="xxxx xxxx xxxx xxxx"
                 value={formattedCardNumber}
                 onChange={handleCardNumberChange}
+                style={{height:"35px"}}
             />
         </div>
     );
