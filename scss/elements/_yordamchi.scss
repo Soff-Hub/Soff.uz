@@ -2085,27 +2085,33 @@
         background-position: center center;
         background-size: cover;
         background-repeat: no-repeat;
-        padding: 20px;
+        padding: 20px 20px 20px 40px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
         height: 200px;
         position: relative;
-        
+
 
         .profile_images_card {
             position: absolute;
             bottom: -25%;
 
+            .ant-image {
+                width: 162px !important;
+                height: 162px !important;
+                border-radius: 50% !important;
+            }
+
             .ant-image-img {
-                width: 132px !important;
-                height: 132px !important;
+                width: 162px !important;
+                height: 162px !important;
                 border-radius: 50% !important;
                 border: 4px solid white;
             }
 
             .ant-image-mask {
-                width: 132px !important;
-                height: 132px !important;
+                width: 162px !important;
+                height: 162px !important;
                 border-radius: 50% !important;
                 border: 4px solid white;
             }
@@ -2152,6 +2158,37 @@
 
         p {
             margin: 0;
+        }
+    }
+}
+
+@media (max-width:500px) {
+    .user_profile_container {
+        .user_profile_card {
+            padding: 0;
+
+            .profile_images_card {
+                left: 50%;
+                transform: translateX(-50%);
+
+                .ant-image-img {
+                    width: 142px !important;
+                    height: 142px !important;
+                    border-radius: 50% !important;
+                }
+
+                .ant-image-mask {
+                    width: 142px !important;
+                    height: 142px !important;
+                    border-radius: 50% !important;
+                }
+            }
+        }
+
+        .user_profile_body {
+            h1 {
+                text-align: center;
+            }
         }
     }
 }
