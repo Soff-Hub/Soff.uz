@@ -28,23 +28,21 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
     async function getProducts() {
         const token = user?.access;
-        if (token) {
-            try {
-                const response = await axios.get(
-                    baseUrl + `customer/documents/${pid}/`,
-                    {
-                        headers: {
-                            Authorization: token ? `Bearer ${token}` : '',
-                        },
+        try {
+            const response = await axios.get(
+                baseUrl + `customer/documents/${pid}/`,
+                {
+                    headers: {
+                        Authorization: token ? `Bearer ${token}` : '',
+                    },
 
-                    }
-                );
+                }
+            );
 
-                setProduct(response?.data);
+            setProduct(response?.data);
 
-            } catch (error) {
-                console.error('Error fetching document:', error);
-            }
+        } catch (error) {
+            console.error('Error fetching document:', error);
         }
     }
 
@@ -79,7 +77,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     }
 
     useEffect(() => {
-        if (pid && user?.access) {
+        if (pid) {
             getProducts();
             getProductSimiller();
         }
