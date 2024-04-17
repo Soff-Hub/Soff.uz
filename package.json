@@ -6,8 +6,8 @@
     "homepage": "https://soff.uz",
     "scripts": {
         "dev": "next dev -p 3001",
-        "build": "next build -p 3001",
-        "start": "next start",
+        "build": "next build",
+        "start": "next start -p 3001",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
         "compile": "npm run clean && antd-tools"
     },
