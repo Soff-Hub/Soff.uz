@@ -247,7 +247,7 @@ export default function SellerDonateForm() {
                             }
                         </div>
 
-                        <div className='d-flex align-items-center gap-3'>
+                        <div className='d-flex align-items-center gap-3 mt-4'>
                             <div className="form-group flex-grow-1">
                                 <p>Xabar matnini yuboring</p>
                                 <textarea
