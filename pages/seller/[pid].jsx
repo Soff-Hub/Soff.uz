@@ -158,98 +158,97 @@ const SellerPage = ({ seller }) => {
                                 </div>
 
                             </div>
-                            <div className='user_profile_body'>
+                            <div className='user_profile_body usr_bodyy'>
                                 {
                                     sellerr?.seller &&
-                                    <>
+                                    <div className='d-flex justify-content-between user_titleCard '>
                                         <h1>{sellerr?.seller?.full_name} </h1>
-                                       
-                                    </>
+
+
+                                        <div  style={{transform:"translateY(-50px)"}} className="col-12 col-md-9 user_cardss">
+                                            <div className="row justify-content-center">
+                                                <div className="col-10 col-sm-6 col-md-4 mt-3">
+                                                    <div className="d-flex align-items-center">
+                                                        <i className="fa-regular fa-hard-drive fa-2x mr-4"></i>
+                                                        <div>
+                                                            <p className="h1">
+                                                                {
+                                                                    sellerr?.total_approved_documents
+                                                                }{' '}
+                                                                ta
+                                                            </p>
+                                                            <p className="h4">
+                                                                Jami mahsulotlar soni
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-10 col-sm-6 col-md-4 my-3">
+                                                    <div className="d-flex align-items-center">
+                                                        <i className="fa-regular fa-handshake fa-2x mr-4"></i>
+                                                        <div>
+                                                            <p className="h1">
+                                                                {
+                                                                    sellerr?.total_sold_documents
+                                                                }{' '}
+                                                                ta
+                                                            </p>
+                                                            <p className="h4">
+                                                                Sotilgan mahsulotlari soni
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="col-10 col-sm-6 col-md-4 my-3">
+                                                    <div className="d-flex align-items-center">
+                                                        <i className="fa-regular fa-gem fa-2x mr-4"></i>
+                                                        <div>
+                                                            <p className="h1">
+                                                                {addPeriodToThousands(
+                                                                    sellerr?.total_income
+                                                                )}{' '}
+                                                                so'm
+                                                            </p>
+                                                            <p className="h4">Daromad</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div className="d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ">
+                                                <a
+                                                    href='#products'
+                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1' ? 'donate-color-btn' : ''}`} style={{ textDecoration: 'none' }}
+                                                    onClick={() => setTab('tab-1')}
+                                                >
+                                                    {' '}
+                                                    <i className="fa-regular fa-pen-to-square"></i>{' '}
+                                                    Mahsulotlari
+                                                </a>
+                                                <button
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2' ? 'donate-color-btn' : ''}`}
+                                                    onClick={showModal}>
+                                                    {' '}
+                                                    <i className="fa-regular fa-pen-to-square"></i>{' '}
+                                                    Buyurtma berish
+                                                </button>
+                                                <button
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3' ? 'donate-color-btn' : ''}`}
+                                                    // onClick={showModalDonate}
+                                                    onClick={() => setTab('tab-3')}
+                                                >
+                                                    {' '}
+                                                    <i className="fa-solid fa-hand-holding-medical"></i>{' '}
+                                                    Qo'llab quvvatlash
+                                                </button>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
                                 }
                             </div>
                         </div>
 
-                        <div className="document-seller-about mb-5 row">
-
-                            <div className="col-12 col-md-12">
-                                <div className="row justify-content-center">
-                                    <div className="col-10 col-sm-6 col-md-4 my-3">
-                                        <div className="d-flex align-items-center">
-                                            <i className="fa-regular fa-hard-drive fa-2x mr-4"></i>
-                                            <div>
-                                                <p className="h1">
-                                                    {
-                                                        sellerr?.total_approved_documents
-                                                    }{' '}
-                                                    ta
-                                                </p>
-                                                <p className="h4">
-                                                    Jami mahsulotlar soni
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-10 col-sm-6 col-md-4 my-3">
-                                        <div className="d-flex align-items-center">
-                                            <i className="fa-regular fa-handshake fa-2x mr-4"></i>
-                                            <div>
-                                                <p className="h1">
-                                                    {
-                                                        sellerr?.total_sold_documents
-                                                    }{' '}
-                                                    ta
-                                                </p>
-                                                <p className="h4">
-                                                    Sotilgan mahsulotlari soni
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-10 col-sm-6 col-md-4 my-3">
-                                        <div className="d-flex align-items-center">
-                                            <i className="fa-regular fa-gem fa-2x mr-4"></i>
-                                            <div>
-                                                <p className="h1">
-                                                    {addPeriodToThousands(
-                                                        sellerr?.total_income
-                                                    )}{' '}
-                                                    so'm
-                                                </p>
-                                                <p className="h4">Daromad</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ">
-                                    <a
-                                        href='#products'
-                                        className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1' ? 'donate-color-btn' : ''}`} style={{ textDecoration: 'none' }}
-                                        onClick={() => setTab('tab-1')}
-                                    >
-                                        {' '}
-                                        <i className="fa-regular fa-pen-to-square"></i>{' '}
-                                        Mahsulotlari
-                                    </a>
-                                    <button
-                                        className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2' ? 'donate-color-btn' : ''}`}
-                                        onClick={showModal}>
-                                        {' '}
-                                        <i className="fa-regular fa-pen-to-square"></i>{' '}
-                                        Buyurtma berish
-                                    </button>
-                                    <button
-                                        className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3' ? 'donate-color-btn' : ''}`}
-                                        // onClick={showModalDonate}
-                                        onClick={() => setTab('tab-3')}
-                                    >
-                                        {' '}
-                                        <i className="fa-solid fa-hand-holding-medical"></i>{' '}
-                                        Qo'llab quvvatlash
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
 
                     </div>
                 </div>

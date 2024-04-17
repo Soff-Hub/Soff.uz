@@ -105,6 +105,25 @@
     height: 50px !important;
 }
 
+@media (max-width:1024px){
+    .usr_bodyy{
+        padding: 20px 0 !important;
+    }
+    .user_titleCard{
+        padding-top: 20px;
+        display: flex;
+        flex-direction: column;
+        h1{
+            padding-top: 20px;
+        }
+
+        .user_cardss{
+            flex: 100%;
+            max-width: 100%;
+            transform: translateY(10px) !important;
+        }
+    }
+}
 
 .seller-account-page{
     position: relative;
