@@ -58,32 +58,40 @@ function Notifications() {
     }
 
     async function handleClickEditUserProfile() {
-        const formData = new FormData();
-        if (image) {
-            formData.append('image', image);
-        }
 
-        if (imageBag) {
-            formData.append('background_image', imageBag);
-        }
+        try {
+            const formData = new FormData();
+            if (image) {
+                formData.append('image', image);
+            }
 
-        const ItemsData = await PatchRepository.getPatchProfile(
-            formData,
-            user?.access
-        );
-        setRenderProfile(!renderProfile);
+            if (imageBag) {
+                formData.append('background_image', imageBag);
+            }
 
-        setImageBag(null)
-        setImage(null)
+            await PatchRepository.getPatchProfile(
+                formData,
+                user?.access
+            );
+            setRenderProfile(!renderProfile);
+            setImageBag(null)
+            setImage(null)
 
-        if (ItemsData) {
-            const modal = Modal.success({
+
+            Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content: `Sizning ma'lumotlaringiz o'zgartirildi`,
             });
-            modal.update;
+        } catch (error) {
+            Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: error && (error?.background_image?.[0] || error?.image?.[0]),
+            });
         }
+
+
     }
 
 
@@ -153,10 +161,10 @@ function Notifications() {
                     dataBsTarget="exampleModalMyProductsUserProfile"
                     onSubmited={handleClickEditUserProfile}
                 >
-                    {/* <label htmlFor="file">
+                    <label htmlFor="file">
                         Orqa fon rasmi
                         <input type="file" className='form-control py-4 rounded' id='file' name='file' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImageBag(e.target.files[0])} />
-                    </label> */}
+                    </label>
                     <label htmlFor="files">
                         Profle rasmi
                         <input type="file" className='form-control py-4 rounded' id='files' name='files' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImage(e.target.files[0])} />

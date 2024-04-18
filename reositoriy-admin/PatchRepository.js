@@ -7,9 +7,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -18,7 +18,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => (error?.response));
+            .catch((error) => error?.response);
         return reponse;
     }
     async PatchUsers(data, id, token) {
@@ -27,9 +27,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -38,7 +38,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return reponse;
     }
     async PatchTegs(data, id, token) {
@@ -47,9 +47,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -67,9 +67,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -87,9 +87,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -98,7 +98,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return reponse;
     }
     async getMyProductsPatch(data, id, token) {
@@ -107,9 +107,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 202) {
@@ -118,7 +118,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => (error?.response));
+            .catch((error) => error?.response);
         return reponse;
     }
     async getTextItemsUpdate(data, id, token) {
@@ -127,9 +127,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
             .then((response) => {
                 if (response.status === 202) {
@@ -138,7 +138,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => (error?.response));
+            .catch((error) => error?.response);
         return reponse;
     }
     async getBannersPatch(data, id, token) {
@@ -147,13 +147,10 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
-
-
-
             .then((response) => {
                 if (response.status === 200) {
                     return response;
@@ -161,7 +158,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return reponse;
     }
     async getMyProductsDelete(id, token) {
@@ -170,12 +167,9 @@ class PatchRepository {
             url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
         })
-
-
-
             .then((response) => {
                 if (response.status === 200) {
                     return response.data;
@@ -186,38 +180,34 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getPatchProfile(data ,token) {
-        const endPoint = "auth/profile/"
-        const reponse = await Repository({
-            url:baseUrlProfie+endPoint,
-            method: 'PATCH',
-            headers: {
-                'Authorization' : `Bearer ${token}`
-            },
-            data:data
-        })
 
-            .then((response) => {
-                if (response.status === 200 || response.status === 201) {
-                    return response.data;
-                } else {
-                    return null;
-                }
-            })
-            .catch((error) => ({ error: JSON.stringify(error) }));
-        return reponse;
+    async getPatchProfile(data, token) {
+        const endPoint = 'auth/profile/';
+        try {
+            const response = await Repository({
+                url: baseUrlProfie + endPoint,
+                method: 'PATCH',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data: data,
+            });
+            return response.data;
+        } catch (error) {
+            return  Promise.reject(error?.response?.data);
+        }
     }
-    async getPatchProfileAriza(data,id,token) {
-        const endPoint =`admin/answer/${id}`
+
+    async getPatchProfileAriza(data, id, token) {
+        const endPoint = `admin/answer/${id}`;
         const reponse = await Repository({
-            url:baseUrl + endPoint,
+            url: baseUrl + endPoint,
             method: 'PATCH',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
-
             .then((response) => {
                 if (response.status === 200) {
                     return response;
@@ -225,20 +215,19 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => (error.response));
+            .catch((error) => error.response);
         return reponse;
     }
-    async getPatchPoster(data,token) {
-        const endPoint =`product-create-second/`
+    async getPatchPoster(data, token) {
+        const endPoint = `product-create-second/`;
         const reponse = await Repository({
-            url:baseUrl + endPoint,
+            url: baseUrl + endPoint,
             method: 'POST',
             headers: {
-                'Authorization' : `Bearer ${token}`
+                Authorization: `Bearer ${token}`,
             },
-            data:data
+            data: data,
         })
-
             .then((response) => {
                 if (response.status === 201) {
                     return response;
@@ -249,9 +238,6 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
-
 }
-
-
 
 export default new PatchRepository();
