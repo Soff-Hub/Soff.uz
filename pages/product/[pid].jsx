@@ -109,7 +109,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     ];
 
 
-
     return (
         <>
             <PageContainer title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
@@ -117,7 +116,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     {defaultProducts && (
                         <>
                             <meta property="og:title" content={`Soff | ${defaultProducts?.title}`} />
-                            <meta property="og:description" content="Soff | Soff online hujjatlar bazasi" />
+                            <meta property="og:description" content={`Soff | Soff online hujjatlar bazasi | ${defaultProducts?.title}`} />
                             <meta property="og:image" content={defaultProducts?.poster_url} />
                             <meta property="og:site_name" content="Soff.uz" />
                             <title>{defaultProducts?.title}</title>

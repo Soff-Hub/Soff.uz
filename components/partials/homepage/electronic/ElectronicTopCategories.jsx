@@ -70,7 +70,6 @@ function ElectronicTopCategories() {
         ));
     }, [category]);
 
-    console.log('category', category);
 
     return (
         <div className="ps-top-categories">

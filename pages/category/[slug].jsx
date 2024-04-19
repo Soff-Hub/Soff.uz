@@ -117,6 +117,8 @@ export default function ProductCategoryScreen({ category2 }) {
             text: nom,
         },
     ];
+
+
     return (
         <PageContainer
             footer={<FooterDefault />}
