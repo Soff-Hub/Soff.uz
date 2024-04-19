@@ -13,6 +13,7 @@ function Notifications() {
     const [profileData, setProfileData] = useState({});
     const [renderProfile, setRenderProfile] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
     const [profile, setProfile] = useState(null);
     const [image, setImage] = useState('');
     const [imageBag, setImageBag] = useState('');
@@ -63,6 +64,7 @@ function Notifications() {
     async function handleClickEditUserProfile() {
 
         try {
+            setLoading2(true)
             const formData = new FormData();
             if (image) {
                 formData.append('image', image);
@@ -93,7 +95,7 @@ function Notifications() {
                 content: error && (error?.background_image?.[0] || error?.image?.[0]),
             });
         }
-
+        setLoading2(false)
 
     }
 
@@ -115,7 +117,7 @@ function Notifications() {
                     <div className="col-lg-8">
                         <div className="user_profile_container">
                             <div className="user_profile_card" style={{ backgroundImage: `url(${profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif"})` }}>
-
+                                     {loading2 ? <h2 className='text-center text-white loading_h2'>Yuklanmoqda...</h2> : <></>}
                                 <div className="profile_images_card"  >
                                     <Image.PreviewGroup >
                                         <Image

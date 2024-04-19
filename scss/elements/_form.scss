@@ -23,9 +23,9 @@
     }
 }
 
-.p-inputnumber-input {
-    padding: 8px !important;
-    border: 1px solid #ccc;
+
+.audio_ramka {
+    border: 2px solid $color-1st;
     border-radius: 5px;
 }
 
@@ -124,6 +124,35 @@ textarea.form-control {
         right: 15px;
     }
 }
+
+
+.product_priview {
+    position: relative;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    .up_left {
+        background-color: #00000052;
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        i {
+            position: absolute;
+            color: #fff;
+            opacity: 100% !important;
+            font-size: 50px;
+        }
+    }
+}
+
 
 .ps-number {
     position: relative;
@@ -611,6 +640,7 @@ textarea.form-control {
         border-radius: 0 4px 4px 0;
         padding-left: 25px;
         padding-right: 25px;
+        color: #fff;
     }
 
     input {

@@ -85,7 +85,7 @@ export default function NextImageCard({
                    }
                     {
                         up &&
-                    <div className="up">
+                    <div className="up_left">
                         <i className="fa-solid fa-angles-up fa-bounce"></i>
                     </div>
                     }

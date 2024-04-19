@@ -2136,6 +2136,12 @@
         height: 200px;
         position: relative;
 
+        .loading_h2{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
         .profile_images_card {
             position: absolute;
             bottom: -25%;
@@ -2218,6 +2224,15 @@
     .user_profile_container {
         .user_profile_card {
             padding: 0;
+
+            .loading_h2{
+                position: absolute;
+                top: 30%;
+                left: 50%;
+                transform: translate(-50%, -40%);
+                font-size: 30px;
+            }
+
 
             .profile_images_card {
                 left: 50%;
