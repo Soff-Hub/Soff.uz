@@ -2136,15 +2136,17 @@
         height: 200px;
         position: relative;
 
-
         .profile_images_card {
             position: absolute;
             bottom: -25%;
+
 
             .ant-image {
                 width: 162px !important;
                 height: 162px !important;
                 border-radius: 50% !important;
+                object-fit: cover !important;
+
             }
 
             .ant-image-img {
@@ -2152,6 +2154,8 @@
                 height: 162px !important;
                 border-radius: 50% !important;
                 border: 4px solid white;
+                object-fit: cover !important;
+                object-position: top center !important;
             }
 
             .ant-image-mask {
@@ -2159,6 +2163,7 @@
                 height: 162px !important;
                 border-radius: 50% !important;
                 border: 4px solid white;
+                object-fit: cover !important;
             }
         }
 
