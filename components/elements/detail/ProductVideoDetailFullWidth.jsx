@@ -27,7 +27,7 @@ const ProductVideoDetailFullWidth = ({
         <>
             <Meta
                 title={product?.title}
-                image={product?.iamges?.map((item) => item?.image_url)}
+                image={product?.iamges?.map((item) => item?.image_url) || product?.poster_url}
             />
             <div className="ps-product--detail ">
                 <div className="row">
