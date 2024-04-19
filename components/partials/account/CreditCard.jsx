@@ -89,20 +89,20 @@ const CreditCard = () => {
 
   return (
     <div className="row mx-auto mt-3 " >
-      {/* <div className="rounded">
+      <div className="rounded">
         <strong>Yangi karta qo'shish</strong>
 
-        <div className="row mt-2 row-gap-2">
-       <div className="col-md-5">
+        <div className="row mt-2 row-gap-2 gap-3">
+       <div className="col-md-5 p-0">
        <CreditCardInput  onChange={value => numberTyper(value)} />
        </div>
-        <button onClick={handleClickCardPosts} className="btn btn-success py-2 col-md-2">
+        <button onClick={handleClickCardPosts} className="btn btn-success py-2  col-md-2">
           <span className="fs-5" >Saqlash</span></button>
         </div>
 
-      </div> */}
+      </div>
 
-      {/* <div className="row mt-2 row-gap-3 mx-auto gap-3" >
+      <div className="row mt-2 row-gap-3 mx-auto gap-3 p-0" style={{transform:"translateX(-7px)"}} >
         <strong className="m-0 mt-3">Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-4 text-primary m-0"></i></strong>
         {
           profileCard?.length > 0 ? profileCard?.map((item, index) => (
@@ -116,7 +116,7 @@ const CreditCard = () => {
             :
             <h4 className="mt-5 mx-5"><span>Hozircha karta mavjud emas!</span></h4>
         }
-      </div> */}
+      </div>
       <ModalDelete onSuccess={handleClickDelete} />
     </div>
 

@@ -526,7 +526,7 @@ class Register extends Component {
                                 foydalanuvchi tomonidan kiritilgan elektron
                                 pochta (e-mail) orqali qabul qilib olish (4.2.4.
                                 shart bajarilgan taqdirda) yoki o’zining shaxsiy
-                                profilidagi «Sotib olingan» sahifasiga kirish
+                                profilidagi «Sotib olinganlar» sahifasiga kirish
                                 orqali qabul qilib olish;
                             </p>
                             <p>

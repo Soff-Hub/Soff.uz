@@ -240,7 +240,7 @@ const ProductDetailQuickView = ({ product }) => {
                                                                 )
                                                             }>
                                                             {' '}
-                                                            # {item.name}{' '}
+                                                            {item.name}{' '}
                                                         </a>
                                                     </Link>
                                                 </div>

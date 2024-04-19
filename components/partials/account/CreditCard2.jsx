@@ -5,9 +5,8 @@ import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
-import { audioDownloaderSale } from '~/utilities/common-helpers';
 
-const CreditCard2 = ({ document}) => {
+const CreditCard2 = ({ document }) => {
     const { user } = useSelector((state) => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
@@ -22,7 +21,6 @@ const CreditCard2 = ({ document}) => {
     const [buttonOk, setButtonOk] = useState(false);
     const [tab, setTab] = useState(false);
 
-    const [data, setData] = useState({title:"documents"});
 
 
 
@@ -115,7 +113,7 @@ const CreditCard2 = ({ document}) => {
         }
 
     }
-  
+
 
     async function handleSubmitCode() {
         setButtonOk(true);
@@ -148,20 +146,20 @@ const CreditCard2 = ({ document}) => {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muffaqiyatli!',
-                content: `${dataNews?.data?.msg}`,
+                content: `${dataNews?.data?.msg} `,
             });
 
-            if (user?.role === 'seller') {
+            if (user?.role === 'seller' || user?.role === 'customer') {
                 Router.push('/account/sellerproducts');
             } else {
-                Router.push('/account/myproducts');
+                Router.push('/');
             }
             if (document?.length > 1) {
                 removeAll();
             }
         }
     }
-  
+
 
     useEffect(() => {
         if (resData?.status === 201) {

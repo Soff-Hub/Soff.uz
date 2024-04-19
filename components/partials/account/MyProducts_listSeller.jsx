@@ -140,7 +140,7 @@ function MyProductsListsSeller() {
 
     const columns = [
         {
-            title: 'Mahsulot',
+            title: 'Yuklab olish',
             dataIndex: 'id',
             key: 'id',
             render: (id) => (

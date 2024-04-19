@@ -127,19 +127,19 @@ function Notifications() {
                                         <i className="fa-solid fa-camera-retro"></i>
                                     </a>
                                 </div>
-                                <div className='edit_icon' style={{ cursor: "pointer" }}>
-                                    <a data-bs-target="#exampleModalMyProductsUserProfileName"
-                                        data-bs-toggle="modal">
+                                {/* <div className='edit_icon' style={{ cursor: "pointer" }}>
 
-                                        <i class="fa-solid fa-pen"></i>
-                                    </a>
-                                </div>
+                                </div> */}
                             </div>
                             <div className='user_profile_body'>
                                 {
                                     profile &&
                                     <>
-                                        <h1>{profile?.first_name}  {profile?.last_name}</h1>
+                                        <h1>{profile?.first_name}  {profile?.last_name}    
+                                        <a  style={{cursor:"pointer"}} data-bs-target="#exampleModalMyProductsUserProfileName"
+                                            data-bs-toggle="modal">
+                                            <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
+                                        </a></h1>
                                         {
                                             profile?.email &&
                                             <p>{profile?.email}</p>
@@ -151,6 +151,7 @@ function Notifications() {
                                     </>
                                 }
                                 <CreditCard />
+
                             </div>
                         </div>
                     </div>
@@ -185,15 +186,7 @@ function Notifications() {
                         placeholder="Ismingiz"
                         className="form-control rounded-3"
                         onChange={(e) =>
-                            setProfileData(
-                                (prev) => ({
-                                    ...prev,
-                                    first_name:
-                                        e.target
-                                            .value,
-                                })
-                            )
-                        }
+                            setProfileData((prev) => ({ ...prev, first_name: e.target.value, }))}
                     />
                     <input
                         type="text"

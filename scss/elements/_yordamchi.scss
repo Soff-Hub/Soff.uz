@@ -37,6 +37,27 @@
     }
 }
 
+@media (min-width:375px) and (max-width:500px) {
+    .tolov-usullari {
+        div {
+            p {
+                font-size: 12px !important;
+            }
+        }
+    }
+}
+
+@media (max-width:375px) {
+    .tolov-usullari {
+        div {
+            p {
+                font-size: 10px !important;
+            }
+        }
+    }
+}
+
+
 .banner-left-one {
     height: min-content;
 
@@ -2134,12 +2155,12 @@
             }
         }
 
-        .edit_icon {
-            position: absolute;
-            right: 20px;
-            bottom: -40px;
-            z-index: 99;
-        }
+        // .edit_icon {
+        //     position: absolute;
+        //     right: 20px;
+        //     bottom: -40px;
+        //     z-index: 99;
+        // }
 
     }
 
@@ -2188,7 +2209,9 @@
         }
 
         .user_profile_body {
-            h1,p {
+
+            h1,
+            p {
                 text-align: center;
             }
         }
