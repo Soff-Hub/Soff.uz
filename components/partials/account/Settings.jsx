@@ -116,7 +116,7 @@ function Notifications() {
 
                     <div className="col-lg-8">
                         <div className="user_profile_container">
-                            <div className="user_profile_card" style={{ backgroundImage: `url(${profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif"})` }}>
+                            <div className="user_profile_card" style={{ backgroundImage: `url(${loading2 ? "/static/img/orqafon1.avif" : (profile?.background_image ? profile?.background_image : "/static/img/orqafon1.avif")})` }}>
                                      {loading2 ? <h2 className='text-center text-white loading_h2'>Yuklanmoqda...</h2> : <></>}
                                 <div className="profile_images_card"  >
                                     <Image.PreviewGroup >
