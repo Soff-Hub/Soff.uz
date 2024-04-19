@@ -147,11 +147,13 @@ const PostsProductsEdit = () => {
             if (title) {
                 Object.assign(data, { title: title });
             }
-            if (results) {
-                Object.assign(data, { tags: results });
-            }
-            if (results3) {
-                Object.assign(data, { tags: results3 });
+            if (dataCatStatus == "approved") {
+                if (results) {
+                    Object.assign(data, { tags: results });
+                }
+                if (results3) {
+                    Object.assign(data, { tags: results3 });
+                }
             }
             if (category_id[0]) {
                 Object.assign(data, { category: category_id[0] });
@@ -275,29 +277,29 @@ const PostsProductsEdit = () => {
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
                                                     : item.status ===
-                                                      'cancelled'
-                                                    ? 'Bekor qilingan'
-                                                    : item.status === 'approved'
-                                                    ? 'Tasdiqlangan'
-                                                    : ''}
+                                                        'cancelled'
+                                                        ? 'Bekor qilingan'
+                                                        : item.status === 'approved'
+                                                            ? 'Tasdiqlangan'
+                                                            : ''}
                                             </option>
                                         ) : (
                                             <option value={item.status}>
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
                                                     : item.status ===
-                                                      'cancelled'
-                                                    ? 'Bekor qilingan'
-                                                    : item.status === 'approved'
-                                                    ? 'Tasdiqlangan'
-                                                    : ''}
+                                                        'cancelled'
+                                                        ? 'Bekor qilingan'
+                                                        : item.status === 'approved'
+                                                            ? 'Tasdiqlangan'
+                                                            : ''}
                                             </option>
                                         )
                                     )}
                                 </select>
                             </div>
                             {dataCatStatus === 'cancelled' ||
-                            products.status === 'cancelled' ? (
+                                products.status === 'cancelled' ? (
                                 <div className="row">
                                     <div className="col-md-4 d-flex justify-content-between p-0">
                                         <p>Holat to'g'risida sabab: *</p>{' '}
@@ -536,8 +538,8 @@ const PostsProductsEdit = () => {
                                         {Fulldata
                                             ? parse(Fulldata)
                                             : products?.description
-                                            ? parse(products?.description)
-                                            : ''}
+                                                ? parse(products?.description)
+                                                : ''}
                                     </span>
                                 </p>
                             </div>
@@ -658,8 +660,8 @@ const PostsProductsEdit = () => {
                                             {Fulldata
                                                 ? parse(Fulldata)
                                                 : products?.description
-                                                ? parse(products?.description)
-                                                : ''}
+                                                    ? parse(products?.description)
+                                                    : ''}
                                         </span>
                                     </p>
                                 </div>
@@ -724,8 +726,8 @@ const PostsProductsEdit = () => {
                                                 <h4>
                                                     {products
                                                         ? addPeriodToThousands(
-                                                              products?.price
-                                                          )
+                                                            products?.price
+                                                        )
                                                         : '0'}{' '}
                                                     so'm
                                                 </h4>
@@ -799,8 +801,8 @@ const PostsProductsEdit = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : products
-                                                                      ?.category
-                                                                      ?.name}
+                                                                    ?.category
+                                                                    ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>
@@ -833,7 +835,7 @@ const PostsProductsEdit = () => {
                                             </div>
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 {products?.active_tag?.length >
-                                                0 ? (
+                                                    0 ? (
                                                     <p>
                                                         {' '}
                                                         <strong>
@@ -886,10 +888,10 @@ const PostsProductsEdit = () => {
                                                     {Fulldata
                                                         ? parse(Fulldata)
                                                         : products?.description
-                                                        ? parse(
-                                                              products?.description
-                                                          )
-                                                        : ''}
+                                                            ? parse(
+                                                                products?.description
+                                                            )
+                                                            : ''}
                                                 </div>
                                             </TabPane>
                                         </Tabs>
