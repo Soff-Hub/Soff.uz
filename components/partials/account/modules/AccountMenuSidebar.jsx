@@ -8,8 +8,24 @@ import useAuth from '~/hooks/useAuth';
 import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
+import { useRef } from 'react';
 
-const AccountMenuSidebar = ({ data, renderProfile }) => {
+const AccountMenuSidebar = ({
+    data,
+    renderProfile,
+    forwardedRef,
+    forwardedRef4,
+    forwardedRef5,
+    forwardedRefProduct,
+    forwardedRefPanel,
+    forwardedPurchased,
+    forwardedProductSelection,
+    forwardedOrder,
+    forwardedNotification,
+    forwardedAplication,
+    forwardedSettings,
+    forwardedFinish
+}) => {
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const { asPath } = useRouter();
@@ -55,7 +71,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         const res = logOutAuth(data);
 
         if (res) {
-            Router.push('/account/dashbord')
+            Router.push('/account/dashbord');
             dispatch(logOut());
         }
     };
@@ -203,10 +219,13 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }
 
    
+
+    console.log('data', data);
+
+
     return (
         <aside className="ps-widget--account-dashboard">
-            <div className="ps-widget__header  p-2 pb-4">
-                
+            <div ref={forwardedRef} className="ps-widget__header  p-2 pb-4">
                 {profile?.image ? (
                     <img src={`${profile?.image}`} className="profile__image" />
                 ) : (
@@ -259,7 +278,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             </div>
             {user?.role === 'seller' ? (
                 <div className="pb-3">
-                    <h4 className="w-100  border m-0 p-3 rounded-3  text-truncate mb-2">
+                    <h4
+                        ref={forwardedRef4}
+                        className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
                         <strong
                             className={`fs-3 text-${
                                 profile?.is_payment === false
@@ -270,7 +291,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                             {addPeriodToThousands(profile?.wallet)} so'm
                         </strong>
                     </h4>
-                    <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
+                    <h5
+                        ref={forwardedRef5}
+                        className="w-100  border m-0 p-3 rounded-3  text-truncate">
                         <p
                             className="m-0"
                             style={{ fontWeight: 600, color: 'black' }}>
@@ -302,7 +325,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     style={{ cursor: 'pointer' }}
                                     className="fa-regular fa-circle-question mt-2"></i>
                             </Tooltip>
-                            <span style={{overflow:'hidden'}}>
+                            <span style={{ overflow: 'hidden' }}>
                                 Taklif havolani olish{' '}
                                 {profile?.code ? (
                                     <>
@@ -370,7 +393,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                             {link?.url === '#' ? (
                                 <>
                                     <Badge.Ribbon
-                                    key={link?.url}
+                                        key={link?.url}
                                         text="Tez kunda"
                                         color="volcano">
                                         <Card size="small">
@@ -391,7 +414,10 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     </Badge.Ribbon>
                                 </>
                             ) : link?.url === 'b' ? (
-                                <Badge.Ribbon   key={link?.url} text="Tez kunda" color="volcano">
+                                <Badge.Ribbon
+                                    key={link?.url}
+                                    text="Tez kunda"
+                                    color="volcano">
                                     <Card size="small">
                                         <li onClick={showModalCustomer}>
                                             <span
@@ -399,7 +425,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                                     cursor: 'pointer',
                                                 }}>
                                                 <a className="d-flex align-items-center">
-                                                <i className="fa-regular fa-handshake"></i>
+                                                    <i className="fa-regular fa-handshake"></i>
                                                     Buyurtma berish
                                                 </a>
                                             </span>
@@ -408,6 +434,32 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                 </Badge.Ribbon>
                             ) : (
                                 <li
+                                    ref={
+                                        link?.text === 'Boshqaruv paneli' && user?.role === 'seller'
+                                            ? forwardedRefPanel
+                                            : link?.text ===
+                                              'Mening mahsulotlarim' && user?.role === 'seller'
+                                            ? forwardedRefProduct
+                                            : link?.text ===
+                                              'Sotib olingan' && user?.role === 'seller'
+                                            ? forwardedPurchased
+                                            : link?.text ===
+                                              'Yangi mahsulot' && user?.role === 'seller'
+                                            ? forwardedProductSelection
+                                            : link?.text ===
+                                              'Buyurtmalar' && user?.role === 'seller'
+                                            ? forwardedOrder
+                                            : link?.text ===
+                                              'Yangiliklar' && user?.role === 'seller'
+                                            ? forwardedNotification
+                                            : link?.text ===
+                                              'Ariza va Takliflar' && user?.role === 'seller'
+                                            ? forwardedAplication
+                                            : link?.text ===
+                                              'Profil' && user?.role === 'seller'
+                                            ? forwardedSettings
+                                            : null
+                                    }
                                     key={link.text}
                                     className={
                                         link.url === asPath ? 'active' : ''
