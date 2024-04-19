@@ -1,27 +1,29 @@
 // click page 
 
-.click-form-item{
-    label{
+.click-form-item {
+    label {
         position: relative;
         width: 100% !important;
-        i{
+
+        i {
             position: absolute;
             top: 50%;
             left: 12%;
             transform: translateY(-50%);
             font-size: 18px;
         }
-        .i{
+
+        .i {
             left: 6%;
         }
     }
 
-    .card__number{
+    .card__number {
         padding-left: 45px;
     }
 }
 
-.p-inputnumber-input{
+.p-inputnumber-input {
     padding: 8px !important;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -41,13 +43,13 @@
 
 
 
-aside{
-    span{
+aside {
+    span {
         overflow: auto;
     }
 }
 
-.ant-form-item-control-input-content .ant-input{
+.ant-form-item-control-input-content .ant-input {
     padding: 10px !important;
 }
 
@@ -55,9 +57,9 @@ aside{
     padding: 0 10px 0 3px !important;
 }
 
-.inputt::placeholder{
-        color: #000 !important;
-    }
+.inputt::placeholder {
+    color: #000 !important;
+}
 
 .form-control {
     outline: none;
@@ -72,6 +74,7 @@ aside{
     box-shadow: 0 0 rgba(#000, 0);
     transition: all 0.4s ease;
     box-shadow: 0 0 0 #000;
+
     @include placeholder() {
         opacity: 1;
     }
@@ -86,6 +89,7 @@ aside{
         height: 50px;
         border-radius: 1;
         border: 1px solid #dddddd;
+
         &:focus {
             border-color: $color-1st;
             outline: none;
@@ -99,6 +103,7 @@ aside{
         height: 50px;
         border: none;
         border-radius: 0;
+
         .ant-select-selection__rendered {
             line-height: 50px;
         }
@@ -114,7 +119,7 @@ textarea.form-control {
 .ps-input--has-icon {
     position: relative;
 
-    > i {
+    >i {
         @include vertical-align();
         right: 15px;
     }
@@ -134,7 +139,7 @@ textarea.form-control {
         transition: all 0.4s ease;
 
         &:before {
-            font-family: FontAwesome;
+            font-family: HelviticaRounded;
             @include center();
             color: $color-heading;
         }
@@ -171,7 +176,7 @@ textarea.form-control {
     position: relative;
     display: block;
 
-    > input {
+    >input {
         position: absolute;
         visibility: hidden;
         box-sizing: border-box;
@@ -217,7 +222,7 @@ textarea.form-control {
         }
     }
 
-    input[type='checkbox']:checked ~ label {
+    input[type='checkbox']:checked~label {
         &:before {
             background-color: $color-2nd;
             border-color: $color-2nd;
@@ -237,7 +242,7 @@ textarea.form-control {
     &--color {
         margin-right: 1rem;
 
-        > label {
+        >label {
             margin-bottom: 0;
             width: 20px;
             height: 20px;
@@ -259,7 +264,7 @@ textarea.form-control {
             }
         }
 
-        input[type='radio']:checked ~ label {
+        input[type='radio']:checked~label {
             background-color: transparent;
 
             &:before {
@@ -310,7 +315,7 @@ textarea.form-control {
     }
 
     &.color-sidebar {
-        > label {
+        >label {
             &:before {
                 width: 26px;
                 height: 26px;
@@ -322,7 +327,7 @@ textarea.form-control {
     &--size {
         margin-right: 1rem;
 
-        > label {
+        >label {
             margin-bottom: 0;
             padding: 8px 20px;
             border: none;
@@ -337,7 +342,7 @@ textarea.form-control {
             }
         }
 
-        input[type='checkbox']:checked ~ label {
+        input[type='checkbox']:checked~label {
             color: #ffffff;
             background-color: #a7a7a7;
         }
@@ -347,7 +352,7 @@ textarea.form-control {
 .ps-radio {
     position: relative;
 
-    > input {
+    >input {
         position: absolute;
         visibility: hidden;
         box-sizing: border-box;
@@ -394,7 +399,7 @@ textarea.form-control {
         }
     }
 
-    input[type='radio']:checked ~ label {
+    input[type='radio']:checked~label {
         &:before {
             background-color: $color-2nd;
             border-color: $color-2nd;
@@ -414,7 +419,7 @@ textarea.form-control {
     &--color {
         margin-right: 1rem;
 
-        > label {
+        >label {
             margin-bottom: 0;
             width: 20px;
             height: 20px;
@@ -435,7 +440,7 @@ textarea.form-control {
             }
         }
 
-        input[type='radio']:checked ~ label {
+        input[type='radio']:checked~label {
             background-color: rgba(#3dc47e, 0.5);
         }
 
@@ -489,7 +494,7 @@ textarea.form-control {
     margin-bottom: 2.5rem;
 
 
-    > label {
+    >label {
         margin-bottom: 1.5rem;
         font-weight: 400;
         color: #000000;
@@ -503,7 +508,8 @@ textarea.form-control {
     display: flex;
     flex-flow: row nowrap;
     align-items: center;
-    > label {
+
+    >label {
         margin-bottom: 0;
         font-weight: 700;
         min-width: 160px;
@@ -516,16 +522,19 @@ textarea.form-control {
 
     @include media('<lg') {
         padding-left: 0;
+
         label {
             position: static;
             @include transform(translateY(0));
         }
+
         &.textarea {
             label {
                 @include transform(translateY(0));
             }
         }
     }
+
     @include media('<sm') {
         display: block;
     }
@@ -569,6 +578,7 @@ textarea.form-control {
         color: $color-heading;
         @include border-radius(50px);
         background-color: transparent;
+
         @include placeholder() {
             color: $color-heading;
         }
@@ -628,7 +638,7 @@ textarea.form-control {
     position: relative;
     display: inline-block;
 
-    > a {
+    >a {
         position: relative;
         display: block;
         padding-right: 20px;
@@ -735,6 +745,7 @@ textarea.form-control {
 
         &.active {
             border-color: $color-1st;
+
             .ps-variant__size {
                 color: $color-heading;
             }
@@ -782,6 +793,7 @@ textarea.form-control {
         img {
             position: relative;
         }
+
         &.active {
             border-color: $color-1st;
         }
@@ -811,8 +823,8 @@ textarea.form-control {
 }
 
 @media screen and (max-width: '992px') {
-    .ps-form__orders{
-        h3{
+    .ps-form__orders {
+        h3 {
             padding-top: 15px;
             text-align: center;
         }
@@ -820,25 +832,27 @@ textarea.form-control {
 }
 
 @media screen and (max-width: '575px') {
-    .click-form-item{
-        label{
+    .click-form-item {
+        label {
             position: relative;
             width: 100% !important;
-            i{
+
+            i {
                 position: absolute;
                 top: 50%;
                 left: 4%;
                 transform: translateY(-50%);
                 font-size: 18px;
             }
-            .i{
+
+            .i {
                 left: 4%;
             }
         }
-    
-        .card__number{
+
+        .card__number {
             padding-left: 45px;
         }
     }
-    
+
 }
