@@ -12,6 +12,7 @@ function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [profileData, setProfileData] = useState({});
     const [renderProfile, setRenderProfile] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [profile, setProfile] = useState(null);
     const [image, setImage] = useState('');
     const [imageBag, setImageBag] = useState('');
@@ -20,10 +21,12 @@ function Notifications() {
 
 
     async function ProfileUsers() {
+        setLoading(false)
         const ItemsData = await GetRepository.getProfile(user?.access);
         if (ItemsData.id) {
             setProfile(ItemsData);
         }
+        setLoading(true)
     }
 
     useEffect(() => {
@@ -132,24 +135,33 @@ function Notifications() {
                                 </div> */}
                             </div>
                             <div className='user_profile_body'>
-                                {
-                                    profile &&
-                                    <>
-                                        <h1>{profile?.first_name}  {profile?.last_name}
-                                            <a style={{ cursor: "pointer" }} data-bs-target="#exampleModalMyProductsUserProfileName"
-                                                data-bs-toggle="modal">
-                                                <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
-                                            </a></h1>
-                                        {
-                                            profile?.email &&
-                                            <p>{profile?.email}</p>
-                                        }
-                                        {
-                                            profile?.phone &&
-                                            <p>{profile?.phone}</p>
-                                        }
-                                    </>
-                                }
+                                <>
+                                    {
+                                        loading ?
+                                            <>
+                                                <h1>{profile?.first_name}  {profile?.last_name}
+                                                    <a style={{ cursor: "pointer" }} data-bs-target="#exampleModalMyProductsUserProfileName"
+                                                        data-bs-toggle="modal">
+                                                        <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
+                                                    </a></h1>
+                                                {
+                                                    profile?.email &&
+                                                    <p>{profile?.email}</p>
+                                                }
+                                            </>
+                                            :
+                                            <>
+                                                <h1 style={{opacity:"0"}}> Ozodbek Abdisamato
+                                                    <a style={{ cursor: "pointer" }}
+                                                        data-bs-toggle="modal">
+                                                        <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
+                                                    </a></h1>
+
+                                                <p style={{opacity:"0"}} >abdisamatovozodbek003@gmail.com</p>
+                                            </>
+                                    }
+
+                                </>
                                 <CreditCard />
 
                             </div>

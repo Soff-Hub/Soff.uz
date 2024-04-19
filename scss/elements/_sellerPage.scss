@@ -5,7 +5,8 @@
 .user-inviter {
     background-color: #fff;
     padding: 15px;
-    & h4{
+
+    & h4 {
         font-size: 16px;
         line-height: 22px;
         margin: 0;
@@ -18,7 +19,8 @@
     display: flex;
     gap: 15px;
     align-items: center;
-    & h4{
+
+    & h4 {
         font-size: 16px;
         line-height: 22px;
         margin: 0;
@@ -30,11 +32,14 @@
     overflow-y: scroll;
     border-radius: 5px;
 }
+
 .inviter_user__container::-webkit-scrollbar {
     display: none;
 }
+
 .inviter_user__items {
     padding: 3px 10px;
+
     p {
         font-weight: 600;
         padding: 0;
@@ -42,82 +47,91 @@
     }
 }
 
-.profile-image{
+.profile-image {
     border: 1px solid rgb(216, 214, 214);
     position: relative;
-    & i{
+
+    & i {
         position: absolute;
         font-size: 22px;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
     }
-    & span{
+
+    & span {
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
     }
-    input{
+
+    input {
         display: none;
     }
 }
 
-.profile__image{
-    width: 150px;
-    // height: 50px;
+.profile__image {
+    min-width: 50px !important;
+    min-height: 50px !important;
+    max-height: 50px !important;
+    max-height: 50px !important;
     border-radius: 50%;
-    border: 2px solid $color-1st    ;
-    object-fit: cover;
+    border: 2px solid $color-1st ;
+    object-fit: cover !important;
+    object-position: top center !important;
 }
 
-.profile__image-client{
+.profile__image-client {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: 2px solid $color-1st    ;
+    border: 2px solid $color-1st ;
     object-fit: cover;
 }
 
-.profile__image-client-top-seller{
+.profile__image-client-top-seller {
     width: 35px;
     height: 35px;
     border-radius: 50%;
-    border: 2px solid $color-1st    ;
+    border: 2px solid $color-1st ;
     object-fit: cover;
 }
 
 
 
-.product_detail__seller_name{
+.product_detail__seller_name {
     transition: all .5s;
-    &:hover{
+
+    &:hover {
         cursor: pointer;
         text-decoration: underline;
     }
 }
 
-.ant-upload{
+.ant-upload {
     height: 50px !important;
 }
 
-.ant-upload-list-item-container{
+.ant-upload-list-item-container {
     height: 50px !important;
 }
 
-@media (max-width:1024px){
-    .usr_bodyy{
+@media (max-width:1024px) {
+    .usr_bodyy {
         padding: 20px 0 !important;
     }
-    .user_titleCard{
+
+    .user_titleCard {
         padding-top: 20px;
         display: flex;
         flex-direction: column;
-        h1{
+
+        h1 {
             padding-top: 20px !important;
         }
 
-        .user_cardss{
+        .user_cardss {
             flex: 100%;
             max-width: 100%;
             transform: translateY(10px) !important;
@@ -125,17 +139,19 @@
     }
 }
 
-.seller-account-page{
+.seller-account-page {
     position: relative;
-    .seller-cover{
+
+    .seller-cover {
         height: 200px;
     }
 }
 
 
-.donate-color-btn{
+.donate-color-btn {
     background-color: #c5ab35 !important;
-    &:hover{
+
+    &:hover {
         background-color: #000 !important;
     }
 }
