@@ -125,7 +125,7 @@ function ApplicationLists() {
     }
 
     async function getItemsSellerPost() {
-        const data = { credit_card: dataCard, amount: dataPrice }
+        const data = { credit_card: dataCard, amount: dataPrice ? dataPrice : profile?.wallet }
         const Items = await PostsRepository.PostsMyProductsAriza(data, user?.access);
         if (Items?.status === 200 || Items?.status === 201) {
             const modal = Modal.success({
@@ -163,7 +163,7 @@ function ApplicationLists() {
 
                 const response = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
 
-                if (response || response?.status === 201 || response?.status==200) {
+                if (response || response?.status === 201 || response?.status == 200) {
                     const modal = Modal.success({
                         centered: true,
                         title: 'Muvaffaqqiyatli!',
@@ -195,7 +195,6 @@ function ApplicationLists() {
             });
         }
     }
-
 
 
     function addPeriodToThousands(number) {

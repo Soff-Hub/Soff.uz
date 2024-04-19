@@ -135,11 +135,11 @@ function Notifications() {
                                 {
                                     profile &&
                                     <>
-                                        <h1>{profile?.first_name}  {profile?.last_name}    
-                                        <a  style={{cursor:"pointer"}} data-bs-target="#exampleModalMyProductsUserProfileName"
-                                            data-bs-toggle="modal">
-                                            <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
-                                        </a></h1>
+                                        <h1>{profile?.first_name}  {profile?.last_name}
+                                            <a style={{ cursor: "pointer" }} data-bs-target="#exampleModalMyProductsUserProfileName"
+                                                data-bs-toggle="modal">
+                                                <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
+                                            </a></h1>
                                         {
                                             profile?.email &&
                                             <p>{profile?.email}</p>
