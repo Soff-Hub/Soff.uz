@@ -331,6 +331,34 @@ function DashbordList() {
         ) : (
             <></>
         ),
+        user.role === 'admin' ? (
+            {
+                title: "To\'lov turi ",
+                dataIndex: 'provider',
+                key: 'address',
+                render: (provider) => (
+                    <span>
+                        {provider === 'card_data' ? (
+                            <span>
+                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                karta orqali
+                            </span>
+                        ) : provider === 'click' ? ( <span>
+                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                            click orqali
+                        </span>) : provider === 'payme' ? (
+                             <span>
+                             <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                             payme orqali
+                         </span>
+                        ) : " "}
+                    </span>
+                ),
+            }
+        ) : (
+            <></>
+        ),
+
         {
             title: 'Buyurtma sanasi',
             dataIndex: 'created_at',

@@ -218,11 +218,6 @@ const AccountMenuSidebar = ({
         }
     }
 
-   
-
-    console.log('data', data);
-
-
     return (
         <aside className="ps-widget--account-dashboard">
             <div ref={forwardedRef} className="ps-widget__header  p-2 pb-4">
