@@ -274,16 +274,17 @@ const PostsProductsEdit = () => {
                                                 selected
                                                 key={i}
                                                 value={item.status}>
-                                                {item.status === 'moderation'
+                                                {products.status === 'moderation'
                                                     ? 'Moderatsiya'
-                                                    : item.status ===
+                                                    : products.status ===
                                                         'cancelled'
                                                         ? 'Bekor qilingan'
-                                                        : item.status === 'approved'
+                                                        : products.status === 'approved'
                                                             ? 'Tasdiqlangan'
                                                             : ''}
                                             </option>
-                                        ) : (
+                                        ) 
+                                        : (
                                             <option value={item.status}>
                                                 {item.status === 'moderation'
                                                     ? 'Moderatsiya'
