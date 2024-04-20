@@ -8,7 +8,6 @@ import useAuth from '~/hooks/useAuth';
 import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
-import { useRef } from 'react';
 
 const AccountMenuSidebar = ({
     data,
@@ -217,6 +216,7 @@ const AccountMenuSidebar = ({
             }, 2000);
         }
     }
+
 
     return (
         <aside className="ps-widget--account-dashboard">
@@ -436,7 +436,7 @@ const AccountMenuSidebar = ({
                                               'Mening mahsulotlarim' && user?.role === 'seller'
                                             ? forwardedRefProduct
                                             : link?.text ===
-                                              'Sotib olingan' && user?.role === 'seller'
+                                              'Sotib olinganlar' && user?.role === 'seller'
                                             ? forwardedPurchased
                                             : link?.text ===
                                               'Yangi mahsulot' && user?.role === 'seller'

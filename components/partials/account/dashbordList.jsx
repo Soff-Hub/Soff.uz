@@ -126,6 +126,8 @@ function DashbordList() {
     // Birinchi marta kirgan bolsa id===0 bo'ladi , aks holda 1
     // const{ id }= useSelector(state => state.auth.beginRole)
 
+    console.log('user', user);
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -480,7 +482,7 @@ function DashbordList() {
     const divRef = useRef(null);
 
     const scrollTop = (e) => {
-      console.log('window.screenY', window.scrollY);
+    //   console.log('window.screenY', window.scrollY);
       if (window && e === 2) {
         // window.scrollTo({
         //     top: -100,
@@ -493,7 +495,6 @@ function DashbordList() {
     return (
         <section className="ps-my-account ps-page--account p-0">
             <Tour
-
                 ref={divRef}
                 onChange={(e) => (console.log(e), scrollTop(e))}
                 open={open}
@@ -502,8 +503,8 @@ function DashbordList() {
                 prevButtonLabel={'Oldingi'}
                 nextButtonLabel={'Keyingisi'}
                 finishButtonLabel={'Tugatish'}
-                scrollIntoViewOptions={true}
-                style={{ overflow: 'auto', height: '500px' }}
+                // scrollIntoViewOptions={true}
+                // style={{ overflow: 'auto', height: '500px' }}
             />
             <div className="container">
                 {user?.role === 'admin' ? (
