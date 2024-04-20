@@ -323,6 +323,7 @@ function DashbordList() {
                 title: 'Narx',
                 dataIndex: 'price',
                 key: 'address',
+                width: '150px',
                 render: (price) => (
                     <span>
                         <i className="fa-solid fa-coins text-warning"></i>{' '}
