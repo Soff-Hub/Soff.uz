@@ -422,7 +422,7 @@ const Posts = () => {
                             className=" col-md-7 pb-5">
                             <div className="col-md-8 p-0  mt-3">
                                 <div className="col-md-12  d-flex justify-content-between p-0 ">
-                                    <h4 className="p-0">Yangi mahsulot </h4>
+                                    <h4 className="p-0">Video Mahsulot </h4>
                                 </div>
                             </div>
                             <div className="row">
@@ -430,7 +430,7 @@ const Posts = () => {
                                     <div className="row">
                                         <div className="col-md-12  d-flex flex-column">
                                             <div className=" d-flex justify-content-between p-0 ">
-                                                <p>Mahsulot nomi: *</p>
+                                                <p>Video nomi: *</p>
                                                 <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
                                                     <i
                                                         style={{
@@ -498,7 +498,7 @@ const Posts = () => {
 
                                         <div className=" col-md-12 d-flex flex-column mt-3">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Mahsulot sotish narxi: *</p>{' '}
+                                                <p>Video sotish narxi: *</p>{' '}
                                                 <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
                                                     <i
                                                         style={{
@@ -536,7 +536,7 @@ const Posts = () => {
                                     <div className="row">
                                         <div className="col-md-12 d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Mahsulot: *</p>{' '}
+                                                <p>Video(asosiy): *</p>{' '}
                                                 <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .ppt, .pptx .pdf">
                                                     <i
                                                         style={{
@@ -574,11 +574,7 @@ const Posts = () => {
                                                                 }}>
                                                                 <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                                 <span>
-                                                                    Faylni
-                                                                    yuklash
-                                                                    uchun ushbu
-                                                                    hududga
-                                                                    bosing.
+                                                                    Asosiy video
                                                                 </span>
                                                             </span>
                                                         )}
@@ -611,7 +607,10 @@ const Posts = () => {
                                         </div>
                                         <div className="col-md-12 d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Mahsulot: *</p>{' '}
+                                                <p>
+                                                    Video(qisqa ko'rish uchun):
+                                                    *
+                                                </p>{' '}
                                                 <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .ppt, .pptx .pdf">
                                                     <i
                                                         style={{
@@ -649,11 +648,9 @@ const Posts = () => {
                                                                 }}>
                                                                 <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                                 <span>
-                                                                    Faylni
-                                                                    yuklash
-                                                                    uchun ushbu
-                                                                    hududga
-                                                                    bosing.
+                                                                    Qisqa
+                                                                    ko'rish
+                                                                    uchun video
                                                                 </span>
                                                             </span>
                                                         )}
@@ -696,26 +693,21 @@ const Posts = () => {
                                                 </Tooltip>
                                             </div>
                                             <div
-                                                className="add-product-user-image d-flex justify-content-between   form-control pt-2 rounded-3"
+                                                className="add-product-user-image d-flex justify-content-between gap-3  form-control pt-2 rounded-3"
                                                 style={{
                                                     backgroundColor: '#F1F1F1',
-                                                    border: `1px dashed ${
-                                                        (livePosterFile?.images
-                                                            ?.length < 3 &&
-                                                            uploadPoster) ||
-                                                        livePosterFile?.images
-                                                            ?.length < 3
-                                                            ? 'red'
-                                                            : 'green'
-                                                    }`,
+                                                    border: `1px dashed green`,
                                                     height: '100px',
                                                 }}>
                                                 <label
                                                     style={{
-                                                        width: '50px',
+                                                        width: '45%',
                                                         cursor: 'pointer',
+                                                        border: '1px solid green',
+                                                        borderRadius:'5px',
+                                                        position:'relative'
                                                     }}>
-                                                    <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                                                    <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3 plus-icon-style "></i>
                                                     <input
                                                         type="file"
                                                         onChange={(e) =>
@@ -723,76 +715,12 @@ const Posts = () => {
                                                         }
                                                         accept="image/*"
                                                         style={{
-                                                            width: '20px',
+                                                            width: '50px',
                                                         }}
                                                     />
                                                 </label>
-                                                <div
-                                                    className="overflow-x-scroll  d-flex  gap-1
-                                   "
-                                                    style={{ width: '430px' }}>
-                                                    {!livePosterFile?.images
-                                                        ?.length > 0 ? (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center mt-4 mx-5"
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                            <span className="text-center">
-                                                                {' '}
-                                                                {uploadPoster
-                                                                    ? 'Ilitmos kamida 3ta rasmini yuklang.'
-                                                                    : 'Rasmini yuklash uchun ushbu hududga bosing.'}{' '}
-                                                            </span>
-                                                        </span>
-                                                    ) : (
-                                                        livePosterFile?.images?.map(
-                                                            (item, i) =>
-                                                                item.id ===
-                                                                fileImgFileID ? (
-                                                                    <img
-                                                                        src={
-                                                                            item.image_url
-                                                                        }
-                                                                        alt=" "
-                                                                        key={i}
-                                                                        style={{
-                                                                            display:
-                                                                                'block',
-                                                                            border: '2px solid red',
-                                                                            filter: 'blur(1px)',
-                                                                            cursor: 'not-allowed',
-                                                                        }}
-                                                                    />
-                                                                ) : (
-                                                                    <img
-                                                                        className="mx-1 "
-                                                                        onClick={() => {
-                                                                            setLiveFile(
-                                                                                item?.image_url
-                                                                            );
-                                                                            setFileImgFileID(
-                                                                                item?.id
-                                                                            );
-                                                                            setCustomeFile(
-                                                                                item?.file
-                                                                            );
-                                                                        }}
-                                                                        src={
-                                                                            item?.image_url
-                                                                        }
-                                                                        alt=" "
-                                                                        key={i}
-                                                                        style={{
-                                                                            display:
-                                                                                'block',
-                                                                            cursor: 'pointer',
-                                                                        }}
-                                                                    />
-                                                                )
-                                                        )
-                                                    )}
+                                                <div className="">
+                                                    <img style={{maxWidth:'100%', height:'85px'}} src="https://m.media-amazon.com/images/G/01/primevideo/seo/primevideo-seo-logo.png" alt="poster/video" />
                                                 </div>
                                             </div>
                                         </div>
@@ -855,7 +783,14 @@ const Posts = () => {
                         <div
                             className="col-md-5 rounded-3  p-3  card mt-5"
                             style={{ maxWidth: '485px' }}>
-                            <iframe
+                            <video className=" border w-100" controls>
+                                <source
+                                    src="https://youtu.be/XGPg0AMTKHM"
+                                    type={`video/*`}
+                                />
+                            </video>
+
+                            {/* <iframe
                                 width="100%"
                                 height="300"
                                 src="https://www.youtube.com/embed/XGPg0AMTKHM"
@@ -863,11 +798,7 @@ const Posts = () => {
                                 frameborder="0"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen></iframe>
-
-                            {/* <video width="640" height="360" controls>
-                                <source src="https://www.youtube.com/embed/XGPg0AMTKHM" type="video/*" />
-                            </video> */}
+                                allowfullscreen></iframe> */}
                         </div>
                     </div>
 
