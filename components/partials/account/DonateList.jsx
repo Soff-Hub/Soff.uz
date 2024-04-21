@@ -10,9 +10,9 @@ export default function DonateList() {
     const { user } = useSelector((state) => state.auth);
 
     const getDonate = async (token) => {
-        const respons = await GetRepository.getNotificationData(token);
+        const respons = await GetRepository.getDonateList(token);
         if (respons) {
-            setDonate(respons.results);
+            setDonate(respons);
         }
     };
 
@@ -21,6 +21,8 @@ export default function DonateList() {
             getDonate(user?.access);
         }
     }, [user?.access]);
+
+    console.log('donate list', donate);
 
     // const columnsOrdersSeller = [
     //     {
