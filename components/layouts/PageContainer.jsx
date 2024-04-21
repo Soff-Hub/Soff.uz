@@ -115,9 +115,9 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-truck',
     },
     {
-        text: 'Yangiliklar',
-        url: '/account/notification',
-        icon: 'fa-solid fa-bell',
+        text: 'Donatlar ro\'yxati',
+        url: '/account/donate-page',
+        icon: 'fa-solid fa-hand-holding-dollar',
     },
     {
         text: "Ariza va Takliflar",
@@ -137,9 +137,9 @@ export let cutomerAccountLink = [
         icon: 'fa-solid fa-bag-shopping',
     },
     {
-        text: 'Yangiliklar',
-        url: '/account/notification',
-        icon: 'fa-solid fa-bell',
+        text: 'Donatlar ro\'yxati',
+        url: '/account/donate-page',
+        icon: 'fa-solid fa-hand-holding-dollar',
     },
     {
         text: 'Buyurtma berish',

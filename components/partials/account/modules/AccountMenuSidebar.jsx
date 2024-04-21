@@ -15,15 +15,7 @@ const AccountMenuSidebar = ({
     forwardedRef,
     forwardedRef4,
     forwardedRef5,
-    forwardedRefProduct,
-    forwardedRefPanel,
-    forwardedPurchased,
-    forwardedProductSelection,
-    forwardedOrder,
-    forwardedNotification,
-    forwardedAplication,
-    forwardedSettings,
-    forwardedFinish
+    forwardedRef6
 }) => {
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
@@ -287,9 +279,9 @@ const AccountMenuSidebar = ({
                         </strong>
                     </h4>
                     <h5
-                        ref={forwardedRef5}
+                        
                         className="w-100  border m-0 p-3 rounded-3  text-truncate">
-                        <p
+                        <p ref={forwardedRef5}
                             className="m-0"
                             style={{ fontWeight: 600, color: 'black' }}>
                             Taklif qilingan foydalanuvchilar:{' '}
@@ -348,6 +340,7 @@ const AccountMenuSidebar = ({
                             </span>
                         </p>
                     </h5>
+                    <p ref={forwardedRef6} ></p>
                 </div>
             ) : (
                 <></>
@@ -382,7 +375,7 @@ const AccountMenuSidebar = ({
                         bo'ladi.
                     </p>
                 </Modal>
-                <ul>
+                <ul  >
                     {data.map((link) => (
                         <>
                             {link?.url === '#' ? (
@@ -429,32 +422,32 @@ const AccountMenuSidebar = ({
                                 </Badge.Ribbon>
                             ) : (
                                 <li
-                                    ref={
-                                        link?.text === 'Boshqaruv paneli' && user?.role === 'seller'
-                                            ? forwardedRefPanel
-                                            : link?.text ===
-                                              'Mening mahsulotlarim' && user?.role === 'seller'
-                                            ? forwardedRefProduct
-                                            : link?.text ===
-                                              'Sotib olinganlar' && user?.role === 'seller'
-                                            ? forwardedPurchased
-                                            : link?.text ===
-                                              'Yangi mahsulot' && user?.role === 'seller'
-                                            ? forwardedProductSelection
-                                            : link?.text ===
-                                              'Buyurtmalar' && user?.role === 'seller'
-                                            ? forwardedOrder
-                                            : link?.text ===
-                                              'Yangiliklar' && user?.role === 'seller'
-                                            ? forwardedNotification
-                                            : link?.text ===
-                                              'Ariza va Takliflar' && user?.role === 'seller'
-                                            ? forwardedAplication
-                                            : link?.text ===
-                                              'Profil' && user?.role === 'seller'
-                                            ? forwardedSettings
-                                            : null
-                                    }
+                                    // ref={
+                                    //     link?.text === 'Boshqaruv paneli' && user?.role === 'seller'
+                                    //         ? forwardedRefPanel
+                                    //         : link?.text ===
+                                    //           'Mening mahsulotlarim' && user?.role === 'seller'
+                                    //         ? forwardedRefProduct
+                                    //         : link?.text ===
+                                    //           'Sotib olinganlar' && user?.role === 'seller'
+                                    //         ? forwardedPurchased
+                                    //         : link?.text ===
+                                    //           'Yangi mahsulot' && user?.role === 'seller'
+                                    //         ? forwardedProductSelection
+                                    //         : link?.text ===
+                                    //           'Buyurtmalar' && user?.role === 'seller'
+                                    //         ? forwardedOrder
+                                    //         : link?.text ===
+                                    //           'Yangiliklar' && user?.role === 'seller'
+                                    //         ? forwardedNotification
+                                    //         : link?.text ===
+                                    //           'Ariza va Takliflar' && user?.role === 'seller'
+                                    //         ? forwardedAplication
+                                    //         : link?.text ===
+                                    //           'Profil' && user?.role === 'seller'
+                                    //         ? forwardedSettings
+                                    //         : null
+                                    // }
                                     key={link.text}
                                     className={
                                         link.url === asPath ? 'active' : ''

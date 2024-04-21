@@ -30,15 +30,15 @@ function DashbordList() {
     const ref3 = useRef(null);
     const ref4 = useRef(null);
     const ref5 = useRef(null);
-    const refProduct = useRef(null);
     const refPanel = useRef(null);
-    const refPurchased = useRef(null);
-    const refProductSelection = useRef(null);
+    // const refProduct = useRef(null);
+    // const refPurchased = useRef(null);
+    // const refProductSelection = useRef(null);
     // const refOrder = useRef(null);
-    const refNotification = useRef(null);
-    const refAplication = useRef(null);
-    const refSettings = useRef(null);
-    const refff = useRef(null);
+    // const refNotification = useRef(null);
+    // const refAplication = useRef(null);
+    // const refSettings = useRef(null);
+    // const refff = useRef(null);
     const [open, setOpen] = useState(false);
     const steps = [
         {
@@ -73,53 +73,18 @@ function DashbordList() {
             target: () => ref5.current,
         },
         {
-            title: "Boshqaruv paneli",
+            title: "Menyu",
             description:
-                "Bu joyda siz buyurtma ma'lumotlarini ko'rishingiz mumkin",
+                "Quyidagi menyuda  siz profilingiz va mahsulotlaringiz haqida ma'lumotlar olishingiz mumkin ",
             target: () => refPanel.current,
         },
         {
-            title: "Mening mahsulotlarim",
+            title: "So'nggi buyurtmalar",
             description:
-                "Bu joyda siz yuklagan mahsuloringiz ko'ra olasiz",
-            target: () => refProduct.current,
+                "Bu joyda siz buyurtmalar haqida ma'lumotlarga ega bo'lasiz",
+            target: () => ref3.current,
         },
-        {
-            title: "Sotib olingan mahsulotlar",
-            description:
-                'Bu joyda siz sotib olgan mahsulotlaringiz turadi',
-            target: () => refPurchased.current,
-        },
-        {
-            title: "Yangi mahsulot qo'shish",
-            description:
-                'Bu joyda siz mahsulot qo\'shishini tanlashingiz mumkin',
-            target: () => refProductSelection.current,
-        },
-        // {
-        //     title: "Buyurtmalar",
-        //     description:
-        //         'Bu joyda esa siz oxirgi marta qilingan buyurtmalar haqida bilib olishingiz mumkin',
-        //     target: () => refOrder.current,
-        // },
-        {
-            title: "Yangiliklar",
-            description:
-                'Bu joyda siz sotilgan va ko\'rib chiqilgan mahsulotlar haqida ma\'lumot shuningdek soff.uz tomonidan yuborilgan xabarlarni ham ko\'rishingiz mumkin',
-            target: () => refNotification.current,
-        },
-        {
-            title: "Sozlamalar",
-            description:
-                'Bu joyda esa siz profil sozlamalarini sozlashingiz mumkin ',
-            target: () => refSettings.current,
-        },
-        // {
-        //     title: "So'ngi qilingan buyurtmalar",
-        //     description:
-        //         'Bu joyda esa siz oxirgi marta qilingan buyurtmalar haqida bilib olishingiz mumkin',
-        //     target: () => ref3.current,
-        // },
+
     ];
 
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -501,9 +466,9 @@ function DashbordList() {
                 open={open}
                 onClose={() => setOpen(false) }
                 steps={steps}
-                prevButtonLabel={'Oldingi'}
-                nextButtonLabel={'Keyingisi'}
-                finishButtonLabel={'Tugatish'}
+                // prevButtonLabel={'Oldingi'}
+                // nextButtonLabel={'Keyingisi'}
+                // finishButtonLabel={'Tugatish'}
                 // scrollIntoViewOptions={true}
                 // style={{ overflow: 'auto', height: '500px' }}
             />
@@ -874,23 +839,13 @@ function DashbordList() {
                     className="row pb-5 mt-5"
                     style={{ alignItems: 'flex-start' }}>
                     <div className="col-lg-4" id='panel' >
-                        <div className="ps-page__left">
+                        <div className="ps-page__left" >
                             <AccountMenuSidebar
                                 forwardedRef={ref2}
                                 forwardedRef4={ref4}
                                 forwardedRef5={ref5}
-                                forwardedRefProduct={refProduct}
-                                forwardedRefPanel={refPanel}
-                                forwardedPurchased={refPurchased}
-                                forwardedProductSelection={refProductSelection}
-                                // forwardedOrder={refOrder}
-                                forwardedNotification={refNotification}
-                                forwardedAplication={refAplication}
-                                forwardedSettings={refSettings}
-
-                                forwardedFinish={ref3}
-
-                                data={accountLinks}
+                                forwardedRef6={refPanel}
+                                data={accountLinks}   
                             />
                         </div>
                     </div>
@@ -945,7 +900,7 @@ function DashbordList() {
                             </div>
                         )}
                         <div className="pb-5 mt-4">
-                            <h4
+                            <h4 
                                 ref={ref3}
                                 className="bg-white m-0 text-center py-4">
                                 So'nggi buyurtmalar
