@@ -46,6 +46,7 @@ const Posts = () => {
     const [uploadPoster, setUploadPoster] = useState(false);
     const [customePoster, setCustomePoster] = useState(false);
     const [customeFile, setCustomeFile] = useState(null);
+    const [profile, setProfile] = useState(null);
 
     const breadCrumb = [
         {
@@ -107,6 +108,12 @@ const Posts = () => {
             }
         }
     };
+
+    
+    async function ProfileUsers() {
+        const ItemsData = await GetRepository.getProfile(user?.access);
+        setProfile(ItemsData);
+    }
 
     const onSearch = async (value) => {
         const ItemsData = await GetRepository.getAllCategoryLists(value);
@@ -382,7 +389,13 @@ const Posts = () => {
         PostFilePoster();
     }, [fileImgFile]);
 
-    const profile = {}
+    useEffect(() => {
+        if (user?.access) {
+            ProfileUsers()
+        }
+    }, [user?.access])
+    
+
     const livePosterVideo = {}
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -953,6 +966,7 @@ const Posts = () => {
                         </div>
                     </div>
                 </div>
+
                 {/* mahsulotning user qismi uchun real ko'rinishi */}
                 <div
                     className="modal fade "
@@ -1257,8 +1271,7 @@ const Posts = () => {
                                                         }}>
                                                         <div>
                                                             { 
-                                                            // profile?.image
-                                                            false
+                                                            profile?.image
                                                             ? (
                                                                 <img
                                                                     alt="soff"
