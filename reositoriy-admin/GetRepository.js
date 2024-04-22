@@ -783,7 +783,7 @@ class GetRepository {
     }
 
     async getDonateList(token) {
-        const endPoint = `seller/donates`;
+        const endPoint = `donates/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
