@@ -449,10 +449,11 @@ const Posts = () => {
                                                 }
                                             />
                                         </div>
-                                        <div className=" col-md-12 d-flex flex-column ">
-                                            <div className="m-0 pt-2 d-flex justify-content-between p-0">
-                                                <p>Teglar:</p>{' '}
-                                                <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+
+                                        <div className=" col-md-12 d-flex flex-column mt-3">
+                                            <div className=" mt-2 d-flex justify-content-between p-0">
+                                                <p>Video sotish narxi: *</p>{' '}
+                                                <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -460,15 +461,30 @@ const Posts = () => {
                                                         className="fa-regular fa-circle-question px-4 mt-2"></i>
                                                 </Tooltip>
                                             </div>
-                                            <div className="rounded-3  p-0 m-0 d-flex flex-column ">
-                                                <Select
-                                                    mode="tags"
-                                                    style={{ width: '100%' }}
-                                                    onChange={handleChange}>
-                                                    {children}
-                                                </Select>
+                                            <div className="d-flex">
+                                                <Checkbox
+                                                    defaultChecked={free}
+                                                    className="col-md-4 d-flex align-items-center justify-content-start px-0 py-2"
+                                                    onChange={handleFreeChange}>
+                                                    Bepul
+                                                </Checkbox>
+
+                                                <InputNumber
+                                                    required
+                                                    disabled={free}
+                                                    value={taxminiyNarx}
+                                                    className="col-md-8 p-2 "
+                                                    onValueChange={(e) => (
+                                                        setNarxNomi(false),
+                                                        setTaxminiyNarx(
+                                                            e.value
+                                                        ),
+                                                        setNarx(e.value)
+                                                    )}
+                                                />
                                             </div>
                                         </div>
+
                                         <div className=" col-md-12 d-flex flex-column mt-3">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Kategoriya: *</p>{' '}
@@ -496,10 +512,10 @@ const Posts = () => {
                                             </div>
                                         </div>
 
-                                        <div className=" col-md-12 d-flex flex-column mt-3">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Video sotish narxi: *</p>{' '}
-                                                <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
+                                        <div className=" col-md-12 d-flex flex-column ">
+                                            <div className="m-0 pt-2 d-flex justify-content-between p-0">
+                                                <p>Teglar:</p>{' '}
+                                                <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -507,27 +523,13 @@ const Posts = () => {
                                                         className="fa-regular fa-circle-question px-4 mt-2"></i>
                                                 </Tooltip>
                                             </div>
-                                            <div className="d-flex">
-                                                <Checkbox
-                                                    defaultChecked={free}
-                                                    className="col-md-4 d-flex align-items-center justify-content-start px-0 py-2"
-                                                    onChange={handleFreeChange}>
-                                                    Bepul
-                                                </Checkbox>
-
-                                                <InputNumber
-                                                    required
-                                                    disabled={free}
-                                                    value={taxminiyNarx}
-                                                    className="col-md-8 p-2"
-                                                    onValueChange={(e) => (
-                                                        setNarxNomi(false),
-                                                        setTaxminiyNarx(
-                                                            e.value
-                                                        ),
-                                                        setNarx(e.value)
-                                                    )}
-                                                />
+                                            <div className="rounded-3  p-0 m-0 d-flex flex-column ">
+                                                <Select
+                                                    mode="tags"
+                                                    style={{ width: '100%' }}
+                                                    onChange={handleChange}>
+                                                    {children}
+                                                </Select>
                                             </div>
                                         </div>
                                     </div>
@@ -727,7 +729,7 @@ const Posts = () => {
                                     </div>
                                 </div>
 
-                                <div className="col-md-12 row pr-0">
+                                <div className="col-md-12 row pr-0 mt-4">
                                     <div className="col-md-12  d-flex flex-column mt-3 p-0">
                                         <div className=" d-flex justify-content-between p-0">
                                             <p>Mahsulot to’liq tavsifi: </p>{' '}
