@@ -8,6 +8,7 @@ import Page404 from '../page/page-404';
 import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
 import Joyride from 'react-joyride';
+import { Modal } from 'antd';
 
 const MyAccountPage = () => {
     const breadCrumb = [
@@ -22,6 +23,8 @@ const MyAccountPage = () => {
 
     const { user } = useSelector(state => state.auth)
     const [run, setRun] = useState(false)
+    const [step, setStep] = useState(null)
+    const [open, setOpen] = useState(false)
 
     const steps = [
         {
@@ -62,19 +65,62 @@ const MyAccountPage = () => {
         },
         {
             target: '.step-9',
-            content: "Barcha sotilgan mahsulotlar ma'lumotlari sahifasi",
+            content: "Barcha sotilgan mahsulotlaringiz ma'lumotlari sahifasi",
         },
         {
             target: '.step-10',
-            content: "Kelib tushdan donatlar ma'lumotlari sahifasi",
+            content: "Kelib tushgan donatlar ma'lumotlari sahifasi",
         },
         {
             target: '.step-11',
-            content: "Balansdan pul yechish va Sayt rivoji uchun taklif va murojaatlar sahifasi",
+            content: "Balansingizdan pul yechish va sayt rivoji uchun taklif va murojaatlar yuborish sahifasi",
         },
         {
             target: '.step-12',
-            content: "Shaxsiy ma'lumotlar va kartalaringizni boshqarish sahifasi",
+            content: "Shaxsiy ma'lumotlaringiz va kartalaringizni boshqarish sahifasi",
+        },
+    ]
+
+    const questions = [
+        // {
+        //     target: '.step-1',
+        //     content: "Barcha daromadlarim hisobini qayerdan olaman",
+        // },
+        // {
+        //     target: '.step-3',
+        //     content: "Balansim va taklif qilgan foydalanuvchilarim haqidagi ma'lumotlar qayerda",
+        // },
+        {
+            target: '.step-5',
+            content: "Men o'zim yuklagan mahsulotlarimni qayerdan topaman",
+        },
+        {
+            target: '.step-6',
+            content: 'Mahsulot sotib oldim lekin uni topa olmayapman, qayerda',
+        },
+        // {
+        //     target: '.step-7',
+        //     content: "Yangi mahsulotni qanday yuklasam bo'ladi",
+        // },
+        {
+            target: '.step-9',
+            content: "Mendan sotib olingan mahsulotlarni qayerda ko'rsam bo'ladi",
+        },
+        // {
+        //     target: '.step-10',
+        //     content: "Menga donat qilganlar ma'lumotni ko'ra olmayapman",
+        // },
+        {
+            target: '.step-11',
+            content: "Balansimdagi pulni kartamga qanday o'tkazaman",
+        },
+        {
+            target: '.step-11',
+            content: "Mening sayt haqida taklif yoki shikoyatim bor, qayerga yozay",
+        },
+        {
+            target: '.step-12',
+            content: "Profilim ma'lumotlarini va kartalarimni o'zgartira olamanmi",
         },
     ]
 
@@ -84,6 +130,24 @@ const MyAccountPage = () => {
             window.scrollTo(0, 0);
             setRun(false)
         }
+    };
+
+
+    const callbackSingle = (data) => {
+        if (data.action === 'next' || data.action === 'reset' || data.action === 'finish') {
+            // window.scrollTo(0, 0);
+            const doc = document.querySelector('.headerSticky')
+            doc.id = "headerSticky"
+            setStep(null)
+        }
+    };
+
+    const setSingleStep = (step) => {
+        setOpen(false)
+        const doc = document.querySelector('.headerSticky')
+        doc.id = ""
+        const item = steps.findIndex(el => el.target === step.target)
+        setStep(item)
     };
 
     useEffect(() => {
@@ -100,7 +164,7 @@ const MyAccountPage = () => {
                     title={"Soff | Bosh panel"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <Joyride
+                {user?.role === 'seller' && <Joyride
                     steps={steps}
                     run={run}
                     continuous
@@ -118,7 +182,7 @@ const MyAccountPage = () => {
                         },
                     }}
                     disableOverlayClose
-                    hideCloseButton
+                    // hideCloseButton
                     callback={callback}
                     locale={{
                         back: "Oldingi",
@@ -128,8 +192,59 @@ const MyAccountPage = () => {
                         open: "Ochish",
                         skip: "O'tkazib yuborish"
                     }}
-                />
-                <DashbordList />
+                />}
+                {step && user?.role === 'seller' && <Joyride
+                    steps={steps}
+                    run
+                    continuous
+                    floaterProps={{
+                        autoOpen: true,
+                        placement: 'right-start',
+                        offset: 0
+                    }}
+                    styles={{
+                        options: {
+                            arrowColor: '#e3ffeb',
+                            primaryColor: '#00A44F',
+                            textColor: '#004a14',
+                            padding: 0
+                        },
+                    }}
+                    disableOverlayClose
+                    hideCloseButton
+                    callback={callbackSingle}
+                    stepIndex={step}
+                    disableCloseOnEsc
+                    locale={{
+                        back: "",
+                        last: "Tushundim",
+                        close: "Yopish",
+                        next: "Tushundim",
+                        open: "Ochish",
+                    }}
+                />}
+
+                <Modal
+                    title="Eng ko'p beriladigan savollar"
+                    open={open}
+                    onOk={() => setOpen(false)}
+                    onCancel={() => setOpen(false)}
+                    okText="Yopish"
+                    cancelButtonProps={{ style: { display: 'none' } }}
+                    okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', marginTop: '20px', gap: '6px' }}>
+                        {
+                            questions.map((ask, index) => (
+                                <p key={index} onClick={() => setSingleStep(ask)} style={{ color: '#004a14', cursor: 'pointer' }}>
+                                    <i className='fa-solid fa-question fa-sm'></i>. {ask.content}
+                                </p>
+                            ))
+                        }
+                    </div>
+                </Modal>
+
+
+                <DashbordList setOpen={setOpen} />
             </div>
         </PageContainer> : user?.access ? <Page404 /> : <Selection />
     );

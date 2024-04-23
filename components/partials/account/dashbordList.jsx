@@ -12,7 +12,7 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import Link from 'next/link';
 import Example from './Chart';
 
-function DashbordList() {
+function DashbordList({ setOpen }) {
     const [data, setData] = useState([]);
     const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
@@ -380,8 +380,11 @@ function DashbordList() {
 
     return (
         <section className="ps-my-account ps-page--account p-0">
-            <p className='step-0'></p>
+            <p className='step-0 m-0'></p>
             <div className="container">
+                <div style={{ textAlign: 'end', marginBottom: '6px' }}>
+                    <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}>Saytdan foydalanish bo'yicha savolingiz bormi?</p>
+                </div>
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">
                         <div>
@@ -803,7 +806,7 @@ function DashbordList() {
                                 <Example year={year} month={month} />
                             </div>
                         )}
-                        <div className="pb-5 mt-4">
+                        <div className="pb-5">
                             <h4
                                 className="bg-white m-0 text-center py-4">
                                 So'nggi buyurtmalar
