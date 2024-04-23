@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Pagination, Select, Table, Tour } from 'antd';
+import { Select, Table } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
@@ -23,75 +23,10 @@ function DashbordList() {
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(null);
-    
-
-    const ref1 = useRef(null);
-    const ref2 = useRef(null);
-    const ref3 = useRef(null);
-    const ref4 = useRef(null);
-    const ref5 = useRef(null);
-    const refPanel = useRef(null);
-    // const refProduct = useRef(null);
-    // const refPurchased = useRef(null);
-    // const refProductSelection = useRef(null);
-    // const refOrder = useRef(null);
-    // const refNotification = useRef(null);
-    // const refAplication = useRef(null);
-    // const refSettings = useRef(null);
-    // const refff = useRef(null);
-    const [open, setOpen] = useState(false);
-    const steps = [
-        {
-            title: "Dashboard ma'lumotlari",
-            description:
-                "Bu yerda siz butun davr mobaynida jami daromadingiz, oxirgi 30 kundagi daromadingiz, bugungi daromadingiz va yana jami buyurtmalar soni kabi ma'lumotlarga ega bo'lishingiz mumkin",
-            // cover: (
-            //   <img
-            //     alt="tour.png"
-            //     src="https://user-images.githubusercontent.com/5378891/197385811-55df8480-7ff4-44bd-9d43-a7dade598d70.png"
-            //   />
-            // ),
-            nextButtonLabel:'keyin',
-            target: () => ref1.current,
-        },
-        {
-            title: "Foydalanuvchi ma'lumotlari",
-            description:
-                "Bu joyda sizni shaxsiy ma'lumotlaringiz joylashgan bo'lib uni xohlagan vaqtingizda o'zgartirishingiz mumkin",
-            target: () => ref2.current,
-        },
-        {
-            title: "Sizning balansingiz",
-            description:
-                "Bu joyda sizning pullaringiz miqdori ko'rsatiladi",
-            target: () => ref4.current,
-        },
-        {
-            title: "Taklif havolangiz",
-            description:
-                "Bu joyda siz taklif havolangizni olishingiz mumkin, shuningdek nechta sotuvchi taklif qilganingiz va ulardan kelgan daromadni  ko'rib turishingiz mumkin",
-            target: () => ref5.current,
-        },
-        {
-            title: "Menyu",
-            description:
-                "Quyidagi menyuda  siz profilingiz va mahsulotlaringiz haqida ma'lumotlar olishingiz mumkin ",
-            target: () => refPanel.current,
-        },
-        {
-            title: "So'nggi buyurtmalar",
-            description:
-                "Bu joyda siz buyurtmalar haqida ma'lumotlarga ega bo'lasiz",
-            target: () => ref3.current,
-        },
-
-    ];
 
     const { accountLinks, user } = useSelector((state) => state.auth);
     // Birinchi marta kirgan bolsa id===0 bo'ladi , aks holda 1
     // const{ id }= useSelector(state => state.auth.beginRole)
-
-    console.log('user', user);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -166,9 +101,6 @@ function DashbordList() {
         GetItemsProducts();
         GetItemsProductsOrders(1);
         GetItemsProductsPopular();
-        if (localStorage.getItem('tour')) {
-            setOpen(true);
-        }
     }, []);
 
     const columns = [
@@ -311,14 +243,14 @@ function DashbordList() {
                                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
                                 karta orqali
                             </span>
-                        ) : provider === 'click' ? ( <span>
+                        ) : provider === 'click' ? (<span>
                             <i className="fa-solid text-success fa-circle-check"></i>{' '}
                             click orqali
                         </span>) : provider === 'payme' ? (
-                             <span>
-                             <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                             payme orqali
-                         </span>
+                            <span>
+                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                payme orqali
+                            </span>
                         ) : " "}
                     </span>
                 ),
@@ -445,33 +377,10 @@ function DashbordList() {
         { name: 'Noyabr', value: '11' },
         { name: 'Dekabr', value: '12' },
     ];
-    const divRef = useRef(null);
-
-    const scrollTop = (e) => {
-    //   console.log('window.screenY', window.scrollY);
-      if (window && e === 2) {
-        // window.scrollTo({
-        //     top: -100,
-        //     left: 100,
-        //     behavior: "smooth",
-        //   });          
-      }
-    };
 
     return (
         <section className="ps-my-account ps-page--account p-0">
-            <Tour
-                ref={divRef}
-                onChange={(e) => (console.log(e), scrollTop(e))}
-                open={open}
-                onClose={() => setOpen(false) }
-                steps={steps}
-                // prevButtonLabel={'Oldingi'}
-                // nextButtonLabel={'Keyingisi'}
-                // finishButtonLabel={'Tugatish'}
-                // scrollIntoViewOptions={true}
-                // style={{ overflow: 'auto', height: '500px' }}
-            />
+            <p className='step-0'></p>
             <div className="container">
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">
@@ -534,7 +443,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.total_revenue ||
-                                data?.total_revenue == 0 ? (
+                                    data?.total_revenue == 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -574,7 +483,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.today_revenue ||
-                                data?.today_revenue === 0 ? (
+                                    data?.today_revenue === 0 ? (
                                     <h4 className="mt-5">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -614,7 +523,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.total_order ||
-                                data?.total_order === 0 ? (
+                                    data?.total_order === 0 ? (
                                     <h4 className="mt-5">
                                         {addPeriodToThousands(
                                             data?.total_order
@@ -652,7 +561,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.total_shops ||
-                                data?.total_shops === 0 ? (
+                                    data?.total_shops === 0 ? (
                                     <h4 className="mt-5 pt-4 ">
                                         {addPeriodToThousands(
                                             data?.total_shops
@@ -673,8 +582,7 @@ function DashbordList() {
                     </div>
                 ) : (
                     <div
-                        ref={ref1}
-                        className="pb-4  d-flex gap-3 overflow-x-scroll">
+                        className="pb-4  d-flex gap-3 overflow-x-scroll step-1">
                         <div>
                             <div
                                 className=" bg-white py-5 px-4"
@@ -695,7 +603,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.all_revenue ||
-                                data?.all_revenue === 0 ? (
+                                    data?.all_revenue === 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -735,7 +643,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.last_month_revenue ||
-                                data?.last_month_revenue === 0 ? (
+                                    data?.last_month_revenue === 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -775,7 +683,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.today_revenue ||
-                                data?.today_revenue === 0 ? (
+                                    data?.today_revenue === 0 ? (
                                     <h4 className="mt-5">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -815,7 +723,7 @@ function DashbordList() {
                                     </div>
                                 </div>
                                 {data?.total_order ||
-                                data?.total_order === 0 ? (
+                                    data?.total_order === 0 ? (
                                     <h4 className="mt-5">
                                         {addPeriodToThousands(
                                             data?.total_order
@@ -841,11 +749,7 @@ function DashbordList() {
                     <div className="col-lg-4" id='panel' >
                         <div className="ps-page__left" >
                             <AccountMenuSidebar
-                                forwardedRef={ref2}
-                                forwardedRef4={ref4}
-                                forwardedRef5={ref5}
-                                forwardedRef6={refPanel}
-                                data={accountLinks}   
+                                data={accountLinks}
                             />
                         </div>
                     </div>
@@ -900,8 +804,7 @@ function DashbordList() {
                             </div>
                         )}
                         <div className="pb-5 mt-4">
-                            <h4 
-                                ref={ref3}
+                            <h4
                                 className="bg-white m-0 text-center py-4">
                                 So'nggi buyurtmalar
                             </h4>

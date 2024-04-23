@@ -11,11 +11,7 @@ import { formatCurrency } from '~/utilities/product-helper';
 
 const AccountMenuSidebar = ({
     data,
-    renderProfile,
-    forwardedRef,
-    forwardedRef4,
-    forwardedRef5,
-    forwardedRef6
+    renderProfile
 }) => {
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
@@ -136,7 +132,7 @@ const AccountMenuSidebar = ({
             setSocket2(
                 new WebSocket(
                     'wss://api.soff.uz/ws/seller-document/?token=' +
-                        user?.access
+                    user?.access
                 )
             );
         }
@@ -161,7 +157,7 @@ const AccountMenuSidebar = ({
             setSocketApplication(
                 new WebSocket(
                     'wss://api.soff.uz/ws/seller-application/?token=' +
-                        user?.access
+                    user?.access
                 )
             );
         }
@@ -212,7 +208,7 @@ const AccountMenuSidebar = ({
 
     return (
         <aside className="ps-widget--account-dashboard">
-            <div ref={forwardedRef} className="ps-widget__header  p-2 pb-4">
+            <div className="ps-widget__header  p-2 pb-4 step-2">
                 {profile?.image ? (
                     <img src={`${profile?.image}`} className="profile__image" />
                 ) : (
@@ -264,24 +260,22 @@ const AccountMenuSidebar = ({
                 </figure>
             </div>
             {user?.role === 'seller' ? (
-                <div className="pb-3">
+                <div className="pb-3 step-3">
                     <h4
-                        ref={forwardedRef4}
                         className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
                         <strong
-                            className={`fs-3 text-${
-                                profile?.is_payment === false
-                                    ? 'danger'
-                                    : 'success'
-                            }`}>
+                            className={`fs-3 text-${profile?.is_payment === false
+                                ? 'danger'
+                                : 'success'
+                                }`}>
                             <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
                             {addPeriodToThousands(profile?.wallet)} so'm
                         </strong>
                     </h4>
                     <h5
-                        
+
                         className="w-100  border m-0 p-3 rounded-3  text-truncate">
-                        <p ref={forwardedRef5}
+                        <p
                             className="m-0"
                             style={{ fontWeight: 600, color: 'black' }}>
                             Taklif qilingan foydalanuvchilar:{' '}
@@ -340,7 +334,7 @@ const AccountMenuSidebar = ({
                             </span>
                         </p>
                     </h5>
-                    <p ref={forwardedRef6} ></p>
+                    <p></p>
                 </div>
             ) : (
                 <></>
@@ -376,7 +370,7 @@ const AccountMenuSidebar = ({
                     </p>
                 </Modal>
                 <ul  >
-                    {data.map((link) => (
+                    {data.map((link, index) => (
                         <>
                             {link?.url === '#' ? (
                                 <>
@@ -386,7 +380,7 @@ const AccountMenuSidebar = ({
                                         color="volcano">
                                         <Card size="small">
                                             <li
-                                                className={'active| fast_day '}
+                                                className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}
                                                 onClick={showModal}>
                                                 <span
                                                     style={{
@@ -421,46 +415,17 @@ const AccountMenuSidebar = ({
                                     </Card>
                                 </Badge.Ribbon>
                             ) : (
-                                <li
-                                    // ref={
-                                    //     link?.text === 'Boshqaruv paneli' && user?.role === 'seller'
-                                    //         ? forwardedRefPanel
-                                    //         : link?.text ===
-                                    //           'Mening mahsulotlarim' && user?.role === 'seller'
-                                    //         ? forwardedRefProduct
-                                    //         : link?.text ===
-                                    //           'Sotib olinganlar' && user?.role === 'seller'
-                                    //         ? forwardedPurchased
-                                    //         : link?.text ===
-                                    //           'Yangi mahsulot' && user?.role === 'seller'
-                                    //         ? forwardedProductSelection
-                                    //         : link?.text ===
-                                    //           'Buyurtmalar' && user?.role === 'seller'
-                                    //         ? forwardedOrder
-                                    //         : link?.text ===
-                                    //           'Yangiliklar' && user?.role === 'seller'
-                                    //         ? forwardedNotification
-                                    //         : link?.text ===
-                                    //           'Ariza va Takliflar' && user?.role === 'seller'
-                                    //         ? forwardedAplication
-                                    //         : link?.text ===
-                                    //           'Profil' && user?.role === 'seller'
-                                    //         ? forwardedSettings
-                                    //         : null
-                                    // }
-                                    key={link.text}
-                                    className={
-                                        link.url === asPath ? 'active' : ''
-                                    }>
+                                <li key={link.text}
+                                    className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}>
                                     <Link href={link.url}>
-                                        <a className="d-flex align-items-center">
+                                        <a className={`d-flex align-items-center`}>
                                             <i className={link.icon}></i>
                                             {link.text}{' '}
                                             {user?.role === 'admin' ? (
                                                 link?.url ===
                                                     '/account/application' &&
-                                                (applicationData?.count > 0 ||
-                                                    webdata?.count > 0) ? (
+                                                    (applicationData?.count > 0 ||
+                                                        webdata?.count > 0) ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{
@@ -482,7 +447,7 @@ const AccountMenuSidebar = ({
                                             {user?.role === 'admin' ? (
                                                 link?.url ===
                                                     '/account/products' &&
-                                                webdata1?.count > 0 ? (
+                                                    webdata1?.count > 0 ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{
@@ -499,7 +464,7 @@ const AccountMenuSidebar = ({
                                             {user?.role === 'seller' ? (
                                                 link?.url ===
                                                     '/account/myproducts' &&
-                                                webdata2?.count > 0 ? (
+                                                    webdata2?.count > 0 ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{
@@ -516,8 +481,8 @@ const AccountMenuSidebar = ({
                                             {user?.role === 'seller' ? (
                                                 link?.url ===
                                                     '/account/application' &&
-                                                (applicationData?.count > 0 ||
-                                                    webdata?.count > 0) ? (
+                                                    (applicationData?.count > 0 ||
+                                                        webdata?.count > 0) ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{

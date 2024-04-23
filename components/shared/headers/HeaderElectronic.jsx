@@ -19,6 +19,7 @@ const HeaderElectronic = ({ kk }) => {
         top_category_lists: topCategoryData,
     } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const [run, setRun] = useState(false)
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
@@ -46,21 +47,21 @@ const HeaderElectronic = ({ kk }) => {
         if (topCategoryData?.length === 0) {
             getTopCategory();
         }
+
+        if (localStorage.getItem('tour') && localStorage.getItem('tour') === "true") {
+            setRun(true);
+        }
     }, []);
 
     return (
         <header
             className="header header--standard header--electronic"
-            id="headerSticky">
+            id={run ? "" : "headerSticky"}>
             <div className="header__content">
                 <div className="container">
                     <div className="header__content-left">
                         <Link href="/">
                             <a className="ps-logo">
-                                {/* <img
-                                    src="/static/img/soff/soff_green_white.png"
-                                    alt="soff"
-                                /> */}
                                 <NextImageCard
                                     url="/static/img/soff/soff_green_white.png"
                                     clasS="logoo"
