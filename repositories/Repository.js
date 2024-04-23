@@ -1,12 +1,11 @@
 import axios from 'axios';
-// const baseDomain = 'https://api.soff.uz/api/v1/'; // API for products
-const baseDomain = 'https://testapi.soff.uz/api/v1/'; 
-// export const basePostUrl = 'https://api.soff.uz'; // API for post
-export const basePostUrl = 'https://testapi.soff.uz'; 
-// export const baseStoreURL = 'https://api.soff.uz'; // API for vendor(store)
-export const baseStoreURL = 'https://testapi.soff.uz';
-// export const baseUrlAuth = 'https://api.soff.uz/'
-export const baseUrlAuth = 'https://testapi.soff.uz/'
+
+// BASE DOMAINS
+const baseDomain = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`;
+export const basePostUrl = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+export const baseStoreURL = `${process.env.NEXT_PUBLIC_BASE_URL}`;
+export const baseUrlAuth = `${process.env.NEXT_PUBLIC_BASE_URL}/`
+
 
 export const customHeaders = {
     Accept: 'application/json',
