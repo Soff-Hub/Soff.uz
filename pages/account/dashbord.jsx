@@ -126,7 +126,7 @@ const MyAccountPage = () => {
 
     const callback = (data) => {
         if (data.action === 'reset') {
-            // localStorage.removeItem('tour')
+            localStorage.removeItem('tour')
             window.scrollTo(0, 0);
             setRun(false)
         }
