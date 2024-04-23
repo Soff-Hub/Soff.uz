@@ -108,7 +108,7 @@ const SellerPage = ({ seller }) => {
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
                 title={`Soff | Sotuvchi ${sellerr?.seller?.full_name}  `}
-                description={`Saytimizga o'z mahsulotlarini sotuvga qo'yayotgan ${sellerr?.seller?.full_name} ning barcha mahsulotlarini ko'rishingiz mumkin`}
+                description={`Soff.uz sayti sotuvchisi - ${sellerr?.seller?.full_name} ning barcha mahsulotlarini shu yerda ko'rishingiz mumkin`}
             />
             <Modal
                 title="Buyurtma berish "
