@@ -73,7 +73,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
             setViews(respons);
-            console.log('views', respons);
         }
     }
 
@@ -91,13 +90,16 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             localStorage.getItem('uuid')
                 ? ''
                 : localStorage.setItem('uuid', uuidv4());
-            getUUID(
-                localStorage.getItem('uuid')
-                    ? localStorage.getItem('uuid')
-                    : uuidv4()
-            );
         }
     }, []);
+
+    useEffect(() => {
+        getUUID(
+            localStorage.getItem('uuid')
+                ? localStorage.getItem('uuid')
+                : uuidv4()
+        );
+    }, [pid])
 
     const breadCrumb = [
         {
