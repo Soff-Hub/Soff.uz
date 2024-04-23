@@ -73,6 +73,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
             setViews(respons);
+            console.log('views', respons);
         }
     }
 
