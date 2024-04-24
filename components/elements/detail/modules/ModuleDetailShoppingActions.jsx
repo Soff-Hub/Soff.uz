@@ -56,6 +56,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
     };
 
     const [messageApi, contextHolder] = message.useMessage();
+    
     const infoSuccess = (url) => {
         messageApi.success(
             `Soff | Audio mahsulot dan nusxa ko\'chirildi (${url})`
@@ -86,9 +87,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
             });
     };
 
-    const videoUrl = `https://soff.uz${Router?.asPath}`;
 
-    console.log(videoUrl);
 
     if (true) {
         return (
