@@ -155,16 +155,22 @@ function MyProductsLists() {
     };
 
     async function handleClickView(item) {
-        setLoading(true);
-        const ItemsData = await GetRepository.getMyProductsView(
-            item.id,
-            user?.access
-        );
-        if (ItemsData) {
-            setView(ItemsData);
-            setLoading(false);
+        if (item?.id) {
+            setLoading(true);
+            const ItemsData = await GetRepository.getMyProductsView(
+                item.id,
+                user?.access
+            );
+            if (ItemsData?.title) {
+                setView(ItemsData);
+                setLoading(false);
+                
+            }
         }
     }
+
+
+
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyProductsDelete(
             deleteId,
@@ -298,7 +304,7 @@ function MyProductsLists() {
         }
     };
 
-  
+
 
 
 
@@ -311,7 +317,7 @@ function MyProductsLists() {
                 setTimeout(() => {
                     setCopy(null);
                 }, 2500);
-    
+
                 //   alert(`Video URL copied to clipboard! ${}`);
             })
             .catch((error) => {

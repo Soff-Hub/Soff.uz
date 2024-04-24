@@ -281,15 +281,14 @@ const AudioPosts = () => {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: `${
-                        ItemsData?.status === 400
+                    content: `${ItemsData?.status === 400
                             ? ItemsData?.data?.msg
                                 ? ItemsData?.data?.msg
                                 : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
                             : ItemsData?.status === 413
-                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
-                            : "Audio mahsulot qo'sha olmadingiz "
-                    }`,
+                                ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
+                                : "Audio mahsulot qo'sha olmadingiz "
+                        }`,
                 });
             }
             setLoadingAudio(false);
@@ -473,9 +472,12 @@ const AudioPosts = () => {
                                         type="text"
                                         className="form-control  rounded-3 col-md-8 mb-2"
                                         name="title"
-                                        onChange={(e) =>
-                                            setTitle(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            const value = e.target.value.trim();
+                                            if (value !== "") {
+                                                setTitle(value);
+                                            }
+                                        }}
                                     />
                                 </div>
                                 <div className="row ">
@@ -657,7 +659,7 @@ const AudioPosts = () => {
                                         )}
                                     /> */}
                                     <InputNumber
-                                    required
+                                        required
                                         disabled={free}
                                         value={taxminiyNarx}
                                         className="col-md-6 p-2"
@@ -693,6 +695,7 @@ const AudioPosts = () => {
                                     className="d-flex justify-content-end mt-4 "
                                     style={{ transform: 'translateX(16px)' }}>
                                     <button
+                                        disabled={title === ''}
                                         type="submit"
                                         className="btn btn-success py-3 ">
                                         <span className="fs-4 px-5">
@@ -780,8 +783,8 @@ const AudioPosts = () => {
                                             {' '}
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                      taxminiyNarx
-                                                  ) + "so'm"
+                                                    taxminiyNarx
+                                                ) + "so'm"
                                                 : "To'ldirilmadi"}
                                         </span>
                                     </strong>
@@ -800,10 +803,10 @@ const AudioPosts = () => {
                                     {/* <span style={{maxWidth:'150px'}} > </span> */}
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
-                                              return (
-                                                  <span key={i}>{item} </span>
-                                              );
-                                          })
+                                            return (
+                                                <span key={i}>{item} </span>
+                                            );
+                                        })
                                         : "To'ldirilmadi"}
                                 </p>
 
@@ -825,7 +828,7 @@ const AudioPosts = () => {
                                             {livePosterAudio?.data
                                                 ?.content_duration
                                                 ? livePosterAudio?.data
-                                                      ?.content_duration
+                                                    ?.content_duration
                                                 : ' '}{' '}
                                         </li>
                                         <li>
@@ -907,10 +910,10 @@ const AudioPosts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -929,14 +932,14 @@ const AudioPosts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              {item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            {item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -957,7 +960,7 @@ const AudioPosts = () => {
                                                 {livePosterAudio?.data
                                                     ?.content_duration
                                                     ? livePosterAudio?.data
-                                                          ?.content_duration
+                                                        ?.content_duration
                                                     : ' '}{' '}
                                             </li>
                                             <li>
