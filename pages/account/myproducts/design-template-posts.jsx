@@ -371,7 +371,12 @@ const Posts = () => {
                                     type="text"
                                     className="form-control  rounded-3 col-md-8 mb-2"
                                     name="title"
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value.trim();
+                                        if (value !== "") {
+                                            setTitle(value);
+                                        }
+                                    }}
                                 />
                             </div>
                             <div className="row ">
@@ -644,7 +649,7 @@ const Posts = () => {
                                     </button>
                                 ) : (
                                     <button
-                                        disabled={loading}
+                                        disabled={ title==='' || loading}
                                         type="submit"
                                         className="btn btn-success py-3 ">
                                         <span className="fs-4 px-5">
