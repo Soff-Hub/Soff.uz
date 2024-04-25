@@ -509,7 +509,7 @@ function MyProductsLists() {
                                         copy === id ?
                                             <i className="fa-solid fa-check mx-2 "></i> :
                                             <i
-                                                className="fa-solid fa-copy text-success-emphasis mx-2"
+                                                className="fa-solid fa-share text-success-emphasis mx-2"
                                                 onClick={() =>
                                                     copyVideoUrl(
                                                         data.find((item) => item.id === id)

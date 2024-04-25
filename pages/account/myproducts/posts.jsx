@@ -421,7 +421,13 @@ const Posts = () => {
                             onSubmit={handleClickPosts}
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
-                            className=" col-md-8 pb-5">
+                            className=" col-md-8 pb-5"
+                            noValidate
+                            >
+
+
+
+                                
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     <h4 className=" p-0">Yangi mahsulot </h4>
@@ -712,7 +718,7 @@ const Posts = () => {
                                             setFullData(data);
                                         }}
                                         editorLoaded={editorLoaded}
-                                    />
+                                        />
                                 </div>
                             </div>
 

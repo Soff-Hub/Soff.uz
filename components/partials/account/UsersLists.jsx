@@ -190,7 +190,7 @@ function AccountUserPages() {
                                     }
 
 
-                                    <Table dataSource={data} scroll={{ x: 900 }} columns={columns} pagination={false} />
+                                    <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} pagination={false} />
                                     <Pagination total={pageCount} defaultCurrent={currPage}
                                         onChange={(val) => GetItemsUsers(val, selectValStatus)} />
                                 </div>
