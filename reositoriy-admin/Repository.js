@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-// const baseDomain = 'https://api.soff.uz/api/v1/seller/'; 
-const baseDomain = 'https://testapi.soff.uz/api/v1/seller/'; 
-// const baseDomainProfile = 'https://api.soff.uz/'; 
-const baseDomainProfile = 'https://testapi.soff.uz/'; 
-// export const baseUrlCustomer = 'https://api.soff.uz/api/v1/'
-export const baseUrlCustomer = 'https://testapi.soff.uz/api/v1/'
+// BASE DOMAINS
+const baseDomain = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/seller/`;
+const baseDomainProfile = `${process.env.NEXT_PUBLIC_BASE_URL}/`;
+export const baseUrlCustomer = `${process.env.NEXT_PUBLIC_BASE_URL}/api/v1/`
 
 
 export const baseUrl = `${baseDomain}`;

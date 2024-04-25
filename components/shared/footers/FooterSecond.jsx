@@ -78,7 +78,7 @@ const FooterSecond = ({ classes }) => {
                                         style={{
                                             margin: '0',
                                         }}>
-                                       support@soff.uz
+                                        support@soff.uz
                                     </h4>
                                 </div>
                             </div>
@@ -92,7 +92,12 @@ const FooterSecond = ({ classes }) => {
                         <p>
                             Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.
                         </p>
-                     
+                        <p>
+                            <Link href={'/account/donat'}>
+                                Sayt rivoji uchun o'z hissangizni qo'shing - Donat
+                            </Link>
+                        </p>
+
                         {/* <aside className="widget widget_footer widget_contact-us">
                             <NextImageCard  url="/static/img/payment-method/click_logo.png" clasS='category-image mt-1' width='75rem' height='35px' />
                             <NextImageCard  url="/static/img/payment-method/payme_logo.png" clasS='category-image ms-2' width='75rem' height='25px' />
@@ -107,8 +112,8 @@ const FooterSecond = ({ classes }) => {
                         <p style={{
                             marginBottom: '0'
                         }} >Sayt ishlab chiqaruvchi : </p> <a href='https://soffhub.uz/'>
-                            <NextImageCard url="/static/img/soffhub.png" clasS='footer-company-logo d-block ps-2 rounded' width='80px' height='60px'  />
-                            </a>
+                            <NextImageCard url="/static/img/soffhub.png" clasS='footer-company-logo d-block ps-2 rounded' width='80px' height='60px' />
+                        </a>
                     </aside>
                 </div>
             </div>
