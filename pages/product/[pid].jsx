@@ -103,7 +103,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         },
     ];
 
-    console.log('defaultProducts', defaultProducts);
+
 
     return (
         <>
