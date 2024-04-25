@@ -35,6 +35,7 @@ function ApplicationLists() {
     const [currPage, setCurrPage] = useState(1)
     const [textItems, setTextItems] = useState(null)
     const [textItemsId, setTextItemsId] = useState(null)
+    const [sellerSearch, setSellerSearch] = useState('')
     const [loading, setLoading] = useState(true)
     const [date, setDate] = useState(null);
     const [allPrice, setAllPrice] = useState(null);
@@ -105,7 +106,7 @@ function ApplicationLists() {
 
 
     async function getItemsSellerAdmin(page) {
-        const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin");
+        const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin", sellerSearch);
         if (Items && user?.role === "admin") {
             setAllPrice(Items?.total_amount?.amount__sum)
             console.log('item', Items);
@@ -237,10 +238,6 @@ function ApplicationLists() {
     const dataDescripton = data1.find(item => (item?.id == textItemsId && item))
 
 
-
-
-
-
     const columns = [
         {
             title: 'Summa',
@@ -318,24 +315,16 @@ function ApplicationLists() {
         },
         {
             title: 'Telefon raqam yoki email',
-            dataIndex: 'data',
+            dataIndex: 'seller_info',
             key: 'address',
-            render: (data) => (
-                <div className='d-flex flex-column'>
-                    {
-                        data.phone === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
-                    }
-                    {
-                        data.email === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.email}</span>
-                    }
-
-                </div>
-
-            ),
+            render: (seller_info) => (
+                <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
+                    <span className="truncate whitespace-nowrap">
+                        {' '}
+                        {seller_info.name}
+                    </span>
+                    <span>{seller_info.email_or_phone}</span>
+                </a>),
         },
         {
             title: 'Tavsif',
@@ -493,8 +482,8 @@ function ApplicationLists() {
     ]
 
     useEffect(() => {
-        getItemsSellerAdmin(currPage, dataCat);
-    }, [dataCat])
+        getItemsSellerAdmin(currPage, dataCat, sellerSearch);
+    }, [dataCat, sellerSearch])
 
     useEffect(() => {
         getItemsSeller(currPage);
@@ -589,12 +578,32 @@ function ApplicationLists() {
                                             (<>
                                                 <div className='row g-3 mx-auto'>
                                                     <h4 className='py-3 col-md-5'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${allPrice} so'm `}</h4>
-                                                    <select className='form-select col-md-5 mb-5 fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
+                                                    <select className='form-select col-md-5  fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
                                                         <option className='fs-3' selected value="">Holatlar</option>
                                                         <option className='fs-3' value="moderation">Moderatsiya</option>
                                                         <option className='fs-3' value="approved">Tasdiqlangan</option>
                                                         <option className='fs-3' value="cancelled">Bekor qilingan</option>
                                                     </select>
+                                                    <label
+                                                        className={`form-label border col-md-12 p-0 d-flex justify-content-between align-items-center`}
+                                                        style={{
+                                                            backgroundColor: '#F1F1F1',
+                                                        }}>
+                                                        <input
+                                                            type="search"
+                                                            className="form-control"
+                                                            style={{ border: 'none' }}
+                                                            placeholder="Qidiruv"
+                                                            onInput={(e) =>
+                                                                setSellerSearch(
+                                                                    e.target.value
+                                                                )
+                                                            }
+                                                        />
+                                                        <span className="px-4">
+                                                            <i className="fa-solid fa-search "></i>
+                                                        </span>
+                                                    </label>
                                                 </div>
                                                 <Table scroll={{ x: 1450 }} dataSource={dataAdmin} columns={columnsAdmin}
                                                     pagination={false} />

@@ -168,6 +168,7 @@ function DashbordList({ setOpen }) {
             ),
         },
     ];
+    
     const columnsOrders = [
         {
             title: 'Buyurtmachi',
@@ -179,7 +180,7 @@ function DashbordList({ setOpen }) {
                         {' '}
                         {customer_info.name}
                     </span>
-                    {/* <span className ="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span> */}
+                    <span className ="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
                 </div>
             ),
         },
@@ -189,7 +190,7 @@ function DashbordList({ setOpen }) {
                 dataIndex: 'seller_info',
                 key: 'age',
                 render: (seller_info) => (
-                    <div className="d-flex flex-column">
+                    <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
                         <span className="truncate whitespace-nowrap">
                             {' '}
                             {seller_info.name}
@@ -198,7 +199,7 @@ function DashbordList({ setOpen }) {
                             {' '}
                             {seller_info.email_or_phone}
                         </span>
-                    </div>
+                    </a>
                 ),
             }
         ) : (
@@ -292,18 +293,17 @@ function DashbordList({ setOpen }) {
             ),
         },
     ];
+
     const columnsOrdersSeller = [
         {
-            title: 'Buyurtmachi',
-            dataIndex: 'customer_info',
+            title: 'ID',
+            dataIndex: 'id',
             key: 'age',
             render: (customer_info) => (
                 <div className="d-flex flex-column">
                     <span className="truncate whitespace-nowrap">
-                        {' '}
-                        {customer_info.name}
+                        #{customer_info}
                     </span>
-                    {/* <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span> */}
                 </div>
             ),
         },

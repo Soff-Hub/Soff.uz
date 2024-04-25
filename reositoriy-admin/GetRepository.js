@@ -120,6 +120,31 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getShopsProductsAdminDetails(
+        id,
+        token,
+    ) {
+        const endPoint = `admin/product-list/${id ? id + '/' : ''}`;
+
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getMyProducts(page, category, tagItems, date, status, search, token) {
         const endPoint = `product-list/?page=${page}&category=${
             category || ''
@@ -659,9 +684,9 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getProfileArizaAdmin(page, status, token, isAdmin) {
+    async getProfileArizaAdmin(page, status, token, isAdmin,search) {
         const endPoint = isAdmin
-            ? `admin/application/?page=${page}&status=${status ? status : ''}`
+            ? `admin/application/?page=${page}&status=${status ? status : ''}&search=${search ? search : ''}`
             : `application-list/?page=${page}&status=${status ? status : ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
