@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button, Pagination, Select, Table, Tooltip, Modal } from 'antd';
+import { Button, Pagination, Select, Table, Tooltip} from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -11,6 +11,7 @@ import Link from 'next/link';
 import Axios from 'axios';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
+var parse = require('html-react-parser');
 
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 const { TabPane } = Tabs;
