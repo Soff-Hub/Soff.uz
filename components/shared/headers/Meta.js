@@ -4,7 +4,13 @@ var parse = require('html-react-parser');
 
 
 const Meta = ({ title, image, description, keywords, author }) => {
+  function removeHTMLTags(html) {
+    var doc = new DOMParser().parseFromString(html, 'text/html');
+    return doc.body.textContent || "";
+}
 
+  console.log('meta', removeHTMLTags(description));
+  
 
     return (
         <Head>
@@ -12,8 +18,8 @@ const Meta = ({ title, image, description, keywords, author }) => {
             <meta
                 property="og:description"
                 content={
-                  parse(description)?.props?.children
-                        ? parse(description)?.props?.children
+                  description
+                      ? removeHTMLTags(description)
                         : `${title} | Soff | Soff online hujjatlar bazasi`
                 }
             />
@@ -30,8 +36,8 @@ const Meta = ({ title, image, description, keywords, author }) => {
             <meta
                 name="description"
                 content={
-                  parse(description)?.props?.children
-                        ? parse(description)?.props?.children
+                  description
+                        ? removeHTMLTags(description)
                         : `${title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
                 }
             />
