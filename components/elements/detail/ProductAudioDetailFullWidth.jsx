@@ -7,6 +7,7 @@ import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInfor
 import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppingActions';
 import Link from 'next/link';
 
+
 const ProductAudioDetailFullWidth = ({
     product,
     views,
@@ -18,12 +19,16 @@ const ProductAudioDetailFullWidth = ({
         Router.push(`/search?keyword=${e}`);
     };
 
+    console.log('product', product);
 
     return (
         <>
             <Meta
                 title={product?.title}
                 image={product?.iamges?.map((item) => item?.image_url)  || product?.poster_url}
+                description={product?.description}
+                keywords={product?.tag ? product?.tag?.map((e) => e?.name) : product?.title }
+                author={`${product?.seller?.first_name} ${product?.seller?.last_name}`}
             />
             <div className="ps-product--detail ">
                 <div className="row">

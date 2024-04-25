@@ -25,7 +25,7 @@ const AccountNotificationsPage = () => {
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Bannerlarni o'zgartirish"}
+                        title={"Bannerlarni o'zgartirish"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <ContextList />

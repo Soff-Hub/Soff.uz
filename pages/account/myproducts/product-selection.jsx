@@ -52,7 +52,7 @@ const Posts = () => {
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
-                <Meta title={'Soff | Yangi mahsulot yaratishni tanlash'} />
+                <Meta title={'Yangi mahsulot yaratishni tanlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
 
                 {

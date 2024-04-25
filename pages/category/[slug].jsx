@@ -125,7 +125,7 @@ export default function ProductCategoryScreen({ category2 }) {
             title={category ? nom : 'Kategoriya'}
             boxed={true}>
             <Meta
-                title={`Soff | ${nom}`}
+                title={`${nom}`}
                 description={`Biz siz qidirayotgan mahsulotlarni Soff.uz saytimizning ${nom} kategoriyasida topdik`}
             />
             <div className="ps-page--shop">

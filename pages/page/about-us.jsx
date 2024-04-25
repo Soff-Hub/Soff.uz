@@ -10,7 +10,7 @@ const AboutUs = () => {
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta
-                        title={"Soff | Soff.uz nima?"}
+                        title={"Soff.uz nima?"}
                         description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
                     />
                     <AboutContent />

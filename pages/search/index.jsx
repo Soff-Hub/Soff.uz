@@ -53,7 +53,7 @@ const SearchPage = () => {
         <PageContainer title={`Search results for: "${keyword}" `}>
             <div className="ps-page">
                 <Meta
-                    title={"Soff | Qidiruv natijalar"}
+                    title={"Qidiruv natijalar"}
                 />
                 <BreadCrumb breacrumb={breadcrumb} />
             </div>

@@ -1,7 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
 import { message } from 'antd';
-import Meta from '~/components/shared/headers/Meta';
 import { useState } from 'react';
 import useWishlist from '~/hooks/useWishlist';
 
@@ -120,10 +119,6 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
 
     return (
         <header>
-            <Meta
-                title={`Soff | ${product?.title}`}
-                image={product?.poster_url}
-            />
             {contextHolder}
             <div
                 style={{

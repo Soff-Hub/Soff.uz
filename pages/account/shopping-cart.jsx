@@ -111,7 +111,7 @@ const ShoppingCartScreen = () => {
             <PageContainer footer={<FooterDefault />} title="Shopping Cart">
                 <div className="ps-page--simple">
                     <Meta
-                        title={"Soff | Xarid savati"}
+                        title={"Xarid savati"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <div className="ps-section--shopping ps-shopping-cart">

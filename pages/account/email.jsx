@@ -25,7 +25,7 @@ const AccountEmail = () => {
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Pochtaga Xabar Yuborish"}
+                        title={"Pochtaga Xabar Yuborish"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <EmailLists />

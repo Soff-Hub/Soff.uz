@@ -7,7 +7,7 @@ const FormPage = () => {
     return (
         <PageContainer title="FAQ">
             <Meta
-                title={"Soff | Savollaringiz bormi?"}
+                title={"Savollaringiz bormi?"}
                 description="Soff.uz - Sayti haqida shu sahifamizda to'liq bilib olishingiz mumkin"
             />
             <div className='container-faqs ms-lg-5 ms-md-3' style={{ margin: '0 auto' }}>

@@ -20,7 +20,7 @@ const CheckoutOnePage = () => {
         <PageContainer footer={<FooterDefault />} title="Checkout">
             <div className="ps-page--simple">
                 <Meta
-                    title={"Soff | Xarid savati"}
+                    title={"Xarid savati"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <CheckoutOne />

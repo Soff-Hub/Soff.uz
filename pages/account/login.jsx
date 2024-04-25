@@ -36,7 +36,7 @@ const LoginPage = () => {
                 <PageContainer footer={<FooterDefault />} title="Login">
                     <div className="ps-page--my-account">
                         <Meta
-                            title={"Soff | Kirish"}
+                            title={"Kirish"}
                             description="Soff.uz - Saytiga hoziroq kiring va o'z mahsulatlaringizni soting"
                         />
                         <BreadCrumb breacrumb={breadCrumb} />
