@@ -91,26 +91,26 @@ const CreditCard = () => {
     <div className="row mx-auto mt-3 " >
       <div className="rounded">
         <strong>Yangi karta qo'shish</strong>
-
+        
         <div className="row mt-2 row-gap-2 gap-3">
-       <div className="col-md-5 p-0">
-       <CreditCardInput  onChange={value => numberTyper(value)} />
-       </div>
-        <button onClick={handleClickCardPosts} className="btn btn-success py-2  col-md-2">
-          <span className="fs-5" >Saqlash</span></button>
+          <div className="col-md-5 p-0">
+            <CreditCardInput onChange={value => numberTyper(value)} />
+          </div>
+          <button onClick={handleClickCardPosts} className="btn btn-success py-2  col-md-2">
+            <span className="fs-5" >Saqlash</span></button>
         </div>
 
       </div>
 
-      <div className="row mt-2 row-gap-3 mx-auto gap-3 p-0" style={{transform:"translateX(-7px)"}} >
+      <div className="row mt-2 row-gap-3 mx-auto gap-3 p-0" style={{ transform: "translateX(-7px)" }} >
         <strong className="m-0 mt-3">Kartalaringiz: <i className="fa-solid fa-credit-card fa-flip mt-2 fs-4 text-primary m-0"></i></strong>
         {
           profileCard?.length > 0 ? profileCard?.map((item, index) => (
             <div className="d-flex gap-4 col-md-6 p-0 align-items-center" key={index} >
-              <h4 className="text-warning  fs-4  px-4 m-0 rounded-3 pt-2  bg-white form-control" style={{fontWeight: "bold", fontFamily: "monospace",height:"35px" }} >{item.credit_card}</h4>
+              <h4 className="text-warning  fs-4  px-4 m-0 rounded-3 pt-2  bg-white form-control" style={{ fontWeight: "bold", fontFamily: "monospace", height: "35px" }} >{item.credit_card}</h4>
               <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal" style={{ cursor: "pointer" }} onClick={() => setDeleteId(item.id)} >
                 <i className="fa-solid fa-trash-can fs-2 mt-2  text-danger" ></i>
-                </a>
+              </a>
             </div>
           ))
             :

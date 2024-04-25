@@ -14,7 +14,7 @@ var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
-const category_id = [];
+
 
 const PostsMyProducts = () => {
     const { TabPane } = Tabs;
@@ -30,6 +30,7 @@ const PostsMyProducts = () => {
     const [Fulldata, setFullData] = useState('');
     const [free, setFree] = useState(false);
     const [disabled, setDeisabled] = useState(false);
+    const [category_id, setCategory_ID] = useState(null)
 
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
@@ -76,7 +77,7 @@ const PostsMyProducts = () => {
     async function handleClickPostsEdit(e) {
         e.preventDefault();
 
-        if (title || taxminiyNarx || tagSearchResult || category_id[0]) {
+        if (title || taxminiyNarx || tagSearchResult || category_id) {
             const formData = new FormData();
             setDeisabled(true);
             if (title) {
@@ -90,8 +91,8 @@ const PostsMyProducts = () => {
             if (Fulldata) {
                 formData.append('description', Fulldata);
             }
-            if (category_id[0]) {
-                formData.append('category', category_id[0]);
+            if (category_id) {
+                formData.append('category', category_id);
             }
             if (tagSearchResult) {
                 formData.append('tags', tagSearchResult);
@@ -236,7 +237,10 @@ const PostsMyProducts = () => {
         GetItemsCategoryLists();
     }, []);
 
-    console.log('customePostersdsdsdsd', products?.document?.content_type);
+    useEffect(() => {
+        setCategory_ID(products?.category?.id)
+    }, [])
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer

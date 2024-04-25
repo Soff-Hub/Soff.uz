@@ -13,7 +13,6 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
-const category_id = [];
 
 const PostsProductsEdit = () => {
     const { TabPane } = Tabs;
@@ -30,6 +29,7 @@ const PostsProductsEdit = () => {
     const [textAreaItems, setTextAreaItmes] = useState(null);
     const [categoryName, setCategoryName] = useState('');
     const [tegProductsLists, setTegProdcutsLists] = useState([]);
+    const [category_id, setCategory_ID] = useState(null)
 
     const breadCrumb = [
         {
@@ -49,7 +49,7 @@ const PostsProductsEdit = () => {
             setDataCategory(ItemsData);
         }
     }
-    // console.log('products', products);
+
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
         if (ItemsData) {
@@ -85,11 +85,10 @@ const PostsProductsEdit = () => {
         );
     }
     const onChange = async (e) => {
-        category_id.length = 0;
         setCategoryName(e);
         for (let j = 0; j < dataCategory.length; j++) {
             if (dataCategory[j].name === e) {
-                category_id.push(dataCategory[j].id);
+                setCategory_ID(dataCategory[j].id);
             }
         }
     };
@@ -138,7 +137,7 @@ const PostsProductsEdit = () => {
         e.preventDefault();
         if (
             title ||
-            category_id[0] ||
+            category_id ||
             dataCatStatus ||
             Fulldata ||
             textAreaItems
@@ -155,8 +154,8 @@ const PostsProductsEdit = () => {
                     Object.assign(data, { tags: results3 });
                 }
             }
-            if (category_id[0]) {
-                Object.assign(data, { category: category_id[0] });
+            if (category_id) {
+                Object.assign(data, { category: category_id });
             }
             if (dataCatStatus) {
                 Object.assign(data, { status: dataCatStatus });
@@ -201,6 +200,12 @@ const PostsProductsEdit = () => {
             status: 'cancelled',
         },
     ];
+
+    useEffect(() => {
+        setCategory_ID(products?.category?.id)
+    }, [])
+
+
 
     return user?.role === 'admin' ? (
         <PageContainer
@@ -283,19 +288,19 @@ const PostsProductsEdit = () => {
                                                             ? 'Tasdiqlangan'
                                                             : ''}
                                             </option>
-                                        ) 
-                                        : (
-                                            <option value={item.status}>
-                                                {item.status === 'moderation'
-                                                    ? 'Moderatsiya'
-                                                    : item.status ===
-                                                        'cancelled'
-                                                        ? 'Bekor qilingan'
-                                                        : item.status === 'approved'
-                                                            ? 'Tasdiqlangan'
-                                                            : ''}
-                                            </option>
                                         )
+                                            : (
+                                                <option value={item.status}>
+                                                    {item.status === 'moderation'
+                                                        ? 'Moderatsiya'
+                                                        : item.status ===
+                                                            'cancelled'
+                                                            ? 'Bekor qilingan'
+                                                            : item.status === 'approved'
+                                                                ? 'Tasdiqlangan'
+                                                                : ''}
+                                                </option>
+                                            )
                                     )}
                                 </select>
                             </div>

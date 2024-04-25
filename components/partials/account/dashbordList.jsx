@@ -17,7 +17,6 @@ function DashbordList({ setOpen }) {
     const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
     const [View, setView] = useState({});
-    const [pageCount, setPageCount] = useState(0);
     const [pageCount2, setPageCount2] = useState(0);
     const [currPage, setCurrPage] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -814,7 +813,7 @@ function DashbordList({ setOpen }) {
                             {user?.role == 'admin' ? (
                                 <>
                                     <Table
-                                        scroll={{ x: 1350 }}
+                                        scroll={{ x: 1600 }}
                                         dataSource={dataOrders}
                                         columns={columnsOrders}
                                         pagination={false}
