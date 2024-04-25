@@ -65,7 +65,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
         );
     } else {
         priceView = (
-            <h4 className="ps-product__price">
+            <h4 className="ps-product__price " style={{minWidth:"120px"}}>
                 {+product.discount_price === 0 ? (
                     <p>Bepul</p>
                 ) : product.discount === 0 ? (

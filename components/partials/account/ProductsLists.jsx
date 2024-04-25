@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button, Pagination, Select, Table, Tooltip} from 'antd';
+import { Button, Pagination, Select, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -35,6 +35,7 @@ function ProductsLists() {
     const [deleteIdView, setDeleteIdView] = useState({});
     const [dataVal, setDataVal] = useState([]);
     const [dataValStatus, setDataCatStatus] = useState(null);
+    const [filterType, setFiltertype] = useState('');
     const [date, setDate] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -73,7 +74,8 @@ function ProductsLists() {
         dataFormat,
         id,
         arxiv,
-        search
+        search,
+        filterType,
     ) {
         const ItemsData = await GetRepository.getShopsProducts(
             null,
@@ -85,6 +87,7 @@ function ProductsLists() {
             id,
             arxiv,
             search,
+            filterType,
             user?.access
         );
         setPageCount(ItemsData?.count);
@@ -235,7 +238,7 @@ function ProductsLists() {
                 dataFormat,
                 null,
                 dateArxiv,
-                search
+                search,filterType
             );
         }
     }, [
@@ -245,6 +248,7 @@ function ProductsLists() {
         dateArxiv,
         searchDebounce,
         router.query.page,
+        filterType,
     ]);
 
     useEffect(() => {
@@ -476,6 +480,7 @@ function ProductsLists() {
 
                                                             {options}
                                                         </Select>
+
                                                         <select
                                                             className="form-select col-md-5 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
@@ -507,7 +512,7 @@ function ProductsLists() {
                                                             </option>
                                                         </select>
                                                         <RangePicker
-                                                            className="w-100 py-3 col-md-6 rounded-3"
+                                                            className="w-100 py-3 col-md-4 rounded-3"
                                                             onChange={(e) =>
                                                                 setDate(e)
                                                             }
@@ -516,15 +521,47 @@ function ProductsLists() {
                                                             onClick={
                                                                 handleCLickArxiv
                                                             }
-                                                            className="col-md-5 input py-3"
+                                                            className="col-md-3 input py-3"
                                                             style={{
                                                                 height: '48px',
                                                             }}>
-                                                            <span className="fs-3 text-dark">
+                                                            <span className="fs-4 text-dark">
                                                                 Arxivlangan
                                                                 holatlar
                                                             </span>
                                                         </Button>
+
+                                                        <select
+                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
+                                                            onChange={(e) =>
+                                                                setFiltertype(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }>
+                                                            <option
+                                                                className="fs-3"
+                                                                selected
+                                                                value="">
+                                                                Barcha turlar
+                                                            </option>
+                                                            <option
+                                                                className="fs-3"
+                                                                value="file">
+                                                                File
+                                                            </option>
+                                                            <option
+                                                                className="fs-3"
+                                                                value="audio">
+                                                                Audio
+                                                            </option>
+                                                            <option
+                                                                className="fs-3"
+                                                                value="template">
+                                                                Shablon
+                                                            </option>
+                                                        </select>
+
                                                     </div>
                                                 </div>
                                             </div>

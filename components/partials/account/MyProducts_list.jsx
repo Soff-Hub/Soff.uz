@@ -41,6 +41,7 @@ function MyProductsLists() {
         discount: 0,
     });
     const [dataValCat, setDataCat] = useState(null);
+    const [filterType, setFiltertype] = useState('');
     const [deleteId, setDeleteId] = useState(null);
     const [date, setDate] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -80,7 +81,8 @@ function MyProductsLists() {
         tagName,
         dataFormat,
         status,
-        search
+        search,
+        filterType
     ) {
         const ItemsData = await GetRepository.getMyProducts(
             page,
@@ -89,6 +91,7 @@ function MyProductsLists() {
             dataFormat,
             status,
             search,
+            filterType,
             user?.access
         );
         if (ItemsData?.results) {
@@ -164,7 +167,7 @@ function MyProductsLists() {
             if (ItemsData?.title) {
                 setView(ItemsData);
                 setLoading(false);
-                
+
             }
         }
     }
@@ -379,9 +382,10 @@ function MyProductsLists() {
             tagName,
             dataFormat,
             selectValStatus,
-            search
+            search,
+            filterType,
         );
-    }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce]);
+    }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce,filterType]);
 
     const columns = [
         {
@@ -770,7 +774,7 @@ function MyProductsLists() {
                                                         {user?.role ===
                                                             'seller' ? (
                                                             <select
-                                                                className="form-select col-md-6 fs-3 py-3 rounded-3"
+                                                                className="form-select col-md-3 fs-3 py-3 rounded-3"
                                                                 onChange={(e) =>
                                                                     setSelectValStatus(
                                                                         e.target
@@ -806,11 +810,42 @@ function MyProductsLists() {
                                                         )}
 
                                                         <RangePicker
-                                                            className="col-md-5 py-3   rounded-3"
+                                                            className="col-md-4 py-3   rounded-3"
                                                             onChange={(e) =>
                                                                 setDate(e)
                                                             }
                                                         />
+                                                        <select
+                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
+                                                            onChange={(e) =>
+                                                                setFiltertype(
+                                                                    e.target
+                                                                        .value
+                                                                )
+                                                            }>
+                                                            <option
+                                                                className="fs-3"
+                                                                selected
+                                                                value="">
+                                                                Barcha turlar
+                                                            </option>
+                                                            <option
+                                                                className="fs-3"
+                                                                value="file">
+                                                                File
+                                                            </option>
+                                                            <option
+                                                                className="fs-3"
+                                                                value="audio">
+                                                                Audio
+                                                            </option>
+                                                            <option
+                                                                className="fs-3"
+                                                                value="template">
+                                                                Shablon
+                                                            </option>
+                                                        </select>
+
                                                     </div>
                                                 </div>
                                             </div>
