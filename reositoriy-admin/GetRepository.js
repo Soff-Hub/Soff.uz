@@ -93,7 +93,8 @@ class GetRepository {
         id,
         arxiv,
         search,
-        token,
+        document__content_type,
+        token
     ) {
         const endPoint = `admin/product-list/${
             id ? id + '/' : ''
@@ -101,6 +102,8 @@ class GetRepository {
             date || ''
         }&status=${dataValStatus || ''}&arxiv=${arxiv || ''}&search=${
             search || ''
+        }&document__content_type=${
+            document__content_type || ''
         }&offset=${offset}&limit=${limit}`;
 
         const reponse = await Repository({
@@ -121,10 +124,7 @@ class GetRepository {
         return reponse;
     }
 
-    async getShopsProductsAdminDetails(
-        id,
-        token,
-    ) {
+    async getShopsProductsAdminDetails(id, token) {
         const endPoint = `admin/product-list/${id ? id + '/' : ''}`;
 
         const reponse = await Repository({
@@ -145,12 +145,23 @@ class GetRepository {
         return reponse;
     }
 
-    async getMyProducts(page, category, tagItems, date, status, search, token) {
+    async getMyProducts(
+        page,
+        category,
+        tagItems,
+        date,
+        status,
+        search,
+        document__content_type,
+        token
+    ) {
         const endPoint = `product-list/?page=${page}&category=${
             category || ''
         }${tagItems ? `&tag=${tagItems}` : ``}&date_range_after=${
             date || ''
-        }&status=${status || ''}&search=${search}`;
+        }&status=${status || ''}&search=${search}&document__content_type=${
+            document__content_type || ''
+        }`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -283,7 +294,9 @@ class GetRepository {
         return reponse;
     }
     async getAllCategoryListsDesign(search) {
-        const endPoint = `admin/category-children/templates?search=${search || ''}`;
+        const endPoint = `admin/category-children/templates?search=${
+            search || ''
+        }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -404,7 +417,7 @@ class GetRepository {
         const endPoint = `admin/notification-list`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
-            method: 'GET'
+            method: 'GET',
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -614,7 +627,6 @@ class GetRepository {
             },
         })
             .then((response) => {
-                
                 if (response.status === 200) {
                     return response.data;
                 } else {
@@ -684,9 +696,11 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getProfileArizaAdmin(page, status, token, isAdmin,search) {
+    async getProfileArizaAdmin(page, status, token, isAdmin, search) {
         const endPoint = isAdmin
-            ? `admin/application/?page=${page}&status=${status ? status : ''}&search=${search ? search : ''}`
+            ? `admin/application/?page=${page}&status=${
+                  status ? status : ''
+              }&search=${search ? search : ''}`
             : `application-list/?page=${page}&status=${status ? status : ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -826,7 +840,6 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-   
 }
 
 export default new GetRepository();
