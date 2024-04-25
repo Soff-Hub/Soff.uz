@@ -1,13 +1,13 @@
 {
     "name": "soffuz",
-    "version": "2.2.1",
+    "version": "1.0.0",
     "private": true,
     "author": "Soff Hub",
     "homepage": "https://soff.uz",
     "scripts": {
         "dev": "next dev -p 3000",
         "build": "next build",
-        "start": "next start -p 3001",
+        "start": "next start -p 3011",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
         "compile": "npm run clean && antd-tools"
     },
@@ -39,9 +39,11 @@
         "prettier": "^2.0.5",
         "primereact": "^10.6.3",
         "react": "^17.0.2",
+        "react-audio-player": "^0.17.0",
         "react-chartjs-2": "^5.2.0",
         "react-cookie": "^4.0.3",
         "react-credit-cards": "^0.8.3",
+        "react-custom-audio-player": "^1.3.7",
         "react-dom": "^17.0.2",
         "react-fusioncharts": "^4.0.0",
         "react-google-recaptcha": "^3.1.0",

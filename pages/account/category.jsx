@@ -24,7 +24,7 @@ const MyAccountPage = () => {
             <PageContainer footer={<FooterDefault />} title="Address">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Kategoriyalar"}
+                        title={"Kategoriyalar"}
                         description="O'zingizga kerakli mahsulotlarni Soff.uz saytingiz ushbu kategoriyasidan topishingiz mumkin"
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
