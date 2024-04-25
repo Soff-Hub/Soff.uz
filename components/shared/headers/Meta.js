@@ -1,16 +1,11 @@
 import Head from 'next/head';
 import React from 'react';
-var parse = require('html-react-parser');
-
 
 const Meta = ({ title, image, description, keywords, author }) => {
-  function removeHTMLTags(html) {
-    var doc = new DOMParser().parseFromString(html, 'text/html');
-    return doc.body.textContent || "";
-}
-
-  console.log('meta', removeHTMLTags(description));
-  
+ 
+  const removeHTMLTags = (html) => {
+    return html.replace(/<[^>]+>/g, '');
+  };
 
     return (
         <Head>
