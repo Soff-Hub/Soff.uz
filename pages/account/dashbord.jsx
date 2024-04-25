@@ -182,7 +182,7 @@ const MyAccountPage = () => {
                         },
                     }}
                     disableOverlayClose
-                    // hideCloseButton
+                    hideCloseButton
                     callback={callback}
                     locale={{
                         back: "Oldingi",
