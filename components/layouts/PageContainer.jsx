@@ -77,11 +77,11 @@ export let accountAdminLinks = [
         url: '/account/context',
         icon: 'fa-solid fa-sliders',
     },
-    {
-        text: 'Sozlamalar',
-        url: '/account/settings',
-        icon: 'fa-solid fa-gear',
-    },
+    // {
+    //     text: 'Sozlamalar',
+    //     url: '/account/settings',
+    //     icon: 'fa-solid fa-gear',
+    // },
 ];
 export let accountSellerLink = [
     {

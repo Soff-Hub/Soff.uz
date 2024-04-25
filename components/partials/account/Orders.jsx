@@ -24,18 +24,16 @@ function OrdersLists() {
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
-        ? `${date[0]?.$y}-${
-              `${date[0].$M + 1}`.length === 1
-                  ? `0${date[0].$M + 1}`
-                  : date[0].$M + 1
-          }-${date[0].$D}`
+        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
+            ? `0${date[0].$M + 1}`
+            : date[0].$M + 1
+        }-${date[0].$D}`
         : '';
     const dateFormat1 = date
-        ? `${date[1]?.$y}-${
-              `${date[1].$M + 1}`.length === 1
-                  ? `0${date[1].$M + 1}`
-                  : date[1].$M + 1
-          }-${date[1].$D}`
+        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
+            ? `0${date[1].$M + 1}`
+            : date[1].$M + 1
+        }-${date[1].$D}`
         : '';
     const dataFormat = date ? `${dateFormat0}&end_date=${dateFormat1}` : '';
 
@@ -102,13 +100,13 @@ function OrdersLists() {
             key: 'age',
             width: 300,
             render: (seller_info) => (
-                <div className="d-flex flex-column">
+                <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
                     <span className="truncate whitespace-nowrap">
                         {' '}
                         {seller_info.name}
                     </span>
                     <span>{seller_info.email_or_phone}</span>
-                </div>
+                </a>
             ),
         },
         {
@@ -176,9 +174,15 @@ function OrdersLists() {
     ];
     const columnSellers = [
         {
-            title: 'Buyurtmachi',
-            dataIndex: 'customer_info',
+            title: 'ID',
+            dataIndex: 'id',
             key: 'user',
+            render: (customer_info) => (
+                <div className="d-flex flex-column">
+                    <span className="truncate whitespace-nowrap">
+                        #{customer_info}
+                    </span>
+                </div>)
         },
         {
             title: 'Mahsulot nomi',
@@ -288,11 +292,10 @@ function OrdersLists() {
                                         />
                                         <div className="d-flex gap-2">
                                             <label
-                                                className={`form-label border ${
-                                                    user.role === 'admin'
-                                                        ? 'col-6 w-50'
-                                                        : 'col-12 w-100'
-                                                } col-6 w-50 p-0 d-flex justify-content-between align-items-center`}
+                                                className={`form-label border ${user.role === 'admin'
+                                                    ? 'col-6 w-50'
+                                                    : 'col-12 w-100'
+                                                    } col-6 w-50 p-0 d-flex justify-content-between align-items-center`}
                                                 style={{
                                                     backgroundColor: '#F1F1F1',
                                                 }}>
