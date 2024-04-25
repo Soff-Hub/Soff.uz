@@ -19,7 +19,6 @@ const ProductAudioDetailFullWidth = ({
         Router.push(`/search?keyword=${e}`);
     };
 
-    console.log('product', product);
 
     return (
         <>
