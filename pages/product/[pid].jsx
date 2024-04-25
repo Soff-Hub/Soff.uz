@@ -60,6 +60,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             );
 
             const responseDocumentFile = response.data;
+
+
+            
             setSimilar(responseDocumentFile);
 
         } catch (error) {

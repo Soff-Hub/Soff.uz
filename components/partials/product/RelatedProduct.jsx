@@ -10,6 +10,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
         }
     }, [collectionSlug, pid]);
 
+    console.log('relatedProduct', relatedProduct);
 
     // Views
     let carouselView;
