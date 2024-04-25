@@ -19,7 +19,7 @@ const DonatePage = () => {
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Yangiliklar"}
+                        title={"Yangiliklar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <DonateList/>

@@ -27,7 +27,7 @@ const Products = () => {
             <PageContainer footer={<FooterDefault />} title="Invoices">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Mahsulotlar"}
+                        title={"Mahsulotlar"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
                     <ProductsLists />

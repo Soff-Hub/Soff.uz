@@ -161,7 +161,7 @@ const MyAccountPage = () => {
         user?.role === 'admin' || user?.role === 'seller' ? <PageContainer footer={<FooterDefault />} title="Address">
             <div className="ps-page--my-account">
                 <Meta
-                    title={"Soff | Bosh panel"}
+                    title={"Bosh panel"}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />
                 {user?.role === 'seller' && <Joyride

@@ -243,7 +243,7 @@ const PostsMyProducts = () => {
             footer={<FooterDefault />}
             title="Recent Viewed Products">
             <div className="ps-page--my-account">
-                <Meta title={'Soff | Mahsulotni tahirirlash'} />
+                <Meta title={'Mahsulotni tahirirlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="d-flex container justify-content-center">
                     <div

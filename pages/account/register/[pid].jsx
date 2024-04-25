@@ -32,7 +32,7 @@ const RegisterPage = () => {
             <PageContainer footer={<FooterDefault />} title="Register">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Soff | Ro'yxatdan o'tish"}
+                        title={"Ro'yxatdan o'tish"}
                         description="Soff.uz - O'z hisobingizga kiring va mahsulotlaringizni soting"
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
