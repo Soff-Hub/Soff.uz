@@ -110,29 +110,6 @@ function OrdersLists() {
             ),
         },
         {
-            title: 'Narx',
-            dataIndex: 'price',
-            key: 'address',
-            render: (price) => (
-                <span>
-                    <i className="fa-solid fa-coins text-warning"></i>{' '}
-                    {addPeriodToThousands(price)} so'm
-                </span>
-            ),
-        },
-        {
-            title: 'Buyurtma sanasi',
-            dataIndex: 'created_at',
-            key: 'address',
-            render: (created_at) => (
-                <span>
-                    {' '}
-                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
-                    <CalculateTimeDifference targetDate={created_at} />
-                </span>
-            ),
-        },
-        {
             title: 'Buyurtma nomi',
             dataIndex: 'info',
             key: 'address',
@@ -147,30 +124,72 @@ function OrdersLists() {
                 </div>
             ),
         },
-        // {
-        //     title: 'Holat',
-        //     dataIndex: 'status',
-        //     key: 'address',
-        //     render: (status) =>
-        //         status === 'approved' ? (
-        //             <span>
-        //                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
-        //                 tasdiqlangan
-        //             </span>
-        //         ) : status === 'cancelled' ? (
-        //             <span>
-        //                 <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-        //                 Bekor qilingan
-        //             </span>
-        //         ) : status === 'pending' ? (
-        //             <span>
-        //                 <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-        //                 Moderatsiya
-        //             </span>
-        //         ) : (
-        //             <></>
-        //         ),
-        // },
+        {
+            title: 'Narx',
+            dataIndex: 'price',
+            key: 'address',
+            render: (price) => (
+                <span>
+                    <i className="fa-solid fa-coins text-warning"></i>{' '}
+                    {addPeriodToThousands(price)} so'm
+                </span>
+            ),
+        },
+        {
+            title: "To\'lov turi ",
+            dataIndex: 'provider',
+            key: 'address',
+            render: (provider) => (
+                <span>
+                    {provider === 'card_data' ? (
+                        <span>
+                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                            karta orqali
+                        </span>
+                    ) : provider === 'click' ? (<span>
+                        <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                        click orqali
+                    </span>) : provider === 'payme' ? (
+                        <span>
+                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                            payme orqali
+                        </span>
+                    ) : " "}
+                </span>
+            ),
+        },
+        {
+            title: 'Buyurtma sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    <CalculateTimeDifference targetDate={created_at} />
+                </span>
+            ),
+        }, {
+            title: 'Holat',
+            dataIndex: 'status',
+            key: 'address',
+            render: (status) => (
+                <span>
+                    {status === 'approved' ? (
+                        <span>
+                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                            tasdiqlangan
+                        </span>
+                    ) : (
+                        <span>
+                            <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
+                            tasdiqlanganmagan
+                        </span>
+                    )}
+                </span>
+            ),
+        },
+
     ];
     const columnSellers = [
         {
@@ -248,6 +267,8 @@ function OrdersLists() {
         //         ),
         // },
     ];
+
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -349,7 +370,7 @@ function OrdersLists() {
                                     {user?.role === 'admin' ? (
                                         <>
                                             <Table
-                                                scroll={{ x: 1350 }}
+                                                scroll={{ x: 1600 }}
                                                 dataSource={data}
                                                 columns={columns}
                                                 pagination={false}

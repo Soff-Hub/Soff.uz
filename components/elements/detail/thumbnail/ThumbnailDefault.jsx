@@ -2,6 +2,9 @@ import React from 'react';
 import NextImageCard from '~/components/nextImagecard';
 
 const ThumbnailDefault = ({ product, vertical = true, views }) => {
+
+    console.log(product);
+
     return (
         <div
             className="ps-product__thumbnail"
@@ -24,7 +27,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                 </div>
                 <div className="views">
                     {' '}
-                    <i className="fa-solid fa-eye"></i> <span>{views?.count}</span>
+                    <i className="fa-solid fa-eye"></i> <span>{product?.view_count}</span>
                 </div>
             </figure>
         </div>
