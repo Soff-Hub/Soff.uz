@@ -12,7 +12,7 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import Link from 'next/link';
 import Example from './Chart';
 
-function DashbordList() {
+function DashbordList({ setOpen }) {
     const [data, setData] = useState([]);
     const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
@@ -168,6 +168,7 @@ function DashbordList() {
             ),
         },
     ];
+    
     const columnsOrders = [
         {
             title: 'Buyurtmachi',
@@ -179,7 +180,7 @@ function DashbordList() {
                         {' '}
                         {customer_info.name}
                     </span>
-                    {/* <span className ="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span> */}
+                    <span className ="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
                 </div>
             ),
         },
@@ -189,7 +190,7 @@ function DashbordList() {
                 dataIndex: 'seller_info',
                 key: 'age',
                 render: (seller_info) => (
-                    <div className="d-flex flex-column">
+                    <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
                         <span className="truncate whitespace-nowrap">
                             {' '}
                             {seller_info.name}
@@ -198,7 +199,7 @@ function DashbordList() {
                             {' '}
                             {seller_info.email_or_phone}
                         </span>
-                    </div>
+                    </a>
                 ),
             }
         ) : (
@@ -292,18 +293,17 @@ function DashbordList() {
             ),
         },
     ];
+
     const columnsOrdersSeller = [
         {
-            title: 'Buyurtmachi',
-            dataIndex: 'customer_info',
+            title: 'ID',
+            dataIndex: 'id',
             key: 'age',
             render: (customer_info) => (
                 <div className="d-flex flex-column">
                     <span className="truncate whitespace-nowrap">
-                        {' '}
-                        {customer_info.name}
+                        #{customer_info}
                     </span>
-                    {/* <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span> */}
                 </div>
             ),
         },
@@ -380,8 +380,11 @@ function DashbordList() {
 
     return (
         <section className="ps-my-account ps-page--account p-0">
-            <p className='step-0'></p>
+            <p className='step-0 m-0'></p>
             <div className="container">
+                {window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
+                    <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}>Saytdan foydalanish bo'yicha savolingiz bormi?</p>
+                </div>}
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">
                         <div>
@@ -803,7 +806,7 @@ function DashbordList() {
                                 <Example year={year} month={month} />
                             </div>
                         )}
-                        <div className="pb-5 mt-4">
+                        <div className="pb-5">
                             <h4
                                 className="bg-white m-0 text-center py-4">
                                 So'nggi buyurtmalar

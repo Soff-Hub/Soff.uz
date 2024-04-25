@@ -115,25 +115,20 @@ function ProductsLists() {
     }
 
     async function handleClickView(item) {
-        setLoading(true);
-        setIsModalOpen(true);
-        const ItemsData = await GetRepository.getShopsProducts(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            item?.id,
-            null,
-            search,
-            user?.access
-        );
-        if (ItemsData?.title) {
-            setDeleteIdView(ItemsData);
-            setLoading(false);
+        if (item.id) {
+            setLoading(true);
+            const ItemsData = await GetRepository.getShopsProductsAdminDetails(
+                item?.id,
+                user?.access
+            );
+            if (ItemsData?.title) {
+                setDeleteIdView(ItemsData);
+                setIsModalOpen(true);
+                setLoading(false);
+            }
         }
     }
+
 
     async function handleClickIdEditProducts(productsItems) {
         const ItemsData = await GetRepository.getShopsProducts(
@@ -189,7 +184,7 @@ function ProductsLists() {
             const a = document.createElement('a');
             a.href = url;
             a.download =
-            deleteIdView.title +
+                deleteIdView.title +
                 '.' +
                 fileContent.file_url.split('.')[
                 fileContent.file_url?.split('.').length - 1
@@ -643,7 +638,7 @@ function ProductsLists() {
                                                                                             href="#"
                                                                                             as="#">
                                                                                             <a>
-                                                                                             
+
                                                                                                 {
                                                                                                     item?.name
                                                                                                 }{' '}
@@ -871,6 +866,7 @@ function ProductsLists() {
             </div>
         </section>
     );
+
 }
 
 export default ProductsLists;

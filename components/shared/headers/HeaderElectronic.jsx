@@ -47,15 +47,17 @@ const HeaderElectronic = ({ kk }) => {
         if (topCategoryData?.length === 0) {
             getTopCategory();
         }
+    }, []);
 
+    useEffect(() => {
         if (localStorage.getItem('tour') && localStorage.getItem('tour') === "true") {
             setRun(true);
         }
-    }, []);
+    }, [])
 
     return (
         <header
-            className="header header--standard header--electronic"
+            className="header header--standard header--electronic headerSticky"
             id={run ? "" : "headerSticky"}>
             <div className="header__content">
                 <div className="container">

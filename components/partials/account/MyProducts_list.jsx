@@ -52,6 +52,8 @@ function MyProductsLists() {
     const [currPage, setCurrPage] = useState(1);
     const [count, setCount] = useState('');
     const dispatch = useDispatch();
+
+    const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
         ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
@@ -153,16 +155,22 @@ function MyProductsLists() {
     };
 
     async function handleClickView(item) {
-        setLoading(true);
-        const ItemsData = await GetRepository.getMyProductsView(
-            item.id,
-            user?.access
-        );
-        if (ItemsData) {
-            setView(ItemsData);
-            setLoading(false);
+        if (item?.id) {
+            setLoading(true);
+            const ItemsData = await GetRepository.getMyProductsView(
+                item.id,
+                user?.access
+            );
+            if (ItemsData?.title) {
+                setView(ItemsData);
+                setLoading(false);
+                
+            }
         }
     }
+
+
+
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyProductsDelete(
             deleteId,
@@ -295,6 +303,28 @@ function MyProductsLists() {
             setLoading4(false);
         }
     };
+
+
+
+
+
+    const copyVideoUrl = (item) => {
+        const videoUrl = `https://soff.uz/product/${item?.name?.slug}`;
+        navigator.clipboard
+            .writeText(videoUrl)
+            .then(() => {
+                setCopy(item?.id);
+                setTimeout(() => {
+                    setCopy(null);
+                }, 2500);
+
+                //   alert(`Video URL copied to clipboard! ${}`);
+            })
+            .catch((error) => {
+                console.error('Error copying video URL: ', error);
+            });
+    };
+
 
 
 
@@ -468,6 +498,34 @@ function MyProductsLists() {
                 key: 'address',
                 render: (id) => (
                     <div>
+                        {
+                            data.some(
+                                (el) =>
+                                    el.id == id &&
+                                    el.data_status?.status === 'approved'
+                            ) ?
+                                <a>
+                                    {
+                                        copy === id ?
+                                            <i className="fa-solid fa-check mx-2 "></i> :
+                                            <i
+                                                className="fa-solid fa-copy text-success-emphasis mx-2"
+                                                onClick={() =>
+                                                    copyVideoUrl(
+                                                        data.find((item) => item.id === id)
+                                                    )
+                                                }></i>
+                                    }
+                                </a>
+                                :
+                                <a>
+                                    <i
+                                        style={{ opacity: "0" }}
+                                        className="fa-solid fa-copy text-success-emphasis mx-2"
+                                    ></i>
+                                </a>
+                        }
+
                         <a
                             data-bs-target="#staticBackdropView"
                             data-bs-toggle="modal">
@@ -557,6 +615,9 @@ function MyProductsLists() {
                 ),
             },
     ];
+
+    "/product/loyiha-boshqarish-shablonlari-shablon1"
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -941,10 +1002,10 @@ function MyProductsLists() {
                                                         {
                                                             View?.status === 'cancelled' ? (
                                                                 <div className="mb-4">
-                                                                <strong className="text-danger pb-5">
-                                                                    {View?.reason}
-                                                                </strong>
-                                                            </div>
+                                                                    <strong className="text-danger pb-5">
+                                                                        {View?.reason}
+                                                                    </strong>
+                                                                </div>
                                                             ) : ''
                                                         }
                                                         <ModuleDetailTopInformation
@@ -1001,7 +1062,7 @@ function MyProductsLists() {
                                                                                 href="#"
                                                                                 as="#">
                                                                                 <a>
-                                                                                  
+
                                                                                     {
                                                                                         item.name
                                                                                     }{' '}
