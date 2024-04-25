@@ -45,7 +45,7 @@ const ProductCategoryScreen = () => {
             boxed={true}>
             <div className="ps-page--shop">
                 <Meta
-                    title={`Soff | Ayni vaqtdagi eng yaxshi kategoriyalar`}
+                    title={`Ayni vaqtdagi eng yaxshi kategoriyalar`}
                     description={`Saytimizdagi eng sotuvi avjida bo'lgan kategoriyalardan biri⚡`}
                 />
                 <BreadCrumb breacrumb={breadCrumb} />

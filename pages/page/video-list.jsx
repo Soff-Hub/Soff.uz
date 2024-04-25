@@ -21,7 +21,7 @@ const VedioList = () => {
         <div>
             <PageContainer footer={<FooterDefault />} title="FAQ page">
                 <Meta
-                    title={"Soff | Video qo'llanma"}
+                    title={"Video qo'llanma"}
                     description="Saytdan qanday foydalanish haqida videolar orqali bizdan yordam olishingiz mumkin"
                 />
                 <div className="ps-page--singlee">

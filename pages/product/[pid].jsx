@@ -13,9 +13,8 @@ import { v4 as uuidv4 } from 'uuid';
 import PostRepository from '~/repositories/PostRepository';
 import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
 import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
-import axios from 'axios'
-import Head from "next/head";
-
+import axios from 'axios';
+import Head from 'next/head';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -35,12 +34,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     headers: {
                         Authorization: token ? `Bearer ${token}` : '',
                     },
-
                 }
             );
 
             setProduct(response?.data);
-
         } catch (error) {
             console.error('Error fetching document:', error);
         }
@@ -55,22 +52,16 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     headers: {
                         Authorization: token ? `Bearer ${token}` : '',
                     },
-
                 }
             );
 
             const responseDocumentFile = response.data;
 
-
-            
             setSimilar(responseDocumentFile);
-
         } catch (error) {
             console.error('Error fetching document:', error);
         }
     }
-
-
 
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
@@ -84,9 +75,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             getProducts();
             getProductSimiller();
         }
-
     }, [user?.access, pid]);
-
 
     useEffect(() => {
         if (pid) {
@@ -102,7 +91,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 ? localStorage.getItem('uuid')
                 : uuidv4()
         );
-    }, [pid])
+    }, [pid]);
 
     const breadCrumb = [
         {
@@ -114,26 +103,12 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         },
     ];
 
+    console.log('defaultProducts', defaultProducts);
 
     return (
         <>
-            <PageContainer title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
-                <Head>
-                    {defaultProducts && (
-                        <>
-                            <meta property="og:title" content={`Soff | ${defaultProducts?.title}`} />
-                            <meta property="og:description" content={`Soff | Soff online hujjatlar bazasi | ${defaultProducts?.title}`} />
-                            <meta property="og:image" content={defaultProducts?.poster_url} />
-                            <meta property="og:site_name" content="Soff.uz" />
-                            <title>{defaultProducts?.title}</title>
-                        </>
-                    )}
-                    <meta
-                        name="description"
-                        content="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling."
-                    />
-                </Head>
-
+            <PageContainer
+                title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
 
                 <div className="container">
@@ -148,35 +123,35 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                    'video' ? (
+                                  'video' ? (
                                     <div className="">
                                         <ProductVideoDetailFullWidth
                                             product={product}
                                             views={views}
-
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                    'audio' ?
+                                  'audio' ? (
                                     <div className="">
                                         <ProductAudioDetailFullWidth
                                             product={product}
                                             views={views}
                                         />
-                                    </div> : product?.document?.content_type ===
-                                        'article' ?
-                                        <div>
-                                            {/* <ProductAudioDetailFullWidth
+                                    </div>
+                                ) : product?.document?.content_type ===
+                                  'article' ? (
+                                    <div>
+                                        {/* <ProductAudioDetailFullWidth
                                     product={product}
                                     document={document}
                                     views={views}
                                 /> */}
-                                        </div>
-                                        : (
-                                            <div className="ps-page__left">
-                                                <SkeletonProductDetail />
-                                            </div>
-                                        )}
+                                    </div>
+                                ) : (
+                                    <div className="ps-page__left">
+                                        <SkeletonProductDetail />
+                                    </div>
+                                )}
                             </div>
 
                             {similar?.length > 0 ? (
@@ -195,11 +170,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     );
 };
 
-
 export async function getServerSideProps({ query }) {
-    const resquest = await fetch(
-        baseUrl + `customer/documents/${query.pid}/`,
-    );
+    const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
     const defaultProducts = await resquest.json();
 
     return {
@@ -209,6 +181,4 @@ export async function getServerSideProps({ query }) {
     };
 }
 
-
 export default ProductDefaultPage;
-

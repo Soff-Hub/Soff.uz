@@ -25,7 +25,7 @@ const Tanishish = () => {
       <Page404 /> :
       <PageContainer>
         <Meta
-          title={"Soff | Shartlar bilan tanishish"}
+          title={"Shartlar bilan tanishish"}
         />
         <BreadCrumb breacrumb={breadCrumb} />
         <div className="ps-checkout ps-section--shopping">

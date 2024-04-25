@@ -10,7 +10,7 @@ const BecomeASeller = () => {
             <div className="ps-page--singlee">
                 <div className="container-faqs">
                     <Meta
-                        title={"Soff | Sotuvchiga aylaning"}
+                        title={"Sotuvchiga aylaning"}
                         description="Soff.uz - Saytimizda siz sotuvchi bo'lib ro'yxatdan o'tishingiz mumkin albatta"
                     />
                     <BecomeSeller />

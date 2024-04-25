@@ -107,7 +107,7 @@ const SellerPage = ({ seller }) => {
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
             <Meta
-                title={`Soff | Sotuvchi ${sellerr?.seller?.full_name}  `}
+                title={`${sellerr?.seller?.full_name}  `}
                 description={`Soff.uz sayti sotuvchisi - ${sellerr?.seller?.full_name} ning barcha mahsulotlarini shu yerda ko'rishingiz mumkin`}
             />
             <Modal
