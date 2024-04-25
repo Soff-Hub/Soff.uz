@@ -382,9 +382,9 @@ function DashbordList({ setOpen }) {
         <section className="ps-my-account ps-page--account p-0">
             <p className='step-0 m-0'></p>
             <div className="container">
-                <div style={{ textAlign: 'end', marginBottom: '6px' }}>
+                {window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
                     <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}>Saytdan foydalanish bo'yicha savolingiz bormi?</p>
-                </div>
+                </div>}
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">
                         <div>
