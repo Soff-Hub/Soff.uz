@@ -42,8 +42,6 @@ const Posts = () => {
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
-
-
       
     const [free, setFree] = useState(false);
     const [uploadPoster, setUploadPoster] = useState(false);
