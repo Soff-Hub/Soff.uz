@@ -236,7 +236,7 @@ const MyAccountPage = () => {
                         {
                             questions.map((ask, index) => (
                                 <p key={index} onClick={() => setSingleStep(ask)} style={{ color: '#004a14', cursor: 'pointer' }}>
-                                    <i className='fa-solid fa-question fa-sm'></i>. {ask.content}
+                                    <i className='fa-regular fa-circle-question'></i> {ask.content}
                                 </p>
                             ))
                         }
