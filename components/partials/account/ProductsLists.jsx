@@ -135,18 +135,7 @@ function ProductsLists() {
 
 
     async function handleClickIdEditProducts(productsItems) {
-        const ItemsData = await GetRepository.getShopsProducts(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            productsItems,
-            null,
-            search,
-            user?.access
-        );
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, productsItems, null, null, null, user?.access)
         if (ItemsData) {
             dispatch(MyProductsEdit(ItemsData));
             Router.push(`/account/products/edit?page=${router.query.page}`);
@@ -238,7 +227,7 @@ function ProductsLists() {
                 dataFormat,
                 null,
                 dateArxiv,
-                search,filterType
+                search, filterType
             );
         }
     }, [
