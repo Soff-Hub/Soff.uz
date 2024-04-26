@@ -82,45 +82,29 @@ const MyAccountPage = () => {
     ]
 
     const questions = [
-        // {
-        //     target: '.step-1',
-        //     content: "Barcha daromadlarim hisobini qayerdan olaman",
-        // },
-        // {
-        //     target: '.step-3',
-        //     content: "Balansim va taklif qilgan foydalanuvchilarim haqidagi ma'lumotlar qayerda",
-        // },
         {
             target: '.step-5',
-            content: "Men o'zim yuklagan mahsulotlarimni qayerdan topaman",
+            content: "Yuklagan mahsulotlarimni qayerdan ko'rsam bo'ladi?",
         },
         {
             target: '.step-6',
-            content: 'Mahsulot sotib oldim lekin uni topa olmayapman, qayerda',
+            content: "Mahsulot sotib oldim, lekin uni topa olmayapman. Qayerdan ko'ra olaman?",
         },
-        // {
-        //     target: '.step-7',
-        //     content: "Yangi mahsulotni qanday yuklasam bo'ladi",
-        // },
         {
             target: '.step-9',
-            content: "Mendan sotib olingan mahsulotlarni qayerda ko'rsam bo'ladi",
-        },
-        // {
-        //     target: '.step-10',
-        //     content: "Menga donat qilganlar ma'lumotni ko'ra olmayapman",
-        // },
-        {
-            target: '.step-11',
-            content: "Balansimdagi pulni kartamga qanday o'tkazaman",
+            content: "Yuklagan mahsulotlarimni nechtasi sotilganini qayerdan ko'rsam bo'ladi?",
         },
         {
             target: '.step-11',
-            content: "Mening sayt haqida taklif yoki shikoyatim bor, qayerga yozay",
+            content: "Balansimdagi pulni kartamga qanday o'tkazishim mumkin?",
+        },
+        {
+            target: '.step-11',
+            content: "Taklif yoki shikoyatlarim bor, qanday qilib sizlarga uni yuborishim mumkin?",
         },
         {
             target: '.step-12',
-            content: "Profilim ma'lumotlarini va kartalarimni o'zgartira olamanmi",
+            content: "Profil va kartalarim ma'lumotlarini qayerdan o'zgartirishim mumkin?",
         },
     ]
 
@@ -236,7 +220,7 @@ const MyAccountPage = () => {
                         {
                             questions.map((ask, index) => (
                                 <p key={index} onClick={() => setSingleStep(ask)} style={{ color: '#004a14', cursor: 'pointer' }}>
-                                    <i className='fa-solid fa-question fa-sm'></i>. {ask.content}
+                                    {ask.content}
                                 </p>
                             ))
                         }
