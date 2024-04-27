@@ -634,7 +634,7 @@ function ProductsLists() {
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
                                                         product={deleteIdView ? deleteIdView : ""}
-                                                        views={0}
+                                                        views={deleteIdView?.view_count}
                                                         admin={true}
                                                         taxminiyNarx={deleteIdView?.price}
                                                     />
@@ -732,6 +732,7 @@ function ProductsLists() {
                                                 <div className="ps-product__header ">
                                                     <ThumbnailDefault
                                                         product={deleteIdView ? deleteIdView : ""}
+                                                        views={deleteIdView?.view_count}
                                                     />
                                                     <div className="ps-product__info">
                                                         <div className="mb-4">

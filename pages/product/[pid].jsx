@@ -66,9 +66,11 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
-            setViews(respons);
+            setViews(respons.count);
         }
     }
+
+    console.log(views);
 
     useEffect(() => {
         if (pid) {

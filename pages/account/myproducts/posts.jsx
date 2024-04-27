@@ -44,7 +44,7 @@ const Posts = () => {
     const [disabled, setDeisabled] = useState(false);
 
 
-      
+
     const [free, setFree] = useState(false);
     const [uploadPoster, setUploadPoster] = useState(false);
     const [customePoster, setCustomePoster] = useState(false);
@@ -276,8 +276,10 @@ const Posts = () => {
             );
 
             if (ItemsData?.status === 201) {
-                if (!ItemsData?.data?.images) {
+                if (ItemsData?.data?.images < 3) {
                     setUploadPoster(true);
+                }
+                if (!ItemsData?.data?.images) {
                     setCustomePoster(true);
                     setLivePosterFile({ ...ItemsData?.data, images: [] });
                     setLiveFile2({ ...ItemsData?.data, images: [] });
@@ -312,31 +314,27 @@ const Posts = () => {
         const img = window.URL.createObjectURL(e.target.files[0]);
         setLiveFile(img);
 
-        if (uploadPoster) {
-            setLivePosterFile({
-                ...livePosterFile,
-                images: livePosterFile?.images
-                    ? [
-                        ...livePosterFile?.images,
-                        {
-                            id: new Date().getTime(),
-                            image_url: img,
-                            file: e.target.files[0],
-                        },
-                    ]
-                    : [
-                        {
-                            id: new Date().getTime(),
-                            image_url: img,
-                            file: e.target.files[0],
-                        },
-                    ],
-            });
-        } else {
-            // setLivePosterFile({ ...livePosterFile, images: [{ id: new Date().getTime(), image_url: img }] });
-        }
+        setLivePosterFile({
+            ...livePosterFile,
+            images: livePosterFile?.images
+                ? [
+                    ...livePosterFile?.images,
+                    {
+                        id: new Date().getTime(),
+                        image_url: img,
+                        file: e.target.files[0],
+                    },
+                ]
+                : [
+                    {
+                        id: new Date().getTime(),
+                        image_url: img,
+                        file: e.target.files[0],
+                    },
+                ],
+        });
 
-        if (livePosterFile?.images?.length >= 2) {
+        if (livePosterFile?.images?.length > 2) {
             setUploadPoster(false);
         }
     }
@@ -426,11 +424,11 @@ const Posts = () => {
                             id="FormPostsMyProducts"
                             className=" col-md-8 pb-5"
                             noValidate
-                            >
+                        >
 
 
 
-                                
+
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     <h4 className=" p-0">Yangi mahsulot </h4>
@@ -721,7 +719,7 @@ const Posts = () => {
                                             setFullData(data);
                                         }}
                                         editorLoaded={editorLoaded}
-                                        />
+                                    />
                                 </div>
                             </div>
 
@@ -729,7 +727,7 @@ const Posts = () => {
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
-                                    disabled={title==='' || disabled}
+                                    disabled={title === '' || disabled}
                                     type="submit"
                                     className="btn btn-success py-3 ">
                                     <span className="fs-4 px-5">
