@@ -8,6 +8,7 @@ import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppin
 import Link from 'next/link';
 
 
+
 const ProductAudioDetailFullWidth = ({
     product,
     views,
