@@ -17,6 +17,8 @@ export default function AudioProductCart({ product }) {
         wavesurfer && wavesurfer.playPause();
     };
 
+    console.log('product', product);
+
     return (
         <div className="audio-cart-container">
             <div className="audio-cart-content">
@@ -40,6 +42,7 @@ export default function AudioProductCart({ product }) {
                                 <Link style={{display:'flex'}}  href="/product/[pid]" as={`/product/${product.slug}`}>
                                     <a className='audio-name text-truncate'>
                                 {product?.title}
+                                {product?.sellr?.first_name} {product?.sellr?.last_name}
                                     </a>
                                 </Link>
                             </p>
