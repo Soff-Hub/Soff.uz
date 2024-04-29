@@ -22,7 +22,6 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     } else {
         productItemsView = <p>Mahsulot topilmadi</p>;
     }
-console.log('jjjj', data?.promotional_sliders);
     // Audio view
     let audioProductItemsView;
     if (data && data?.promotional_sliders?.length > 0) {
