@@ -34,7 +34,7 @@ function ProductsLists() {
     const [search, setSerach] = useState([]);
     const [deleteIdView, setDeleteIdView] = useState({});
     const [dataVal, setDataVal] = useState([]);
-    const [dataValStatus, setDataCatStatus] = useState(null);
+    const [dataValStatus, setDataCatStatus] = useState("moderation");
     const [filterType, setFiltertype] = useState('');
     const [date, setDate] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
