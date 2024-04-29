@@ -2136,12 +2136,13 @@
         height: 200px;
         position: relative;
 
-        .loading_h2{
+        .loading_h2 {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
         .profile_images_card {
             position: absolute;
             bottom: -25%;
@@ -2225,7 +2226,7 @@
         .user_profile_card {
             padding: 0;
 
-            .loading_h2{
+            .loading_h2 {
                 position: absolute;
                 top: 30%;
                 left: 50%;
@@ -2260,4 +2261,15 @@
             }
         }
     }
+}
+
+.video-react {
+    position: relative;
+}
+
+.video-react-big-play-button {
+    border: 0 !important;
+    position: absolute !important;
+    top: 50%;
+    left: 50%;
 }

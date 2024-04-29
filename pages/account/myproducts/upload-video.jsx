@@ -24,7 +24,7 @@ const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState(null);
-    const [fileImgFileID, setFileImgFileID] = useState('');
+    const [fileImgFileID, setFileImgFileID] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
@@ -217,53 +217,36 @@ const Posts = () => {
         formData.append('description', Fulldata);
         formData.append('tags', tagSearchResult);
 
-        liveFile2?.images?.[0]?.id
-            ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
-            : 'None';
-
-        // fileImgPoster ? formData.append('images', fileImgPoster) : 'None';
-
-        if (customePoster) {
-            customeFile
-                ? formData.append('poster', customeFile)
-                : formData.append('poster', fileImgPoster[0]);
-            for (const file of fileImgPoster) {
-                formData.append('images', file);
-            }
-        } else {
-            fileImgPoster
-                ? formData.append('poster', fileImgPoster[0])
-                : 'None';
-            fileImgFileID ? formData.append('poster_id', fileImgFileID) : '';
-        }
+        formData.append('poster', customeFile)
 
         formData.append('category', category_id[0]);
         formData.append('document', livePosterFile?.id);
+        console.log(formData)
 
-        const patchItems = await PatchRepository.getPatchPoster(
-            formData,
-            user?.access
-        );
-        if (patchItems?.status === 201) {
-            Router.push('/account/myproducts');
-            setDeisabled(false);
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            });
-        } else {
-            setDeisabled(false);
-            console.log(patchItems);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content:
-                    patchItems?.data?.msg ||
-                    JSON.stringify(patchItems?.data.category),
-            });
-        }
+        // const patchItems = await PatchRepository.getPatchPoster(
+        //     formData,
+        //     user?.access
+        // );
+        // if (patchItems?.status === 201) {
+        //     Router.push('/account/myproducts');
+        //     setDeisabled(false);
+        //     const modal = Modal.warning({
+        //         centered: true,
+        //         title: 'Muvaffaqqiyatli!',
+        //         content:
+        //             "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+        //     });
+        // } else {
+        //     setDeisabled(false);
+        //     console.log(patchItems);
+        //     const modal = Modal.error({
+        //         centered: true,
+        //         title: 'Xatolik!',
+        //         content:
+        //             patchItems?.data?.msg ||
+        //             JSON.stringify(patchItems?.data.category),
+        //     });
+        // }
     }
 
     async function PostFilePoster() {
@@ -310,7 +293,6 @@ const Posts = () => {
     }
 
     function LiveImage(e) {
-        setFileImgFileID('');
         setCustomePoster(true);
         setFileImgPoster((c) => [...c, e.target.files[0]]);
         const img = window.URL.createObjectURL(e.target.files[0]);
@@ -321,20 +303,20 @@ const Posts = () => {
                 ...livePosterFile,
                 images: livePosterFile?.images
                     ? [
-                          ...livePosterFile?.images,
-                          {
-                              id: new Date().getTime(),
-                              image_url: img,
-                              file: e.target.files[0],
-                          },
-                      ]
+                        ...livePosterFile?.images,
+                        {
+                            id: new Date().getTime(),
+                            image_url: img,
+                            file: e.target.files[0],
+                        },
+                    ]
                     : [
-                          {
-                              id: new Date().getTime(),
-                              image_url: img,
-                              file: e.target.files[0],
-                          },
-                      ],
+                        {
+                            id: new Date().getTime(),
+                            image_url: img,
+                            file: e.target.files[0],
+                        },
+                    ],
             });
         } else {
             // setLivePosterFile({ ...livePosterFile, images: [{ id: new Date().getTime(), image_url: img }] });
@@ -343,6 +325,12 @@ const Posts = () => {
         if (livePosterFile?.images?.length >= 2) {
             setUploadPoster(false);
         }
+    }
+
+    const uploadTizer = (file) => {
+        const video = window.URL.createObjectURL(file);
+        setFileImgFile({ file, video })
+        console.log({ file, video });
     }
 
     function addPeriodToThousands(number) {
@@ -385,9 +373,9 @@ const Posts = () => {
         GetItemsCategoryLists();
     }, []);
 
-    useEffect(() => {
-        PostFilePoster();
-    }, [fileImgFile]);
+    // useEffect(() => {
+    //     PostFilePoster();
+    // }, [fileImgFile]);
 
     useEffect(() => {
         if (user?.access) {
@@ -570,13 +558,13 @@ const Posts = () => {
                                                     border: '1px dashed green',
                                                     width: '100%',
                                                 }}>
-                                                {livePosterFile === '' ? (
+                                                {!fileImgFileID ? (
                                                     <span
                                                         className="d-flex flex-column align-items-center"
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}>
-                                                            
+
                                                         {loading ? (
                                                             <span className="d-flex justify-content-center">
                                                                 <ClipLoader
@@ -616,7 +604,7 @@ const Posts = () => {
                                                     required
                                                     type="file"
                                                     onChange={(e) =>
-                                                        setFileImgFile(
+                                                        setFileImgFileID(
                                                             e.target.files[0]
                                                         )
                                                     }
@@ -646,7 +634,7 @@ const Posts = () => {
                                                     border: '1px dashed green',
                                                     width: '100%',
                                                 }}>
-                                                {livePosterFile === '' ? (
+                                                {!fileImgFile ? (
                                                     <span
                                                         className="d-flex flex-column align-items-center"
                                                         style={{
@@ -692,7 +680,7 @@ const Posts = () => {
                                                     required
                                                     type="file"
                                                     onChange={(e) =>
-                                                        setFileImgFile(
+                                                        uploadTizer(
                                                             e.target.files[0]
                                                         )
                                                     }
@@ -811,20 +799,10 @@ const Posts = () => {
                             style={{ maxWidth: '485px' }}>
                             <video className=" border w-100" controls>
                                 <source
-                                    src="https://youtu.be/XGPg0AMTKHM"
+                                    src={fileImgFile?.file}
                                     type={`video/*`}
                                 />
                             </video>
-
-                            {/* <iframe
-                                width="100%"
-                                height="300"
-                                src="https://www.youtube.com/embed/XGPg0AMTKHM"
-                                title="Shahzoda - Yomg&#39;ir nomli albom dasturi 2018"
-                                frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin"
-                                allowfullscreen></iframe> */}
                         </div>
                     </div>
 
@@ -884,10 +862,10 @@ const Posts = () => {
                                                 {' '}
                                                 {taxminiyNarx
                                                     ? addPeriodToThousands(
-                                                          removePrefix(
-                                                              taxminiyNarx
-                                                          )
-                                                      ) + "so'm"
+                                                        removePrefix(
+                                                            taxminiyNarx
+                                                        )
+                                                    ) + "so'm"
                                                     : "To'ldirilmadi"}
                                             </span>
                                         </strong>
@@ -914,14 +892,14 @@ const Posts = () => {
                                         {/* <span style={{maxWidth:'150px'}} > </span> */}
                                         {tagSearchResult.length > 0
                                             ? tagSearchResult?.map(
-                                                  (item, i) => {
-                                                      return (
-                                                          <span key={i}>
-                                                              {item}{' '}
-                                                          </span>
-                                                      );
-                                                  }
-                                              )
+                                                (item, i) => {
+                                                    return (
+                                                        <span key={i}>
+                                                            {item}{' '}
+                                                        </span>
+                                                    );
+                                                }
+                                            )
                                             : "To'ldirilmadi"}
                                     </p>
                                     <p className="live-card-p">
@@ -941,8 +919,8 @@ const Posts = () => {
                                                 </strong>{' '}
                                                 {livePosterFile?.page_count
                                                     ? livePosterFile?.page_count +
-                                                      ' ' +
-                                                      'ta'
+                                                    ' ' +
+                                                    'ta'
                                                     : ''}{' '}
                                             </li>
                                             <li>
@@ -993,175 +971,6 @@ const Posts = () => {
                                     aria-label="Close"></button>
                             </div>
                             <div className="ps-container">
-                                <div className="ps-product--detail ps-product--fullwidth">
-                                    {/* <div className="ps-product__header ">
-                                        <div className="ps-product__thumbnail">
-                                            <figure>
-                                                <div className="ps-wrapper">
-                                                    {livePosterFile?.images ? (
-                                                        livePosterFile?.images?.map(
-                                                            (item) => (
-                                                                <img
-                                                                    src={
-                                                                        item.image_url
-                                                                    }
-                                                                    alt="doc"
-                                                                    key={
-                                                                        item.id
-                                                                    }
-                                                                    className="border mb-3 "
-                                                                    style={{
-                                                                        objectFit:
-                                                                            'contain',
-                                                                    }}
-                                                                />
-                                                            )
-                                                        )
-                                                    ) : (
-                                                        <img
-                                                            src="/static/img/docCopy.png"
-                                                            alt="doc"
-                                                        />
-                                                    )}
-                                                </div>
-                                            </figure>
-                                        </div>
-                                        <div className="ps-product__info">
-                                            <header>
-                                                <h1>
-                                                    {' '}
-                                                    {title
-                                                        ? title
-                                                        : "To'ldirilmadi"}
-                                                </h1>
-                                                <h4>
-                                                    {' '}
-                                                    {taxminiyNarx
-                                                        ? addPeriodToThousands(
-                                                              removePrefix(
-                                                                  taxminiyNarx
-                                                              )
-                                                          ) + "so'm"
-                                                        : "To'ldirilmadi"}
-                                                </h4>
-                                            </header>
-
-                                            <div className="ps-product__desc">
-                                                <strong>
-                                                    <span>
-                                                        <strong className="fs-4">
-                                                            Qisqa tavsif
-                                                        </strong>
-                                                        :{' '}
-                                                    </span>
-                                                    <ul
-                                                        style={{
-                                                            listStyleType:
-                                                                'revert',
-                                                        }}>
-                                                        <li>
-                                                            {' '}
-                                                            <strong className="fs-4">
-                                                                Betlar soni:{' '}
-                                                            </strong>{' '}
-                                                            {livePosterFile?.page_count
-                                                                ? livePosterFile?.page_count +
-                                                                  ' ' +
-                                                                  'ta'
-                                                                : ''}{' '}
-                                                        </li>
-                                                        <li>
-                                                            {' '}
-                                                            <strong className="fs-4">
-                                                                Hajmi:{' '}
-                                                            </strong>
-                                                            {
-                                                                livePosterFile?.file_size
-                                                            }
-                                                        </li>
-                                                        <li>
-                                                            {' '}
-                                                            <strong className="fs-4">
-                                                                Turi:{' '}
-                                                            </strong>
-                                                            {
-                                                                livePosterFile?.file_type
-                                                            }
-                                                        </li>
-                                                        <li>
-                                                            <strong>
-                                                                Kategoriyasi
-                                                            </strong>{' '}
-                                                            :{' '}
-                                                            {categoryName
-                                                                ? categoryName
-                                                                : livePosterFile
-                                                                      ?.category
-                                                                      ?.name}
-                                                        </li>
-                                                    </ul>
-                                                </strong>
-                                                <ul></ul>
-                                            </div>
-                                            <div className="ps-product__shopping row-gap-3">
-                                                <button
-                                                    className="ps-btn ps-btn--black"
-                                                    style={{
-                                                        cursor: 'not-allowed',
-                                                    }}>
-                                                    Savatga qo'shish
-                                                </button>
-                                                <button
-                                                    className="ps-btn"
-                                                    style={{
-                                                        cursor: 'not-allowed',
-                                                    }}>
-                                                    Sotib olish
-                                                </button>
-                                                <div className="ps-product__actions">
-                                                    <a
-                                                        style={{
-                                                            cursor: 'not-allowed',
-                                                        }}>
-                                                        <i
-                                                            className={`icon-heart`}></i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                {tagSearchResult.length > 0 ? (
-                                                    tagSearchResult?.map(
-                                                        (item, i) => {
-                                                            return (
-                                                                <span
-                                                                    className="mx-2"
-                                                                    key={i}>
-                                                                    {' '}
-                                                                    {item}{' '}
-                                                                </span>
-                                                            );
-                                                        }
-                                                    )
-                                                ) : (
-                                                    <></>
-                                                )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="ps-product__content ps-tab-root">
-                                        <Tabs defaultActiveKey="1">
-                                            <TabPane
-                                                tab="Mahsulot to’liq tavsifi"
-                                                key="1">
-                                                <div className="ps-document">
-                                                    {Fulldata
-                                                        ? parse(Fulldata)
-                                                        : "To'ldirilmadi"}
-                                                </div>
-                                            </TabPane>
-                                        </Tabs>
-                                    </div> */}
-                                </div>
                                 <div className="row">
                                     <div className="col-xl-8 col-lg-8 col-12">
                                         {!liveFile ? (
