@@ -1,6 +1,5 @@
 
-import { jsxs } from 'react/jsx-runtime.js';
-import WavesurferPlayer from '@wavesurfer/react';
+// import WavesurferPlayer from '@wavesurfer/react';
 import React, { useState } from 'react';
 
 export default function DefaultAudio({ product }) {
@@ -72,7 +71,7 @@ export default function DefaultAudio({ product }) {
 
                     {product?.file_url === 'No' ? (
                         <div className="row audio-style">
-                            {/* <audio
+                            <audio
                                 id="audioPlayer"
                                 controls
                                 src={
@@ -80,8 +79,8 @@ export default function DefaultAudio({ product }) {
                                 }></audio>
                             <div className="audio-none">
                                 <span></span>
-                            </div> */}
-                            <div
+                            </div>
+                            {/* <div
                                 className="col-1 audio-play"
                                 onClick={onPlayPause}>
                                 {isPlaying ? (
@@ -93,8 +92,8 @@ export default function DefaultAudio({ product }) {
                                         <i class="fa-solid fa-circle-play"></i>
                                     </>
                                 )}
-                            </div>
-                            <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
+                            </div> */}
+                            {/* <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
                                 <WavesurferPlayer
                                     height={40}
                                     waveColor="#00A44F"
@@ -103,16 +102,16 @@ export default function DefaultAudio({ product }) {
                                     onPlay={() => setIsPlaying(true)}
                                     onPause={() => setIsPlaying(false)}
                                 />
-                            </div>
+                            </div> */}
                         </div>
                     ) : (
                         <div className="row  audio-style">
-                            {/* <audio
+                            <audio
                                 id="audioPlayer"
                                 controls
-                                src={product?.file_url}></audio> */}
+                                src={product?.file_url}></audio>
 
-                            <div
+                            {/* <div
                                 className="col-1 audio-play"
                                 onClick={onPlayPause}>
                                 {isPlaying ? (
@@ -124,8 +123,8 @@ export default function DefaultAudio({ product }) {
                                         <i class="fa-solid fa-circle-play"></i>
                                     </>
                                 )}
-                            </div>
-                            <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
+                            </div> */}
+                            {/* <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
                                 {
                                     product?.file_url ?
                                     <WavesurferPlayer
@@ -141,7 +140,7 @@ export default function DefaultAudio({ product }) {
                                 }
                      
 
-                            </div>
+                            </div> */}
                         </div>
                     )}
                 </div>

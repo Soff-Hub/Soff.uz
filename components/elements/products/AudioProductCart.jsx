@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import ModuleProductActions from './modules/ModuleProductActions';
 import Link from 'next/link';
-import WavesurferPlayer from '@wavesurfer/react';
+// import WavesurferPlayer from '@wavesurfer/react';
 
 export default function AudioProductCart({ product }) {
     const [wavesurfer, setWavesurfer] = useState(null);
@@ -49,14 +49,14 @@ export default function AudioProductCart({ product }) {
                         </div>
                     </div>
                     <div className="col-xl-7 col-lg-9">
-                        <WavesurferPlayer
+                        {/* <WavesurferPlayer
                             height={40}
                             waveColor="#00A44F"
                             url={product?.document?.short_content_url}
                             onReady={onReady}
                             onPlay={() => setIsPlaying(true)}
                             onPause={() => setIsPlaying(false)}
-                        />
+                        /> */}
                     </div>
                     <div className="col-xl-2 col-lg-9 d-flex align-content-center justify-content-start justify-content-xl-center pl-xl-0 pl-5 p pt-2">
                         <ModuleProductActions product={product} audio={true} />
