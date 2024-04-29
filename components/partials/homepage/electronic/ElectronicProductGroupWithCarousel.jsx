@@ -14,7 +14,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                     <div
                         key={index}
                         className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
-                        <Product product={item} />{' '}
+                      {item?.document?.content_type != 'audio' && <Product product={item} />  }  
                     </div>
                 ))}
             </div>
@@ -22,7 +22,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     } else {
         productItemsView = <p>Mahsulot topilmadi</p>;
     }
-
+console.log('jjjj', data?.promotional_sliders);
     // Audio view
     let audioProductItemsView;
     if (data && data?.promotional_sliders?.length > 0) {

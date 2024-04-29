@@ -39,6 +39,12 @@
     }
 }
 
+.audio-list-action{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 @media screen and (max-width: 1200px) {
     .audio-cart-container {
         .audio-name{

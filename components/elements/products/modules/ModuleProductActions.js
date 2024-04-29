@@ -99,7 +99,7 @@ const ModuleProductActions = ({ product, audio }) => {
             </Modal>
             <ul className={`ps-product__actions ${audio ? 'd-flex gap-5 justify-content-center align-content-center audio-list-icons' : ""} `}>
                 
-                <li>
+                <li className={`${audio ? 'audio-list-action' : ''}`} >
                     <a
                         href="#"
                         data-toggle="tooltip"
@@ -110,7 +110,7 @@ const ModuleProductActions = ({ product, audio }) => {
                     </a>
                 </li>
 
-                <li>
+                <li className={`${audio ? 'audio-list-action' : ''}`}>
                     <a
                         href="#"
                         data-toggle="tooltip"
@@ -121,7 +121,7 @@ const ModuleProductActions = ({ product, audio }) => {
                     </a>
                 </li>
 
-                <li>
+                <li className={`${audio ? 'audio-list-action' : ''}`}>
                     <a
                         href="#"
                         data-toggle="tooltip"
