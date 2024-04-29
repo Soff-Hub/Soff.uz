@@ -14,6 +14,8 @@ var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
+import { useForm } from 'react-hook-form';
+import Input from '~/components/form/Input';
 
 
 const PostsMyProducts = () => {
@@ -25,12 +27,11 @@ const PostsMyProducts = () => {
     const { products, user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [categoryName, setCategoryName] = useState('');
-    const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
     const [free, setFree] = useState(false);
-    const [disabled, setDeisabled] = useState(false);
     const [category_id, setCategory_ID] = useState(null)
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
@@ -74,14 +75,12 @@ const PostsMyProducts = () => {
         );
     }
 
-    async function handleClickPostsEdit(e) {
-        e.preventDefault();
+    async function handleClickPostsEdit(data) {
 
-        if (title || taxminiyNarx || tagSearchResult || category_id) {
+        if (data?.title || taxminiyNarx || tagSearchResult || category_id) {
             const formData = new FormData();
-            setDeisabled(true);
-            if (title) {
-                formData.append('title', title);
+            if (watch('title')) {
+                formData.append('title', data?.title);
             }
             if (free && !taxminiyNarx) {
                 formData.append('price', 0);
@@ -139,9 +138,7 @@ const PostsMyProducts = () => {
                         "Sizning mahsulotingiz muvaffaqqiyatli o'zgartirildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
                 });
                 setTagSearchResult(null);
-                setTitle(null);
                 setTaxminiyNarx(null);
-                setDeisabled(false);
             } else {
                 const modal = Modal.error({
                     centered: true,
@@ -207,7 +204,6 @@ const PostsMyProducts = () => {
 
     function LiveImage(e) {
         const img = window.URL.createObjectURL(e.target.files[0]);
-        // setCustomePoster(img);
 
         if (customePoster.length <= 8) {
             setCustomePoster([
@@ -268,10 +264,11 @@ const PostsMyProducts = () => {
                             </Button>
                         </div>
                         <form
-                            onSubmit={handleClickPostsEdit}
+                            onSubmit={handleSubmit(handleClickPostsEdit)}
                             style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
-                            className=" pb-5  col-md-8">
+                            className=" pb-5  col-md-8"
+                            noValidate>
                             <div className="row">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     {' '}
@@ -282,11 +279,16 @@ const PostsMyProducts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                     </Tooltip>
                                 </div>
-                                <input
-                                    type="text"
-                                    className="form-control  rounded-3 col-md-8 mb-3 "
+                                <Input
                                     name="title"
-                                    onChange={(e) => setTitle(e.target.value)}
+                                    type="text"
+                                    className={"col-md-8 mb-2"}
+                                    InputClassName={"form-control  rounded-3 "}
+                                    {...register('title', {
+                                        required: 'Maydon toldirish majburiy',
+                                        validate: value => value.trim() !== "" || "Nomi bo'sh bo'lishi mumkin emas"
+                                    })}
+                                    error={errors.title?.message}
                                     defaultValue={products?.title}
                                 />
                             </div>
@@ -390,7 +392,7 @@ const PostsMyProducts = () => {
                                             ) : (
                                                 customePoster?.map((item, i) =>
                                                     customeFile?.image_url ===
-                                                    item.image_url ? (
+                                                        item.image_url ? (
                                                         <div
                                                             className="selected-img"
                                                             style={{
@@ -488,12 +490,12 @@ const PostsMyProducts = () => {
                                     }
                                 /> */}
 
-                                  <InputNumber
-                                  disabled={free}
-                                  value={products?.price}
-                                  className="col-md-6 p-2 post-price"
-                                  onValueChange={(e) => setTaxminiyNarx(e.target.value)}
-                              />
+                                <InputNumber
+                                    disabled={free}
+                                    value={products?.price}
+                                    className="col-md-6 p-2 post-price"
+                                    onValueChange={(e) => setTaxminiyNarx(e.target.value)}
+                                />
                             </div>
                             <div className="row">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
@@ -560,7 +562,7 @@ const PostsMyProducts = () => {
                                         <strong>Nomi</strong>:{' '}
                                     </span>{' '}
                                     <span style={{ maxWidth: '150px' }}>
-                                        {title ? title : products?.title}
+                                        {watch("title") ? watch("title") : products?.title}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
@@ -571,8 +573,8 @@ const PostsMyProducts = () => {
                                         {taxminiyNarx
                                             ? addPeriodToThousands(taxminiyNarx)
                                             : addPeriodToThousands(
-                                                  products?.discount_price
-                                              )}
+                                                products?.discount_price
+                                            )}
                                         so'm
                                     </span>
                                 </p>
@@ -643,8 +645,8 @@ const PostsMyProducts = () => {
                                         {Fulldata
                                             ? parse(Fulldata)
                                             : products?.description
-                                            ? parse(products?.description)
-                                            : ''}
+                                                ? parse(products?.description)
+                                                : ''}
                                     </span>
                                 </p>
                             </div>
@@ -683,7 +685,7 @@ const PostsMyProducts = () => {
                                             <strong>Nomi</strong>:{' '}
                                         </span>{' '}
                                         <span style={{ maxWidth: '150px' }}>
-                                            {title ? title : products?.title}
+                                            {watch("title") ? watch("title") : products?.title}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
@@ -693,11 +695,11 @@ const PostsMyProducts = () => {
                                         <span style={{ maxWidth: '150px' }}>
                                             {taxminiyNarx
                                                 ? addPeriodToThousands(
-                                                      taxminiyNarx
-                                                  )
+                                                    taxminiyNarx
+                                                )
                                                 : addPeriodToThousands(
-                                                      products?.discount_price
-                                                  )}
+                                                    products?.discount_price
+                                                )}
                                             so'm
                                         </span>
                                     </p>
@@ -770,8 +772,8 @@ const PostsMyProducts = () => {
                                             {Fulldata
                                                 ? parse(Fulldata)
                                                 : products?.description
-                                                ? parse(products?.description)
-                                                : ''}
+                                                    ? parse(products?.description)
+                                                    : ''}
                                         </span>
                                     </p>
                                 </div>
@@ -829,18 +831,18 @@ const PostsMyProducts = () => {
                                         <div className="ps-product__info">
                                             <header>
                                                 <h1>
-                                                    {title
-                                                        ? title
+                                                    {watch("title")
+                                                        ? watch("title")
                                                         : products?.title}
                                                 </h1>
                                                 <h4>
                                                     {taxminiyNarx
                                                         ? addPeriodToThousands(
-                                                              taxminiyNarx
-                                                          )
+                                                            taxminiyNarx
+                                                        )
                                                         : addPeriodToThousands(
-                                                              products?.discount_price
-                                                          )}{' '}
+                                                            products?.discount_price
+                                                        )}{' '}
                                                     so'm
                                                 </h4>
                                             </header>
@@ -913,8 +915,8 @@ const PostsMyProducts = () => {
                                                             {categoryName
                                                                 ? categoryName
                                                                 : products
-                                                                      ?.category
-                                                                      ?.name}
+                                                                    ?.category
+                                                                    ?.name}
                                                         </li>
                                                     </ul>
                                                 </strong>
@@ -965,10 +967,10 @@ const PostsMyProducts = () => {
                                                     {Fulldata
                                                         ? parse(Fulldata)
                                                         : products?.description
-                                                        ? parse(
-                                                              products?.description
-                                                          )
-                                                        : ''}
+                                                            ? parse(
+                                                                products?.description
+                                                            )
+                                                            : ''}
                                                 </div>
                                             </TabPane>
                                         </Tabs>

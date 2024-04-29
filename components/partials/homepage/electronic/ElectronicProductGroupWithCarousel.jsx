@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import Product from '~/components/elements/products/Product';
-import ReactAudioPlayer from 'react-audio-player';
 
 const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
 
@@ -22,11 +21,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                             </div>
                         ))}
 
-                    {/* <ReactAudioPlayer
-                        src="https://audio-previews.elements.envatousercontent.com/files/271591854/preview.mp3?response-content-disposition=attachment%3B+filename%3D%22AX3HBJW-inspiring-epic.mp3%22"
-                        autoPlay
-                        controls
-                    /> */}
+                   
                 </div>
             );
         } else {
