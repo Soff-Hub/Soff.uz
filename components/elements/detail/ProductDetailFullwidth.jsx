@@ -19,8 +19,6 @@ const ProductDetailFullwidth = ({ product, views }) => {
         setTag(product?.tag);
     }, []);
 
-
-
     return (
         <>
             <Meta

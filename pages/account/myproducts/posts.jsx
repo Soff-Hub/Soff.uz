@@ -42,6 +42,7 @@ const Posts = () => {
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
+
     const [free, setFree] = useState(false);
     const [uploadPoster, setUploadPoster] = useState(false);
     const [customePoster, setCustomePoster] = useState(false);
@@ -202,8 +203,10 @@ const Posts = () => {
             );
 
             if (ItemsData?.status === 201) {
-                if (!ItemsData?.data?.images) {
+                if (ItemsData?.data?.images < 3) {
                     setUploadPoster(true);
+                }
+                if (!ItemsData?.data?.images) {
                     setCustomePoster(true);
                     setLivePosterFile({ ...ItemsData?.data, images: [] });
                     setLiveFile2({ ...ItemsData?.data, images: [] });
@@ -238,29 +241,27 @@ const Posts = () => {
         const img = window.URL.createObjectURL(e.target.files[0]);
         setLiveFile(img);
 
-        if (uploadPoster) {
-            setLivePosterFile({
-                ...livePosterFile,
-                images: livePosterFile?.images
-                    ? [
-                        ...livePosterFile?.images,
-                        {
-                            id: new Date().getTime(),
-                            image_url: img,
-                            file: e.target.files[0],
-                        },
-                    ]
-                    : [
-                        {
-                            id: new Date().getTime(),
-                            image_url: img,
-                            file: e.target.files[0],
-                        },
-                    ],
-            });
-        } 
+        setLivePosterFile({
+            ...livePosterFile,
+            images: livePosterFile?.images
+                ? [
+                    ...livePosterFile?.images,
+                    {
+                        id: new Date().getTime(),
+                        image_url: img,
+                        file: e.target.files[0],
+                    },
+                ]
+                : [
+                    {
+                        id: new Date().getTime(),
+                        image_url: img,
+                        file: e.target.files[0],
+                    },
+                ],
+        });
 
-        if (livePosterFile?.images?.length >= 2) {
+        if (livePosterFile?.images?.length > 2) {
             setUploadPoster(false);
         }
     }

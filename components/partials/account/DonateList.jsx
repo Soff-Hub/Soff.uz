@@ -1,4 +1,4 @@
-import { Table } from 'antd';
+import { Alert, Table } from 'antd';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -79,8 +79,13 @@ export default function DonateList() {
     return (
         <div className="ps-section--shopping ps-whishlist">
             <div className="container">
-                <div className="ps-section__header">
-                    <h1>Qo'llab quvvatlaganlar</h1>
+                <div className="ps-section__header m-0 p-0 mb-5">
+                    <h2>Qo'llab quvvatlaganlar</h2>
+                    <p>
+                        <Alert type='info' message="Bu yerda siz ulashgan ishlaringizni ko'rgan Soff.uz foydalanuvchilari, qo'llab quvvatlash maqsadida pul o'tkazmalarini amalga oshirganliklarini ko'rishingiz mumkin" >
+                            Bu yerda siz ulashgan ishlaringizni ko'rgan Soff.uz foydalanuvchilari, qo'llab quvvatlash maqsadida pul o'tkazmalarini amalga oshirganliklarini ko'rishingiz mumkin
+                        </Alert>
+                    </p>
                 </div>
 
                 <div className="ps-section__content">
@@ -92,7 +97,7 @@ export default function DonateList() {
                             pagination={false}
                         />
                     ) : (
-                        <div className="alert alert-danger" role="alert">
+                        <div className="alert alert-danger text-center" role="alert">
                             Qo'llab quvvatlaganlar hozircha yo'q!
                         </div>
                     )}

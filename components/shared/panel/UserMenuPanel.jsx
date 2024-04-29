@@ -187,11 +187,10 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                 <div className="pb-3">
                     <h4 className="w-100  border m-0 p-3 rounded-3  text-truncate ">
                         <strong
-                            className={`fs-3 text-${
-                                profile?.is_payment === false
-                                    ? 'danger'
-                                    : 'success'
-                            }`}>
+                            className={`fs-3 text-${profile?.is_payment === false
+                                ? 'danger'
+                                : 'success'
+                                }`}>
                             <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
                             {addPeriodToThousands(profile?.wallet)} so'm
                         </strong>
@@ -327,6 +326,24 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                         </li>
                                     </Card>
                                 </Badge.Ribbon>
+                            ) : link?.url == '/account/donate-page' ? (
+                                <Badge.Ribbon text="Yangi funksiya" color="orange">
+                                    <Card size="small">
+                                        <li
+                                            onClick={handleDrawerClose}
+                                            key={link.text}
+                                            className={
+                                                link.url === asPath ? 'active' : ''
+                                            }>
+                                            <Link href={link.url}>
+                                                <a>
+                                                    <i className={link.icon}></i>
+                                                    {link.text}{' '}
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    </Card>
+                                </Badge.Ribbon>
                             ) : (
                                 <li
                                     onClick={handleDrawerClose}
@@ -341,7 +358,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                             {user?.role === 'admin' ? (
                                                 link?.url ===
                                                     '/account/application' &&
-                                                webdata?.is_avaiable ===
+                                                    webdata?.is_avaiable ===
                                                     true ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
@@ -359,7 +376,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                             {user?.role === 'admin' ? (
                                                 link?.url ===
                                                     '/account/products' &&
-                                                webdata1?.is_avaiable ===
+                                                    webdata1?.is_avaiable ===
                                                     true ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
@@ -377,7 +394,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                             {user?.role === 'seller' ? (
                                                 link?.url ===
                                                     '/account/myproducts' &&
-                                                webdata2?.is_avaiable ===
+                                                    webdata2?.is_avaiable ===
                                                     true ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"

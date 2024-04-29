@@ -21,7 +21,6 @@ const ProductAudioDetailFullWidth = ({
     };
 
 
-
     return (
         <>
             <Meta
