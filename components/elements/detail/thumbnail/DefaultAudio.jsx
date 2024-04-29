@@ -1,4 +1,4 @@
-import WavesurferPlayer from '@wavesurfer/react';
+import WavesurferPlayer from 'react/jsx-runtime.js';
 import React, { useState } from 'react';
 
 export default function DefaultAudio({ product }) {
