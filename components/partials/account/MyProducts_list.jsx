@@ -858,7 +858,7 @@ function MyProductsLists() {
                                             </h4>
                                             <Table
                                                 dataSource={data}
-                                                scroll={{ x: 1500 }}
+                                                scroll={{ x: 1600 }}
                                                 columns={columns}
                                                 pagination={false}
                                             />
