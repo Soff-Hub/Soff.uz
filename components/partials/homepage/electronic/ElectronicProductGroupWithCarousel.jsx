@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Product from '~/components/elements/products/Product';
+import ProductVideo from '~/components/elements/products/ProductVideo';
 
 const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
 
@@ -20,9 +21,18 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                                 <Product product={item} />{' '}
                             </div>
                         ))}
-
-                   
                 </div>
+                // <div className="d-flex align-content-center row" style={{ rowGap: '15px' }}>
+                //     {data?.promotional_sliders
+                //         ?.slice(0, 6)
+                //         .map((item, index) => (
+                //             <div
+                //                 key={index}
+                //                 className="col-md-4">
+                //                 <ProductVideo product={item} />{' '}
+                //             </div>
+                //     ))}
+                // </div>
             );
         } else {
             productItemsView = <p>Mahsulot topilmadi</p>;
