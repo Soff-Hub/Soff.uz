@@ -1,5 +1,5 @@
 
-import { jsxs } from 'react/jsx-runtime';
+import { jsxs } from 'react/jsx-runtime.js';
 import WavesurferPlayer from '@wavesurfer/react';
 import React, { useState } from 'react';
 
