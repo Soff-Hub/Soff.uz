@@ -66,7 +66,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
-            setViews(respons.count);
+            setViews(respons);
         }
     }
 

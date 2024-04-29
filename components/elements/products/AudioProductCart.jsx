@@ -80,7 +80,7 @@ const AudioWaveform = ({ product }) => {
 
     const [wavesurferObj, setWavesurferObj] = useState();
 
-    const [playing, setPlaying] = useState(true); 
+    const [playing, setPlaying] = useState(false); 
     const [volume, setVolume] = useState(1); 
 
     // create the waveform inside the correct component
@@ -122,6 +122,19 @@ const AudioWaveform = ({ product }) => {
         setPlaying(!playing);
     };
 
+    useEffect(() => {
+        if (wavesurferObj) {
+            wavesurferObj.on('finish', handleAudioFinish);
+        }
+    }, [wavesurferObj]);
+    
+    const handleAudioFinish = () => {
+        // Audioning tugagan paytidagi harakatlar
+        console.log('Audio tugab ketdi');
+        // Boshqa harakatlar
+        setPlaying(false);
+    };
+
 
     return (
         <>
@@ -134,7 +147,7 @@ const AudioWaveform = ({ product }) => {
                                 <div
                                     className="col-xl-1 col-lg-1 col-md-1  audio-play-list"
                                     onClick={handlePlayPause}>
-                                    {!playing ? (
+                                    {playing ? (
                                         <>
                                             <i class="fa-solid fa-circle-pause"></i>
                                         </>
@@ -149,15 +162,15 @@ const AudioWaveform = ({ product }) => {
                                     <Link
                                         style={{ display: 'flex' }}
                                         href="/product/[pid]"
-                                        as={`/product/${product.slug}`}>
+                                        as={`/product/${product?.seller?.id}`}>
                                         <a className="audio-name text-truncate fw-bolder">
                                             {product?.title}
                                         </a>
                                     </Link>
                                            
                                 </p>
-								<Link  href="/product/[pid]"
-                                        as={`/product/${product.slug}`} >
+								<Link  href="/seller/[pid]"
+                                        as={`/seller/${product.slug}`} >
 								<a className='text-truncate' > 
 									{product?.seller?.first_name}
 									{product?.seller?.last_name}
