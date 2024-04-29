@@ -19,6 +19,8 @@ import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/mo
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import Link from 'next/link';
 import { InputNumber } from 'primereact/inputnumber';
+import { useForm } from 'react-hook-form';
+import Input from '~/components/form/Input';
 
 const category_id = [];
 
@@ -26,14 +28,12 @@ const AudioPosts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [fileImgAudio, setFileImgAudio] = useState(null);
-    const [fileImgFileID, setFileImgFileID] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [narxNomi, setNarxNomi] = useState(true);
-    const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
     const [livePosterAudio, setLivePosterAudio] = useState('');
@@ -49,6 +49,9 @@ const AudioPosts = () => {
     const maxCompleted = 100;
     const [progress, setProgress] = useState(0);
     const [socket, setSocket] = useState(null);
+
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
 
     const breadCrumb = [
         {
@@ -196,11 +199,10 @@ const AudioPosts = () => {
         }
     }
 
-    async function handleClickPosts(e) {
-        e.preventDefault();
+    async function handleClickPosts(data) {
 
         const formData = new FormData();
-        formData.append('title', title);
+        formData.append('title', data?.title);
         if (free) {
             formData.append('price', 0);
         } else {
@@ -209,12 +211,7 @@ const AudioPosts = () => {
         formData.append('description', Fulldata);
         formData.append('tags', tagSearchResult);
         formData.append('document', livePosterAudio?.id);
-        liveFile?.images?.[0]?.id
-            ? formData.append('poster_id', liveFile?.images?.[0]?.id)
-            : 'None',
-            fileImgPoster ? formData.append('poster', fileImgPoster) : 'None',
-            fileImgFileID ? formData.append('poster_id', fileImgFileID) : '',
-            formData.append('category', category_id[0]);
+        formData.append('poster', fileImgPoster)
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
@@ -282,12 +279,12 @@ const AudioPosts = () => {
                     centered: true,
                     title: 'Xatolik!',
                     content: `${ItemsData?.status === 400
+                        ? ItemsData?.data?.msg
                             ? ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                            : ItemsData?.status === 413
-                                ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
-                                : "Audio mahsulot qo'sha olmadingiz "
+                            : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
+                        : ItemsData?.status === 413
+                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
+                            : "Audio mahsulot qo'sha olmadingiz "
                         }`,
                 });
             }
@@ -295,12 +292,18 @@ const AudioPosts = () => {
         }
     }
 
-    function LiveImage(e) {
-        setFileImgFileID('');
-        setFileImgPoster(e.target.files[0]);
-        const img = window.URL.createObjectURL(e.target.files[0]);
-        setLiveFile(img);
-    }
+
+
+    useEffect(() => {
+        const selectedImage = watch('image[0]');
+        setFileImgPoster(selectedImage);
+        if (selectedImage) {
+            const img = window?.URL?.createObjectURL(selectedImage);
+            setLiveFile(img);
+        }
+    }, [watch('image')]);
+
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -333,6 +336,14 @@ const AudioPosts = () => {
     useEffect(() => {
         PostAudioPoster();
     }, [fileImgAudio]);
+
+
+    useEffect(() => {
+        if (watch('file')) {
+            setFileImgAudio(watch('file[0]'));
+        }
+    }, [watch('file')]);
+
 
     useEffect(() => {
         if (user?.access) {
@@ -411,6 +422,8 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
+
+
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -446,10 +459,12 @@ const AudioPosts = () => {
 
                         <div className={` rounded-3 col-md-8 mb-2`}>
                             <form
-                                onSubmit={handleClickPosts}
+                                onSubmit={handleSubmit(handleClickPosts)}
                                 style={{ position: 'relative', width: '100%' }}
                                 id="FormPostsMyProducts"
-                                className=" col-md-12 pb-5">
+                                className=" col-md-12 pb-5"
+
+                                noValidate>
                                 <div className="row   mt-3">
                                     <div className="col-md-4  d-flex justify-content-between p-0 ">
                                         <h4 className=" p-0">
@@ -467,17 +482,16 @@ const AudioPosts = () => {
                                                 className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                         </Tooltip>
                                     </div>
-                                    <input
-                                        required
-                                        type="text"
-                                        className="form-control  rounded-3 col-md-8 mb-2"
+                                    <Input
                                         name="title"
-                                        onChange={(e) => {
-                                            const value = e.target.value.trim();
-                                            if (value !== "") {
-                                                setTitle(value);
-                                            }
-                                        }}
+                                        type="text"
+                                        className={"col-md-8 mb-2"}
+                                        InputClassName={"form-control  rounded-3 "}
+                                        {...register('title', {
+                                            required: 'Maydon toldirish majburiy',
+                                            validate: value => value.trim() !== "" || "Nomi bo'sh bo'lishi mumkin emas"
+                                        })}
+                                        error={errors.title?.message}
                                     />
                                 </div>
                                 <div className="row ">
@@ -489,67 +503,75 @@ const AudioPosts = () => {
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
                                         </Tooltip>
                                     </div>
-
-                                    <label
-                                        className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
-                                        style={{
-                                            backgroundColor: '#F1F1F1',
-                                            border: '1px dashed green',
-                                            width: '100%',
-                                        }}>
-                                        {livePosterAudio === '' ? (
-                                            <span
-                                                className="d-flex flex-column align-items-center"
-                                                style={{ cursor: 'pointer' }}>
-                                                {loadingAudio ? (
-                                                    <Tooltip title="Mahsulot yuklash davom etmoqda">
-                                                        <Progress
-                                                            percent={
-                                                                socket?.progress
-                                                            }
-                                                            success={{
-                                                                percent: 30,
-                                                            }}
-                                                        />
-                                                    </Tooltip>
-                                                ) : (
-                                                    <span
-                                                        className="d-flex flex-column align-items-center "
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}>
-                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                        <span>
-                                                            Mahsulot (audio)
-                                                            yuklash uchun ushbu
-                                                            hududga bosing
-                                                            (.mp3)
+                                    <div className="col-md-8 p-0">
+                                        <label
+                                            className="add-product-user-image d-flex flex-column justify-content-center 
+                                        align-content-center form-control py-5 rounded-3 text-truncate"
+                                            style={{
+                                                backgroundColor: errors.file?.message ? " #fff" : '#F1F1F1',
+                                                border: errors.file?.message ? '1px solid red' : "1px dashed green",
+                                                width: '100%',
+                                            }}>
+                                            {livePosterAudio === '' ? (
+                                                <span
+                                                    className="d-flex flex-column align-items-center"
+                                                    style={{ cursor: 'pointer' }}>
+                                                    {loadingAudio ? (
+                                                        <Tooltip title="Mahsulot yuklash davom etmoqda">
+                                                            <Progress
+                                                                percent={
+                                                                    socket?.progress
+                                                                }
+                                                                success={{
+                                                                    percent: 30,
+                                                                }}
+                                                            />
+                                                        </Tooltip>
+                                                    ) : (
+                                                        <span
+                                                            className="d-flex flex-column align-items-center "
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                            }}>
+                                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                            <span>
+                                                                Mahsulot (audio)
+                                                                yuklash uchun ushbu
+                                                                hududga bosing
+                                                                (.mp3)
+                                                            </span>
                                                         </span>
-                                                    </span>
-                                                )}
-                                            </span>
-                                        ) : (
-                                            <span
-                                                className="d-flex flex-column align-items-center"
-                                                style={{ cursor: 'pointer' }}>
-                                                <span>
-                                                    {' '}
-                                                    Siz audio yukladingiz{' '}
-                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                    )}
                                                 </span>
-                                            </span>
-                                        )}
-                                        <input
-                                            required
-                                            type="file"
-                                            onChange={(e) =>
-                                                setFileImgAudio(
-                                                    e.target.files[0]
-                                                )
-                                            }
-                                            accept="audio/mp3"
-                                        />
-                                    </label>
+                                            ) : (
+                                                <span
+                                                    className="d-flex flex-column align-items-center"
+                                                    style={{ cursor: 'pointer' }}>
+                                                    <span>
+                                                        {' '}
+                                                        Siz audio yukladingiz{' '}
+                                                        <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                    </span>
+                                                </span>
+                                            )}
+                                            <input
+                                                name='file'
+                                                type="file"
+                                                {...register('file', {
+                                                    required: 'Maydon toldirish majburiy',
+                                                    validate: value => !!value[0] || "Audio tanlanishi majburiy"
+                                                })}
+                                                accept="audio/mp3"
+                                            />
+
+                                        </label>
+
+                                        <p className={"my-2  text-danger"}>
+                                            {errors?.file?.message}
+                                        </p>
+
+                                    </div>
+
                                 </div>
 
                                 <div className="row mb-3">
@@ -561,31 +583,40 @@ const AudioPosts = () => {
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
                                         </Tooltip>
                                     </div>
-                                    <label
-                                        className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
-                                        style={{
-                                            backgroundColor: '#F1F1F1',
-                                            border: '1px dashed green',
-                                            height: '61px',
-                                        }}>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => LiveImage(e)}
-                                            accept="image/*"
-                                            style={{ width: '20px' }}
-                                        />
-                                        <span
-                                            className="d-flex flex-column align-items-center "
+                                    <div className='col-md-8 p-0'>
+                                        <label
+                                            className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
                                             style={{
-                                                cursor: 'pointer',
+                                                height: '61px',
+                                                backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',
+                                                border: errors.image?.message ? '1px solid red' : "1px dashed green",
+                                                width: '100%',
                                             }}>
-                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                            <span>
-                                                Mahsulot rasmni yuklash uchun
-                                                ushbu hududga bosing.
+                                            <input
+                                                name='image'
+                                                type="file"
+                                                {...register('image', {
+                                                    required: "Rasm to'ldirish majburiy",
+                                                    validate: value => !!value[0] || "Rasm tanlanishi majburiy"
+                                                })}
+                                                accept="image/*"
+                                            />
+                                            <span
+                                                className="d-flex flex-column align-items-center "
+                                                style={{
+                                                    cursor: 'pointer',
+                                                }}>
+                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                <span>
+                                                    Mahsulot rasmni yuklash uchun
+                                                    ushbu hududga bosing.
+                                                </span>
                                             </span>
-                                        </span>
-                                    </label>
+                                        </label>
+                                        <p className={"my-2  text-danger"}>
+                                            {errors?.image?.message}
+                                        </p>
+                                    </div>
                                 </div>
 
                                 <div className=" row ">
@@ -645,19 +676,6 @@ const AudioPosts = () => {
                                         onChange={handleFreeChange}>
                                         Bepul
                                     </Checkbox>
-                                    {/* <input
-                                        required
-                                        type={narxNomi ? 'text' : 'number'}
-                                        className="form-control  rounded-3 col-md-6"
-                                        name="price"
-                                        disabled={free}
-                                        value={taxminiyNarx}
-                                        onChange={(e) => (
-                                            setNarxNomi(false),
-                                            setTaxminiyNarx(e.target.value),
-                                            setNarx(e.target.value)
-                                        )}
-                                    /> */}
                                     <InputNumber
                                         required
                                         disabled={free}
@@ -695,7 +713,7 @@ const AudioPosts = () => {
                                     className="d-flex justify-content-end mt-4 "
                                     style={{ transform: 'translateX(16px)' }}>
                                     <button
-                                        disabled={title === ''}
+
                                         type="submit"
                                         className="btn btn-success py-3 ">
                                         <span className="fs-4 px-5">
@@ -773,7 +791,7 @@ const AudioPosts = () => {
                                 <p className="live-card-p">
                                     <strong>Nomi : </strong>{' '}
                                     <span style={{ maxWidth: `150px` }}>
-                                        {title ? title : "To'ldirilmadi"}
+                                        {watch("title") ? watch("title") : "To'ldirilmadi"}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
@@ -900,7 +918,7 @@ const AudioPosts = () => {
                                         <strong>Nomi : </strong>{' '}
                                         <span style={{ maxWidth: '150px' }}>
                                             {' '}
-                                            {title ? title : "To'ldirilmadi"}
+                                            {watch("title") ? watch("title") : "To'ldirilmadi"}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
@@ -1021,7 +1039,7 @@ const AudioPosts = () => {
                                         <DefaultAudioLive
                                             product={audioPost}
                                             liveFile={liveFile}
-                                            title={title}
+                                            title={watch("title")}
                                             categoryName={categoryName}
                                         />
                                         <ModuleAudioDetailTopInformationLive

@@ -14,7 +14,7 @@ import PostRepository from '~/repositories/PostRepository';
 import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
 import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
 import axios from 'axios';
-import Head from 'next/head';
+
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
