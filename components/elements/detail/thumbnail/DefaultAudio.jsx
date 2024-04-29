@@ -33,11 +33,10 @@ export default function DefaultAudio({ product }) {
                     <div
                         className="audio__poster"
                         style={{
-                            backgroundImage: `url( ${
-                                product?.poster_url
+                            backgroundImage: `url( ${product?.poster_url
                                     ? product?.poster_url
                                     : 'https://png.pngtree.com/background/20230612/original/pngtree-colorful-musical-notes-and-music-notes-picture-image_3176403.jpg'
-                            } )`,
+                                } )`,
                             borderRadius: '5px',
                             backgroundPositionX: 'center',
                             backgroundPositionY: 'center',
@@ -127,18 +126,17 @@ export default function DefaultAudio({ product }) {
                             <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
                                 {
                                     product?.file_url ?
-                                    <WavesurferPlayer
-                                    height={40}
-                                    waveColor="#00A44F"
-                                    url={product?.file_url}
-                                    onReady={onReady}
-                                    onPlay={() => setIsPlaying(true)}
-                                    onPause={() => setIsPlaying(false)}
-                                /> 
-                                : "Loading..."
-
+                                        <WavesurferPlayer
+                                            height={40}
+                                            waveColor="#00A44F"
+                                            url={product?.file_url}
+                                            onReady={onReady}
+                                            onPlay={() => setIsPlaying(true)}
+                                            onPause={() => setIsPlaying(false)}
+                                        />
+                                        : "Loading..."
                                 }
-                               
+
                             </div>
                         </div>
                     )}

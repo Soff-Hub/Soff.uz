@@ -16,7 +16,8 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
-
+import { useForm } from 'react-hook-form';
+import Input from '~/components/form/Input';
 const category_id = [];
 
 const Posts = () => {
@@ -30,7 +31,6 @@ const Posts = () => {
     const { user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [narxNomi, setNarxNomi] = useState(true);
-    const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
     const [livePosterFile, setLivePosterFile] = useState('');
@@ -43,12 +43,13 @@ const Posts = () => {
     const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
 
-
-
     const [free, setFree] = useState(false);
     const [uploadPoster, setUploadPoster] = useState(false);
     const [customePoster, setCustomePoster] = useState(false);
     const [customeFile, setCustomeFile] = useState(null);
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+
 
     const breadCrumb = [
         {
@@ -187,80 +188,6 @@ const Posts = () => {
         }
     }
 
-    async function handleClickPosts(e) {
-        e.preventDefault();
-
-        if (customePoster && fileImgPoster?.length < 3) {
-            const modal = Modal.info({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Mahsulot to'liq yuklanishi uchun mahsulot rasmi ga kamida 3ta rasm yuklashingiz kerak!",
-            });
-
-            return;
-        }
-
-        setDeisabled(true);
-
-        const formData = new FormData();
-        formData.append('title', title);
-        if (free) {
-            formData.append('price', 0);
-        } else {
-            formData.append('price', narx);
-        }
-        formData.append('description', Fulldata);
-        formData.append('tags', tagSearchResult);
-
-        liveFile2?.images?.[0]?.id
-            ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
-            : 'None';
-
-        // fileImgPoster ? formData.append('images', fileImgPoster) : 'None';
-
-        if (customePoster) {
-            customeFile
-                ? formData.append('poster', customeFile)
-                : formData.append('poster', fileImgPoster[0]);
-            for (const file of fileImgPoster) {
-                formData.append('images', file);
-            }
-        } else {
-            fileImgPoster
-                ? formData.append('poster', fileImgPoster[0])
-                : 'None';
-            fileImgFileID ? formData.append('poster_id', fileImgFileID) : '';
-        }
-
-        formData.append('category', category_id[0]);
-        formData.append('document', livePosterFile?.id);
-
-        const patchItems = await PatchRepository.getPatchPoster(
-            formData,
-            user?.access
-        );
-        if (patchItems?.status === 201) {
-            Router.push('/account/myproducts');
-            setDeisabled(false);
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            });
-        } else {
-            setDeisabled(false);
-            console.log(patchItems);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content:
-                    patchItems?.data?.msg ||
-                    JSON.stringify(patchItems?.data.category),
-            });
-        }
-    }
 
     async function PostFilePoster() {
         if (fileImgFile) {
@@ -383,7 +310,88 @@ const Posts = () => {
         PostFilePoster();
     }, [fileImgFile]);
 
-    console.log(title);
+
+    async function handleClickPosts(data) {
+
+        if (customePoster && fileImgPoster?.length < 3) {
+            const modal = Modal.info({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content:
+                    "Mahsulot to'liq yuklanishi uchun mahsulot rasmi ga kamida 3ta rasm yuklashingiz kerak!",
+            });
+
+            return;
+        }
+
+        setDeisabled(true);
+
+        const formData = new FormData();
+        formData.append('title', data?.title);
+        if (free) {
+            formData.append('price', 0);
+        } else {
+            formData.append('price', narx);
+        }
+        formData.append('description', Fulldata);
+        formData.append('tags', tagSearchResult);
+
+        liveFile2?.images?.[0]?.id
+            ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
+            : 'None';
+
+        if (customePoster) {
+            customeFile
+                ? formData.append('poster', customeFile)
+                : formData.append('poster', fileImgPoster[0]);
+            for (const file of fileImgPoster) {
+                formData.append('images', file);
+            }
+        } else {
+            fileImgPoster
+                ? formData.append('poster', fileImgPoster[0])
+                : 'None';
+            fileImgFileID ? formData.append('poster_id', fileImgFileID) : '';
+        }
+
+        formData.append('category', category_id[0]);
+        formData.append('document', livePosterFile?.id);
+
+        const patchItems = await PatchRepository.getPatchPoster(
+            formData,
+            user?.access
+        );
+        if (patchItems?.status === 201) {
+            Router.push('/account/myproducts');
+            setDeisabled(false);
+            const modal = Modal.warning({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content:
+                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+            });
+        } else {
+            setDeisabled(false);
+            console.log(patchItems);
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content:
+                    patchItems?.data?.msg ||
+                    JSON.stringify(patchItems?.data.category),
+            });
+        }
+
+    }
+
+
+
+    useEffect(() => {
+        if (watch('file')) {
+            setFileImgFile(watch('file[0]'));
+        }
+    }, [watch('file')]);
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -392,6 +400,7 @@ const Posts = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Yangi mahsulot yaratish'} />
                 <BreadCrumb breacrumb={breadCrumb} />
+
                 <div className="d-flex container justify-content-center ">
                     <div
                         className="row  w-100 gap-3 pt-5"
@@ -419,16 +428,12 @@ const Posts = () => {
                         </div>
 
                         <form
-                            onSubmit={handleClickPosts}
+                            onSubmit={handleSubmit(handleClickPosts)}
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
                             className=" col-md-8 pb-5"
                             noValidate
                         >
-
-
-
-
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     <h4 className=" p-0">Yangi mahsulot </h4>
@@ -444,19 +449,21 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                     </Tooltip>
                                 </div>
-                                <input
-                                    required
-                                    type="text"
-                                    className="form-control  rounded-3 col-md-8 mb-2"
+                                <Input
                                     name="title"
-                                    onChange={(e) => {
-                                        const value = e.target.value.trim();
-                                        if (value !== "") {
-                                            setTitle(value);
-                                        }
-                                    }}
+                                    type="text"
+                                    className={"col-md-8 mb-2"}
+                                    InputClassName={"form-control  rounded-3 "}
+                                    {...register('title', {
+                                        required: 'Maydon toldirish majburiy',
+                                        validate: value => value.trim() !== "" || "Nomi bo'sh bo'lishi mumkin emas"
+                                    })}
+                                    error={errors.title?.message}
                                 />
+
                             </div>
+
+
                             <div className="row ">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot: *</p>{' '}
@@ -466,60 +473,71 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                {/* <div className="row"> */}
-                                <label
-                                    className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
-                                    style={{
-                                        backgroundColor: '#F1F1F1',
-                                        border: '1px dashed green',
-                                        width: '100%',
-                                    }}>
-                                    {livePosterFile === '' ? (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{ cursor: 'pointer' }}>
-                                            {loading ? (
-                                                <span className="d-flex justify-content-center">
-                                                    <ClipLoader
-                                                        size={25}
-                                                        color="#36d7b7"
-                                                    />
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    className="d-flex flex-column align-items-center "
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}>
-                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                    <span>
-                                                        Faylni yuklash uchun
-                                                        ushbu hududga bosing.
+
+                                <div className='col-md-8 p-0'>
+                                    <label
+                                        className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
+                                        style={{
+                                            backgroundColor: errors.file?.message ? " #fff" : '#F1F1F1',
+                                            border: errors.file?.message ? '1px solid red' : "1px dashed green",
+                                            width: '100%',
+                                        }}>
+                                        {livePosterFile === '' ? (
+                                            <span
+                                                className="d-flex flex-column align-items-center"
+                                                style={{ cursor: 'pointer' }}>
+                                                {loading ? (
+                                                    <span className="d-flex justify-content-center">
+                                                        <ClipLoader
+                                                            size={25}
+                                                            color="#36d7b7"
+                                                        />
                                                     </span>
-                                                </span>
-                                            )}
-                                        </span>
-                                    ) : (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{ cursor: 'pointer' }}>
-                                            <span>
-                                                {' '}
-                                                Siz mahsulot yukladingiz{' '}
-                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                ) : (
+                                                    <span
+                                                        className="d-flex flex-column align-items-center "
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                        <span>
+                                                            Faylni yuklash uchun
+                                                            ushbu hududga bosing.
+                                                        </span>
+                                                    </span>
+                                                )}
                                             </span>
-                                        </span>
-                                    )}
-                                    <input
-                                        required
-                                        type="file"
-                                        onChange={(e) =>
-                                            setFileImgFile(e.target.files[0])
-                                        }
-                                        accept=".doc, .docx, .ppt, .pdf, .pptx"
-                                    />
-                                </label>
+                                        ) : (
+                                            <span
+                                                className="d-flex flex-column align-items-center"
+                                                style={{ cursor: 'pointer' }}>
+                                                <span>
+                                                    {' '}
+                                                    Siz mahsulot yukladingiz{' '}
+                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                </span>
+                                            </span>
+                                        )}
+
+                                        <input
+                                            name='file'
+                                            type="file"
+                                            {...register('file', {
+                                                required: 'Maydon toldirish majburiy',
+                                                validate: value => !!value[0] || "Fayl tanlanishi majburiy"
+                                            })}
+                                            accept=".doc, .docx, .ppt, .pdf, .pptx"
+                                        />
+
+
+                                    </label>
+                                    <p className={"my-2  text-danger"}>
+                                        {errors?.file?.message}
+                                    </p>
+
+                                </div>
                             </div>
+
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot rasmi: *</p>
@@ -619,6 +637,7 @@ const Posts = () => {
                                     </div>
                                 </div>
                             </div>
+
                             <div className=" row ">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                     <p>Teglar:</p>{' '}
@@ -637,6 +656,7 @@ const Posts = () => {
                                     </Select>
                                 </div>
                             </div>
+
                             <div className=" row  mt-2">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Kategoriya: *</p>{' '}
@@ -646,6 +666,7 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
+
                                 <div className="rounded-3  p-0 m-0 d-flex flex-column col-md-8">
                                     <Select
                                         mode="select"
@@ -656,9 +677,12 @@ const Posts = () => {
                                             height: '47px',
                                         }}
                                         onChange={onChange}
-                                        onSearch={onSearch}>
+                                        onSearch={onSearch}
+
+                                    >
                                         {options}
                                     </Select>
+
                                 </div>
                             </div>
                             <div className="row mt-3">
@@ -676,19 +700,6 @@ const Posts = () => {
                                     onChange={handleFreeChange}>
                                     Bepul
                                 </Checkbox>
-                                {/* <input
-                                    required
-                                    type={narxNomi ? 'text' : 'number'}
-                                    className="form-control  rounded-3 col-md-6"
-                                    name="price"
-                                    disabled={free}
-                                    value={taxminiyNarx}
-                                    onChange={(e) => (
-                                        setNarxNomi(false),
-                                        setTaxminiyNarx(e.target.value),
-                                        setNarx(e.target.value)
-                                    )}
-                                /> */}
 
                                 <InputNumber
                                     required
@@ -701,6 +712,7 @@ const Posts = () => {
                                         setNarx(e.value)
                                     )}
                                 />
+
                             </div>
 
                             <div className="  row mt-3">
@@ -727,7 +739,7 @@ const Posts = () => {
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
-                                    disabled={title === '' || disabled}
+                                disabled={disabled}
                                     type="submit"
                                     className="btn btn-success py-3 ">
                                     <span className="fs-4 px-5">
@@ -776,7 +788,7 @@ const Posts = () => {
                                     <strong>Nomi : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>
                                         {' '}
-                                        {title ? title : "To'ldirilmadi"}
+                                        {watch("title") ? watch("title") : "To'ldirilmadi"}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
@@ -800,18 +812,10 @@ const Posts = () => {
                                             : "To'ldirilmadi"}{' '}
                                     </span>
                                 </p>
-                                {/* <p className="live-card-p">
-                                    <strong>Chegirmasi : </strong>{' '}
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {' '}
-                                        {discount
-                                            ? discount + '%'
-                                            : "To'ldirilmadi"}{' '}
-                                    </span>
-                                </p> */}
+
                                 <p className="live-card-p">
                                     <strong>Taglari : </strong>
-                                    {/* <span style={{maxWidth:'150px'}} > </span> */}
+
                                     {tagSearchResult.length > 0
                                         ? tagSearchResult?.map((item, i) => {
                                             return (
@@ -913,7 +917,7 @@ const Posts = () => {
                                         <strong>Nomi : </strong>{' '}
                                         <span style={{ maxWidth: '150px' }}>
                                             {' '}
-                                            {title ? title : "To'ldirilmadi"}
+                                            {watch("title") ? watch("title") : "To'ldirilmadi"}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
@@ -1067,9 +1071,7 @@ const Posts = () => {
                                             <header>
                                                 <h1>
                                                     {' '}
-                                                    {title
-                                                        ? title
-                                                        : "To'ldirilmadi"}
+                                                    {watch("title") ? watch("title") : "To'ldirilmadi"}
                                                 </h1>
                                                 <h4>
                                                     {' '}
