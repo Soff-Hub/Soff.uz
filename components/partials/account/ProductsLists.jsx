@@ -135,18 +135,7 @@ function ProductsLists() {
 
 
     async function handleClickIdEditProducts(productsItems) {
-        const ItemsData = await GetRepository.getShopsProducts(
-            null,
-            null,
-            null,
-            null,
-            null,
-            null,
-            productsItems,
-            null,
-            search,
-            user?.access
-        );
+        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, productsItems, null, null, null, user?.access)
         if (ItemsData) {
             dispatch(MyProductsEdit(ItemsData));
             Router.push(`/account/products/edit?page=${router.query.page}`);
@@ -238,7 +227,7 @@ function ProductsLists() {
                 dataFormat,
                 null,
                 dateArxiv,
-                search,filterType
+                search, filterType
             );
         }
     }, [
@@ -645,7 +634,7 @@ function ProductsLists() {
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
                                                         product={deleteIdView ? deleteIdView : ""}
-                                                        views={0}
+                                                        views={deleteIdView?.view_count}
                                                         admin={true}
                                                         taxminiyNarx={deleteIdView?.price}
                                                     />
@@ -743,6 +732,7 @@ function ProductsLists() {
                                                 <div className="ps-product__header ">
                                                     <ThumbnailDefault
                                                         product={deleteIdView ? deleteIdView : ""}
+                                                        views={deleteIdView?.view_count}
                                                     />
                                                     <div className="ps-product__info">
                                                         <div className="mb-4">

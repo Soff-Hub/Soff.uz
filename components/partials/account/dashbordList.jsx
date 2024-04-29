@@ -167,7 +167,7 @@ function DashbordList({ setOpen }) {
             ),
         },
     ];
-    
+
     const columnsOrders = [
         {
             title: 'Buyurtmachi',
@@ -179,7 +179,7 @@ function DashbordList({ setOpen }) {
                         {' '}
                         {customer_info.name}
                     </span>
-                    <span className ="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                    <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
                 </div>
             ),
         },
@@ -382,7 +382,7 @@ function DashbordList({ setOpen }) {
             <p className='step-0 m-0'></p>
             <div className="container">
                 {window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
-                    <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}>Saytdan foydalanish bo'yicha savolingiz bormi?</p>
+                    <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}><i className='fa-regular fa-circle-question'></i> Saytdan foydalanish bo'yicha savolingiz bormi?</p>
                 </div>}
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">

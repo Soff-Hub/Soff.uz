@@ -372,26 +372,47 @@ const AccountMenuSidebar = ({
                 <ul  >
                     {data.map((link, index) => (
                         <>
-                            {link?.url === '#' ? (
+                            {link?.url === '#' || link?.url === '/account/donate-page' ? (
                                 <>
                                     <Badge.Ribbon
                                         key={link?.url}
-                                        text="Tez kunda"
-                                        color="volcano">
+                                        text={link.url === '#' ? "Tez kunda" : "Yangi funksiya"}
+                                        color={link.url === '#' ? "volcano" : "blue"}>
                                         <Card size="small">
-                                            <li
-                                                className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}
-                                                onClick={showModal}>
-                                                <span
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}>
-                                                    <a className="d-flex align-items-center">
-                                                        <i className="fa-regular fa-handshake"></i>
-                                                        Mening bitimlarim
-                                                    </a>
-                                                </span>
-                                            </li>
+                                            {
+                                                link?.url === "#" ? (
+                                                    <li
+                                                        className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}
+                                                        onClick={showModal}
+                                                    >
+                                                        <span
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                            }}>
+                                                            <a className="d-flex align-items-center">
+                                                                <i className={'fa-regular fa-handshake'}></i>
+                                                                Mening bitimlarim
+                                                            </a>
+                                                        </span>
+                                                    </li>
+                                                ) : (
+                                                    <li
+                                                        className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}
+                                                    >
+                                                        <Link
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                            }}
+                                                            href={link.url}
+                                                        >
+                                                            <a className="d-flex align-items-center">
+                                                                <i className={link.icon}></i>
+                                                                {link.text}
+                                                            </a>
+                                                        </Link>
+                                                    </li>
+                                                )
+                                            }
                                         </Card>
                                     </Badge.Ribbon>
                                 </>

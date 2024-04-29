@@ -159,6 +159,17 @@
 
 
 
+.audio-play{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    i{
+        font-size: 25px;
+    }
+}
+
+
+
 @media screen and (max-width: 1200px){
     .audio--container{
         height: 260px;

@@ -27,7 +27,7 @@ const ThumbnailDefault = ({ product, vertical = true, views }) => {
                 </div>
                 <div className="views">
                     {' '}
-                    <i className="fa-solid fa-eye"></i> <span>{product?.view_count}</span>
+                    <i className="fa-solid fa-eye"></i> <span>{views}</span>
                 </div>
             </figure>
         </div>
