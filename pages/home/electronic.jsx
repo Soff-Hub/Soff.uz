@@ -26,7 +26,6 @@ const HomeElectronicsPage = () => {
 
     async function getProducts() {
         const responseData = await axios.get(baseUrl + 'customer/category-list/')
-        console.log('dfdg', responseData);
         setCategory(responseData?.data?.results);
     }
 
