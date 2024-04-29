@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 import DefaultVideo from './thumbnail/DefaultVideo';
+import ModuleVideoDetailTopInformation from './modules/ModuleVideoDetailTopInformation';
 
 const ProductVideoDetailFullWidth = ({
     product,
