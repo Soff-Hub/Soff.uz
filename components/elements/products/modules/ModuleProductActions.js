@@ -8,7 +8,7 @@ import Router from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios'
 
-const ModuleProductActions = ({ product }) => {
+const ModuleProductActions = ({ product, audio }) => {
     const [isQuickView, setIsQuickView] = useState(false);
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
@@ -97,7 +97,7 @@ const ModuleProductActions = ({ product }) => {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
-            <ul className="ps-product__actions">
+            <ul className={`ps-product__actions ${audio ? 'd-flex gap-5 justify-content-center align-content-center audio-list-icons' : ""} `}>
                 
                 <li>
                     <a

@@ -1,4 +1,4 @@
-import WavesurferPlayer from '@wavesurfer/react';
+// import WavesurferPlayer from '@wavesurfer/react';
 import React, { useState } from 'react';
 
 export default function DefaultAudio({ product }) {
@@ -94,14 +94,14 @@ export default function DefaultAudio({ product }) {
                                 )}
                             </div>
                             <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
-                                <WavesurferPlayer
+                                {/* <WavesurferPlayer
                                     height={40}
                                     waveColor="#00A44F"
                                     url={product?.document?.short_content_url}
                                     onReady={onReady}
                                     onPlay={() => setIsPlaying(true)}
                                     onPause={() => setIsPlaying(false)}
-                                />
+                                /> */}
                             </div>
                         </div>
                     ) : (
@@ -125,7 +125,7 @@ export default function DefaultAudio({ product }) {
                                 )}
                             </div>
                             <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
-                                {
+                                {/* {
                                     product?.file_url ?
                                     <WavesurferPlayer
                                     height={40}
@@ -134,10 +134,10 @@ export default function DefaultAudio({ product }) {
                                     onReady={onReady}
                                     onPlay={() => setIsPlaying(true)}
                                     onPause={() => setIsPlaying(false)}
-                                /> 
+                                />  
                                 : "Loading..."
 
-                                }
+                                } */}
                                
                             </div>
                         </div>
