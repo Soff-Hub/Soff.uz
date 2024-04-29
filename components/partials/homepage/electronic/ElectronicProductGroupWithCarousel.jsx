@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Product from '~/components/elements/products/Product';
 import AudioProductCart from '~/components/elements/products/AudioProductCart';
 
+
 const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     // Views
     let productItemsView;
@@ -38,6 +39,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
         );
     } else {
         productItemsView = <p>Audio mahsulot topilmadi</p>;
+
     }
 
     return (
