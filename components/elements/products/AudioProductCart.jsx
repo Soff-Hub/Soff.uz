@@ -1,8 +1,8 @@
 import React from 'react';
 import { useState } from 'react';
 import ModuleProductActions from './modules/ModuleProductActions';
-import WavesurferPlayer from '@wavesurfer/react';
 import Link from 'next/link';
+import WavesurferPlayer from '@wavesurfer/react';
 
 export default function AudioProductCart({ product }) {
     const [wavesurfer, setWavesurfer] = useState(null);
