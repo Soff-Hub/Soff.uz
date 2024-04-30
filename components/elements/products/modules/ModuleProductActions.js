@@ -6,7 +6,8 @@ import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import Router from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
-import axios from 'axios'
+import axios from 'axios';
+import { audioDownloaderSale } from '~/utilities/common-helpers';
 
 const ModuleProductActions = ({ product, audio }) => {
     const [isQuickView, setIsQuickView] = useState(false);
@@ -15,6 +16,7 @@ const ModuleProductActions = ({ product, audio }) => {
     const [open, setOpen] = useState(false);
     const [productView, setProduct] = useState([]);
     const { user } = useSelector((state) => state.auth);
+    const [loading, setLoading] = useState(true)
 
     const showModal = () => {
         setOpen(true);
@@ -46,7 +48,6 @@ const ModuleProductActions = ({ product, audio }) => {
         }
     }
 
-
     async function getProducts(e) {
         e.preventDefault();
         try {
@@ -67,12 +68,16 @@ const ModuleProductActions = ({ product, audio }) => {
         }
     }
 
-
     const handleHideQuickView = async (e) => {
         e.preventDefault();
 
         setIsQuickView(false);
     };
+
+    const detailLink = () => {
+        Router.push(`/product/${product?.slug}`)
+    };
+
 
     return (
         <>
@@ -97,9 +102,13 @@ const ModuleProductActions = ({ product, audio }) => {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
-            <ul className={`ps-product__actions ${audio ? 'd-flex gap-5 justify-content-center align-content-center audio-list-icons' : ""} `}>
-                
-                <li className={`${audio ? 'audio-list-action' : ''}`} >
+            <ul
+                className={`ps-product__actions ${
+                    audio
+                        ? 'd-flex gap-5 justify-content-center align-content-center audio-list-icons'
+                        : ''
+                } `}>
+                <li className={`${audio ? 'audio-list-action' : ''}`}>
                     <a
                         href="#"
                         data-toggle="tooltip"
@@ -116,7 +125,7 @@ const ModuleProductActions = ({ product, audio }) => {
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Ko'proq ko'rish"
-                        onClick={getProducts}>
+                        onClick={audio ? detailLink : getProducts}>
                         <i className="icon-eye"></i>
                     </a>
                 </li>
@@ -140,6 +149,29 @@ const ModuleProductActions = ({ product, audio }) => {
                     </a>
                 </li>
 
+                {audio && (
+                    <li className={`${audio ? 'audio-list-action' : ''}`}>
+                        <a
+                            href="#"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Yuklab olish"
+                            onClick={async (e) => {
+                                e.preventDefault();
+                                setLoading(true);
+                                await audioDownloaderSale(product, product);
+                                setLoading(false);
+                            }}>
+                            <i
+                                className={`${
+                                    !loading 
+                                        ? 'fa-regular fa-circle fa-beat-fade'
+                                        : 'fa-solid fa-download'
+                                } `}></i>
+                        </a>
+                    </li>
+                )}
+
                 <Modal
                     centeredwishlist
                     footer={null}
@@ -156,3 +188,27 @@ const ModuleProductActions = ({ product, audio }) => {
 };
 
 export default connect((state) => state)(ModuleProductActions);
+
+{/* <a
+    style={{
+        cursor: `${admin ? 'not-allowed' : 'pointer'}`,
+        minWidth: '172px',
+    }}
+    className="ps-btn ps-btn--black max-class"
+    href="#"
+    onClick={async (e) => {
+        e.preventDefault();
+        setLoading(true);
+        await audioDownloaderSale(product, product);
+        setLoading(false);
+    }}>
+    {!loading ? (
+        'Bepul yuklab olish'
+    ) : (
+        <div>
+            <div className="spinner-border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    )}
+</a>; */}
