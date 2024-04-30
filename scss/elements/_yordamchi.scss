@@ -1925,6 +1925,49 @@
 }
 
 @media (max-width: 500px) {
+    .ps-panel--search-result {
+        padding: 10px !important;
+
+        .ps-panel__content {
+            .ps-product__title {
+                display: inline !important;
+            }
+
+            .ps-product__thumbnail {
+                margin: 0 !important;
+                width: 80px !important;
+                max-width: 80px !important;
+                height: 50px !important;
+
+                a {
+                    margin: 0 !important;
+                }
+
+            }
+        }
+
+    }
+
+    .ps-form--quick-search {
+        width: 100%;
+    }
+
+    .ps-form__input {
+
+        input {
+            border-radius: 5px !important;
+            height: 36px !important;
+        }
+    }
+
+    .button_search {
+        display: none;
+    }
+
+    .searchFilterSelect {
+        display: none;
+    }
+
     .bannerModal2Carousel {
         top: 25%;
         left: 18%;
@@ -1972,6 +2015,51 @@
     .colCard2 {
         position: absolute;
         top: 81%;
+    }
+}
+
+@media (max-width:1200px) {
+    .ps-panel--search-result {
+        padding: 10px !important;
+
+        .ps-panel__content {
+            .ps-product__title {
+                display: inline !important;
+            }
+
+            .ps-product__thumbnail {
+                margin: 0 !important;
+                width: 80px !important;
+                max-width: 80px !important;
+                height: 50px !important;
+
+                a {
+                    margin: 0 !important;
+                }
+
+            }
+        }
+
+    }
+
+    .ps-form--quick-search {
+        width: 100%;
+    }
+
+    .ps-form__input {
+
+        input {
+            border-radius: 5px !important;
+            height: 36px !important;
+        }
+    }
+
+    .button_search {
+        display: none;
+    }
+
+    .searchFilterSelect {
+        display: none;
     }
 }
 
@@ -2136,12 +2224,13 @@
         height: 200px;
         position: relative;
 
-        .loading_h2{
+        .loading_h2 {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
         }
+
         .profile_images_card {
             position: absolute;
             bottom: -25%;
@@ -2225,7 +2314,7 @@
         .user_profile_card {
             padding: 0;
 
-            .loading_h2{
+            .loading_h2 {
                 position: absolute;
                 top: 30%;
                 left: 50%;

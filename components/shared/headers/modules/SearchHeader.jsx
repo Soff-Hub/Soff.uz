@@ -23,7 +23,7 @@ function useDebounce(value, delay) {
     return debouncedValue;
 }
 
-const SearchHeader = () => {
+const SearchHeader = ({ setSearch }) => {
     const inputEl = useRef(null);
     const [isSearch, setIsSearch] = useState(false);
     const [keyword, setKeyword] = useState('');
@@ -150,13 +150,15 @@ const SearchHeader = () => {
                     type="text"
                     value={keyword}
                     placeholder="Qidiruv..."
-                    onChange={(e) => setKeyword(e.target.value)}
+                    onChange={(e) =>
+
+                        (setKeyword(e.target.value), setSearch(e.target.value))}
                 />
                 {clearTextView}
                 {loadingView}
             </div>
 
-            <button onClick={handleSubmit}>Qidiruv</button>
+            <button className='button_search' onClick={handleSubmit}>Qidiruv</button>
 
             <div
                 className={`ps-panel--search-result${isSearch ? ' active ' : ''

@@ -24,7 +24,7 @@ function NavigationListAdmin() {
 
     const handleShowTagsDrawer = () => {
         setMenuDrawer(false);
-        Router.push('/account/products')
+        Router.push('/account/products?page=1')
     };
 
     const handleShowApplicationDrawer = () => {
