@@ -135,13 +135,12 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                 </h1>
             </div>
             <div
-                className={`product__top-information ${
-                    product?.document?.content_type === 'video'
-                        ? 'video_user_information'
-                        : product?.document?.content_type === 'audio'
+                className={`product__top-information ${product?.document?.content_type === 'video'
+                    ? 'video_user_information'
+                    : product?.document?.content_type === 'audio'
                         ? 'video_user_information'
                         : ''
-                } `}
+                    } `}
                 style={{ width: '100%' }}>
                 <div>
                     <div
@@ -172,13 +171,12 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                     </div>
                 </div>
                 <div
-                    className={`${
-                        product?.document?.content_type === 'video'
-                            ? 'video_send_container'
-                            : product?.document?.content_type === 'audio'
+                    className={`${product?.document?.content_type === 'video'
+                        ? 'video_send_container'
+                        : product?.document?.content_type === 'audio'
                             ? 'video_send_container'
                             : ''
-                    }`}>
+                        } d-flex align-items-center gap-4`}>
                     <div
                         className={`ps-product__actions heart_video `}>
                         <a
@@ -188,33 +186,32 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                                 cursor: `${admin ? 'not-allowed' : 'pointer'}`,
                             }}>
                             <i
-                                className={`${
-                                    wishlist?.some(
-                                        (item) =>
-                                            Number(item.id) ===
-                                            Number(product.id)
-                                    )
-                                        ? 'fa-solid fa-heart text-danger'
-                                        : 'icon-heart'
-                                } `}></i>
+                                className={`${wishlist?.some(
+                                    (item) =>
+                                        Number(item.id) ===
+                                        Number(product.id)
+                                )
+                                    ? 'fa-solid fa-heart text-danger'
+                                    : 'icon-heart'
+                                    } `}></i>
                         </a>
                     </div>
                     <div className="views_video mt-1">
                         {' '}
                         <i class="fa-solid fa-eye"></i>{' '}
                         <span>
-                            {product?.view ? product?.view : views?.count}
+                            {views || (product?.view ? product?.view : views?.count)}
                         </span>
                     </div>
                     <div className="video_send" onClick={() => copyVideoUrl()}>
                         {
-                            copy ? 
-                            <i class="fa-solid fa-check"></i>
-                            :
-                            <>
-                           <i class="fa-solid fa-share-nodes"></i>
-                            ulashish
-                            </>
+                            copy ?
+                                <i class="fa-solid fa-check"></i>
+                                :
+                                <>
+                                    <i class="fa-solid fa-share-nodes mr-2"></i>
+                                    ulashish
+                                </>
                         }
                     </div>
                 </div>
