@@ -609,7 +609,7 @@ const Posts = () => {
                                     required
                                     disabled={free}
                                     value={taxminiyNarx}
-                                    className="col-md-6 p-2 post-price"
+                                    className="col-md-6 p-2 price_input_number"
                                     onValueChange={(e) => (
                                         setTaxminiyNarx(e.value),
                                         setNarx(e.value)

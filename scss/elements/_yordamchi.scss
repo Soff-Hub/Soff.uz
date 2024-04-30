@@ -2045,7 +2045,8 @@
     .ps-form--quick-search {
         width: 100%;
     }
-    .ps-form--quick-search button{
+
+    .ps-form--quick-search button {
         background-color: #00A44F !important;
         padding: 5px !important;
         font-size: 12px !important;
@@ -2364,4 +2365,16 @@
             }
         }
     }
+}
+
+
+.p-inputnumber-input {
+    border: 1px solid #dddddd !important;
+    border-radius: 5px !important;
+    height: 43px !important;
+    padding: 0 10px !important;
+}
+
+.p-inputnumber-input:hover {
+    border: 1px solid #06c !important;
 }

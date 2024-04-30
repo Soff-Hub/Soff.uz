@@ -680,7 +680,7 @@ const AudioPosts = () => {
                                         required
                                         disabled={free}
                                         value={taxminiyNarx}
-                                        className="col-md-6 p-2"
+                                        className="col-md-6 p-2 price_input_number"
                                         onValueChange={(e) => (
                                             setNarxNomi(false),
                                             setTaxminiyNarx(e.value),
