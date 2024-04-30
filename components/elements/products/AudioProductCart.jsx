@@ -172,7 +172,7 @@ const AudioWaveform = ({ product }) => {
 								<Link  href="/seller/[pid]"
                                         as={`/seller/${product?.seller?.id}`} >
 								<a className='text-truncate' > 
-									{product?.seller?.first_name}
+									{product?.seller?.first_name}{" "}
 									{product?.seller?.last_name}
 								</a>
 								</Link>
