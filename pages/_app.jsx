@@ -46,16 +46,6 @@ function App({ Component, pageProps }) {
                 />
                 <meta name="format-detection" content="telephone=no" />
                 <meta name="apple-mobile-web-app-capable" content="yes" />
-                <meta name="author" content="nouthemes" />
-                <meta
-                    name="keywords"
-                    content=" audio, video , file , document
-                    "
-                />
-                <meta
-                    name="description"
-                    content="Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling."
-                />
             </Head>
 
             <NextProgress
