@@ -45,7 +45,6 @@ const SearchHeader = ({ setSearch }) => {
         }
     }
 
-console.log(keyword);
 
     useEffect(() => {
         // getSearchData();
@@ -75,8 +74,7 @@ console.log(keyword);
     // Views
     let productItemsView,
         clearTextView,
-        loadingView,
-        loadMoreView;
+        loadingView
     if (!loading) {
         if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0)) {
             productItemsView = <p>Mahsulot topilmadi</p>;
@@ -90,7 +88,7 @@ console.log(keyword);
         if (keyword !== '') {
             clearTextView = (
                 <span className="ps-form__action" onClick={handleClearKeyword}>
-                    <i className="icon icon-cross2"></i> 
+                    <i className="icon icon-cross2"></i>
                 </span>
             );
         }
@@ -109,7 +107,7 @@ console.log(keyword);
             className="ps-form--quick-search"
             method="get"
             action="/"
-            onSubmit={handleSubmit} 
+            onSubmit={handleSubmit}
         >
 
             <Select
@@ -148,7 +146,7 @@ console.log(keyword);
             <div className="ps-form__input">
                 <input
                     ref={inputEl}
-                    className="form-control"
+                    className={keyword === '' ? "form-control input2" : "input1 form-control "}
                     type="text"
                     value={keyword}
                     placeholder="Qidiruv..."
@@ -158,14 +156,13 @@ console.log(keyword);
                 {loadingView}
             </div>
 
-            <button className='button_search' >Qidiruv</button>
-
+            <button className={keyword === '' ? 'button_search' : "d-block button_serach_color"}>Qidiruv</button>
             <div
                 className={`ps-panel--search-result${isSearch ? ' active ' : ''
                     }`}>
                 <div className="ps-panel__content">{productItemsView}</div>
-                {loadMoreView}
             </div>
+
         </form>
     );
 };
