@@ -33,6 +33,7 @@ const SearchHeader = ({ setSearch }) => {
 
     function handleClearKeyword() {
         setKeyword('');
+        setSearch('')
         setIsSearch(false);
         setLoading(false);
     }
