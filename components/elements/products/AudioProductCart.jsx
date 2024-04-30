@@ -162,7 +162,7 @@ const AudioWaveform = ({ product }) => {
                                     <Link
                                         style={{ display: 'flex' }}
                                         href="/product/[pid]"
-                                        as={`/product/${product?.seller?.id}`}>
+                                        as={`/product/${product.slug}`}>
                                         <a className="audio-name text-truncate fw-bolder">
                                             {product?.title}
                                         </a>
@@ -170,7 +170,7 @@ const AudioWaveform = ({ product }) => {
                                            
                                 </p>
 								<Link  href="/seller/[pid]"
-                                        as={`/seller/${product.slug}`} >
+                                        as={`/seller/${product?.seller?.id}`} >
 								<a className='text-truncate' > 
 									{product?.seller?.first_name}
 									{product?.seller?.last_name}
