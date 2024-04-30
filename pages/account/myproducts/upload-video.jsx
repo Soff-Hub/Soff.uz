@@ -17,13 +17,14 @@ import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import Link from 'next/link';
-
-const category_id = [];
+import axios from 'axios';
+import { baseUrl } from '~/repositories/Repository';
 
 const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState(null);
+    const [extraFiles, setExtraFiles] = useState(null);
     const [fileImgFileID, setFileImgFileID] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
@@ -48,6 +49,7 @@ const Posts = () => {
     const [customePoster, setCustomePoster] = useState(false);
     const [customeFile, setCustomeFile] = useState(null);
     const [profile, setProfile] = useState(null);
+    const [category_id, setCategoryId] = useState([])
 
     const breadCrumb = [
         {
@@ -68,13 +70,16 @@ const Posts = () => {
     const Option = Select.Option;
 
     const onChange = async (e) => {
-        category_id.length = 0;
+        setCategoryId([])
+        const customecategory = []
         setCategoryName(e);
         for (let j = 0; j < dataCategory.length; j++) {
             if (dataCategory[j].name === e) {
-                category_id.push(dataCategory[j].id);
+                customecategory.push(dataCategory[j].id);
             }
         }
+
+        setCategoryId(customecategory)
 
         let arr = [];
         if (tagSearchResult?.length > 0) {
@@ -87,7 +92,7 @@ const Posts = () => {
             }
         }
         const data = {
-            category_id: category_id[0],
+            category_id: customecategory[0],
             tag_id: arr,
         };
 
@@ -142,6 +147,8 @@ const Posts = () => {
         );
     }
 
+    const controller = new AbortController();
+
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
         const prefixBoolen = text.toString()?.includes(prefix);
@@ -191,21 +198,28 @@ const Posts = () => {
         }
     }
 
-    async function handleClickPosts(e) {
-        e.preventDefault();
+    const openClose = (id) => {
+        const btn = document.createElement('button');
+        btn.setAttribute('data-bs-target', id);
+        btn.setAttribute('data-bs-toggle', 'modal');
+        document.body.appendChild(btn);
+        btn.click();
+        document.body.removeChild(btn);
+    }
 
-        if (customePoster && fileImgPoster?.length < 3) {
+    async function handleClickPosts(e) {
+        e?.preventDefault?.();
+
+        if (!customePoster) {
             const modal = Modal.info({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
                 content:
-                    "Mahsulot to'liq yuklanishi uchun mahsulot rasmi ga kamida 3ta rasm yuklashingiz kerak!",
+                    "Video to'liq yuklanishi uchun video muqova rasmini yuklashingiz kerak!",
             });
 
             return;
         }
-
-        setDeisabled(true);
 
         const formData = new FormData();
         formData.append('title', title);
@@ -217,11 +231,46 @@ const Posts = () => {
         formData.append('description', Fulldata);
         formData.append('tags', tagSearchResult);
 
-        formData.append('poster', customeFile)
+        formData.append('poster', customePoster.file)
 
         formData.append('category', category_id[0]);
-        formData.append('document', livePosterFile?.id);
-        console.log(formData)
+        formData.append('file', fileImgFileID);
+        formData.append('short_content', fileImgFile.file);
+        formData.append('extra_file', extraFiles);
+
+        try {
+            openClose('#staticBackdrop-2')
+
+            const resp = await axios.post(`${baseUrl}seller/video-product-create/`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${user?.access}`,
+                    // signal: controller.abort
+                }
+            })
+            openClose('#staticBackdrop-2')
+
+            Router.push('/account/myproducts');
+            const modal = Modal.warning({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content:
+                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+            })
+
+        } catch (err) {
+            console.log('Error: ', err)
+            openClose('#staticBackdrop-2')
+
+            // const modal = Modal.warning({
+            //     centered: true,
+            //     title: 'Muvaffaqqiyatli!',
+            //     content:
+            //         "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+            // })
+
+        } finally {
+            setDeisabled(false)
+        }
 
         // const patchItems = await PatchRepository.getPatchPoster(
         //     formData,
@@ -265,12 +314,10 @@ const Posts = () => {
             if (ItemsData?.status === 201) {
                 if (!ItemsData?.data?.images) {
                     setUploadPoster(true);
-                    setCustomePoster(true);
                     setLivePosterFile({ ...ItemsData?.data, images: [] });
                     setLiveFile2({ ...ItemsData?.data, images: [] });
                 } else {
                     setLivePosterFile(ItemsData?.data);
-                    setCustomePoster(false);
                     setLiveFile2(ItemsData?.data);
                 }
 
@@ -293,44 +340,15 @@ const Posts = () => {
     }
 
     function LiveImage(e) {
-        setCustomePoster(true);
-        setFileImgPoster((c) => [...c, e.target.files[0]]);
+        // setFileImgPoster((c) => [...c, e.target.files[0]]);
         const img = window.URL.createObjectURL(e.target.files[0]);
-        setLiveFile(img);
-
-        if (uploadPoster) {
-            setLivePosterFile({
-                ...livePosterFile,
-                images: livePosterFile?.images
-                    ? [
-                        ...livePosterFile?.images,
-                        {
-                            id: new Date().getTime(),
-                            image_url: img,
-                            file: e.target.files[0],
-                        },
-                    ]
-                    : [
-                        {
-                            id: new Date().getTime(),
-                            image_url: img,
-                            file: e.target.files[0],
-                        },
-                    ],
-            });
-        } else {
-            // setLivePosterFile({ ...livePosterFile, images: [{ id: new Date().getTime(), image_url: img }] });
-        }
-
-        if (livePosterFile?.images?.length >= 2) {
-            setUploadPoster(false);
-        }
+        // setLiveFile(img);
+        setCustomePoster({ file: e.target.files[0], url: img });
     }
 
     const uploadTizer = (file) => {
         const video = window.URL.createObjectURL(file);
-        setFileImgFile({ file, video })
-        console.log({ file, video });
+        setFileImgFile({ file, video: video })
     }
 
     function addPeriodToThousands(number) {
@@ -413,7 +431,8 @@ const Posts = () => {
                             <Button
                                 className="btn-success "
                                 data-bs-target="#staticBackdrop"
-                                data-bs-toggle="modal">
+                                data-bs-toggle="modal"
+                            >
                                 <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
                             </Button>
                         </div>
@@ -732,7 +751,7 @@ const Posts = () => {
                                                             maxWidth: '100%',
                                                             height: '85px',
                                                         }}
-                                                        src="https://m.media-amazon.com/images/G/01/primevideo/seo/primevideo-seo-logo.png"
+                                                        src={customePoster?.url || "https://m.media-amazon.com/images/G/01/primevideo/seo/primevideo-seo-logo.png"}
                                                         alt="poster/video"
                                                     />
                                                 </div>
@@ -770,9 +789,10 @@ const Posts = () => {
                                             transform: 'translateX(16px)',
                                         }}>
                                         <button
-                                            disabled={disabled}
                                             type="submit"
-                                            className="btn btn-success py-3 ">
+                                            className="btn btn-success py-3 "
+                                            onClick={handleClickPosts}
+                                        >
                                             <span className="fs-4 px-5">
                                                 Mahsulot qo'shish{' '}
                                                 <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
@@ -797,163 +817,161 @@ const Posts = () => {
                         <div
                             className="col-md-5 rounded-3  p-3  card mt-5"
                             style={{ maxWidth: '485px' }}>
-                            <video className=" border w-100" controls>
-                                <source
+                            <video
+                                className=" border w-100"
+                                controls
+                                preload='none'
+                                src={fileImgFile?.video}
+                                poster={customePoster?.url}
+                                style={{ maxHeight: '250px' }}
+                            >
+                                {/* <source
                                     src={fileImgFile?.file}
                                     type={`video/*`}
-                                />
+                                /> */}
                             </video>
+                            <div className="col-md-12 d-flex flex-column ">
+                                <div className=" mt-2 d-flex justify-content-between p-0">
+                                    <p>Qo'shimcha fayllar uchun (.zip)</p>{' '}
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
+                                        <i
+                                            style={{
+                                                cursor: 'pointer',
+                                            }}
+                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                    </Tooltip>
+                                </div>
+                                {/* <div className="row"> */}
+                                <label
+                                    className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
+                                    style={{
+                                        backgroundColor: '#F1F1F1',
+                                        border: '1px dashed green',
+                                        width: '100%',
+                                    }}>
+                                    {!extraFiles ? (
+                                        <span
+                                            className="d-flex flex-column align-items-center"
+                                            style={{
+                                                cursor: 'pointer',
+                                            }}>
+
+                                            {loading ? (
+                                                <span className="d-flex justify-content-center">
+                                                    <ClipLoader
+                                                        size={25}
+                                                        color="#36d7b7"
+                                                    />
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    className="d-flex flex-column align-items-center "
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                    }}>
+                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                    <span>
+                                                        Qo'shimcha fayllar
+                                                    </span>
+                                                </span>
+                                            )}
+
+                                        </span>
+                                    ) : (
+                                        <span
+                                            className="d-flex flex-column align-items-center"
+                                            style={{
+                                                cursor: 'pointer',
+                                            }}>
+                                            <span>
+                                                {' '}
+                                                Tanlangan{' '}
+                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                            </span>
+                                        </span>
+                                    )}
+                                    <input
+                                        required
+                                        type="file"
+                                        onChange={(e) =>
+                                            setExtraFiles(
+                                                e.target.files[0]
+                                            )
+                                        }
+                                        accept=".zip"
+                                    />
+                                </label>
+                            </div>
                         </div>
                     </div>
 
                     {/* offcanvas */}
-                    <div
-                        className="offcanvas offcanvas-end"
-                        tabindex="-1"
-                        id="offcanvasRight"
-                        aria-labelledby="offcanvasRightLabel">
-                        <div className="offcanvas-header">
-                            <h4 id="offcanvasRightLabel" className="mt-5 ">
-                                <span>
-                                    Qo'shayotgan mahsulotingizni ko'rinishi
-                                </span>{' '}
-                            </h4>
-                            <button
-                                type="button"
-                                className="btn-close text-reset"
-                                data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
-                        </div>
-                        <div className="offcanvas-body">
-                            <div className="card  rounded-3 ">
-                                <div className="image rounded mb-3">
-                                    {!liveFile ? (
-                                        <img
-                                            src={
-                                                livePosterFile?.images?.[0]
-                                                    ?.image_url ||
-                                                '/static/img/docCopy.png'
-                                            }
-                                            alt="doc"
-                                            className="border mb-4"
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    ) : (
-                                        <img
-                                            src={liveFile}
-                                            alt="doc"
-                                            className="mb-4 border"
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    )}
-                                </div>
-                                <div className="text-start">
-                                    <p className="live-card-p">
-                                        <strong>Nomi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {' '}
-                                            {title ? title : "To'ldirilmadi"}
-                                        </span>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong>Narxi : </strong>
-                                        <strong style={{ maxWidth: '150px' }}>
-                                            <span>
-                                                {' '}
-                                                {taxminiyNarx
-                                                    ? addPeriodToThousands(
-                                                        removePrefix(
-                                                            taxminiyNarx
-                                                        )
-                                                    ) + "so'm"
-                                                    : "To'ldirilmadi"}
-                                            </span>
-                                        </strong>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong>Kategoriyasi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {categoryName
-                                                ? categoryName
-                                                : "To'ldirilmadi"}{' '}
-                                        </span>
-                                    </p>
-                                    {/* <p className="live-card-p">
-                                        <strong>Chegirmasi : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {' '}
-                                            {discount
-                                                ? discount + '%'
-                                                : "To'ldirilmadi"}{' '}
-                                        </span>
-                                    </p> */}
-                                    <p className="live-card-p">
-                                        <strong>Taglari : </strong>
-                                        {/* <span style={{maxWidth:'150px'}} > </span> */}
-                                        {tagSearchResult.length > 0
-                                            ? tagSearchResult?.map(
-                                                (item, i) => {
-                                                    return (
-                                                        <span key={i}>
-                                                            {item}{' '}
+
+                </div>
+
+                {/* mahsulotning user qismi uchun real ko'rinishi */}
+
+                <div
+                    className="modal fade "
+                    id="staticBackdrop"
+                    data-bs-backdrop="static"
+                    data-bs-keyboard="false"
+                    aria-labelledby="staticBackdropLabel"
+                    aria-hidden="true">
+                    <div className="modal-dialog">
+                        <div className="modal-content mahsulotingizElh3 ">
+                            <div className="ps-container">
+                                <div className="row">
+                                    <div className="col-12">
+                                        <div
+                                            className={`product__top-information ${'video_user_information'} `}
+                                            style={{ width: '100%' }}>
+                                            <div className='py-5 d-flex gap-3' style={{ flexDirection: 'column' }}>
+                                                <span className="d-flex justify-content-center gap-3">
+                                                    <span>Yuklanmoqda</span>
+                                                    <ClipLoader
+                                                        size={25}
+                                                        color="#36d7b7"
+                                                    />
+                                                </span>
+                                                <p style={{ fontSize: '20px', textAlign: 'center' }} className='fw-semibold'>
+                                                    Video yuklanmoqda bu sizning internet tezligingizga qarab turlicha  vaqt olishi mumkin
+                                                </p>
+
+                                                <div className="d-flex gap-3 justify-content-center">
+                                                    <button
+                                                        className="btn btn-danger py-3 "
+                                                        onClick={() => {
+                                                            openClose('#staticBackdrop-2')
+                                                            window.location.reload()
+                                                        }}
+                                                    >
+                                                        <span className="fs-4 px-5">
+                                                            Bekor qilish{' '}
                                                         </span>
-                                                    );
-                                                }
-                                            )
-                                            : "To'ldirilmadi"}
-                                    </p>
-                                    <p className="live-card-p">
-                                        <span>
-                                            <strong className="fs-4">
-                                                Qisqa tavsif
-                                            </strong>
-                                            :{' '}
-                                        </span>
-                                        <ul
-                                            style={{ maxWidth: '150px' }}
-                                            className="">
-                                            <li>
-                                                {' '}
-                                                <strong className="fs-4">
-                                                    Betlar soni:{' '}
-                                                </strong>{' '}
-                                                {livePosterFile?.page_count
-                                                    ? livePosterFile?.page_count +
-                                                    ' ' +
-                                                    'ta'
-                                                    : ''}{' '}
-                                            </li>
-                                            <li>
-                                                {' '}
-                                                <strong className="fs-4">
-                                                    Hajmi:{' '}
-                                                </strong>{' '}
-                                                {livePosterFile?.file_size}
-                                            </li>
-                                            <li>
-                                                {' '}
-                                                <strong className="fs-4">
-                                                    Turi:{' '}
-                                                </strong>{' '}
-                                                {livePosterFile?.file_type}
-                                            </li>
-                                        </ul>
-                                    </p>
-                                    <p className="live-card-p">
-                                        <strong> To'liq ma'lumot : </strong>{' '}
-                                        <span style={{ maxWidth: '150px' }}>
-                                            {Fulldata
-                                                ? parse(Fulldata)
-                                                : "To'ldirilmadi"}
-                                        </span>
-                                    </p>
+                                                    </button>
+                                                    <button
+                                                        className="btn btn-success py-3 "
+                                                        onClick={() => {
+                                                            window.open('http://localhost:3000/account/myproducts/upload-video', '_blank');
+                                                        }}
+                                                    >
+                                                        <span className="fs-4 px-5">
+                                                            Yana yuklash{' '}
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {/* mahsulotning user qismi uchun real ko'rinishi */}
+
+
                 <div
                     className="modal fade "
                     id="staticBackdrop"

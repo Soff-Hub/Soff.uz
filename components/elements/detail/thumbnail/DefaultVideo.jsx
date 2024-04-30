@@ -7,20 +7,24 @@ export default function DefaultVideo({ product }) {
         <div className="video_container">
             <div className="video_content">
                 <video
-                id='videoPlayer'
+                    id='videoPlayer'
                     className="video_iframe"
                     width="100%"
                     height="auto"
-                    style={{maxHeight:'380px'}}
+                    style={{ maxHeight: '380px' }}
                     controls
-                    poster={product?.poster_url}>
-                    <source
-                        src={product?.document?.short_content_url}
+                    preload='none'
+                    poster={product?.poster_url}
+                    src='https://video-previews.elements.envatousercontent.com/h264-video-previews/0096fd70-06bc-4309-8fed-07762e53c9fd/6386658.mp4'
+                >
+                    {/* <source
+                        // src={product?.document?.short_content_url}
+                        src={"https://video-previews.elements.envatousercontent.com/h264-video-previews/0096fd70-06bc-4309-8fed-07762e53c9fd/6386658.mp4"}
                         type={`video/${product?.document?.file_type?.replace(
                             '.',
                             ''
                         )}`}
-                    />
+                    /> */}
                     Your browser does not support the video tag.
                 </video>
             </div>
