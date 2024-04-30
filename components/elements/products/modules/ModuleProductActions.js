@@ -76,9 +76,6 @@ const ModuleProductActions = ({ product, audio }) => {
         setIsQuickView(false);
     };
 
-    const detailLink = () => {
-        Router.push(`/product/${product?.slug}`)
-    };
 
 
     return (
@@ -122,14 +119,25 @@ const ModuleProductActions = ({ product, audio }) => {
                 </li>
 
                 <li className={`${audio ? 'audio-list-action' : ''}`}>
-                    <a
-                        href="#"
+                    {
+                        audio ?
+                        <a
+                        href={`/product/${product?.slug}`}
                         data-toggle="tooltip"
                         data-placement="top"
-                        title="Ko'proq ko'rish"
-                        onClick={audio ? detailLink : getProducts}>
+                        title="Ko'proq ko'rish">
                         <i className="icon-eye"></i>
-                    </a>
+                    </a> :
+                      <a
+                      href="#"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Ko'proq ko'rish"
+                      onClick={ getProducts}>
+                      <i className="icon-eye"></i>
+                  </a>
+                    }
+                  
                 </li>
 
                 <li className={`${audio ? 'audio-list-action' : ''}`}>
@@ -151,7 +159,7 @@ const ModuleProductActions = ({ product, audio }) => {
                     </a>
                 </li>
 
-                {audio && (
+                {/* {audio && (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <a
                             href="#"
@@ -172,7 +180,7 @@ const ModuleProductActions = ({ product, audio }) => {
                                 } `}></i>
                         </a>
                     </li>
-                )}
+                )} */}
 
                 <Modal
                     centeredwishlist
@@ -191,26 +199,4 @@ const ModuleProductActions = ({ product, audio }) => {
 
 export default connect((state) => state)(ModuleProductActions);
 
-{/* <a
-    style={{
-        cursor: `${admin ? 'not-allowed' : 'pointer'}`,
-        minWidth: '172px',
-    }}
-    className="ps-btn ps-btn--black max-class"
-    href="#"
-    onClick={async (e) => {
-        e.preventDefault();
-        setLoading(true);
-        await audioDownloaderSale(product, product);
-        setLoading(false);
-    }}>
-    {!loading ? (
-        'Bepul yuklab olish'
-    ) : (
-        <div>
-            <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-            </div>
-        </div>
-    )}
-</a>; */}
+
