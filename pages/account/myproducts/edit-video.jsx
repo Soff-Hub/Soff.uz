@@ -23,14 +23,14 @@ import { baseUrl } from '~/repositories/Repository';
 const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
+    const { user, products } = useSelector((state) => state.auth);
     const [fileImgFile, setFileImgFile] = useState(null);
     const [extraFiles, setExtraFiles] = useState(null);
     const [fileImgFileID, setFileImgFileID] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { user } = useSelector((state) => state.auth);
-    const [taxminiyNarx, setTaxminiyNarx] = useState('');
+    const [taxminiyNarx, setTaxminiyNarx] = useState(products?.price);
     const [narxNomi, setNarxNomi] = useState(true);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -44,7 +44,7 @@ const Posts = () => {
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
-    const [free, setFree] = useState(false);
+    const [free, setFree] = useState(Number(products?.price) === 0);
     const [uploadPoster, setUploadPoster] = useState(false);
     const [customePoster, setCustomePoster] = useState(false);
     const [customeFile, setCustomeFile] = useState(null);
@@ -60,6 +60,8 @@ const Posts = () => {
             text: 'Video mahsulot qo’shish',
         },
     ];
+
+    console.log(products);
 
     async function GetItemsCategoryLists() {
         const ItemsData = await GetRepository.getAllCategoryLists();
@@ -210,32 +212,55 @@ const Posts = () => {
     async function handleClickPosts(e) {
         e?.preventDefault?.();
 
-        if (!customePoster) {
-            const modal = Modal.info({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Video to'liq yuklanishi uchun video muqova rasmini yuklashingiz kerak!",
-            });
+        // if (!customePoster) {
+        //     const modal = Modal.info({
+        //         centered: true,
+        //         title: 'Muvaffaqqiyatli!',
+        //         content:
+        //             "Video to'liq yuklanishi uchun video muqova rasmini yuklashingiz kerak!",
+        //     });
 
-            return;
-        }
+        //     return;
+        // }
 
         const formData = new FormData();
-        formData.append('title', title);
+        if (title) {
+            formData.append('title', title);
+        }
+
         if (free) {
             formData.append('price', 0);
-        } else {
+        }
+        if (narx) {
             formData.append('price', narx);
         }
-        formData.append('description', Fulldata);
-        formData.append('tags', tagSearchResult);
 
-        formData.append('poster', customePoster.file)
+        if (Fulldata) {
+            formData.append('description', Fulldata);
+        }
 
-        formData.append('category', category_id[0]);
-        formData.append('file', fileImgFileID);
-        formData.append('short_content', fileImgFile.file);
+        if (tagSearchResult) {
+            formData.append('tags', tagSearchResult);
+        }
+
+        if (customePoster) {
+            formData.append('poster', customePoster.file)
+        }
+
+        if (category_id?.[0]) {
+            formData.append('category', category_id[0]);
+        }
+
+        if (fileImgFileID) {
+            formData.append('file', fileImgFileID);
+        }
+
+
+        if (fileImgFile) {
+            formData.append('short_content', fileImgFile.file);
+        }
+
+
         if (extraFiles) {
             formData.append('extra_file', extraFiles);
         }
@@ -243,7 +268,7 @@ const Posts = () => {
         try {
             openClose('#staticBackdrop-2')
 
-            const resp = await axios.post(`${baseUrl}seller/video-product-create/`, formData, {
+            const resp = await axios.patch(`${baseUrl}seller/video-product-create/`, formData, {
                 headers: {
                     'Authorization': `Bearer ${user?.access}`,
                     // signal: controller.abort
@@ -273,31 +298,6 @@ const Posts = () => {
         } finally {
             setDeisabled(false)
         }
-
-        // const patchItems = await PatchRepository.getPatchPoster(
-        //     formData,
-        //     user?.access
-        // );
-        // if (patchItems?.status === 201) {
-        //     Router.push('/account/myproducts');
-        //     setDeisabled(false);
-        //     const modal = Modal.warning({
-        //         centered: true,
-        //         title: 'Muvaffaqqiyatli!',
-        //         content:
-        //             "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-        //     });
-        // } else {
-        //     setDeisabled(false);
-        //     console.log(patchItems);
-        //     const modal = Modal.error({
-        //         centered: true,
-        //         title: 'Xatolik!',
-        //         content:
-        //             patchItems?.data?.msg ||
-        //             JSON.stringify(patchItems?.data.category),
-        //     });
-        // }
     }
 
     async function PostFilePoster() {
@@ -468,6 +468,7 @@ const Posts = () => {
                                                 type="text"
                                                 className="form-control  rounded-3  mb-2"
                                                 name="title"
+                                                defaultValue={products?.title}
                                                 onChange={(e) =>
                                                     setTitle(e.target.value)
                                                 }
@@ -498,6 +499,7 @@ const Posts = () => {
                                                     disabled={free}
                                                     value={taxminiyNarx}
                                                     className="col-md-8 p-2 "
+                                                    defaultValue={products?.price}
                                                     onValueChange={(e) => (
                                                         setNarxNomi(false),
                                                         setTaxminiyNarx(
@@ -529,6 +531,7 @@ const Posts = () => {
                                                         width: '100%',
                                                         height: '47px',
                                                     }}
+                                                    defaultValue={products?.category?.id}
                                                     onChange={onChange}
                                                     onSearch={onSearch}>
                                                     {options}
@@ -551,7 +554,9 @@ const Posts = () => {
                                                 <Select
                                                     mode="tags"
                                                     style={{ width: '100%' }}
-                                                    onChange={handleChange}>
+                                                    onChange={handleChange}
+                                                    defaultValue={products?.tag?.map(el => el.id)}
+                                                >
                                                     {children}
                                                 </Select>
                                             </div>
@@ -601,7 +606,7 @@ const Posts = () => {
                                                                 }}>
                                                                 <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                                 <span>
-                                                                    Asosiy video
+                                                                    Yangi yuklash uchun bosing
                                                                 </span>
                                                             </span>
                                                         )}
@@ -676,9 +681,7 @@ const Posts = () => {
                                                                 }}>
                                                                 <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                                 <span>
-                                                                    Qisqa
-                                                                    ko'rish
-                                                                    uchun video
+                                                                    Yangi yuklash uchun bosing
                                                                 </span>
                                                             </span>
                                                         )}
@@ -781,6 +784,7 @@ const Posts = () => {
                                                     setFullData(data);
                                                 }}
                                                 editorLoaded={editorLoaded}
+                                                value={products?.description}
                                             />
                                         </div>
                                     </div>
@@ -796,7 +800,7 @@ const Posts = () => {
                                             onClick={handleClickPosts}
                                         >
                                             <span className="fs-4 px-5">
-                                                Mahsulot qo'shish{' '}
+                                                O'zgarishlarni saqlash{' '}
                                                 <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
                                             </span>
                                         </button>
@@ -823,7 +827,7 @@ const Posts = () => {
                                 className=" border w-100"
                                 controls
                                 preload='none'
-                                src={fileImgFile?.video}
+                                src={fileImgFile?.video || products?.document?.short_content_url}
                                 poster={customePoster?.url}
                                 style={{ maxHeight: '250px' }}
                             >
