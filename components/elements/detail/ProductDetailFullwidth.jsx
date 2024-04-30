@@ -44,7 +44,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
                             {tag?.length > 0 &&
-                                tag.map((item, i) => (
+                                tag.slice(0,15).map((item, i) => (
                                     <div key={i} className="m-2 tag-product">
                                         <Link href="#" as="#">
                                             <a

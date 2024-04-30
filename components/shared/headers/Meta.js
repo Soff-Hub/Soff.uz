@@ -24,7 +24,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
             <meta property="og:site_name" content="Soff.uz" />
             <meta
                 property="og:keywords"
-                content={keywords ? keywords?.map((e) => e.name) : title}
+                content={keywords ? keywords?.map((e) => e?.name) : title}
             />
             <title>{title}</title>
             <meta
