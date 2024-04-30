@@ -827,7 +827,7 @@ function ProductsLists() {
                                                 </div>
                                                 <div className="ps-product__content ps-tab-root">
                                                     <Tabs defaultActiveKey="1">
-                                                        <TabPane tab="Izoh" key="1">
+                                                        <TabPane tab="Mahsulot to’liq tavsifi" key="1">
                                                             <PartialDescription
                                                                 product={deleteIdView}
                                                             />

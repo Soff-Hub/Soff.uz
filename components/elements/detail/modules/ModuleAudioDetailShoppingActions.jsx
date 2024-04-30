@@ -147,7 +147,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                             className="ps-btn max-clas"
                                             href="#"
                                             onClick={(e) => handleBuynow(e)}>
-                                            1 klikda sotib oling
+                                            Hoziroq xarid qilish
                                         </a>
                                     </>
                                 )}
