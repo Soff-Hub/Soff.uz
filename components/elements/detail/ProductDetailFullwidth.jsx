@@ -24,8 +24,8 @@ const ProductDetailFullwidth = ({ product, views }) => {
             <Meta
                 title={product?.title}
                 image={product?.iamges?.map((item) => item?.image_url) || product?.poster_url}
-                description={`${product?.description}, ${product?.tag?.map((e) => `${e?.name}, `)}`}
-                keywords={product?.tag ? product?.tag?.map((e) => `${e?.name}, ${product?.category?.name}`) : product?.title}
+                description={product?.description}
+                keywords={product?.tag ? product?.tag : product?.title}
                 author={`${product?.seller?.first_name} ${product?.seller?.last_name}`}
             />
             <div className="ps-product--detail ps-product--fullwidth">
