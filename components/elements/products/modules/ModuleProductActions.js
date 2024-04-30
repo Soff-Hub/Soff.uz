@@ -18,7 +18,6 @@ const ModuleProductActions = ({ product, audio }) => {
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
 
-    console.log('loading', loading);
 
     const showModal = () => {
         setOpen(true);
