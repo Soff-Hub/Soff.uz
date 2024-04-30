@@ -41,10 +41,20 @@ const AudioWaveform = ({ product, inCategory }) => {
         if (wavesurferObj) wavesurferObj.setVolume(volume);
     }, [volume, wavesurferObj]);
 
-    const handlePlayPause = (e) => {
-        wavesurferObj.playPause();
+    const handlePlayPause = () => {
+        
+        document.querySelectorAll('.audio-cart-content .fa-circle-pause').forEach((el) => {
+            el.click();
+        });
+
         setPlaying(!playing);
+        if (!playing) {
+            wavesurferObj.play();
+        } else {
+            wavesurferObj.pause();
+        }
     };
+    
 
     useEffect(() => {
         if (wavesurferObj) {
