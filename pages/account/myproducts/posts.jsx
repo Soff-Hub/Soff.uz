@@ -197,6 +197,7 @@ const Posts = () => {
             const formData = new FormData();
             setLoading(true);
             formData.append('file', fileImgFile);
+            formData.append('content_type', 'file');
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
                 formData,
                 user?.access
@@ -739,7 +740,7 @@ const Posts = () => {
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
-                                disabled={disabled}
+                                    disabled={disabled}
                                     type="submit"
                                     className="btn btn-success py-3 ">
                                     <span className="fs-4 px-5">
