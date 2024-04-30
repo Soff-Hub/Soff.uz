@@ -234,6 +234,7 @@ const Posts = () => {
             const formData = new FormData();
             setLoading(true);
             formData.append('file', fileImgFile);
+            formData.append('content_type', 'template');
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
                 formData,
                 user?.access
@@ -613,7 +614,7 @@ const Posts = () => {
                                         setTaxminiyNarx(e.value),
                                         setNarx(e.value)
                                     )}
-                                    style={{height:"45px"}}
+                                    style={{ height: "45px" }}
                                 />
                             </div>
 

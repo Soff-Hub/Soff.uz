@@ -1,17 +1,56 @@
-import WavesurferPlayer from 'react/jsx-runtime.js';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import wavesurfer from 'wavesurfer.js';
 
 export default function DefaultAudio({ product }) {
-    const [wavesurfer, setWavesurfer] = useState(null);
-    const [isPlaying, setIsPlaying] = useState(false);
+    const wavesurferRef = useRef(null);
 
-    const onReady = (ws) => {
-        setWavesurfer(ws);
-        setIsPlaying(false);
-    };
+    const [wavesurferObj, setWavesurferObj] = useState();
 
-    const onPlayPause = () => {
-        wavesurfer && wavesurfer.playPause();
+    const [playing, setPlaying] = useState(true);
+    const [volume, setVolume] = useState(1);
+
+    // create the waveform inside the correct component
+    useEffect(() => {
+        if (wavesurferRef.current && !wavesurferObj) {
+            setWavesurferObj(
+                wavesurfer.create({
+                    container: wavesurferRef.current,
+                    scrollParent: true,
+                    autoCenter: true,
+                    loopSelection: true,
+                    cursorColor: '#00A44F',
+                    waveColor: '#00A44F',
+                    progressColor: '#ccc',
+                    responsive: true,
+                    height: 40,
+                })
+            );
+        }
+    }, [wavesurferObj]);
+
+    useEffect(() => {
+        if (product?.file_url === 'No') {
+            if (wavesurferObj && product?.document?.short_content_url) {
+                wavesurferObj.load(product?.document?.short_content_url);
+            }
+        } else {
+            if (wavesurferObj && product?.file_url) {
+                wavesurferObj.load(product?.file_url);
+            }
+        }
+    }, [
+        product?.file_url,
+        product?.document?.short_content_url,
+        wavesurferObj,
+    ]);
+
+    useEffect(() => {
+        if (wavesurferObj) wavesurferObj.setVolume(volume);
+    }, [volume, wavesurferObj]);
+
+    const handlePlayPause = (e) => {
+        wavesurferObj.playPause();
+        setPlaying(!playing);
     };
 
     return (
@@ -33,10 +72,11 @@ export default function DefaultAudio({ product }) {
                     <div
                         className="audio__poster"
                         style={{
-                            backgroundImage: `url( ${product?.poster_url
+                            backgroundImage: `url( ${
+                                product?.poster_url
                                     ? product?.poster_url
                                     : 'https://png.pngtree.com/background/20230612/original/pngtree-colorful-musical-notes-and-music-notes-picture-image_3176403.jpg'
-                                } )`,
+                            } )`,
                             borderRadius: '5px',
                             backgroundPositionX: 'center',
                             backgroundPositionY: 'center',
@@ -75,14 +115,14 @@ export default function DefaultAudio({ product }) {
                                 controls
                                 src={
                                     product?.document?.short_content_url
-                                }></audio>
+                                }></audio> */}
                             <div className="audio-none">
                                 <span></span>
-                            </div> */}
+                            </div>
                             <div
                                 className="col-1 audio-play"
-                                onClick={onPlayPause}>
-                                {isPlaying ? (
+                                onClick={handlePlayPause}>
+                                {!playing ? (
                                     <>
                                         <i class="fa-solid fa-circle-pause"></i>
                                     </>
@@ -93,14 +133,7 @@ export default function DefaultAudio({ product }) {
                                 )}
                             </div>
                             <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
-                                <WavesurferPlayer
-                                    height={40}
-                                    waveColor="#00A44F"
-                                    url={product?.document?.short_content_url}
-                                    onReady={onReady}
-                                    onPlay={() => setIsPlaying(true)}
-                                    onPause={() => setIsPlaying(false)}
-                                />
+                                <div ref={wavesurferRef} id="waveform"></div>
                             </div>
                         </div>
                     ) : (
@@ -112,8 +145,8 @@ export default function DefaultAudio({ product }) {
 
                             <div
                                 className="col-1 audio-play"
-                                onClick={onPlayPause}>
-                                {isPlaying ? (
+                                onClick={handlePlayPause}>
+                                {!playing ? (
                                     <>
                                         <i class="fa-solid fa-circle-pause"></i>
                                     </>
@@ -124,19 +157,13 @@ export default function DefaultAudio({ product }) {
                                 )}
                             </div>
                             <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
-                                {
-                                    product?.file_url ?
-                                        <WavesurferPlayer
-                                            height={40}
-                                            waveColor="#00A44F"
-                                            url={product?.file_url}
-                                            onReady={onReady}
-                                            onPlay={() => setIsPlaying(true)}
-                                            onPause={() => setIsPlaying(false)}
-                                        />
-                                        : "Loading..."
-                                }
-
+                                {product?.file_url ? (
+                                    <div
+                                        ref={wavesurferRef}
+                                        id="waveform"></div>
+                                ) : (
+                                    'Loading...'
+                                )}
                             </div>
                         </div>
                     )}
