@@ -13,8 +13,6 @@ import Head from 'next/head';
 import NextProgress from 'next-progress';
 
 function App({ Component, pageProps }) {
-    
-      
     useEffect(() => {
         setTimeout(function () {
             document.getElementById('__next').classList.add('loaded');
@@ -28,7 +26,6 @@ function App({ Component, pageProps }) {
         //         e.preventDefault();
         //     }
         // };
-  
 
         // document.onkeydown = function (e) {
         //     if (e.keyCode == 123) {
@@ -38,11 +35,9 @@ function App({ Component, pageProps }) {
         // };
     });
 
-
     return (
         <>
             <Head>
-
                 <title>Soff</title>
                 <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
                 <meta
@@ -54,7 +49,8 @@ function App({ Component, pageProps }) {
                 <meta name="author" content="nouthemes" />
                 <meta
                     name="keywords"
-                    content="Dars ishlanmalar, Diplom ishlar, Slaydlar (maktab darsliklari bo'yicha), Slaydlar, Referatlar, Kurs ishlari, Adabiyot, Algebra, Anatomiya, Arxitektura, Astronomiya, Biologiya, Biotexnologiya, Botanika, Chizmachilik, CHQBT, Davlat tilida ish yuritish, Dinshunoslik asoslari, Ekologiya, Energetika, Falsafa, Fizika, Fransuz tili, Geodeziya, Geografiya, Geologiya, Geometriya, Huquqshunoslik, Informatika va AT, Ingliz tili, Iqtisodiyot, Issiqlik texnikasi, Jismoniy tarbiya, Kimyo, Konchilik ishi, Madaniyatshunoslik, Maktabgacha va boshlang'ich ta'lim, Manaviyat asoslari, Mashinasozlik, Materialshunoslik, Mehnat, Melioratsiya, Metrologiya, Mexanika, Milliy istiqlol g'oyasi, Musiqa, Nemis tili, O'qish, Odam va uning salomatligi, Odobnoma, Oziq-ovqat texnologiyasi, Pedagogika, Prezident asarlari, Psixologiya, Psixologiya, Qishloq va o'rmon xo'jaligi, Radiotexnika, Rus tili va adabiyoti, San'at, Siyosatshunoslik, Sotsiologiya, Suv xo'jaligi, Tabiatshunoslik, Tarix, Tasviriy san'at, Texnika va texnologiya, Tibbiyot, Tilshunoslik, To'qimachilik, Transport, Valeologiya, Xayot faoliyati xavfsizligi, Zoologiya, Ko'chirib olish"
+                    content=" audio, video , file , document
+                    "
                 />
                 <meta
                     name="description"
@@ -65,7 +61,7 @@ function App({ Component, pageProps }) {
             <NextProgress
                 delay={300}
                 options={{ showSpinner: false }}
-                color='#00A44F'
+                color="#00A44F"
             />
             <CookiesProvider>
                 <MasterLayout>
