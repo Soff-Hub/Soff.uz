@@ -104,7 +104,7 @@ const ModuleAudioDetailTopInformationLive = ({
                     <div className=" views_video  mt-1">
                         {' '}
                         <i className="fa-solid fa-eye"></i>{' '}
-                        <span>{views ? views : 0}</span>
+                        <span>{views?.count ? views?.count : 0}</span>
                     </div>
                     <div className="video_send" style={{
                         display: `${admin ? 'none' : 'block'}`,
