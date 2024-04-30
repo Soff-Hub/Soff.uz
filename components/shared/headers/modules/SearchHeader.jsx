@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import Router from 'next/router';
 import { Select, Spin } from 'antd';
 
@@ -44,6 +43,9 @@ const SearchHeader = ({ setSearch }) => {
             Router.push(`/search?keyword=${keyword}&type=${selectFile}`);
         }
     }
+
+console.log(keyword);
+
     useEffect(() => {
         // getSearchData();
         if (debouncedSearchTerm) {
@@ -87,7 +89,7 @@ const SearchHeader = ({ setSearch }) => {
         if (keyword !== '') {
             clearTextView = (
                 <span className="ps-form__action" onClick={handleClearKeyword}>
-                    <i className="icon icon-cross2"></i>
+                    <i className="icon icon-cross2"></i> 
                 </span>
             );
         }
@@ -106,8 +108,7 @@ const SearchHeader = ({ setSearch }) => {
             className="ps-form--quick-search"
             method="get"
             action="/"
-            onSubmit={handleSubmit}
-            onBlur={handleClearKeyword}
+            onSubmit={handleSubmit} 
         >
 
             <Select
@@ -150,15 +151,13 @@ const SearchHeader = ({ setSearch }) => {
                     type="text"
                     value={keyword}
                     placeholder="Qidiruv..."
-                    onChange={(e) =>
-
-                        (setKeyword(e.target.value), setSearch(e.target.value))}
+                    onChange={(e) => (setKeyword(e.target.value), setSearch(e.target.value))}
                 />
                 {clearTextView}
                 {loadingView}
             </div>
 
-            <button className='button_search' onClick={handleSubmit}>Qidiruv</button>
+            <button className='button_search' >Qidiruv</button>
 
             <div
                 className={`ps-panel--search-result${isSearch ? ' active ' : ''

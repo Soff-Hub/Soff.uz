@@ -29,7 +29,7 @@ const ModuleAudioDetailShoppingActionsLive = ({ admin, free }) => {
                                     }}
                                     className="ps-btn max-class"
                                     href="#">
-                                    1 klikda sotib oling
+                                    Hoziroq xarid qilish
                                 </a>
                             </>
                         ) : (
