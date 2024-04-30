@@ -45,11 +45,26 @@ const PostsProductsEdit = () => {
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
-        if (ItemsData) {
-            setDataCategory(ItemsData);
+        if (products?.document?.content_type === 'file') {
+            const ItemsData = await GetRepository.getAllCategoryLists();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'audio') {
+            const ItemsData = await GetRepository.getAllCategoryListsAudio();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'template') {
+            const ItemsData = await GetRepository.getAllCategoryListsDesign();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
         }
     }
+
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
@@ -918,3 +933,4 @@ const PostsProductsEdit = () => {
 };
 
 export default PostsProductsEdit;
+
