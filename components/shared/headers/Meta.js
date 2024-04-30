@@ -7,7 +7,6 @@ const Meta = ({ title, image, description, keywords, author }) => {
     return html.replace(/<[^>]+>/g, '');
   };
 
-  console.log('keywords', keywords);
 
     return (
         <Head>
@@ -35,6 +34,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
                         : `${title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
                 }
             />
+             <meta property="image"  content={image} />
             <meta
                 name="author"
                 property="author"
