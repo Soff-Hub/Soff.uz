@@ -7,7 +7,6 @@ import useWishlist from '~/hooks/useWishlist';
 import Router from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
-import Axios from 'axios';
 
 const ModuleProductActions = ({ product, audio }) => {
     const [isQuickView, setIsQuickView] = useState(false);
@@ -17,8 +16,6 @@ const ModuleProductActions = ({ product, audio }) => {
     const [productView, setProduct] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
-
-
     const showModal = () => {
         setOpen(true);
     };
@@ -34,11 +31,7 @@ const ModuleProductActions = ({ product, audio }) => {
         showModal();
         e.preventDefault();
         setCartOneItem(product.id);
-        // const modal = Modal.success({
-        //     centered: true,
-        //     title: 'Muvaffaqqiyatli!',
-        //     content: "Siz  malumotlarni o'zgartirdingiz ",
-        // });
+
     }
 
     function handleAddItemToWishlist(e) {
@@ -75,27 +68,24 @@ const ModuleProductActions = ({ product, audio }) => {
         setIsQuickView(false);
     };
 
-    const audioDownloaderSale = async (file, product) => {
+    const audioDownloaderSale = async (file) => {
         try {
             setLoading(true);
-            const response = await Axios.get(file, {
+            const response = await axios.get(file, {
                 responseType: 'blob',
             });
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download =
-                'soff.uz -' +
-                product?.title +
-                '.' +
-                file.split('.')[file?.split('.').length - 1];
+            // Foydalanuvchi faylni qanday nomlayotganini ko'rish uchun "a.download" attributini o'zgartiraylik
+            a.download = 'audio_file.mp3';
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            console.error('Error downloading file: ', error);
-        }finally {
+            console.error('Faylni yuklab olishda xato: ', error);
+        } finally {
             setLoading(false);
         }
     };
@@ -188,8 +178,7 @@ const ModuleProductActions = ({ product, audio }) => {
                             title="Yuklab olish"
                             onClick={() =>
                                 audioDownloaderSale(
-                                    product?.document?.short_content_url,
-                                    product
+                                    product?.document?.short_content_url
                                 )
                             }>
                             <i
@@ -203,7 +192,12 @@ const ModuleProductActions = ({ product, audio }) => {
                 ) : (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <a
-                            href="account/selection"
+                            href={`${
+                                user?.access !== undefined ||
+                                user?.access !== ''
+                                    ? `account/checkout-one?id=${product?.id}`
+                                    : `account/register-user?id=${product?.id}`
+                            } `}
                             data-toggle="tooltip"
                             data-placement="top"
                             title="Yuklab olish">
