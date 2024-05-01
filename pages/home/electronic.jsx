@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
+import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
 
 const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
@@ -77,12 +78,18 @@ const HomeElectronicsPage = () => {
     }, []);
 
     const memoizedBanner = useMemo(() => {
-        return <ElectronicBanner />;
+        return (
+            <>
+                <HeaderMobileBottom />
+                <ElectronicBanner />
+            </>
+        );
     }, []);
-    
+
     return (
         <main id="homepage-7">
             <Meta title="Soff | Barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
+
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}

@@ -159,7 +159,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleBuynow(e)}>
-                                            1 klikda sotib oling
+                                            Hoziroq xarid qilish
                                         </a>
                                     </>
                                 )}
