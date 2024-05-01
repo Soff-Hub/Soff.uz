@@ -6,7 +6,7 @@ import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
 
 
 const ProductVideo = ({ product }) => {
-    const { thumbnailImage, title } = useProduct();
+    const {title } = useProduct();
     function addPeriodToThousands(number) {
         const numStr = String(number);
 

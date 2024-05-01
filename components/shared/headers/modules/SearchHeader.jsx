@@ -47,7 +47,6 @@ const SearchHeader = ({ setSearch }) => {
 
 
     useEffect(() => {
-        // getSearchData();
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword || selectFile) {
@@ -80,8 +79,8 @@ const SearchHeader = ({ setSearch }) => {
             productItemsView = <p>Mahsulot topilmadi</p>;
         }
         else {
-            resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || []].map((product) => (
-                <ProductSearchResult product={product} key={product.id} />
+            resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 || resultItems?.video?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template ||[], ...resultItems?.video || []].map((product) => (
+                <ProductSearchResult product={product} key={product.id} /> 
             )) : productItemsView = <p>Mahsulot topilmadi</p>
         }
 
