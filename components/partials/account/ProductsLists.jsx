@@ -34,7 +34,7 @@ function ProductsLists() {
     const [search, setSerach] = useState([]);
     const [deleteIdView, setDeleteIdView] = useState({});
     const [dataVal, setDataVal] = useState([]);
-    const [dataValStatus, setDataCatStatus] = useState("moderation");
+    const [dataValStatus, setDataCatStatus] = useState("");
     const [filterType, setFiltertype] = useState('');
     const [date, setDate] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
@@ -82,7 +82,7 @@ function ProductsLists() {
             null,
             page,
             category,
-            dataValStatus,
+            router.query.status,
             dataFormat,
             id,
             arxiv,
@@ -138,7 +138,7 @@ function ProductsLists() {
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, productsItems, null, null, null, user?.access)
         if (ItemsData) {
             dispatch(MyProductsEdit(ItemsData));
-            Router.push(`/account/products/edit?page=${router.query.page}`);
+            Router.push(`/account/products/edit`);
         }
     }
 
@@ -192,11 +192,13 @@ function ProductsLists() {
         }
     };
 
-
-
     const handlePagination = (pageNum, count) => {
         Router.push(`/account/products?page=${pageNum}`);
         setCurrPage(pageNum);
+    };
+
+    const handleFilterStatus = (status) => {
+        Router.push(`/account/products?page=${currPage}&status=${status}`);
     };
 
     useEffect(() => {
@@ -205,25 +207,26 @@ function ProductsLists() {
 
     useEffect(() => {
         setCurrPage(router.query.page);
-        if (router.query.page) {
+        setDataCatStatus(router.query.status)
+        if (router.query.page || router.query.status) {
             GetItemsProductsLists(
                 router.query.page,
                 category_id,
-                dataValStatus,
+                router.query.status,
                 dataFormat,
                 null,
                 dateArxiv,
                 search
             );
         }
-    }, [router.query.page]);
+    }, [router.query.page, router.query.status]);
 
     useEffect(() => {
-        if (router.query.page) {
+        if (router.query.page || router.query.status) {
             GetItemsProductsLists(
                 router.query.page,
                 category_id,
-                dataValStatus,
+                router.query.status,
                 dataFormat,
                 null,
                 dateArxiv,
@@ -232,7 +235,7 @@ function ProductsLists() {
         }
     }, [
         category_id,
-        dataValStatus,
+        router.query.status,
         dataFormat,
         dateArxiv,
         searchDebounce,
@@ -245,6 +248,8 @@ function ProductsLists() {
             setLoading(false);
         }
     }, []);
+
+
 
     const columns = [
         {
@@ -374,7 +379,7 @@ function ProductsLists() {
                                 )
                             }></i>
                     </a>
-                    <Link href={'#'}>
+                    <Link href={'/account/products/edit'}>
                         <a>
                             <i
                                 className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
@@ -473,7 +478,7 @@ function ProductsLists() {
                                                         <select
                                                             className="form-select col-md-5 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
-                                                                setDataCatStatus(
+                                                                handleFilterStatus(
                                                                     e.target
                                                                         .value
                                                                 )
@@ -822,7 +827,7 @@ function ProductsLists() {
                                                 </div>
                                                 <div className="ps-product__content ps-tab-root">
                                                     <Tabs defaultActiveKey="1">
-                                                        <TabPane tab="Izoh" key="1">
+                                                        <TabPane tab="Mahsulot to’liq tavsifi" key="1">
                                                             <PartialDescription
                                                                 product={deleteIdView}
                                                             />

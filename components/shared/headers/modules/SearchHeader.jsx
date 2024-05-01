@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Link from 'next/link';
 import Router from 'next/router';
 import { Select, Spin } from 'antd';
 
@@ -23,7 +22,7 @@ function useDebounce(value, delay) {
     return debouncedValue;
 }
 
-const SearchHeader = () => {
+const SearchHeader = ({ setSearch }) => {
     const inputEl = useRef(null);
     const [isSearch, setIsSearch] = useState(false);
     const [keyword, setKeyword] = useState('');
@@ -34,6 +33,7 @@ const SearchHeader = () => {
 
     function handleClearKeyword() {
         setKeyword('');
+        setSearch('')
         setIsSearch(false);
         setLoading(false);
     }
@@ -44,6 +44,8 @@ const SearchHeader = () => {
             Router.push(`/search?keyword=${keyword}&type=${selectFile}`);
         }
     }
+
+
     useEffect(() => {
         // getSearchData();
         if (debouncedSearchTerm) {
@@ -72,8 +74,7 @@ const SearchHeader = () => {
     // Views
     let productItemsView,
         clearTextView,
-        loadingView,
-        loadMoreView;
+        loadingView
     if (!loading) {
         if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0)) {
             productItemsView = <p>Mahsulot topilmadi</p>;
@@ -107,7 +108,6 @@ const SearchHeader = () => {
             method="get"
             action="/"
             onSubmit={handleSubmit}
-            onBlur={handleClearKeyword}
         >
 
             <Select
@@ -146,24 +146,23 @@ const SearchHeader = () => {
             <div className="ps-form__input">
                 <input
                     ref={inputEl}
-                    className="form-control"
+                    className={keyword === '' ? "form-control input2" : "input1 form-control "}
                     type="text"
                     value={keyword}
                     placeholder="Qidiruv..."
-                    onChange={(e) => setKeyword(e.target.value)}
+                    onChange={(e) => (setKeyword(e.target.value), setSearch(e.target.value))}
                 />
                 {clearTextView}
                 {loadingView}
             </div>
 
-            <button onClick={handleSubmit}>Qidiruv</button>
-
+            <button className={keyword === '' ? 'button_search' : "d-block button_serach_color"}>Qidiruv</button>
             <div
                 className={`ps-panel--search-result${isSearch ? ' active ' : ''
                     }`}>
                 <div className="ps-panel__content">{productItemsView}</div>
-                {loadMoreView}
             </div>
+
         </form>
     );
 };
