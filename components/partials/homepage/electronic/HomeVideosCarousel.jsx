@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Product from '~/components/elements/products/Product';
 import ProductVideo from '~/components/elements/products/ProductVideo';
 
-const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
+const HomeVideosCarousel = ({ title, data, id, slug }) => {
 
 
     // Views
@@ -11,28 +11,17 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     if (true) {
         if (data && data?.promotional_sliders?.length > 0) {
             productItemsView = (
-                <div className="d-flex align-content-center row">
+                <div className="d-flex align-content-center row" style={{ rowGap: '15px' }}>
                     {data?.promotional_sliders
                         ?.slice(0, 6)
                         .map((item, index) => (
                             <div
                                 key={index}
-                                className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
-                                <Product product={item} />{' '}
+                                className="col-md-4">
+                                <ProductVideo product={item} />{' '}
                             </div>
                         ))}
                 </div>
-                // <div className="d-flex align-content-center row" style={{ rowGap: '15px' }}>
-                //     {data?.promotional_sliders
-                //         ?.slice(0, 6)
-                //         .map((item, index) => (
-                //             <div
-                //                 key={index}
-                //                 className="col-md-4">
-                //                 <ProductVideo product={item} />{' '}
-                //             </div>
-                //         ))}
-                // </div>
             );
         } else {
             productItemsView = <p>Mahsulot topilmadi</p>;
@@ -61,4 +50,4 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
         </div>
     );
 };
-export default ElectronicProductGroupWithCarousel;
+export default HomeVideosCarousel;
