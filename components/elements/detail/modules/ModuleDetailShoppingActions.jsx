@@ -166,7 +166,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                             </>
                         ) : (
                             <a
-                                style={{ cursor: 'pointer', minWidth: "212px" }}
+                                style={{ cursor:loading ? 'not-allowed' : 'pointer', minWidth: "212px" }}
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"
                                 onClick={async (e) => {
