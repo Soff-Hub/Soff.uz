@@ -15,7 +15,9 @@ import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
+import { useForm } from 'react-hook-form';
 import { InputNumber } from 'primereact/inputnumber';
+import Input from '~/components/form/Input';
 
 const category_id = [];
 
@@ -23,28 +25,23 @@ const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState(null);
-    const [fileImgFileID, setFileImgFileID] = useState('');
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
-    const [narxNomi, setNarxNomi] = useState(true);
-    const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
     const [livePosterFile, setLivePosterFile] = useState('');
     const [categoryName, setCategoryName] = useState('');
-    const [fileImgPoster, setFileImgPoster] = useState([]);
-    const [liveFile, setLiveFile] = useState('');
-    const [liveFile2, setLiveFile2] = useState('');
     const [narx, setNarx] = useState('');
-    const [chegirmaTek, setChegirmaTek] = useState(true);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [free, setFree] = useState(false);
-    const [uploadPoster, setUploadPoster] = useState(false);
     const [document, setDocument] = useState(null)
+    const [customePoster, setCustomePoster] = useState([]);
+    const [customeFile, setCustomeFile] = useState(null);
+    const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const breadCrumb = [
         {
@@ -184,11 +181,10 @@ const Posts = () => {
         }
     }
 
-    async function handleClickPosts(e) {
-        e.preventDefault();
+    async function handleClickPosts() {
         setLoading2(true);
         const formData = new FormData();
-        formData.append('title', title);
+        formData.append('title', watch('title'));
         if (free) {
             formData.append('price', 0);
         } else {
@@ -196,13 +192,17 @@ const Posts = () => {
         }
         formData.append('description', Fulldata);
         formData.append('tags', tagSearchResult);
-        liveFile2?.images?.[0]?.id
-            ? formData.append('poster_id', liveFile2?.images?.[0]?.id)
-            : 'None';
-        for (const img of fileImgPoster) {
-            formData.append('images', img)
+
+        const customePosters = customePoster
+            .filter((el) => el.custome)
+            .map((el) => el.file);
+
+        if (customePosters.length > 0) {
+            for (const file of customePosters) {
+                formData.append('images', file);
+            }
         }
-        fileImgFileID ? formData.append('poster', fileImgFileID.file) : formData.append('poster', fileImgPoster[0])
+        formData.append('poster', customeFile.file);
         formData.append('category', category_id[0]);
         formData.append('document', document?.id);
 
@@ -230,26 +230,19 @@ const Posts = () => {
 
     async function PostFilePoster() {
         if (fileImgFile) {
-            setLiveFile('');
             setLivePosterFile('');
             const formData = new FormData();
             setLoading(true);
             formData.append('file', fileImgFile);
+            formData.append('content_type', 'template');
             const ItemsData = await PostsRepository.PostsMyProductsPoster(
                 formData,
                 user?.access
             );
 
             if (ItemsData?.status === 201) {
-                // setLivePosterFile(ItemsData?.data);
                 setDocument(ItemsData?.data)
-                setLiveFile2(ItemsData?.data);
-                const modal = Modal.success({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: "Yangi .zip file qo'shdingiz ",
-                });
-                setUploadPoster(true)
+                setLivePosterFile(ItemsData?.data);
             } else {
                 const modal = Modal.error({
                     centered: true,
@@ -261,13 +254,26 @@ const Posts = () => {
         }
     }
 
-    function LiveImage(e) {
-        setFileImgFileID('');
-        setFileImgPoster((c) => [...c, e.target.files[0]]);
-        const img = window.URL.createObjectURL(e.target.files[0]);
-        setLivePosterFile(c => ([...c, { url: img, file: e.target.files[0] }]));
-        setLiveFile(img);
-    }
+
+
+
+    useEffect(() => {
+        const selectedImage = watch('image[0]');
+        if (selectedImage) {
+            const img = window?.URL?.createObjectURL(selectedImage);
+            setCustomeFile({ image_url: img, file: selectedImage, })
+            setCustomePoster([
+                {
+                    id: new Date().getTime(),
+                    image_url: img,
+                    file: selectedImage,
+                    custome: true,
+                },
+                ...customePoster,
+            ]);
+        }
+    }, [watch('image')]);
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -287,16 +293,6 @@ const Posts = () => {
         return formattedNumber;
     }
 
-    const chegirma = (foiz) => {
-        if (narx) {
-            const chegirmaNarx = narx - (narx * foiz) / 100;
-            if (chegirmaNarx < 1000) {
-                setChegirmaTek(false);
-            } else {
-                setChegirmaTek(true);
-            }
-        }
-    };
 
     const handleFreeChange = (e) => {
         setFree(!free);
@@ -305,13 +301,22 @@ const Posts = () => {
     useEffect(() => {
         GetItemsTag();
         setEditorLoaded(true);
-        chegirma();
         GetItemsCategoryLists();
     }, []);
 
     useEffect(() => {
         PostFilePoster();
     }, [fileImgFile]);
+
+    useEffect(() => {
+        if (watch('file')) {
+            setFileImgFile(watch('file[0]'));
+        }
+    }, [watch('file')]);
+
+
+
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -347,10 +352,12 @@ const Posts = () => {
                         </div>
 
                         <form
-                            onSubmit={handleClickPosts}
+                            onSubmit={handleSubmit(handleClickPosts)}
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
-                            className=" col-md-8 pb-5">
+                            className=" col-md-8 pb-5"
+                            noValidate
+                        >
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     <h4 className=" p-0">Yangi mahsulot </h4>
@@ -366,19 +373,19 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2 "></i>
                                     </Tooltip>
                                 </div>
-                                <input
-                                    required
-                                    type="text"
-                                    className="form-control  rounded-3 col-md-8 mb-2"
+                                <Input
                                     name="title"
-                                    onChange={(e) => {
-                                        const value = e.target.value.trim();
-                                        if (value !== "") {
-                                            setTitle(value);
-                                        }
-                                    }}
+                                    type="text"
+                                    className={"col-md-8 mb-2"}
+                                    InputClassName={"form-control  rounded-3 "}
+                                    {...register('title', {
+                                        required: "Shablon nomini to'ldirish majburiy",
+                                        validate: value => value.trim() !== "" || "Shablon nomi bo'sh bo'lishi mumkin emas"
+                                    })}
+                                    error={errors.title?.message}
                                 />
                             </div>
+
                             <div className="row ">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Shablon fayli: *</p>{' '}
@@ -388,127 +395,134 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                <label
-                                    className="add-product-user-image d-flex flex-column justify-content-center col-md-8 align-content-center form-control py-5 rounded-3 text-truncate"
-                                    style={{
-                                        backgroundColor: '#F1F1F1',
-                                        border: '1px dashed green',
-                                        width: '100%',
-                                    }}>
-                                    {livePosterFile === '' ? (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{ cursor: 'pointer' }}>
-                                            {loading ? (
-                                                <span className="d-flex justify-content-center">
-                                                    <ClipLoader
-                                                        size={25}
-                                                        color="#36d7b7"
-                                                    />
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    className="d-flex flex-column align-items-center "
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}>
-                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                    <span>
-                                                        Shablon faylini yuklash
-                                                        uchun ushbu hududga
-                                                        bosing (.zip).
+
+                                <div className='col-md-8 p-0'>
+                                    <label
+                                        className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
+                                        style={{
+                                            backgroundColor: errors.file?.message ? " #fff" : '#F1F1F1',
+                                            border: errors.file?.message ? '1px solid red' : "1px dashed green",
+                                            width: '100%',
+                                        }}>
+                                        {livePosterFile === '' ? (
+                                            <span
+                                                className="d-flex flex-column align-items-center"
+                                                style={{ cursor: 'pointer' }}>
+                                                {loading ? (
+                                                    <span className="d-flex justify-content-center">
+                                                        <ClipLoader
+                                                            size={25}
+                                                            color="#36d7b7"
+                                                        />
                                                     </span>
-                                                </span>
-                                            )}
-                                        </span>
-                                    ) : (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{ cursor: 'pointer' }}>
-                                            <span>
-                                                {' '}
-                                                Siz shabloningizni yukladingiz{' '}
-                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                ) : (
+                                                    <span
+                                                        className="d-flex flex-column align-items-center "
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                        <span>
+                                                            Shablon faylini yuklash
+                                                            uchun ushbu hududga
+                                                            bosing (.zip).
+                                                        </span>
+                                                    </span>
+                                                )}
                                             </span>
-                                        </span>
-                                    )}
-                                    <input
-                                        required
-                                        type="file"
-                                        onChange={(e) =>
-                                            setFileImgFile(e.target.files[0])
-                                        }
-                                        accept=".zip"
-                                    />
-                                </label>
+                                        ) : (
+                                            <span
+                                                className="d-flex flex-column align-items-center"
+                                                style={{ cursor: 'pointer' }}>
+                                                <span>
+                                                    {' '}
+                                                    Siz mahsulot yukladingiz{' '}
+                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                </span>
+                                            </span>
+                                        )}
+
+                                        <input
+                                            name='file'
+                                            type="file"
+                                            {...register('file', {
+                                                required: "Shablon qo'shish majburiy",
+                                                validate: value => !!value[0] || "Shablon tanlanishi majburiy"
+                                            })}
+                                            accept=".zip"
+                                        />
+
+
+                                    </label>
+                                    <p className={"my-2  text-danger"}>
+                                        {errors?.file?.message}
+                                    </p>
+
+                                </div>
+
                             </div>
+
                             <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Shablon posteri: *</p>{' '}
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
+                                    <p>Mahsulot rasmi: *</p>
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: .jpeg yoki .jpg, .png, .psd, .svg">
                                         <i
                                             style={{ cursor: 'pointer' }}
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-                                <div
-                                    className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
-                                    style={{
-                                        backgroundColor: '#F1F1F1',
-                                        border: '1px dashed green',
-                                        height: '100px',
-                                    }}>
-                                    <label
-                                        style={{
-                                            width: '50px',
-                                            cursor: 'pointer',
-                                        }}>
-                                        <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                                        <input
-                                            type="file"
-                                            onChange={(e) => LiveImage(e)}
-                                            accept="image/*"
-                                            style={{ width: '20px' }}
-                                        />
-                                    </label>
+
+                                <div className='col-md-8 p-0'>
                                     <div
-                                        className="overflow-x-scroll  d-flex  gap-1
-                                   "
-                                        style={{ width: '430px' }}>
-                                        {!livePosterFile?.length > 0 ? (
-                                            <span
-                                                className="d-flex flex-column align-items-center mt-4 mx-5"
-                                                style={{ cursor: 'pointer' }}>
-                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                <span className="text-center">
-                                                    {' '}
-                                                    {uploadPoster
-                                                        ? 'Ilitmos kamida 3ta rasmini yuklang.'
-                                                        : 'Rasmini yuklash uchun ushbu hududga bosing.'}{' '}
-                                                </span>
-                                            </span>
-                                        ) : (
-                                            livePosterFile?.map(
-                                                (item, i) =>
-                                                    item.file ===
-                                                        fileImgFileID.file ? (
+                                        className="add-product-user-image d-flex justify-content-between  form-control pt-2 rounded-3"
+                                        style={{
+                                            height: '100px',
+                                            backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',
+                                            border: errors.image?.message ? '1px solid red' : "1px dashed green",
+                                        }}>
+                                        <label
+                                            style={{
+                                                width: '50px',
+                                                cursor: 'pointer',
+                                            }}>
+                                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                                            <input
+                                                name='image'
+                                                type="file"
+                                                {...register('image', {
+                                                    required: "Shablon rasmini qo'shish majburiy",
+                                                    validate: value => !!value[0] || "Shablon rasmi tanlanishi majburiy"
+                                                })}
+                                                style={{ width: '20px' }}
+                                                accept="image/*"
+                                            />
+                                        </label>
+
+                                        <div
+                                            className="overflow-x-scroll  d-flex  gap-1"
+                                            style={{ width: '430px' }}>
+                                            {
+                                                !customePoster?.length > 0 ?
+                                                    <span
+                                                        className="d-flex flex-column align-items-center mt-4 mx-5"
+                                                        style={{ cursor: 'pointer' }}>
+                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                        <span className="text-center">
+                                                            Rasmini yuklash uchun ushbu hududga bosing.
+                                                        </span>
+                                                    </span>
+                                                    :
+                                                    customePoster?.map((item, i) =>
+                                                    (
                                                         <img
-                                                            src={item.url}
-                                                            alt=" "
-                                                            key={i}
-                                                            style={{
-                                                                display:
-                                                                    'block',
-                                                                border: '2px solid red',
-                                                                filter: 'blur(1px)',
-                                                                cursor: 'not-allowed',
+                                                            className="mx-1 "
+                                                            onClick={() => {
+                                                                setCustomeFile(
+                                                                    item
+                                                                );
                                                             }}
-                                                        />
-                                                    ) : (
-                                                        <img
-                                                            className="mx-1"
                                                             src={
-                                                                item.url
+                                                                item?.image_url
                                                             }
                                                             alt=" "
                                                             key={i}
@@ -517,17 +531,23 @@ const Posts = () => {
                                                                     'block',
                                                                 cursor: 'pointer',
                                                             }}
-                                                            onClick={() => {
-                                                                setFileImgFileID(item)
-                                                                setLiveFile(item.url)
-                                                            }}
                                                         />
                                                     )
-                                            )
-                                        )}
+                                                    )
+
+                                            }
+                                        </div>
                                     </div>
+                                    <p className={"my-2  text-danger"}>
+                                        {errors?.image?.message}
+                                    </p>
                                 </div>
+
                             </div>
+
+
+
+
                             <div className=" row ">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                     <p>Teglar:</p>{' '}
@@ -585,29 +605,16 @@ const Posts = () => {
                                     onChange={handleFreeChange}>
                                     Bepul
                                 </Checkbox>
-                                {/* <input
-                                    required
-                                    type={narxNomi ? 'text' : 'number'}
-                                    className="form-control  rounded-3 col-md-6"
-                                    name="price"
-                                    disabled={free}
-                                    value={taxminiyNarx}
-                                    onChange={(e) => (
-                                        setNarxNomi(false),
-                                        setTaxminiyNarx(e.target.value),
-                                        setNarx(e.target.value)
-                                    )}
-                                /> */}
                                 <InputNumber
                                     required
                                     disabled={free}
                                     value={taxminiyNarx}
-                                    className="col-md-6 p-2 post-price"
+                                    className="col-md-6 p-2 price_input_number"
                                     onValueChange={(e) => (
-                                        setNarxNomi(false),
                                         setTaxminiyNarx(e.value),
                                         setNarx(e.value)
                                     )}
+                                    style={{ height: "45px" }}
                                 />
                             </div>
 
@@ -649,7 +656,7 @@ const Posts = () => {
                                     </button>
                                 ) : (
                                     <button
-                                        disabled={ title==='' || loading}
+                                        disabled={loading}
                                         type="submit"
                                         className="btn btn-success py-3 ">
                                         <span className="fs-4 px-5">
@@ -659,6 +666,7 @@ const Posts = () => {
                                     </button>
                                 )}
                             </div>
+
                             <div className="mahsulotingiz">
                                 <span
                                     className="fixed-btn"
@@ -670,41 +678,32 @@ const Posts = () => {
                                 </span>
                             </div>
                         </form>
+
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
                             <div className="image rounded mb-3">
-                                {!liveFile ? (
-                                    <div className="d-flex justify-content-center">
-                                        <img
-                                            src={
-                                                livePosterFile?.images?.[0]
-                                                    ?.image_url ||
-                                                '/static/img/shablon.png'
-                                            }
-                                            alt="doc"
-                                            className=" mb-4"
-                                            style={{
-                                                objectFit: 'cover',
-                                                width: '250px',
-                                            }}
-                                        />
-                                    </div>
-                                ) : (
+                                <div className="d-flex justify-content-center">
                                     <img
-                                        src={liveFile}
+                                        src={
+                                            customeFile?.image_url ? customeFile?.image_url :
+                                                '/static/img/shablon.png'
+                                        }
                                         alt="doc"
-                                        className="mb-4 border"
-                                        style={{ objectFit: 'cover' }}
+                                        className=" mb-4"
+                                        style={{
+                                            objectFit: 'cover',
+                                            width: '250px',
+                                        }}
                                     />
-                                )}
+                                </div>
                             </div>
                             <div className="text-start">
                                 <p className="live-card-p">
                                     <strong>Nomi : </strong>{' '}
                                     <span style={{ maxWidth: '150px' }}>
                                         {' '}
-                                        {title ? title : "To'ldirilmadi"}
+                                        {watch('title') ? watch('title') : "To'ldirilmadi"}
                                     </span>
                                 </p>
                                 <p className="live-card-p">
@@ -750,6 +749,7 @@ const Posts = () => {
                             </div>
                         </div>
                     </div>
+
                     <div
                         className="offcanvas offcanvas-end"
                         tabindex="-1"
@@ -770,32 +770,22 @@ const Posts = () => {
                         <div className="offcanvas-body">
                             <div className="card  rounded-3 ">
                                 <div className="image rounded mb-3">
-                                    {!liveFile ? (
-                                        <img
-                                            src={
-                                                livePosterFile?.images?.[0]
-                                                    ?.image_url ||
-                                                '/static/img/docCopy.png'
-                                            }
-                                            alt="doc"
-                                            className="border mb-4"
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    ) : (
-                                        <img
-                                            src={liveFile}
-                                            alt="doc"
-                                            className="mb-4 border"
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    )}
+                                    <img
+                                        src={
+                                            customeFile?.image_url ? customeFile?.image_url :
+                                                '/static/img/shablon.png'
+                                        }
+                                        alt="doc"
+                                        className="border mb-4"
+                                        style={{ objectFit: 'cover' }}
+                                    />
                                 </div>
                                 <div className="text-start">
                                     <p className="live-card-p">
                                         <strong>Nomi : </strong>{' '}
                                         <span style={{ maxWidth: '150px' }}>
                                             {' '}
-                                            {title ? title : "To'ldirilmadi"}
+                                            {watch('title') ? watch('title') : "To'ldirilmadi"}
                                         </span>
                                     </p>
                                     <p className="live-card-p">
@@ -906,9 +896,10 @@ const Posts = () => {
                                     <div className="ps-product__header ">
                                         <div className="ps-product__thumbnail">
                                             <figure>
+
                                                 <div className="ps-wrapper">
-                                                    {livePosterFile?.images ? (
-                                                        livePosterFile?.images?.map(
+                                                    {customePoster ? (
+                                                        customePoster?.map(
                                                             (item) => (
                                                                 <img
                                                                     src={
@@ -939,8 +930,8 @@ const Posts = () => {
                                             <header>
                                                 <h1>
                                                     {' '}
-                                                    {title
-                                                        ? title
+                                                    {watch('title')
+                                                        ? watch('title')
                                                         : "To'ldirilmadi"}
                                                 </h1>
                                                 <h4>
