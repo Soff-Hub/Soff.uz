@@ -31,7 +31,6 @@ const ModuleProductActions = ({ product, audio }) => {
         showModal();
         e.preventDefault();
         setCartOneItem(product.id);
-
     }
 
     function handleAddItemToWishlist(e) {
@@ -170,40 +169,44 @@ const ModuleProductActions = ({ product, audio }) => {
                     </a>
                 </li>
 
-                {audio && product?.discount_price === 0 ? (
-                    <li className={`${audio ? 'audio-list-action' : ''}`}>
-                        <span
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="Yuklab olish"
-                            onClick={() =>
-                                audioDownloaderSale(
-                                    product?.document?.short_content_url
-                                )
-                            }>
-                            <i
-                                className={`${
-                                    loading
-                                        ? 'fa-regular fa-circle fa-beat-fade'
-                                        : 'fa-solid fa-download'
-                                } `}></i>
-                        </span>
-                    </li>
+                {audio ? (
+                    product?.discount_price === 0 ? (
+                        <li className={`${audio ? 'audio-list-action' : ''}`}>
+                            <span
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Yuklab olish"
+                                onClick={() =>
+                                    audioDownloaderSale(
+                                        product?.document?.short_content_url
+                                    )
+                                }>
+                                <i
+                                    className={`${
+                                        loading
+                                            ? 'fa-regular fa-circle fa-beat-fade'
+                                            : 'fa-solid fa-download'
+                                    } `}></i>
+                            </span>
+                        </li>
+                    ) : (
+                        <li className={`${audio ? 'audio-list-action' : ''}`}>
+                            <a
+                                href={`${
+                                    user?.access !== undefined ||
+                                    user?.access !== ''
+                                        ? `account/checkout-one?id=${product?.id}`
+                                        : `account/register-user?id=${product?.id}`
+                                } `}
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Yuklab olish">
+                                <i className={`${'fa-solid fa-download'} `}></i>
+                            </a>
+                        </li>
+                    )
                 ) : (
-                    <li className={`${audio ? 'audio-list-action' : ''}`}>
-                        <a
-                            href={`${
-                                user?.access !== undefined ||
-                                user?.access !== ''
-                                    ? `account/checkout-one?id=${product?.id}`
-                                    : `account/register-user?id=${product?.id}`
-                            } `}
-                            data-toggle="tooltip"
-                            data-placement="top"
-                            title="Yuklab olish">
-                            <i className={`${'fa-solid fa-download'} `}></i>
-                        </a>
-                    </li>
+                    <></>
                 )}
 
                 <Modal
