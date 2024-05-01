@@ -42,10 +42,11 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [volume, wavesurferObj]);
 
     const handlePlayPause = () => {
-        
-        document.querySelectorAll('.audio-cart-content .fa-circle-pause').forEach((el) => {
-            el.click();
-        });
+        document
+            .querySelectorAll('.audio-cart-content .fa-circle-pause')
+            .forEach((el) => {
+                el.click();
+            });
 
         setPlaying(!playing);
         if (!playing) {
@@ -54,7 +55,6 @@ const AudioWaveform = ({ product, inCategory }) => {
             wavesurferObj.pause();
         }
     };
-    
 
     useEffect(() => {
         if (wavesurferObj) {
@@ -66,6 +66,24 @@ const AudioWaveform = ({ product, inCategory }) => {
         // console.log('Audio tugab ketdi');
         setPlaying(false);
     };
+
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
 
     return (
         <>
@@ -109,6 +127,33 @@ const AudioWaveform = ({ product, inCategory }) => {
                                             {product?.seller?.last_name}
                                         </a>
                                     </Link>
+                                    <div>
+                                        {+product?.discount_price === 0 ? (
+                                            <p className='free-audio-price'>Bepul</p>
+                                        ) : product?.discount === 0 ? (
+                                            <p>
+                                                {addPeriodToThousands(
+                                                    product?.discount_price
+                                                )}{' '}
+                                                so'm
+                                            </p>
+                                        ) : (
+                                            <>
+                                                <del>
+                                                    {addPeriodToThousands(
+                                                        product?.price
+                                                    )}{' '}
+                                                    so'm
+                                                </del>
+                                                <p>
+                                                    {addPeriodToThousands(
+                                                        product?.discount_price
+                                                    )}
+                                                    so'm
+                                                </p>
+                                            </>
+                                        )}
+                                    </div>
                                 </div>
                             </div>
                         </div>
