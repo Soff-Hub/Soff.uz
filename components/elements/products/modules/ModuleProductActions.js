@@ -16,7 +16,6 @@ const ModuleProductActions = ({ product, audio }) => {
     const [productView, setProduct] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
-console.log('user', user?.access);
     const showModal = () => {
         setOpen(true);
     };
@@ -32,11 +31,7 @@ console.log('user', user?.access);
         showModal();
         e.preventDefault();
         setCartOneItem(product.id);
-        // const modal = Modal.success({
-        //     centered: true,
-        //     title: 'Muvaffaqqiyatli!',
-        //     content: "Siz  malumotlarni o'zgartirdingiz ",
-        // });
+
     }
 
     function handleAddItemToWishlist(e) {
@@ -175,7 +170,7 @@ console.log('user', user?.access);
                     </a>
                 </li>
 
-                {(audio && product?.discount_price === 0) ? (
+                {audio && product?.discount_price === 0 ? (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <span
                             data-toggle="tooltip"
@@ -194,13 +189,14 @@ console.log('user', user?.access);
                                 } `}></i>
                         </span>
                     </li>
-                ) :  (
+                ) : (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <a
                             href={`${
-                                user?.access !== undefined || user?.access !== "" 
+                                user?.access !== undefined ||
+                                user?.access !== ''
                                     ? `account/checkout-one?id=${product?.id}`
-                                    : 'account/selection'
+                                    : `account/register-user?id=${product?.id}`
                             } `}
                             data-toggle="tooltip"
                             data-placement="top"
