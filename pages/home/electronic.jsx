@@ -13,7 +13,6 @@ import Link from 'next/link';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
-import HomeVideosCarousel from '~/components/partials/homepage/electronic/HomeVideosCarousel';
 import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
 
 const HomeElectronicsPage = () => {
@@ -32,7 +31,6 @@ const HomeElectronicsPage = () => {
     }
 
     async function getFreeDocuments() {
-
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
 
         setFreeProducts({
@@ -43,7 +41,6 @@ const HomeElectronicsPage = () => {
             slug: "bepul-mahsulotlar",
             promotional_sliders: [...responseData.data]
         });
-
     }
     async function getTopSellers() {
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
@@ -112,14 +109,6 @@ const HomeElectronicsPage = () => {
                 key={234}
                 slug={freeProducts.slug}
             />
-            {/* <HomeVideosCarousel
-                collectionSlug="electronics-best-sellers"
-                title={"Video materiallar"}
-                data={freeProducts}
-                id={freeProducts.id}
-                key={234}
-                slug={freeProducts.slug}
-            /> */}
             {category?.length > 0 ? (
                 category.map((item, index) =>
                     item?.promotional_sliders?.length > 0 && (
