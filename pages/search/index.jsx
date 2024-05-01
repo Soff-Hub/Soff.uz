@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import PostRepository from '~/repositories/PostRepository';
 import Meta from '~/components/shared/headers/Meta';
 import Link from "next/link";
+import ProductVideo from '~/components/elements/products/ProductVideo';
 
 const SearchPage = () => {
 
@@ -15,7 +16,7 @@ const SearchPage = () => {
     const [resultdata, setresultData] = useState([]);
 
     async function getSearchData() {
-        const responseData = await PostRepository.postSearchFilter(query?.keyword,query?.type);
+        const responseData = await PostRepository.postSearchFilter(query?.keyword, query?.type);
         if (responseData) {
             setresultData(responseData);
         }
@@ -72,7 +73,7 @@ const SearchPage = () => {
                             resultdata?.file?.length > 0 &&
                             <>
                                 <div className="ps-section__header">
-                                    <h3 className='titleeeeeeee'>File</h3>
+                                    <h3 className='titleeeeeeee d-flex align-items-center gap-2 '>Hujjatlar <span className='mt-1' style={{padding:"3px 8px",border:"1px solid #fff",borderRadius:"5px",fontSize:"12px"}}>{resultdata?.file?.length}</span></h3>
                                     <ul className="ps-section__links">
                                         <li>{keyword &&
                                             <Link href={`/filter?keyword=${keyword}&type=file`}>
@@ -105,7 +106,7 @@ const SearchPage = () => {
                             resultdata?.audio?.length > 0 &&
                             <>
                                 <div className="ps-section__header">
-                                    <h3 className='titleeeeeeee'>Audio</h3>
+                                <h3 className='titleeeeeeee d-flex align-items-center gap-2 '>Audiolar <span className='mt-1' style={{padding:"3px 8px",border:"1px solid #fff",borderRadius:"5px",fontSize:"12px"}}>{resultdata?.audio?.length}</span></h3>
                                     <ul className="ps-section__links">
                                         <li>{keyword &&
                                             <Link href={`/filter?keyword=${keyword}&type=audio`}>
@@ -138,7 +139,7 @@ const SearchPage = () => {
                             resultdata?.template?.length > 0 &&
                             <>
                                 <div className="ps-section__header">
-                                    <h3 className='titleeeeeeee'>Shablon</h3>
+                                <h3 className='titleeeeeeee d-flex align-items-center gap-2 '>Shablonlar <span className='mt-1' style={{padding:"3px 8px",border:"1px solid #fff",borderRadius:"5px",fontSize:"12px"}}>{resultdata?.template?.length}</span></h3>
                                     <ul className="ps-section__links">
                                         <li>{keyword &&
                                             <Link href={`/filter?keyword=${keyword}&type=template`}>
@@ -166,6 +167,41 @@ const SearchPage = () => {
                             </>
                         }
                     </>
+
+                    <>
+                        {
+                            resultdata?.vedio?.length > 0 &&
+                            <>
+                                <div className="ps-section__header">
+                                <h3 className='titleeeeeeee d-flex align-items-center gap-2 '>Vediolar <span className='mt-1' style={{padding:"3px 8px",border:"1px solid #fff",borderRadius:"5px",fontSize:"12px"}}>{resultdata?.vedio?.length}</span></h3>
+                                    <ul className="ps-section__links">
+                                        <li>{keyword &&
+                                            <Link href={`/filter?keyword=${keyword}&type=vedio`}>
+                                                <a className='d-flex align-items-center gap-2'>
+                                                    <span>Barchasini ko'rish</span>
+                                                    <i className='fa-solid fa-angles-right fa-beat-fade'></i>
+                                                </a>
+                                            </Link>
+                                        }
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div className="ps-section__content">
+                                    <div className="d-flex align-content-center row">
+                                        {
+                                            resultdata?.vedio?.slice(0, 6)?.map((item, index) => (
+                                                <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                                    <ProductVideo product={item} />{' '}
+                                                </div>
+                                            ))}
+                                    </div>
+
+                                </div>
+                            </>
+                        }
+                    </>
+
                 </div>
             </div>
         </PageContainer>
