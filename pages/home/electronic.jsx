@@ -112,14 +112,14 @@ const HomeElectronicsPage = () => {
                 key={234}
                 slug={freeProducts.slug}
             />
-            <HomeVideosCarousel
+            {/* <HomeVideosCarousel
                 collectionSlug="electronics-best-sellers"
                 title={"Video materiallar"}
                 data={freeProducts}
                 id={freeProducts.id}
                 key={234}
                 slug={freeProducts.slug}
-            />
+            /> */}
             {category?.length > 0 ? (
                 category.map((item, index) =>
                     item?.promotional_sliders?.length > 0 && (
