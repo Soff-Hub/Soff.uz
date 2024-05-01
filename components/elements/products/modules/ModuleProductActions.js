@@ -6,7 +6,8 @@ import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import Router from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
-import axios from 'axios'
+import axios from 'axios';
+import Axios from 'axios';
 
 const ModuleProductActions = ({ product, audio }) => {
     const [isQuickView, setIsQuickView] = useState(false);
@@ -15,6 +16,8 @@ const ModuleProductActions = ({ product, audio }) => {
     const [open, setOpen] = useState(false);
     const [productView, setProduct] = useState([]);
     const { user } = useSelector((state) => state.auth);
+    const [loading, setLoading] = useState(false);
+
 
     const showModal = () => {
         setOpen(true);
@@ -46,7 +49,6 @@ const ModuleProductActions = ({ product, audio }) => {
         }
     }
 
-
     async function getProducts(e) {
         e.preventDefault();
         try {
@@ -67,11 +69,35 @@ const ModuleProductActions = ({ product, audio }) => {
         }
     }
 
-
     const handleHideQuickView = async (e) => {
         e.preventDefault();
 
         setIsQuickView(false);
+    };
+
+    const audioDownloaderSale = async (file, product) => {
+        try {
+            setLoading(true);
+            const response = await Axios.get(file, {
+                responseType: 'blob',
+            });
+
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download =
+                'soff.uz -' +
+                product?.title +
+                '.' +
+                file.split('.')[file?.split('.').length - 1];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+        } catch (error) {
+            console.error('Error downloading file: ', error);
+        }finally {
+            setLoading(false);
+        }
     };
 
     return (
@@ -97,9 +123,13 @@ const ModuleProductActions = ({ product, audio }) => {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
-            <ul className={`ps-product__actions ${audio ? 'd-flex gap-5 justify-content-center align-content-center audio-list-icons' : ""} `}>
-                
-                <li className={`${audio ? 'audio-list-action' : ''}`} >
+            <ul
+                className={`ps-product__actions ${
+                    audio
+                        ? 'd-flex gap-5 justify-content-center align-content-center audio-list-icons'
+                        : ''
+                } `}>
+                <li className={`${audio ? 'audio-list-action' : ''}`}>
                     <a
                         href="#"
                         data-toggle="tooltip"
@@ -111,14 +141,24 @@ const ModuleProductActions = ({ product, audio }) => {
                 </li>
 
                 <li className={`${audio ? 'audio-list-action' : ''}`}>
-                    <a
-                        href="#"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Ko'proq ko'rish"
-                        onClick={getProducts}>
-                        <i className="icon-eye"></i>
-                    </a>
+                    {audio ? (
+                        <a
+                            href={`/product/${product?.slug}`}
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Ko'proq ko'rish">
+                            <i className="icon-eye"></i>
+                        </a>
+                    ) : (
+                        <a
+                            href="#"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Ko'proq ko'rish"
+                            onClick={getProducts}>
+                            <i className="icon-eye"></i>
+                        </a>
+                    )}
                 </li>
 
                 <li className={`${audio ? 'audio-list-action' : ''}`}>
@@ -139,6 +179,38 @@ const ModuleProductActions = ({ product, audio }) => {
                             } `}></i>
                     </a>
                 </li>
+
+                {audio && product?.discount_price === 0 ? (
+                    <li className={`${audio ? 'audio-list-action' : ''}`}>
+                        <span
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Yuklab olish"
+                            onClick={() =>
+                                audioDownloaderSale(
+                                    product?.document?.short_content_url,
+                                    product
+                                )
+                            }>
+                            <i
+                                className={`${
+                                    loading
+                                        ? 'fa-regular fa-circle fa-beat-fade'
+                                        : 'fa-solid fa-download'
+                                } `}></i>
+                        </span>
+                    </li>
+                ) : (
+                    <li className={`${audio ? 'audio-list-action' : ''}`}>
+                        <a
+                            href="account/selection"
+                            data-toggle="tooltip"
+                            data-placement="top"
+                            title="Yuklab olish">
+                            <i className={`${'fa-solid fa-download'} `}></i>
+                        </a>
+                    </li>
+                )}
 
                 <Modal
                     centeredwishlist

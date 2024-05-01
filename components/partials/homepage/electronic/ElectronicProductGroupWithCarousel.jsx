@@ -30,7 +30,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                 {data?.promotional_sliders?.slice(0, 6).map((item, index) => (
                     <div
                         key={index}
-                        className="col-12 my-3">
+                        className="col-12 my-2">
                         <AudioProductCart product={item} />{' '}
                     </div>
                 ))}

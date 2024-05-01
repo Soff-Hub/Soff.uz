@@ -31,16 +31,18 @@ const HomeElectronicsPage = () => {
     }
 
     async function getFreeDocuments() {
-        // const responseData = await axios.get(baseUrl + 'customer/free-document/')
 
-        // setFreeProducts({
-        //     id: 999999999999999,
-        //     name: "Bepul mahsulotlar",
-        //     icon: null,
-        //     image: null,
-        //     slug: "bepul-mahsulotlar",
-        //     promotional_sliders: [...responseData.data]
-        // });
+        const responseData = await axios.get(baseUrl + 'customer/free-document/')
+        
+        setFreeProducts({
+            id: 999999999999999,
+            name: "Bepul mahsulotlar",
+            icon: null,
+            image: null,
+            slug: "bepul-mahsulotlar",
+            promotional_sliders: [...responseData.data]
+        });
+
     }
     async function getTopSellers() {
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
@@ -101,14 +103,14 @@ const HomeElectronicsPage = () => {
                 // key={235}
                 slug={topSellers.slug}
             />
-            {/* <ElectronicProductGroupWithCarousel
+            <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}
                 data={freeProducts}
                 id={freeProducts.id}
                 key={234}
                 slug={freeProducts.slug}
-            /> */}
+            />
             {category?.length > 0 ? (
                 category.map((item, index) =>
                     item?.promotional_sliders?.length > 0 && (

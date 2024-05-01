@@ -10,6 +10,7 @@ import { CategorySlug } from '~/store/auth/action';
 import useDebounce from '~/hooks/useDebounce';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
+import AudioWaveform from '~/components/elements/products/AudioProductCart';
 
 const ShopItems = ({
     columns = 4,
@@ -17,7 +18,7 @@ const ShopItems = ({
     data,
     dataCount,
     setDataCount,
-    categoryData
+    categoryData,
 }) => {
     const Router = useRouter();
     const { query } = Router;
@@ -34,33 +35,34 @@ const ShopItems = ({
 
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     // const { category_lists: categoryData } = useSelector(state => state.auth)
-    const [search, setSearch] = useState('')
-    const searchDebounce = useDebounce(search, 1000)
+    const [search, setSearch] = useState('');
+    const searchDebounce = useDebounce(search, 1000);
 
     async function getFreeDocuments(page = 1, searchVal = '') {
-        const responseData = await axios.get(`${baseUrl}customer/documents/?free_documents=0&page=${page}&search=${searchVal}`)
+        const responseData = await axios.get(
+            `${baseUrl}customer/documents/?free_documents=0&page=${page}&search=${searchVal}`
+        );
         if (responseData) {
             setNewData(responseData?.data?.results);
         }
     }
 
-
     async function getCategry() {
-        const responseData = await ProductRepository.getCategoryParent().then(() => setLoad(true))
+        const responseData = await ProductRepository.getCategoryParent().then(
+            () => setLoad(true)
+        );
         if (responseData?.length > 0) {
             dispatch(CategorySlug(responseData?.data?.results));
             // categorySlug
         }
     }
 
-
     function handleChangeViewMode(e) {
         e.preventDefault();
         setListView(!listView);
     }
-
 
     function handleSetColumns() {
         switch (columns) {
@@ -82,7 +84,6 @@ const ShopItems = ({
         }
     }
 
-
     useEffect(() => {
         data !== null ? setSuccess(false) : setSuccess(true);
         handleSetColumns();
@@ -99,17 +100,16 @@ const ShopItems = ({
             getCategry();
         }
 
-        if (slug !== "bepul-mahsulotlar") {
+        if (slug !== 'bepul-mahsulotlar') {
             if (categoryData?.every((cat) => cat.slug !== slug)) {
                 setchaildId(slug);
-                setParentId(null)
+                setParentId(null);
             } else {
                 setParentId(slug);
-                setchaildId(null)
+                setchaildId(null);
             }
         }
-
-    }, [slug])
+    }, [slug]);
 
     const handlePagination = async (e) => {
         setPage(e);
@@ -150,8 +150,8 @@ const ShopItems = ({
                 setLoad(true);
             }
         }
-        if (slug === "bepul-mahsulotlar") {
-            getFreeDocuments(e, search)
+        if (slug === 'bepul-mahsulotlar') {
+            getFreeDocuments(e, search);
         }
     };
 
@@ -166,10 +166,10 @@ const ShopItems = ({
                 parentId,
                 null,
                 null,
-                "&free_documents=0",
+                '&free_documents=0',
                 null
             );
-            setDataCount(respons.count)
+            setDataCount(respons.count);
             return setNewData(respons?.results);
         }
         if (chaildId) {
@@ -279,8 +279,8 @@ const ShopItems = ({
     }
 
     async function detailSearch(e) {
-        if (slug === "bepul-mahsulotlar") {
-            getFreeDocuments(1, e)
+        if (slug === 'bepul-mahsulotlar') {
+            getFreeDocuments(1, e);
         } else {
             if (chaildId) {
                 const respons = await ProductRepository.getSearchProduct(
@@ -325,9 +325,9 @@ const ShopItems = ({
     }
 
     useEffect(() => {
-        detailSearch(search)
-    }, [searchDebounce])
-
+        detailSearch(search);
+    }, [searchDebounce]);
+    console.log('data', data);
     // Views
     let productItemsView;
     if (success) {
@@ -337,24 +337,29 @@ const ShopItems = ({
             </div>
         ));
         productItemsView = <div className="row">{skeletonItems}</div>;
-
-
-
     } else {
         if (data?.length > 0) {
             const items =
                 newData?.length > 0 &&
                 newData?.map((item) => (
-                    <div
-                        className={classes + ' home-card-category'}
-                        key={item.id}
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            alignContent: 'center',
-                        }}>
-                        <Product product={item} />
-                    </div>
+                    <>
+                        {item?.document?.content_type === 'audio' ? (
+                            <div className="col-12 my-3">
+                                <AudioWaveform product={item} inCategory = {true} />
+                            </div>
+                        ) : (
+                            <div
+                                className={classes + ' home-card-category'}
+                                key={item.id}
+                                style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignContent: 'center',
+                                }}>
+                                <Product product={item} />
+                            </div>
+                        )}
+                    </>
                 ));
             productItemsView = (
                 <div className="ps-shop-items">
@@ -388,7 +393,6 @@ const ShopItems = ({
                 </div>
             );
         }
-
     }
 
     return (
@@ -408,25 +412,29 @@ const ShopItems = ({
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </label>
-                    {slug !== "bepul-mahsulotlar" && <span style={{ margin: "0 10px" }}>Saralash</span>}
-                    {slug !== "bepul-mahsulotlar" && <select
-                        className="ps-select form-control"
-                        data-placeholder="Sort Items"
-                        onChange={(e) => handleSelect(e)}>
-                        <option value="mashhur">
-                            Mashhurlari bo'yicha
-                        </option>
-                        <option value="&free_documents=0">
-                            Bepul mahsulotlar
-                        </option>
-                        <option value="all">Yangilari</option>
-                        <option value="arzondan">
-                            Narx bo'yicha: arzondan qimmatga
-                        </option>
-                        <option value="qimmatdan">
-                            Narx bo'yicha: qimmatdan arzonga
-                        </option>
-                    </select>}
+                    {slug !== 'bepul-mahsulotlar' && (
+                        <span style={{ margin: '0 10px' }}>Saralash</span>
+                    )}
+                    {slug !== 'bepul-mahsulotlar' && (
+                        <select
+                            className="ps-select form-control"
+                            data-placeholder="Sort Items"
+                            onChange={(e) => handleSelect(e)}>
+                            <option value="mashhur">
+                                Mashhurlari bo'yicha
+                            </option>
+                            <option value="&free_documents=0">
+                                Bepul mahsulotlar
+                            </option>
+                            <option value="all">Yangilari</option>
+                            <option value="arzondan">
+                                Narx bo'yicha: arzondan qimmatga
+                            </option>
+                            <option value="qimmatdan">
+                                Narx bo'yicha: qimmatdan arzonga
+                            </option>
+                        </select>
+                    )}
                 </div>
             </div>
             <div className="ps-shopping__content pagination-product-box">
@@ -435,7 +443,8 @@ const ShopItems = ({
             <div className="ps-shopping__footer text-center">
                 {data?.length >= pageSize ? (
                     <div className="ps-pagination">
-                        <Pagination className="mt-3"
+                        <Pagination
+                            className="mt-3"
                             total={dataCount}
                             pageSize={pageSize}
                             responsive={true}
@@ -444,16 +453,19 @@ const ShopItems = ({
                             onChange={(e) => handlePagination(e)}
                         />
                     </div>
-                ) : <div className="ps-pagination">
-                    <Pagination className="mt-3"
-                        total={1}
-                        pageSize={1}
-                        responsive={true}
-                        showSizeChanger={false}
-                        current={1}
-                        onChange={(e) => handlePagination(e)}
-                    />
-                </div>}
+                ) : (
+                    <div className="ps-pagination">
+                        <Pagination
+                            className="mt-3"
+                            total={1}
+                            pageSize={1}
+                            responsive={true}
+                            showSizeChanger={false}
+                            current={1}
+                            onChange={(e) => handlePagination(e)}
+                        />
+                    </div>
+                )}
             </div>
         </div>
     );
