@@ -66,10 +66,11 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
-            setViews(respons);
+            setViews(respons.count);
         }
     }
 
+    console.log(views);
 
     useEffect(() => {
         if (pid) {
@@ -117,6 +118,14 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         <div className="ps-container">
                             <div className="ps-page__container">
                                 {product?.document?.content_type === 'file' ? (
+                                    <div className="ps-page__left">
+                                        <ProductDetailFullwidth
+                                            product={product}
+                                            views={views}
+                                        />
+                                    </div>
+                                ) : product?.document?.content_type ===
+                                  'video' ? (
                                     <div className="">
                                         <ProductVideoDetailFullWidth
                                             product={product}
@@ -124,15 +133,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                    'video' ? (
-                                    <div className="">
-                                        <ProductVideoDetailFullWidth
-                                            product={product}
-                                            views={views}
-                                        />
-                                    </div>
-                                ) : product?.document?.content_type ===
-                                    'audio' ? (
+                                  'audio' ? (
                                     <div className="">
                                         <ProductAudioDetailFullWidth
                                             product={product}
@@ -140,7 +141,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                    'article' ? (
+                                  'article' ? (
                                     <div>
                                         {/* <ProductAudioDetailFullWidth
                                     product={product}
