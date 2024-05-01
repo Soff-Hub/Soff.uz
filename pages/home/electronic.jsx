@@ -32,7 +32,6 @@ const HomeElectronicsPage = () => {
     }
 
     async function getFreeDocuments() {
-
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
 
         setFreeProducts({
@@ -43,7 +42,6 @@ const HomeElectronicsPage = () => {
             slug: "bepul-mahsulotlar",
             promotional_sliders: [...responseData.data]
         });
-
     }
     async function getTopSellers() {
         const responseData = await axios.get(baseUrl + 'customer/free-document/')

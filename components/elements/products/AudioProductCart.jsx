@@ -63,7 +63,7 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     const handleAudioFinish = () => {
-        console.log('Audio tugab ketdi');
+        // console.log('Audio tugab ketdi');
         setPlaying(false);
     };
 
