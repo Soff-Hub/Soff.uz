@@ -193,10 +193,10 @@ const ModuleProductActions = ({ product, audio }) => {
                         <li className={`${audio ? 'audio-list-action' : ''}`}>
                             <a
                                 href={`${
-                                    user?.access !== undefined ||
-                                    user?.access !== ''
-                                        ? `account/checkout-one?id=${product?.id}`
-                                        : `account/register-user?id=${product?.id}`
+                                    user?.access === undefined ||
+                                    user?.access === ''
+                                        ? `account/register-user?id=${product?.id}`
+                                        : `account/checkout-one?id=${product?.id}`
                                 } `}
                                 data-toggle="tooltip"
                                 data-placement="top"
