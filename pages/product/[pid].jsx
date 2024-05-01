@@ -43,6 +43,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }
 
+
     async function getProductSimiller() {
         try {
             const token = user?.access;
@@ -63,6 +64,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }
 
+    
     async function getUUID(uuid) {
         const respons = await PostRepository.postProductUUID(pid, uuid);
         if (respons) {
@@ -70,6 +72,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }
 
+    
 
     useEffect(() => {
         if (pid) {
@@ -123,15 +126,17 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             views={views}
                                         />
                                     </div>
-                                ) : product?.document?.content_type ===
-                                    'video' ? (
-                                    <div className="">
-                                        <ProductVideoDetailFullWidth
-                                            product={product}
-                                            views={views}
-                                        />
-                                    </div>
-                                ) : product?.document?.content_type ===
+                                ) 
+                                // : product?.document?.content_type ===
+                                //     'video' ? (
+                                //     <div className="">
+                                //         <ProductVideoDetailFullWidth
+                                //             product={product}
+                                //             views={views}
+                                //         />
+                                //     </div>
+                                // ) 
+                                : product?.document?.content_type ===
                                     'audio' ? (
                                     <div className="">
                                         <ProductAudioDetailFullWidth
