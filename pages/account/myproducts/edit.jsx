@@ -342,6 +342,7 @@ const PostsMyProducts = () => {
                                 </div>
                             </div>
 
+
                             {products?.document?.content_type !== 'audio' ? (
                                 <div className="row mb-3">
                                     <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
@@ -399,7 +400,6 @@ const PostsMyProducts = () => {
                                                                 display:
                                                                     'block',
                                                                 border: `1px solid red`,
-                                                                // filter: 'blur(1px)',
                                                                 cursor: 'default',
                                                                 padding: 1,
                                                                 width: '80px',

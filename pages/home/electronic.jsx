@@ -14,6 +14,7 @@ import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
 import HomeVideosCarousel from '~/components/partials/homepage/electronic/HomeVideosCarousel';
+import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
 
 const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
@@ -27,10 +28,11 @@ const HomeElectronicsPage = () => {
 
     async function getProducts() {
         const responseData = await axios.get(baseUrl + 'customer/category-list/')
-        setCategory(responseData.data.results);
+        setCategory(responseData?.data?.results);
     }
 
     async function getFreeDocuments() {
+
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
 
         setFreeProducts({
@@ -41,6 +43,7 @@ const HomeElectronicsPage = () => {
             slug: "bepul-mahsulotlar",
             promotional_sliders: [...responseData.data]
         });
+
     }
     async function getTopSellers() {
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
@@ -78,12 +81,18 @@ const HomeElectronicsPage = () => {
     }, []);
 
     const memoizedBanner = useMemo(() => {
-        return <ElectronicBanner />;
+        return (
+            <>
+                <HeaderMobileBottom />
+                <ElectronicBanner />
+            </>
+        );
     }, []);
 
     return (
         <main id="homepage-7">
             <Meta title="Soff | Barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
+
             {memoizedBanner}
             <VedioPage />
             {memoizedCard}

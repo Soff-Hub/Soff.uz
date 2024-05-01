@@ -34,7 +34,7 @@ function ProductsLists() {
     const [search, setSerach] = useState([]);
     const [deleteIdView, setDeleteIdView] = useState({});
     const [dataVal, setDataVal] = useState([]);
-    const [dataValStatus, setDataCatStatus] = useState(null);
+    const [dataValStatus, setDataCatStatus] = useState("");
     const [filterType, setFiltertype] = useState('');
     const [date, setDate] = useState(null);
     const [dateArxiv, setDateArxiv] = useState(null);
@@ -46,8 +46,11 @@ function ProductsLists() {
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 800);
     const [adminModal, setAdminModal] = useState(false);
+    const [allProducts, setAllProducts] = useState(false);
     const router = useRouter();
     const pid = router.asPath;
+
+
 
 
     const { RangePicker } = DatePicker;
@@ -82,7 +85,7 @@ function ProductsLists() {
             null,
             page,
             category,
-            dataValStatus,
+            router.query.status,
             dataFormat,
             id,
             arxiv,
@@ -196,11 +199,25 @@ function ProductsLists() {
     };
 
 
-
-    const handlePagination = (pageNum, count) => {
-        Router.push(`/account/products?page=${pageNum}`);
+    const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
+        Router.push(`/account/products?page=${pageNum}`);
     };
+
+    const handleFilterStatus = (status) => {
+        Router.push(`/account/products?page=${currPage}&status=${status}`);
+    };
+
+    function handleClickProductsAll() {
+        setAllProducts(!allProducts)
+        setFiltertype('')
+        setDateArxiv(null)
+        setCategoryID(null)
+        setDate(null)
+        Router.push(`/account/products?page=${router.query.page}`);
+    }
+
+
 
     useEffect(() => {
         GetItemsCategory();
@@ -208,25 +225,26 @@ function ProductsLists() {
 
     useEffect(() => {
         setCurrPage(router.query.page);
-        if (router.query.page) {
+        setDataCatStatus(router.query.status)
+        if (router.query.page || router.query.status) {
             GetItemsProductsLists(
                 router.query.page,
                 category_id,
-                dataValStatus,
+                router.query.status,
                 dataFormat,
                 null,
                 dateArxiv,
                 search
             );
         }
-    }, [router.query.page]);
+    }, [router.query.page, router.query.status]);
 
     useEffect(() => {
-        if (router.query.page) {
+        if (router.query.page || router.query.status) {
             GetItemsProductsLists(
                 router.query.page,
                 category_id,
-                dataValStatus,
+                router.query.status,
                 dataFormat,
                 null,
                 dateArxiv,
@@ -235,7 +253,7 @@ function ProductsLists() {
         }
     }, [
         category_id,
-        dataValStatus,
+        router.query.status,
         dataFormat,
         dateArxiv,
         searchDebounce,
@@ -248,6 +266,8 @@ function ProductsLists() {
             setLoading(false);
         }
     }, []);
+
+
 
     const columns = [
         {
@@ -377,7 +397,7 @@ function ProductsLists() {
                                 )
                             }></i>
                     </a>
-                    <Link href={'#'}>
+                    <Link href={'/account/products/edit'}>
                         <a>
                             <i
                                 className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
@@ -434,6 +454,7 @@ function ProductsLists() {
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0 ">
                                                     <button
+                                                        onClick={()=>Router.push(`/account/products?page=${1}`)}
                                                         style={{
                                                             backgroundColor:
                                                                 '#F1F1F1',
@@ -453,8 +474,9 @@ function ProductsLists() {
                                                     className="accordion-collapse collapse"
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
+
                                                         <Select
-                                                            className="col-md-6 p-0"
+                                                            className="col-md-5 p-0"
                                                             mode="select"
                                                             showSearch
                                                             style={{
@@ -474,9 +496,9 @@ function ProductsLists() {
                                                         </Select>
 
                                                         <select
-                                                            className="form-select col-md-5 fs-3 py-3 rounded-3"
+                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
-                                                                setDataCatStatus(
+                                                                handleFilterStatus(
                                                                     e.target
                                                                         .value
                                                                 )
@@ -503,6 +525,7 @@ function ProductsLists() {
                                                                 Bekor qilingan
                                                             </option>
                                                         </select>
+                                                        <button onClick={handleClickProductsAll} className='btn btn-success col-md-2'><span className='fs-5' style={{ lineHeight: "12px" }}>Bracha mahsulotlar</span></button>
                                                         <RangePicker
                                                             className="w-100 py-3 col-md-4 rounded-3"
                                                             onChange={(e) =>
@@ -526,10 +549,7 @@ function ProductsLists() {
                                                         <select
                                                             className="form-select col-md-4 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
-                                                                setFiltertype(
-                                                                    e.target
-                                                                        .value
-                                                                )
+                                                                (setFiltertype(e.target.value))
                                                             }>
                                                             <option
                                                                 className="fs-3"
@@ -591,10 +611,11 @@ function ProductsLists() {
                                     />
                                     <Pagination
                                         className="mt-3"
-                                        defaultCurrent={router.query.page}
+                                        defaultCurrent={1}
                                         total={pageCount}
                                         onChange={handlePagination}
                                         showSizeChanger
+                                        current={router.query.page}
                                     // hideOnSinglePage={false}
                                     />
                                 </div>
@@ -825,7 +846,7 @@ function ProductsLists() {
                                                 </div>
                                                 <div className="ps-product__content ps-tab-root">
                                                     <Tabs defaultActiveKey="1">
-                                                        <TabPane tab="Izoh" key="1">
+                                                        <TabPane tab="Mahsulot to’liq tavsifi" key="1">
                                                             <PartialDescription
                                                                 product={deleteIdView}
                                                             />

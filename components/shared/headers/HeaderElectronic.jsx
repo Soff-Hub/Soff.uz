@@ -20,6 +20,7 @@ const HeaderElectronic = ({ kk }) => {
     } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const [run, setRun] = useState(false)
+    const [search, setSearch] = useState('')
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
@@ -86,7 +87,7 @@ const HeaderElectronic = ({ kk }) => {
                         </div>
                     </div>
                     <div className="header__content-center">
-                        <SearchHeader />
+                        <SearchHeader setSearch={setSearch} />
                     </div>
                     <div className="header__content-right">
                         <ElectronicHeaderActions />

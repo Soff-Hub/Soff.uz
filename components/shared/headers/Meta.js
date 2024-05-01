@@ -7,6 +7,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
     return html.replace(/<[^>]+>/g, '');
   };
 
+
     return (
         <Head>
             <meta  property="og:title" content={title} />
@@ -22,12 +23,9 @@ const Meta = ({ title, image, description, keywords, author }) => {
             <meta property="og:site_name" content="Soff.uz" />
             <meta
                 property="og:keywords"
-                content={keywords ? keywords?.map((e) => e) : title}
+                content={keywords ? keywords?.map((e) => e?.name) : title}
             />
-            <meta name="site_name" content="Soff.uz" />
             <title>{title}</title>
-            <meta name="title"  content={title} />
-            <meta  name="image" content={image} />
             <meta
                 name="description"
                 content={
@@ -36,15 +34,15 @@ const Meta = ({ title, image, description, keywords, author }) => {
                         : `${title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
                 }
             />
+             <meta property="image"  content={image} />
             <meta
                 name="author"
                 property="author"
                 content={author ? author : 'nouthemes'}
             />
-            <meta
-                name="keywords"
+             <meta
                 property="keywords"
-                content={keywords ? keywords?.map((e) => e) : title}
+                content={keywords ? keywords?.map((e) => e?.name) : title}
             />
         </Head>
     );

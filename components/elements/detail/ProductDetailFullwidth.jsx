@@ -24,8 +24,8 @@ const ProductDetailFullwidth = ({ product, views }) => {
             <Meta
                 title={product?.title}
                 image={product?.iamges?.map((item) => item?.image_url) || product?.poster_url}
-                description={`${product?.description}, ${product?.tag?.map((e) => `${e?.name}, `)}`}
-                keywords={product?.tag ? product?.tag?.map((e) => `${e?.name}, ${product?.category?.name}`) : product?.title}
+                description={product?.description}
+                keywords={product?.tag ? product?.tag : product?.title}
                 author={`${product?.seller?.first_name} ${product?.seller?.last_name}`}
             />
             <div className="ps-product--detail ps-product--fullwidth">
@@ -44,7 +44,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
                             {tag?.length > 0 &&
-                                tag.map((item, i) => (
+                                tag.slice(0,15).map((item, i) => (
                                     <div key={i} className="m-2 tag-product">
                                         <Link href="#" as="#">
                                             <a

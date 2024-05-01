@@ -6,7 +6,7 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { audioDownloaderSale } from '~/utilities/common-helpers';
+
 
 const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
 
@@ -147,7 +147,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                             className="ps-btn max-clas"
                                             href="#"
                                             onClick={(e) => handleBuynow(e)}>
-                                            1 klikda sotib oling
+                                            Hoziroq xarid qilish
                                         </a>
                                     </>
                                 )}
