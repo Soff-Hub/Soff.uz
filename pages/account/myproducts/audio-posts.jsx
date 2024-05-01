@@ -52,7 +52,7 @@ const AudioPosts = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-
+console.log('category_id', category_id);
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
@@ -119,6 +119,8 @@ const AudioPosts = () => {
             }
         }
     };
+
+
 
     const onSearch = async (value) => {
         const ItemsData = await GetRepository.getAllCategoryListsAudio(value);
@@ -212,6 +214,7 @@ const AudioPosts = () => {
         formData.append('tags', tagSearchResult);
         formData.append('document', livePosterAudio?.id);
         formData.append('poster', fileImgPoster)
+        formData.append('category', category_id?.[0])
 
         const patchItems = await PatchRepository.getPatchPoster(
             formData,
