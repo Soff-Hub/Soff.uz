@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
+import HomeVideosCarousel from '~/components/partials/homepage/electronic/HomeVideosCarousel';
 import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
 
 const HomeElectronicsPage = () => {
@@ -33,7 +34,7 @@ const HomeElectronicsPage = () => {
     async function getFreeDocuments() {
 
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
-        
+
         setFreeProducts({
             id: 999999999999999,
             name: "Bepul mahsulotlar",
@@ -106,6 +107,14 @@ const HomeElectronicsPage = () => {
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}
+                data={freeProducts}
+                id={freeProducts.id}
+                key={234}
+                slug={freeProducts.slug}
+            />
+            <HomeVideosCarousel
+                collectionSlug="electronics-best-sellers"
+                title={"Video materiallar"}
                 data={freeProducts}
                 id={freeProducts.id}
                 key={234}
