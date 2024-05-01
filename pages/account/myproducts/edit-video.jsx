@@ -531,7 +531,7 @@ const Posts = () => {
                                                         width: '100%',
                                                         height: '47px',
                                                     }}
-                                                    defaultValue={products?.category?.id}
+                                                    defaultValue={products?.category?.name}
                                                     onChange={onChange}
                                                     onSearch={onSearch}>
                                                     {options}
@@ -555,7 +555,7 @@ const Posts = () => {
                                                     mode="tags"
                                                     style={{ width: '100%' }}
                                                     onChange={handleChange}
-                                                    defaultValue={products?.tag?.map(el => el.id)}
+                                                    defaultValue={products?.tag?.map(el => el.name)}
                                                 >
                                                     {children}
                                                 </Select>

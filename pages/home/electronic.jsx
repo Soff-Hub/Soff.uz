@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
+import HomeVideosCarousel from '~/components/partials/homepage/electronic/HomeVideosCarousel';
 
 const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
@@ -31,7 +32,7 @@ const HomeElectronicsPage = () => {
 
     async function getFreeDocuments() {
         const responseData = await axios.get(baseUrl + 'customer/free-document/')
-        
+
         setFreeProducts({
             id: 999999999999999,
             name: "Bepul mahsulotlar",
@@ -79,7 +80,7 @@ const HomeElectronicsPage = () => {
     const memoizedBanner = useMemo(() => {
         return <ElectronicBanner />;
     }, []);
-    
+
     return (
         <main id="homepage-7">
             <Meta title="Soff | Barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
@@ -97,6 +98,14 @@ const HomeElectronicsPage = () => {
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}
+                data={freeProducts}
+                id={freeProducts.id}
+                key={234}
+                slug={freeProducts.slug}
+            />
+            <HomeVideosCarousel
+                collectionSlug="electronics-best-sellers"
+                title={"Video materiallar"}
                 data={freeProducts}
                 id={freeProducts.id}
                 key={234}
