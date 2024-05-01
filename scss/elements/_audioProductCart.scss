@@ -1,6 +1,6 @@
 .audio-cart-container {
     background-color: #fff;
-    padding: 20px 15px;
+    padding: 10px 5px;
     border-radius: 15px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
     transition: all .5s;
@@ -43,6 +43,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.free-audio-price{
+    display: inline;
+    font-weight: 600;
 }
 
 @media screen and (max-width: 1200px) {
