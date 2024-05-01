@@ -16,9 +16,7 @@ const ModuleProductActions = ({ product, audio }) => {
     const [productView, setProduct] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
-
-    
-
+console.log('user', user?.access);
     const showModal = () => {
         setOpen(true);
     };
@@ -75,7 +73,7 @@ const ModuleProductActions = ({ product, audio }) => {
         setIsQuickView(false);
     };
 
-    const audioDownloaderSale = async (file, product) => {
+    const audioDownloaderSale = async (file) => {
         try {
             setLoading(true);
             const response = await axios.get(file, {
@@ -85,17 +83,14 @@ const ModuleProductActions = ({ product, audio }) => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download =
-                'soff.uz -' +
-                product?.title +
-                '.' +
-                file.split('.')[file?.split('.').length - 1];
+            // Foydalanuvchi faylni qanday nomlayotganini ko'rish uchun "a.download" attributini o'zgartiraylik
+            a.download = 'audio_file.mp3';
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            console.error('Error downloading file: ', error);
-        }finally {
+            console.error('Faylni yuklab olishda xato: ', error);
+        } finally {
             setLoading(false);
         }
     };
@@ -180,7 +175,7 @@ const ModuleProductActions = ({ product, audio }) => {
                     </a>
                 </li>
 
-                {(audio && product?.discount_price === 0 || user?.access)? (
+                {(audio && product?.discount_price === 0) ? (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <span
                             data-toggle="tooltip"
@@ -188,8 +183,7 @@ const ModuleProductActions = ({ product, audio }) => {
                             title="Yuklab olish"
                             onClick={() =>
                                 audioDownloaderSale(
-                                    product?.document?.short_content_url,
-                                    product
+                                    product?.document?.short_content_url
                                 )
                             }>
                             <i
@@ -200,10 +194,14 @@ const ModuleProductActions = ({ product, audio }) => {
                                 } `}></i>
                         </span>
                     </li>
-                ) : (
+                ) :  (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <a
-                            href={`${user?.access ? `account/checkout-one?id=${product?.id}` : 'account/selection'} `}
+                            href={`${
+                                user?.access !== undefined || user?.access !== "" 
+                                    ? `account/checkout-one?id=${product?.id}`
+                                    : 'account/selection'
+                            } `}
                             data-toggle="tooltip"
                             data-placement="top"
                             title="Yuklab olish">
