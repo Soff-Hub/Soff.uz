@@ -7,7 +7,6 @@ import useWishlist from '~/hooks/useWishlist';
 import Router from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
-import Axios from 'axios';
 
 const ModuleProductActions = ({ product, audio }) => {
     const [isQuickView, setIsQuickView] = useState(false);
@@ -18,6 +17,7 @@ const ModuleProductActions = ({ product, audio }) => {
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
 
+    
 
     const showModal = () => {
         setOpen(true);
@@ -78,7 +78,7 @@ const ModuleProductActions = ({ product, audio }) => {
     const audioDownloaderSale = async (file, product) => {
         try {
             setLoading(true);
-            const response = await Axios.get(file, {
+            const response = await axios.get(file, {
                 responseType: 'blob',
             });
 
@@ -180,7 +180,7 @@ const ModuleProductActions = ({ product, audio }) => {
                     </a>
                 </li>
 
-                {audio && product?.discount_price === 0 ? (
+                {(audio && product?.discount_price === 0 || user?.access)? (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <span
                             data-toggle="tooltip"
@@ -203,7 +203,7 @@ const ModuleProductActions = ({ product, audio }) => {
                 ) : (
                     <li className={`${audio ? 'audio-list-action' : ''}`}>
                         <a
-                            href="account/selection"
+                            href={`${user?.access ? `account/checkout-one?id=${product?.id}` : 'account/selection'} `}
                             data-toggle="tooltip"
                             data-placement="top"
                             title="Yuklab olish">
