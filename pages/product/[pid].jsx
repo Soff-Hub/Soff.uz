@@ -70,7 +70,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }
 
-    console.log(views);
 
     useEffect(() => {
         if (pid) {
