@@ -36,7 +36,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     },
                 }
             );
-
             setProduct(response?.data);
         } catch (error) {
             console.error('Error fetching document:', error);
@@ -118,7 +117,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                             <div className="ps-page__container">
                                 {product?.document?.content_type === 'file' ? (
                                     <div className="">
-                                        <ProductVideoDetailFullWidth
+                                        <ProductDetailFullwidth
                                             product={product}
                                             views={views}
                                         />
@@ -142,11 +141,11 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 ) : product?.document?.content_type ===
                                     'article' ? (
                                     <div>
-                                        {/* <ProductAudioDetailFullWidth
-                                    product={product}
-                                    document={document}
-                                    views={views}
-                                /> */}
+                                        <ProductAudioDetailFullWidth
+                                            product={product}
+                                            document={document}
+                                            views={views}
+                                        />
                                     </div>
                                 ) : (
                                     <div className="ps-page__left">
