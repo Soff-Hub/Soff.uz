@@ -29,9 +29,9 @@ export const generateTempArray = (maxItems) => {
 
 
 export const audioDownloaderSale = async (file, product) => {
-
+    const filee = file?.file_url.includes('?X-Amz-Algorithm') ? file?.file_url.split('?')[0] : file?.file_url
     try {
-        const response = await Axios.get(file?.file_url, {
+        const response = await Axios.get(filee, {
             responseType: 'blob',
         });
 
@@ -41,8 +41,8 @@ export const audioDownloaderSale = async (file, product) => {
         a.download =
             'soff.uz -' + product?.title  +
             '.' +
-            file?.file_url.split('.')[
-                file?.file_url?.split('.').length - 1
+            filee?.split('.')[
+                filee?.split('.').length - 1
             ];
         document.body.appendChild(a);
         a.click();

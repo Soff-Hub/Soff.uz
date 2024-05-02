@@ -280,32 +280,6 @@ function MyProductsLists() {
 
         return formattedNumber;
     }
-    const handleButtonClick = async (ID) => {
-        try {
-            setLoading4(true);
-            const fileContent = data?.find((item) => item.id == ID);
-            const response = await axios.get(fileContent?.document?.file_url, {
-                responseType: 'blob',
-            });
-
-            const url = window.URL.createObjectURL(new Blob([response.data]));
-            const a = document.createElement('a');
-            a.href = url;
-            a.download =
-                fileContent.title +
-                '.' +
-                fileContent?.document?.file_url.split('.')[
-                fileContent?.document?.file_url?.split('.').length - 1
-                ];
-            document.body.appendChild(a);
-            a.click();
-            window.URL.revokeObjectURL(url);
-            setLoading4(false);
-        } catch (error) {
-            console.error('Error downloading file: ', error);
-            setLoading4(false);
-        }
-    };
 
 
 
@@ -344,32 +318,36 @@ function MyProductsLists() {
         );
     };
 
+  
+
     const handleButtonClickViewProducts = async () => {
+
+        const file = View?.document?.file_url.includes('?X-Amz-Algorithm') ? View?.document?.file_url.split('?')[0] : View?.document?.file_url
         try {
-            setLoading2(true);
-            const fileContent = View?.document;
-            const response = await Axios.get(fileContent?.file_url, {
+            setLoading(true);
+            const response = await axios.get(file, {
                 responseType: 'blob',
             });
 
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            a.download =
-                View.title +
-                '.' +
-                fileContent.file_url.split('.')[
-                fileContent.file_url?.split('.').length - 1
-                ];
+             a.download =
+            'soff.uz -' + View?.title  +
+            '.' +
+            file?.split('.')[
+                file?.split('.').length - 1
+            ];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
-            setLoading2(false);
         } catch (error) {
             console.error('Error downloading file: ', error);
-            setLoading2(false);
+        } finally {
+            setLoading(false);
         }
     };
+    
 
     useEffect(() => {
         GetItemsCategory();
@@ -495,8 +473,7 @@ function MyProductsLists() {
             <></>
         ),
 
-        user?.role === 'seller'
-            ? {
+   {
                 title: 'Harakatlar',
                 dataIndex: 'id',
                 key: 'address',
@@ -593,31 +570,7 @@ function MyProductsLists() {
                     </div>
                 ),
             }
-            : {
-                title: 'Faylni yuklash  ',
-                dataIndex: 'id',
-                key: 'address',
-                render: (id) => (
-                    <>
-                        {loading4 ? (
-                            <div
-                                className="spinner-border mx-2 "
-                                role="status"
-                                style={{ cursor: 'not-allowed' }}>
-                                <span className="visually-hidden">
-                                    Loading...
-                                </span>
-                            </div>
-                        ) : (
-                            <a>
-                                <i
-                                    className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                                    onClick={() => handleButtonClick(id)}></i>
-                            </a>
-                        )}
-                    </>
-                ),
-            },
+           ,
     ];
 
     "/product/loyiha-boshqarish-shablonlari-shablon1"
