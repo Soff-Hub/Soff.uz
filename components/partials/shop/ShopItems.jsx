@@ -11,6 +11,7 @@ import useDebounce from '~/hooks/useDebounce';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import AudioWaveform from '~/components/elements/products/AudioProductCart';
+import ProductVideo from '~/components/elements/products/ProductVideo';
 
 const ShopItems = ({
     columns = 4,
@@ -345,20 +346,27 @@ const ShopItems = ({
                     <>
                         {item?.document?.content_type === 'audio' ? (
                             <div className="col-12 my-3">
-                                <AudioWaveform product={item} inCategory = {true} />
+                                <AudioWaveform product={item} inCategory={true} />
                             </div>
-                        ) : (
-                            <div
-                                className={classes + ' home-card-category'}
-                                key={item.id}
-                                style={{
-                                    display: 'flex',
-                                    justifyContent: 'center',
-                                    alignContent: 'center',
-                                }}>
-                                <Product product={item} />
-                            </div>
-                        )}
+                        ) :
+
+                            item?.document?.content_type === 'video' ? (
+                                <div className="col-md-4 my-3">
+                                    <ProductVideo product={item} />
+                                </div>
+                            ) : (
+
+                                <div
+                                    className={classes + ' home-card-category'}
+                                    key={item.id}
+                                    style={{
+                                        display: 'flex',
+                                        justifyContent: 'center',
+                                        alignContent: 'center',
+                                    }}>
+                                    <Product product={item} />
+                                </div>
+                            )}
                     </>
                 ));
             productItemsView = (
