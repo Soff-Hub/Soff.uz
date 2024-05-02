@@ -162,7 +162,7 @@ const Posts = () => {
                                     </a>
                                 </Link>
                             </div>
-                            {/* <div className="select-col ">
+                            <div className="select-col ">
                                 <Link href="/account/myproducts/upload-video">
                                     <a>
                                         <div className="select-card ">
@@ -189,7 +189,7 @@ const Posts = () => {
                                         </div>
                                     </a>
                                 </Link>
-                            </div> */}
+                            </div>
                         </div>
                     </>
                 )}
