@@ -91,7 +91,7 @@ console.log('user', user?.access);
     // };
 
       const audioDownloaderSale = async (filee, product) => {
-        const file = filee.includes('?X-Amz-Algorithm') ? filee.split('?')[0] : filee
+        const file = filee.includes('?AWSAccessKeyId') ? filee.split('?')[0] : filee
         try {
             setLoading(true);
             const response = await axios.get(file, {
