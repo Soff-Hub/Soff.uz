@@ -14,7 +14,7 @@ import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
 import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
-
+import HomeVideosCarousel from '~/components/partials/homepage/electronic/HomeVideosCarousel';
 
 
 const HomeElectronicsPage = () => {
@@ -106,6 +106,14 @@ const HomeElectronicsPage = () => {
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}
+                data={freeProducts}
+                id={freeProducts.id}
+                key={234}
+                slug={freeProducts.slug}
+            />
+            <HomeVideosCarousel
+                collectionSlug="electronics-best-sellers"
+                title={"Video materiallar"}
                 data={freeProducts}
                 id={freeProducts.id}
                 key={234}
