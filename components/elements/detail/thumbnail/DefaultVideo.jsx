@@ -14,17 +14,9 @@ export default function DefaultVideo({ product }) {
                     style={{ maxHeight: '380px' }}
                     controls
                     preload='none'
-                    poster={product?.poster_url}
+                    poster={product?.poster}
                     src='https://video-previews.elements.envatousercontent.com/h264-video-previews/0096fd70-06bc-4309-8fed-07762e53c9fd/6386658.mp4'
                 >
-                    {/* <source
-                        // src={product?.document?.short_content_url}
-                        src={"https://video-previews.elements.envatousercontent.com/h264-video-previews/0096fd70-06bc-4309-8fed-07762e53c9fd/6386658.mp4"}
-                        type={`video/${product?.document?.file_type?.replace(
-                            '.',
-                            ''
-                        )}`}
-                    /> */}
                     Your browser does not support the video tag.
                 </video>
             </div>
