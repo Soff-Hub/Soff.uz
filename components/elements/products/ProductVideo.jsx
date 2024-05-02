@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
 
 
 const ProductVideo = ({ product }) => {
-    const {title } = useProduct();
+    const { title } = useProduct();
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -24,6 +24,57 @@ const ProductVideo = ({ product }) => {
         return formattedNumber;
 
     }
+
+    const [videos, setVideos] = useState([]);
+
+    const handlePlayPause = (index) => {
+        const updatedVideos = [...videos];
+        updatedVideos.forEach((video, i) => {
+            if (i !== index) {
+                video.pause();
+            } else {
+                if (video.paused) {
+                    video.play();
+                } else {
+                    video.pause();
+                }
+            }
+        });
+        setVideos(updatedVideos);
+    };
+
+
+    // <>
+    //     {videos.map((video, index) => (
+    //         <video
+    //             key={index}
+    //             className="border w-100"
+    //             controls={true}
+    //             preload="none"
+    //             playsInline
+    //             src={'https://video-previews.elements.envatousercontent.com/h264-video-previews/0096fd70-06bc-4309-8fed-07762e53c9fd/6386658.mp4'}
+    //             poster={product?.poster_url}
+    //             loop
+    //             style={{
+    //                 borderTopRightRadius: '12px',
+    //                 borderTopLeftRadius: '12px',
+    //                 background: 'unset'
+    //             }}
+    //             ref={(ref) => {
+    //                 if (ref) {
+    //                     const updatedVideos = [...videos];
+    //                     updatedVideos[index] = ref;
+    //                     setVideos(updatedVideos);
+    //                 }
+    //             }}
+    //             onClick={() => handlePlayPause(index)}
+    //         />
+    //     ))}
+    // </>
+
+
+
+
     return (
         <div className="" style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px", borderRadius: '15px' }}>
             <div
@@ -40,15 +91,19 @@ const ProductVideo = ({ product }) => {
                             objectFit: 'cover'
                         }}>
                         <video
-                            className=" border w-100"
-                            controls={true}
-                            preload='none'
-                            // playsInline
-                            src="https://video-previews.elements.envatousercontent.com/h264-video-previews/0096fd70-06bc-4309-8fed-07762e53c9fd/6386658.mp4"
-                            poster={product.poster_url}
-                            loop
-                            style={{ borderTopRightRadius: '12px', borderTopLeftRadius: '12px', background: 'unset' }}
 
+                            className="border w-100"
+                            controls={true}
+                            preload="none"
+                            playsInline
+                            src={product?.short_content_url}
+                            poster={product?.poster_url}
+                            loop
+                            style={{
+                                borderTopRightRadius: '12px',
+                                borderTopLeftRadius: '12px',
+                                background: 'unset'
+                            }}
                         >
                         </video>
                     </a>
