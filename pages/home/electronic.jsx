@@ -14,7 +14,6 @@ import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
 import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
-import HomeVideosCarousel from '~/components/partials/homepage/electronic/HomeVideosCarousel';
 
 
 const HomeElectronicsPage = () => {
@@ -88,6 +87,8 @@ const HomeElectronicsPage = () => {
         );
     }, []);
 
+
+
     return (
         <main id="homepage-7">
             <Meta title="Soff | Barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
@@ -100,7 +101,6 @@ const HomeElectronicsPage = () => {
                 title={topSellers.name}
                 data={topSellers}
                 id={topSellers.id}
-                // key={235}
                 slug={topSellers.slug}
             />
             
@@ -112,14 +112,7 @@ const HomeElectronicsPage = () => {
                 key={234}
                 slug={freeProducts.slug}
             />
-            <HomeVideosCarousel
-                collectionSlug="electronics-best-sellers"
-                title={"Video materiallar"}
-                data={freeProducts}
-                id={freeProducts.id}
-                key={234}
-                slug={freeProducts.slug}
-            />
+
             {category?.length > 0 ? (
                 category.map((item, index) =>
                     item?.promotional_sliders?.length > 0 && (
