@@ -16,6 +16,7 @@ const ModuleProductActions = ({ product, audio }) => {
     const [productView, setProduct] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
+console.log('user', user?.access);
     const showModal = () => {
         setOpen(true);
     };
@@ -67,7 +68,30 @@ const ModuleProductActions = ({ product, audio }) => {
         setIsQuickView(false);
     };
 
-    const audioDownloaderSale = async (file) => {
+    // const audioDownloaderSale = async (file) => {
+    //     try {
+    //         setLoading(true);
+    //         const response = await axios.get(file, {
+    //             responseType: 'blob',
+    //         });
+
+    //         const url = window.URL.createObjectURL(new Blob([response.data]));
+    //         const a = document.createElement('a');
+    //         a.href = url;
+    //         // Foydalanuvchi faylni qanday nomlayotganini ko'rish uchun "a.download" attributini o'zgartiraylik
+    //         a.download = 'audio_file.mp3';
+    //         document.body.appendChild(a);
+    //         a.click();
+    //         window.URL.revokeObjectURL(url);
+    //     } catch (error) {
+    //         console.error('Faylni yuklab olishda xato: ', error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // };
+
+      const audioDownloaderSale = async (filee, product) => {
+        const file = filee.includes('?X-Amz-Algorithm') ? filee.split('?')[0] : filee
         try {
             setLoading(true);
             const response = await axios.get(file, {
@@ -77,13 +101,17 @@ const ModuleProductActions = ({ product, audio }) => {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-            // Foydalanuvchi faylni qanday nomlayotganini ko'rish uchun "a.download" attributini o'zgartiraylik
-            a.download = 'audio_file.mp3';
+             a.download =
+            'soff.uz -' + product?.title  +
+            '.' +
+            file?.split('.')[
+                file?.split('.').length - 1
+            ];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            console.error('Faylni yuklab olishda xato: ', error);
+            console.error('Error downloading file: ', error);
         } finally {
             setLoading(false);
         }
@@ -205,6 +233,7 @@ const ModuleProductActions = ({ product, audio }) => {
                             </a>
                         </li>
                     )
+
                 ) : (
                     <></>
                 )}

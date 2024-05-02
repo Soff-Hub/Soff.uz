@@ -102,7 +102,8 @@ function MyProductsListsSeller() {
         try {
             setLoading2(ID);
             const fileContent = data?.find((item) => item.id == ID);
-            const response = await axios.get(fileContent?.file, {
+            const filee = fileContent?.file.includes('?X-Amz-Algorithm') ? fileContent?.file.split('?')[0] : fileContent?.file
+            const response = await axios.get(filee, {
                 responseType: 'blob',
             });
 
@@ -110,11 +111,12 @@ function MyProductsListsSeller() {
             const a = document.createElement('a');
             a.href = url;
             a.download =
-                fileContent.title +
+                fileContent?.name?.title +
                 '.' +
-                fileContent?.file.split('.')[
-                fileContent?.file?.split('.').length - 1
+                filee?.split('.')[
+                filee?.split('.').length - 1
                 ];
+                
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);

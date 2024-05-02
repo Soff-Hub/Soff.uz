@@ -145,6 +145,7 @@ function ProductsLists() {
                 return Router.push(`/account/products/edit-video?page=${router.query.page}`);
             }
             Router.push(`/account/products/edit?page=${router.query.page}`);
+
         }
     }
 
@@ -175,7 +176,8 @@ function ProductsLists() {
         try {
             setLoading2(true);
             const fileContent = deleteIdView?.document;
-            const response = await Axios.get(fileContent?.file_url, {
+            const filee = fileContent?.file_url.includes('?X-Amz-Algorithm') ? fileContent?.file_url.split('?')[0] : fileContent?.file_url
+            const response = await Axios.get(filee, {
                 responseType: 'blob',
             });
 
@@ -185,8 +187,8 @@ function ProductsLists() {
             a.download =
                 deleteIdView.title +
                 '.' +
-                fileContent.file_url.split('.')[
-                fileContent.file_url?.split('.').length - 1
+                filee.split('.')[
+                filee?.split('.').length - 1
                 ];
             document.body.appendChild(a);
             a.click();
