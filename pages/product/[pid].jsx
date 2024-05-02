@@ -117,14 +117,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         <div className="ps-container">
                             <div className="ps-page__container">
                                 {product?.document?.content_type === 'file' ? (
-                                    <div className="ps-page__left">
-                                        <ProductDetailFullwidth
-                                            product={product}
-                                            views={views}
-                                        />
-                                    </div>
-                                ) : product?.document?.content_type ===
-                                  'video' ? (
                                     <div className="">
                                         <ProductVideoDetailFullWidth
                                             product={product}
@@ -132,7 +124,15 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                  'audio' ? (
+                                    'video' ? (
+                                    <div className="">
+                                        <ProductVideoDetailFullWidth
+                                            product={product}
+                                            views={views}
+                                        />
+                                    </div>
+                                ) : product?.document?.content_type ===
+                                    'audio' ? (
                                     <div className="">
                                         <ProductAudioDetailFullWidth
                                             product={product}
@@ -140,7 +140,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                  'article' ? (
+                                    'article' ? (
                                     <div>
                                         {/* <ProductAudioDetailFullWidth
                                     product={product}
