@@ -381,7 +381,7 @@ function DashbordList({ setOpen }) {
         <section className="ps-my-account ps-page--account p-0">
             <p className='step-0 m-0'></p>
             <div className="container">
-                {window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
+                { user?.role != 'admin' && window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
                     <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}><i className='fa-regular fa-circle-question'></i> Saytdan foydalanish bo'yicha savolingiz bormi?</p>
                 </div>}
                 {user?.role === 'admin' ? (
