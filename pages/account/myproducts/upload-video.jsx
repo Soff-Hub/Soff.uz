@@ -12,7 +12,6 @@ import CKeditor from '../../../components/partials/account/CKeditor';
 import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
-import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
@@ -49,7 +48,7 @@ const Posts = () => {
     const [customePoster, setCustomePoster] = useState(false);
     const [customeFile, setCustomeFile] = useState(null);
     const [profile, setProfile] = useState(null);
-    const [category_id, setCategoryId] = useState([])
+    const [category_id, setCategoryId] = useState([]);
 
     const breadCrumb = [
         {
@@ -70,8 +69,8 @@ const Posts = () => {
     const Option = Select.Option;
 
     const onChange = async (e) => {
-        setCategoryId([])
-        const customecategory = []
+        setCategoryId([]);
+        const customecategory = [];
         setCategoryName(e);
         for (let j = 0; j < dataCategory.length; j++) {
             if (dataCategory[j].name === e) {
@@ -79,7 +78,7 @@ const Posts = () => {
             }
         }
 
-        setCategoryId(customecategory)
+        setCategoryId(customecategory);
 
         let arr = [];
         if (tagSearchResult?.length > 0) {
@@ -205,7 +204,7 @@ const Posts = () => {
         document.body.appendChild(btn);
         btn.click();
         document.body.removeChild(btn);
-    }
+    };
 
     async function handleClickPosts(e) {
         e?.preventDefault?.();
@@ -231,7 +230,7 @@ const Posts = () => {
         formData.append('description', Fulldata);
         formData.append('tags', tagSearchResult);
 
-        formData.append('poster', customePoster.file)
+        formData.append('poster', customePoster.file);
 
         formData.append('category', category_id[0]);
         formData.append('file', fileImgFileID);
@@ -241,15 +240,19 @@ const Posts = () => {
         }
 
         try {
-            openClose('#staticBackdrop-2')
+            openClose('#staticBackdrop-2');
 
-            const resp = await axios.post(`${baseUrl}seller/video-product-create/`, formData, {
-                headers: {
-                    'Authorization': `Bearer ${user?.access}`,
-                    // signal: controller.abort
+            const resp = await axios.post(
+                `${baseUrl}seller/video-product-create/`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user?.access}`,
+                        // signal: controller.abort
+                    },
                 }
-            })
-            openClose('#staticBackdrop-2')
+            );
+            openClose('#staticBackdrop-2');
 
             Router.push('/account/myproducts');
             const modal = Modal.warning({
@@ -257,11 +260,10 @@ const Posts = () => {
                 title: 'Muvaffaqqiyatli!',
                 content:
                     "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            })
-
+            });
         } catch (err) {
-            console.log('Error: ', err)
-            openClose('#staticBackdrop-2')
+            console.log('Error: ', err);
+            openClose('#staticBackdrop-2');
 
             // const modal = Modal.warning({
             //     centered: true,
@@ -269,9 +271,8 @@ const Posts = () => {
             //     content:
             //         "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
             // })
-
         } finally {
-            setDeisabled(false)
+            setDeisabled(false);
         }
 
         // const patchItems = await PatchRepository.getPatchPoster(
@@ -349,9 +350,10 @@ const Posts = () => {
     }
 
     const uploadTizer = (file) => {
+        console.log('file', file);
         const video = window.URL.createObjectURL(file);
-        setFileImgFile({ file, video: video })
-    }
+        setFileImgFile({ file, video: video });
+    };
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -405,6 +407,8 @@ const Posts = () => {
 
     const livePosterVideo = {};
 
+    console.log('fileImgFile', fileImgFile);
+
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -433,8 +437,7 @@ const Posts = () => {
                             <Button
                                 className="btn-success "
                                 data-bs-target="#staticBackdrop"
-                                data-bs-toggle="modal"
-                            >
+                                data-bs-toggle="modal">
                                 <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
                             </Button>
                         </div>
@@ -585,7 +588,6 @@ const Posts = () => {
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}>
-
                                                         {loading ? (
                                                             <span className="d-flex justify-content-center">
                                                                 <ClipLoader
@@ -605,7 +607,6 @@ const Posts = () => {
                                                                 </span>
                                                             </span>
                                                         )}
-
                                                     </span>
                                                 ) : (
                                                     <span
@@ -753,7 +754,10 @@ const Posts = () => {
                                                             maxWidth: '100%',
                                                             height: '85px',
                                                         }}
-                                                        src={customePoster?.url || "https://m.media-amazon.com/images/G/01/primevideo/seo/primevideo-seo-logo.png"}
+                                                        src={
+                                                            customePoster?.url ||
+                                                            'https://m.media-amazon.com/images/G/01/primevideo/seo/primevideo-seo-logo.png'
+                                                        }
                                                         alt="poster/video"
                                                     />
                                                 </div>
@@ -793,8 +797,7 @@ const Posts = () => {
                                         <button
                                             type="submit"
                                             className="btn btn-success py-3 "
-                                            onClick={handleClickPosts}
-                                        >
+                                            onClick={handleClickPosts}>
                                             <span className="fs-4 px-5">
                                                 Mahsulot qo'shish{' '}
                                                 <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
@@ -822,11 +825,10 @@ const Posts = () => {
                             <video
                                 className=" border w-100"
                                 controls
-                                preload='none'
+                                preload="none"
                                 src={fileImgFile?.video}
                                 poster={customePoster?.url}
-                                style={{ maxHeight: '250px' }}
-                            >
+                                style={{ maxHeight: '250px' }}>
                                 {/* <source
                                     src={fileImgFile?.file}
                                     type={`video/*`}
@@ -857,7 +859,6 @@ const Posts = () => {
                                             style={{
                                                 cursor: 'pointer',
                                             }}>
-
                                             {loading ? (
                                                 <span className="d-flex justify-content-center">
                                                     <ClipLoader
@@ -877,7 +878,6 @@ const Posts = () => {
                                                     </span>
                                                 </span>
                                             )}
-
                                         </span>
                                     ) : (
                                         <span
@@ -896,9 +896,7 @@ const Posts = () => {
                                         required
                                         type="file"
                                         onChange={(e) =>
-                                            setExtraFiles(
-                                                e.target.files[0]
-                                            )
+                                            setExtraFiles(e.target.files[0])
                                         }
                                         accept=".zip"
                                     />
@@ -908,7 +906,6 @@ const Posts = () => {
                     </div>
 
                     {/* offcanvas */}
-
                 </div>
 
                 {/* mahsulotning user qismi uchun real ko'rinishi */}
@@ -928,7 +925,11 @@ const Posts = () => {
                                         <div
                                             className={`product__top-information ${'video_user_information'} `}
                                             style={{ width: '100%' }}>
-                                            <div className='py-5 d-flex gap-3' style={{ flexDirection: 'column' }}>
+                                            <div
+                                                className="py-5 d-flex gap-3"
+                                                style={{
+                                                    flexDirection: 'column',
+                                                }}>
                                                 <span className="d-flex justify-content-center gap-3">
                                                     <span>Yuklanmoqda</span>
                                                     <ClipLoader
@@ -936,18 +937,26 @@ const Posts = () => {
                                                         color="#36d7b7"
                                                     />
                                                 </span>
-                                                <p style={{ fontSize: '20px', textAlign: 'center' }} className='fw-semibold'>
-                                                    Video yuklanmoqda bu sizning internet tezligingizga qarab turlicha  vaqt olishi mumkin
+                                                <p
+                                                    style={{
+                                                        fontSize: '20px',
+                                                        textAlign: 'center',
+                                                    }}
+                                                    className="fw-semibold">
+                                                    Video yuklanmoqda bu sizning
+                                                    internet tezligingizga qarab
+                                                    turlicha vaqt olishi mumkin
                                                 </p>
 
                                                 <div className="d-flex gap-3 justify-content-center">
                                                     <button
                                                         className="btn btn-danger py-3 "
                                                         onClick={() => {
-                                                            openClose('#staticBackdrop-2')
-                                                            window.location.reload()
-                                                        }}
-                                                    >
+                                                            openClose(
+                                                                '#staticBackdrop-2'
+                                                            );
+                                                            window.location.reload();
+                                                        }}>
                                                         <span className="fs-4 px-5">
                                                             Bekor qilish{' '}
                                                         </span>
@@ -955,9 +964,11 @@ const Posts = () => {
                                                     <button
                                                         className="btn btn-success py-3 "
                                                         onClick={() => {
-                                                            window.open('http://localhost:3000/account/myproducts/upload-video', '_blank');
-                                                        }}
-                                                    >
+                                                            window.open(
+                                                                'http://localhost:3000/account/myproducts/upload-video',
+                                                                '_blank'
+                                                            );
+                                                        }}>
                                                         <span className="fs-4 px-5">
                                                             Yana yuklash{' '}
                                                         </span>
@@ -971,8 +982,6 @@ const Posts = () => {
                         </div>
                     </div>
                 </div>
-
-
 
                 <div
                     className="modal fade "
@@ -993,39 +1002,28 @@ const Posts = () => {
                             <div className="ps-container">
                                 <div className="row">
                                     <div className="col-xl-8 col-lg-8 col-12">
-                                        {!liveFile ? (
+                                        
                                             <>
                                                 {
                                                     // videoPost?.data
                                                     // ?.short_content
-                                                    !true ? (
+                                                    fileImgFileID ? (
                                                         <div className="video_container">
                                                             <div className="video_content">
                                                                 <video
-                                                                    id="videoPlayer"
-                                                                    className="video_iframe"
-                                                                    width="100%"
+                                                                    className=" border w-100"
+                                                                    controls
+                                                                    preload="none"
+                                                                    src={
+                                                                        fileImgFile?.video
+                                                                    }
+                                                                    poster={
+                                                                        customePoster?.url
+                                                                    }
                                                                     style={{
                                                                         maxHeight:
-                                                                            '380px',
-                                                                    }}
-                                                                    controls>
-                                                                    <source
-                                                                        src={
-                                                                            videoPost
-                                                                                ?.data
-                                                                                ?.short_content
-                                                                        }
-                                                                        type={`video/${videoPost?.data?.file_type?.replace(
-                                                                            '.',
-                                                                            ''
-                                                                        )}`}
-                                                                    />
-                                                                    Your browser
-                                                                    does not
-                                                                    support the
-                                                                    video tag.
-                                                                </video>
+                                                                            '250px',
+                                                                    }}></video>
                                                             </div>
                                                         </div>
                                                     ) : (
@@ -1044,59 +1042,7 @@ const Posts = () => {
                                                     )
                                                 }
                                             </>
-                                        ) : (
-                                            <>
-                                                {
-                                                    // videoPost?.data
-                                                    // ?.short_content
-                                                    true ? (
-                                                        <div className="video_container">
-                                                            <div className="video_content">
-                                                                <video
-                                                                    id="videoPlayer"
-                                                                    className="video_iframe"
-                                                                    width="100%"
-                                                                    height="auto"
-                                                                    style={{
-                                                                        maxHeight:
-                                                                            '380px',
-                                                                    }}
-                                                                    controls
-                                                                    poster={
-                                                                        liveFile
-                                                                    }>
-                                                                    <source
-                                                                        src={
-                                                                            videoPost
-                                                                                ?.data
-                                                                                ?.short_content
-                                                                        }
-                                                                        type={`video/${videoPost?.data?.file_type?.replace(
-                                                                            '.',
-                                                                            ''
-                                                                        )}`}
-                                                                    />
-                                                                    Your browser
-                                                                    does not
-                                                                    support the
-                                                                    video tag.
-                                                                </video>
-                                                            </div>
-                                                        </div>
-                                                    ) : (
-                                                        <img
-                                                            src={liveFile}
-                                                            alt="docc"
-                                                            className="border mb-4 w-100"
-                                                            style={{
-                                                                objectFit:
-                                                                    'cover',
-                                                            }}
-                                                        />
-                                                    )
-                                                }
-                                            </>
-                                        )}
+                                      
                                         <div
                                             className={`product__top-information ${'video_user_information'} `}
                                             style={{ width: '100%' }}>
@@ -1172,71 +1118,8 @@ const Posts = () => {
                                                             listStyleType:
                                                                 'revert',
                                                         }}>
-                                                        {
-                                                            <li>
-                                                                <strong>
-                                                                    Davomiyligi
-                                                                    :{' '}
-                                                                </strong>{' '}
-                                                                <div></div>{' '}
-                                                                <span>
-                                                                    {livePosterVideo
-                                                                        ?.data
-                                                                        ?.content_duration &&
-                                                                        livePosterVideo
-                                                                            ?.data
-                                                                            ?.content_duration}
-                                                                </span>
-                                                            </li>
-                                                        }
-                                                        {
-                                                            <li>
-                                                                <strong>
-                                                                    Sifati :{' '}
-                                                                </strong>{' '}
-                                                                <div></div>{' '}
-                                                                <span>
-                                                                    {livePosterVideo
-                                                                        ?.data
-                                                                        ?.content_quality &&
-                                                                        livePosterVideo
-                                                                            ?.data
-                                                                            ?.content_quality}
-                                                                </span>
-                                                            </li>
-                                                        }
-                                                        {
-                                                            <li>
-                                                                <strong>
-                                                                    Turi :{' '}
-                                                                </strong>{' '}
-                                                                <div></div>{' '}
-                                                                <span className="file_type-color">
-                                                                    {livePosterVideo
-                                                                        ?.data
-                                                                        ?.file_type &&
-                                                                        livePosterVideo
-                                                                            ?.data
-                                                                            ?.file_type}
-                                                                </span>
-                                                            </li>
-                                                        }
-                                                        {
-                                                            <li>
-                                                                <strong>
-                                                                    Hajmi :{' '}
-                                                                </strong>{' '}
-                                                                <div></div>{' '}
-                                                                <span>
-                                                                    {livePosterVideo
-                                                                        ?.data
-                                                                        ?.file_size &&
-                                                                        livePosterVideo
-                                                                            ?.data
-                                                                            ?.file_size}
-                                                                </span>
-                                                            </li>
-                                                        }
+                                                    
+                                                      
                                                         {
                                                             <li>
                                                                 <strong>
