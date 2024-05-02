@@ -15,7 +15,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                     <div
                         key={index}
                         className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
-                      {item?.document?.content_type != 'audio' && <Product product={item} />  }  
+                        {item?.document?.content_type != 'audio' && <Product product={item} />}
                     </div>
                 ))}
             </div>
@@ -39,7 +39,25 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
         );
     } else {
         productItemsView = <p>Audio mahsulot topilmadi</p>;
+    }
 
+
+    // Video view
+    let videoProductItemsView;
+    if (data && data?.promotional_sliders?.length > 0) {
+        videoProductItemsView = (
+            <div className="row">
+                {data?.promotional_sliders?.slice(0, 6).map((item, index) => (
+                    <div
+                        key={index}
+                        className="col-md-4 my-2">
+                        <ProductVideo product={item} />{' '}
+                    </div>
+                ))}
+            </div>
+        );
+    } else {
+        productItemsView = <p>Audio mahsulot topilmadi</p>;
     }
 
     return (
@@ -62,11 +80,17 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                     <div className="ps-section__content">
                         {audioProductItemsView}
                     </div>
-                ) : (
-                    <div className="ps-section__content">
-                        {productItemsView}
-                    </div>
-                )}
+                ) :
+                    title === 'Video materiallar' ? (
+                        <div className="ps-section__content">
+                            {videoProductItemsView}
+                        </div>
+                    )
+                        : (
+                            <div className="ps-section__content">
+                                {productItemsView}
+                            </div>
+                        )}
             </div>
         </div>
     );
