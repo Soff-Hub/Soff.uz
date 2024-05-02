@@ -136,7 +136,7 @@ const Wishlist = ({ ecomerce }) => {
                                                 </a>
                                             ) : (
                                                 <a
-                                                    style={{ cursor: 'pointer',minWidth: "172px" }}
+                                                    style={{ cursor:loading ? "not-allowed" : 'pointer',minWidth: "172px" }}
                                                     className="ps-btn d-inline-block"
                                                     href=""
                                                     onClick={async (e) => {

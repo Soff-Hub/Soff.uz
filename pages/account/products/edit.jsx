@@ -45,11 +45,26 @@ const PostsProductsEdit = () => {
     const Option = Select.Option;
 
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
-        if (ItemsData) {
-            setDataCategory(ItemsData);
+        if (products?.document?.content_type === 'file') {
+            const ItemsData = await GetRepository.getAllCategoryLists();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'audio') {
+            const ItemsData = await GetRepository.getAllCategoryListsAudio();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'template') {
+            const ItemsData = await GetRepository.getAllCategoryListsDesign();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
         }
     }
+
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
@@ -235,6 +250,8 @@ const PostsProductsEdit = () => {
                         </div>
                         <form
                             onSubmit={handleClickPostsEdit}
+                            onClick={() => Router.back()}
+
                             style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
                             className="pb-5 col-md-8">
@@ -426,6 +443,7 @@ const PostsProductsEdit = () => {
                             </div>
 
                             <div
+
                                 className="d-flex justify-content-end "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
@@ -918,3 +936,4 @@ const PostsProductsEdit = () => {
 };
 
 export default PostsProductsEdit;
+
