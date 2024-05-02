@@ -36,7 +36,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     },
                 }
             );
-
+      
             setProduct(response?.data);
         } catch (error) {
             console.error('Error fetching document:', error);
