@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Product from '~/components/elements/products/Product';
 import ProductVideo from '~/components/elements/products/ProductVideo';
 
 const HomeVideosCarousel = ({ title, data, id, slug }) => {
