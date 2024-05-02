@@ -201,6 +201,9 @@ function MyProductsLists() {
         );
         if (ItemsData) {
             dispatch(MyProductsEdit(ItemsData));
+            if (ItemsData?.document?.content_type === "video") {
+                return Router.push('/account/myproducts/edit-video');
+            }
             Router.push('/account/myproducts/edit');
         }
     }
@@ -363,7 +366,7 @@ function MyProductsLists() {
             search,
             filterType,
         );
-    }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce,filterType]);
+    }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce, filterType]);
 
     const columns = [
         {

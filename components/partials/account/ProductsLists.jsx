@@ -138,7 +138,11 @@ function ProductsLists() {
         const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, productsItems, null, null, null, user?.access)
         if (ItemsData) {
             dispatch(MyProductsEdit(ItemsData));
-            Router.push(`/account/products/edit`);
+            if (ItemsData?.document?.content_type === "video") {
+                return Router.push(`/account/products/edit-video?page=${router.query.page}`);
+            }
+            Router.push(`/account/products/edit?page=${router.query.page}`);
+
         }
     }
 
@@ -180,8 +184,8 @@ function ProductsLists() {
             a.download =
                 deleteIdView.title +
                 '.' +
-               filee.split('.')[
-               filee?.split('.').length - 1
+                filee.split('.')[
+                filee?.split('.').length - 1
                 ];
             document.body.appendChild(a);
             a.click();

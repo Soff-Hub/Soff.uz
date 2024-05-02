@@ -5,6 +5,7 @@ import PageContainer from '~/components/layouts/PageContainer';
 import { useRouter } from 'next/router';
 import PostRepository from '~/repositories/PostRepository';
 import Meta from '~/components/shared/headers/Meta';
+import ProductVideo from '~/components/elements/products/ProductVideo';
 
 const FilterPages = () => {
 
@@ -79,11 +80,16 @@ const FilterPages = () => {
                                         <Product product={item} />{' '}
                                     </div>
                                 ))}
-
                             {resultdata?.template?.length > 0 &&
                                 resultdata?.template?.map((item, index) => (
                                     <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
                                         <Product product={item} />{' '}
+                                    </div>
+                                ))}
+                            {resultdata?.vedio?.length > 0 &&
+                                resultdata?.vedio?.map((item, index) => (
+                                    <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                        <ProductVideo product={item} />{' '}
                                     </div>
                                 ))}
                         </div>

@@ -5,7 +5,7 @@
     "author": "Soff Hub",
     "homepage": "https://soff.uz",
     "scripts": {
-        "dev": "next dev -p 3001",
+        "dev": "next dev -p 3000",
         "build": "next build",
         "start": "next start -p 3001",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
@@ -66,6 +66,7 @@
         "slick-carousel": "^1.8.1",
         "swiper": "^11.0.5",
         "uuid": "^9.0.1",
+        "video-react": "^0.16.0",
         "wavesurfer.js": "^7.7.11",
         "websocket": "^1.0.34"
     },
