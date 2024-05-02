@@ -250,6 +250,8 @@ const PostsProductsEdit = () => {
                         </div>
                         <form
                             onSubmit={handleClickPostsEdit}
+                            onClick={() => Router.back()}
+
                             style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
                             className="pb-5 col-md-8">
@@ -441,6 +443,7 @@ const PostsProductsEdit = () => {
                             </div>
 
                             <div
+
                                 className="d-flex justify-content-end "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
