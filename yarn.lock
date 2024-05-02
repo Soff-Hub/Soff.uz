@@ -70,10 +70,24 @@
   resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.24.4.tgz"
   integrity sha512-vg8Gih2MLK+kOkHJp4gBEIkyaIi00jgWot2D9QOmmfLC8jINSOzmCLta6Bvz/JSBCqnegV0L80jhxkol5GWNfQ==
 
+<<<<<<< HEAD
 "@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.1.0", "@babel/core@^7.12.0", "@babel/core@^7.13.0", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.4.5":
   version "7.24.5"
   resolved "https://registry.npmjs.org/@babel/core/-/core-7.24.5.tgz"
   integrity sha512-tVQRucExLQ02Boi4vdPp49svNGcfL2GhdTCT9aldhXgCJVAI21EtRfBettiuLUwce/7r6bFdgs6JFkcdTiFttA==
+=======
+<<<<<<< HEAD
+"@babel/core@^7.1.0", "@babel/core@^7.4.5":
+  version "7.24.0"
+  resolved "https://registry.npmjs.org/@babel/core/-/core-7.24.0.tgz"
+  integrity sha512-fQfkg0Gjkza3nf0c7/w6Xf34BW4YvzNfACRLmmb7XRLa6XHdR+K9AlJlxneFfWYf6uhOzuzZVTjF/8KfndZANw==
+=======
+"@babel/core@^7.0.0", "@babel/core@^7.0.0-0", "@babel/core@^7.0.0-0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.1.0", "@babel/core@^7.12.0", "@babel/core@^7.13.0", "@babel/core@^7.4.0 || ^8.0.0-0 <8.0.0", "@babel/core@^7.4.5":
+  version "7.23.0"
+  resolved "https://registry.npmjs.org/@babel/core/-/core-7.23.0.tgz"
+  integrity sha512-97z/ju/Jy1rZmDxybphrBuI+jtJjFVoz7Mr9yUQVVVi+DNZE333uFQeMOqcCIy1x3WYBIbWftUSLmbNXNT7qFQ==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     "@ampproject/remapping" "^2.2.0"
     "@babel/code-frame" "^7.24.2"
@@ -1086,10 +1100,24 @@
   resolved "https://registry.npmjs.org/@babel/regjsgen/-/regjsgen-0.8.0.tgz"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
+<<<<<<< HEAD
 "@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5", "@babel/runtime@^7.23.2", "@babel/runtime@^7.23.6", "@babel/runtime@^7.23.9", "@babel/runtime@^7.24.4", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
   version "7.24.5"
   resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.24.5.tgz"
   integrity sha512-Nms86NXrsaeU9vbBJKni6gXiEXZ4CVpYVzEjDH9Sb8vmZ3UljyA1GSOJl/6LGPO8EHLuSF9H+IxNXHPX8QHJ4g==
+=======
+<<<<<<< HEAD
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5", "@babel/runtime@^7.23.2", "@babel/runtime@^7.23.6", "@babel/runtime@^7.23.9", "@babel/runtime@^7.24.0", "@babel/runtime@^7.3.4", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+  version "7.24.0"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.24.0.tgz"
+  integrity sha512-Chk32uHMg6TnQdvw2e9IlqPpFX/6NLuK0Ys2PqLb7/gL5uFn9mXvK715FGLlOLQrcO4qIkNHkvPGktzzXexsFw==
+=======
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.1.2", "@babel/runtime@^7.10.1", "@babel/runtime@^7.10.4", "@babel/runtime@^7.11.1", "@babel/runtime@^7.11.2", "@babel/runtime@^7.12.5", "@babel/runtime@^7.14.0", "@babel/runtime@^7.15.4", "@babel/runtime@^7.16.7", "@babel/runtime@^7.18.0", "@babel/runtime@^7.18.3", "@babel/runtime@^7.20.0", "@babel/runtime@^7.20.7", "@babel/runtime@^7.21.0", "@babel/runtime@^7.22.5", "@babel/runtime@^7.23.1", "@babel/runtime@^7.23.2", "@babel/runtime@^7.3.4", "@babel/runtime@^7.4.5", "@babel/runtime@^7.5.5", "@babel/runtime@^7.6.3", "@babel/runtime@^7.8.4", "@babel/runtime@^7.8.7", "@babel/runtime@^7.9.2":
+  version "7.24.1"
+  resolved "https://registry.npmjs.org/@babel/runtime/-/runtime-7.24.1.tgz"
+  integrity sha512-+BIznRzyqBf+2wCTxcKE3wDjfGeCoVE61KSHGpkzqrLi8qxqFwBeUFyId2cxkTmm55fzDGnm0+yCxaxygrLUnQ==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     regenerator-runtime "^0.14.0"
 
@@ -1197,10 +1225,32 @@
   dependencies:
     ckeditor5 "40.2.0"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> last_branch
 "@ckeditor/ckeditor5-clipboard@40.2.0":
   version "40.2.0"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-clipboard/-/ckeditor5-clipboard-40.2.0.tgz"
   integrity sha512-8/xPH9/i86ukcEiHdmTgNuPVJeYTrivbx5ZYqycPO4Eem7VM99gIbOe7pIYpuV+klr9ymVxIHbGyTJDJ3oUO8A==
+<<<<<<< HEAD
+=======
+=======
+"@ckeditor/ckeditor5-core@>=37.0.0":
+  version "40.2.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-40.2.0.tgz"
+  integrity sha512-0fqIaN+ZhkXXA3mpBN+alycBzPMc8ruO8VrP0OnvCjowqZVS2HXC2AaXNBdxc75xGI3ScXIor7FsgFHxVJIYYQ==
+  dependencies:
+    "@ckeditor/ckeditor5-engine" "40.2.0"
+    "@ckeditor/ckeditor5-utils" "40.2.0"
+    lodash-es "4.17.21"
+
+"@ckeditor/ckeditor5-core@40.0.0":
+  version "40.0.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-core/-/ckeditor5-core-40.0.0.tgz"
+  integrity sha512-8xoSDOc9/35jEikKtYbdYmBxPop7i/JYSkkZmJYbZ8XxkjQiIMAUYOJVdNntfuLGazU+THmutieEA/x3ISme4g==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     "@ckeditor/ckeditor5-core" "40.2.0"
     "@ckeditor/ckeditor5-engine" "40.2.0"
@@ -1246,10 +1296,31 @@
     "@ckeditor/ckeditor5-utils" "40.2.0"
     lodash-es "4.17.21"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> last_branch
 "@ckeditor/ckeditor5-easy-image@40.2.0":
   version "40.2.0"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-easy-image/-/ckeditor5-easy-image-40.2.0.tgz"
   integrity sha512-bE9YHGYEY1ql5mIqZSI2fkoBA4th28M0GDaJutwJYKM3t+Bost3Zh1UfmYKE2kvYgmeLY1L3hjQpN9w7NYyLpw==
+<<<<<<< HEAD
+=======
+=======
+"@ckeditor/ckeditor5-engine@>=37.0.0", "@ckeditor/ckeditor5-engine@40.2.0":
+  version "40.2.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-40.2.0.tgz"
+  integrity sha512-sgboUX8Ps+LcEgywyT3BeK1nzLHjNVIiZU1qvRxR3ixzIw4w2xRNXCGfESWLW5Y5rv9+ypUCrX61oLnZU64PQQ==
+  dependencies:
+    "@ckeditor/ckeditor5-utils" "40.2.0"
+    lodash-es "4.17.21"
+
+"@ckeditor/ckeditor5-engine@40.0.0":
+  version "40.0.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-engine/-/ckeditor5-engine-40.0.0.tgz"
+  integrity sha512-zauOXFudE1B94RSziWWojdpqGprSo4rKwW3KLU6nfaz9Kq9RZkcP/TW5ADE0DxC2jWUMeItVE/3U8ES5fZ0hqQ==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     ckeditor5 "40.2.0"
 
@@ -1486,6 +1557,7 @@
     "@ckeditor/ckeditor5-ui" "40.2.0"
     "@ckeditor/ckeditor5-utils" "40.2.0"
 
+<<<<<<< HEAD
 "@ckeditor/ckeditor5-upload@41.3.1":
   version "41.3.1"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-upload/-/ckeditor5-upload-41.3.1.tgz"
@@ -1519,6 +1591,47 @@
   version "40.2.0"
   resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-40.2.0.tgz"
   integrity sha512-ets7o2dUR7l23G9o/RAbu+gJzUkc2Ul269E3TEhZnbQXFjshvEGK2kzuay7I+/waL3ADuYe4zuoBqsqdPoAhfg==
+=======
+<<<<<<< HEAD
+"@ckeditor/ckeditor5-utils@40.2.0":
+  version "40.2.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-40.2.0.tgz"
+  integrity sha512-f+kTJBwwk7Y/LXm8pEPxBTXVlJwQrH7Levzye9zxEDB0Jtj7+brGr87o666fPmL/ATQc5M+VPhbvnk2sOv7WKg==
+  dependencies:
+    lodash-es "4.17.21"
+
+"@ckeditor/ckeditor5-watchdog@40.2.0":
+  version "40.2.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-40.2.0.tgz"
+  integrity sha512-ets7o2dUR7l23G9o/RAbu+gJzUkc2Ul269E3TEhZnbQXFjshvEGK2kzuay7I+/waL3ADuYe4zuoBqsqdPoAhfg==
+=======
+"@ckeditor/ckeditor5-utils@>=37.0.0", "@ckeditor/ckeditor5-utils@40.2.0":
+  version "40.2.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-40.2.0.tgz"
+  integrity sha512-f+kTJBwwk7Y/LXm8pEPxBTXVlJwQrH7Levzye9zxEDB0Jtj7+brGr87o666fPmL/ATQc5M+VPhbvnk2sOv7WKg==
+  dependencies:
+    lodash-es "4.17.21"
+
+"@ckeditor/ckeditor5-utils@40.0.0":
+  version "40.0.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-utils/-/ckeditor5-utils-40.0.0.tgz"
+  integrity sha512-52UwkeGxrZWhbwWWfixKceWhF1kuDeJNAM57wqfB7GS8CzElOpJ3AELeD/L/ZkUEBGL9asqribEH3CzgTjWKPA==
+  dependencies:
+    lodash-es "4.17.21"
+
+"@ckeditor/ckeditor5-watchdog@>=37.0.0":
+  version "40.2.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-40.2.0.tgz"
+  integrity sha512-ets7o2dUR7l23G9o/RAbu+gJzUkc2Ul269E3TEhZnbQXFjshvEGK2kzuay7I+/waL3ADuYe4zuoBqsqdPoAhfg==
+  dependencies:
+    lodash-es "4.17.21"
+
+"@ckeditor/ckeditor5-watchdog@40.0.0":
+  version "40.0.0"
+  resolved "https://registry.npmjs.org/@ckeditor/ckeditor5-watchdog/-/ckeditor5-watchdog-40.0.0.tgz"
+  integrity sha512-bwBimEdiUCe6/1IScWhC2vomcwApkKeb804NuxX7m7QhctKaHALV+tRVG/y8Oln3qCaw3na6C4pQgaXz0qtWcQ==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     lodash-es "4.17.21"
 
@@ -1611,10 +1724,24 @@
   resolved "https://registry.npmjs.org/@emotion/memoize/-/memoize-0.8.1.tgz"
   integrity sha512-W2P2c/VRW1/1tLox0mVUalvnWXxavmv/Oum2aPsRcoDJuob75FC3Y8FbpfLwUegRcxINtGUMPq0tFCvYNTBXNA==
 
+<<<<<<< HEAD
 "@emotion/react@^11.0.0-rc.0", "@emotion/react@^11.11.1", "@emotion/react@^11.4.1", "@emotion/react@^11.5.0":
   version "11.11.4"
   resolved "https://registry.npmjs.org/@emotion/react/-/react-11.11.4.tgz"
   integrity sha512-t8AjMlF0gHpvvxk5mAtCqR4vmxiGHCeJBaQO6gncUSdklELOgtwjerNY2yuJNfwnc6vi16U/+uMF+afIawJ9iw==
+=======
+<<<<<<< HEAD
+"@emotion/react@^11.11.1":
+  version "11.11.4"
+  resolved "https://registry.npmjs.org/@emotion/react/-/react-11.11.4.tgz"
+  integrity sha512-t8AjMlF0gHpvvxk5mAtCqR4vmxiGHCeJBaQO6gncUSdklELOgtwjerNY2yuJNfwnc6vi16U/+uMF+afIawJ9iw==
+=======
+"@emotion/react@^11.0.0-rc.0", "@emotion/react@^11.11.1", "@emotion/react@^11.4.1", "@emotion/react@^11.5.0":
+  version "11.11.1"
+  resolved "https://registry.npmjs.org/@emotion/react/-/react-11.11.1.tgz"
+  integrity sha512-5mlW1DquU5HaxjLkfkGN1GA/fvVGdyHURRiX/0FHl2cfIfRxSOfmxEH5YS43edp0OldZrZ+dkBKbngxcNCdZvA==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     "@babel/runtime" "^7.18.3"
     "@emotion/babel-plugin" "^11.11.0"
@@ -2002,10 +2129,24 @@
   dependencies:
     "@babel/runtime" "^7.23.9"
 
+<<<<<<< HEAD
 "@mui/material@^5.0.0", "@mui/material@^5.14.12":
   version "5.15.16"
   resolved "https://registry.npmjs.org/@mui/material/-/material-5.15.16.tgz"
   integrity sha512-ery2hFReewko9gpDBqOr2VmXwQG9ifXofPhGzIx09/b9JqCQC/06kZXZDGGrOTpIddK9HlIf4yrS+G70jPAzUQ==
+=======
+<<<<<<< HEAD
+"@mui/material@^5.14.12":
+  version "5.15.12"
+  resolved "https://registry.npmjs.org/@mui/material/-/material-5.15.12.tgz"
+  integrity sha512-vXJGg6KNKucsvbW6l7w9zafnpOp0CWc0Wx4mDykuABTpQ5QQBnZxP7+oB4yAS1hDZQ1WobbeIl0CjxK4EEahkA==
+=======
+"@mui/material@^5.0.0", "@mui/material@^5.14.12":
+  version "5.14.12"
+  resolved "https://registry.npmjs.org/@mui/material/-/material-5.14.12.tgz"
+  integrity sha512-EelF2L46VcVqhg3KjzIGBBpOtcBgRh0MMy9Efuk6Do81QdcZsFC9RebCVAflo5jIdbHiBmxBs5/l5Q9NjONozg==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     "@babel/runtime" "^7.23.9"
     "@mui/base" "5.0.0-beta.40"
@@ -2312,10 +2453,24 @@
   dependencies:
     "@types/react" "*"
 
+<<<<<<< HEAD
 "@types/react@*", "@types/react@^17.0.0 || ^18.0.0", "@types/react@>=0.0.0 <=99":
   version "18.3.1"
   resolved "https://registry.npmjs.org/@types/react/-/react-18.3.1.tgz"
   integrity sha512-V0kuGBX3+prX+DQ/7r2qsv1NsdfnCLnTgnRJ1pYnxykBhGMz+qj+box5lq7XsO5mtZsBqpjwwTu/7wszPfMBcw==
+=======
+<<<<<<< HEAD
+"@types/react@*":
+  version "18.2.64"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.2.64.tgz"
+  integrity sha512-MlmPvHgjj2p3vZaxbQgFUQFvD8QiZwACfGqEdDSWou5yISWxDQ4/74nCAwsUiX7UFLKZz3BbVSPj+YxeoGGCfg==
+=======
+"@types/react@*", "@types/react@^17.0.0 || ^18.0.0", "@types/react@>=0.0.0 <=99":
+  version "18.2.25"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.2.25.tgz"
+  integrity sha512-24xqse6+VByVLIr+xWaQ9muX1B4bXJKXBbjszbld/UEDslGLY53+ZucF44HCmLbMPejTzGG9XgR+3m2/Wqu1kw==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
@@ -2721,10 +2876,24 @@ antd-tools@^7.7.1:
     webpack-merge "^4.2.1"
     webpackbar "^3.2.0"
 
+<<<<<<< HEAD
 antd@^5.8.4, antd@>=4.0.0:
   version "5.16.5"
   resolved "https://registry.npmjs.org/antd/-/antd-5.16.5.tgz"
   integrity sha512-8MGjf2ejlii2iVH4F960jwpdGiU+ISWPdiMA2O1AJSFJFA3eCxVLHkKRGiagsRmdo3AUU8tuPfQsqbLuEIlswA==
+=======
+<<<<<<< HEAD
+antd@^5.8.4:
+  version "5.15.2"
+  resolved "https://registry.npmjs.org/antd/-/antd-5.15.2.tgz"
+  integrity sha512-EByEiCQknPKJVYfD+zneXwEvjdFzvMw8CZrsxw9nq19ftC4uMcMkZ2irasW7RQQGg9i7XsAZpAwYz3anuFX+EA==
+=======
+antd@^5.8.4, antd@>=4.0.0:
+  version "5.9.4"
+  resolved "https://registry.npmjs.org/antd/-/antd-5.9.4.tgz"
+  integrity sha512-eyNn1C/Q9ESn4ktfTlRIIXBbWT5L/Rr38xP37dIvJ3FeD/a4vaVcMqqLz5ywwMPKxgWnuUxggo1mJwWdPoIdSg==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     "@ant-design/colors" "^7.0.2"
     "@ant-design/cssinjs" "^1.18.5"
@@ -3492,9 +3661,29 @@ browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.22.2, browserslist@^4
   resolved "https://registry.npmjs.org/browserslist/-/browserslist-4.23.0.tgz"
   integrity sha512-QW8HiM1shhT2GuzkvklfjcKDiWFXHOeFCIA/huJPwHsslwcydgk7X+z2zXpEijP98UCY7HbubZt5J2Zgvf0CaQ==
   dependencies:
+<<<<<<< HEAD
     caniuse-lite "^1.0.30001587"
     electron-to-chromium "^1.4.668"
     node-releases "^2.0.14"
+=======
+<<<<<<< HEAD
+    caniuse-lite "^1.0.30001587"
+    electron-to-chromium "^1.4.668"
+    node-releases "^2.0.14"
+=======
+    caniuse-lite "^1.0.30000792"
+    electron-to-chromium "^1.3.30"
+
+browserslist@^4.0.0, browserslist@^4.12.0, browserslist@^4.21.9, browserslist@^4.22.1, "browserslist@>= 4.21.0":
+  version "4.22.1"
+  resolved "https://registry.npmjs.org/browserslist/-/browserslist-4.22.1.tgz"
+  integrity sha512-FEVc202+2iuClEhZhrWy6ZiAcRLvNMyYcxZ8raemul1DYVOVdFsbqckWLdsixQZCpJlwe77Z3UTalE7jsjnKfQ==
+  dependencies:
+    caniuse-lite "^1.0.30001541"
+    electron-to-chromium "^1.4.535"
+    node-releases "^2.0.13"
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
     update-browserslist-db "^1.0.13"
 
 bser@2.1.1:
@@ -3743,10 +3932,24 @@ character-reference-invalid@^1.0.0:
   resolved "https://registry.npmjs.org/character-reference-invalid/-/character-reference-invalid-1.1.4.tgz"
   integrity sha512-mKKUkUbhPpQlCOfIuZkvSEgktjPFIsZKRRbC6KWVEMvlzblj3i3asQv5ODsrwt0N3pHAEvjP8KTQPHkp0+6jOg==
 
+<<<<<<< HEAD
 chart.js@^2.9.0, chart.js@^4.1.1:
   version "2.9.4"
   resolved "https://registry.npmjs.org/chart.js/-/chart.js-2.9.4.tgz"
   integrity sha512-B07aAzxcrikjAPyV+01j7BmOpxtQETxTSlQ26BEYJ+3iUkbNKaOJ/nDbT6JjyqYxseM0ON12COHYdU2cTIjC7A==
+=======
+<<<<<<< HEAD
+chart.js@^2.9.0:
+  version "2.9.4"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-2.9.4.tgz"
+  integrity sha512-B07aAzxcrikjAPyV+01j7BmOpxtQETxTSlQ26BEYJ+3iUkbNKaOJ/nDbT6JjyqYxseM0ON12COHYdU2cTIjC7A==
+=======
+chart.js@^2.9.0, chart.js@^4.1.1:
+  version "2.9.0"
+  resolved "https://registry.npmjs.org/chart.js/-/chart.js-2.9.0.tgz"
+  integrity sha512-qgbY2tObinNst84qlWYiNTvszJSKoyoYiOjqOztUaW88N+Xk7QFJ9PasO+w0G1+NkxJzKzun7kUSZd7oWLCIDQ==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     chartjs-color "^2.1.0"
     moment "^2.10.2"
@@ -4524,6 +4727,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
+<<<<<<< HEAD
 data-view-buffer@^1.0.1:
   version "1.0.1"
   resolved "https://registry.npmjs.org/data-view-buffer/-/data-view-buffer-1.0.1.tgz"
@@ -4555,6 +4759,16 @@ dayjs@^1.11.10, "dayjs@>= 1.x":
   version "1.11.11"
   resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.11.tgz"
   integrity sha512-okzr3f11N6WuqYtZSvm+F776mB41wRZMhKP+hc34YdW+KmtYYK9iqvHSwo2k9FEH3fhGXvOPV6yz2IcSrfRUDg==
+=======
+<<<<<<< HEAD
+dayjs@^1.11.10:
+=======
+dayjs@^1.11.1, "dayjs@>= 1.x":
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+  version "1.11.10"
+  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.11.10.tgz"
+  integrity sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==
+>>>>>>> last_branch
 
 debug-fabulous@1.X:
   version "1.1.0"
@@ -7923,10 +8137,24 @@ mkdirp@^0.5.1, mkdirp@^0.5.3, mkdirp@~0.5.1:
   dependencies:
     minimist "^1.2.6"
 
+<<<<<<< HEAD
 moment@^2.10.2, moment@^2.29.1, "moment@>= 2.x":
   version "2.30.1"
   resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
   integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
+=======
+<<<<<<< HEAD
+moment@^2.10.2, moment@^2.29.1:
+  version "2.30.1"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.30.1.tgz"
+  integrity sha512-uEmtNhbDOrWPFS+hdjFCBfy9f2YoyzRpwcl+DqpC6taX21FzsTLQVbMV/W7PzNSX6x/bhC1zA3c2UQ5NzH6how==
+=======
+moment@^2.10.2, moment@^2.29.1, "moment@>= 2.x":
+  version "2.29.4"
+  resolved "https://registry.npmjs.org/moment/-/moment-2.29.4.tgz"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
 
 move-concurrently@^1.0.1:
   version "1.0.1"
@@ -10262,10 +10490,24 @@ redux-persist@^6.0.0:
   resolved "https://registry.npmjs.org/redux-persist/-/redux-persist-6.0.0.tgz"
   integrity sha512-71LLMbUq2r02ng2We9S215LtPu3fY0KgaGE0k8WRgl6RkqxtGfl7HUozz1Dftwsb0D/5mZ8dwAaPbtnzfvbEwQ==
 
+<<<<<<< HEAD
 redux-saga@^1.1.3, redux-saga@1.x:
   version "1.3.0"
   resolved "https://registry.npmjs.org/redux-saga/-/redux-saga-1.3.0.tgz"
   integrity sha512-J9RvCeAZXSTAibFY0kGw6Iy4EdyDNW7k6Q+liwX+bsck7QVsU78zz8vpBRweEfANxnnlG/xGGeOvf6r8UXzNJQ==
+=======
+<<<<<<< HEAD
+redux-saga@^1.1.3:
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/redux-saga/-/redux-saga-1.3.0.tgz"
+  integrity sha512-J9RvCeAZXSTAibFY0kGw6Iy4EdyDNW7k6Q+liwX+bsck7QVsU78zz8vpBRweEfANxnnlG/xGGeOvf6r8UXzNJQ==
+=======
+redux-saga@^1.1.3, redux-saga@1.x:
+  version "1.2.3"
+  resolved "https://registry.npmjs.org/redux-saga/-/redux-saga-1.2.3.tgz"
+  integrity sha512-HDe0wTR5nhd8Xr5xjGzoyTbdAw6rjy1GDplFt3JKtKN8/MnkQSRqK/n6aQQhpw5NI4ekDVOaW+w4sdxPBaCoTQ==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     "@redux-saga/core" "^1.3.0"
 
@@ -10740,10 +10982,24 @@ sane@^4.0.3:
     minimist "^1.1.1"
     walker "~1.0.5"
 
+<<<<<<< HEAD
 sass@^1.3.0, sass@^1.45.2:
   version "1.76.0"
   resolved "https://registry.npmjs.org/sass/-/sass-1.76.0.tgz"
   integrity sha512-nc3LeqvF2FNW5xGF1zxZifdW3ffIz5aBb7I7tSvOoNu7z1RQ6pFt9MBuiPtjgaI62YWrM/txjWlOCFiGtf2xpw==
+=======
+<<<<<<< HEAD
+sass@^1.45.2:
+  version "1.71.1"
+  resolved "https://registry.npmjs.org/sass/-/sass-1.71.1.tgz"
+  integrity sha512-wovtnV2PxzteLlfNzbgm1tFXPLoZILYAMJtvoXXkD7/+1uP41eKkIt1ypWq5/q2uT94qHjXehEYfmjKOvjL9sg==
+=======
+sass@^1.3.0, sass@^1.45.2:
+  version "1.69.0"
+  resolved "https://registry.npmjs.org/sass/-/sass-1.69.0.tgz"
+  integrity sha512-l3bbFpfTOGgQZCLU/gvm1lbsQ5mC/WnLz3djL2v4WCJBDrWm58PO+jgngcGRNnKUh6wSsdm50YaovTqskZ0xDQ==
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   dependencies:
     chokidar ">=3.0.0 <4.0.0"
     immutable "^4.0.0"
@@ -11813,6 +12069,12 @@ ts-loader@^6.0.2:
     micromatch "^4.0.0"
     semver "^6.0.0"
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+tslib@1.9.0, tslib@^1.8.1:
+=======
+>>>>>>> last_branch
 tslib@^1.10.0, tslib@^1.8.0, tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
@@ -11829,6 +12091,10 @@ tslib@^2.6.2:
   integrity sha512-AEYxH93jGFPn/a2iVAwW87VuUIkR1FVUKB77NwMF7nBTDkDrrT/Hpt/IrCJ0QXhW27jTBDcf5ZY7w6RiqTMw2Q==
 
 tslib@1.9.0:
+<<<<<<< HEAD
+=======
+>>>>>>> 795d609c4029da53612883901dfe03cadf0f2031
+>>>>>>> last_branch
   version "1.9.0"
   resolved "https://registry.npmjs.org/tslib/-/tslib-1.9.0.tgz"
   integrity sha512-f/qGG2tUkrISBlQZEjEqoZ3B2+npJjIf04H1wuAv9iA8i04Icp+61KRXxFdha22670NJopsZCIjhC3SnjPRKrQ==

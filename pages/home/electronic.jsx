@@ -15,6 +15,8 @@ import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
 import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
 
+
+
 const HomeElectronicsPage = () => {
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
     const [category, setCategory] = useState([])
