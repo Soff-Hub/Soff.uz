@@ -103,6 +103,7 @@ const HomeElectronicsPage = () => {
                 // key={235}
                 slug={topSellers.slug}
             />
+            
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}

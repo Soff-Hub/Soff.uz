@@ -5,9 +5,8 @@ import ModuleProductActions from './modules/ModuleProductActions';
 
 const AudioWaveform = ({ product, inCategory }) => {
     const wavesurferRef = useRef(null);
-    const timelineRef = useRef(null);
 
-    const [wavesurferObj, setWavesurferObj] = useState();
+    const [wavesurferObj, setWavesurferObj] = useState(null);
 
     const [playing, setPlaying] = useState(false);
     const [volume, setVolume] = useState(1);
@@ -33,7 +32,7 @@ const AudioWaveform = ({ product, inCategory }) => {
 
     useEffect(() => {
         if (wavesurferObj) {
-            wavesurferObj.load(product?.document?.short_content_url);
+            wavesurferObj?.load(product?.document?.short_content_url);
         }
     }, [product?.document?.short_content_url, wavesurferObj]);
 
@@ -48,6 +47,8 @@ const AudioWaveform = ({ product, inCategory }) => {
                 el.click();
             });
 
+
+        
         setPlaying(!playing);
         if (!playing) {
             wavesurferObj.play();
@@ -67,6 +68,7 @@ const AudioWaveform = ({ product, inCategory }) => {
         setPlaying(false);
     };
 
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -84,6 +86,7 @@ const AudioWaveform = ({ product, inCategory }) => {
 
         return formattedNumber;
     }
+
 
     return (
         <>

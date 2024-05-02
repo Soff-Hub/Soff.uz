@@ -156,7 +156,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                         ) : (
                             <a
                                 style={{
-                                    cursor: `${admin
+                                    cursor: `${admin || loading
                                         ? 'not-allowed'
                                         : 'pointer'
                                         }`,

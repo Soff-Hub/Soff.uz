@@ -40,7 +40,6 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     } else {
         productItemsView = <p>Audio mahsulot topilmadi</p>;
 
-
     }
 
     return (

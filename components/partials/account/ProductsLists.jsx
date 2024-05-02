@@ -46,8 +46,11 @@ function ProductsLists() {
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 800);
     const [adminModal, setAdminModal] = useState(false);
+    const [allProducts, setAllProducts] = useState(false);
     const router = useRouter();
     const pid = router.asPath;
+
+
 
 
     const { RangePicker } = DatePicker;
@@ -197,14 +200,26 @@ function ProductsLists() {
         }
     };
 
-    const handlePagination = (pageNum, count) => {
-        Router.push(`/account/products?page=${pageNum}`);
+
+    const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
+        Router.push(`/account/products?page=${pageNum}`);
     };
 
     const handleFilterStatus = (status) => {
         Router.push(`/account/products?page=${currPage}&status=${status}`);
     };
+
+    function handleClickProductsAll() {
+        setAllProducts(!allProducts)
+        setFiltertype('')
+        setDateArxiv(null)
+        setCategoryID(null)
+        setDate(null)
+        Router.push(`/account/products?page=${router.query.page}`);
+    }
+
+
 
     useEffect(() => {
         GetItemsCategory();
@@ -441,6 +456,7 @@ function ProductsLists() {
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0 ">
                                                     <button
+                                                        onClick={()=>Router.push(`/account/products?page=${1}`)}
                                                         style={{
                                                             backgroundColor:
                                                                 '#F1F1F1',
@@ -460,8 +476,9 @@ function ProductsLists() {
                                                     className="accordion-collapse collapse"
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
+
                                                         <Select
-                                                            className="col-md-6 p-0"
+                                                            className="col-md-5 p-0"
                                                             mode="select"
                                                             showSearch
                                                             style={{
@@ -481,7 +498,7 @@ function ProductsLists() {
                                                         </Select>
 
                                                         <select
-                                                            className="form-select col-md-5 fs-3 py-3 rounded-3"
+                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
                                                                 handleFilterStatus(
                                                                     e.target
@@ -510,6 +527,7 @@ function ProductsLists() {
                                                                 Bekor qilingan
                                                             </option>
                                                         </select>
+                                                        <button onClick={handleClickProductsAll} className='btn btn-success col-md-2'><span className='fs-5' style={{ lineHeight: "12px" }}>Bracha mahsulotlar</span></button>
                                                         <RangePicker
                                                             className="w-100 py-3 col-md-4 rounded-3"
                                                             onChange={(e) =>
@@ -533,10 +551,7 @@ function ProductsLists() {
                                                         <select
                                                             className="form-select col-md-4 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
-                                                                setFiltertype(
-                                                                    e.target
-                                                                        .value
-                                                                )
+                                                                (setFiltertype(e.target.value))
                                                             }>
                                                             <option
                                                                 className="fs-3"
@@ -598,10 +613,11 @@ function ProductsLists() {
                                     />
                                     <Pagination
                                         className="mt-3"
-                                        defaultCurrent={router.query.page}
+                                        defaultCurrent={1}
                                         total={pageCount}
                                         onChange={handlePagination}
                                         showSizeChanger
+                                        current={router.query.page}
                                     // hideOnSinglePage={false}
                                     />
                                 </div>

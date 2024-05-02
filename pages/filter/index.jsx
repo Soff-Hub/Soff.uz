@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import PostRepository from '~/repositories/PostRepository';
 import Meta from '~/components/shared/headers/Meta';
 import ProductVideo from '~/components/elements/products/ProductVideo';
+import AudioWaveform from '~/components/elements/products/AudioProductCart';
 
 const FilterPages = () => {
 
@@ -65,7 +66,7 @@ const FilterPages = () => {
                 <div className="container">
 
 
-                    <div className="ps-section__content">
+                    <div className="ps-section__content mb-5">
                         <div className="d-flex align-content-center row">
                             {resultdata?.file?.length > 0 &&
                                 resultdata?.file?.map((item, index) => (
@@ -76,8 +77,8 @@ const FilterPages = () => {
 
                             {resultdata?.audio?.length > 0 &&
                                 resultdata?.audio?.map((item, index) => (
-                                    <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
-                                        <Product product={item} />{' '}
+                                    <div key={index} className=" my-3 col-d-12">
+                                        <AudioWaveform product={item} />{' '}
                                     </div>
                                 ))}
                             {resultdata?.template?.length > 0 &&
@@ -86,9 +87,9 @@ const FilterPages = () => {
                                         <Product product={item} />{' '}
                                     </div>
                                 ))}
-                            {resultdata?.vedio?.length > 0 &&
-                                resultdata?.vedio?.map((item, index) => (
-                                    <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                            {resultdata?.video?.length > 0 &&
+                                resultdata?.video?.map((item, index) => (
+                                    <div key={index} className="col-md-4 my-3">
                                         <ProductVideo product={item} />{' '}
                                     </div>
                                 ))}
