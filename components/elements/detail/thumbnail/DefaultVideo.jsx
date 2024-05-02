@@ -3,6 +3,7 @@ import React from 'react';
 export default function DefaultVideo({ product }) {
     // product?.document?.short_content_url
     // `video/${product?.document?.file_type?.replace('.','' )}`
+    console.log('product', product);
     return (
         <div className="video_container">
             <div className="video_content">
@@ -15,7 +16,7 @@ export default function DefaultVideo({ product }) {
                     controls
                     preload='none'
                     poster={product?.poster_url}
-                    src='https://video-previews.elements.envatousercontent.com/h264-video-previews/0096fd70-06bc-4309-8fed-07762e53c9fd/6386658.mp4'
+                    src={ product?.discount_price === 0 ? product?.file_url : product?.document?.short_content_url}
                 >
                     {/* <source
                         // src={product?.document?.short_content_url}
