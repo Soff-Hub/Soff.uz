@@ -261,8 +261,9 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
     async getAllCategoryLists(search) {
-        const endPoint = `admin/category-children?search=${search || ''}`;
+        const endPoint = `admin/category-children/file/?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -278,7 +279,7 @@ class GetRepository {
         return reponse;
     }
     async getAllCategoryListsAudio(search) {
-        const endPoint = `admin/category-children/audio?search=${search || ''}`;
+        const endPoint = `admin/category-children/audio/?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -294,7 +295,7 @@ class GetRepository {
         return reponse;
     }
     async getAllCategoryListsDesign(search) {
-        const endPoint = `admin/category-children/templates?search=${
+        const endPoint = `admin/category-children/template/?search=${
             search || ''
         }`;
         const reponse = await Repository({
@@ -311,6 +312,26 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getAllCategoryListsVideo(search) {
+        const endPoint = `admin/category-children/video/?search=${
+            search || ''
+        }`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getCategoryParentLists(token) {
         const endPoint = `admin/category-parent/`;
         const reponse = await Repository({

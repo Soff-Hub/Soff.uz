@@ -27,21 +27,21 @@ const ProductVideo = ({ product }) => {
 
     const [videos, setVideos] = useState([]);
 
-    const handlePlayPause = (index) => {
-        const updatedVideos = [...videos];
-        updatedVideos.forEach((video, i) => {
-            if (i !== index) {
-                video.pause();
-            } else {
-                if (video.paused) {
-                    video.play();
-                } else {
-                    video.pause();
-                }
-            }
-        });
-        setVideos(updatedVideos);
-    };
+    // const handlePlayPause = (index) => {
+    //     const updatedVideos = [...videos];
+    //     updatedVideos.forEach((video, i) => {
+    //         if (i !== index) {
+    //             video.pause();
+    //         } else {
+    //             if (video.paused) {
+    //                 video.play();
+    //             } else {
+    //                 video.pause();
+    //             }
+    //         }
+    //     });
+    //     setVideos(updatedVideos);
+    // };
 
 
     // <>
@@ -96,7 +96,7 @@ const ProductVideo = ({ product }) => {
                             controls={true}
                             preload="none"
                             playsInline
-                            src={product?.short_content_url}
+                            src={product?.document?.short_content_url}
                             poster={product?.poster_url}
                             loop
                             style={{
