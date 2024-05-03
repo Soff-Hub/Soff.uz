@@ -144,7 +144,7 @@ function ProductsLists() {
             if (ItemsData?.document?.content_type === "video") {
                 return Router.push(`/account/products/edit-video?page=${router.query.page}`);
             }
-            Router.push(`/account/products/edit?page=${router.query.page}`);
+            Router.push(`/account/products/edit`);
 
         }
     }
@@ -203,7 +203,7 @@ function ProductsLists() {
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
-        Router.push(`/account/products?page=${pageNum}`);
+        Router.push(`/account/products?page=${pageNum}&status=${dataValStatus}`);
     };
 
     const handleFilterStatus = (status) => {
@@ -227,7 +227,12 @@ function ProductsLists() {
 
     useEffect(() => {
         setCurrPage(router.query.page);
-        setDataCatStatus(router.query.status)
+        if (router.query.status === undefined) {
+            setDataCatStatus('')
+        } else {
+            setDataCatStatus(router.query.status)
+        }
+
         if (router.query.page || router.query.status) {
             GetItemsProductsLists(
                 router.query.page,
@@ -456,7 +461,7 @@ function ProductsLists() {
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0 ">
                                                     <button
-                                                        onClick={()=>Router.push(`/account/products?page=${1}`)}
+                                                        onClick={() => Router.push(`/account/products?page=${1}&status=${dataValStatus}`)}
                                                         style={{
                                                             backgroundColor:
                                                                 '#F1F1F1',
