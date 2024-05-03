@@ -17,7 +17,7 @@ export default function DefaultVideo({ product }) {
                     preload='none'
 
                     poster={product?.poster_url ? product?.poster_url : product?.poster}
-                    src={ product?.discount_price === 0 ? product?.file_url : product?.document?.short_content_url}
+                    src={ product?.discount_price === 0 ? product?.document?.file_url : product?.document?.short_content_url}
                 >
                     Your browser does not support the video tag.
                 </video>

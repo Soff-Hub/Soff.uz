@@ -12,53 +12,32 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
         productItemsView = (
             <div className="d-flex align-content-center row">
                 {data?.promotional_sliders?.slice(0, 6).map((item, index) => (
-                    <div
-                        key={index}
-                        className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
-                        {item?.document?.content_type != 'audio' && <Product product={item} />}
-                    </div>
+                    item?.document?.content_type === 'audio' ?
+                        <div
+                            key={index}
+                            className="col-md-12 my-2">
+                            <AudioProductCart product={item} />{' '}
+                        </div> :
+                        item?.document?.content_type === 'video' ?
+                            <div
+                                key={index}
+                                className="col-md-4 my-2">
+                                <ProductVideo product={item} />{' '}
+                            </div>
+                            :
+
+                            <div
+                                key={index}
+                                className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                <Product product={item} />
+                            </div>
                 ))}
             </div>
         );
     } else {
         productItemsView = <p>Mahsulot topilmadi</p>;
     }
-    // Audio view
-    let audioProductItemsView;
-    if (data && data?.promotional_sliders?.length > 0) {
-        audioProductItemsView = (
-            <div className="row">
-                {data?.promotional_sliders?.slice(0, 6).map((item, index) => (
-                    <div
-                        key={index}
-                        className="col-12 my-2">
-                        <AudioProductCart product={item} />{' '}
-                    </div>
-                ))}
-            </div>
-        );
-    } else {
-        productItemsView = <p>Audio mahsulot topilmadi</p>;
-    }
 
-
-    // Video view
-    let videoProductItemsView;
-    if (data && data?.promotional_sliders?.length > 0) {
-        videoProductItemsView = (
-            <div className="row">
-                {data?.promotional_sliders?.slice(0, 6).map((item, index) => (
-                    <div
-                        key={index}
-                        className="col-md-4 my-2">
-                        <ProductVideo product={item} />{' '}
-                    </div>
-                ))}
-            </div>
-        );
-    } else {
-        productItemsView = <p>Audio mahsulot topilmadi</p>;
-    }
 
     return (
         <div className="ps-product-list">
@@ -78,12 +57,12 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                 </div>
                 {title === 'Audio materiallar' ? (
                     <div className="ps-section__content">
-                        {audioProductItemsView}
+                        {productItemsView}
                     </div>
                 ) :
                     title === 'Video materiallar' ? (
                         <div className="ps-section__content">
-                            {videoProductItemsView}
+                            {productItemsView}
                         </div>
                     )
                         : (

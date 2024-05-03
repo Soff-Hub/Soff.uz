@@ -31,7 +31,6 @@ const Posts = () => {
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
     const [categoryName, setCategoryName] = useState('');
-    const [liveFile, setLiveFile] = useState('');
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
     const [disabled, setDeisabled] = useState(false);
@@ -54,10 +53,9 @@ const Posts = () => {
         },
     ];
 
-    console.log(products);
 
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryListsVideo();
         if (ItemsData) {
             setDataCategory(ItemsData);
         }
@@ -116,7 +114,7 @@ const Posts = () => {
     }
 
     const onSearch = async (value) => {
-        const ItemsData = await GetRepository.getAllCategoryLists(value);
+        const ItemsData = await GetRepository.getAllCategoryListsVideo(value);
         if (ItemsData) {
             setDataCategory(ItemsData);
         }
