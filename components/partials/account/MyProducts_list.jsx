@@ -25,6 +25,7 @@ import ModuleDetailTopInformation from '~/components/elements/detail/modules/Mod
 import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudioLive';
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
+import DefaultVideo from '~/components/elements/detail/thumbnail/DefaultVideo';
 const { TabPane } = Tabs;
 var parse = require('html-react-parser');
 
@@ -325,7 +326,7 @@ function MyProductsLists() {
 
     const handleButtonClickViewProducts = async () => {
 
-        const file = View?.document?.file_url.includes('?X-Amz-Algorithm') ? View?.document?.file_url.split('?')[0] : View?.document?.file_url
+        const file = View?.document?.file_url.includes('?AWSAccessKeyId') ? View?.document?.file_url.split('?')[0] : View?.document?.file_url
         try {
             setLoading(true);
             const response = await axios.get(file, {
@@ -576,7 +577,7 @@ function MyProductsLists() {
            ,
     ];
 
-    "/product/loyiha-boshqarish-shablonlari-shablon1"
+    console.log('View', View);
 
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -868,6 +869,7 @@ function MyProductsLists() {
                             <div className="ps-container">
                                 {!loading ? (
                                     <>
+                                     
                                         {View?.document?.content_type ===
                                             'audio' ? (
                                             <div className="row">
@@ -891,7 +893,6 @@ function MyProductsLists() {
                                                     <div className="price_and_tag">
                                                         <ModuleAudioDetailShoppingActionsLive
                                                             admin={true}
-                                                        // free={free}
                                                         />
 
                                                         <>
@@ -983,7 +984,114 @@ function MyProductsLists() {
                                                     )}
                                                 </div>
                                             </div>
-                                        ) : (
+                                        ) : View?.document?.content_type ===
+                                        'video' ? 
+                                        <div className="row">
+                                        <div className="col-12">
+                                            <DefaultVideo product={View} />
+                                            <ModuleAudioDetailTopInformationLive
+                                                product={View ? View : ''}
+                                                views={0}
+                                                admin={true}
+                                                taxminiyNarx={
+                                                    View?.price
+                                                }
+                                            />
+                                            <div className="price_and_tag">
+                                                <ModuleAudioDetailShoppingActionsLive
+                                                    admin={true}
+                                                />
+
+                                                <>
+                                                    {
+                                                        <div className="">
+                                                            <p>
+                                                                Tezkor
+                                                                teglar
+                                                            </p>
+                                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                                {View
+                                                                    ?.tag
+                                                                    ?.length >
+                                                                    0 &&
+                                                                    View?.tag?.map(
+                                                                        (
+                                                                            item,
+                                                                            i
+                                                                        ) => (
+                                                                            <div
+                                                                                key={
+                                                                                    i
+                                                                                }
+                                                                                className="m-2 tag-product">
+                                                                                <Link
+                                                                                    href="#"
+                                                                                    as="#">
+                                                                                    <a>
+                                                                                        {' '}
+                                                                                        #
+                                                                                        {
+                                                                                            item?.name
+                                                                                        }{' '}
+                                                                                    </a>
+                                                                                </Link>
+                                                                            </div>
+                                                                        )
+                                                                    )}
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </>
+                                            </div>
+                                        </div>
+
+                                        <div className="ps-product__content ps-tab-root mb-5">
+                                            <Tabs defaultActiveKey="1">
+                                                <TabPane
+                                                    tab="Mahsulot to’liq tavsifi"
+                                                    key="1">
+                                                    <div className="ps-document">
+                                                        {View?.description
+                                                            ? parse(
+                                                                View?.description
+                                                            )
+                                                            : "To'ldirilmadi"}
+                                                    </div>
+                                                </TabPane>
+                                            </Tabs>
+                                        </div>
+
+                                        <div className="d-flex justify-content-end p-5 ">
+                                            {loading2 ? (
+                                                <button
+                                                    className="btn btn-success  p-2 px-5 fs-4 "
+                                                    style={{
+                                                        width: '179px',
+                                                        cursor: 'not-allowed',
+                                                    }}>
+                                                    <div
+                                                        className="spinner-border "
+                                                        role="status">
+                                                        <span className="visually-hidden">
+                                                            Loading...
+                                                        </span>
+                                                    </div>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={
+                                                        handleButtonClickViewProducts
+                                                    }
+                                                    className="btn btn-success p-2 px-5 fs-4 ">
+                                                    <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                    <span className="fs-3">
+                                                        File ochish
+                                                    </span>
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
+                                        : (
                                             <div className="ps-product--detail ps-product--fullwidth">
                                                 <div className="ps-product__header ">
                                                     <ThumbnailDefault

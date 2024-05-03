@@ -97,12 +97,12 @@ function MyProductsListsSeller() {
         return formattedNumber;
     }
 
-
+    console.log('View', View);
     const handleButtonClick = async (ID) => {
         try {
             setLoading2(ID);
             const fileContent = data?.find((item) => item.id == ID);
-            const filee = fileContent?.file.includes('?X-Amz-Algorithm') ? fileContent?.file.split('?')[0] : fileContent?.file
+            const filee = fileContent?.file.includes('?AWSAccessKeyId') ? fileContent?.file.split('?')[0] : fileContent?.file
             const response = await axios.get(filee, {
                 responseType: 'blob',
             });
