@@ -176,7 +176,7 @@ function ProductsLists() {
         try {
             setLoading2(true);
             const fileContent = deleteIdView?.document;
-            const filee = fileContent?.file_url.includes('?X-Amz-Algorithm') ? fileContent?.file_url.split('?')[0] : fileContent?.file_url
+            const filee = fileContent?.file_url.includes('?AWSAccessKeyId') ? fileContent?.file_url.split('?')[0] : fileContent?.file_url
             const response = await Axios.get(filee, {
                 responseType: 'blob',
             });

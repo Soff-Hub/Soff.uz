@@ -5,8 +5,8 @@ import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { audioDownloaderSale } from '~/utilities/common-helpers';
 import { message } from 'antd';
+import Axios from 'axios';
 
 const VideoDetailShoppingActions = ({ product }) => {
 
@@ -87,7 +87,31 @@ const VideoDetailShoppingActions = ({ product }) => {
             });
     };
 
-
+     const audioDownloaderSale = async (file) => {
+        const filee = file?.includes('?AWSAccessKeyId=') ? file?.split('?')[0] : file
+        try {
+            const response = await Axios.get(filee, {
+                responseType: 'blob',
+            });
+    
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download =
+                'soff.uz -' + file  +
+                '.' +
+                filee?.split('.')[
+                    filee?.split('.').length - 1
+                ];
+            document.body.appendChild(a);
+            a.click();
+            window.URL.revokeObjectURL(url);
+            return true
+        } catch (error) {
+            console.error('Error downloading file: ', error);
+            return Promise.reject(error)
+        }
+    };
 
     if (true) {
         return (
@@ -187,7 +211,9 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 }
                             </a>
                         )}
+
                     </div>
+                       
 
                     {/* <div className="p-3 rounded-3 " style={{ backgroundColor: "#F1F1F1", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
                         {copy ? (
@@ -215,6 +241,43 @@ const VideoDetailShoppingActions = ({ product }) => {
                                     } `}></i>
                         </a>
                     </div> */}
+                </div>
+                <div className='ps-product__shopping w-100 d-flex justify-content-between m-0' >
+                {
+                            product?.document?.images?.length > 0 &&
+                            <div>
+                                <p>Qo'shimcha fayllarni yuklab olish</p>
+                                {
+                                    product?.document?.images?.map((e) =>  <a
+                                    style={{
+                                        cursor: 'pointer',
+                                        minWidth: "150px",
+                                        fontSize: "14px"
+                                    }}
+                                    className="ps-btn ps-btn--black py-3"
+                                    href="#"
+                                    onClick={async (e) => {
+                                        e.preventDefault();
+                                        setLoading(true)
+                                        await audioDownloaderSale(e?.image_url);
+                                        setLoading(false)
+                                    }}>
+                                    {!loading ? "Yuklab olish" :
+                                        <div>
+                                            <div
+                                                className="spinner-border"
+                                                role="status">
+                                                <span className="visually-hidden">
+                                                    Loading...
+                                                </span>
+                                            </div>
+                                        </div>
+                                    }
+                                </a>)
+                                }
+                            </div> 
+                            
+                        }
                 </div>
             </>
         );
