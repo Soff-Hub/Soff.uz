@@ -65,7 +65,6 @@ const PostsProductsEdit = () => {
         }
     }
 
-
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
         if (ItemsData) {
@@ -110,10 +109,25 @@ const PostsProductsEdit = () => {
     };
 
     const onSearch = async (value) => {
-        const ItemsData = await GetRepository.getAllCategoryLists(value);
-        if (ItemsData) {
-            setDataCategory(ItemsData);
+        if (products?.document?.content_type === 'file') {
+            const ItemsData = await GetRepository.getAllCategoryLists(value);
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
         }
+        if (products?.document?.content_type === 'audio') {
+            const ItemsData = await GetRepository.getAllCategoryListsAudio(value);
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'template') {
+            const ItemsData = await GetRepository.getAllCategoryListsDesign(value);
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+
     };
     const options = [];
 
@@ -250,6 +264,8 @@ const PostsProductsEdit = () => {
                         </div>
                         <form
                             onSubmit={handleClickPostsEdit}
+
+
                             style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
                             className="pb-5 col-md-8">
@@ -441,6 +457,7 @@ const PostsProductsEdit = () => {
                             </div>
 
                             <div
+
                                 className="d-flex justify-content-end "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
