@@ -138,15 +138,10 @@ function ProductsLists() {
 
 
     async function handleClickIdEditProducts(productsItems) {
-        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, productsItems, null, null, null, user?.access)
-        if (ItemsData) {
-            dispatch(MyProductsEdit(ItemsData));
-            if (ItemsData?.document?.content_type === "video") {
-                return Router.push(`/account/products/edit-video?page=${router.query.page}`);
-            }
-            Router.push(`/account/products/edit`);
-
+        if (productsItems) {
+            Router.push(`/account/products/${productsItems}`);
         }
+
     }
 
     function handleCLickArxiv() {
@@ -404,15 +399,14 @@ function ProductsLists() {
                                 )
                             }></i>
                     </a>
-                    <Link href={'/account/products/edit'}>
-                        <a>
+                    
+                        <span style={{cursor:"pointer"}}>
                             <i
                                 className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
                                 onClick={() =>
                                     handleClickIdEditProducts(id)
                                 }></i>
-                        </a>
-                    </Link>
+                        </span>
                 </div>
             ),
         },
