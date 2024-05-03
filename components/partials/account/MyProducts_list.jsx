@@ -988,7 +988,7 @@ function MyProductsLists() {
                                         'video' ? 
                                         <div className="row">
                                         <div className="col-12">
-                                            <DefaultVideo product={View} />
+                                            <DefaultVideo product={View} /> 
                                             <ModuleAudioDetailTopInformationLive
                                                 product={View ? View : ''}
                                                 views={0}

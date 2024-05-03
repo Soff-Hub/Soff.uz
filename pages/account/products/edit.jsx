@@ -65,7 +65,6 @@ const PostsProductsEdit = () => {
         }
     }
 
-
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
         if (ItemsData) {
@@ -250,7 +249,7 @@ const PostsProductsEdit = () => {
                         </div>
                         <form
                             onSubmit={handleClickPostsEdit}
-                            onClick={() => Router.back()}
+                            
 
                             style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
