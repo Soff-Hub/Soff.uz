@@ -436,12 +436,12 @@ function MyProductsLists() {
         },
         {
             title: 'Yuklanishlar soni',
-            dataIndex: 'upload_count',
-            key: 'upload_count',
-            render: (upload_count) => (
-                <span key={upload_count}>
+            dataIndex: 'uploads_count',
+            key: 'uploads_count',
+            render: (uploads_count) => (
+                <span key={uploads_count}>
                     {' '}
-                    <i className="fa-solid fa-download"></i> {upload_count}
+                    <i className="fa-solid fa-download"></i> {uploads_count}
                 </span>
             ),
         },
