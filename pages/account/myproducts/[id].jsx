@@ -24,7 +24,7 @@ const PostsMyProducts = () => {
     const [tagSearchResult, setTagSearchResult] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { products, user } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
@@ -32,9 +32,13 @@ const PostsMyProducts = () => {
     const [free, setFree] = useState(false);
     const [category_id, setCategory_ID] = useState(null)
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const routerId = Router.query?.id
+    const [products, setProducts] = useState(null);
+    const [loading, setLoading] = useState(false);
 
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
+
 
     const breadCrumb = [
         {
@@ -45,6 +49,25 @@ const PostsMyProducts = () => {
             text: 'Mahsulotni tahrirlash',
         },
     ];
+
+    async function getProducts() {
+        if (routerId) {
+            setLoading(true)
+            const ItemsData = await GetRepository.getMyProductsView(
+                routerId,
+                user?.access
+            );
+            setProducts(ItemsData);
+            setLoading(false)
+        }
+
+    }
+    useEffect(() => {
+        getProducts()
+    }, [routerId])
+
+
+
 
     useEffect(() => {
         if (products && products.document && products.document.images) {
@@ -96,6 +119,28 @@ const PostsMyProducts = () => {
             if (tagSearchResult) {
                 formData.append('tags', tagSearchResult);
             }
+
+    const onSearch = async (value) => {
+        if (products?.document?.content_type === 'file') {
+            const ItemsData = await GetRepository.getAllCategoryLists(value);
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'audio') {
+            const ItemsData = await GetRepository.getAllCategoryListsAudio(value);
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'template') {
+            const ItemsData = await GetRepository.getAllCategoryListsDesign(value);
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+
+    };
 
             const customePosters = customePoster
                 .filter((el) => el.custome)
@@ -245,7 +290,9 @@ const PostsMyProducts = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Mahsulotni tahirirlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <div className="d-flex container justify-content-center">
+
+
+                {!loading ? (products && <div className="d-flex container justify-content-center">
                     <div
                         className="row w-100 gap-3 pt-5 "
                         style={{ alignItems: 'flex-start' }}>
@@ -264,6 +311,7 @@ const PostsMyProducts = () => {
                             </Button>
                         </div>
                         <form
+
                             onSubmit={handleSubmit(handleClickPostsEdit)}
                             style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
@@ -520,6 +568,7 @@ const PostsMyProducts = () => {
                             </div>
 
                             <div
+
                                 className="d-flex justify-content-end "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
@@ -780,7 +829,30 @@ const PostsMyProducts = () => {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div>) :
+                    <div className="ps-container">
+                        <div
+                            className="ps-product--detail ps-product--fullwidth"
+                            style={{
+                                height: '690px',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                    width: '150px',
+                                    height: '150px',
+                                }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div>
+                    </div>}
+
+
                 <div
                     className="modal fade "
                     id="staticBackdrop"
