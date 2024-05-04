@@ -6,7 +6,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-    
+
 
     return (
         <Head>
@@ -20,6 +20,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
                 }
             />
             <meta property="og:image" content={image} />
+            <meta name="twitter:image" content={image}></meta>
             <meta name="twitter:image" content={image}></meta>
             <meta property="og:url" content={image} />
             <meta property="og:site_name" content="Soff.uz" />
