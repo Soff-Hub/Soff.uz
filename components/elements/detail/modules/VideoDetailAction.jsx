@@ -9,7 +9,6 @@ import { message } from 'antd';
 import Axios from 'axios';
 
 const VideoDetailShoppingActions = ({ product }) => {
-
     const { setCartOneItem } = useCart();
     const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
@@ -87,29 +86,28 @@ const VideoDetailShoppingActions = ({ product }) => {
             });
     };
 
-     const audioDownloaderSale = async (file) => {
-        const filee = file?.includes('?AWSAccessKeyId=') ? file?.split('?')[0] : file
+    const audioDownloaderSale = async (file) => {
+        const filee =  file;
         try {
             const response = await Axios.get(filee, {
                 responseType: 'blob',
             });
-    
+
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
             a.download =
-                'soff.uz -' + file  +
+                'soff.uz -' +
+                file +
                 '.' +
-                filee?.split('.')[
-                    filee?.split('.').length - 1
-                ];
+                filee?.split('.')[filee?.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
-            return true
+            return true;
         } catch (error) {
             console.error('Error downloading file: ', error);
-            return Promise.reject(error)
+            return Promise.reject(error);
         }
     };
 
@@ -138,49 +136,52 @@ const VideoDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
                 <div className="ps-product__shopping">
-                    <div className='w-100 d-flex justify-content-between m-0'>
+                    <div className="w-100 d-flex justify-content-between m-0">
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.file_url !== "No" ? (
-                                    <a
-                                        style={{
-                                            cursor: 'pointer',
-                                            minWidth: "150px",
-                                            fontSize: "14px"
-                                        }}
-                                        className="ps-btn ps-btn--black py-3"
-                                        href="#"
-                                        onClick={async (e) => {
-                                            e.preventDefault();
-                                            setLoading(true)
-                                            await audioDownloaderSale(product, product);
-                                            setLoading(false)
-                                        }}>
-                                        {!loading ? "Yuklab olish" :
-                                            <div>
-                                                <div
-                                                    className="spinner-border"
-                                                    role="status">
-                                                    <span className="visually-hidden">
-                                                        Loading...
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        }
-                                    </a>
+                                {product?.file_url !== 'No' ? (
+                                    ''
                                 ) : (
+                                    // <a
+                                    //     style={{
+                                    //         cursor: 'pointer',
+                                    //         minWidth: "150px",
+                                    //         fontSize: "14px"
+                                    //     }}
+                                    //     className="ps-btn ps-btn--black py-3"
+                                    //     href="#"
+                                    //     onClick={async (e) => {
+                                    //         e.preventDefault();
+                                    //         setLoading(true)
+                                    //         await audioDownloaderSale(product, product);
+                                    //         setLoading(false)
+                                    //     }}>
+                                    //     {!loading ? "Yuklab olish" :
+                                    //         <div>
+                                    //             <div
+                                    //                 className="spinner-border"
+                                    //                 role="status">
+                                    //                 <span className="visually-hidden">
+                                    //                     Loading...
+                                    //                 </span>
+                                    //             </div>
+                                    //         </div>
+                                    //     }
+                                    // </a>
                                     <>
                                         <a
                                             className="ps-btn ps-btn--black py-3"
                                             href="#"
-                                            style={{ fontSize: "14px" }}
-                                            onClick={(e) => handleAddItemToCart(e)}>
+                                            style={{ fontSize: '14px' }}
+                                            onClick={(e) =>
+                                                handleAddItemToCart(e)
+                                            }>
                                             Savatga qo'shish
                                         </a>
                                         <a
                                             className="ps-btn py-3 me-0"
                                             href="#"
-                                            style={{ fontSize: "14px" }}
+                                            style={{ fontSize: '14px' }}
                                             onClick={(e) => handleBuynow(e)}>
                                             1 klikda sotib oling
                                         </a>
@@ -188,32 +189,31 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 )}
                             </>
                         ) : (
-                            <a
-                                style={{ cursor:loading ? "not-allowed" : 'pointer', minWidth: "212px" }}
-                                className="ps-btn ps-btn--black max-class"
-                                href="#"
-                                onClick={async (e) => {
-                                    e.preventDefault();
-                                    setLoading(true)
-                                    await audioDownloaderSale(product, product);
-                                    setLoading(false)
-                                }}>
-                                {!loading ? "Bepul yuklab olish" :
-                                    <div>
-                                        <div
-                                            className="spinner-border"
-                                            role="status">
-                                            <span className="visually-hidden">
-                                                Loading...
-                                            </span>
-                                        </div>
-                                    </div>
-                                }
-                            </a>
+                            // <a
+                            //     style={{ cursor:loading ? "not-allowed" : 'pointer', minWidth: "212px" }}
+                            //     className="ps-btn ps-btn--black max-class"
+                            //     href="#"
+                            //     onClick={async (e) => {
+                            //         e.preventDefault();
+                            //         setLoading(true)
+                            //         await audioDownloaderSale(product, product);
+                            //         setLoading(false)
+                            //     }}>
+                            //     {!loading ? "Bepul yuklab olish" :
+                            //         <div>
+                            //             <div
+                            //                 className="spinner-border"
+                            //                 role="status">
+                            //                 <span className="visually-hidden">
+                            //                     Loading...
+                            //                 </span>
+                            //             </div>
+                            //         </div>
+                            //     }
+                            // </a>
+                            ''
                         )}
-
                     </div>
-                       
 
                     {/* <div className="p-3 rounded-3 " style={{ backgroundColor: "#F1F1F1", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
                         {copy ? (
@@ -242,27 +242,28 @@ const VideoDetailShoppingActions = ({ product }) => {
                         </a>
                     </div> */}
                 </div>
-                <div className='ps-product__shopping w-100 d-flex justify-content-between m-0' >
-                {
-                            product?.document?.images?.length > 0 &&
-                            <div>
-                                <p>Qo'shimcha fayllarni yuklab olish</p>
-                                {
-                                    product?.document?.images?.map((e) =>  <a
+                <div className="ps-product__shopping w-100 d-flex justify-content-between m-0">
+                    {product?.document?.images?.length > 0 && (
+                        <div>
+                            <p>Qo'shimcha fayllarni yuklab olish</p>
+                            {product?.document?.images?.map((e) => (
+                                <a
                                     style={{
                                         cursor: 'pointer',
-                                        minWidth: "150px",
-                                        fontSize: "14px"
+                                        minWidth: '150px',
+                                        fontSize: '14px',
                                     }}
                                     className="ps-btn ps-btn--black py-3"
                                     href="#"
                                     onClick={async (e) => {
                                         e.preventDefault();
-                                        setLoading(true)
+                                        setLoading(true);
                                         await audioDownloaderSale(e?.image_url);
-                                        setLoading(false)
+                                        setLoading(false);
                                     }}>
-                                    {!loading ? "Yuklab olish" :
+                                    {!loading ? (
+                                        'Yuklab olish'
+                                    ) : (
                                         <div>
                                             <div
                                                 className="spinner-border"
@@ -272,12 +273,11 @@ const VideoDetailShoppingActions = ({ product }) => {
                                                 </span>
                                             </div>
                                         </div>
-                                    }
-                                </a>)
-                                }
-                            </div> 
-                            
-                        }
+                                    )}
+                                </a>
+                            ))}
+                        </div>
+                    )}
                 </div>
             </>
         );
