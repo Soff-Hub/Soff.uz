@@ -26,8 +26,6 @@ import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/m
 
 function ProductsLists() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const dispatch = useDispatch();
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
@@ -137,9 +135,15 @@ function ProductsLists() {
 
 
     async function handleClickIdEditProducts(productsItems) {
-        if (productsItems) {
-            Router.push(`/account/products/${productsItems}`);
-        }
+     
+        console.log(productsItems);
+
+            if (productsItems?.content_type === 'video') {
+                Router.push(`/account/products/edit-video/${productsItems?.id}`);
+            } else {
+                Router.push(`/account/products/${productsItems?.id}`);
+            }
+        
 
     }
 
@@ -164,6 +168,7 @@ function ProductsLists() {
 
         return formattedNumber;
     }
+
 
 
     const handleButtonClickViewProducts = async () => {
@@ -383,9 +388,9 @@ function ProductsLists() {
 
         {
             title: 'Harakatlar',
-            dataIndex: 'id',
+            dataIndex: 'content_type_id',
             key: 'address',
-            render: (id) => (
+            render: (content_type_id) => (
                 <div>
                     <a
                         data-bs-target="#staticBackdropView"
@@ -394,18 +399,18 @@ function ProductsLists() {
                             className="fa-solid fa-eye text-success-emphasis mx-2"
                             onClick={() =>
                                 handleClickView(
-                                    data.find((item) => item.id === id)
+                                    data.find((item) => item.id === content_type_id?.id)
                                 )
                             }></i>
                     </a>
-                    
-                        <span style={{cursor:"pointer"}}>
-                            <i
-                                className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
-                                onClick={() =>
-                                    handleClickIdEditProducts(id)
-                                }></i>
-                        </span>
+
+                    <span style={{ cursor: "pointer" }}>
+                        <i
+                            className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
+                            onClick={() =>
+                                handleClickIdEditProducts(content_type_id)
+                            }></i>
+                    </span>
                 </div>
             ),
         },

@@ -48,12 +48,11 @@ function MyProductsLists() {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [loading3, setLoading3] = useState(false);
-    const [loading4, setLoading4] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState('');
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const [count, setCount] = useState('');
-    const dispatch = useDispatch();
+
 
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
@@ -195,9 +194,14 @@ function MyProductsLists() {
             search
         );
     }
+
     async function handleClickIdEdit(productsItems) {
         if (productsItems) {
-            Router.push(`/account/myproducts/${productsItems}`);
+            if (productsItems?.content_type === 'video') {
+                Router.push(`/account/myproducts/edit-video/${productsItems?.id}`);
+            } else {
+                Router.push(`/account/myproducts/${productsItems?.id}`);
+            }
         }
     }
 
@@ -315,7 +319,7 @@ function MyProductsLists() {
         );
     };
 
-  
+
 
     const handleButtonClickViewProducts = async () => {
 
@@ -329,12 +333,12 @@ function MyProductsLists() {
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
-             a.download =
-            'soff.uz -' + View?.title  +
-            '.' +
-            file?.split('.')[
+            a.download =
+                'soff.uz -' + View?.title +
+                '.' +
+                file?.split('.')[
                 file?.split('.').length - 1
-            ];
+                ];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -344,7 +348,7 @@ function MyProductsLists() {
             setLoading(false);
         }
     };
-    
+
 
     useEffect(() => {
         GetItemsCategory();
@@ -472,107 +476,107 @@ function MyProductsLists() {
             <></>
         ),
 
-   {
-                title: 'Harakatlar',
-                dataIndex: 'id',
-                key: 'address',
-                render: (id) => (
-                    <div>
-                        {
-                            data.some(
-                                (el) =>
-                                    el.id == id &&
-                                    el.data_status?.status === 'approved'
-                            ) ?
-                                <a>
-                                    {
-                                        copy === id ?
-                                            <i className="fa-solid fa-check mx-2 "></i> :
-                                            <i
-                                                className="fa-solid fa-share text-success-emphasis mx-2"
-                                                onClick={() =>
-                                                    copyVideoUrl(
-                                                        data.find((item) => item.id === id)
-                                                    )
-                                                }></i>
-                                    }
-                                </a>
-                                :
-                                <a>
-                                    <i
-                                        style={{ opacity: "0" }}
-                                        className="fa-solid fa-copy text-success-emphasis mx-2"
-                                    ></i>
-                                </a>
-                        }
-
-                        <a
-                            data-bs-target="#staticBackdropView"
-                            data-bs-toggle="modal">
-                            <i
-                                className="fa-solid fa-eye text-success-emphasis mx-2"
-                                onClick={() =>
-                                    handleClickView(
-                                        data.find((item) => item.id === id)
-                                    )
-                                }></i>
-                        </a>
-                        {data.some(
+        {
+            title: 'Harakatlar',
+            dataIndex: 'content_type_id',
+            key: 'address',
+            render: (content_type_id) => (
+                <div>
+                    {
+                        data.some(
                             (el) =>
-                                el.id == id &&
-                                el.data_status?.status === 'moderation'
-                        ) ? (
-                            <Link href={'#'}>
-                                <a>
-                                    <i
-                                        className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                                        onClick={() =>
-                                            handleClickIdEdit(id)
-                                        }></i>
-                                </a>
-                            </Link>
-                        ) : data.some(
-                            (el) =>
-                                el.id == id &&
+                                el.id == content_type_id?.id &&
                                 el.data_status?.status === 'approved'
-                        ) ? (
-                            <a
-                                data-bs-target="#exampleModalMyProductsPrice"
-                                data-bs-toggle="modal"
-                                onClick={() => handleClickIdEditModal(id)}>
-                                <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
+                        ) ?
+                            <a>
+                                {
+                                    copy === content_type_id?.id ?
+                                        <i className="fa-solid fa-check mx-2 "></i> :
+                                        <i
+                                            className="fa-solid fa-share text-success-emphasis mx-2"
+                                            onClick={() =>
+                                                copyVideoUrl(
+                                                    data.find((item) => item.id === content_type_id?.id)
+                                                )
+                                            }></i>
+                                }
                             </a>
-                        ) : data.some(
-                            (el) =>
-                                el.id == id &&
-                                el.data_status?.status === 'cancelled'
-                        ) ? (
-                            <Link href={'#'}>
-                                <a>
-                                    <i
-                                        className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                                        onClick={() =>
-                                            handleClickIdEdit(id)
-                                        }></i>
-                                </a>
-                            </Link>
-                        ) : (
-                            <></>
-                        )}
+                            :
+                            <a>
+                                <i
+                                    style={{ opacity: "0" }}
+                                    className="fa-solid fa-copy text-success-emphasis mx-2"
+                                ></i>
+                            </a>
+                    }
+
+                    <a
+                        data-bs-target="#staticBackdropView"
+                        data-bs-toggle="modal">
+                        <i
+                            className="fa-solid fa-eye text-success-emphasis mx-2"
+                            onClick={() =>
+                                handleClickView(
+                                    data.find((item) => item.id === content_type_id?.id)
+                                )
+                            }></i>
+                    </a>
+                    {data.some(
+                        (el) =>
+                            el.id == content_type_id?.id &&
+                            el.data_status?.status === 'moderation'
+                    ) ? (
+                        <Link href={'#'}>
+                            <a>
+                                <i
+                                    className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
+                                    onClick={() =>
+                                        handleClickIdEdit(content_type_id)
+                                    }></i>
+                            </a>
+                        </Link>
+                    ) : data.some(
+                        (el) =>
+                            el.id == content_type_id?.id &&
+                            el.data_status?.status === 'approved'
+                    ) ? (
                         <a
-                            data-bs-target="#exampleModalToggle"
-                            data-bs-toggle="modal">
-                            <i
-                                className="fa-solid fa-trash-can text-danger mx-2"
-                                onClick={() => setDeleteId(id)}></i>
+                            data-bs-target="#exampleModalMyProductsPrice"
+                            data-bs-toggle="modal"
+                            onClick={() => handleClickIdEditModal(content_type_id?.id)}>
+                            <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
                         </a>
-                    </div>
-                ),
-            }
-           ,
+                    ) : data.some(
+                        (el) =>
+                            el.id == content_type_id?.id &&
+                            el.data_status?.status === 'cancelled'
+                    ) ? (
+                        <Link href={'#'}>
+                            <a>
+                                <i
+                                    className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
+                                    onClick={() =>
+                                        handleClickIdEdit(content_type_id)
+                                    }></i>
+                            </a>
+                        </Link>
+                    ) : (
+                        <></>
+                    )}
+                    <a
+                        data-bs-target="#exampleModalToggle"
+                        data-bs-toggle="modal">
+                        <i
+                            className="fa-solid fa-trash-can text-danger mx-2"
+                            onClick={() => setDeleteId(content_type_id?.id)}></i>
+                    </a>
+                </div>
+            ),
+        }
+        ,
     ];
 
-    console.log('View', View);
+
 
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -864,7 +868,7 @@ function MyProductsLists() {
                             <div className="ps-container">
                                 {!loading ? (
                                     <>
-                                     
+
                                         {View?.document?.content_type ===
                                             'audio' ? (
                                             <div className="row">
@@ -980,206 +984,83 @@ function MyProductsLists() {
                                                 </div>
                                             </div>
                                         ) : View?.document?.content_type ===
-                                        'video' ? 
-                                        <div className="row">
-                                        <div className="col-12">
-                                            <DefaultVideo product={View} /> 
-                                            <ModuleAudioDetailTopInformationLive
-                                                product={View ? View : ''}
-                                                views={0}
-                                                admin={true}
-                                                taxminiyNarx={
-                                                    View?.price
-                                                }
-                                            />
-                                            <div className="price_and_tag">
-                                                <ModuleAudioDetailShoppingActionsLive
-                                                    admin={true}
-                                                />
-
-                                                <>
-                                                    {
-                                                        <div className="">
-                                                            <p>
-                                                                Tezkor
-                                                                teglar
-                                                            </p>
-                                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                                {View
-                                                                    ?.tag
-                                                                    ?.length >
-                                                                    0 &&
-                                                                    View?.tag?.map(
-                                                                        (
-                                                                            item,
-                                                                            i
-                                                                        ) => (
-                                                                            <div
-                                                                                key={
-                                                                                    i
-                                                                                }
-                                                                                className="m-2 tag-product">
-                                                                                <Link
-                                                                                    href="#"
-                                                                                    as="#">
-                                                                                    <a>
-                                                                                        {' '}
-                                                                                        #
-                                                                                        {
-                                                                                            item?.name
-                                                                                        }{' '}
-                                                                                    </a>
-                                                                                </Link>
-                                                                            </div>
-                                                                        )
-                                                                    )}
-                                                            </div>
-                                                        </div>
-                                                    }
-                                                </>
-                                            </div>
-                                        </div>
-
-                                        <div className="ps-product__content ps-tab-root mb-5">
-                                            <Tabs defaultActiveKey="1">
-                                                <TabPane
-                                                    tab="Mahsulot to’liq tavsifi"
-                                                    key="1">
-                                                    <div className="ps-document">
-                                                        {View?.description
-                                                            ? parse(
-                                                                View?.description
-                                                            )
-                                                            : "To'ldirilmadi"}
-                                                    </div>
-                                                </TabPane>
-                                            </Tabs>
-                                        </div>
-
-                                        <div className="d-flex justify-content-end p-5 ">
-                                            {loading2 ? (
-                                                <button
-                                                    className="btn btn-success  p-2 px-5 fs-4 "
-                                                    style={{
-                                                        width: '179px',
-                                                        cursor: 'not-allowed',
-                                                    }}>
-                                                    <div
-                                                        className="spinner-border "
-                                                        role="status">
-                                                        <span className="visually-hidden">
-                                                            Loading...
-                                                        </span>
-                                                    </div>
-                                                </button>
-                                            ) : (
-                                                <button
-                                                    onClick={
-                                                        handleButtonClickViewProducts
-                                                    }
-                                                    className="btn btn-success p-2 px-5 fs-4 ">
-                                                    <i className="fa-solid fa-download mx-1"></i>{' '}
-                                                    <span className="fs-3">
-                                                        File ochish
-                                                    </span>
-                                                </button>
-                                            )}
-                                        </div>
-                                    </div>
-                                        : (
-                                            <div className="ps-product--detail ps-product--fullwidth">
-                                                <div className="ps-product__header ">
-                                                    <ThumbnailDefault
-                                                        product={View}
-                                                    />
-                                                    <div className="ps-product__info">
-                                                        {
-                                                            View?.status === 'cancelled' ? (
-                                                                <div className="mb-4">
-                                                                    <strong className="text-danger pb-5">
-                                                                        {View?.reason}
-                                                                    </strong>
-                                                                </div>
-                                                            ) : ''
+                                            'video' ?
+                                            <div className="row">
+                                                <div className="col-12">
+                                                    <DefaultVideo product={View} />
+                                                    <ModuleAudioDetailTopInformationLive
+                                                        product={View ? View : ''}
+                                                        views={0}
+                                                        admin={true}
+                                                        taxminiyNarx={
+                                                            View?.price
                                                         }
-                                                        <ModuleDetailTopInformation
-                                                            product={
-                                                                View ? View : ''
-                                                            }
+                                                    />
+                                                    <div className="price_and_tag">
+                                                        <ModuleAudioDetailShoppingActionsLive
+                                                            admin={true}
                                                         />
-                                                        <ModuleProductDetailDescription
-                                                            product={View}
-                                                        />
-                                                        <div className="ps-product__shopping row-gap-3">
-                                                            <div>
-                                                                <button
-                                                                    className="ps-btn ps-btn--black"
-                                                                    style={{
-                                                                        cursor: 'not-allowed',
-                                                                    }}>
-                                                                    Savatga
-                                                                    qo'shish
-                                                                </button>
-                                                                <button
-                                                                    className="ps-btn"
-                                                                    style={{
-                                                                        cursor: 'not-allowed',
-                                                                    }}>
-                                                                    Sotib olish
-                                                                </button>
-                                                            </div>
-                                                            <div className="ps-product__actions">
-                                                                <a
-                                                                    style={{
-                                                                        cursor: 'not-allowed',
-                                                                    }}>
-                                                                    <i
-                                                                        className={`icon-heart`}></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <p>Tezkor teglar</p>
-                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                            {View?.tag?.length >
-                                                                0 &&
-                                                                View?.tag.map(
-                                                                    (
-                                                                        item,
-                                                                        i
-                                                                    ) => (
-                                                                        <div
-                                                                            key={
-                                                                                i
-                                                                            }
-                                                                            className="m-2 tag-product">
-                                                                            <Link
-                                                                                href="#"
-                                                                                as="#">
-                                                                                <a>
 
-                                                                                    {
-                                                                                        item.name
-                                                                                    }{' '}
-                                                                                </a>
-                                                                            </Link>
-                                                                        </div>
-                                                                    )
-                                                                )}
-                                                        </div>
+                                                        <>
+                                                            {
+                                                                <div className="">
+                                                                    <p>
+                                                                        Tezkor
+                                                                        teglar
+                                                                    </p>
+                                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                                        {View
+                                                                            ?.tag
+                                                                            ?.length >
+                                                                            0 &&
+                                                                            View?.tag?.map(
+                                                                                (
+                                                                                    item,
+                                                                                    i
+                                                                                ) => (
+                                                                                    <div
+                                                                                        key={
+                                                                                            i
+                                                                                        }
+                                                                                        className="m-2 tag-product">
+                                                                                        <Link
+                                                                                            href="#"
+                                                                                            as="#">
+                                                                                            <a>
+                                                                                                {' '}
+                                                                                                #
+                                                                                                {
+                                                                                                    item?.name
+                                                                                                }{' '}
+                                                                                            </a>
+                                                                                        </Link>
+                                                                                    </div>
+                                                                                )
+                                                                            )}
+                                                                    </div>
+                                                                </div>
+                                                            }
+                                                        </>
                                                     </div>
                                                 </div>
-                                                <div className="ps-product__content ps-tab-root">
+
+                                                <div className="ps-product__content ps-tab-root mb-5">
                                                     <Tabs defaultActiveKey="1">
                                                         <TabPane
                                                             tab="Mahsulot to’liq tavsifi"
                                                             key="1">
-                                                            <PartialDescription
-                                                                product={View}
-                                                            />
+                                                            <div className="ps-document">
+                                                                {View?.description
+                                                                    ? parse(
+                                                                        View?.description
+                                                                    )
+                                                                    : "To'ldirilmadi"}
+                                                            </div>
                                                         </TabPane>
                                                     </Tabs>
                                                 </div>
-                                                <div className="d-flex justify-content-end ">
+
+                                                <div className="d-flex justify-content-end p-5 ">
                                                     {loading2 ? (
                                                         <button
                                                             className="btn btn-success  p-2 px-5 fs-4 "
@@ -1209,7 +1090,130 @@ function MyProductsLists() {
                                                     )}
                                                 </div>
                                             </div>
-                                        )}
+                                            : (
+                                                <div className="ps-product--detail ps-product--fullwidth">
+                                                    <div className="ps-product__header ">
+                                                        <ThumbnailDefault
+                                                            product={View}
+                                                        />
+                                                        <div className="ps-product__info">
+                                                            {
+                                                                View?.status === 'cancelled' ? (
+                                                                    <div className="mb-4">
+                                                                        <strong className="text-danger pb-5">
+                                                                            {View?.reason}
+                                                                        </strong>
+                                                                    </div>
+                                                                ) : ''
+                                                            }
+                                                            <ModuleDetailTopInformation
+                                                                product={
+                                                                    View ? View : ''
+                                                                }
+                                                            />
+                                                            <ModuleProductDetailDescription
+                                                                product={View}
+                                                            />
+                                                            <div className="ps-product__shopping row-gap-3">
+                                                                <div>
+                                                                    <button
+                                                                        className="ps-btn ps-btn--black"
+                                                                        style={{
+                                                                            cursor: 'not-allowed',
+                                                                        }}>
+                                                                        Savatga
+                                                                        qo'shish
+                                                                    </button>
+                                                                    <button
+                                                                        className="ps-btn"
+                                                                        style={{
+                                                                            cursor: 'not-allowed',
+                                                                        }}>
+                                                                        Sotib olish
+                                                                    </button>
+                                                                </div>
+                                                                <div className="ps-product__actions">
+                                                                    <a
+                                                                        style={{
+                                                                            cursor: 'not-allowed',
+                                                                        }}>
+                                                                        <i
+                                                                            className={`icon-heart`}></i>
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                            <p>Tezkor teglar</p>
+                                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                                {View?.tag?.length >
+                                                                    0 &&
+                                                                    View?.tag.map(
+                                                                        (
+                                                                            item,
+                                                                            i
+                                                                        ) => (
+                                                                            <div
+                                                                                key={
+                                                                                    i
+                                                                                }
+                                                                                className="m-2 tag-product">
+                                                                                <Link
+                                                                                    href="#"
+                                                                                    as="#">
+                                                                                    <a>
+
+                                                                                        {
+                                                                                            item.name
+                                                                                        }{' '}
+                                                                                    </a>
+                                                                                </Link>
+                                                                            </div>
+                                                                        )
+                                                                    )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="ps-product__content ps-tab-root">
+                                                        <Tabs defaultActiveKey="1">
+                                                            <TabPane
+                                                                tab="Mahsulot to’liq tavsifi"
+                                                                key="1">
+                                                                <PartialDescription
+                                                                    product={View}
+                                                                />
+                                                            </TabPane>
+                                                        </Tabs>
+                                                    </div>
+                                                    <div className="d-flex justify-content-end ">
+                                                        {loading2 ? (
+                                                            <button
+                                                                className="btn btn-success  p-2 px-5 fs-4 "
+                                                                style={{
+                                                                    width: '179px',
+                                                                    cursor: 'not-allowed',
+                                                                }}>
+                                                                <div
+                                                                    className="spinner-border "
+                                                                    role="status">
+                                                                    <span className="visually-hidden">
+                                                                        Loading...
+                                                                    </span>
+                                                                </div>
+                                                            </button>
+                                                        ) : (
+                                                            <button
+                                                                onClick={
+                                                                    handleButtonClickViewProducts
+                                                                }
+                                                                className="btn btn-success p-2 px-5 fs-4 ">
+                                                                <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                                <span className="fs-3">
+                                                                    File ochish
+                                                                </span>
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
                                     </>
                                 ) : (
                                     <div
