@@ -422,7 +422,7 @@ const Posts = () => {
                                             border: errors.file?.message ? '1px solid red' : "1px dashed green",
                                             width: '100%',
                                         }}>
-                                        {livePosterFile === '' ? (
+                                        {!fileImgFile || livePosterFile === '' ? (
                                             <span
                                                 className="d-flex flex-column align-items-center"
                                                 style={{ cursor: 'pointer' }}>

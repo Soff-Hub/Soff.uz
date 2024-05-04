@@ -13,7 +13,6 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
     }, [collectionSlug, pid]);
 
 
-    console.log(relatedProduct);
 
     // Views
     let productItemsView;

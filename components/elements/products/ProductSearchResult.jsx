@@ -35,7 +35,7 @@ const ProductSearchResult = ({ product }) => {
                                 ></i>)
                             }
                             {
-                                product?.document?.content_type === 'file' && (<i
+                                product?.document?.content_type === 'file' || product?.document?.content_type === 'template' && (<i
                                     style={{
                                         position: "absolute",
                                         top: "50%",
