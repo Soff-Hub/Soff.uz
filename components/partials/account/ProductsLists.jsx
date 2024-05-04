@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { MyProductsEdit } from '~/store/auth/action';
 import Link from 'next/link';
 import Axios from 'axios';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
