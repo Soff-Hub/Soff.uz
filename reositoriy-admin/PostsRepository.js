@@ -141,6 +141,28 @@ class PostRepository {
         return response;
     }
 
+    async PostsMyProductsPosterVideo(data, token) {
+        const endPoint = `video-file-create/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return response;
+    }
+
+
     async PostsMyProductsAriza(data, token) {
         const endPoint = `application/`;
         const response = await Repository({
