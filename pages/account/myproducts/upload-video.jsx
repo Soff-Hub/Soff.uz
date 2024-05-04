@@ -248,7 +248,6 @@ const Posts = () => {
                 console.log("Error edit",err);
                 openClose('#staticBackdrop-2');
             }
-
             setDeisabled(false);
         }else{
             const modal = Modal.warning({
