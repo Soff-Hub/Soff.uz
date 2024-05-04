@@ -118,7 +118,7 @@ const ProductVideo = ({ product }) => {
                     <p className='mr-auto m-0'>{`${product?.seller?.first_name} ${product?.seller?.last_name}`}</p>
                     <div className="d-flex justify-content-between align-items-center">
                         {+product.discount_price === 0 ? (
-                            <p className="free-product-text">Bepul</p>
+                            <p className="free-audio-price">Bepul</p>
                         ) : product.discount === 0 ? (
                             <p className='m-0 fw-bold'>
                                 {addPeriodToThousands(product.discount_price)} so'm

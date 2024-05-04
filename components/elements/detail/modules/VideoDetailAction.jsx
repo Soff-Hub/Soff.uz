@@ -87,12 +87,12 @@ const VideoDetailShoppingActions = ({ product }) => {
     };
 
     const audioDownloaderSale = async (file) => {
-        const filee =  file;
+        const filee = 'http://192.168.1.14/media/Images/new__Abdurahimov_Ahmad.zip';
         try {
             const response = await Axios.get(filee, {
                 responseType: 'blob',
             });
-
+    
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
@@ -106,10 +106,11 @@ const VideoDetailShoppingActions = ({ product }) => {
             window.URL.revokeObjectURL(url);
             return true;
         } catch (error) {
-            console.error('Error downloading file: ', error);
+            console.error('Faylni yuklab olishda xatolik: ', error);
             return Promise.reject(error);
         }
     };
+    
 
     if (true) {
         return (
@@ -135,7 +136,8 @@ const VideoDetailShoppingActions = ({ product }) => {
                     <p>Mahsulotingizni savatga qo'shdingiz!</p>
                     <p></p>
                 </Modal>
-                <div className="ps-product__shopping">
+                <div
+                    className={` ${product?.document?.images?.length > 0 ? '' : 'ps-product__shopping'} `}>
                     <div className="w-100 d-flex justify-content-between m-0">
                         {product?.discount_price > 0 ? (
                             <>
@@ -245,37 +247,37 @@ const VideoDetailShoppingActions = ({ product }) => {
                 <div className="ps-product__shopping w-100 d-flex justify-content-between m-0">
                     {product?.document?.images?.length > 0 && (
                         <div>
-                            <p>Qo'shimcha fayllarni yuklab olish</p>
-                            {product?.document?.images?.map((e) => (
-                                <a
-                                    style={{
-                                        cursor: 'pointer',
-                                        minWidth: '150px',
-                                        fontSize: '14px',
-                                    }}
-                                    className="ps-btn ps-btn--black py-3"
-                                    href="#"
-                                    onClick={async (e) => {
-                                        e.preventDefault();
-                                        setLoading(true);
-                                        await audioDownloaderSale(e?.image_url);
-                                        setLoading(false);
-                                    }}>
-                                    {!loading ? (
-                                        'Yuklab olish'
-                                    ) : (
-                                        <div>
-                                            <div
-                                                className="spinner-border"
-                                                role="status">
-                                                <span className="visually-hidden">
-                                                    Loading...
-                                                </span>
+                            <p
+                                className="fw-bold fs-4 rounded-1 border py-2 px-4 hover-extra-file"
+                                style={{ backgroundColor: '#F1F1F1' }}>
+                                Qo'shimcha fayllarni yuklab olish uchun{' '}
+                                {product?.document?.images?.map((e) => (
+                                    <span
+                                        className="pl-2"
+                                        onClick={async (e) => {
+                                            e.preventDefault();
+                                            setLoading(true);
+                                            await audioDownloaderSale(
+                                                e?.image_url
+                                            );
+                                            setLoading(false);
+                                        }}>
+                                        {!loading ? (
+                                            <i class="fa-solid fa-download"></i>
+                                        ) : (
+                                            <div>
+                                                <div
+                                                    className="spinner-border"
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )}
-                                </a>
-                            ))}
+                                        )}
+                                    </span>
+                                ))}
+                            </p>
                         </div>
                     )}
                 </div>
