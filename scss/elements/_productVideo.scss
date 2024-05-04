@@ -143,6 +143,10 @@
     right: 32%;
 }
 
+.hover-extra-file:hover {
+    cursor: pointer;
+}
+
 @media screen and (max-width: '992px') {
     .ps-product__desc{
         margin-top: 20px;

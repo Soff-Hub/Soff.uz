@@ -38,7 +38,7 @@ const ProductVideoDetailFullWidth = ({
                 author={`${product?.seller?.first_name} ${product?.seller?.last_name}`}
             />
             <div className="ps-product--detail ">
-                <div className="row">
+                <div className="row mb-xl-5 mb-lg-5 mb-0">
                     <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
                         <DefaultVideo product={product} />
                         <ModuleVideoDetailTopInformation
@@ -62,7 +62,7 @@ const ProductVideoDetailFullWidth = ({
 
                 {admin && ActiveTag}
                 {product?.tag?.length > 0 && (
-                    <div className="">
+                    <div className="mb-xl-5 mb-lg-5 mb-0">
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
                             {product?.tag?.length > 0 &&
