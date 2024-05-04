@@ -105,7 +105,7 @@ const ProductDetailQuickView = ({ product }) => {
                                     </span>
                                 </div>
                             </div>
-                        ) : product?.document?.content_type === 'file' ? (
+                        ) : product?.document?.content_type === 'file' || product?.document?.content_type === 'template' ? (
                             <figure className="figure">
                                 <div className="ps-wrapper">
                                     {img?.length > 0

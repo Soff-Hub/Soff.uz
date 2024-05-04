@@ -128,7 +128,7 @@ const SearchHeader = ({ setSearch }) => {
                     },
                     {
                         value: 'file',
-                        label: 'File',
+                        label: 'Hujjat',
                     },
                     {
                         value: 'audio',
@@ -137,6 +137,10 @@ const SearchHeader = ({ setSearch }) => {
                     {
                         value: 'template',
                         label: 'Shablon',
+                    },
+                    {
+                        value: 'video',
+                        label: 'Video',
                     },
                 ]}
             />

@@ -4,11 +4,11 @@ import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import Page404 from '~/pages/page/page-404';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
-import LoginPage from '../login';
+import LoginPage from '../../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import CKeditor from '../../../components/partials/account/CKeditor';
+import CKeditor from '../../../../components/partials/account/CKeditor';
 import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
@@ -24,25 +24,32 @@ const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const { user, products } = useSelector((state) => state.auth);
+    const [fileImgFile, setFileImgFile] = useState(null);
+    const [extraFiles, setExtraFiles] = useState(null);
+    const [fileImgFileID, setFileImgFileID] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const [taxminiyNarx, setTaxminiyNarx] = useState(products?.price);
+    const [narxNomi, setNarxNomi] = useState(true);
+    const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
+    const [livePosterFile, setLivePosterFile] = useState('');
     const [categoryName, setCategoryName] = useState('');
+    const [fileImgPoster, setFileImgPoster] = useState('');
     const [liveFile, setLiveFile] = useState('');
+    const [liveFile2, setLiveFile2] = useState('');
     const [narx, setNarx] = useState('');
     const [chegirmaTek, setChegirmaTek] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
     const [free, setFree] = useState(Number(products?.price) === 0);
+    const [uploadPoster, setUploadPoster] = useState(false);
+    const [customePoster, setCustomePoster] = useState(false);
+    const [customeFile, setCustomeFile] = useState(null);
     const [profile, setProfile] = useState(null);
     const [category_id, setCategoryId] = useState([])
-    const [dataCatStatus, setDataCatStatus] = useState(null);
-
-    const [tagSearchResult1, setTagSearchResult2] = useState(null);
-    const [tegProductsLists, setTegProdcutsLists] = useState([]);
-    const [textAreaItems, setTextAreaItmes] = useState(null);
 
     const breadCrumb = [
         {
@@ -129,13 +136,6 @@ const Posts = () => {
         }
     }
 
-    async function GetItemsTagAktivmas() {
-        const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access);
-        if (ItemsData) {
-            setTegProdcutsLists(ItemsData);
-        }
-    }
-
     const children = [];
     const options = [];
     for (let i = 0; i < tagItems?.length; i++) {
@@ -146,15 +146,6 @@ const Posts = () => {
     for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
             <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
-        );
-    }
-
-    const childrenAktivmas = [];
-    for (let i = 0; i < tegProductsLists?.length; i++) {
-        childrenAktivmas.push(
-            <Option key={tegProductsLists[i].name}>
-                {tegProductsLists[i].name}
-            </Option>
         );
     }
 
@@ -218,54 +209,85 @@ const Posts = () => {
         document.body.removeChild(btn);
     }
 
-    const resuslts1 = products?.active_tag?.map((item) => item.name);
-    const resuslts2 = products?.deactive_tag?.map((item) => item.name);
-
-    const results = tagSearchResult?.concat(tagSearchResult1);
-    const results3 = resuslts1?.concat(resuslts2);
-
     async function handleClickPosts(e) {
         e?.preventDefault?.();
 
-        const data = {};
-        if (dataCatStatus == "approved") {
-            if (results) {
-                Object.assign(data, { tags: results });
-            }
-            if (results3) {
-                Object.assign(data, { tags: results3 });
-            }
+        // if (!customePoster) {
+        //     const modal = Modal.info({
+        //         centered: true,
+        //         title: 'Muvaffaqqiyatli!',
+        //         content:
+        //             "Video to'liq yuklanishi uchun video muqova rasmini yuklashingiz kerak!",
+        //     });
+
+        //     return;
+        // }
+
+        const formData = new FormData();
+        if (title) {
+            formData.append('title', title);
         }
+
+        if (free) {
+            formData.append('price', 0);
+        }
+        if (narx) {
+            formData.append('price', narx);
+        }
+
+        if (Fulldata) {
+            formData.append('description', Fulldata);
+        }
+
+        if (tagSearchResult) {
+            formData.append('tags', tagSearchResult);
+        }
+
+        if (customePoster) {
+            formData.append('poster', customePoster.file)
+        }
+
         if (category_id?.[0]) {
-            Object.assign(data, { category: category_id[0] });
+            formData.append('category', category_id[0]);
         }
 
-        if (dataCatStatus) {
-            Object.assign(data, { status: dataCatStatus });
+        if (fileImgFileID) {
+            formData.append('file', fileImgFileID);
         }
 
-        if (textAreaItems) {
-            Object.assign(data, { reason: textAreaItems });
+
+        if (fileImgFile) {
+            formData.append('short_content', fileImgFile.file);
+        }
+
+
+        if (extraFiles) {
+            formData.append('extra_file', extraFiles);
         }
 
         try {
+            openClose('#staticBackdrop-2')
 
-            await PatchRepository.getProductsPatch(
-                data,
-                products?.id,
-                user?.access
-            );
+            const resp = await axios.patch(`${baseUrl}seller/video-product-create/`, formData, {
+                headers: {
+                    'Authorization': `Bearer ${user?.access}`,
+                    // signal: controller.abort
+                }
+            })
+            openClose('#staticBackdrop-2')
 
-            setFullData(null);
-
-            const modal = Modal.success({
+            Router.push('/account/myproducts');
+            const modal = Modal.warning({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
-            Router.push(`/account/products?page=${Router.query.page}`);
+                content:
+                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+            })
+
         } catch (err) {
             console.log('Error: ', err)
+            openClose('#staticBackdrop-2')
+
             // const modal = Modal.warning({
             //     centered: true,
             //     title: 'Muvaffaqqiyatli!',
@@ -276,7 +298,59 @@ const Posts = () => {
         } finally {
             setDeisabled(false)
         }
+    }
 
+    async function PostFilePoster() {
+        if (fileImgFile) {
+            setLiveFile('');
+            setDeisabled(true);
+            setLivePosterFile('');
+            const formData = new FormData();
+            setLoading(true);
+            formData.append('file', fileImgFile);
+            const ItemsData = await PostsRepository.PostsMyProductsPoster(
+                formData,
+                user?.access
+            );
+
+            if (ItemsData?.status === 201) {
+                if (!ItemsData?.data?.images) {
+                    setUploadPoster(true);
+                    setLivePosterFile({ ...ItemsData?.data, images: [] });
+                    setLiveFile2({ ...ItemsData?.data, images: [] });
+                } else {
+                    setLivePosterFile(ItemsData?.data);
+                    setLiveFile2(ItemsData?.data);
+                }
+
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content: "Yangi file qo'shdingiz ",
+                });
+                setDeisabled(false);
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: "File mahsulot qo'sha olmadingiz ",
+                });
+                setDeisabled(false);
+            }
+            setLoading(false);
+        }
+    }
+
+    function LiveImage(e) {
+        // setFileImgPoster((c) => [...c, e.target.files[0]]);
+        const img = window.URL.createObjectURL(e.target.files[0]);
+        // setLiveFile(img);
+        setCustomePoster({ file: e.target.files[0], url: img });
+    }
+
+    const uploadTizer = (file) => {
+        const video = window.URL.createObjectURL(file);
+        setFileImgFile({ file, video: video })
     }
 
     function addPeriodToThousands(number) {
@@ -308,20 +382,9 @@ const Posts = () => {
         }
     };
 
-    const dataStatus = [
-        {
-            id: 1,
-            status: 'moderation',
-        },
-        {
-            id: 2,
-            status: 'approved',
-        },
-        {
-            id: 3,
-            status: 'cancelled',
-        },
-    ];
+    const handleFreeChange = (e) => {
+        setFree(!free);
+    };
 
     useEffect(() => {
         GetItemsTag();
@@ -338,12 +401,11 @@ const Posts = () => {
         if (user?.access) {
             ProfileUsers();
         }
-        GetItemsTagAktivmas()
     }, [user?.access]);
 
     const livePosterVideo = {};
 
-    return user?.role === 'admin' ? (
+    return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
@@ -354,30 +416,39 @@ const Posts = () => {
                     <div
                         className="row  w-100 gap-3 pt-5"
                         style={{ alignItems: 'flex-start' }}>
-                        <div className='row d-flex justify-content-between'>
-                            <h3 className="p-0  col-md-8  fw-semibold">
-                                Mahsulotni tekshirish
-                            </h3>
-                            <div
-                                className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                                style={{ maxWidth: '370px' }}>
-                                <h4> Sotuvdagi ko'rinishi : </h4>
-                                <Button
-                                    className="btn-success "
-                                    data-bs-target="#staticBackdrop"
-                                    data-bs-toggle="modal"
-                                >
-                                    <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
-                                </Button>
-                            </div>
+                        <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
+                            {' '}
+                            <i className="fa-solid fa-triangle-exclamation"></i>{' '}
+                            Hurmatli Sotuvchi mahsulot yuklayotganingizda
+                            mahsulot o'zingizni shaxsiy mahsulotingiz ekanligiga
+                            ishonch hosil qiling. Aks holda o'sha
+                            mahsulotingizni sotuvda ko'rinmasligi va profilingiz
+                            bloklab qo'yilishi mumkin. E'tiborli bo'ling!
+                        </h5>
+
+                        <div
+                            className="col-md-4 m-0  d-flex justify-content-between p-0 "
+                            style={{ maxWidth: '370px' }}>
+                            <h4> Sotuvdagi ko'rinishi : </h4>
+                            <Button
+                                className="btn-success "
+                                data-bs-target="#staticBackdrop"
+                                data-bs-toggle="modal"
+                            >
+                                <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
+                            </Button>
                         </div>
 
                         <form
                             onSubmit={handleClickPosts}
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
-                            className="col-md-7 pb-5">
-
+                            className=" col-md-7 pb-5">
+                            <div className="col-md-8 p-0  mt-3">
+                                <div className="col-md-12  d-flex justify-content-between p-0 ">
+                                    <h4 className="p-0">Video Mahsulot </h4>
+                                </div>
+                            </div>
                             <div className="row">
                                 <div className="col-md-6">
                                     <div className="row">
@@ -397,13 +468,80 @@ const Posts = () => {
                                                 type="text"
                                                 className="form-control  rounded-3  mb-2"
                                                 name="title"
-                                                value={products?.title}
+                                                defaultValue={products?.title}
+                                                onChange={(e) =>
+                                                    setTitle(e.target.value)
+                                                }
                                             />
+                                        </div>
+
+                                        <div className=" col-md-12 d-flex flex-column mt-3">
+                                            <div className=" mt-2 d-flex justify-content-between p-0">
+                                                <p>Video sotish narxi: *</p>{' '}
+                                                <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                </Tooltip>
+                                            </div>
+                                            <div className="d-flex">
+                                                <Checkbox
+                                                    defaultChecked={free}
+                                                    className="col-md-4 d-flex align-items-center justify-content-start px-0 py-2"
+                                                    onChange={handleFreeChange}>
+                                                    Bepul
+                                                </Checkbox>
+
+                                                <InputNumber
+                                                    required
+                                                    disabled={free}
+                                                    value={taxminiyNarx}
+                                                    className="col-md-8 p-2 "
+                                                    defaultValue={products?.price}
+                                                    onValueChange={(e) => (
+                                                        setNarxNomi(false),
+                                                        setTaxminiyNarx(
+                                                            e.value
+                                                        ),
+                                                        setNarx(e.value)
+                                                    )}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className=" col-md-12 d-flex flex-column mt-3">
+                                            <div className=" mt-2 d-flex justify-content-between p-0">
+                                                <p>Kategoriya: *</p>{' '}
+                                                <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                </Tooltip>
+                                            </div>
+                                            <div className="rounded-3  p-0 m-0 d-flex flex-column">
+                                                <Select
+                                                    mode="select"
+                                                    showSearch
+                                                    allowClear
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '47px',
+                                                    }}
+                                                    defaultValue={products?.category?.name}
+                                                    onChange={onChange}
+                                                    onSearch={onSearch}>
+                                                    {options}
+                                                </Select>
+                                            </div>
                                         </div>
 
                                         <div className=" col-md-12 d-flex flex-column ">
                                             <div className="m-0 pt-2 d-flex justify-content-between p-0">
-                                                <p>Aktiv teglar:</p>{' '}
+                                                <p>Teglar:</p>{' '}
                                                 <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
                                                     <i
                                                         style={{
@@ -417,17 +555,20 @@ const Posts = () => {
                                                     mode="tags"
                                                     style={{ width: '100%' }}
                                                     onChange={handleChange}
-                                                    defaultValue={products?.active_tag?.map(el => el.name)}
+                                                    defaultValue={products?.tag?.map(el => el.name)}
                                                 >
                                                     {children}
                                                 </Select>
                                             </div>
                                         </div>
-
-                                        <div className=" col-md-12 d-flex flex-column ">
-                                            <div className="m-0 pt-2 d-flex justify-content-between p-0">
-                                                <p>Yangi teglar:</p>{' '}
-                                                <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <div className="row">
+                                        <div className="col-md-12 d-flex flex-column ">
+                                            <div className=" mt-2 d-flex justify-content-between p-0">
+                                                <p>Video(asosiy): *</p>{' '}
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .ppt, .pptx .pdf">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -435,116 +576,193 @@ const Posts = () => {
                                                         className="fa-regular fa-circle-question px-4 mt-2"></i>
                                                 </Tooltip>
                                             </div>
-                                            <div className="rounded-3  p-0 m-0 d-flex flex-column ">
-                                                <Select
-                                                    mode="tags"
-                                                    onChange={(e) => setTagSearchResult2(e)}
-                                                    defaultValue={
-                                                        products?.deactive_tag &&
-                                                        products?.deactive_tag?.map(
-                                                            (item) => item.name
+                                            {/* <div className="row"> */}
+                                            <label
+                                                className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
+                                                style={{
+                                                    backgroundColor: '#F1F1F1',
+                                                    border: '1px dashed green',
+                                                    width: '100%',
+                                                }}>
+                                                {!fileImgFileID ? (
+                                                    <span
+                                                        className="d-flex flex-column align-items-center"
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+
+                                                        {loading ? (
+                                                            <span className="d-flex justify-content-center">
+                                                                <ClipLoader
+                                                                    size={25}
+                                                                    color="#36d7b7"
+                                                                />
+                                                            </span>
+                                                        ) : (
+                                                            <span
+                                                                className="d-flex flex-column align-items-center "
+                                                                style={{
+                                                                    cursor: 'pointer',
+                                                                }}>
+                                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                                <span>
+                                                                    Yangi yuklash uchun bosing
+                                                                </span>
+                                                            </span>
+                                                        )}
+
+                                                    </span>
+                                                ) : (
+                                                    <span
+                                                        className="d-flex flex-column align-items-center"
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <span>
+                                                            {' '}
+                                                            Siz mahsulot
+                                                            yukladingiz{' '}
+                                                            <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                        </span>
+                                                    </span>
+                                                )}
+                                                <input
+                                                    required
+                                                    type="file"
+                                                    onChange={(e) =>
+                                                        setFileImgFileID(
+                                                            e.target.files[0]
                                                         )
                                                     }
-                                                    className="col-md-12 p-0 mb-3" size='small'>
-                                                    {childrenAktivmas}
-                                                </Select>
-                                            </div>
+                                                    accept="video/*"
+                                                />
+                                            </label>
                                         </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className=" col-md-12 d-flex flex-column">
-                                        <div className="d-flex justify-content-between p-0">
-                                            <p>Kategoriya: *</p>{' '}
-                                            <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
-                                                <i
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                            </Tooltip>
-                                        </div>
-                                        <div className="rounded-3  p-0 m-0 d-flex flex-column">
-                                            <Select
-                                                mode="select"
-                                                showSearch
-                                                allowClear
-                                                style={{
-                                                    width: '100%',
-                                                    height: '47px',
-                                                }}
-                                                defaultValue={products?.category?.name}
-                                                onChange={onChange}
-                                                onSearch={onSearch}>
-                                                {options}
-                                            </Select>
-                                        </div>
-                                    </div>
-                                    <div className="col-12 mt-4">
-                                        <p>Xolatini belgilang: *</p>{' '}
-                                        <select
-                                            className="form-select form-control fs-3 py-0 rounded-3"
-                                            style={{ padding: '0 !important', height: '45px' }}
-                                            onChange={(e) =>
-                                                setDataCatStatus(e.target.value)
-                                            }>
-                                            {dataStatus?.map((item, i) =>
-                                                products.status === item.status ? (
-                                                    <option
-                                                        selected
-                                                        key={i}
-                                                        value={item.status}>
-                                                        {products.status === 'moderation'
-                                                            ? 'Moderatsiyaga tushurish'
-                                                            : products.status ===
-                                                                'cancelled'
-                                                                ? 'Bekor qilish'
-                                                                : products.status === 'approved'
-                                                                    ? 'Tasdiqlash'
-                                                                    : ''}
-                                                    </option>
-                                                )
-                                                    : (
-                                                        <option value={item.status}>
-                                                            {item.status === 'moderation'
-                                                                ? 'Moderatsiya'
-                                                                : item.status ===
-                                                                    'cancelled'
-                                                                    ? 'Bekor qilish'
-                                                                    : item.status === 'approved'
-                                                                        ? 'Tasdiqlash'
-                                                                        : ''}
-                                                        </option>
-                                                    )
-                                            )}
-                                        </select>
-                                    </div>
-                                    {dataCatStatus === 'cancelled' ||
-                                        products.status === 'cancelled' ? (
-                                        <>
-                                            <div className="col-12 d-flex justify-content-between p-0 mt-3">
-                                                <p>Holat to'g'risida sabab: *</p>{' '}
-                                                <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
+                                        <div className="col-md-12 d-flex flex-column ">
+                                            <div className=" mt-2 d-flex justify-content-between p-0">
+                                                <p>
+                                                    Video(qisqa ko'rish uchun):
+                                                    *
+                                                </p>{' '}
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .ppt, .pptx .pdf">
                                                     <i
-                                                        style={{ cursor: 'pointer' }}
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
                                                         className="fa-regular fa-circle-question px-4 mt-2"></i>
                                                 </Tooltip>
                                             </div>
-
-                                            <div className="col-12">
-                                                <textarea
-                                                    defaultValue={products?.reason}
-                                                    onChange={(e) =>
-                                                        setTextAreaItmes(e.target.value)
-                                                    }
+                                            {/* <div className="row"> */}
+                                            <label
+                                                className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
+                                                style={{
+                                                    backgroundColor: '#F1F1F1',
+                                                    border: '1px dashed green',
+                                                    width: '100%',
+                                                }}>
+                                                {!fileImgFile ? (
+                                                    <span
+                                                        className="d-flex flex-column align-items-center"
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        {loading ? (
+                                                            <span className="d-flex justify-content-center">
+                                                                <ClipLoader
+                                                                    size={25}
+                                                                    color="#36d7b7"
+                                                                />
+                                                            </span>
+                                                        ) : (
+                                                            <span
+                                                                className="d-flex flex-column align-items-center "
+                                                                style={{
+                                                                    cursor: 'pointer',
+                                                                }}>
+                                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                                <span>
+                                                                    Yangi yuklash uchun bosing
+                                                                </span>
+                                                            </span>
+                                                        )}
+                                                    </span>
+                                                ) : (
+                                                    <span
+                                                        className="d-flex flex-column align-items-center"
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <span>
+                                                            {' '}
+                                                            Siz mahsulot
+                                                            yukladingiz{' '}
+                                                            <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                        </span>
+                                                    </span>
+                                                )}
+                                                <input
                                                     required
-                                                    rows={4}
-                                                    className="rounded w-100 border p-3 border-danger"></textarea>
+                                                    type="file"
+                                                    onChange={(e) =>
+                                                        uploadTizer(
+                                                            e.target.files[0]
+                                                        )
+                                                    }
+                                                    accept="video/*"
+                                                />
+                                            </label>
+                                        </div>
+                                        <div className="col-md-12  d-flex flex-column ">
+                                            <div className=" mt-2 d-flex justify-content-between p-0">
+                                                <p>Video poster rasmi: *</p>
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                </Tooltip>
                                             </div>
-                                        </>
-                                    ) : (
-                                        <></>
-                                    )}
+                                            <div
+                                                className="add-product-user-image d-flex justify-content-between gap-3  form-control pt-2 rounded-3"
+                                                style={{
+                                                    backgroundColor: '#F1F1F1',
+                                                    border: `1px dashed green`,
+                                                    height: '100px',
+                                                }}>
+                                                <label
+                                                    style={{
+                                                        width: '45%',
+                                                        cursor: 'pointer',
+                                                        border: '1px solid green',
+                                                        borderRadius: '5px',
+                                                        position: 'relative',
+                                                    }}>
+                                                    <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3 plus-icon-style "></i>
+                                                    <input
+                                                        type="file"
+                                                        onChange={(e) =>
+                                                            LiveImage(e)
+                                                        }
+                                                        accept="image/*"
+                                                        style={{
+                                                            width: '50px',
+                                                        }}
+                                                    />
+                                                </label>
+                                                <div className="">
+                                                    <img
+                                                        style={{
+                                                            maxWidth: '100%',
+                                                            height: '85px',
+                                                        }}
+                                                        src={customePoster?.url || "https://m.media-amazon.com/images/G/01/primevideo/seo/primevideo-seo-logo.png"}
+                                                        alt="poster/video"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <div className="col-md-12 row pr-0 mt-4">
@@ -603,14 +821,14 @@ const Posts = () => {
                         </form>
 
                         <div
-                            className="col-md-5 rounded-3  p-3  card"
+                            className="col-md-5 rounded-3  p-3  card mt-5"
                             style={{ maxWidth: '485px' }}>
                             <video
                                 className=" border w-100"
                                 controls
                                 preload='none'
-                                src={products?.document?.short_content_url}
-                                // poster={customePoster?.url}
+                                src={fileImgFile?.video || products?.document?.short_content_url}
+                                poster={customePoster?.url}
                                 style={{ maxHeight: '250px' }}
                             >
                                 {/* <source
@@ -630,25 +848,65 @@ const Posts = () => {
                                     </Tooltip>
                                 </div>
                                 {/* <div className="row"> */}
-                                <div
-                                    className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-4 rounded-3 text-truncate"
+                                <label
+                                    className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
                                     style={{
                                         backgroundColor: '#F1F1F1',
                                         border: '1px dashed green',
                                         width: '100%',
                                     }}>
-                                    <span
-                                        className="d-flex flex-column align-items-center"
-                                        style={{
-                                            cursor: 'pointer',
-                                        }}>
-                                        <span>
-                                            {' '}
-                                            Tanlangan{' '}
-                                            <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                    {!extraFiles ? (
+                                        <span
+                                            className="d-flex flex-column align-items-center"
+                                            style={{
+                                                cursor: 'pointer',
+                                            }}>
+
+                                            {loading ? (
+                                                <span className="d-flex justify-content-center">
+                                                    <ClipLoader
+                                                        size={25}
+                                                        color="#36d7b7"
+                                                    />
+                                                </span>
+                                            ) : (
+                                                <span
+                                                    className="d-flex flex-column align-items-center "
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                    }}>
+                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                    <span>
+                                                        Qo'shimcha fayllar
+                                                    </span>
+                                                </span>
+                                            )}
+
                                         </span>
-                                    </span>
-                                </div>
+                                    ) : (
+                                        <span
+                                            className="d-flex flex-column align-items-center"
+                                            style={{
+                                                cursor: 'pointer',
+                                            }}>
+                                            <span>
+                                                {' '}
+                                                Tanlangan{' '}
+                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                            </span>
+                                        </span>
+                                    )}
+                                    <input
+                                        required
+                                        type="file"
+                                        onChange={(e) =>
+                                            setExtraFiles(
+                                                e.target.files[0]
+                                            )
+                                        }
+                                        accept=".zip"
+                                    />
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -739,24 +997,110 @@ const Posts = () => {
                             <div className="ps-container">
                                 <div className="row">
                                     <div className="col-xl-8 col-lg-8 col-12">
-                                        <div className="video_container">
-                                            <div className="video_content">
-                                                <video
-                                                    id="videoPlayer"
-                                                    className="video_iframe"
-                                                    width="100%"
-                                                    preload='none'
-                                                    style={{
-                                                        maxHeight:
-                                                            '380px',
-                                                    }}
-                                                    controls
-                                                    // poster={customePoster?.url}
-                                                    src={products?.document?.short_content_url}
-                                                >
-                                                </video>
-                                            </div>
-                                        </div>
+                                        {!liveFile ? (
+                                            <>
+                                                {
+                                                    // videoPost?.data
+                                                    // ?.short_content
+                                                    !true ? (
+                                                        <div className="video_container">
+                                                            <div className="video_content">
+                                                                <video
+                                                                    id="videoPlayer"
+                                                                    className="video_iframe"
+                                                                    width="100%"
+                                                                    style={{
+                                                                        maxHeight:
+                                                                            '380px',
+                                                                    }}
+                                                                    controls>
+                                                                    <source
+                                                                        src={
+                                                                            videoPost
+                                                                                ?.data
+                                                                                ?.short_content
+                                                                        }
+                                                                        type={`video/${videoPost?.data?.file_type?.replace(
+                                                                            '.',
+                                                                            ''
+                                                                        )}`}
+                                                                    />
+                                                                    Your browser
+                                                                    does not
+                                                                    support the
+                                                                    video tag.
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <img
+                                                            src={
+                                                                'https://kohantextilejournal.com/wp-content/uploads/2018/04/video-poster.jpg'
+                                                            }
+                                                            alt="docc"
+                                                            className="border mb-4 w-100"
+                                                            style={{
+                                                                objectFit:
+                                                                    'cover',
+                                                            }}
+                                                            height={350}
+                                                        />
+                                                    )
+                                                }
+                                            </>
+                                        ) : (
+                                            <>
+                                                {
+                                                    // videoPost?.data
+                                                    // ?.short_content
+                                                    true ? (
+                                                        <div className="video_container">
+                                                            <div className="video_content">
+                                                                <video
+                                                                    id="videoPlayer"
+                                                                    className="video_iframe"
+                                                                    width="100%"
+                                                                    height="auto"
+                                                                    style={{
+                                                                        maxHeight:
+                                                                            '380px',
+                                                                    }}
+                                                                    controls
+                                                                    poster={
+                                                                        liveFile
+                                                                    }>
+                                                                    <source
+                                                                        src={
+                                                                            videoPost
+                                                                                ?.data
+                                                                                ?.short_content
+                                                                        }
+                                                                        type={`video/${videoPost?.data?.file_type?.replace(
+                                                                            '.',
+                                                                            ''
+                                                                        )}`}
+                                                                    />
+                                                                    Your browser
+                                                                    does not
+                                                                    support the
+                                                                    video tag.
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                    ) : (
+                                                        <img
+                                                            src={liveFile}
+                                                            alt="docc"
+                                                            className="border mb-4 w-100"
+                                                            style={{
+                                                                objectFit:
+                                                                    'cover',
+                                                            }}
+                                                        />
+                                                    )
+                                                }
+                                            </>
+                                        )}
                                         <div
                                             className={`product__top-information ${'video_user_information'} `}
                                             style={{ width: '100%' }}>
@@ -1063,6 +1407,8 @@ const Posts = () => {
                 </div>
             </div>
         </PageContainer>
+    ) : user?.access ? (
+        <Page404 />
     ) : (
         <LoginPage />
     );

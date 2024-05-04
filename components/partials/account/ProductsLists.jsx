@@ -6,7 +6,6 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { MyProductsEdit } from '~/store/auth/action';
 import Link from 'next/link';
 import Axios from 'axios';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
@@ -27,8 +26,6 @@ import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/m
 
 function ProductsLists() {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
-    const dispatch = useDispatch();
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
@@ -138,15 +135,16 @@ function ProductsLists() {
 
 
     async function handleClickIdEditProducts(productsItems) {
-        const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, productsItems, null, null, null, user?.access)
-        if (ItemsData) {
-            dispatch(MyProductsEdit(ItemsData));
-            if (ItemsData?.document?.content_type === "video") {
-                return Router.push(`/account/products/edit-video?page=${router.query.page}`);
-            }
-            Router.push(`/account/products/edit?page=${router.query.page}`);
+     
+        console.log(productsItems);
 
-        }
+            if (productsItems?.content_type === 'video') {
+                Router.push(`/account/products/edit-video/${productsItems?.id}`);
+            } else {
+                Router.push(`/account/products/${productsItems?.id}`);
+            }
+        
+
     }
 
     function handleCLickArxiv() {
@@ -170,6 +168,7 @@ function ProductsLists() {
 
         return formattedNumber;
     }
+
 
 
     const handleButtonClickViewProducts = async () => {
@@ -203,7 +202,7 @@ function ProductsLists() {
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
-        Router.push(`/account/products?page=${pageNum}`);
+        Router.push(`/account/products?page=${pageNum}&status=${dataValStatus}`);
     };
 
     const handleFilterStatus = (status) => {
@@ -227,7 +226,12 @@ function ProductsLists() {
 
     useEffect(() => {
         setCurrPage(router.query.page);
-        setDataCatStatus(router.query.status)
+        if (router.query.status === undefined) {
+            setDataCatStatus('')
+        } else {
+            setDataCatStatus(router.query.status)
+        }
+
         if (router.query.page || router.query.status) {
             GetItemsProductsLists(
                 router.query.page,
@@ -384,9 +388,9 @@ function ProductsLists() {
 
         {
             title: 'Harakatlar',
-            dataIndex: 'id',
+            dataIndex: 'content_type_id',
             key: 'address',
-            render: (id) => (
+            render: (content_type_id) => (
                 <div>
                     <a
                         data-bs-target="#staticBackdropView"
@@ -395,19 +399,18 @@ function ProductsLists() {
                             className="fa-solid fa-eye text-success-emphasis mx-2"
                             onClick={() =>
                                 handleClickView(
-                                    data.find((item) => item.id === id)
+                                    data.find((item) => item.id === content_type_id?.id)
                                 )
                             }></i>
                     </a>
-                    <Link href={'/account/products/edit'}>
-                        <a>
-                            <i
-                                className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
-                                onClick={() =>
-                                    handleClickIdEditProducts(id)
-                                }></i>
-                        </a>
-                    </Link>
+
+                    <span style={{ cursor: "pointer" }}>
+                        <i
+                            className="fa-solid fa-pen-to-square mx-4  text-success-emphasis"
+                            onClick={() =>
+                                handleClickIdEditProducts(content_type_id)
+                            }></i>
+                    </span>
                 </div>
             ),
         },
@@ -456,7 +459,7 @@ function ProductsLists() {
                                             <div className="accordion-item">
                                                 <h2 className="accordion-header m-0 ">
                                                     <button
-                                                        onClick={()=>Router.push(`/account/products?page=${1}`)}
+                                                        onClick={() => Router.push(`/account/products?page=${1}&status=${dataValStatus}`)}
                                                         style={{
                                                             backgroundColor:
                                                                 '#F1F1F1',

@@ -117,7 +117,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     <div className="ps-page--product">
                         <div className="ps-container">
                             <div className="ps-page__container">
-                                {product?.document?.content_type === 'file' ? (
+                                {product?.document?.content_type === 'file' || product?.document?.content_type === 'template' ? (
                                     <div className="ps-page__left">
                                         <ProductDetailFullwidth
                                             product={product}
