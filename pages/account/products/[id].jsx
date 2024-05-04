@@ -22,15 +22,19 @@ const PostsProductsEdit = () => {
     const [tagSearchResult1, setTagSearchResult2] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
-    const { products, user } = useSelector((state) => state.auth);
+    const { user } = useSelector((state) => state.auth);
     const [title, setTitle] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [dataCatStatus, setDataCatStatus] = useState(null);
     const [Fulldata, setFullData] = useState(null);
     const [textAreaItems, setTextAreaItmes] = useState(null);
     const [categoryName, setCategoryName] = useState('');
     const [tegProductsLists, setTegProdcutsLists] = useState([]);
     const [category_id, setCategory_ID] = useState(null)
+    const routerId = Router.query?.id
+    const [products, setProducts] = useState(null)
+
 
     const breadCrumb = [
         {
@@ -135,6 +139,19 @@ const PostsProductsEdit = () => {
         options.push(<Option key={item.name}>{item.name}</Option>);
     }
 
+    async function getProducts() {
+        if (routerId) {
+            setLoading(true)
+            const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, routerId, null, null, null, user?.access)
+            setProducts(ItemsData);
+            setLoading(false)
+        }
+
+    }
+    useEffect(() => {
+        getProducts()
+    }, [routerId])
+
     useEffect(() => {
         GetItemsTag();
         setEditorLoaded(true);
@@ -233,7 +250,7 @@ const PostsProductsEdit = () => {
 
     useEffect(() => {
         setCategory_ID(products?.category?.id)
-    }, [])
+    }, [products?.category?.id])
 
 
 
@@ -244,104 +261,202 @@ const PostsProductsEdit = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Mahsulotni tahrirlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <div className="d-flex container justify-content-center">
-                    <div
-                        className="row w-100 gap-3 mt-5 "
-                        style={{ alignItems: 'flex-start' }}>
-                        <h4 className="col-md-8 m-0 p-0">
-                            Mahsulotni tahrirlash
-                        </h4>
+                {!loading ?
+
+                    (products && <div className="d-flex container justify-content-center">
                         <div
-                            className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                            style={{ maxWidth: '370px' }}>
-                            <h4>Sotuvdagi ko'rinishi : </h4>
-                            <Button
-                                className="btn-success "
-                                data-bs-target="#staticBackdrop"
-                                data-bs-toggle="modal">
-                                <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>
-                            </Button>
-                        </div>
-                        <form
-                            onSubmit={handleClickPostsEdit}
-
-
-                            style={{ position: 'relative' }}
-                            id="FormPostsMyProducts"
-                            className="pb-5 col-md-8">
-                            <div className="row">
-                                <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                    {' '}
-                                    <p>Mahsulot nomi: *</p>
-                                    <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                                    </Tooltip>
-                                </div>
-
-                                <input
-                                    type="text"
-                                    className="form-control  rounded-3 col-md-8 mb-3 "
-                                    placeholder="Mahsulot nomi"
-                                    name="title"
-                                    onChange={(e) => setTitle(e.target.value)}
-                                    defaultValue={products?.title}
-                                />
+                            className="row w-100 gap-3 mt-5 "
+                            style={{ alignItems: 'flex-start' }}>
+                            <h4 className="col-md-8 m-0 p-0">
+                                Mahsulotni tahrirlash
+                            </h4>
+                            <div
+                                className="col-md-4 m-0  d-flex justify-content-between p-0 "
+                                style={{ maxWidth: '370px' }}>
+                                <h4>Sotuvdagi ko'rinishi : </h4>
+                                <Button
+                                    className="btn-success "
+                                    data-bs-target="#staticBackdrop"
+                                    data-bs-toggle="modal">
+                                    <i className="fa-solid  fa-eye text-success-emphasis mx-3"></i>
+                                </Button>
                             </div>
-                            <div className="row">
-                                <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                    {' '}
-                                    <p>Mahsulot holati: *</p>
-                                    <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                                    </Tooltip>
-                                </div>
+                            <form
+                                onSubmit={handleClickPostsEdit}
 
-                                <select
-                                    className="form-select fs-3 py-3 rounded-3 col-md-8 mb-3"
-                                    onChange={(e) =>
-                                        setDataCatStatus(e.target.value)
-                                    }>
-                                    {dataStatus?.map((item, i) =>
-                                        products.status === item.status ? (
-                                            <option
-                                                selected
-                                                key={i}
-                                                value={item.status}>
-                                                {products.status === 'moderation'
-                                                    ? 'Moderatsiya'
-                                                    : products.status ===
-                                                        'cancelled'
-                                                        ? 'Bekor qilingan'
-                                                        : products.status === 'approved'
-                                                            ? 'Tasdiqlangan'
-                                                            : ''}
-                                            </option>
-                                        )
-                                            : (
-                                                <option value={item.status}>
-                                                    {item.status === 'moderation'
+
+                                style={{ position: 'relative' }}
+                                id="FormPostsMyProducts"
+                                className="pb-5 col-md-8">
+                                <div className="row">
+                                    <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                        {' '}
+                                        <p>Mahsulot nomi: *</p>
+                                        <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                        </Tooltip>
+                                    </div>
+
+                                    <input
+                                        type="text"
+                                        className="form-control  rounded-3 col-md-8 mb-3 "
+                                        placeholder="Mahsulot nomi"
+                                        name="title"
+                                        onChange={(e) => setTitle(e.target.value)}
+                                        defaultValue={products?.title}
+                                    />
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                        {' '}
+                                        <p>Mahsulot holati: *</p>
+                                        <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                        </Tooltip>
+                                    </div>
+
+                                    <select
+                                        className="form-select fs-3 py-3 rounded-3 col-md-8 mb-3"
+                                        onChange={(e) =>
+                                            setDataCatStatus(e.target.value)
+                                        }>
+                                        {dataStatus?.map((item, i) =>
+                                            products.status === item.status ? (
+                                                <option
+                                                    selected
+                                                    key={i}
+                                                    value={item.status}>
+                                                    {products.status === 'moderation'
                                                         ? 'Moderatsiya'
-                                                        : item.status ===
+                                                        : products.status ===
                                                             'cancelled'
                                                             ? 'Bekor qilingan'
-                                                            : item.status === 'approved'
+                                                            : products.status === 'approved'
                                                                 ? 'Tasdiqlangan'
                                                                 : ''}
                                                 </option>
                                             )
-                                    )}
-                                </select>
-                            </div>
-                            {dataCatStatus === 'cancelled' ||
-                                products.status === 'cancelled' ? (
+                                                : (
+                                                    <option value={item.status}>
+                                                        {item.status === 'moderation'
+                                                            ? 'Moderatsiya'
+                                                            : item.status ===
+                                                                'cancelled'
+                                                                ? 'Bekor qilingan'
+                                                                : item.status === 'approved'
+                                                                    ? 'Tasdiqlangan'
+                                                                    : ''}
+                                                    </option>
+                                                )
+                                        )}
+                                    </select>
+                                </div>
+                                {dataCatStatus === 'cancelled' ||
+                                    products.status === 'cancelled' ? (
+                                    <div className="row">
+                                        <div className="col-md-4 d-flex justify-content-between p-0">
+                                            <p>Holat to'g'risida sabab: *</p>{' '}
+                                            <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
+                                                <i
+                                                    style={{ cursor: 'pointer' }}
+                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                            </Tooltip>
+                                        </div>
+
+                                        <div className="col-md-8 p-0 mb-3">
+                                            <textarea
+                                                defaultValue={products?.reason}
+                                                onChange={(e) =>
+                                                    setTextAreaItmes(e.target.value)
+                                                }
+                                                required
+                                                rows={4}
+                                                className="rounded w-100 border p-3 border-danger"></textarea>
+                                        </div>
+                                    </div>
+                                ) : (
+                                    <></>
+                                )}
+                                <div className="row">
+                                    <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
+                                        <p>Aktiv teglar:</p>{' '}
+                                        <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+
+                                    <Select
+                                        mode="tags"
+                                        onChange={(e) => setTagSearchResult(e)}
+                                        defaultValue={
+                                            products?.active_tag &&
+                                            products?.active_tag?.map(
+                                                (item) => item.name
+                                            )
+                                        }
+                                        className="col-md-8 p-0 mb-3">
+                                        {children}
+                                    </Select>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
+                                        <p>Aktiv emas teglar:</p>{' '}
+                                        <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+                                    <Select
+                                        mode="tags"
+                                        onChange={(e) => setTagSearchResult2(e)}
+                                        defaultValue={
+                                            products?.deactive_tag &&
+                                            products?.deactive_tag?.map(
+                                                (item) => item.name
+                                            )
+                                        }
+                                        className="col-md-8 p-0 mb-3">
+                                        {childrenAktivmas}
+                                    </Select>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                        <p>Kategoriya: *</p>{' '}
+                                        <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                        </Tooltip>
+                                    </div>
+
+                                    <div className="rounded-3  mb-3 p-0 m-0 d-flex flex-column col-md-8">
+                                        <Select
+                                            mode="select"
+                                            showSearch
+                                            allowClear
+                                            style={{
+                                                width: '100%',
+                                                height: '47px',
+                                            }}
+                                            onChange={onChange}
+                                            onSearch={onSearch}
+                                            defaultValue={products?.category?.name}>
+                                            {options}
+                                        </Select>
+                                    </div>
+                                </div>
                                 <div className="row">
                                     <div className="col-md-4 d-flex justify-content-between p-0">
-                                        <p>Holat to'g'risida sabab: *</p>{' '}
-                                        <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
+                                        <p>Mahsulot to’liq tavsifi: *</p>{' '}
+                                        <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
                                             <i
                                                 style={{ cursor: 'pointer' }}
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
@@ -349,261 +464,45 @@ const PostsProductsEdit = () => {
                                     </div>
 
                                     <div className="col-md-8 p-0 mb-3">
-                                        <textarea
-                                            defaultValue={products?.reason}
-                                            onChange={(e) =>
-                                                setTextAreaItmes(e.target.value)
-                                            }
-                                            required
-                                            rows={4}
-                                            className="rounded w-100 border p-3 border-danger"></textarea>
+                                        <CKeditor
+                                            name="description"
+                                            onChange={(data) => {
+                                                setFullData(data);
+                                            }}
+                                            editorLoaded={editorLoaded}
+                                            value={products?.description}
+                                        />
                                     </div>
                                 </div>
-                            ) : (
-                                <></>
-                            )}
-                            <div className="row">
-                                <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
-                                    <p>Aktiv teglar:</p>{' '}
-                                    <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
 
-                                <Select
-                                    mode="tags"
-                                    onChange={(e) => setTagSearchResult(e)}
-                                    defaultValue={
-                                        products?.active_tag &&
-                                        products?.active_tag?.map(
-                                            (item) => item.name
-                                        )
-                                    }
-                                    className="col-md-8 p-0 mb-3">
-                                    {children}
-                                </Select>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
-                                    <p>Aktiv emas teglar:</p>{' '}
-                                    <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
-                                <Select
-                                    mode="tags"
-                                    onChange={(e) => setTagSearchResult2(e)}
-                                    defaultValue={
-                                        products?.deactive_tag &&
-                                        products?.deactive_tag?.map(
-                                            (item) => item.name
-                                        )
-                                    }
-                                    className="col-md-8 p-0 mb-3">
-                                    {childrenAktivmas}
-                                </Select>
-                            </div>
+                                <div
 
-                            <div className="row">
-                                <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Kategoriya: *</p>{' '}
-                                    <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
+                                    className="d-flex justify-content-end "
+                                    style={{ transform: 'translateX(16px)' }}>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success py-3 px-5 ">
+                                        <span className="fs-4">
+                                            Saqlash{' '}
+                                            <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
+                                        </span>
+                                    </button>
                                 </div>
-
-                                <div className="rounded-3  mb-3 p-0 m-0 d-flex flex-column col-md-8">
-                                    <Select
-                                        mode="select"
-                                        showSearch
-                                        allowClear
-                                        style={{
-                                            width: '100%',
-                                            height: '47px',
-                                        }}
-                                        onChange={onChange}
-                                        onSearch={onSearch}
-                                        defaultValue={products?.category?.name}>
-                                        {options}
-                                    </Select>
+                                <div className="mahsulotingiz">
+                                    <span
+                                        className="fixed-btn"
+                                        type="button"
+                                        data-bs-toggle="offcanvas"
+                                        data-bs-target="#offcanvasRight"
+                                        aria-controls="offcanvasRight">
+                                        <i className="fa-solid fa-id-card fa-beat fs-1"></i>
+                                    </span>
                                 </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-md-4 d-flex justify-content-between p-0">
-                                    <p>Mahsulot to’liq tavsifi: *</p>{' '}
-                                    <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
-
-                                <div className="col-md-8 p-0 mb-3">
-                                    <CKeditor
-                                        name="description"
-                                        onChange={(data) => {
-                                            setFullData(data);
-                                        }}
-                                        editorLoaded={editorLoaded}
-                                        value={products?.description}
-                                    />
-                                </div>
-                            </div>
-
+                            </form>
                             <div
-
-                                className="d-flex justify-content-end "
-                                style={{ transform: 'translateX(16px)' }}>
-                                <button
-                                    type="submit"
-                                    className="btn btn-success py-3 px-5 ">
-                                    <span className="fs-4">
-                                        Saqlash{' '}
-                                        <i className="fa-solid fa-cloud-arrow-down mx-2"></i>
-                                    </span>
-                                </button>
-                            </div>
-                            <div className="mahsulotingiz">
-                                <span
-                                    className="fixed-btn"
-                                    type="button"
-                                    data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight">
-                                    <i className="fa-solid fa-id-card fa-beat fs-1"></i>
-                                </span>
-                            </div>
-                        </form>
-                        <div
-                            className="card rounded-3 col-md-4 p-3 cardResponsive "
-                            style={{ maxWidth: '370px' }}>
-                            <div className="image rounded ">
+                                className="card rounded-3 col-md-4 p-3 cardResponsive "
+                                style={{ maxWidth: '370px' }}>
                                 <div className="image rounded ">
-                                    {!products.poster ? (
-                                        <img
-                                            src="/static/img/docCopy.png"
-                                            alt="doc"
-                                            className="border mb-4"
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    ) : (
-                                        <img
-                                            src={products.poster}
-                                            alt="doc"
-                                            className="mb-4 border"
-                                            style={{ objectFit: 'cover' }}
-                                        />
-                                    )}
-                                </div>
-                            </div>
-                            <div className="text-start">
-                                <p className="live-card-p">
-                                    <span>
-                                        <strong>Nomi</strong>:{' '}
-                                    </span>{' '}
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {title ? title : products?.title}
-                                    </span>
-                                </p>
-                                <p className="live-card-p">
-                                    <span>
-                                        <strong>Teglari</strong>:{' '}
-                                    </span>
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {products?.active_tag?.map((item) => (
-                                            <span key={item.id}>
-                                                #{item.name}{' '}
-                                            </span>
-                                        ))}
-                                    </span>
-                                </p>
-                                <p className="live-card-p">
-                                    <span>
-                                        <strong>Kategoriya</strong>:{' '}
-                                    </span>
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {categoryName
-                                            ? categoryName
-                                            : products?.category?.name}
-                                    </span>
-                                </p>
-                                <p className="live-card-p">
-                                    <span>
-                                        <strong className="fs-4">
-                                            Qisqa tavsif
-                                        </strong>
-                                        :{' '}
-                                    </span>
-                                    <ul
-                                        style={{ maxWidth: '150px' }}
-                                        className="">
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Betlar soni:{' '}
-                                            </strong>{' '}
-                                            {products?.document?.page_count} ta
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Hajmi:{' '}
-                                            </strong>{' '}
-                                            {products?.document?.file_size}
-                                        </li>
-                                        <li>
-                                            {' '}
-                                            <strong className="fs-4">
-                                                Turi:{' '}
-                                            </strong>{' '}
-                                            {products?.document?.file_type}
-                                        </li>
-                                    </ul>
-                                </p>
-                                <p className="live-card-p">
-                                    <span>
-                                        <strong>
-                                            Mahsulotingiz haqida to'liq ma'umot
-                                        </strong>
-                                        :{' '}
-                                    </span>
-                                    <span style={{ maxWidth: '150px' }}>
-                                        {Fulldata
-                                            ? parse(Fulldata)
-                                            : products?.description
-                                                ? parse(products?.description)
-                                                : ''}
-                                    </span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        className="offcanvas offcanvas-end"
-                        tabindex="-1"
-                        id="offcanvasRight"
-                        aria-labelledby="offcanvasRightLabel">
-                        <div className="offcanvas-header pt-5">
-                            <h3 id="offcanvasRightLabel" className="m-0 elh3">
-                                <span>
-                                    Tahrirlanayotgan mahsulotingizni ko'rinishi
-                                </span>{' '}
-                            </h3>
-                            <button
-                                type="button"
-                                className="btn-close text-reset"
-                                data-bs-dismiss="offcanvas"
-                                aria-label="Close"></button>
-                        </div>
-                        <div className="offcanvas-body">
-                            <div className="card rounded-3 ">
-                                <div className="image rounded">
                                     <div className="image rounded ">
                                         {!products.poster ? (
                                             <img
@@ -636,7 +535,7 @@ const PostsProductsEdit = () => {
                                             <strong>Teglari</strong>:{' '}
                                         </span>
                                         <span style={{ maxWidth: '150px' }}>
-                                            {products?.tag?.map((item) => (
+                                            {products?.active_tag?.map((item) => (
                                                 <span key={item.id}>
                                                     #{item.name}{' '}
                                                 </span>
@@ -668,8 +567,7 @@ const PostsProductsEdit = () => {
                                                 <strong className="fs-4">
                                                     Betlar soni:{' '}
                                                 </strong>{' '}
-                                                {products?.document?.page_count}{' '}
-                                                ta
+                                                {products?.document?.page_count} ta
                                             </li>
                                             <li>
                                                 {' '}
@@ -690,8 +588,7 @@ const PostsProductsEdit = () => {
                                     <p className="live-card-p">
                                         <span>
                                             <strong>
-                                                Mahsulotingiz haqida to'liq
-                                                ma'umot
+                                                Mahsulotingiz haqida to'liq ma'umot
                                             </strong>
                                             :{' '}
                                         </span>
@@ -706,8 +603,153 @@ const PostsProductsEdit = () => {
                                 </div>
                             </div>
                         </div>
+                        <div
+                            className="offcanvas offcanvas-end"
+                            tabindex="-1"
+                            id="offcanvasRight"
+                            aria-labelledby="offcanvasRightLabel">
+                            <div className="offcanvas-header pt-5">
+                                <h3 id="offcanvasRightLabel" className="m-0 elh3">
+                                    <span>
+                                        Tahrirlanayotgan mahsulotingizni ko'rinishi
+                                    </span>{' '}
+                                </h3>
+                                <button
+                                    type="button"
+                                    className="btn-close text-reset"
+                                    data-bs-dismiss="offcanvas"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div className="offcanvas-body">
+                                <div className="card rounded-3 ">
+                                    <div className="image rounded">
+                                        <div className="image rounded ">
+                                            {!products.poster ? (
+                                                <img
+                                                    src="/static/img/docCopy.png"
+                                                    alt="doc"
+                                                    className="border mb-4"
+                                                    style={{ objectFit: 'cover' }}
+                                                />
+                                            ) : (
+                                                <img
+                                                    src={products.poster}
+                                                    alt="doc"
+                                                    className="mb-4 border"
+                                                    style={{ objectFit: 'cover' }}
+                                                />
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="text-start">
+                                        <p className="live-card-p">
+                                            <span>
+                                                <strong>Nomi</strong>:{' '}
+                                            </span>{' '}
+                                            <span style={{ maxWidth: '150px' }}>
+                                                {title ? title : products?.title}
+                                            </span>
+                                        </p>
+                                        <p className="live-card-p">
+                                            <span>
+                                                <strong>Teglari</strong>:{' '}
+                                            </span>
+                                            <span style={{ maxWidth: '150px' }}>
+                                                {products?.tag?.map((item) => (
+                                                    <span key={item.id}>
+                                                        #{item.name}{' '}
+                                                    </span>
+                                                ))}
+                                            </span>
+                                        </p>
+                                        <p className="live-card-p">
+                                            <span>
+                                                <strong>Kategoriya</strong>:{' '}
+                                            </span>
+                                            <span style={{ maxWidth: '150px' }}>
+                                                {categoryName
+                                                    ? categoryName
+                                                    : products?.category?.name}
+                                            </span>
+                                        </p>
+                                        <p className="live-card-p">
+                                            <span>
+                                                <strong className="fs-4">
+                                                    Qisqa tavsif
+                                                </strong>
+                                                :{' '}
+                                            </span>
+                                            <ul
+                                                style={{ maxWidth: '150px' }}
+                                                className="">
+                                                <li>
+                                                    {' '}
+                                                    <strong className="fs-4">
+                                                        Betlar soni:{' '}
+                                                    </strong>{' '}
+                                                    {products?.document?.page_count}{' '}
+                                                    ta
+                                                </li>
+                                                <li>
+                                                    {' '}
+                                                    <strong className="fs-4">
+                                                        Hajmi:{' '}
+                                                    </strong>{' '}
+                                                    {products?.document?.file_size}
+                                                </li>
+                                                <li>
+                                                    {' '}
+                                                    <strong className="fs-4">
+                                                        Turi:{' '}
+                                                    </strong>{' '}
+                                                    {products?.document?.file_type}
+                                                </li>
+                                            </ul>
+                                        </p>
+                                        <p className="live-card-p">
+                                            <span>
+                                                <strong>
+                                                    Mahsulotingiz haqida to'liq
+                                                    ma'umot
+                                                </strong>
+                                                :{' '}
+                                            </span>
+                                            <span style={{ maxWidth: '150px' }}>
+                                                {Fulldata
+                                                    ? parse(Fulldata)
+                                                    : products?.description
+                                                        ? parse(products?.description)
+                                                        : ''}
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>) :
+                    <div className="ps-container">
+                        <div
+                            className="ps-product--detail ps-product--fullwidth"
+                            style={{
+                                height: '690px',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{
+                                    width: '150px',
+                                    height: '150px',
+                                }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                </div>
+
+                }
                 <div
                     className="modal fade "
                     id="staticBackdrop"

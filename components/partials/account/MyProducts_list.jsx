@@ -196,18 +196,11 @@ function MyProductsLists() {
         );
     }
     async function handleClickIdEdit(productsItems) {
-        const ItemsData = await GetRepository.getMyProductsView(
-            productsItems,
-            user?.access
-        );
-        if (ItemsData) {
-            dispatch(MyProductsEdit(ItemsData));
-            if (ItemsData?.document?.content_type === "video") {
-                return Router.push('/account/myproducts/edit-video');
-            }
-            Router.push('/account/myproducts/edit');
+        if (productsItems) {
+            Router.push(`/account/myproducts/${productsItems}`);
         }
     }
+
     async function handleClickIdEditModal(productsItems) {
         setLoading3(true);
         const ItemsData = await GetRepository.getMyProductsView(
@@ -368,6 +361,8 @@ function MyProductsLists() {
             filterType,
         );
     }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce, filterType]);
+
+
 
     const columns = [
         {
