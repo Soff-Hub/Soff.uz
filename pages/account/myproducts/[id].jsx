@@ -120,28 +120,6 @@ const PostsMyProducts = () => {
                 formData.append('tags', tagSearchResult);
             }
 
-    const onSearch = async (value) => {
-        if (products?.document?.content_type === 'file') {
-            const ItemsData = await GetRepository.getAllCategoryLists(value);
-            if (ItemsData) {
-                setDataCategory(ItemsData);
-            }
-        }
-        if (products?.document?.content_type === 'audio') {
-            const ItemsData = await GetRepository.getAllCategoryListsAudio(value);
-            if (ItemsData) {
-                setDataCategory(ItemsData);
-            }
-        }
-        if (products?.document?.content_type === 'template') {
-            const ItemsData = await GetRepository.getAllCategoryListsDesign(value);
-            if (ItemsData) {
-                setDataCategory(ItemsData);
-            }
-        }
-
-    };
-
             const customePosters = customePoster
                 .filter((el) => el.custome)
                 .map((el) => el.file);
@@ -311,7 +289,6 @@ const PostsMyProducts = () => {
                             </Button>
                         </div>
                         <form
-
                             onSubmit={handleSubmit(handleClickPostsEdit)}
                             style={{ position: 'relative' }}
                             id="FormPostsMyProducts"
@@ -568,7 +545,6 @@ const PostsMyProducts = () => {
                             </div>
 
                             <div
-
                                 className="d-flex justify-content-end "
                                 style={{ transform: 'translateX(16px)' }}>
                                 <button
