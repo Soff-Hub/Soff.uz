@@ -27,7 +27,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
             <meta
                 property="og:keywords"
                 content={
-                    keywords ? keywords?.map((e) => e?.name?.join(', ')) : title
+                    keywords ? keywords?.map((e) => e?.name) : title
                 }
             />
             <meta name="viewport" />
@@ -49,7 +49,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
             <meta
                 property="keywords"
                 content={
-                    keywords ? keywords?.map((e) => e?.name?.join(', ')) : title
+                    keywords ? keywords?.map((e) => e?.name) : title
                 }
             />
         </Head>
