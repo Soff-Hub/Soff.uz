@@ -1,9 +1,7 @@
 import React from 'react';
 
 export default function DefaultVideo({ product }) {
-    // product?.document?.short_content_url
-    // `video/${product?.document?.file_type?.replace('.','' )}`
-    console.log('product', product);
+
     return (
         <div className="video_container">
             <div className="video_content">
@@ -15,8 +13,7 @@ export default function DefaultVideo({ product }) {
                     style={{ maxHeight: '380px' }}
                     controls
                     preload='none'
-
-                    poster={product?.poster_url}
+                    poster={product?.poster_url ? product?.poster_url : product?.poster}
                     src={product?.document?.short_content_url}
                 >
                     Your browser does not support the video tag.
