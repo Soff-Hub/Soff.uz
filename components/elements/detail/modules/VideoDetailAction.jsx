@@ -144,35 +144,9 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 {product?.file_url !== 'No' ? (
                                     ''
                                 ) : (
-                                    // <a
-                                    //     style={{
-                                    //         cursor: 'pointer',
-                                    //         minWidth: "150px",
-                                    //         fontSize: "14px"
-                                    //     }}
-                                    //     className="ps-btn ps-btn--black py-3"
-                                    //     href="#"
-                                    //     onClick={async (e) => {
-                                    //         e.preventDefault();
-                                    //         setLoading(true)
-                                    //         await audioDownloaderSale(product, product);
-                                    //         setLoading(false)
-                                    //     }}>
-                                    //     {!loading ? "Yuklab olish" :
-                                    //         <div>
-                                    //             <div
-                                    //                 className="spinner-border"
-                                    //                 role="status">
-                                    //                 <span className="visually-hidden">
-                                    //                     Loading...
-                                    //                 </span>
-                                    //             </div>
-                                    //         </div>
-                                    //     }
-                                    // </a>
                                     <>
                                         <a
-                                            className="ps-btn ps-btn--black py-3"
+                                            className="ps-btn text-white py-3 mb-4"
                                             href="#"
                                             style={{ fontSize: '14px' }}
                                             onClick={(e) =>
@@ -181,7 +155,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn py-3 me-0"
+                                            className="ps-btn py-3 me-0 mb-4"
                                             href="#"
                                             style={{ fontSize: '14px' }}
                                             onClick={(e) => handleBuynow(e)}>
@@ -191,64 +165,18 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 )}
                             </>
                         ) : (
-                            // <a
-                            //     style={{ cursor:loading ? "not-allowed" : 'pointer', minWidth: "212px" }}
-                            //     className="ps-btn ps-btn--black max-class"
-                            //     href="#"
-                            //     onClick={async (e) => {
-                            //         e.preventDefault();
-                            //         setLoading(true)
-                            //         await audioDownloaderSale(product, product);
-                            //         setLoading(false)
-                            //     }}>
-                            //     {!loading ? "Bepul yuklab olish" :
-                            //         <div>
-                            //             <div
-                            //                 className="spinner-border"
-                            //                 role="status">
-                            //                 <span className="visually-hidden">
-                            //                     Loading...
-                            //                 </span>
-                            //             </div>
-                            //         </div>
-                            //     }
-                            // </a>
+
                             ''
                         )}
                     </div>
 
-                    {/* <div className="p-3 rounded-3 " style={{ backgroundColor: "#F1F1F1", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
-                        {copy ? (
-                            <div className='text-center'>
-                                <i className="fa-solid fa-check "></i>
-                            </div>
-                        ) : (
-                            <div style={{ cursor: "pointer" }} className='w-full d-flex justify-content-center align-items-center'>
-                                <i className="fa-solid fa-share-nodes " style={{ marginRight: "5px" }}></i>
-                                ulashish
-                            </div>
-                        )}
-                    </div> */}
-
-                    {/* <div className="ps-product__actions">
-                        <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                            <i
-                                className={`${wishlist?.some(
-                                    (item) =>
-                                        Number(item.id) ===
-                                        Number(product.id)
-                                )
-                                    ? 'fa-solid fa-heart text-danger'
-                                    : 'icon-heart'
-                                    } `}></i>
-                        </a>
-                    </div> */}
+    
                 </div>
-                <div className="ps-product__shopping w-100 d-flex justify-content-between m-0">
+                <div className="ps-product__shopping w-100 d-flex justify-content-between m-0 p-0">
                     {product?.document?.images?.length > 0 && (
-                        <div>
+                        <div className='w-full p-0'>
                             <p
-                                className="fw-bold fs-4 rounded-1 border py-2 px-4 hover-extra-file"
+                                className="fw-bold fs-4 rounded-1 border py-2 px-4 hover-extra-file w-full"
                                 style={{ backgroundColor: '#F1F1F1' }}>
                                 Qo'shimcha fayllarni yuklab olish uchun{' '}
                                 {product?.document?.images?.map((e) => (
@@ -265,7 +193,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                         {!loading ? (
                                             <i class="fa-solid fa-download"></i>
                                         ) : (
-                                            <div>
+                                            
                                                 <div
                                                     className="spinner-border"
                                                     role="status">
@@ -273,7 +201,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                                         Loading...
                                                     </span>
                                                 </div>
-                                            </div>
+                                            
                                         )}
                                     </span>
                                 ))}

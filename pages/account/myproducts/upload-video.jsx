@@ -226,28 +226,37 @@ const Posts = () => {
             try {
                 openClose('#staticBackdrop-2');
 
-                const resp = await axios.post(
-                    `${baseUrl}seller/video-product-create/`,
-                    formData,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${user?.access}`,
-                        },
-                    }
-                );
-                openClose('#staticBackdrop-2');
-
-                Router.push('/account/myproducts');
-                const modal = Modal.warning({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content:
-                        "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                const response = await fetch(`${baseUrl}seller/video-product-create/`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${user?.access}`,
+                    },
+                    body: formData,
                 });
+
+                if (response.ok) {
+                    openClose('#staticBackdrop-2');
+                    Router.push('/account/myproducts');
+                    const modal = Modal.warning({
+                        centered: true,
+                        title: 'Muvaffaqqiyatli!',
+                        content:
+                            "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                    });
+                } else {
+                    openClose('#staticBackdrop-2');
+                    const errorMessage = await response.json();
+                    const modal = Modal.error({
+                        centered: true,
+                        title: 'Xatolik!',
+                        content: errorMessage?.msg?.map(item => (item)),
+                    });
+                    throw new Error(errorMessage?.msg);
+                }
             } catch (err) {
-                console.log("Error edit", err);
-                openClose('#staticBackdrop-2');
+                console.log(err);
             }
+
             setDeisabled(false);
         } else {
             const modal = Modal.warning({
@@ -375,7 +384,6 @@ const Posts = () => {
         }
     }, [user?.access]);
 
-    console.log(fileImgFileID);  
 
 
     return user?.role === 'seller' ? (
