@@ -6,7 +6,11 @@ const Meta = ({ title, image, description, keywords, author }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-
+    // console.log('title', title);
+    // console.log('image', image);
+    // console.log('description', description);
+    // console.log('keywords', keywords);
+    // console.log('author', author);
 
     return (
         <Head>
@@ -21,7 +25,6 @@ const Meta = ({ title, image, description, keywords, author }) => {
             />
             <meta property="og:image" content={image} />
             <meta name="twitter:image" content={image}></meta>
-            <meta name="twitter:image" content={image}></meta>
             <meta property="og:url" content={image} />
             <meta property="og:site_name" content="Soff.uz" />
             <meta
@@ -30,28 +33,9 @@ const Meta = ({ title, image, description, keywords, author }) => {
                     keywords ? keywords?.map((e) => e?.name) : title
                 }
             />
-            {/* <meta name="viewport" />
-            <title>{title}</title>
-            <meta
-                name="description"
-                content={
-                    description
-                        ? removeHTMLTags(description)
-                        : `${title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
-                }
-            />
-            <meta property="image" content={image} />
-            <meta
-                name="author"
-                property="author"
-                content={author ? author : 'nouthemes'}
-            />
-            <meta
-                property="keywords"
-                content={
-                    keywords ? keywords?.map((e) => e?.name) : title
-                }
-            /> */}
+
+            <meta name="viewport" />
+           
         </Head>
     );
 };
