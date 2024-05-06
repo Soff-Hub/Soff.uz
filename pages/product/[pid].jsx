@@ -14,6 +14,7 @@ import PostRepository from '~/repositories/PostRepository';
 import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
 import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
 import axios from 'axios';
+import Head from 'next/head';
 
 
 const ProductDefaultPage = ({ defaultProducts }) => {
@@ -24,6 +25,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [similar, setSimilar] = useState([]);
 
     const { user } = useSelector((state) => state.auth);
+
+    const removeHTMLTags = (html) => {
+        return html.replace(/<[^>]+>/g, '');
+    };
 
     async function getProducts() {
         const token = user?.access;
@@ -104,13 +109,33 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         },
     ];
 
-
+    // console.log('product   ==>', product);
 
     return (
         <>
             <PageContainer
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+                <Head>
+
+                <title>{product?.title}</title>
+                <meta name="title" content={product?.title} />
+            <meta
+                name="description"
+                content={
+                    product?.description
+                        ? removeHTMLTags(product?.description)
+                        : `${product?.title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
+                }
+            />
+            <meta name="image" content={product?.poster_url} />
+            <meta
+                name="keywords"
+                content={
+                    product?.tag ? product?.tag?.map((e) => e?.name) : product?.title
+                }
+            />
+                </Head>
 
                 <div className="container">
                     <div className="ps-page--product">

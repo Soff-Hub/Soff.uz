@@ -6,10 +6,15 @@ const Meta = ({ title, image, description, keywords, author }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-
+    // console.log('title', title);
+    // console.log('image', image);
+    // console.log('description', description);
+    // console.log('keywords', keywords);
+    // console.log('author', author);
 
     return (
         <Head>
+            <meta property="og:type" content="website" />
             <meta property="og:title" content={title} />
             <meta
                 property="og:description"
@@ -20,37 +25,30 @@ const Meta = ({ title, image, description, keywords, author }) => {
                 }
             />
             <meta property="og:image" content={image} />
-            <meta name="twitter:image" content={image}></meta>
-            <meta name="twitter:image" content={image}></meta>
-            <meta property="og:url" content={image} />
+            <meta property="og:url" content="soff.uz" />
             <meta property="og:site_name" content="Soff.uz" />
             <meta
                 property="og:keywords"
-                content={
-                    keywords ? keywords?.map((e) => e?.name) : title
-                }
+                content={keywords ? keywords?.map((e) => e?.name) : title}
             />
-            <meta name="viewport" />
-            <title>{title}</title>
+
+
+            <meta property="twitter:image" content={image}></meta>
+            <meta property="twitter:type" content="website" />
+            <meta property="twitter:title" content={title} />
             <meta
-                name="description"
+                property="twitter:description"
                 content={
                     description
                         ? removeHTMLTags(description)
-                        : `${title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
+                        : `${title} | Soff | Soff online hujjatlar bazasi`
                 }
             />
-            <meta property="image" content={image} />
+            <meta property="twitter:url" content="soff.uz" />
+            <meta property="twitter:site_name" content="Soff.uz" />
             <meta
-                name="author"
-                property="author"
-                content={author ? author : 'nouthemes'}
-            />
-            <meta
-                property="keywords"
-                content={
-                    keywords ? keywords?.map((e) => e?.name) : title
-                }
+                property="twitter:keywords"
+                content={keywords ? keywords?.map((e) => e?.name) : title}
             />
         </Head>
     );
