@@ -16,7 +16,6 @@ import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAud
 import axios from 'axios';
 import Head from 'next/head';
 
-
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
     const { pid } = router.query;
@@ -75,7 +74,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         }
     }
 
-
     useEffect(() => {
         if (pid) {
             getProducts();
@@ -117,31 +115,34 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
                 <Head>
-
-                <title>{product?.title}</title>
-                <meta name="title" content={product?.title} />
-            <meta
-                name="description"
-                content={
-                    product?.description
-                        ? removeHTMLTags(product?.description)
-                        : `${product?.title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
-                }
-            />
-            <meta name="image" content={product?.poster_url} />
-            <meta
-                name="keywords"
-                content={
-                    product?.tag ? product?.tag?.map((e) => e?.name) : product?.title
-                }
-            />
+                    <title>{product?.title}</title>
+                    <meta name="title" content={product?.title} />
+                    <meta
+                        name="description"
+                        content={
+                            product?.description
+                                ? removeHTMLTags(product?.description)
+                                : `${product?.title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
+                        }
+                    />
+                    <meta name="image" content={product?.poster_url} />
+                    <meta
+                        name="keywords"
+                        content={
+                            product?.tag
+                                ? product?.tag?.map((e) => e?.name)
+                                : product?.title
+                        }
+                    />
                 </Head>
 
                 <div className="container">
                     <div className="ps-page--product">
                         <div className="ps-container p-0">
                             <div className="ps-page__container">
-                                {product?.document?.content_type === 'file' || product?.document?.content_type === 'template' ? (
+                                {product?.document?.content_type === 'file' ||
+                                product?.document?.content_type ===
+                                    'template' ? (
                                     <div className="">
                                         <ProductDetailFullwidth
                                             product={product}
@@ -149,7 +150,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                    'video' ? (
+                                  'video' ? (
                                     <div className="">
                                         <ProductVideoDetailFullWidth
                                             product={product}
@@ -157,7 +158,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                    'audio' ? (
+                                  'audio' ? (
                                     <div className="">
                                         <ProductAudioDetailFullWidth
                                             product={product}
@@ -165,7 +166,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                    'article' ? (
+                                  'article' ? (
                                     <div>
                                         <ProductAudioDetailFullWidth
                                             product={product}
