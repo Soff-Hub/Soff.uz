@@ -155,7 +155,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn py-3 me-0 mb-4"
+                                            className="ps-btn py-3 me-0 mb-4 text-white"
                                             href="#"
                                             style={{ fontSize: '14px' }}
                                             onClick={(e) => handleBuynow(e)}>
@@ -172,7 +172,7 @@ const VideoDetailShoppingActions = ({ product }) => {
 
     
                 </div>
-                <div className="ps-product__shopping w-100 d-flex justify-content-between m-0 p-0">
+                <div className="row m-0 p-0">
                     {product?.document?.images?.length > 0 && (
                         <div className='w-full p-0'>
                             <p
