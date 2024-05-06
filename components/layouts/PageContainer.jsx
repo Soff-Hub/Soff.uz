@@ -157,6 +157,7 @@ const PageContainer = ({
     header = initHeaders,
     footer = initFooters,
     children,
+    title
 }) => {
     const { user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
@@ -187,6 +188,7 @@ const PageContainer = ({
         <>
             <Head>
                 <title>Soff - barcha ma'lumotlar bazasi </title>
+                <meta property="og:title" content={title} />
             </Head>
             {header}
             <div >
