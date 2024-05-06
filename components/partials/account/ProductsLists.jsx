@@ -758,7 +758,7 @@ function ProductsLists() {
                                         ) :
                                             deleteIdView?.document?.content_type ===
                                                 'video' ? <div className="row">
-                                                <div className="col-12">
+                                                <div className="col-md-12">
                                                     <DefaultVideo product={deleteIdView} />
                                                     <ModuleAudioDetailTopInformationLive
                                                         product={deleteIdView ? deleteIdView : ''}
