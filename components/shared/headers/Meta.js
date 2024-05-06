@@ -30,7 +30,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
                     keywords ? keywords?.map((e) => e?.name) : title
                 }
             />
-            <meta name="viewport" />
+            {/* <meta name="viewport" />
             <title>{title}</title>
             <meta
                 name="description"
@@ -51,7 +51,7 @@ const Meta = ({ title, image, description, keywords, author }) => {
                 content={
                     keywords ? keywords?.map((e) => e?.name) : title
                 }
-            />
+            /> */}
         </Head>
     );
 };
