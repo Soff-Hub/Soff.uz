@@ -25,12 +25,10 @@ const ProductVideo = ({ product }) => {
 
     }
 
-    console.log('pid', product);
 
     return (
         <div className="" style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px", borderRadius: '15px' }}>
             <div
-                // className="ps-product__thumbnail"
                 style={{
                     margin: '0 auto',
                 }}>
@@ -47,10 +45,8 @@ const ProductVideo = ({ product }) => {
                             className="border w-100"
                             controls={true}
                             preload="none"
-                            playsInline
                             src={product?.document?.short_content_url}
                             poster={product?.poster_url}
-                            loop
                             style={{
                                 borderTopRightRadius: '12px',
                                 borderTopLeftRadius: '12px',

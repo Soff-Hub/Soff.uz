@@ -103,6 +103,8 @@ const PostsProductsEdit = () => {
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
+
+
     const onChange = async (e) => {
         setCategoryName(e);
         for (let j = 0; j < dataCategory.length; j++) {
@@ -233,6 +235,7 @@ const PostsProductsEdit = () => {
         }
         Router.back();
     }
+    
     const dataStatus = [
         {
             id: 1,
@@ -251,6 +254,7 @@ const PostsProductsEdit = () => {
     useEffect(() => {
         setCategory_ID(products?.category?.id)
     }, [products?.category?.id])
+
 
 
 
@@ -914,6 +918,7 @@ const PostsProductsEdit = () => {
                                                     </a>
                                                 </div>
                                             </div>
+
                                             <div className=" d-flex justify-content-start align-content-center flex-wrap">
                                                 {products?.active_tag?.length >
                                                     0 ? (
@@ -958,6 +963,8 @@ const PostsProductsEdit = () => {
                                                     <></>
                                                 )}
                                             </div>
+
+
                                         </div>
                                     </div>
                                     <div className="ps-product__content ps-tab-root">

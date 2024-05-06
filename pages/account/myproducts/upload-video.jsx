@@ -202,7 +202,7 @@ const Posts = () => {
 
     async function handleClickPosts() {
 
-        if (customePoster.file || free || livePosterFile?.id || fileImgFile?.file || category_id[0] || watch('title')){
+        if (customePoster.file || free || livePosterFile?.id || fileImgFile?.file || category_id[0] || watch('title')) {
             const formData = new FormData();
             formData.append('title', watch('title'));
             if (free) {
@@ -245,12 +245,11 @@ const Posts = () => {
                         "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
                 });
             } catch (err) {
-                console.log("Error edit",err);
+                console.log("Error edit", err);
                 openClose('#staticBackdrop-2');
             }
-
             setDeisabled(false);
-        }else{
+        } else {
             const modal = Modal.warning({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -262,32 +261,42 @@ const Posts = () => {
     }
 
     async function PostFilePoster() {
-        if (fileImgFileID) {
-            setLivePosterFile('');
-            const formData = new FormData();
-            setLoading(true);
-            formData.append('file', fileImgFileID);
-            const ItemsData = await PostsRepository.PostsMyProductsPosterVideo(
-                formData,
-                user?.access
-            );
+        if (fileImgFileID && fileImgFileID?.size) {
+            if (Math.ceil((fileImgFileID?.size / 1024) / 1000) < 500) {
+                setLivePosterFile('');
+                const formData = new FormData();
+                setLoading(true);
+                formData.append('file', fileImgFileID);
+                const ItemsData = await PostsRepository.PostsMyProductsPosterVideo(
+                    formData,
+                    user?.access
+                );
 
-            if (ItemsData?.status === 201) {
-                if (!ItemsData?.data?.images) {
-                    setLivePosterFile({ ...ItemsData?.data, images: [] });
-                } else {
-                    setLivePosterFile(ItemsData?.data);
+                if (ItemsData?.status === 201) {
+                    if (!ItemsData?.data?.images) {
+                        setLivePosterFile({ ...ItemsData?.data, images: [] });
+                    } else {
+                        setLivePosterFile(ItemsData?.data);
+                    }
+
+                    setLoading(false);
                 }
             } else {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: "Video  qo'sha olmadingiz ",
+                    content: "500 MB dan katta hajmli Video yuklay  olmaysiz!",
                 });
             }
-            setLoading(false);
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: "Video yuklashda xatolik yuz berdi. Qaytadan urinib ko'ring!",
+            });
         }
     }
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -318,8 +327,12 @@ const Posts = () => {
     }, []);
 
     useEffect(() => {
-        PostFilePoster();
+        if (fileImgFileID && fileImgFileID?.size) {
+            PostFilePoster();
+        }
+
     }, [fileImgFileID]);
+
 
     useEffect(() => {
         if (watch('file')) {
@@ -774,7 +787,7 @@ const Posts = () => {
                                             type="submit"
                                             disabled={loading}
                                             className="btn btn-success py-3 "
-                                            >
+                                        >
                                             <span className="fs-4 px-5">
                                                 Mahsulot qo'shish{' '}
                                                 <i className="fa-solid fa-cloud-arrow-up mx-2"></i>

@@ -551,15 +551,13 @@ function MyProductsLists() {
                             el.id == content_type_id?.id &&
                             el.data_status?.status === 'cancelled'
                     ) ? (
-                        <Link href={'#'}>
-                            <a>
+                            <span style={{cursor:"pointer"}}>
                                 <i
                                     className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
                                     onClick={() =>
                                         handleClickIdEdit(content_type_id)
                                     }></i>
-                            </a>
-                        </Link>
+                            </span>
                     ) : (
                         <></>
                     )}
