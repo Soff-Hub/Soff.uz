@@ -97,7 +97,6 @@ function MyProductsListsSeller() {
         return formattedNumber;
     }
 
-    console.log('View', View);
     const handleButtonClick = async (ID) => {
         try {
             setLoading2(ID);
