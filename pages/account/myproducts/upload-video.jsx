@@ -272,6 +272,7 @@ const Posts = () => {
                     user?.access
                 );
 
+
                 if (ItemsData?.status === 201) {
                     if (!ItemsData?.data?.images) {
                         setLivePosterFile({ ...ItemsData?.data, images: [] });
@@ -280,6 +281,13 @@ const Posts = () => {
                     }
 
                     setLoading(false);
+                } else {
+                    setLoading(false);
+                    const modal = Modal.error({
+                        centered: true,
+                        title: 'Xatolik!',
+                        content: ItemsData?.msg?.map(item => (item)),
+                    });
                 }
             } else {
                 const modal = Modal.error({
@@ -367,7 +375,7 @@ const Posts = () => {
         }
     }, [user?.access]);
 
-
+    console.log(fileImgFileID);  
 
 
     return user?.role === 'seller' ? (

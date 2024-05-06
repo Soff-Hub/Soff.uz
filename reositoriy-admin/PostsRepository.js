@@ -1,4 +1,8 @@
-import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from './Repository';
+import Repository, {
+    baseUrl,
+    baseUrlCustomer,
+    baseUrlProfie,
+} from './Repository';
 
 class PostRepository {
     async PostsCategory(data, token) {
@@ -59,7 +63,7 @@ class PostRepository {
         return response;
     }
 
-    async EmailSend(data, token,date ) {
+    async EmailSend(data, token, date) {
         const endPoint = `send-notification/?from_date=${date}`;
         const response = await Repository({
             url: baseUrl + endPoint,
@@ -158,10 +162,9 @@ class PostRepository {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => error?.response?.data);
         return response;
     }
-
 
     async PostsMyProductsAriza(data, token) {
         const endPoint = `application/`;
