@@ -119,6 +119,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 <Head>
 
                 <title>{product?.title}</title>
+                <meta name="title" content={product?.title} />
             <meta
                 name="description"
                 content={
@@ -127,9 +128,9 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         : `${product?.title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
                 }
             />
-            <meta property="image" content={product?.poster_url} />
+            <meta name="image" content={product?.poster_url} />
             <meta
-                property="keywords"
+                name="keywords"
                 content={
                     product?.tag ? product?.tag?.map((e) => e?.name) : product?.title
                 }
