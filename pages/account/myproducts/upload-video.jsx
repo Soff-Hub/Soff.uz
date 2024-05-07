@@ -43,7 +43,13 @@ const Posts = () => {
     const [customePoster, setCustomePoster] = useState(false);
     const [profile, setProfile] = useState(null);
     const [category_id, setCategoryId] = useState([]);
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm();
+    const [videosize, setVideoSize] = useState(null);
 
     const breadCrumb = [
         {
@@ -141,7 +147,6 @@ const Posts = () => {
         );
     }
 
-
     function removePrefix(text) {
         const prefix = 'Tavsiya etilgan narx: ';
         const prefixBoolen = text.toString()?.includes(prefix);
@@ -201,8 +206,14 @@ const Posts = () => {
     };
 
     async function handleClickPosts() {
-
-        if (customePoster.file || free || livePosterFile?.id || fileImgFile?.file || category_id[0] || watch('title')) {
+        if (
+            customePoster.file ||
+            free ||
+            livePosterFile?.id ||
+            fileImgFile?.file ||
+            category_id[0] ||
+            watch('title')
+        ) {
             const formData = new FormData();
             formData.append('title', watch('title'));
             if (free) {
@@ -222,17 +233,19 @@ const Posts = () => {
                 formData.append('extra_file', extraFiles);
             }
 
-
             try {
                 openClose('#staticBackdrop-2');
 
-                const response = await fetch(`${baseUrl}seller/video-product-create/`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${user?.access}`,
-                    },
-                    body: formData,
-                });
+                const response = await fetch(
+                    `${baseUrl}seller/video-product-create/`,
+                    {
+                        method: 'POST',
+                        headers: {
+                            Authorization: `Bearer ${user?.access}`,
+                        },
+                        body: formData,
+                    }
+                );
 
                 if (response.ok) {
                     openClose('#staticBackdrop-2');
@@ -249,7 +262,7 @@ const Posts = () => {
                     const modal = Modal.error({
                         centered: true,
                         title: 'Xatolik!',
-                        content: errorMessage?.msg?.map(item => (item)),
+                        content: errorMessage?.msg?.map((item) => item),
                     });
                     throw new Error(errorMessage?.msg);
                 }
@@ -262,25 +275,34 @@ const Posts = () => {
             const modal = Modal.warning({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content:
-                    "Iltimos maydonlarni to'ldiring!",
+                content: "Iltimos maydonlarni to'ldiring!",
             });
         }
-
     }
 
+    async function getVideoFunk() {
+        const ItemsData = await GetRepository.getVideoSize(user?.access);
+        if (ItemsData) {
+            setVideoSize(ItemsData);
+        }
+    }
+    console.log(Math.ceil(fileImgFileID?.size / 1024 / 1024));
     async function PostFilePoster() {
         if (fileImgFileID && fileImgFileID?.size) {
-            if (Math.ceil((fileImgFileID?.size / 1024) / 1000) < 500) {
+            if (
+                Math.ceil(fileImgFileID?.size / 1024 / 1024) <
+                videosize?.empty_storage_size
+            ) {
                 setLivePosterFile('');
+
                 const formData = new FormData();
                 setLoading(true);
                 formData.append('file', fileImgFileID);
-                const ItemsData = await PostsRepository.PostsMyProductsPosterVideo(
-                    formData,
-                    user?.access
-                );
-
+                const ItemsData =
+                    await PostsRepository.PostsMyProductsPosterVideo(
+                        formData,
+                        user?.access
+                    );
 
                 if (ItemsData?.status === 201) {
                     if (!ItemsData?.data?.images) {
@@ -295,25 +317,37 @@ const Posts = () => {
                     const modal = Modal.error({
                         centered: true,
                         title: 'Xatolik!',
-                        content: ItemsData?.msg?.map(item => (item)),
+                        content: ItemsData?.msg?.map((item) => item),
                     });
                 }
             } else {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: "500 MB dan katta hajmli Video yuklay  olmaysiz!",
+                    content: (
+                        <div>
+                            <p>
+                                {videosize?.empty_storage_size} MB dan katta
+                                hajmli Video yuklay olmaysiz!
+                            </p>
+                            <p>
+                                Agar qo'shimcha joy sotib olishni istasangiz
+                                ushbu havolaga o'ting
+                            </p>
+                            <p className='text-success' style={{cursor:'pointer'}} onClick={() => (Router.push("/account/buying_traffic"),  modal.destroy())} > https://soff.uz/account/buying_traffic </p>
+                        </div>
+                    ),
                 });
             }
         } else {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content: "Video yuklashda xatolik yuz berdi. Qaytadan urinib ko'ring!",
+                content:
+                    "Video yuklashda xatolik yuz berdi. Qaytadan urinib ko'ring!",
             });
         }
     }
-
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -331,7 +365,7 @@ const Posts = () => {
                 : formattedIntegerPart;
 
         return formattedNumber;
-    };
+    }
 
     const handleFreeChange = (e) => {
         setFree(!free);
@@ -347,16 +381,13 @@ const Posts = () => {
         if (fileImgFileID && fileImgFileID?.size) {
             PostFilePoster();
         }
-
     }, [fileImgFileID]);
-
 
     useEffect(() => {
         if (watch('file')) {
             setFileImgFileID(watch('file[0]'));
         }
     }, [watch('file')]);
-
 
     useEffect(() => {
         const file = watch('file_video[0]');
@@ -366,7 +397,6 @@ const Posts = () => {
         }
     }, [watch('file_video')]);
 
-
     useEffect(() => {
         const images = watch('image[0]');
         if (images) {
@@ -375,17 +405,14 @@ const Posts = () => {
         }
     }, [watch('image')]);
 
-
-
-
     useEffect(() => {
         if (user?.access) {
             ProfileUsers();
+            getVideoFunk();
         }
     }, [user?.access]);
 
-
-
+  
     return user?.role === 'seller' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -447,15 +474,19 @@ const Posts = () => {
                                             <Input
                                                 name="title"
                                                 type="text"
-                                                className={"col-md-12 mb-2"}
-                                                InputClassName={"form-control  rounded-3 "}
+                                                className={'col-md-12 mb-2'}
+                                                InputClassName={
+                                                    'form-control  rounded-3 '
+                                                }
                                                 {...register('title', {
-                                                    required: "Video nomini to'ldirish majburiy",
-                                                    validate: value => value.trim() !== "" || "Video nomi bo'sh bo'lishi mumkin emas"
+                                                    required:
+                                                        "Video nomini to'ldirish majburiy",
+                                                    validate: (value) =>
+                                                        value.trim() !== '' ||
+                                                        "Video nomi bo'sh bo'lishi mumkin emas",
                                                 })}
                                                 error={errors.title?.message}
                                             />
-
                                         </div>
 
                                         <div className=" col-md-12 d-flex flex-column mt-3">
@@ -544,7 +575,6 @@ const Posts = () => {
                                 <div className="col-md-6">
                                     <div className="row">
                                         <div className="col-md-12 d-flex flex-column ">
-
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video(asosiy): *</p>{' '}
                                                 <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .ppt, .pptx .pdf">
@@ -555,17 +585,22 @@ const Posts = () => {
                                                         className="fa-regular fa-circle-question px-4 mt-2"></i>
                                                 </Tooltip>
                                             </div>
-                                            <div className='w-full'>
-
-
+                                            <div className="w-full">
                                                 <label
                                                     className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
                                                     style={{
-                                                        backgroundColor: errors.file?.message ? " #fff" : '#F1F1F1',
-                                                        border: errors.file?.message ? '1px solid red' : "1px dashed green",
+                                                        backgroundColor: errors
+                                                            .file?.message
+                                                            ? ' #fff'
+                                                            : '#F1F1F1',
+                                                        border: errors.file
+                                                            ?.message
+                                                            ? '1px solid red'
+                                                            : '1px dashed green',
                                                         width: '100%',
                                                     }}>
-                                                    {!fileImgFileID || livePosterFile === '' ? (
+                                                    {!fileImgFileID ||
+                                                    livePosterFile === '' ? (
                                                         <span
                                                             className="d-flex flex-column align-items-center"
                                                             style={{
@@ -574,7 +609,9 @@ const Posts = () => {
                                                             {loading ? (
                                                                 <span className="d-flex justify-content-center">
                                                                     <ClipLoader
-                                                                        size={25}
+                                                                        size={
+                                                                            25
+                                                                        }
                                                                         color="#36d7b7"
                                                                     />
                                                                 </span>
@@ -586,7 +623,8 @@ const Posts = () => {
                                                                     }}>
                                                                     <i className="fa-solid fa-inbox text-primary mt-1"></i>
                                                                     <span>
-                                                                        Asosiy video
+                                                                        Asosiy
+                                                                        video
                                                                     </span>
                                                                 </span>
                                                             )}
@@ -606,17 +644,23 @@ const Posts = () => {
                                                         </span>
                                                     )}
                                                     <input
-                                                        name='file'
+                                                        name="file"
                                                         type="file"
                                                         {...register('file', {
-                                                            required: "Video qo'shish majburiy",
-                                                            validate: value => !!value[0] || "Video tanlanishi majburiy"
+                                                            required:
+                                                                "Video qo'shish majburiy",
+                                                            validate: (value) =>
+                                                                !!value[0] ||
+                                                                'Video tanlanishi majburiy',
                                                         })}
                                                         accept="video/*"
                                                     />
                                                 </label>
 
-                                                <p className={"my-2  text-danger"}>
+                                                <p
+                                                    className={
+                                                        'my-2  text-danger'
+                                                    }>
                                                     {errors?.file?.message}
                                                 </p>
                                             </div>
@@ -636,13 +680,18 @@ const Posts = () => {
                                                         className="fa-regular fa-circle-question px-4 mt-2"></i>
                                                 </Tooltip>
                                             </div>
-                                            <div className='w-full'>
-
+                                            <div className="w-full">
                                                 <label
                                                     className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
                                                     style={{
-                                                        backgroundColor: errors.file_video?.message ? " #fff" : '#F1F1F1',
-                                                        border: errors.file_video?.message ? '1px solid red' : "1px dashed green",
+                                                        backgroundColor: errors
+                                                            .file_video?.message
+                                                            ? ' #fff'
+                                                            : '#F1F1F1',
+                                                        border: errors
+                                                            .file_video?.message
+                                                            ? '1px solid red'
+                                                            : '1px dashed green',
                                                         width: '100%',
                                                     }}>
                                                     {!fileImgFile ? (
@@ -679,17 +728,31 @@ const Posts = () => {
                                                         </span>
                                                     )}
                                                     <input
-                                                        name='file_video'
+                                                        name="file_video"
                                                         type="file"
-                                                        {...register('file_video', {
-                                                            required: "Qisqa video qo'shish majburiy",
-                                                            validate: value => !!value[0] || "Qisqa video tanlanishi majburiy"
-                                                        })}
+                                                        {...register(
+                                                            'file_video',
+                                                            {
+                                                                required:
+                                                                    "Qisqa video qo'shish majburiy",
+                                                                validate: (
+                                                                    value
+                                                                ) =>
+                                                                    !!value[0] ||
+                                                                    'Qisqa video tanlanishi majburiy',
+                                                            }
+                                                        )}
                                                         accept="video/*"
                                                     />
                                                 </label>
-                                                <p className={"my-2  text-danger"}>
-                                                    {errors?.file_video?.message}
+                                                <p
+                                                    className={
+                                                        'my-2  text-danger'
+                                                    }>
+                                                    {
+                                                        errors?.file_video
+                                                            ?.message
+                                                    }
                                                 </p>
                                             </div>
                                         </div>
@@ -705,50 +768,79 @@ const Posts = () => {
                                                         className="fa-regular fa-circle-question px-4 mt-2"></i>
                                                 </Tooltip>
                                             </div>
-                                            <div className='w-full'>
-
+                                            <div className="w-full">
                                                 <div
                                                     className="add-product-user-image d-flex justify-content-between gap-3  form-control p-2 pt-2 rounded-3"
                                                     style={{
-                                                        backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',
-                                                        border: errors.image?.message ? '1px solid red' : "1px dashed green",
+                                                        backgroundColor: errors
+                                                            .image?.message
+                                                            ? ' #fff'
+                                                            : '#F1F1F1',
+                                                        border: errors.image
+                                                            ?.message
+                                                            ? '1px solid red'
+                                                            : '1px dashed green',
                                                         width: '100%',
-                                                        height: "100px"
+                                                        height: '100px',
                                                     }}>
                                                     <label
-                                                        className='m-0'
+                                                        className="m-0"
                                                         style={{
                                                             width: '45%',
                                                             cursor: 'pointer',
-                                                            backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',
-                                                            border: errors.image?.message ? '1px solid red' : "1px dashed green",
+                                                            backgroundColor:
+                                                                errors.image
+                                                                    ?.message
+                                                                    ? ' #fff'
+                                                                    : '#F1F1F1',
+                                                            border: errors.image
+                                                                ?.message
+                                                                ? '1px solid red'
+                                                                : '1px dashed green',
                                                             borderRadius: '5px',
-                                                            position: 'relative',
+                                                            position:
+                                                                'relative',
                                                         }}>
                                                         <i className="fa-solid fa-plus fs-1 mt-5  mx-3 plus-icon-style "></i>
                                                         <input
-                                                            name='image'
+                                                            name="image"
                                                             type="file"
-                                                            {...register('image', {
-                                                                required: "Video rasmini qo'shish majburiy",
-                                                                validate: value => !!value[0] || "Video rasmi tanlanishi majburiy"
-                                                            })}
+                                                            {...register(
+                                                                'image',
+                                                                {
+                                                                    required:
+                                                                        "Video rasmini qo'shish majburiy",
+                                                                    validate: (
+                                                                        value
+                                                                    ) =>
+                                                                        !!value[0] ||
+                                                                        'Video rasmi tanlanishi majburiy',
+                                                                }
+                                                            )}
                                                             accept="image/*"
                                                             style={{
                                                                 width: '50px',
                                                             }}
                                                         />
                                                     </label>
-                                                    <div className=""
+                                                    <div
+                                                        className=""
                                                         style={{
                                                             width: '50%',
                                                             cursor: 'pointer',
-                                                            backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',
-                                                            border: errors.image?.message ? '2px solid red' : "1px dashed green",
+                                                            backgroundColor:
+                                                                errors.image
+                                                                    ?.message
+                                                                    ? ' #fff'
+                                                                    : '#F1F1F1',
+                                                            border: errors.image
+                                                                ?.message
+                                                                ? '2px solid red'
+                                                                : '1px dashed green',
                                                             borderRadius: '5px',
-                                                            position: 'relative',
-                                                        }}
-                                                    >
+                                                            position:
+                                                                'relative',
+                                                        }}>
                                                         <img
                                                             style={{
                                                                 width: '100%',
@@ -762,10 +854,12 @@ const Posts = () => {
                                                         />
                                                     </div>
                                                 </div>
-                                                <p className={"my-2  text-danger"}>
+                                                <p
+                                                    className={
+                                                        'my-2  text-danger'
+                                                    }>
                                                     {errors?.image?.message}
                                                 </p>
-
                                             </div>
                                         </div>
                                     </div>
@@ -802,8 +896,7 @@ const Posts = () => {
                                         <button
                                             type="submit"
                                             disabled={loading}
-                                            className="btn btn-success py-3 "
-                                        >
+                                            className="btn btn-success py-3 ">
                                             <span className="fs-4 px-5">
                                                 Mahsulot qo'shish{' '}
                                                 <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
@@ -834,9 +927,7 @@ const Posts = () => {
                                 preload="none"
                                 src={fileImgFile?.video}
                                 poster={customePoster?.url}
-                                style={{ maxHeight: '250px' }}>
-
-                            </video>
+                                style={{ maxHeight: '250px' }}></video>
                             <div className="col-md-12 d-flex flex-column ">
                                 <div className=" mt-2 d-flex justify-content-between p-0">
                                     <p>Qo'shimcha fayllar uchun (.zip)</p>{' '}
@@ -868,9 +959,7 @@ const Posts = () => {
                                                     cursor: 'pointer',
                                                 }}>
                                                 <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                <span>
-                                                    Qo'shimcha fayllar
-                                                </span>
+                                                <span>Qo'shimcha fayllar</span>
                                             </span>
                                         </span>
                                     ) : (
@@ -898,9 +987,7 @@ const Posts = () => {
                             </div>
                         </div>
                     </div>
-
                 </div>
-
 
                 <div
                     className="modal fade "
@@ -994,44 +1081,39 @@ const Posts = () => {
                             <div className="ps-container">
                                 <div className="row">
                                     <div className="col-xl-8 col-lg-8 col-12">
-
                                         <>
-                                            {
-
-                                                !fileImgFileID ? (
-                                                    <div className="video_container">
-                                                        <div className="video_content">
-                                                            <video
-                                                                className=" border w-100"
-                                                                controls
-                                                                preload="none"
-                                                                src={
-                                                                    fileImgFile?.video
-                                                                }
-                                                                poster={
-                                                                    customePoster?.url
-                                                                }
-                                                                style={{
-                                                                    maxHeight:
-                                                                        '250px',
-                                                                }}></video>
-                                                        </div>
+                                            {!fileImgFileID ? (
+                                                <div className="video_container">
+                                                    <div className="video_content">
+                                                        <video
+                                                            className=" border w-100"
+                                                            controls
+                                                            preload="none"
+                                                            src={
+                                                                fileImgFile?.video
+                                                            }
+                                                            poster={
+                                                                customePoster?.url
+                                                            }
+                                                            style={{
+                                                                maxHeight:
+                                                                    '250px',
+                                                            }}></video>
                                                     </div>
-                                                ) : (
-                                                    <img
-                                                        src={
-                                                            'https://kohantextilejournal.com/wp-content/uploads/2018/04/video-poster.jpg'
-                                                        }
-                                                        alt="docc"
-                                                        className="border mb-4 w-100"
-                                                        style={{
-                                                            objectFit:
-                                                                'cover',
-                                                        }}
-                                                        height={350}
-                                                    />
-                                                )
-                                            }
+                                                </div>
+                                            ) : (
+                                                <img
+                                                    src={
+                                                        'https://kohantextilejournal.com/wp-content/uploads/2018/04/video-poster.jpg'
+                                                    }
+                                                    alt="docc"
+                                                    className="border mb-4 w-100"
+                                                    style={{
+                                                        objectFit: 'cover',
+                                                    }}
+                                                    height={350}
+                                                />
+                                            )}
                                         </>
 
                                         <div
@@ -1109,8 +1191,6 @@ const Posts = () => {
                                                             listStyleType:
                                                                 'revert',
                                                         }}>
-
-
                                                         {
                                                             <li>
                                                                 <strong>
