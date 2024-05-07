@@ -1,7 +1,6 @@
 import React from 'react';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import Router from 'next/router';
-import Meta from '~/components/shared/headers/Meta';
 import DefaultAudio from './thumbnail/DefaultAudio';
 import ModuleAudioDetailTopInformation from './modules/ModuleAudioDetailTopInformation';
 import ModuleAudioDetailShoppingActions from './modules/ModuleAudioDetailShoppingActions';
@@ -21,15 +20,10 @@ const ProductAudioDetailFullWidth = ({
     };
 
 
+
     return (
         <>
-            <Meta
-                title={product?.title}
-                image={product?.iamges?.map((item) => item?.image_url)  || product?.poster_url}
-                description={product?.description}
-                keywords={product?.tag ? product?.tag : product?.title }
-                author={`${product?.seller?.first_name} ${product?.seller?.last_name}`}
-            />
+
             <div className="ps-product--detail ">
                 <div className="row">
                     <div className="col-12">

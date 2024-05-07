@@ -16,7 +16,7 @@ const ModuleProductActions = ({ product, audio }) => {
     const [productView, setProduct] = useState([]);
     const { user } = useSelector((state) => state.auth);
     const [loading, setLoading] = useState(false);
-console.log('user', user?.access);
+
     const showModal = () => {
         setOpen(true);
     };
@@ -68,27 +68,7 @@ console.log('user', user?.access);
         setIsQuickView(false);
     };
 
-    // const audioDownloaderSale = async (file) => {
-    //     try {
-    //         setLoading(true);
-    //         const response = await axios.get(file, {
-    //             responseType: 'blob',
-    //         });
 
-    //         const url = window.URL.createObjectURL(new Blob([response.data]));
-    //         const a = document.createElement('a');
-    //         a.href = url;
-    //         // Foydalanuvchi faylni qanday nomlayotganini ko'rish uchun "a.download" attributini o'zgartiraylik
-    //         a.download = 'audio_file.mp3';
-    //         document.body.appendChild(a);
-    //         a.click();
-    //         window.URL.revokeObjectURL(url);
-    //     } catch (error) {
-    //         console.error('Faylni yuklab olishda xato: ', error);
-    //     } finally {
-    //         setLoading(false);
-    //     }
-    // };
 
       const audioDownloaderSale = async (filee, product) => {
         const file = filee.includes('?AWSAccessKeyId') ? filee.split('?')[0] : filee

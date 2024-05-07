@@ -107,33 +107,35 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         },
     ];
 
-    // console.log('product   ==>', product);
 
     return (
         <>
             <PageContainer
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+
                 <Head>
-                    <title>{product?.title}</title>
-                    <meta name="title" content={product?.title} />
-                    <meta
-                        name="description"
-                        content={
-                            product?.description
-                                ? removeHTMLTags(product?.description)
-                                : `${product?.title}  Soff.uz - Intellektual mulk marketi, Intellektual mahsulotlarini soting va xarid qiling.`
-                        }
-                    />
-                    <meta name="image" content={product?.poster_url} />
-                    <meta
-                        name="keywords"
-                        content={
-                            product?.tag
-                                ? product?.tag?.map((e) => e?.name)
-                                : product?.title
-                        }
-                    />
+                    <title>{defaultProducts?.title || "soff.uz - Intellektual mulk marketi"}</title>
+                    <meta name="title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
+                    <meta name="description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
+                    <meta name="image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'} />
+                    <meta name="keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+
+                    <meta property="og:type" content="website" />
+                    <meta property="og:title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
+                    <meta property="og:description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
+                    <meta property="og:image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'} />
+                    <meta property="og:url" content="https://soff.uz" />
+                    <meta property="og:site_name" content="soff.uz" />
+                    <meta property="og:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+
+                    <meta property="twitter:image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'}></meta>
+                    <meta property="twitter:type" content="website" />
+                    <meta property="twitter:title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
+                    <meta property="twitter:description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
+                    <meta property="twitter:url" content="https://soff.uz" />
+                    <meta property="twitter:site_name" content="soff.uz" />
+                    <meta property="twitter:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
                 </Head>
 
                 <div className="container">
@@ -141,16 +143,17 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         <div className="ps-container p-0">
                             <div className="ps-page__container">
                                 {product?.document?.content_type === 'file' ||
-                                product?.document?.content_type ===
+                                    product?.document?.content_type ===
                                     'template' ? (
                                     <div className="">
                                         <ProductDetailFullwidth
                                             product={product}
                                             views={views}
+
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                  'video' ? (
+                                    'video' ? (
                                     <div className="">
                                         <ProductVideoDetailFullWidth
                                             product={product}
@@ -158,7 +161,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                  'audio' ? (
+                                    'audio' ? (
                                     <div className="">
                                         <ProductAudioDetailFullWidth
                                             product={product}
@@ -166,7 +169,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
-                                  'article' ? (
+                                    'article' ? (
                                     <div>
                                         <ProductAudioDetailFullWidth
                                             product={product}
