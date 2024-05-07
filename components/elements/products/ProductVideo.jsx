@@ -63,7 +63,10 @@ const ProductVideo = ({ product }) => {
                     <h4 className='text-truncate fw-bold'>{title(product)}</h4>
                 </div>
                 <div className="ps-product__content card-narx-box" style={{ padding: '0 10px' }}>
+                    {
+                        product?.seller && 
                     <p className='mr-auto m-0'>{`${product?.seller?.first_name} ${product?.seller?.last_name}`}</p>
+                    }
                     <div className="d-flex justify-content-between align-items-center">
                         {+product.discount_price === 0 ? (
                             <p className="free-audio-price">Bepul</p>

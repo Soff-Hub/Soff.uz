@@ -75,7 +75,7 @@ const SearchHeader = ({ setSearch }) => {
         clearTextView,
         loadingView
     if (!loading) {
-        if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0)) {
+        if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0 && resultItems?.video?.length === 0)) {
             productItemsView = <p>Mahsulot topilmadi</p>;
         }
         else {

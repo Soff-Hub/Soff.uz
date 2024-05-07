@@ -119,7 +119,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
     return (
         <header>
             <Meta
-                title={`Soff | ${product?.title}`}
+                title={`${product?.title}`}
                 image={product?.poster_url}
             />
             {contextHolder}

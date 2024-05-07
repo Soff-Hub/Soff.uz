@@ -1,6 +1,12 @@
+import Router from 'next/router';
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 export default function DefaultVideo({ product }) {
+    const { user } = useSelector((state) => state.auth);
+    const router = Router.asPath
+
+
 
     return (
         <div className="video_container">
@@ -14,7 +20,7 @@ export default function DefaultVideo({ product }) {
                     controls
                     preload='none'
                     poster={product?.poster_url ? product?.poster_url : product?.poster}
-                    src={product?.document?.short_content_url}
+                    src={((user?.role === 'admin' || user?.role === "seller") && (router==="/account/products?page=1" || router==="/account/myproducts")) ? product?.document?.file_url : product?.document?.short_content_url}
                 >
                     Your browser does not support the video tag.
                 </video>
