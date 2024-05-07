@@ -1,17 +1,27 @@
 import Router from 'next/router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 
-export default function DefaultVideo({ product, class_products }) {
+export default function DefaultVideo({ product, class_products, isPlay, setIsPlay }) {
     const { user } = useSelector((state) => state.auth);
     const router = Router?.asPath
+
+    useEffect(() => {
+        const player = document.getElementById(`videoPlayer-${product.id}`)
+        if (player && isPlay === product.id) {
+            player.play()
+        } else {
+            player.pause()
+        }
+    }, [product, isPlay])
 
 
 
     return (
 
         <video
-            id='videoPlayer'
+            // controlsList='nodownload'
+            id={`videoPlayer-${product.id}`}
             className={class_products ? "border w-100" : "video_iframe"}
             width="100%"
             height="auto"
@@ -19,8 +29,9 @@ export default function DefaultVideo({ product, class_products }) {
                 background: class_products ? 'unset' : "",
                 maxHeight: class_products ? "" : '380px',
                 objectFit: "cover",
-             
+
             }}
+            onPlay={(e) => setIsPlay(product?.id)}
             controls={true}
             preload='none'
             poster={product?.poster_url ? product?.poster_url : product?.poster}

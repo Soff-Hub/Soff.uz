@@ -15,6 +15,7 @@ const SearchPage = () => {
     const Router = useRouter();
     const { query } = Router;
     const [resultdata, setresultData] = useState([]);
+    const [isPlay, setIsPlay] = useState(null)
 
     async function getSearchData() {
         const responseData = await PostRepository.postSearchFilter(query?.keyword, query?.type);
@@ -193,7 +194,7 @@ const SearchPage = () => {
                                         {
                                             resultdata?.video?.slice(0, 6)?.map((item, index) => (
                                                 <div key={index} className="col-md-4 mb-5">
-                                                    <ProductVideo product={item} />{' '}
+                                                    <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />{' '}
                                                 </div>
                                             ))}
                                     </div>
