@@ -3,7 +3,7 @@ import Product from '~/components/elements/products/Product';
 import ProductVideo from '~/components/elements/products/ProductVideo';
 import AudioProductCart from '~/components/elements/products/AudioProductCart';
 
-const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
+const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data, isPlay, setIsPlay }) => {
     const [relatedProduct, setRelatedProduct] = useState(null);
 
     useEffect(() => {
@@ -30,7 +30,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data }) => {
                             <div
                                 key={index}
                                 className="col-md-4 my-2">
-                                <ProductVideo product={item} />{' '}
+                                <ProductVideo product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
                             </div>
                             :
                             <div

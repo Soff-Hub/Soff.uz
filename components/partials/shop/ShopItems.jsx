@@ -38,6 +38,7 @@ const ShopItems = ({
     const dispatch = useDispatch();
     const [search, setSearch] = useState('');
     const searchDebounce = useDebounce(search, 1000);
+    const [isPlay, setIsPlay] = useState(null)
 
     async function getFreeDocuments(page = 1, searchVal = '') {
         const responseData = await axios.get(
@@ -347,7 +348,7 @@ const ShopItems = ({
 
                             item?.document?.content_type === 'video' ? (
                                 <div className="col-md-4  my-3">
-                                    <ProductVideo product={item} />
+                                    <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
                                 </div>
                             ) : (
 
