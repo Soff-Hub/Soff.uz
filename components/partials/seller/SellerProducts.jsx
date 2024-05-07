@@ -1,17 +1,30 @@
 import React from 'react'
 import Product from '~/components/elements/products/Product';
 import { Pagination } from 'antd';
+import ProductVideo from '~/components/elements/products/ProductVideo';
+import AudioWaveform from '~/components/elements/products/AudioProductCart';
 
 export default function SellerProducts({ data = [], page, handlePagination }) {
+
+
     return (
-        <div className="container"  id='products'>
+        <div className="container" id='products'>
             <div className="row">
                 {data?.results?.map((item) => (
-                    <div
-                        className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
-                        key={item.id}>
-                        <Product product={item} />{' '}
-                    </div>
+                    item?.document?.content_type === 'file' || item?.document?.content_type === 'template' ?
+                        <div
+                            className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
+                            key={item.id}>
+                            <Product product={item} />{' '}
+                        </div> :
+                        item?.document?.content_type === 'video' ?
+                            <div className='col-md-4 my-3'>
+                                <ProductVideo product={item} />
+                            </div> : item?.document?.content_type === 'audio' ?
+                                <div className='col-md-12 my-3'>
+                                    <AudioWaveform product={item} />
+                                </div> :
+                                <></>
                 ))}
             </div>
             {data?.count >= 40 && (

@@ -24,7 +24,6 @@ const ShopItems = ({
     const Router = useRouter();
     const { query } = Router;
     const { slug } = Router.query;
-    const [listView, setListView] = useState(true);
     const [classes, setClasses] = useState(
         'col-lg-3 col-md-4 col-sm-4 col-xs-6 col-6 '
     );
@@ -37,7 +36,6 @@ const ShopItems = ({
     const [newData, setNewData] = useState([]);
     const [page, setPage] = useState(1);
     const dispatch = useDispatch();
-    // const { category_lists: categoryData } = useSelector(state => state.auth)
     const [search, setSearch] = useState('');
     const searchDebounce = useDebounce(search, 1000);
 
@@ -60,10 +58,7 @@ const ShopItems = ({
         }
     }
 
-    function handleChangeViewMode(e) {
-        e.preventDefault();
-        setListView(!listView);
-    }
+
 
     function handleSetColumns() {
         switch (columns) {
@@ -351,7 +346,7 @@ const ShopItems = ({
                         ) :
 
                             item?.document?.content_type === 'video' ? (
-                                <div className="col-md-4 my-3">
+                                <div className="col-md-4  my-3">
                                     <ProductVideo product={item} />
                                 </div>
                             ) : (
@@ -445,7 +440,7 @@ const ShopItems = ({
                     )}
                 </div>
             </div>
-            <div className="ps-shopping__content pagination-product-box">
+            <div className="ps-shopping__content pagination-product-box gap-3">
                 {productItemsView}
             </div>
             <div className="ps-shopping__footer text-center">

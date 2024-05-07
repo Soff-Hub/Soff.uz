@@ -762,7 +762,7 @@ function ProductsLists() {
                                                     <DefaultVideo product={deleteIdView} />
                                                     <ModuleAudioDetailTopInformationLive
                                                         product={deleteIdView ? deleteIdView : ''}
-                                                        views={0}
+                                                        views={deleteIdView?.view_count}
                                                         admin={true}
                                                         taxminiyNarx={
                                                             deleteIdView?.price

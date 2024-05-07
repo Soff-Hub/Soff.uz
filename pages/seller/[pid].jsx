@@ -26,9 +26,7 @@ const SellerPage = ({ seller }) => {
     const showModal = () => {
         setIsModalOpen(true);
     };
-    const showModalDonate = () => {
-        setIsModalOpenDonate(true);
-    };
+
     const handleOk = () => {
         setIsModalOpen(false);
     };
@@ -163,11 +161,11 @@ const SellerPage = ({ seller }) => {
                                     sellerr?.seller &&
                                     <div className='d-flex justify-content-between user_titleCard '>
                                         <div>
-                                        <h1>{sellerr?.seller?.full_name} </h1>
-                                        
-                                        <p >Ro'yxatdan o'tgan sana: {sellerr?.created_at} </p>
+                                            <h1>{sellerr?.seller?.full_name} </h1>
+
+                                            <p >Ro'yxatdan o'tgan sana: {sellerr?.created_at} </p>
                                         </div>
-                                        <div   className="col-12 col-md-9 user_cardss">
+                                        <div className="col-12 col-md-9 user_cardss">
                                             <div className="row justify-content-center">
                                                 <div className="col-10 col-sm-6 col-md-4 mt-3">
                                                     <div className="d-flex align-items-center">
