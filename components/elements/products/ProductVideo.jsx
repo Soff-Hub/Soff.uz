@@ -5,7 +5,7 @@ import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
 import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 
 
-const ProductVideo = ({ product }) => {
+const ProductVideo = ({ product, isPlay, setIsPlay }) => {
     const { title } = useProduct();
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -41,7 +41,7 @@ const ProductVideo = ({ product }) => {
                             height: '200px',
                             objectFit: 'cover'
                         }}>
-                        <DefaultVideo product={product} class_products={true} />
+                        <DefaultVideo isPlay={isPlay} setIsPlay={setIsPlay} product={product} class_products={true} />
                     </a>
                 </Link>
 
