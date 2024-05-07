@@ -30,7 +30,7 @@ const ProductVideoDetailFullWidth = ({
             <div className="ps-product--detail ">
                 <div className="row mb-xl-5 mb-lg-5 mb-0">
                     <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-                        <DefaultVideo product={product} />
+                        <DefaultVideo product={product} /> 
                         <ModuleVideoDetailTopInformation
                             product={product}
                             views={views}

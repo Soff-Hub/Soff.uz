@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
+import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 
 
 const ProductVideo = ({ product }) => {
@@ -27,7 +28,7 @@ const ProductVideo = ({ product }) => {
 
 
     return (
-        <div className="" style={{ boxShadow: "rgba(0, 0, 0, 0.1) 0px 0px 5px 0px, rgba(0, 0, 0, 0.1) 0px 0px 1px 0px", borderRadius: '15px' }}>
+        <div className="borderVideeo" style={{ boxShadow: "rgba(149, 157, 165, 0.2) 0px 5px 14px" }}>
             <div
                 style={{
                     margin: '0 auto',
@@ -40,20 +41,7 @@ const ProductVideo = ({ product }) => {
                             height: '200px',
                             objectFit: 'cover'
                         }}>
-                        <video
-
-                            className="border w-100"
-                            controls={true}
-                            preload="none"
-                            src={product?.document?.short_content_url}
-                            poster={product?.poster_url}
-                            style={{
-                                borderTopRightRadius: '12px',
-                                borderTopLeftRadius: '12px',
-                                background: 'unset'
-                            }}
-                        >
-                        </video>
+                        <DefaultVideo product={product} class_products={true} />
                     </a>
                 </Link>
 
@@ -64,12 +52,13 @@ const ProductVideo = ({ product }) => {
                 </div>
                 <div className="ps-product__content card-narx-box" style={{ padding: '0 10px' }}>
                     {
-                        product?.seller && 
-                    <p className='mr-auto m-0'>{`${product?.seller?.first_name} ${product?.seller?.last_name}`}</p>
+                        product?.seller &&
+                        <Link href="/seller/[pid]"
+                            as={`/seller/${product?.seller?.id}`} className='mr-auto m-0'>{`${product?.seller?.first_name} ${product?.seller?.last_name}`}</Link>
                     }
                     <div className="d-flex justify-content-between align-items-center">
                         {+product.discount_price === 0 ? (
-                            <p className="free-audio-price">Bepul</p>
+                            <p className="free-audio-price px-3 mt-1 text-warning rounded" style={{ border: "1.5px solid #FFC107" }}>Bepul</p>
                         ) : product.discount === 0 ? (
                             <p className='m-0 fw-bold'>
                                 {addPeriodToThousands(product.discount_price)} so'm

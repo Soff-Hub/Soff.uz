@@ -7,6 +7,8 @@ import ProductVideo from '~/components/elements/products/ProductVideo';
 
 const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     // Views
+
+    
     let productItemsView;
     if (data && data?.promotional_sliders?.length > 0) {
         productItemsView = (
@@ -37,6 +39,8 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     } else {
         productItemsView = <p>Mahsulot topilmadi</p>;
     }
+
+
 
 
     return (

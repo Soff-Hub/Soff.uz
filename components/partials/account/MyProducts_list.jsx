@@ -881,7 +881,7 @@ function MyProductsLists() {
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
                                                         product={View ? View : ''}
-                                                        views={0}
+                                                        views={View?.view_count}
                                                         admin={true}
                                                         taxminiyNarx={
                                                             View?.price
@@ -987,8 +987,8 @@ function MyProductsLists() {
                                                 <div className="col-12">
                                                     <DefaultVideo product={View} />
                                                     <ModuleAudioDetailTopInformationLive
-                                                        product={View ? View : ''}
-                                                        views={0}
+                                                        product={View}
+                                                        views={View?.view_count}
                                                         admin={true}
                                                         taxminiyNarx={
                                                             View?.price
