@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 
 export default function DefaultVideo({ product, class_products }) {
     const { user } = useSelector((state) => state.auth);
-    const router = Router.asPath
+    const router = Router?.asPath
 
 
 

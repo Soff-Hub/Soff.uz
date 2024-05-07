@@ -21,6 +21,8 @@ const SellerPage = ({ seller }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
     const [tab, setTab] = useState('tab-1');
+    const [typeSelect, setTypeSelect] = useState('file')
+    const [search, setSearch] = useState('')
 
 
     const showModal = () => {
@@ -39,10 +41,13 @@ const SellerPage = ({ seller }) => {
     const handleCancelDonate = () => {
         setIsModalOpenDonate(false);
     };
+
     const getSellerProduct = async (slug) => {
-        const respons = await ProductRepository.getSellerProductSlug(
+        const respons = await ProductRepository.getSellerProductSlugProducts(
             slug,
-            page
+            page,
+            typeSelect,
+            search
         );
         if (respons) {
             setData(respons.data);
@@ -57,7 +62,7 @@ const SellerPage = ({ seller }) => {
 
     const handlePagination = async (e) => {
         setPage(e);
-        const respons = await ProductRepository.getSellerProductSlug(pid, e);
+        const respons = await ProductRepository.getSellerProductSlugProducts(pid, e, typeSelect, search);
         if (respons) {
             setData(respons.data);
         }
@@ -95,10 +100,16 @@ const SellerPage = ({ seller }) => {
 
     useEffect(() => {
         if (pid) {
-            getSellerProduct(pid);
             getSellerUser(pid);
         }
     }, [pid]);
+
+    useEffect(() => {
+        if (pid) {
+            getSellerProduct(pid);
+        }
+    }, [pid, typeSelect, search]);
+
 
     // let productView = <SkeletonProductDetail />;
     return (
@@ -246,6 +257,16 @@ const SellerPage = ({ seller }) => {
 
                                     </div>
                                 }
+                            </div>
+                            <div className='d-flex justify-content-start row m-0 gap-4 mb-5'>
+                                <select  onChange={(e) => (setTypeSelect(e.target.value))} className='form-select col-md-3 fs-2'>
+                                    <option value="file">File</option>
+                                    <option value="template">Template</option>
+                                    <option value="audio">Audio</option>
+                                    <option value="video">Video</option>
+                                </select>
+                                <input type="text" placeholder='Qidiruv...' onInput={(e)=>(setSearch(e.target.value))}
+                                 className='form-control col-md-8 rounded-3' />
                             </div>
                         </div>
 
