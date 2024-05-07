@@ -113,12 +113,13 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             <PageContainer
                 title={defaultProducts ? defaultProducts?.title : 'Loading...'}>
                 <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
+
                 <Head>
                     <title>{defaultProducts?.title || "soff.uz - Intellektual mulk marketi"}</title>
                     <meta name="title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
                     <meta name="description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
                     <meta name="image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'} />
-                    <meta name="keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name) : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+                    <meta name="keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
 
                     <meta property="og:type" content="website" />
                     <meta property="og:title" content={defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} />
@@ -126,7 +127,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     <meta property="og:image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'} />
                     <meta property="og:url" content="https://soff.uz" />
                     <meta property="og:site_name" content="soff.uz" />
-                    <meta property="og:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name) : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+                    <meta property="og:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
 
                     <meta property="twitter:image" content={defaultProducts?.poster_url || '../../static/img/soff/logo-dark.png'}></meta>
                     <meta property="twitter:type" content="website" />
@@ -134,11 +135,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     <meta property="twitter:description" content={defaultProducts?.description ? removeHTMLTags(defaultProducts?.description) : `${defaultProducts?.title || "soff.uz - Intellektual mulk marketi"} `} />
                     <meta property="twitter:url" content="https://soff.uz" />
                     <meta property="twitter:site_name" content="soff.uz" />
-                    <meta property="twitter:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name) : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
+                    <meta property="twitter:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
                 </Head>
-
-
-
 
                 <div className="container">
                     <div className="ps-page--product">
