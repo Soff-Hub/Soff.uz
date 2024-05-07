@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
-import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
-import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 import Link from 'next/link';
 import Router from 'next/router';
-import Meta from '~/components/shared/headers/Meta';
 import DefaultVideo from './thumbnail/DefaultVideo';
 import ModuleVideoDetailTopInformation from './modules/ModuleVideoDetailTopInformation';
 import VideoDetailsDescription from './modules/VideoDetails';
@@ -26,17 +23,10 @@ const ProductVideoDetailFullWidth = ({
         setTag(product?.tag);
     }, []);
 
+
     return (
         <>
-            <Meta
-                title={product?.title}
-                image={product?.iamges?.map((item) => item?.image_url) || product?.poster_url}
-                description={product?.description}
 
-                keywords={product?.tag ? product?.tag?.map((e) => e?.name) : product?.title}
-
-                author={`${product?.seller?.first_name} ${product?.seller?.last_name}`}
-            />
             <div className="ps-product--detail ">
                 <div className="row mb-xl-5 mb-lg-5 mb-0">
                     <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
