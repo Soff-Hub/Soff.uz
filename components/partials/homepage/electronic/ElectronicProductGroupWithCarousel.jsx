@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Product from '~/components/elements/products/Product';
 import AudioProductCart from '~/components/elements/products/AudioProductCart';
@@ -7,8 +7,9 @@ import ProductVideo from '~/components/elements/products/ProductVideo';
 
 const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     // Views
+    const [isPlay, setIsPlay] = useState(null)
 
-    
+
     let productItemsView;
     if (data && data?.promotional_sliders?.length > 0) {
         productItemsView = (
@@ -24,7 +25,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                             <div
                                 key={index}
                                 className="col-md-4 my-2">
-                                <ProductVideo product={item} />{' '}
+                                <ProductVideo product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
                             </div>
                             :
 

@@ -22,6 +22,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [views, setViews] = useState(null);
     const [product, setProduct] = useState([]);
     const [similar, setSimilar] = useState([]);
+    const [isPlay, setIsPlay] = useState(null)
 
     const { user } = useSelector((state) => state.auth);
 
@@ -156,6 +157,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                     'video' ? (
                                     <div className="">
                                         <ProductVideoDetailFullWidth
+                                            isPlay={isPlay} setIsPlay={setIsPlay}
                                             product={product}
                                             views={views}
                                         />
@@ -186,6 +188,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
                             {similar?.length > 0 ? (
                                 <RelatedProduct
+                                    isPlay={isPlay} setIsPlay={setIsPlay}
                                     data={similar}
                                     collectionSlug="shop-recommend-items"
                                 />
