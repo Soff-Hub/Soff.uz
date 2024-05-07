@@ -17,9 +17,9 @@ export default function VedioCart({ title, url, vedioUrl, id }) {
         <div>
             <Head>
                 <title>{title}</title>
-                <meta name="description" content={`Watch ${title} video`} />
+                <meta name="description" content={`${title} video`} />
                 <meta name="keywords" content="video, watch, entertainment, soff.uz , soff" />
-                <meta name="author" content="Soff.uz soff" />
+                <meta name="author" content="soff.uz soff" />
                 <meta name="robots" content="index, follow" />
                 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 

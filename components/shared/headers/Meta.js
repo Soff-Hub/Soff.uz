@@ -6,12 +6,6 @@ const Meta = ({ title, image, description, keywords, author }) => {
         return html.replace(/<[^>]+>/g, '');
     };
 
-    // console.log('title', title);
-    // console.log('image', image);
-    // console.log('description', description);
-    // console.log('keywords', keywords);
-    // console.log('author', author);
-
     return (
         <Head>
             <meta property="og:type" content="website" />
@@ -21,12 +15,12 @@ const Meta = ({ title, image, description, keywords, author }) => {
                 content={
                     description
                         ? removeHTMLTags(description)
-                        : `${title} | Soff | Soff online hujjatlar bazasi`
+                        : `${title}`
                 }
             />
             <meta property="og:image" content={image} />
-            <meta property="og:url" content="soff.uz" />
-            <meta property="og:site_name" content="Soff.uz" />
+            <meta property="og:url" content="https://soff.uz" />
+            <meta property="og:site_name" content="soff.uz" />
             <meta
                 property="og:keywords"
                 content={keywords ? keywords?.map((e) => e?.name) : title}

@@ -6,7 +6,6 @@ import ModuleDetailShoppingActions from '~/components/elements/detail/modules/Mo
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
 import Router from 'next/router';
-import Meta from '~/components/shared/headers/Meta';
 
 const ProductDetailFullwidth = ({ product, views }) => {
     const [tag, setTag] = useState([]);
@@ -19,15 +18,9 @@ const ProductDetailFullwidth = ({ product, views }) => {
         setTag(product?.tag);
     }, []);
 
+
     return (
         <>
-            <Meta
-                title={product?.title}
-                image={product?.iamges?.map((item) => item?.image_url) || product?.poster_url}
-                description={product?.description}
-                keywords={product?.tag ? product?.tag : product?.title}
-                author={`${product?.seller?.first_name} ${product?.seller?.last_name}`}
-            />
             <div className="ps-product--detail ps-product--fullwidth">
                 <div className="ps-product__header ">
                     <ThumbnailDefault product={product} views={views} />
@@ -44,7 +37,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
                             {tag?.length > 0 &&
-                                tag.slice(0,15).map((item, i) => (
+                                tag.slice(0, 15).map((item, i) => (
                                     <div key={i} className="m-2 tag-product">
                                         <Link href="#" as="#">
                                             <a

@@ -7,7 +7,6 @@ export default function DefaultVideo({ product }) {
     const router = Router.asPath
 
 
-    console.log(router);
 
     return (
         <div className="video_container">
