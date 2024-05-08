@@ -157,7 +157,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     }
 
 
-
     return (
         <>
             <PageContainer
@@ -190,7 +189,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
                 <div className="container" style={{ position: 'relative' }}>
                     <div className='text-end m-0'>
-                        <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>
+                        {(defaultProducts?.price !== 0 || defaultProducts?.discpunt_price) !== 0 && <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>}
                     </div>
 
                     <Joyride
@@ -222,7 +221,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                         }}
                     />
 
-                    <div className="ps-page--product pt-1">
+                    <div className={`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`}>
                         <div className="ps-container p-0">
                             <div className="ps-page__container">
                                 {product?.document?.content_type === 'file' ||
