@@ -110,6 +110,7 @@ const VideoDetailShoppingActions = ({ product }) => {
             return Promise.reject(error);
         }
     };
+    console.log(product)
 
 
     if (true) {
