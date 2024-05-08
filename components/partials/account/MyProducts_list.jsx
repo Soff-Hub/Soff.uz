@@ -57,18 +57,16 @@ function MyProductsLists() {
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
-        ? `${date[0]?.$y}-${
-              `${date[0].$M + 1}`.length === 1
-                  ? `0${date[0].$M + 1}`
-                  : date[0].$M + 1
-          }-${date[0].$D}`
+        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
+            ? `0${date[0].$M + 1}`
+            : date[0].$M + 1
+        }-${date[0].$D}`
         : '';
     const dateFormat1 = date
-        ? `${date[1]?.$y}-${
-              `${date[1].$M + 1}`.length === 1
-                  ? `0${date[1].$M + 1}`
-                  : date[1].$M + 1
-          }-${date[1].$D}`
+        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
+            ? `0${date[1].$M + 1}`
+            : date[1].$M + 1
+        }-${date[1].$D}`
         : '';
     const dataFormat = date
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
@@ -546,10 +544,10 @@ function MyProductsLists() {
                             </a>
                         </Link>
                     ) : data.some(
-                          (el) =>
-                              el.id == content_type_id?.id &&
-                              el.data_status?.status === 'approved'
-                      ) ? (
+                        (el) =>
+                            el.id == content_type_id?.id &&
+                            el.data_status?.status === 'approved'
+                    ) ? (
                         <a
                             data-bs-target="#exampleModalMyProductsPrice"
                             data-bs-toggle="modal"
@@ -559,10 +557,10 @@ function MyProductsLists() {
                             <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
                         </a>
                     ) : data.some(
-                          (el) =>
-                              el.id == content_type_id?.id &&
-                              el.data_status?.status === 'cancelled'
-                      ) ? (
+                        (el) =>
+                            el.id == content_type_id?.id &&
+                            el.data_status?.status === 'cancelled'
+                    ) ? (
                         <span style={{ cursor: 'pointer' }}>
                             <i
                                 className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
@@ -629,43 +627,51 @@ function MyProductsLists() {
                                             <br />
                                             <div className="border px-2 py-3 rounded-2">
                                                 <p className="px-2">
-                                                    Video yuklangandagi joy
+                                                <i className="fa-solid fa-triangle-exclamation text-warning"></i> Video yuklash uchun  xotira
                                                     haqida ma'lumot{' '}
                                                 </p>
                                                 <div className=" d-flex justify-content-between flex-wrap gap-5   p-2 ">
                                                     <div className="d-flex gap-3">
-                                                        <div className="bg-success text-white px-3 py-2 fs-5 rounded-3">
-                                                            Umumiy joy :{' '}
-                                                            {
-                                                                videosize?.storage_size
-                                                            }{' '}
-                                                            { videosize?.storage_size ? "mb" : ''}
+                                                        <div className="btn btn-outline-success  px-3 py-2 fs-5 rounded-3">
+                                                            <strong>
+                                                                Umumiy xotira :{' '}
+                                                                {
+                                                                    videosize?.storage_size
+                                                                }{' '}
+                                                                {videosize?.storage_size ? "mb" : ''}
+                                                            </strong>
                                                         </div>
-                                                        <div className="bg-warning text-white px-3 py-2 fs-5 rounded-3">
-                                                            Band qilingan joy :{' '}
-                                                            {
-                                                                videosize?.full_storage_size
-                                                            }
-                                                            { videosize?.full_storage_size ? 'mb' : ''}
+                                                        <div className="btn btn-outline-primary px-3 py-2 fs-5 rounded-3">
+                                                            <strong>
+                                                                Band qilingan xotira :{' '}
+                                                                {
+                                                                    videosize?.full_storage_size
+                                                                }
+                                                                {videosize?.full_storage_size ? 'mb' : ''}
+                                                            </strong>
                                                         </div>
-                                                        <div className="bg-danger text-white px-3 py-2 fs-5 rounded-3">
-                                                            Bo'sh joy :{' '}
-                                                            {
-                                                                videosize?.empty_storage_size
-                                                            }{' '}
-                                                            { videosize?.empty_storage_size ? 'mb' : ''}
+                                                        <div className="btn btn-outline-danger px-3 py-2 fs-5 rounded-3">
+                                                            <strong>
+                                                                Bo'sh xotira :{' '}
+                                                                {
+                                                                    videosize?.empty_storage_size
+                                                                }{' '}
+                                                                {videosize?.empty_storage_size ? 'mb' : ''}
+                                                            </strong>
                                                         </div>
                                                     </div>
                                                     <div
-                                                       
+
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}>
                                                         <Link href="/account/buying_traffic">
-                                                            <span  className="bg-success text-white px-3 py-3 fs-5 rounded-3 m-0" >
-                                                                Joy qo'shish{' '}
-                                                                <i class="fa-solid fa-plus"></i>
-                                                            </span>
+                                                            <div className="btn btn-success px-3 py-2 fs-5 rounded-3" >
+                                                                <span>
+                                                                    Xotira qo'shish{' '}
+                                                                    <i class="fa-solid fa-plus"></i>
+                                                                </span>
+                                                            </div>
                                                         </Link>
                                                     </div>
                                                 </div>
@@ -756,7 +762,7 @@ function MyProductsLists() {
                                                             {options}
                                                         </Select>
                                                         {user?.role ===
-                                                        'seller' ? (
+                                                            'seller' ? (
                                                             <Select
                                                                 className="col-md-5 p-0"
                                                                 mode="select"
@@ -781,7 +787,7 @@ function MyProductsLists() {
                                                             <></>
                                                         )}
                                                         {user?.role ===
-                                                        'seller' ? (
+                                                            'seller' ? (
                                                             <select
                                                                 className="form-select col-md-3 fs-3 py-3 rounded-3"
                                                                 onChange={(e) =>
@@ -921,7 +927,7 @@ function MyProductsLists() {
                                 {!loading ? (
                                     <>
                                         {View?.document?.content_type ===
-                                        'audio' ? (
+                                            'audio' ? (
                                             <div className="row">
                                                 <div className="col-12">
                                                     <DefaultAudioLive
@@ -935,10 +941,10 @@ function MyProductsLists() {
                                                         }
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
-                                                        product={
-                                                            View ? View : ''
-                                                        }
-                                                        views={0}
+
+                                                        product={View ? View : ''}
+                                                        views={View?.view_count}
+
                                                         admin={true}
                                                         taxminiyNarx={
                                                             View?.price
@@ -1000,8 +1006,8 @@ function MyProductsLists() {
                                                             <div className="ps-document">
                                                                 {View?.description
                                                                     ? parse(
-                                                                          View?.description
-                                                                      )
+                                                                        View?.description
+                                                                    )
                                                                     : "To'ldirilmadi"}
                                                             </div>
                                                         </TabPane>
@@ -1039,17 +1045,16 @@ function MyProductsLists() {
                                                 </div>
                                             </div>
                                         ) : View?.document?.content_type ===
-                                          'video' ? (
+                                            'video' ? (
                                             <div className="row">
                                                 <div className="col-12">
                                                     <DefaultVideo
                                                         product={View}
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
-                                                        product={
-                                                            View ? View : ''
-                                                        }
-                                                        views={0}
+                                                        product={View}
+                                                        views={View?.view_count}
+
                                                         admin={true}
                                                         taxminiyNarx={
                                                             View?.price
@@ -1111,8 +1116,8 @@ function MyProductsLists() {
                                                             <div className="ps-document">
                                                                 {View?.description
                                                                     ? parse(
-                                                                          View?.description
-                                                                      )
+                                                                        View?.description
+                                                                    )
                                                                     : "To'ldirilmadi"}
                                                             </div>
                                                         </TabPane>
@@ -1157,7 +1162,7 @@ function MyProductsLists() {
                                                     />
                                                     <div className="ps-product__info">
                                                         {View?.status ===
-                                                        'cancelled' ? (
+                                                            'cancelled' ? (
                                                             <div className="mb-4">
                                                                 <strong className="text-danger pb-5">
                                                                     {
@@ -1361,7 +1366,7 @@ function MyProductsLists() {
                                 <span
                                     className={
                                         finalPrice < 1000 ||
-                                        products2?.discount_pric < 1000
+                                            products2?.discount_pric < 1000
                                             ? 'text-danger'
                                             : 'text-primary'
                                     }>

@@ -214,6 +214,9 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                                 </>
                         }
                     </div>
+                    <div className="product__top-information--price buystep-0" style={{ minWidth: 150 }}>
+                        {priceView}
+                    </div>
                 </div>
             </div>
         </header>

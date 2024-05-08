@@ -385,6 +385,12 @@ function ApplicationLists() {
     ];
     const columnsTextArea = [
         {
+            title: 'Ismi',
+            dataIndex: 'user_name',
+            key: 'address',
+            width: 550,
+        },
+        {
             title: 'Telefon raqam yoki email',
             dataIndex: 'data',
             key: 'address',
