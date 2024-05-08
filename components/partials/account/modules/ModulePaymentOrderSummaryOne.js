@@ -42,7 +42,7 @@ const ModulePaymentOrderSummaryOne = () => {
         <div className="ps-block--checkout-order">
             <h3>Buyurtma mahsulotlari</h3>
             <div className="shot">
-                <div className="ps-block__content">
+                <div className="ps-block__content checkoutstep-0">
                     {data ? (
                         <figure>
                             <p>Mahsulot</p>

@@ -131,7 +131,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                     : 'pointer'
                                                     }`,
                                             }}
-                                            className="ps-btn ps-btn--black max-clas"
+                                            className="ps-btn ps-btn--black max-clas buystep-1"
                                             href="#"
                                             onClick={(e) =>
                                                 handleAddItemToCart(e)
@@ -145,7 +145,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                     : 'pointer'
                                                     }`,
                                             }}
-                                            className="ps-btn max-clas"
+                                            className="ps-btn max-clas buystep-2"
                                             href="#"
                                             onClick={(e) => handleBuynow(e)}>
                                             Hoziroq xarid qilish
