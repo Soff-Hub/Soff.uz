@@ -239,8 +239,6 @@ class ProductRepository {
         return reponse;
     }
 
-
-
     async getProductImagesSlug(pid) {
         const reponse = await Repository.get(
             `${baseUrl}customer/promotional-sliders/${pid}`
@@ -313,8 +311,26 @@ class ProductRepository {
         return reponse;
     }
 
+    async getSellerProductSlugProducts(slug, page, type, search) {
+        const endPoint = `customer/seller-documents/${slug}/?page=${page}&type=${type}&search=${
+            search || ''
+        }`;
+        const reponse = await Repository.get(baseUrl + endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return error.response;
+            });
+        return reponse;
+    }
+
     async getSellerProfileSlug(slug) {
-        const endPoint = `customer/top-sellers/${slug}`
+        const endPoint = `customer/top-sellers/${slug}`;
         const reponse = await Repository.get(baseUrl + endPoint)
             .then((response) => {
                 if (response.data) {

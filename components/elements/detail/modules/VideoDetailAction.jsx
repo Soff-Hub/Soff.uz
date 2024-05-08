@@ -92,7 +92,7 @@ const VideoDetailShoppingActions = ({ product }) => {
             const response = await Axios.get(filee, {
                 responseType: 'blob',
             });
-    
+
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const a = document.createElement('a');
             a.href = url;
@@ -110,7 +110,8 @@ const VideoDetailShoppingActions = ({ product }) => {
             return Promise.reject(error);
         }
     };
-    
+    console.log(product)
+
 
     if (true) {
         return (
@@ -146,7 +147,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn text-white py-3 mb-4"
+                                            className="ps-btn text-white py-3 mb-4 buystep-1"
                                             href="#"
                                             style={{ fontSize: '14px' }}
                                             onClick={(e) =>
@@ -155,7 +156,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn py-3 me-0 mb-4 text-white"
+                                            className="ps-btn py-3 me-0 mb-4 text-white buystep-2"
                                             href="#"
                                             style={{ fontSize: '14px' }}
                                             onClick={(e) => handleBuynow(e)}>
@@ -170,7 +171,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                         )}
                     </div>
 
-    
+
                 </div>
                 <div className="row m-0 p-0">
                     {product?.document?.images?.length > 0 && (
@@ -193,15 +194,15 @@ const VideoDetailShoppingActions = ({ product }) => {
                                         {!loading ? (
                                             <i class="fa-solid fa-download"></i>
                                         ) : (
-                                            
-                                                <div
-                                                    className="spinner-border"
-                                                    role="status">
-                                                    <span className="visually-hidden">
-                                                        Loading...
-                                                    </span>
-                                                </div>
-                                            
+
+                                            <div
+                                                className="spinner-border"
+                                                role="status">
+                                                <span className="visually-hidden">
+                                                    Loading...
+                                                </span>
+                                            </div>
+
                                         )}
                                     </span>
                                 ))}

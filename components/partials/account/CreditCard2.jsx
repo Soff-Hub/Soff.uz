@@ -403,6 +403,6 @@ const CreditCard2 = ({ document }) => {
         },
     ];
 
-    return <Tabs defaultActiveKey="1" items={items} onChange={onChange} />;
+    return <Tabs className='checkoutstep-1' defaultActiveKey="1" items={items} onChange={onChange} />;
 };
 export default CreditCard2;

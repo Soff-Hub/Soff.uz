@@ -49,6 +49,7 @@ const ModuleAudioDetailTopInformationLive = ({
         );
     }
 
+
     return (
         <header>
             <div
@@ -62,6 +63,7 @@ const ModuleAudioDetailTopInformationLive = ({
                 className={`product__top-information ${'video_user_information'} `}
                 style={{ width: '100%' }}>
                 <div>
+                    <h3>{product?.title}</h3>
                     <div
                         className="product__top-information-account"
                         style={{ cursor: 'pointer' }}>
@@ -104,7 +106,7 @@ const ModuleAudioDetailTopInformationLive = ({
                     <div className=" views_video  mt-1">
                         {' '}
                         <i className="fa-solid fa-eye"></i>{' '}
-                        <span>{views?.count ? views?.count : 0}</span>
+                        <span>{views ? views : 0}</span>
                     </div>
                     <div className="video_send" style={{
                         display: `${admin ? 'none' : 'block'}`,

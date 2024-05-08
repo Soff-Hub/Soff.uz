@@ -52,7 +52,6 @@ const AudioPosts = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-console.log('category_id', category_id);
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
