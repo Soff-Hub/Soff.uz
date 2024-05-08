@@ -8,13 +8,15 @@ import { baseUrl } from '~/repositories/Repository';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import PostRepository from '~/repositories/PostRepository';
 import ProductVideoDetailFullWidth from '~/components/elements/detail/ProductVideoDetailFullWidth';
 import ProductAudioDetailFullWidth from '~/components/elements/detail/ProductAudioDetailFullWidth';
 import axios from 'axios';
 import Head from 'next/head';
+import Joyride from 'react-joyride';
+import { OneShopDoc } from '~/store/auth/action';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -23,8 +25,10 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [product, setProduct] = useState([]);
     const [similar, setSimilar] = useState([]);
     const [isPlay, setIsPlay] = useState(null)
+    const [run, setRun] = useState(false)
 
     const { user } = useSelector((state) => state.auth);
+    const dispatch = useDispatch()
 
     const removeHTMLTags = (html) => {
         return html.replace(/<[^>]+>/g, '');
@@ -108,6 +112,51 @@ const ProductDefaultPage = ({ defaultProducts }) => {
         },
     ];
 
+    const steps = [
+        {
+            target: '.buystep-0',
+            content: "Mahsulot sotib olish bo'yicha yordam kerakmi?",
+            locale: {
+                close: "Yopish",
+                next: "Ha, albatta",
+                open: "5",
+            },
+            placement: 'top'
+        },
+        {
+            target: '.buystep-1',
+            content: "Mahsulotni savatga qo'shib bir nechta mahsulotni bittada sotib oling!",
+        },
+        {
+            target: '.buystep-2',
+            content: "Mahsulotni hoziroq sotib oling",
+        }
+    ]
+
+    const callbackSingle = (data) => {
+        if (data.action === 'reset' || data.action === "close") {
+            const doc = document.querySelector('.headerSticky')
+            doc.id = "headerSticky"
+            setRun(false)
+            if (user?.access) {
+                dispatch(OneShopDoc(product));
+                router.push(`/account/checkout-one?id=${product?.id}`);
+            } else {
+                router.push(`/account/register-user?id=${product?.id}`);
+            }
+        }
+    };
+
+    const handleClickStepper = () => {
+        const doc = document.querySelector('.headerSticky')
+        doc.id = ""
+
+        setTimeout(() => {
+            setRun(true)
+        }, 500);
+    }
+
+
 
     return (
         <>
@@ -139,8 +188,41 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     <meta property="twitter:keywords" content={defaultProducts?.tag ? defaultProducts?.tag?.map((e) => e?.name)?.join(', ') : "kurs ishi, taqdimotlar, slaydlar, diplom ishi, prezentatsiya"} />
                 </Head>
 
-                <div className="container">
-                    <div className="ps-page--product">
+                <div className="container" style={{ position: 'relative' }}>
+                    <div className='text-end m-0'>
+                        <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>
+                    </div>
+
+                    <Joyride
+                        steps={steps}
+                        run={run}
+                        continuous
+                        floaterProps={{
+                            autoOpen: true,
+                            placement: 'right-start',
+                            offset: 0
+                        }}
+                        styles={{
+                            options: {
+                                arrowColor: '#e3ffeb',
+                                primaryColor: '#00A44F',
+                                textColor: '#004a14',
+                                padding: '0 !important',
+                                width: 300,
+                            },
+
+                        }}
+                        callback={callbackSingle}
+                        locale={{
+                            back: "Oldingisi",
+                            last: "Tushundim",
+                            close: "Yopish",
+                            next: "Tushundim",
+                            open: "Ochish",
+                        }}
+                    />
+
+                    <div className="ps-page--product pt-1">
                         <div className="ps-container p-0">
                             <div className="ps-page__container">
                                 {product?.document?.content_type === 'file' ||

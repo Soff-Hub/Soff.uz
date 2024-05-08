@@ -211,7 +211,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                     </div>
                     
 
-                    <div className="product__top-information--price">
+                    <div className="product__top-information--price buystep-0">
                         {priceView}
                     </div>
                 </div>

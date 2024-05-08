@@ -148,14 +148,14 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn ps-btn--black py-3"
+                                            className="ps-btn ps-btn--black py-3 buystep-1"
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleAddItemToCart(e)}>
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn py-3"
+                                            className="ps-btn py-3 buystep-2"
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleBuynow(e)}>
