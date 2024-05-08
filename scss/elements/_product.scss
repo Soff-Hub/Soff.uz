@@ -62,7 +62,7 @@
     border-radius: 10px;
     display: flex;
     gap: 7px;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 
     p {
@@ -2497,7 +2497,7 @@
 
 .ps-product--search-result {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: flex-start;
     border: none;
 

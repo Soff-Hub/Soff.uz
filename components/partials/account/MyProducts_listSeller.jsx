@@ -102,7 +102,7 @@ function MyProductsListsSeller() {
             setLoading2(ID);
             const fileContent = data?.find((item) => item.id == ID);
             const filee = fileContent?.file.includes('?AWSAccessKeyId') ? fileContent?.file.split('?')[0] : fileContent?.file
-            const response = await axios.get(filee, {
+            const response = await axios.get(fileContent?.file, {
                 responseType: 'blob',
             });
 
