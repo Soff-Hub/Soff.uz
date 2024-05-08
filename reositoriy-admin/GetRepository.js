@@ -317,7 +317,9 @@ class GetRepository {
         return reponse;
     }
     async getAllCategoryListsAudio(search) {
-        const endPoint = `admin/category-children/audio/?search=${search || ''}`;
+        const endPoint = `admin/category-children/audio/?search=${
+            search || ''
+        }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -613,10 +615,11 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getChartLists(token, year, month) {
+    async getChartLists(token, year, month, role) {
+        const api = role === 'seller' ? 'chart' : 'admin/chart';
         const endPoint = month
-            ? `admin/chart/?year=${year}&month=${month}`
-            : `admin/chart/?year=${year}`;
+            ? `${api}/?year=${year}&month=${month}`
+            : `${api}/?year=${year}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

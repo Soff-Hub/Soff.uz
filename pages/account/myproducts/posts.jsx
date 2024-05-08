@@ -293,8 +293,13 @@ const Posts = () => {
         if (customeFile.file) {
             formData.append('poster', customeFile.file);
         }
-
+        if (livePosterFile?.images?.length > 0) {
+            formData.append('page_count', null);
+        }else{
+            formData.append('page_count', watch('page_count'));
+        }
         formData.append('category', category_id[0]);
+
         formData.append('document', livePosterFile?.id);
 
         const patchItems = await PatchRepository.getPatchPoster(
@@ -329,7 +334,7 @@ const Posts = () => {
         }
     }, [watch('file')]);
 
-
+    console.log(livePosterFile?.images?.length > 0);
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -582,6 +587,44 @@ const Posts = () => {
                                 </div>
                             </div>
 
+                            {
+                                livePosterFile?.images?.length > 0 ?
+                                    <></>
+                                    :
+                                    <div className="row   mt-3">
+                                        <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                            <p>Mahsulot sahifalar soni: *</p>
+                                            <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz sahifa sonini kiritishingiz kerak.">
+                                                <i
+                                                    style={{ cursor: 'pointer' }}
+                                                    className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                            </Tooltip>
+                                        </div>
+
+                                        <Input
+                                            name="count"
+                                            type="text"
+                                            className={"col-md-8 mb-2"}
+                                            InputClassName={"form-control rounded-3"}
+                                            {...register('page_count', {
+                                                required: "Mahsulot sahifalar sonini to'ldirish majburiy",
+                                                pattern: {
+                                                    value: /^[0-9]+$/,
+                                                    message: "Mahsulot sahifalar sonida faqat sonlar bo'lishi kerak"
+                                                },
+                                                validate: value => value.trim() !== "" || "Mahsulot sahifalar soni bo'sh bo'lishi mumkin emas"
+                                            })}
+                                            error={errors.page_count?.message}
+                                        />
+
+
+                                    </div>
+                            }
+
+
+
+
+
                             <div className=" row ">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
                                     <p>Teglar:</p>{' '}
@@ -780,6 +823,10 @@ const Posts = () => {
                                                 ' ' +
                                                 'ta'
                                                 : ''}{' '}
+
+                                                {
+                                                    watch('page_count') ? watch('page_count') + ' ' + "ta" : ''
+                                                }
                                         </li>
                                         <li>
                                             {' '}
