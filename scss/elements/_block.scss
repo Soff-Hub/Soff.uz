@@ -3378,7 +3378,7 @@
     }
     .shot {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         flex-direction: column;
         gap: 15px;
     }

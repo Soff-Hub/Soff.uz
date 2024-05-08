@@ -24,7 +24,7 @@
 
 .video_send_container {
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     gap: 10px;
     align-items: center;
     .video_send {
@@ -116,7 +116,7 @@
 .video--price-live{
     display: flex;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: start;
     p{
         margin: 0;

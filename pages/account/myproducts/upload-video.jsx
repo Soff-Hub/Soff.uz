@@ -412,6 +412,8 @@ const Posts = () => {
         }
     }, [user?.access]);
 
+    console.log(videosize);
+
 
     return user?.role === 'seller' ? (
         <PageContainer
