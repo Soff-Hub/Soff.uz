@@ -224,13 +224,13 @@ const PostsProductsEdit = () => {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
+                content: "Siz malumotlarni o'zgartirdingiz ",
             });
         } else {
             const modal = Modal.info({
                 centered: true,
                 title: "Qayta urinib ko'ring",
-                content: "O'zgartirish uchun malumot kiritilmadi ",
+                content: "O'zgartirish uchun ma'lumot kiritilmadi ",
             });
         }
         Router.back();
