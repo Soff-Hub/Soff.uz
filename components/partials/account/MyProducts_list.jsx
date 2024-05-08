@@ -52,21 +52,23 @@ function MyProductsLists() {
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const [count, setCount] = useState('');
-
+    const [videosize, setVideoSize] = useState(null);
 
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
-        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
-            ? `0${date[0].$M + 1}`
-            : date[0].$M + 1
-        }-${date[0].$D}`
+        ? `${date[0]?.$y}-${
+              `${date[0].$M + 1}`.length === 1
+                  ? `0${date[0].$M + 1}`
+                  : date[0].$M + 1
+          }-${date[0].$D}`
         : '';
     const dateFormat1 = date
-        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
-            ? `0${date[1].$M + 1}`
-            : date[1].$M + 1
-        }-${date[1].$D}`
+        ? `${date[1]?.$y}-${
+              `${date[1].$M + 1}`.length === 1
+                  ? `0${date[1].$M + 1}`
+                  : date[1].$M + 1
+          }-${date[1].$D}`
         : '';
     const dataFormat = date
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
@@ -167,12 +169,9 @@ function MyProductsLists() {
             if (ItemsData?.title) {
                 setView(ItemsData);
                 setLoading(false);
-
             }
         }
     }
-
-
 
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyProductsDelete(
@@ -198,7 +197,9 @@ function MyProductsLists() {
     async function handleClickIdEdit(productsItems) {
         if (productsItems) {
             if (productsItems?.content_type === 'video') {
-                Router.push(`/account/myproducts/edit-video/${productsItems?.id}`);
+                Router.push(
+                    `/account/myproducts/edit-video/${productsItems?.id}`
+                );
             } else {
                 Router.push(`/account/myproducts/${productsItems?.id}`);
             }
@@ -221,12 +222,18 @@ function MyProductsLists() {
         }
     }
 
+    async function getVideoFunk() {
+        const ItemsData = await GetRepository.getVideoSize(user?.access);
+        if (ItemsData) {
+            setVideoSize(ItemsData);
+        }
+    }
+
     async function handleItemsEditProductsPosts() {
         if (ViewPriceDiscount) {
-            const formData = new FormData()
-            formData.append('price', ViewPriceDiscount?.price)
-            formData.append('discount', ViewPriceDiscount?.discount)
-
+            const formData = new FormData();
+            formData.append('price', ViewPriceDiscount?.price);
+            formData.append('discount', ViewPriceDiscount?.discount);
 
             const patchItems = await PatchRepository.getMyProductsPatch(
                 formData,
@@ -282,10 +289,6 @@ function MyProductsLists() {
         return formattedNumber;
     }
 
-
-
-
-
     const copyVideoUrl = (item) => {
         const videoUrl = `https://soff.uz/product/${item?.name?.slug}`;
         navigator.clipboard
@@ -303,10 +306,6 @@ function MyProductsLists() {
             });
     };
 
-
-
-
-
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
         GetItemsProducts(
@@ -319,11 +318,10 @@ function MyProductsLists() {
         );
     };
 
-
-
     const handleButtonClickViewProducts = async () => {
-
-        const file = View?.document?.file_url.includes('?AWSAccessKeyId') ? View?.document?.file_url.split('?')[0] : View?.document?.file_url
+        const file = View?.document?.file_url.includes('?AWSAccessKeyId')
+            ? View?.document?.file_url.split('?')[0]
+            : View?.document?.file_url;
         try {
             setLoading(true);
             const response = await axios.get(file, {
@@ -334,11 +332,10 @@ function MyProductsLists() {
             const a = document.createElement('a');
             a.href = url;
             a.download =
-                'soff.uz -' + View?.title +
+                'soff.uz -' +
+                View?.title +
                 '.' +
-                file?.split('.')[
-                file?.split('.').length - 1
-                ];
+                file?.split('.')[file?.split('.').length - 1];
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -349,10 +346,10 @@ function MyProductsLists() {
         }
     };
 
-
     useEffect(() => {
         GetItemsCategory();
         GetItemsTag();
+        getVideoFunk();
     }, []);
     useEffect(() => {
         GetItemsProducts(
@@ -362,11 +359,16 @@ function MyProductsLists() {
             dataFormat,
             selectValStatus,
             search,
-            filterType,
+            filterType
         );
-    }, [dataValCat, tagName, dataFormat, selectValStatus, searchDebounce, filterType]);
-
-
+    }, [
+        dataValCat,
+        tagName,
+        dataFormat,
+        selectValStatus,
+        searchDebounce,
+        filterType,
+    ]);
 
     const columns = [
         {
@@ -394,7 +396,10 @@ function MyProductsLists() {
             key: 'age',
             width: 300,
             render: (name) => (
-                <span className="truncate whitespace-nowrap"> {name?.title}</span>
+                <span className="truncate whitespace-nowrap">
+                    {' '}
+                    {name?.title}
+                </span>
             ),
         },
         {
@@ -482,33 +487,35 @@ function MyProductsLists() {
             key: 'address',
             render: (content_type_id) => (
                 <div>
-                    {
-                        data.some(
-                            (el) =>
-                                el.id == content_type_id?.id &&
-                                el.data_status?.status === 'approved'
-                        ) ?
-                            <a>
-                                {
-                                    copy === content_type_id?.id ?
-                                        <i className="fa-solid fa-check mx-2 "></i> :
-                                        <i
-                                            className="fa-solid fa-share text-success-emphasis mx-2"
-                                            onClick={() =>
-                                                copyVideoUrl(
-                                                    data.find((item) => item.id === content_type_id?.id)
-                                                )
-                                            }></i>
-                                }
-                            </a>
-                            :
-                            <a>
+                    {data.some(
+                        (el) =>
+                            el.id == content_type_id?.id &&
+                            el.data_status?.status === 'approved'
+                    ) ? (
+                        <a>
+                            {copy === content_type_id?.id ? (
+                                <i className="fa-solid fa-check mx-2 "></i>
+                            ) : (
                                 <i
-                                    style={{ opacity: "0" }}
-                                    className="fa-solid fa-copy text-success-emphasis mx-2"
-                                ></i>
-                            </a>
-                    }
+                                    className="fa-solid fa-share text-success-emphasis mx-2"
+                                    onClick={() =>
+                                        copyVideoUrl(
+                                            data.find(
+                                                (item) =>
+                                                    item.id ===
+                                                    content_type_id?.id
+                                            )
+                                        )
+                                    }></i>
+                            )}
+                        </a>
+                    ) : (
+                        <a>
+                            <i
+                                style={{ opacity: '0' }}
+                                className="fa-solid fa-copy text-success-emphasis mx-2"></i>
+                        </a>
+                    )}
 
                     <a
                         data-bs-target="#staticBackdropView"
@@ -517,7 +524,10 @@ function MyProductsLists() {
                             className="fa-solid fa-eye text-success-emphasis mx-2"
                             onClick={() =>
                                 handleClickView(
-                                    data.find((item) => item.id === content_type_id?.id)
+                                    data.find(
+                                        (item) =>
+                                            item.id === content_type_id?.id
+                                    )
                                 )
                             }></i>
                     </a>
@@ -536,28 +546,30 @@ function MyProductsLists() {
                             </a>
                         </Link>
                     ) : data.some(
-                        (el) =>
-                            el.id == content_type_id?.id &&
-                            el.data_status?.status === 'approved'
-                    ) ? (
+                          (el) =>
+                              el.id == content_type_id?.id &&
+                              el.data_status?.status === 'approved'
+                      ) ? (
                         <a
                             data-bs-target="#exampleModalMyProductsPrice"
                             data-bs-toggle="modal"
-                            onClick={() => handleClickIdEditModal(content_type_id?.id)}>
+                            onClick={() =>
+                                handleClickIdEditModal(content_type_id?.id)
+                            }>
                             <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
                         </a>
                     ) : data.some(
-                        (el) =>
-                            el.id == content_type_id?.id &&
-                            el.data_status?.status === 'cancelled'
-                    ) ? (
-                            <span style={{cursor:"pointer"}}>
-                                <i
-                                    className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                                    onClick={() =>
-                                        handleClickIdEdit(content_type_id)
-                                    }></i>
-                            </span>
+                          (el) =>
+                              el.id == content_type_id?.id &&
+                              el.data_status?.status === 'cancelled'
+                      ) ? (
+                        <span style={{ cursor: 'pointer' }}>
+                            <i
+                                className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
+                                onClick={() =>
+                                    handleClickIdEdit(content_type_id)
+                                }></i>
+                        </span>
                     ) : (
                         <></>
                     )}
@@ -566,15 +578,14 @@ function MyProductsLists() {
                         data-bs-toggle="modal">
                         <i
                             className="fa-solid fa-trash-can text-danger mx-2"
-                            onClick={() => setDeleteId(content_type_id?.id)}></i>
+                            onClick={() =>
+                                setDeleteId(content_type_id?.id)
+                            }></i>
                     </a>
                 </div>
             ),
-        }
-        ,
+        },
     ];
-
-
 
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -615,6 +626,50 @@ function MyProductsLists() {
                                                     qilindi
                                                 </em>
                                             </span>
+                                            <br />
+                                            <div className="border px-2 py-3 rounded-2">
+                                                <p className="px-2">
+                                                    Video yuklangandagi joy
+                                                    haqida ma'lumot{' '}
+                                                </p>
+                                                <div className=" d-flex justify-content-between flex-wrap gap-5   p-2 ">
+                                                    <div className="d-flex gap-3">
+                                                        <div className="bg-success text-white px-3 py-2 fs-5 rounded-3">
+                                                            Umumiy joy :{' '}
+                                                            {
+                                                                videosize?.storage_size
+                                                            }{' '}
+                                                            { videosize?.storage_size ? "mb" : ''}
+                                                        </div>
+                                                        <div className="bg-warning text-white px-3 py-2 fs-5 rounded-3">
+                                                            Band qilingan joy :{' '}
+                                                            {
+                                                                videosize?.full_storage_size
+                                                            }
+                                                            { videosize?.full_storage_size ? 'mb' : ''}
+                                                        </div>
+                                                        <div className="bg-danger text-white px-3 py-2 fs-5 rounded-3">
+                                                            Bo'sh joy :{' '}
+                                                            {
+                                                                videosize?.empty_storage_size
+                                                            }{' '}
+                                                            { videosize?.empty_storage_size ? 'mb' : ''}
+                                                        </div>
+                                                    </div>
+                                                    <div
+                                                       
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <Link href="/account/buying_traffic">
+                                                            <span  className="bg-success text-white px-3 py-3 fs-5 rounded-3 m-0" >
+                                                                Joy qo'shish{' '}
+                                                                <i class="fa-solid fa-plus"></i>
+                                                            </span>
+                                                        </Link>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     ) : (
                                         <></>
@@ -701,7 +756,7 @@ function MyProductsLists() {
                                                             {options}
                                                         </Select>
                                                         {user?.role ===
-                                                            'seller' ? (
+                                                        'seller' ? (
                                                             <Select
                                                                 className="col-md-5 p-0"
                                                                 mode="select"
@@ -726,7 +781,7 @@ function MyProductsLists() {
                                                             <></>
                                                         )}
                                                         {user?.role ===
-                                                            'seller' ? (
+                                                        'seller' ? (
                                                             <select
                                                                 className="form-select col-md-3 fs-3 py-3 rounded-3"
                                                                 onChange={(e) =>
@@ -799,7 +854,6 @@ function MyProductsLists() {
                                                                 Shablon
                                                             </option>
                                                         </select>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -866,13 +920,14 @@ function MyProductsLists() {
                             <div className="ps-container">
                                 {!loading ? (
                                     <>
-
                                         {View?.document?.content_type ===
-                                            'audio' ? (
+                                        'audio' ? (
                                             <div className="row">
                                                 <div className="col-12">
                                                     <DefaultAudioLive
-                                                        product={View ? View : ''}
+                                                        product={
+                                                            View ? View : ''
+                                                        }
                                                         liveFile={View?.poster}
                                                         title={View?.title}
                                                         categoryName={
@@ -880,8 +935,10 @@ function MyProductsLists() {
                                                         }
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
+
                                                         product={View ? View : ''}
                                                         views={View?.view_count}
+
                                                         admin={true}
                                                         taxminiyNarx={
                                                             View?.price
@@ -943,8 +1000,8 @@ function MyProductsLists() {
                                                             <div className="ps-document">
                                                                 {View?.description
                                                                     ? parse(
-                                                                        View?.description
-                                                                    )
+                                                                          View?.description
+                                                                      )
                                                                     : "To'ldirilmadi"}
                                                             </div>
                                                         </TabPane>
@@ -982,13 +1039,22 @@ function MyProductsLists() {
                                                 </div>
                                             </div>
                                         ) : View?.document?.content_type ===
-                                            'video' ?
+                                          'video' ? (
                                             <div className="row">
                                                 <div className="col-12">
-                                                    <DefaultVideo product={View} />
+                                                    <DefaultVideo
+                                                        product={View}
+                                                    />
                                                     <ModuleAudioDetailTopInformationLive
+<<<<<<< HEAD
                                                         product={View}
                                                         views={View?.view_count}
+=======
+                                                        product={
+                                                            View ? View : ''
+                                                        }
+                                                        views={0}
+>>>>>>> origin/last_branch
                                                         admin={true}
                                                         taxminiyNarx={
                                                             View?.price
@@ -1050,8 +1116,8 @@ function MyProductsLists() {
                                                             <div className="ps-document">
                                                                 {View?.description
                                                                     ? parse(
-                                                                        View?.description
-                                                                    )
+                                                                          View?.description
+                                                                      )
                                                                     : "To'ldirilmadi"}
                                                             </div>
                                                         </TabPane>
@@ -1088,130 +1154,132 @@ function MyProductsLists() {
                                                     )}
                                                 </div>
                                             </div>
-                                            : (
-                                                <div className="ps-product--detail ps-product--fullwidth">
-                                                    <div className="ps-product__header ">
-                                                        <ThumbnailDefault
+                                        ) : (
+                                            <div className="ps-product--detail ps-product--fullwidth">
+                                                <div className="ps-product__header ">
+                                                    <ThumbnailDefault
+                                                        product={View}
+                                                    />
+                                                    <div className="ps-product__info">
+                                                        {View?.status ===
+                                                        'cancelled' ? (
+                                                            <div className="mb-4">
+                                                                <strong className="text-danger pb-5">
+                                                                    {
+                                                                        View?.reason
+                                                                    }
+                                                                </strong>
+                                                            </div>
+                                                        ) : (
+                                                            ''
+                                                        )}
+                                                        <ModuleDetailTopInformation
+                                                            product={
+                                                                View ? View : ''
+                                                            }
+                                                        />
+                                                        <ModuleProductDetailDescription
                                                             product={View}
                                                         />
-                                                        <div className="ps-product__info">
-                                                            {
-                                                                View?.status === 'cancelled' ? (
-                                                                    <div className="mb-4">
-                                                                        <strong className="text-danger pb-5">
-                                                                            {View?.reason}
-                                                                        </strong>
-                                                                    </div>
-                                                                ) : ''
-                                                            }
-                                                            <ModuleDetailTopInformation
-                                                                product={
-                                                                    View ? View : ''
-                                                                }
-                                                            />
-                                                            <ModuleProductDetailDescription
-                                                                product={View}
-                                                            />
-                                                            <div className="ps-product__shopping row-gap-3">
-                                                                <div>
-                                                                    <button
-                                                                        className="ps-btn ps-btn--black"
-                                                                        style={{
-                                                                            cursor: 'not-allowed',
-                                                                        }}>
-                                                                        Savatga
-                                                                        qo'shish
-                                                                    </button>
-                                                                    <button
-                                                                        className="ps-btn"
-                                                                        style={{
-                                                                            cursor: 'not-allowed',
-                                                                        }}>
-                                                                        Sotib olish
-                                                                    </button>
-                                                                </div>
-                                                                <div className="ps-product__actions">
-                                                                    <a
-                                                                        style={{
-                                                                            cursor: 'not-allowed',
-                                                                        }}>
-                                                                        <i
-                                                                            className={`icon-heart`}></i>
-                                                                    </a>
-                                                                </div>
+                                                        <div className="ps-product__shopping row-gap-3">
+                                                            <div>
+                                                                <button
+                                                                    className="ps-btn ps-btn--black"
+                                                                    style={{
+                                                                        cursor: 'not-allowed',
+                                                                    }}>
+                                                                    Savatga
+                                                                    qo'shish
+                                                                </button>
+                                                                <button
+                                                                    className="ps-btn"
+                                                                    style={{
+                                                                        cursor: 'not-allowed',
+                                                                    }}>
+                                                                    Sotib olish
+                                                                </button>
                                                             </div>
-                                                            <p>Tezkor teglar</p>
-                                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                                {View?.tag?.length >
-                                                                    0 &&
-                                                                    View?.tag.map(
-                                                                        (
-                                                                            item,
-                                                                            i
-                                                                        ) => (
-                                                                            <div
-                                                                                key={
-                                                                                    i
-                                                                                }
-                                                                                className="m-2 tag-product">
-                                                                                <Link
-                                                                                    href="#"
-                                                                                    as="#">
-                                                                                    <a>
-
-                                                                                        {
-                                                                                            item.name
-                                                                                        }{' '}
-                                                                                    </a>
-                                                                                </Link>
-                                                                            </div>
-                                                                        )
-                                                                    )}
+                                                            <div className="ps-product__actions">
+                                                                <a
+                                                                    style={{
+                                                                        cursor: 'not-allowed',
+                                                                    }}>
+                                                                    <i
+                                                                        className={`icon-heart`}></i>
+                                                                </a>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                    <div className="ps-product__content ps-tab-root">
-                                                        <Tabs defaultActiveKey="1">
-                                                            <TabPane
-                                                                tab="Mahsulot to’liq tavsifi"
-                                                                key="1">
-                                                                <PartialDescription
-                                                                    product={View}
-                                                                />
-                                                            </TabPane>
-                                                        </Tabs>
-                                                    </div>
-                                                    <div className="d-flex justify-content-end ">
-                                                        {loading2 ? (
-                                                            <button
-                                                                className="btn btn-success  p-2 px-5 fs-4 "
-                                                                style={{
-                                                                    width: '179px',
-                                                                    cursor: 'not-allowed',
-                                                                }}>
-                                                                <div
-                                                                    className="spinner-border "
-                                                                    role="status">
-                                                                    <span className="visually-hidden">
-                                                                        Loading...
-                                                                    </span>
-                                                                </div>
-                                                            </button>
-                                                        ) : (
-                                                            <button
-                                                                onClick={
-                                                                    handleButtonClickViewProducts
-                                                                }
-                                                                className="btn btn-success p-2 px-5 fs-4 ">
-                                                                <i className="fa-solid fa-download mx-1"></i>{' '}
-                                                                <span className="fs-3">
-                                                                    File ochish
-                                                                </span>
-                                                            </button>
-                                                        )}
+                                                        <p>Tezkor teglar</p>
+                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                            {View?.tag?.length >
+                                                                0 &&
+                                                                View?.tag.map(
+                                                                    (
+                                                                        item,
+                                                                        i
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                            className="m-2 tag-product">
+                                                                            <Link
+                                                                                href="#"
+                                                                                as="#">
+                                                                                <a>
+                                                                                    {
+                                                                                        item.name
+                                                                                    }{' '}
+                                                                                </a>
+                                                                            </Link>
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            )}
+                                                <div className="ps-product__content ps-tab-root">
+                                                    <Tabs defaultActiveKey="1">
+                                                        <TabPane
+                                                            tab="Mahsulot to’liq tavsifi"
+                                                            key="1">
+                                                            <PartialDescription
+                                                                product={View}
+                                                            />
+                                                        </TabPane>
+                                                    </Tabs>
+                                                </div>
+                                                <div className="d-flex justify-content-end ">
+                                                    {loading2 ? (
+                                                        <button
+                                                            className="btn btn-success  p-2 px-5 fs-4 "
+                                                            style={{
+                                                                width: '179px',
+                                                                cursor: 'not-allowed',
+                                                            }}>
+                                                            <div
+                                                                className="spinner-border "
+                                                                role="status">
+                                                                <span className="visually-hidden">
+                                                                    Loading...
+                                                                </span>
+                                                            </div>
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            onClick={
+                                                                handleButtonClickViewProducts
+                                                            }
+                                                            className="btn btn-success p-2 px-5 fs-4 ">
+                                                            <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                            <span className="fs-3">
+                                                                File ochish
+                                                            </span>
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        )}
                                     </>
                                 ) : (
                                     <div
@@ -1298,7 +1366,7 @@ function MyProductsLists() {
                                 <span
                                     className={
                                         finalPrice < 1000 ||
-                                            products2?.discount_pric < 1000
+                                        products2?.discount_pric < 1000
                                             ? 'text-danger'
                                             : 'text-primary'
                                     }>

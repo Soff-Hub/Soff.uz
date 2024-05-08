@@ -165,7 +165,7 @@ class PatchRepository {
         const endPoint = `product-delete/${id}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
-            method: 'PATCH',
+            method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
             },
