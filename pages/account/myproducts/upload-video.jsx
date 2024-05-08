@@ -286,7 +286,7 @@ const Posts = () => {
             setVideoSize(ItemsData);
         }
     }
-    console.log(Math.ceil(fileImgFileID?.size / 1024 / 1024));
+
     async function PostFilePoster() {
         if (fileImgFileID && fileImgFileID?.size) {
             if (
@@ -321,9 +321,9 @@ const Posts = () => {
                     });
                 }
             } else {
-                const modal = Modal.error({
+                const modal = Modal.warning({
                     centered: true,
-                    title: 'Xatolik!',
+                    title: 'Ogohlantirish!',
                     content: (
                         <div>
                             <p>
@@ -332,9 +332,9 @@ const Posts = () => {
                             </p>
                             <p>
                                 Agar qo'shimcha joy sotib olishni istasangiz
-                                ushbu havolaga o'ting
+                                Xotira sotib olish tugmasiga bosing!
                             </p>
-                            <p className='text-success' style={{cursor:'pointer'}} onClick={() => (Router.push("/account/buying_traffic"),  modal.destroy())} > https://soff.uz/account/buying_traffic </p>
+                            <p className='btn btn-outline-success fs-5' style={{ cursor: 'pointer' }} onClick={() => (Router.push("/account/buying_traffic"), modal.destroy())} > Xotira sotib olish </p>
                         </div>
                     ),
                 });
@@ -412,7 +412,7 @@ const Posts = () => {
         }
     }, [user?.access]);
 
-  
+
     return user?.role === 'seller' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -452,9 +452,10 @@ const Posts = () => {
                             id="FormPostsMyProducts"
                             className=" col-md-7 pb-5"
                             noValidate>
-                            <div className="col-md-8 p-0  mt-3">
+                            <div className="col-md-12 p-0  mt-3">
                                 <div className="col-md-12  d-flex justify-content-between p-0 ">
                                     <h4 className="p-0">Video Mahsulot </h4>
+                                    <p className='text-danger  '><i className="fa-solid fa-circle-exclamation"></i> Sizda Video yuklash uchun  qolgan joy {videosize?.empty_storage_size} MB</p>
                                 </div>
                             </div>
                             <div className="row">
@@ -576,8 +577,9 @@ const Posts = () => {
                                     <div className="row">
                                         <div className="col-md-12 d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Video(asosiy): *</p>{' '}
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .ppt, .pptx .pdf">
+                                                    <p>Video(asosiy): *</p>{' '}
+
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: video/*">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -600,7 +602,7 @@ const Posts = () => {
                                                         width: '100%',
                                                     }}>
                                                     {!fileImgFileID ||
-                                                    livePosterFile === '' ? (
+                                                        livePosterFile === '' ? (
                                                         <span
                                                             className="d-flex flex-column align-items-center"
                                                             style={{
@@ -626,6 +628,7 @@ const Posts = () => {
                                                                         Asosiy
                                                                         video
                                                                     </span>
+
                                                                 </span>
                                                             )}
                                                         </span>
@@ -672,7 +675,7 @@ const Posts = () => {
                                                     Video(qisqa ko'rish uchun):
                                                     *
                                                 </p>{' '}
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .doc va docx, .ppt, .pptx .pdf">
+                                                <Tooltip title="Mijozlar videoni nima haqida ekanligini bilib olishlari uchun. Video quyidagi turdagi video bo’lishi mumkin: video/*">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -760,7 +763,7 @@ const Posts = () => {
                                         <div className="col-md-12  d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video poster rasmi: *</p>
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: video/*">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
