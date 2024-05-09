@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Checkbox, Modal, Pagination, Table } from 'antd';
+import { Modal } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -275,17 +275,17 @@ function CategoryLists() {
                             data-bs-target="#exampleModalToggleEditCategory"
                             data-bs-toggle="modal">
                             <i
-                                className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
+                                className="fa-solid fa-pen-to-square mx-4 text-success-emphasis ml-5"
                                 onClick={() => GetItemsProductsEdit(e?.id)}></i>
                         </a>
-                        {data.some(
+                        {categoryData.some(
                             (el) => el.id == e?.id && el.is_delete === true
                         ) ? (
                             <a
                                 data-bs-target="#exampleModalToggle"
                                 data-bs-toggle="modal">
                                 <i
-                                    className="fa-solid fa-trash-can text-danger mx-3 ml-5"
+                                    className="fa-solid fa-trash-can text-danger mx-3"
                                     onClick={() => setDeleteId(e?.id)}></i>
                             </a>
                         ) : (
@@ -314,7 +314,7 @@ function CategoryLists() {
                             ) : (
                                 <i className="fa-solid fa-image fa-2x "></i>
                             )}
-                            {data.some(
+                            {categoryData.some(
                                 (el) => el.id == e?.id && el.is_delete === true
                             ) ? (
                                 <a
@@ -342,6 +342,8 @@ function CategoryLists() {
             );
         }),
     }));
+
+    
 
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -474,7 +476,7 @@ function CategoryLists() {
                         rel="noopener noreferrer">
                         Link (rasm)
                     </a>
-                    {data.some(
+                    {categoryData?.some(
                         (el) =>
                             el?.id == deleteIdEdit?.id && el.is_update === true
                     ) ? (
@@ -492,14 +494,14 @@ function CategoryLists() {
                     ) : (
                         <></>
                     )}
-                    {data.some(
+                    {categoryData?.some(
                         (el) =>
                             el?.id == deleteIdEdit?.id && el.is_parent === true
                     ) ? (
                         <select
                             className="form-select  rounded-3 py-3 fs-3"
                             onChange={(e) => setTagNameTop(e.target.value)}>
-                            {data.some(
+                            {categoryData?.some(
                                 (el) =>
                                     el?.id == deleteIdEdit?.id &&
                                     el.top === true
