@@ -22,9 +22,11 @@ function DashbordList({ setOpen }) {
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
     const [yearGet, setYearGet] = useState([]);
+    const [donats, setDonats] = useState([]);
     const [month, setMonth] = useState(null);
 
     const { accountLinks, user } = useSelector((state) => state.auth);
+
 
 
     function addPeriodToThousands(number) {
@@ -93,14 +95,22 @@ function DashbordList({ setOpen }) {
         }
     }
 
+    async function getSellerDashbordDonatSS() {
+        const ItemsData = await GetRepository.getSellerDashbordDonat(user?.access);
+        if (ItemsData?.results) {
+            setDonats(ItemsData);
+        }
+    }
+
+
 
     useEffect(() => {
         GetItemsProducts();
         GetItemsProductsOrders(1);
         GetItemsProductsPopular();
         GetItemsSeller_Yearch()
+        getSellerDashbordDonatSS()
     }, []);
-
 
 
 
@@ -168,6 +178,51 @@ function DashbordList({ setOpen }) {
                 </a>
             ),
         },
+    ];
+
+    const columnsDonat = [
+        {
+            title: 'id',
+            dataIndex: 'id',
+            key: 'age',
+            width: 100,
+        },
+        {
+            title: 'Donat qiluvchi',
+            dataIndex: 'sponsor_info',
+            key: 'age',
+            width: 350,
+        },
+        {
+            title: "So'mma",
+            dataIndex: 'amount',
+            key: 'age',
+            render: (discount_price) => (
+                <span>
+                    <i className="fa-solid fa-coins text-warning"></i>{' '}
+                    {addPeriodToThousands(discount_price)}
+                </span>
+            ),
+        },
+        {
+            title: 'Donat qilingan sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    <CalculateTimeDifference targetDate={created_at} />
+                </span>
+            ),
+        },
+        {
+            title: 'Ehson haqida',
+            dataIndex: 'description',
+            key: 'age',
+            width: 350,
+        },
+
     ];
 
     const columnsOrders = [
@@ -364,6 +419,38 @@ function DashbordList({ setOpen }) {
         },
     ];
 
+    const items = [
+        {
+            key: '1',
+            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight:"600" }} >Ommabop Mahsulotlar</span>,
+            children: <div>
+                <Table
+                    scroll={{ x: 1250 }}
+                    dataSource={dataProducts}
+                    columns={columns}
+                    className="pb-5"
+                    pagination={false}
+                />
+            </div>,
+
+
+        },
+        {
+            key: '2',
+            label: <span style={{ marginLeft: "30px", fontSize: "16px", fontWeight:"600" }}>Donatlar ro'yxati  <strong className='mx-2'>({donats?.total_amount ? (addPeriodToThousands(donats?.total_amount)) : 0} so'm)</strong></span>,
+            children: <div>
+             
+                <Table
+                    scroll={{ x: 1250 }}
+                    dataSource={donats?.results}
+                    columns={columnsDonat}
+                    className="pb-5"
+                    pagination={false}
+                />
+            </div>,
+
+        },
+    ]
 
 
     return (
@@ -823,18 +910,12 @@ function DashbordList({ setOpen }) {
                     </div>
                 </div>
                 {user?.role === 'admin' ? (
-                    <div>
-                        <h4 className="bg-white m-0 text-center py-4">
-                            Ommabop mahsulotlar
-                        </h4>
-                        <Table
-                            scroll={{ x: 1250 }}
-                            dataSource={dataProducts}
-                            columns={columns}
-                            className="pb-5"
-                            pagination={false}
-                        />
+                    <div className='tabs_select'>
+
+                        <Tabs defaultActiveKey="1" items={items} className='bg-white ' />
+
                     </div>
+
                 ) : (
                     <></>
                 )}
