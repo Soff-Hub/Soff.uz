@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
-import { Pagination, Select, Table } from 'antd';
+import { Select, Table, Tooltip } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
@@ -12,20 +12,15 @@ import ChartSeller from '~/components/partials/account/ChartSeller';
 const SellerAccount = ({ seller }) => {
     const [data, setData] = useState([]);
     const [dashboardData, setDashboardData] = useState([]);
-    // const [search, setSerach] = useState([]);
-    // const [deleteIdEdit, setDeleteIdEdit] = useState(null);
-    // const [selectVal, setSelectVal] = useState(null);
-    // const [selectValStatus, setSelectValStatus] = useState('');
     const [tableData, setTableData] = useState([]);
     const router = useRouter();
     const { pid } = router.query;
-    const [pageCount, setPageCount] = useState(0);
-    const [currPage, setCurrPage] = useState(1);
 
     const { user } = useSelector((state) => state.auth);
 
     const [year, setYear] = useState(new Date().getFullYear());
     const [month, setMonth] = useState(null);
+    const [yearGet, setYearGet] = useState([]);
 
     const labels = [
         { name: 'Yanvar', value: '01' },
@@ -96,10 +91,20 @@ const SellerAccount = ({ seller }) => {
         }
     }
 
+    async function GetItemsSeller_Yearch() {
+        const ItemsData = await GetRepository.getSellerDashbordYearch(user?.access, pid);
+        if (ItemsData) {
+            setYearGet(ItemsData);
+        }
+    }
+
+
+
     useEffect(() => {
         if (user?.access && pid) {
             GetSellerList(pid, user?.access);
             getDashboardData(pid, user?.access);
+            GetItemsSeller_Yearch()
         }
     }, [pid]);
 
@@ -136,24 +141,35 @@ const SellerAccount = ({ seller }) => {
         },
         {
             title: 'Holat',
-            dataIndex: 'status',
-            key: 'status',
-            render: (status) => (
-                <span>
-                    {status === 'approved' ? (
-                        <span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            Faol
+            dataIndex: 'data_status',
+            key: 'address',
+            render: (datastatus) =>
+                datastatus?.status === 'moderation' ? (
+                    <span>
+                        <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                        Moderatsiya
+                    </span>
+                ) : datastatus?.status === 'approved' ? (
+                    <span>
+                        <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                        Tasdiqlangan
+                    </span>
+                ) : datastatus?.status === 'cancelled' ? (
+                    <Tooltip title={datastatus?.reason}>
+                        <span style={{ cursor: 'pointer' }}>
+                            <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                            Bekor qilingan{' '}
                         </span>
-                    ) : (
-                        <span>
-                            <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                            {status}
-                        </span>
-                    )}
-                </span>
-            ),
-        }
+                    </Tooltip>
+                ) : datastatus?.status === 'deleted' ? (
+                    <span>
+                        <i className="fa-solid fa-inbox text-danger"></i>{' '}
+                        Arxivlangan
+                    </span>
+                ) : (
+                    <></>
+                ),
+        },
     ];
 
     return (
@@ -342,6 +358,14 @@ const SellerAccount = ({ seller }) => {
                                     </span>
                                 </div>
                             </div>
+                            <h4 className={Number(data?.wallet) < 10000 ? 'text-danger' : "text-success"}> - Balans {
+                                addPeriodToThousands(data?.wallet)
+                            } so'm{' '}</h4>
+                            <div className='mb-2'>
+                                <h4>- Ro'yxatdan o'tgan vaqti </h4>
+                                <span className='fs-4 mx-4 '> <CalculateTimeDifference targetDate={data?.created_at} /></span>
+                            </div>
+
                             <h4>
                                 {' '}
                                 - Jami mahsulotlari soni {
@@ -371,7 +395,7 @@ const SellerAccount = ({ seller }) => {
                                                 {' '}
                                                 - {el.full_name} {'  '}
                                                 {el.auth_status ===
-                                                'code_verified' ? (
+                                                    'code_verified' ? (
                                                     <i className="fa-solid text-success fa-circle-check"></i>
                                                 ) : (
                                                     <i className="fa-solid fa-circle-xmark text-danger"></i>
@@ -394,12 +418,9 @@ const SellerAccount = ({ seller }) => {
                                         width: 300,
                                     }}
                                     onChange={handleChangeYear}
-                                    options={[
-                                        2023, 2024, 2025, 2026, 2027, 2028,
-                                        2029, 2030, 2031, 2032, 2033,
-                                    ].map((el) => ({
-                                        value: +el,
-                                        label: `${+el}-yil bo'yicha hisobotlar`,
+                                    options={yearGet?.map((el) => ({
+                                        value: +el?.year,
+                                        label: `${+el?.year}-yil bo'yicha hisobotlar`,
                                     }))}
                                     className="me-2"
                                 />
@@ -417,10 +438,12 @@ const SellerAccount = ({ seller }) => {
                                             label: `Barcha oy ma'lumotlari`,
                                             value: null,
                                         },
-                                        ...labels.map((el) => ({
-                                            label: `${el.name} oyi ma'lumotlari`,
-                                            value: el.value,
-                                        })),
+                                        ...yearGet
+                                            ?.filter(item => item?.year === year)
+                                            .map(item => item?.months?.map((el) => ({
+                                                label: `${el.name} oyi ma'lumotlari`,
+                                                value: el.value,
+                                            })))[0] || []
                                     ]}
                                 />
                             </div>
@@ -441,16 +464,6 @@ const SellerAccount = ({ seller }) => {
                                             columns={columns}
                                             pagination={false}
                                         />
-                                        {/* <Pagination
-                                            total={pageCount}
-                                            defaultCurrent={currPage}
-                                            className="my-3"
-                                            onChange={(val) =>
-                                                GetSellerList(
-                                                    val
-                                                )
-                                            }
-                                        /> */}
                                     </div>
                                 </div>
                             </div>

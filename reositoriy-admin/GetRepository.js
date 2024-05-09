@@ -24,6 +24,26 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getSellerDashbordYearch(token, id) {
+        const endPoint = `get-dates/?seller=${id || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getPopularProducts(token) {
         const endPoint = `admin/popular-product/`;
         const reponse = await Repository({
@@ -91,7 +111,6 @@ class GetRepository {
         dataValStatus,
         date,
         id,
-        arxiv,
         search,
         document__content_type,
         token
@@ -100,7 +119,7 @@ class GetRepository {
             id ? id + '/' : ''
         }?page=${page}&category=${category || ''}&date_range_after=${
             date || ''
-        }&status=${dataValStatus || ''}&arxiv=${arxiv || ''}&search=${
+        }&status=${dataValStatus || ''}&search=${
             search || ''
         }&document__content_type=${
             document__content_type || ''

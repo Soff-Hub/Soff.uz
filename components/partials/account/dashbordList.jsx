@@ -21,6 +21,7 @@ function DashbordList({ setOpen }) {
     const [currPage, setCurrPage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
+    const [yearGet, setYearGet] = useState([]);
     const [month, setMonth] = useState(null);
 
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -78,7 +79,6 @@ function DashbordList({ setOpen }) {
         setLoading(false);
     }
 
-
     const handleChangeYear = (value) => {
         setYear(+value);
     };
@@ -86,11 +86,23 @@ function DashbordList({ setOpen }) {
         setMonth(value);
     };
 
+    async function GetItemsSeller_Yearch() {
+        const ItemsData = await GetRepository.getSellerDashbordYearch(user?.access);
+        if (ItemsData) {
+            setYearGet(ItemsData);
+        }
+    }
+
+
     useEffect(() => {
         GetItemsProducts();
         GetItemsProductsOrders(1);
         GetItemsProductsPopular();
+        GetItemsSeller_Yearch()
     }, []);
+
+
+
 
     const columns = [
         {
@@ -352,26 +364,13 @@ function DashbordList({ setOpen }) {
         },
     ];
 
-    const labels = [
-        { name: 'Yanvar', value: '01' },
-        { name: 'Fevral', value: '02' },
-        { name: 'Mart', value: '03' },
-        { name: 'Aprel', value: '04' },
-        { name: 'May', value: '05' },
-        { name: 'Iyun', value: '06' },
-        { name: 'Iyul', value: '07' },
-        { name: 'Avgust', value: '08' },
-        { name: 'Sentyabr', value: '09' },
-        { name: 'Oktyabr', value: '10' },
-        { name: 'Noyabr', value: '11' },
-        { name: 'Dekabr', value: '12' },
-    ];
+
 
     return (
         <section className="ps-my-account ps-page--account p-0">
             <p className='step-0 m-0'></p>
             <div className="container">
-                { user?.role != 'admin' && window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
+                {user?.role != 'admin' && window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
                     <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}><i className='fa-regular fa-circle-question'></i> Saytdan foydalanish bo'yicha savolingiz bormi?</p>
                 </div>}
                 {user?.role === 'admin' ? (
@@ -747,7 +746,7 @@ function DashbordList({ setOpen }) {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        {user?.role === 'admin' || user?.role === 'seller' && (
+                        {(user?.role === 'admin' || user?.role === 'seller') && (
                             <div className="dashboard-div mb-2">
                                 <Select
                                     defaultValue={{
@@ -758,12 +757,9 @@ function DashbordList({ setOpen }) {
                                         width: 300,
                                     }}
                                     onChange={handleChangeYear}
-                                    options={[
-                                        2023, 2024, 2025, 2026, 2027, 2028,
-                                        2029, 2030, 2031, 2032, 2033,
-                                    ].map((el) => ({
-                                        value: +el,
-                                        label: `${+el}-yil bo'yicha hisobotlar`,
+                                    options={yearGet?.map((el) => ({
+                                        value: +el?.year,
+                                        label: `${+el?.year}-yil bo'yicha hisobotlar`,
                                     }))}
                                     className="me-2"
                                 />
@@ -781,16 +777,18 @@ function DashbordList({ setOpen }) {
                                             label: `Barcha oy ma'lumotlari`,
                                             value: null,
                                         },
-                                        ...labels.map((el) => ({
-                                            label: `${el.name} oyi ma'lumotlari`,
-                                            value: el.value,
-                                        })),
+                                        ...yearGet
+                                            ?.filter(item => item?.year === year)
+                                            .map(item => item?.months?.map((el) => ({
+                                                label: `${el.name} oyi ma'lumotlari`,
+                                                value: el.value,
+                                            })))[0] || []
                                     ]}
                                 />
                             </div>
                         )}
 
-                        {user?.role === 'admin' || user?.role === 'seller' && (
+                        {(user?.role === 'admin' || user?.role === 'seller') && (
                             <div className="dashboard-div">
                                 <Example year={year} month={month} />
                             </div>
