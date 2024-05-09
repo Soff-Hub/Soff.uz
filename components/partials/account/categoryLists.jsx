@@ -14,7 +14,6 @@ import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
 import { Collapse } from 'antd';
 function CategoryLists() {
-    const [data, setData] = useState([]);
     const [search, setSerach] = useState('');
     const [tagItems, setTagItems] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
@@ -85,7 +84,7 @@ function CategoryLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsProductsList(currPage, search, null);
+        GetItemsProductsList(search, null);
     }
 
     async function handleItemsPost(values) {
@@ -112,7 +111,7 @@ function CategoryLists() {
                 content: `Siz  yangi malumot qo'shdingiz`,
             });
         }
-        GetItemsProductsList(currPage, search, null);
+        GetItemsProductsList(search, null);
     }
 
     async function handleItemsEdit() {
@@ -153,7 +152,7 @@ function CategoryLists() {
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
             });
-            GetItemsProductsList(currPage, search, null);
+            GetItemsProductsList(search, null);
 
             setTagNameTop(null);
             setTagName(null);
@@ -257,11 +256,11 @@ function CategoryLists() {
                 <div className="col-md-6">{e?.name}</div>
                 <div className="col-md-6 text-end">
                     <div className="d-flex align-items-center justify-content-end">
-                        {e?.poster_url ? (
-                            <a href={e?.poster_url} target="blank">
+                        {e?.image ? (
+                            <a href={e?.image} target="blank">
                                 {' '}
                                 <NextImageCard
-                                    url={e?.poster_url}
+                                    url={e?.image}
                                     clasS="rounded-3 mb-2"
                                     width="54px"
                                     height="54px"
@@ -277,9 +276,8 @@ function CategoryLists() {
                                 className="fa-solid fa-pen-to-square mx-4 text-success-emphasis ml-5"
                                 onClick={() => GetItemsProductsEdit(e?.id)}></i>
                         </a>
-                        {categoryData.some(
-                            (el) => el.id == e?.id && el.is_delete === true
-                        ) ? (
+                        {e?.is_delete === true
+                          ? (
                             <a
                                 data-bs-target="#exampleModalToggle"
                                 data-bs-toggle="modal">
@@ -300,27 +298,12 @@ function CategoryLists() {
                     <div className="col-md-6">{e?.name}</div>
                     <div className="col-md-6 text-end">
                         <div className="d-flex align-items-center justify-content-end">
-                            {e?.poster_url ? (
-                                <a href={e?.poster_url} target="blank">
-                                    {' '}
-                                    <NextImageCard
-                                        url={e?.poster_url}
-                                        clasS="rounded-3 mb-2"
-                                        width="54px"
-                                        height="54px"
-                                    />
-                                </a>
-                            ) : (
-                                <i className="fa-solid fa-image fa-2x "></i>
-                            )}
-                            {categoryData.some(
-                                (el) => el.id == e?.id && el.is_delete === true
-                            ) ? (
+                        {  e?.is_delete === true ? (
                                 <a
                                     data-bs-target="#exampleModalToggle"
                                     data-bs-toggle="modal">
                                     <i
-                                        className="fa-solid fa-trash-can text-danger mx-3 ml-5"
+                                        className="fa-solid fa-trash-can text-danger mx-3"
                                         onClick={() => setDeleteId(e?.id)}></i>
                                 </a>
                             ) : (
@@ -335,6 +318,7 @@ function CategoryLists() {
                                         GetItemsProductsEdit(e?.id)
                                     }></i>
                             </a>
+                           
                         </div>
                     </div>
                 </div>
