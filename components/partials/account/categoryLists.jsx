@@ -12,13 +12,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
-import { Collapse, Divider } from 'antd';
-const text = `
-  A dog is a type of domesticated animal.
-  Known for its loyalty and faithfulness,
-  it can be found as a welcome guest in many households across the world.
-`;
-
+import { Collapse } from 'antd';
 function CategoryLists() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState('');
@@ -263,13 +257,26 @@ function CategoryLists() {
             <div className="row">
                 <div className="col-md-6">{e?.name}</div>
                 <div className="col-md-6 text-end">
-                    <div>
+                    <div className="d-flex align-items-center justify-content-end">
+                        {e?.poster_url ? (
+                            <a href={e?.poster_url} target="blank">
+                                {' '}
+                                <NextImageCard
+                                    url={e?.poster_url}
+                                    clasS="rounded-3 mb-2"
+                                    width="54px"
+                                    height="54px"
+                                />
+                            </a>
+                        ) : (
+                            <i className="fa-solid fa-image fa-2x"></i>
+                        )}
                         <a
                             data-bs-target="#exampleModalToggleEditCategory"
                             data-bs-toggle="modal">
                             <i
                                 className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
-                                onClick={() => GetItemsProductsEdit(id)}></i>
+                                onClick={() => GetItemsProductsEdit(e?.id)}></i>
                         </a>
                         {data.some(
                             (el) => el.id == e?.id && el.is_delete === true
@@ -278,7 +285,7 @@ function CategoryLists() {
                                 data-bs-target="#exampleModalToggle"
                                 data-bs-toggle="modal">
                                 <i
-                                    className="fa-solid fa-trash-can text-danger mx-3"
+                                    className="fa-solid fa-trash-can text-danger mx-3 ml-5"
                                     onClick={() => setDeleteId(e?.id)}></i>
                             </a>
                         ) : (
@@ -293,7 +300,20 @@ function CategoryLists() {
                 <div className="row border-bottom py-3">
                     <div className="col-md-6">{e?.name}</div>
                     <div className="col-md-6 text-end">
-                        <div>
+                        <div className="d-flex align-items-center justify-content-end">
+                            {e?.poster_url ? (
+                                <a href={e?.poster_url} target="blank">
+                                    {' '}
+                                    <NextImageCard
+                                        url={e?.poster_url}
+                                        clasS="rounded-3 mb-2"
+                                        width="54px"
+                                        height="54px"
+                                    />
+                                </a>
+                            ) : (
+                                <i className="fa-solid fa-image fa-2x "></i>
+                            )}
                             {data.some(
                                 (el) => el.id == e?.id && el.is_delete === true
                             ) ? (
@@ -301,7 +321,7 @@ function CategoryLists() {
                                     data-bs-target="#exampleModalToggle"
                                     data-bs-toggle="modal">
                                     <i
-                                        className="fa-solid fa-trash-can text-danger mx-3"
+                                        className="fa-solid fa-trash-can text-danger mx-3 ml-5"
                                         onClick={() => setDeleteId(e?.id)}></i>
                                 </a>
                             ) : (
@@ -388,7 +408,10 @@ function CategoryLists() {
                                         }
                                     /> */}
 
-                                    <Collapse items={itemArr} accordion={true} />
+                                    <Collapse
+                                        items={itemArr}
+                                        accordion={true}
+                                    />
                                 </div>
                             </div>
                         </div>
