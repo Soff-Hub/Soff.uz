@@ -200,15 +200,15 @@
 @mixin justify-content($value: flex-start) {
     // Alt values.
     $alt-value: $value;
-    @if $value == 'flex-start' {
-        $alt-value: start;
-    } @else if $value == 'flex-end' {
-        $alt-value: end;
-    } @else if $value == 'space-between' {
-        $alt-value: justify;
-    } @else if $value == 'space-around' {
-        $alt-value: distribute;
-    }
+    // @if $value == 'flex-start' {
+    //     $alt-value: start;
+    // } @else if $value == 'flex-end' {
+    //     $alt-value: end;
+    // } @else if $value == 'space-between' {
+    //     $alt-value: justify;
+    // } @else if $value == 'space-around' {
+    //     $alt-value: distribute;
+    // }
 
     // 2009
     @include prefixer(box-pack, $alt-value, webkit moz spec);
@@ -226,11 +226,11 @@
 @mixin align-items($value: stretch) {
     $alt-value: $value;
 
-    @if $value == 'flex-start' {
-        $alt-value: start;
-    } @else if $value == 'flex-end' {
-        $alt-value: end;
-    }
+    // @if $value == 'flex-start' {
+    //     $alt-value: start;
+    // } @else if $value == 'flex-end' {
+    //     $alt-value: end;
+    // }
 
     // 2009
     @include prefixer(box-align, $alt-value, webkit moz spec);
