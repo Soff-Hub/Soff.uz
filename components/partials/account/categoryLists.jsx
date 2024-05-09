@@ -31,19 +31,19 @@ function CategoryLists() {
     const searchVal = useDebounce(search, 1000);
     const [categoryData, setCategoryData] = useState(null);
 
-    async function GetItemsProducts(page, search, id) {
-        setCurrPage(page);
-        const ItemsData = await GetRepository.getCategory(
-            page,
-            search,
-            id,
-            user?.access
-        );
-        if (ItemsData?.results) {
-            setPageCount(ItemsData.count);
-            setData([...ItemsData.results]);
-        }
-    }
+    // async function GetItemsProducts(page, search, id) {
+    //     setCurrPage(page);
+    //     const ItemsData = await GetRepository.getCategory(
+    //         page,
+    //         search,
+    //         id,
+    //         user?.access
+    //     );
+    //     if (ItemsData?.results) {
+    //         setPageCount(ItemsData.count);
+    //         setData([...ItemsData.results]);
+    //     }
+    // }
     async function GetItemsProductsList(search, id) {
         const ItemsData = await GetRepository.getCategoryParentAndChaild(
             search,
@@ -85,7 +85,7 @@ function CategoryLists() {
             title: 'Muvaffaqqiyatli!',
             content: `Siz  malumotlarni o'chirdingiz`,
         });
-        GetItemsProducts(currPage, search, null);
+        GetItemsProductsList(currPage, search, null);
     }
 
     async function handleItemsPost(values) {
@@ -112,7 +112,7 @@ function CategoryLists() {
                 content: `Siz  yangi malumot qo'shdingiz`,
             });
         }
-        GetItemsProducts(currPage, search, null);
+        GetItemsProductsList(currPage, search, null);
     }
 
     async function handleItemsEdit() {
@@ -153,7 +153,7 @@ function CategoryLists() {
                 title: 'Muvaffaqqiyatli!',
                 content: "Siz  malumotlarni o'zgartirdingiz ",
             });
-            GetItemsProducts(currPage, search, null);
+            GetItemsProductsList(currPage, search, null);
 
             setTagNameTop(null);
             setTagName(null);
@@ -178,7 +178,6 @@ function CategoryLists() {
     }, []);
 
     useEffect(() => {
-        GetItemsProducts(currPage, searchVal, null);
         GetItemsProductsList(searchVal, null);
     }, [searchVal]);
 
@@ -343,7 +342,7 @@ function CategoryLists() {
         }),
     }));
 
-    
+
 
     return (
         <section className="ps-my-account ps-page--account p-0">
