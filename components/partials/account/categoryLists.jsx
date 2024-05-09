@@ -188,89 +188,139 @@ function CategoryLists() {
         GetItemsProductsList(searchVal, null);
     }, [searchVal]);
 
-    const columns = [
-        {
-            title: 'Belgi',
-            dataIndex: 'icon',
-            key: 'address',
-            render: (icon) => <i className={icon}></i>,
-        },
-        {
-            title: 'Nomi',
-            dataIndex: 'name',
-            key: 'address',
-        },
-        {
-            title: 'Parent',
-            dataIndex: 'parent',
-            key: 'address',
-            render: (parent) => <span>{parent?.name}</span>,
-        },
-        {
-            title: 'Rasm',
-            dataIndex: 'image',
-            key: 'address',
-            render: (poster_url) => (
-                <div>
-                    {poster_url ? (
-                        <a href={poster_url} target="blank">
-                            {' '}
-                            <NextImageCard
-                                url={poster_url}
-                                clasS="rounded-3 mb-2"
-                                width="54px"
-                                height="54px"
-                            />
-                        </a>
-                    ) : (
-                        <i className="fa-solid fa-image fa-2x"></i>
-                    )}
-                </div>
-            ),
-        },
-        {
-            title: 'Harakatlar',
-            dataIndex: 'id',
-            key: 'address',
-            render: (id) => (
-                <div>
-                    <a
-                        data-bs-target="#exampleModalToggleEditCategory"
-                        data-bs-toggle="modal">
-                        <i
-                            className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
-                            onClick={() => GetItemsProductsEdit(id)}></i>
-                    </a>
-                    {data.some((el) => el.id == id && el.is_delete === true) ? (
-                        <a
-                            data-bs-target="#exampleModalToggle"
-                            data-bs-toggle="modal">
-                            <i
-                                className="fa-solid fa-trash-can text-danger mx-3"
-                                onClick={() => setDeleteId(id)}></i>
-                        </a>
-                    ) : (
-                        <></>
-                    )}
-                </div>
-            ),
-        },
-    ];
+    // const columns = [
+    //     {
+    //         title: 'Belgi',
+    //         dataIndex: 'icon',
+    //         key: 'address',
+    //         render: (icon) => <i className={icon}></i>,
+    //     },
+    //     {
+    //         title: 'Nomi',
+    //         dataIndex: 'name',
+    //         key: 'address',
+    //     },
+    //     {
+    //         title: 'Parent',
+    //         dataIndex: 'parent',
+    //         key: 'address',
+    //         render: (parent) => <span>{parent?.name}</span>,
+    //     },
+    //     {
+    //         title: 'Rasm',
+    //         dataIndex: 'image',
+    //         key: 'address',
+    //         render: (poster_url) => (
+    //             <div>
+    //                 {poster_url ? (
+    //                     <a href={poster_url} target="blank">
+    //                         {' '}
+    //                         <NextImageCard
+    //                             url={poster_url}
+    //                             clasS="rounded-3 mb-2"
+    //                             width="54px"
+    //                             height="54px"
+    //                         />
+    //                     </a>
+    //                 ) : (
+    //                     <i className="fa-solid fa-image fa-2x"></i>
+    //                 )}
+    //             </div>
+    //         ),
+    //     },
+    //     {
+    //         title: 'Harakatlar',
+    //         dataIndex: 'id',
+    //         key: 'address',
+    //         render: (id) => (
+    //             <div>
+    //                 <a
+    //                     data-bs-target="#exampleModalToggleEditCategory"
+    //                     data-bs-toggle="modal">
+    //                     <i
+    //                         className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
+    //                         onClick={() => GetItemsProductsEdit(id)}></i>
+    //                 </a>
+    //                 {data.some((el) => el.id == id && el.is_delete === true) ? (
+    //                     <a
+    //                         data-bs-target="#exampleModalToggle"
+    //                         data-bs-toggle="modal">
+    //                         <i
+    //                             className="fa-solid fa-trash-can text-danger mx-3"
+    //                             onClick={() => setDeleteId(id)}></i>
+    //                     </a>
+    //                 ) : (
+    //                     <></>
+    //                 )}
+    //             </div>
+    //         ),
+    //     },
+    // ];
 
     const itemArr = categoryData?.map((e) => ({
         key: e?.id,
-        label:  <div className='row'>
-        <div className='col-md-6'>{e?.name}</div>
-        <div className='col-md-6 text-end'>amallar</div>
-    </div>,
+        label: (
+            <div className="row">
+                <div className="col-md-6">{e?.name}</div>
+                <div className="col-md-6 text-end">
+                    <div>
+                        <a
+                            data-bs-target="#exampleModalToggleEditCategory"
+                            data-bs-toggle="modal">
+                            <i
+                                className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
+                                onClick={() => GetItemsProductsEdit(id)}></i>
+                        </a>
+                        {data.some(
+                            (el) => el.id == e?.id && el.is_delete === true
+                        ) ? (
+                            <a
+                                data-bs-target="#exampleModalToggle"
+                                data-bs-toggle="modal">
+                                <i
+                                    className="fa-solid fa-trash-can text-danger mx-3"
+                                    onClick={() => setDeleteId(e?.id)}></i>
+                            </a>
+                        ) : (
+                            <></>
+                        )}
+                    </div>
+                </div>
+            </div>
+        ),
         children: e?.children?.map((e) => {
             return (
-                <div className='row border-bottom py-3'>
-                <div className='col-md-6'>{e?.name}</div>
-                <div className='col-md-6 text-end'>amallar</div>
-            </div>
-            )
-        })
+                <div className="row border-bottom py-3">
+                    <div className="col-md-6">{e?.name}</div>
+                    <div className="col-md-6 text-end">
+                        <div>
+                            {data.some(
+                                (el) => el.id == e?.id && el.is_delete === true
+                            ) ? (
+                                <a
+                                    data-bs-target="#exampleModalToggle"
+                                    data-bs-toggle="modal">
+                                    <i
+                                        className="fa-solid fa-trash-can text-danger mx-3"
+                                        onClick={() => setDeleteId(e?.id)}></i>
+                                </a>
+                            ) : (
+                                <></>
+                            )}
+                            <a
+                                data-bs-target="#exampleModalToggleEditCategory"
+                                data-bs-toggle="modal">
+                                <i
+                                    className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
+                                    onClick={() =>
+                                        GetItemsProductsEdit(e?.id)
+                                    }></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            );
+        }),
     }));
 
     return (
@@ -323,7 +373,7 @@ function CategoryLists() {
                                             </span>
                                         </button>
                                     </div>
-                                    <Table
+                                    {/* <Table
                                         scroll={{ x: 750 }}
                                         dataSource={data}
                                         columns={columns}
@@ -336,15 +386,10 @@ function CategoryLists() {
                                         onChange={(page) =>
                                             GetItemsProducts(page, search)
                                         }
-                                    />
-                                </div>
+                                    /> */}
 
-                                <>
-                                    <Divider orientation="left">
-                                        Default Size
-                                    </Divider>
-                                    <Collapse items={itemArr} />
-                                </>
+                                    <Collapse items={itemArr} accordion={true} />
+                                </div>
                             </div>
                         </div>
                     </div>
