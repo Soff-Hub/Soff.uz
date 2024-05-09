@@ -43,7 +43,7 @@
         border-radius: 4px;
         padding: 5px;
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         gap: 7px;
         font-size: 16px;
@@ -54,7 +54,7 @@
 
     .audio_content {
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         gap: 30px !important;
         color: #fff;
@@ -77,7 +77,7 @@
     }
     .audio_child{
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         gap: 15px;
         span{
@@ -110,7 +110,7 @@
 
 .audio_player{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -217,7 +217,7 @@
 
 .audio_live{
     display: flex;
-    justify-content: start;
+    justify-content: flex-start;
     align-items: center;
     gap: 10px;
 }

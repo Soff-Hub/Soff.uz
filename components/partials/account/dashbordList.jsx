@@ -24,8 +24,7 @@ function DashbordList({ setOpen }) {
     const [month, setMonth] = useState(null);
 
     const { accountLinks, user } = useSelector((state) => state.auth);
-    // Birinchi marta kirgan bolsa id===0 bo'ladi , aks holda 1
-    // const{ id }= useSelector(state => state.auth.beginRole)
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -79,15 +78,6 @@ function DashbordList({ setOpen }) {
         setLoading(false);
     }
 
-    // const handlePagination = (pageNum) => {
-    //     setCurrPage(pageNum)
-    //     GetItems(pageNum, dataValCat, dataValStatus, dataFormat, null, dateArxiv,)
-    // }
-
-    // const handlePagination2 = (pageNum) => {
-    //     setCurrPage(pageNum)
-    //     GetItemsProductsOrders(pageNum)
-    // }
 
     const handleChangeYear = (value) => {
         setYear(+value);
@@ -757,7 +747,7 @@ function DashbordList({ setOpen }) {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        {user?.role === 'admin' && (
+                        {user?.role === 'admin' || user?.role === 'seller' && (
                             <div className="dashboard-div mb-2">
                                 <Select
                                     defaultValue={{
@@ -800,7 +790,7 @@ function DashbordList({ setOpen }) {
                             </div>
                         )}
 
-                        {user?.role === 'admin' && (
+                        {user?.role === 'admin' || user?.role === 'seller' && (
                             <div className="dashboard-div">
                                 <Example year={year} month={month} />
                             </div>
@@ -818,7 +808,6 @@ function DashbordList({ setOpen }) {
                                         columns={columnsOrders}
                                         pagination={false}
                                     />
-                                    {/* <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2} onChange={handlePagination2} /> */}
                                 </>
                             ) : (
                                 <>
@@ -847,7 +836,6 @@ function DashbordList({ setOpen }) {
                             className="pb-5"
                             pagination={false}
                         />
-                        {/* <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={handlePagination} /> */}
                     </div>
                 ) : (
                     <></>

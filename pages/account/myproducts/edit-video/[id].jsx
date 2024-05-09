@@ -149,8 +149,8 @@ const Posts = () => {
                 const modal = Modal.warning({
                     centered: true,
                     title: 'Muvaffaqqiyatli!',
-                    content:
-                        "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                    content: "Siz malumotlarni o'zgartirdingiz ",
+
                 });
             } catch (err) {
                 console.log("Error edit", err);
@@ -159,7 +159,7 @@ const Posts = () => {
             const modal = Modal.info({
                 centered: true,
                 title: "Qayta urinib ko'ring",
-                content: "O'zgartirish uchun malumot kiritilmadi ",
+                content: "O'zgartirish uchun ma'lumot kiritilmadi ",
             });
         }
 

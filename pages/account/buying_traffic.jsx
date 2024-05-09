@@ -11,19 +11,24 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useState } from 'react';
 import { Table, Tag } from 'antd';
 import CreditCard2 from '~/components/partials/account/CreditCard2';
+import { formatCurrency } from '~/utilities/product-helper';
+import BuyTrafficCard from '~/components/partials/account/BuyTrafficCard';
 
 function BuyingTraffic() {
-    const { user } = useSelector((state) => state.auth);
-    const [trafficList, setTrafficList] = useState(null);
+
     const breadCrumb = [
         {
             text: 'Asosiy Sahifa',
             url: '/',
         },
         {
-            text: "Video uchun qo'shimcha joy sotib olish",
+            text: "Video yuklash uchun xotira sotib olish",
         },
     ];
+
+    const { user } = useSelector((state) => state.auth);
+    const [trafficList, setTrafficList] = useState([]);
+    const [value, setValue] = useState(null)
 
     async function getTrafficList(token) {
         const ItemsData = await GetRepository.getTrafficListData(token);
@@ -32,42 +37,43 @@ function BuyingTraffic() {
         }
     }
 
-    const columns = [
-        {
-            title: 'Nomi',
-            dataIndex: 'name',
-            key: 'name',
-            render: (text) => <a>{text}</a>,
-        },
-        {
-            title: 'Hajmi',
-            dataIndex: 'size_storage_to_mb',
-            key: 'size_storage_to_mb',
-            render: (size) => (
-                <Tag color="red" key={size}>
-                    {size} {size ? 'mb' : ''}
-                </Tag>
-            ),
-        },
-        {
-            title: 'Narxi',
-            dataIndex: 'price_storage',
-            key: 'price_storage',
-            render: (text) => <a>{text} so'm </a>,
-        },
+    const data = trafficList.map(el => ({ id: el.id, price: el.price_storage, storage: el.size_storage_to_mb }))
 
-        {
-            title: 'Harakatlar',
-            key: 'id',
-            render: (_, id) => (
-                <div
-                    className="bg-info d-inline p-3 text-white rounded-3"
-                    style={{ cursor: 'pointer' }}>
-                    Sotib olish <i class="fa-solid fa-plus"></i>
-                </div>
-            ),
-        },
-    ];
+    console.log(trafficList);
+
+    const add = (id) => {
+        const element = data.find(el => el.id === id)
+        if (value?.id === element.id) {
+            setValue({
+                id: element.id,
+                count: value?.count + 1
+            })
+        } else {
+            setValue({
+                id: element.id,
+                count: 1
+            })
+        }
+    }
+
+    const remove = (id) => {
+        if (value?.count > 1) {
+            setValue({
+                id: id,
+                count: value?.count - 1
+            })
+        } else {
+            setValue(null)
+        }
+    }
+
+    const allValue = value ? {
+        price: data.find(el => el.id === value?.id).price * value.count,
+        storage: data.find(el => el.id === value?.id).storage,
+        storageId: data.find(el => el.id === value?.id).id,
+        count: value.count,
+    } : null
+
 
     useEffect(() => {
         if (user?.access) {
@@ -83,17 +89,89 @@ function BuyingTraffic() {
                 <Meta title={'Yangi mahsulot yaratishni tanlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="container">
-                    <div className="py-3">
-                        Video uchun qo'shimcha joy sotib oling
-                    </div>
-                    <Table
-                        className="py-5"
-                        columns={columns}
-                        dataSource={trafficList}
-                        pagination={false}
-                    />
+                    <div className='py-5' style={{ display: 'flex', justifyContent: 'flex-start', gap: 10, flexWrap: 'wrap' }}>
+                        {
+                            data.map(el => (
+                                <div
+                                    key={el.id}
+                                    style={{
+                                        boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                                        borderRadius: '12px',
+                                        padding: '30px 20px 20px',
+                                        flex: 0.25,
+                                        textAlign: 'center'
+                                    }}>
+                                    <h3 className='m-0' style={{ fontWeight: 600, color: '#00A44F' }}>{el.price ? `${formatCurrency(el.price)} so'm` : "Tekin"}</h3>
+                                    <p style={{ color: 'orange', fontSize: 18, fontWeight: 600 }}>{el.storage} GB</p>
 
-                    <CreditCard2 document={[1]} />
+                                    <div style={{
+                                        display: 'flex',
+                                        width: '100%',
+                                        outline: 'none',
+                                        border: 'none',
+                                        justifyContent: 'center',
+                                        gap: '4px'
+                                    }}>
+                                        {
+                                            value?.id === el.id ? (
+                                                <>
+                                                    <button
+                                                        style={{
+                                                            flex: 0.2,
+                                                            border: 'none',
+                                                            padding: '10px 0',
+                                                            borderRadius: 10,
+                                                            fontWeight: 600
+                                                        }}
+                                                        onClick={() => remove(el.id)}
+                                                    >
+                                                        <i class="fa-solid fa-minus"></i>
+                                                    </button>
+                                                    <button
+                                                        style={{
+                                                            flex: 0.6,
+                                                            border: 'none',
+                                                            padding: '10px 0',
+                                                            borderRadius: 10,
+                                                            fontWeight: 600
+                                                        }} >
+                                                        <span>{value?.count}</span>
+                                                    </button>
+                                                    <button
+                                                        style={{
+                                                            flex: 0.2,
+                                                            border: 'none',
+                                                            padding: '10px 0',
+                                                            borderRadius: 10,
+                                                            fontWeight: 600
+                                                        }}
+                                                        onClick={() => add(el.id)}
+                                                    >
+                                                        <i class="fa-solid fa-plus"></i>
+                                                    </button>
+                                                </>
+                                            ) : <button
+                                                style={{
+                                                    flex: 1,
+                                                    border: 'none',
+                                                    padding: '10px 0',
+                                                    borderRadius: 10,
+                                                    fontWeight: 600,
+                                                    minWidth: '100%'
+                                                    // color: 'white',
+                                                }}
+                                                onClick={() => add(el.id)}
+                                            >
+                                                Sotib Olish
+                                            </button>
+                                        }
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                    {value && <strong className="fs-3">Kalkulyator: {allValue.count}x <span style={{ color: 'orange', fontWeight: 600 }}>{allValue.storage}GB </span> = <span style={{ color: 'orange', fontWeight: 600 }}>{allValue.storage * allValue.count}GB </span> va <span style={{ color: '#00A44F', fontWeight: 600 }}>{formatCurrency(allValue.price)} so'm </span></strong>}
+                    {value && <BuyTrafficCard quantity={allValue.count} traffic={allValue.storageId} />}
                 </div>
             </div>
         </PageContainer>
