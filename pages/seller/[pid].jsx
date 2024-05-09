@@ -258,15 +258,15 @@ const SellerPage = ({ seller }) => {
                                     </div>
                                 }
                             </div>
-                            <div className='d-flex justify-content-start row m-0 gap-4 mb-5'>
-                                <select  onChange={(e) => (setTypeSelect(e.target.value))} className='form-select col-md-3 fs-2'>
-                                    <option value="file">File</option>
-                                    <option value="template">Template</option>
-                                    <option value="audio">Audio</option>
-                                    <option value="video">Video</option>
+                            <div className='seller_contaoner2'>
+                                <select  onChange={(e) => (setTypeSelect(e.target.value))} className='form-control seller_filter rounded-3'>
+                                    <option value="file">Hujjatli materiallar</option>
+                                    <option value="template">Shablon materiallar</option>
+                                    <option value="audio">Audio materiallar</option>
+                                    <option value="video">Video materiallar</option>
                                 </select>
                                 <input type="text" placeholder='Qidiruv...' onInput={(e)=>(setSearch(e.target.value))}
-                                 className='form-control col-md-8 rounded-3' />
+                                 className='form-control  rounded-3 seller_filter_option' />
                             </div>
                         </div>
 
