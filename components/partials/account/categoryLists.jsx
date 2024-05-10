@@ -513,6 +513,7 @@ function CategoryLists() {
                     </select> */}
                     <div>
                         <Switch
+                        size='small'
                             checkedChildren={<CheckOutlined />}
                             unCheckedChildren={<CloseOutlined />}
                             defaultValue={allParents}
