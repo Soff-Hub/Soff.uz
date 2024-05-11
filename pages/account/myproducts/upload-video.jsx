@@ -412,7 +412,6 @@ const Posts = () => {
         }
     }, [user?.access]);
 
-    console.log(videosize);
 
 
     return user?.role === 'seller' ? (
@@ -457,7 +456,7 @@ const Posts = () => {
                             <div className="col-md-12 p-0  mt-3">
                                 <div className="col-md-12  d-flex justify-content-between p-0 ">
                                     <h4 className="p-0">Video Mahsulot </h4>
-                                    <p className='text-danger  '><i className="fa-solid fa-circle-exclamation"></i> Sizda Video yuklash uchun  qolgan joy {videosize?.empty_storage_size} MB</p>
+                                    <p className={videosize?.empty_storage_size < 100 ? 'text-danger' : "text-success"}><i className="fa-solid fa-circle-exclamation"></i> Sizda Video yuklash uchun  qolgan joy {videosize?.empty_storage_size} MB</p>
                                 </div>
                             </div>
                             <div className="row">
@@ -579,7 +578,7 @@ const Posts = () => {
                                     <div className="row">
                                         <div className="col-md-12 d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
-                                                    <p>Video(asosiy): *</p>{' '}
+                                                <p>Video(asosiy): *</p>{' '}
 
                                                 <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: video/*">
                                                     <i
@@ -853,7 +852,7 @@ const Posts = () => {
                                                             }}
                                                             src={
                                                                 customePoster?.url ||
-                                                                'https://m.media-amazon.com/images/G/01/primevideo/seo/primevideo-seo-logo.png'
+                                                                '../../../static/img/videoposter.jpg'
                                                             }
                                                             alt="poster/video"
                                                         />

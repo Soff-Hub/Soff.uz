@@ -197,9 +197,9 @@ const Posts = () => {
 
 
     async function getProducts() {
-        if (routerId) {
+        if (routerId && user?.access) {
             setLoadingIs(true)
-            const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, routerId, null, null, null, user?.access)
+            const ItemsData = await GetRepository.getShopsProductsAdmin(routerId, user?.access)
             setProducts(ItemsData);
             setLoadingIs(false)
         }
@@ -207,7 +207,8 @@ const Posts = () => {
     }
     useEffect(() => {
         getProducts()
-    }, [routerId])
+    }, [routerId, user?.access])
+
 
 
     useEffect(() => {
@@ -549,7 +550,7 @@ const Posts = () => {
                                                                 width: '100%',
                                                                 height: '100%',
                                                             }}
-                                                            src={customePoster?.url ? customePoster?.url : products?.poster
+                                                            src={customePoster?.url ? customePoster?.url : products?.poster_url
 
 
                                                             }
@@ -706,7 +707,7 @@ const Posts = () => {
                                 controls
                                 preload="none"
                                 src={fileImgFile?.video ? fileImgFile?.video : products?.document?.short_content_url}
-                                poster={customePoster?.url ? customePoster?.url : products?.poster}
+                                poster={customePoster?.url ? customePoster?.url : products?.poster_url}
                                 style={{ maxHeight: '250px' }}>
 
                             </video>
@@ -828,7 +829,7 @@ const Posts = () => {
                                                                 controls
                                                                 preload="none"
                                                                 src={fileImgFile?.video ? fileImgFile?.video : products?.document?.short_content_url}
-                                                                poster={customePoster?.url ? customePoster?.url : products?.poster}
+                                                                poster={customePoster?.url ? customePoster?.url : products?.poster_url}
                                                                 style={{
                                                                     maxHeight:
                                                                         '250px',
@@ -936,10 +937,9 @@ const Posts = () => {
                                                                     Kategoriyasi
                                                                 </strong>{' '}
                                                                 : <div></div>{' '}
-                                                                <span>
+                                                                <span className='text-truncate'>
                                                                     {' '}
-                                                                    {categoryName &&
-                                                                        categoryName}
+                                                                    {categoryName || products?.category?.name}
                                                                 </span>
                                                             </li>
                                                         }

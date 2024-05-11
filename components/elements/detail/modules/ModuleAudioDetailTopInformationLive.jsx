@@ -34,8 +34,7 @@ const ModuleAudioDetailTopInformationLive = ({
                 ) : (
                     <>
                         <p className='m-0 p-0' style={{ fontWeight: "bold" }}>
-                            {addPeriodToThousands(taxminiyNarx)}
-                            so'm
+                            {addPeriodToThousands(taxminiyNarx)}  so'm
                         </p>
                     </>
                 )}
@@ -68,10 +67,10 @@ const ModuleAudioDetailTopInformationLive = ({
                         className="product__top-information-account"
                         style={{ cursor: 'pointer' }}>
                         <div>
-                            {product?.image || product?.seller?.image ? (
+                            {product?.image || product?.seller?.image_url ? (
                                 <img
                                     alt="soff"
-                                    src={product?.image || product?.seller?.image}
+                                    src={product?.image || product?.seller?.image_url}
                                     className="profile__image-client"
                                 />
                             ) : (

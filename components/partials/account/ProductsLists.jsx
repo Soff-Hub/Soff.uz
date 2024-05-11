@@ -269,7 +269,7 @@ function ProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster',
+            dataIndex: 'poster_url',
             key: 'name',
             render: (poster_url) => (
                 <div>
@@ -640,7 +640,7 @@ function ProductsLists() {
                                                 <div className="col-12">
                                                     <DefaultAudioLive
                                                         product={deleteIdView ? deleteIdView : ''}
-                                                        liveFile={deleteIdView?.poster}
+                                                        liveFile={deleteIdView?.poster_url}
                                                         title={deleteIdView?.title}
                                                         categoryName={deleteIdView?.category?.name}
                                                     />

@@ -217,7 +217,7 @@ function DashbordList({ setOpen }) {
             ),
         },
         {
-            title: 'Ehson haqida',
+            title: 'Donat haqida',
             dataIndex: 'description',
             key: 'age',
             width: 350,
@@ -939,7 +939,7 @@ function DashbordList({ setOpen }) {
                                 {!loading ? (
                                     <div className="ps-product--detail ps-product--fullwidth">
                                         <div className="ps-product__header ">
-                                            <ThumbnailDefault product={View} />
+                                            <ThumbnailDefault product={View} views={View?.view_count} />
                                             <div className="ps-product__info">
                                                 <header>
                                                     <h1>{View?.title}</h1>

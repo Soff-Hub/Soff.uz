@@ -23,7 +23,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
         <>
             <div className="ps-product--detail ps-product--fullwidth">
                 <div className="ps-product__header ">
-                    <ThumbnailDefault product={product} views={views} />
+                    <ThumbnailDefault product={product} views={views?.view_count} />
                     <div className="ps-product__info">
                         <ModuleDetailTopInformation product={product} />
 
