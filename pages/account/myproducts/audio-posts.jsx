@@ -424,7 +424,7 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-
+console.log(livePosterAudio);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -603,17 +603,29 @@ const AudioPosts = () => {
                                                 })}
                                                 accept="image/*"
                                             />
-                                            <span
-                                                className="d-flex flex-column align-items-center "
-                                                style={{
-                                                    cursor: 'pointer',
-                                                }}>
-                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                <span>
-                                                    Mahsulot rasmni yuklash uchun
-                                                    ushbu hududga bosing.
-                                                </span>
-                                            </span>
+                                            {
+                                                liveFile !== '' ? <span
+                                                    className="d-flex flex-column align-items-center"
+                                                    style={{ cursor: 'pointer' }}>
+                                                    <span>
+                                                        {' '}
+                                                        Siz rasm yukladingiz{' '}
+                                                        <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                    </span>
+                                                </span> :
+                                                    <span
+                                                        className="d-flex flex-column align-items-center "
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                        <span>
+                                                            Mahsulot rasmni yuklash uchun
+                                                            ushbu hududga bosing.
+                                                        </span>
+                                                    </span>
+
+                                            }
                                         </label>
                                         <p className={"my-2  text-danger"}>
                                             {errors?.image?.message}
@@ -845,10 +857,8 @@ const AudioPosts = () => {
                                             <strong className="fs-4">
                                                 Davomiyligi:{' '}
                                             </strong>{' '}
-                                            {livePosterAudio?.data
-                                                ?.content_duration
-                                                ? livePosterAudio?.data
-                                                    ?.content_duration
+                                            {livePosterAudio?.content_duration
+                                                ? livePosterAudio?.content_duration
                                                 : ' '}{' '}
                                         </li>
                                         <li>
@@ -856,14 +866,14 @@ const AudioPosts = () => {
                                             <strong className="fs-4">
                                                 Hajmi :{' '}
                                             </strong>{' '}
-                                            {livePosterAudio?.data?.file_size}
+                                            {livePosterAudio?.file_size}
                                         </li>
                                         <li>
                                             {' '}
                                             <strong className="fs-4">
                                                 Turi :{' '}
                                             </strong>{' '}
-                                            {livePosterAudio?.data?.file_type}
+                                            {livePosterAudio?.file_type}
                                         </li>
                                     </ul>
                                 </p>
