@@ -234,13 +234,13 @@ const AccountMenuSidebar = ({
                                     <span>
                                         {profile?.role
                                             ? 'Admin'
-                                            : "malumt yo'q"}
+                                            : "malumot yo'q"}
                                     </span>
                                 ) : user.role === 'customer' ? (
                                     <span>
                                         {profile?.role
                                             ? 'Foydalanuvchi'
-                                            : "malumt yo'q"}
+                                            : "malumot yo'q"}
                                     </span>
                                 ) : (
                                     <></>
