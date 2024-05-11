@@ -342,9 +342,9 @@ const SellerAccount = ({ seller }) => {
                         <div className="col-lg-4 user-inviter">
                             <div className="d-flex gap-3 align-items-start">
                                 {/* <i className=" fa-3x text-info fa-solid fa-circle-user mb-3"></i> */}
-                                {data?.image ? (
+                                {data?.image_url ? (
                                     <img
-                                        src={`${data?.image}`}
+                                        src={`${data?.image_url}`}
                                         className="profile__image"
                                     />
                                 ) : (
