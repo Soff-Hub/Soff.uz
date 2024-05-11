@@ -6,14 +6,14 @@ import Repository, {
 
 class PostRepository {
     async PostsCategory(data, token) {
-        const endPoint = `admin/category-list/`;
+        const endPoint = `admin/multi-category-create/`;
         const response = await Repository.post(baseUrl + endPoint, data, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
             .then((response) => {
-                if (response.status === 200) {
+                if (response) {
                     return response.data;
                 } else {
                     return null;
