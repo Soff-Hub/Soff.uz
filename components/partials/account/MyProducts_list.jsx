@@ -634,27 +634,24 @@ function MyProductsLists() {
                                                             <strong>
                                                                 Umumiy xotira :{' '}
                                                                 {
-                                                                    videosize?.storage_size
-                                                                }{' '}
-                                                                {videosize?.storage_size ? "mb" : ''}
+                                                                    addPeriodToThousands(videosize?.storage_size)
+                                                                } MB
                                                             </strong>
                                                         </div>
                                                         <div className="btn btn-outline-primary px-3 py-2 fs-5 rounded-3">
                                                             <strong>
                                                                 Band qilingan xotira :{' '}
                                                                 {
-                                                                    videosize?.full_storage_size
-                                                                }
-                                                                {videosize?.full_storage_size ? 'mb' : ''}
+                                                                    addPeriodToThousands(videosize?.full_storage_size)
+                                                                } MB
                                                             </strong>
                                                         </div>
                                                         <div className="btn btn-outline-danger px-3 py-2 fs-5 rounded-3">
                                                             <strong>
                                                                 Bo'sh xotira :{' '}
                                                                 {
-                                                                    videosize?.empty_storage_size
-                                                                }{' '}
-                                                                {videosize?.empty_storage_size ? 'mb' : ''}
+                                                                    addPeriodToThousands(videosize?.empty_storage_size)
+                                                                } MB
                                                             </strong>
                                                         </div>
                                                     </div>

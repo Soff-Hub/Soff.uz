@@ -456,7 +456,7 @@ const Posts = () => {
                             <div className="col-md-12 p-0  mt-3">
                                 <div className="col-md-12  d-flex justify-content-between p-0 ">
                                     <h4 className="p-0">Video Mahsulot </h4>
-                                    <p className={videosize?.empty_storage_size < 100 ? 'text-danger' : "text-success"}><i className="fa-solid fa-circle-exclamation"></i> Sizda Video yuklash uchun  qolgan joy {videosize?.empty_storage_size} MB</p>
+                                    <p className={videosize?.empty_storage_size < 100 ? 'text-danger' : "text-success"}><i className="fa-solid fa-circle-exclamation"></i> Sizda Video yuklash uchun  qolgan joy {addPeriodToThousands(videosize?.empty_storage_size)} MB</p>
                                 </div>
                             </div>
                             <div className="row">
