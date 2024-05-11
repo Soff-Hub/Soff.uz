@@ -35,7 +35,7 @@ function BuyingTraffic() {
         }
     }
 
-    const data = trafficList.map(el => ({ id: el.id, price: el.price_storage, storage: el.size_storage_to_mb }))
+    const data = trafficList?.map(el => ({ id: el.id, price: el.price_storage, storage: el.size_storage_to_mb }))
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
