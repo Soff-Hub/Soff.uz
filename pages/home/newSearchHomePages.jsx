@@ -5,7 +5,6 @@ import { Select, Spin } from 'antd';
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import PostRepository from '~/repositories/PostRepository';
 
-
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
@@ -22,7 +21,9 @@ function useDebounce(value, delay) {
     return debouncedValue;
 }
 
-const SearchHeader = ({ setSearch }) => {
+
+const NewSearchHomePages = () => {
+
     const inputEl = useRef(null);
     const [isSearch, setIsSearch] = useState(false);
     const [keyword, setKeyword] = useState('');
@@ -33,7 +34,6 @@ const SearchHeader = ({ setSearch }) => {
 
     function handleClearKeyword() {
         setKeyword('');
-        setSearch('')
         setIsSearch(false);
         setLoading(false);
     }
@@ -44,7 +44,6 @@ const SearchHeader = ({ setSearch }) => {
             Router.push(`/search?keyword=${keyword}&type=${selectFile}`);
         }
     }
-
 
     useEffect(() => {
         if (debouncedSearchTerm) {
@@ -70,6 +69,7 @@ const SearchHeader = ({ setSearch }) => {
         }
     }, [debouncedSearchTerm, selectFile]);
 
+
     // Views
     let productItemsView,
         clearTextView,
@@ -79,8 +79,8 @@ const SearchHeader = ({ setSearch }) => {
             productItemsView = <p>Mahsulot topilmadi</p>;
         }
         else {
-            resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 || resultItems?.video?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template ||[], ...resultItems?.video || []].map((product) => (
-                <ProductSearchResult product={product} key={product.id} /> 
+            resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 || resultItems?.video?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || [], ...resultItems?.video || []].map((product) => (
+                <ProductSearchResult product={product} key={product.id} />
             )) : productItemsView = <p>Mahsulot topilmadi</p>
         }
 
@@ -101,72 +101,45 @@ const SearchHeader = ({ setSearch }) => {
 
 
 
+
+
     return (
-        <form
-            className="ps-form--quick-search"
-            method="get"
-            action="/"
-            onSubmit={handleSubmit}
-        >
+        <div className="search_home_pages">
+            <div className="container">
+                <div className="search_home_box">
+                    <h1 >From <span>Idea to Launch, </span> <br />Discover best tools for your Startup</h1>
 
-            <Select
-                defaultValue={[selectFile]}
-                placeholder="Barchasi"
-                className='searchFilterSelect'
-                onChange={(e) => setSelectFile(e)}
+                    <form
+                        className="ps-form--quick-search"
+                        method="get"
+                        action="/"
+                        onSubmit={handleSubmit}
+                    >
+                        <div className="ps-form__input">
+                            <input
+                                ref={inputEl}
+                                className={keyword === '' ? "form-control input2" : "input1 form-control "}
+                                type="text"
+                                value={keyword}
+                                placeholder="Qidiruv..."
+                                onChange={(e) => (setKeyword(e.target.value), setSearch(e.target.value))}
+                            />
+                            {clearTextView}
+                            {loadingView}
+                        </div>
+                        <button className={keyword === '' ? 'button_search' : "d-block button_serach_color"}>Qidiruv</button>
+                        <div
+                            className={`ps-panel--search-result${isSearch ? ' active ' : ''
+                                }`}>
+                            <div className="ps-panel__content">{productItemsView}</div>
+                        </div>
 
-                style={{
-                    flex: 1,
-                    minWidth: "100px",
-                    height: "42px",
+                    </form>
 
-                }}
-                options={[
-                    {
-                        value: '',
-                        label: 'Barchasi',
-                    },
-                    {
-                        value: 'file',
-                        label: 'Hujjat',
-                    },
-                    {
-                        value: 'audio',
-                        label: 'Audio',
-                    },
-                    {
-                        value: 'template',
-                        label: 'Shablon',
-                    },
-                    {
-                        value: 'video',
-                        label: 'Video',
-                    },
-                ]}
-            />
-
-
-            <div className="ps-form__input">
-                <input
-                    ref={inputEl}
-                    className={keyword === '' ? "form-control input2" : "input1 form-control "}
-                    type="text"
-                    value={keyword}
-                    placeholder="Qidiruv..."
-                    onChange={(e) => (setKeyword(e.target.value), setSearch(e.target.value))}
-                />
-                {clearTextView}
-                {loadingView}
+                </div>
             </div>
-            <button className={keyword === '' ? 'button_search' : "d-block button_serach_color"}>Qidiruv</button>
-            <div
-                className={`ps-panel--search-result${isSearch ? ' active ' : ''
-                    }`}>
-                <div className="ps-panel__content">{productItemsView}</div>
-            </div>
+        </div>
+    )
+}
 
-        </form>
-    );
-};
-
-export default SearchHeader;
+export default NewSearchHomePages
