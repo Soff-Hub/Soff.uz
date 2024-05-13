@@ -21,9 +21,9 @@ const SellerPage = ({ seller }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
     const [tab, setTab] = useState('tab-1');
-    const [typeSelect, setTypeSelect] = useState('file')
-    const [search, setSearch] = useState('')
-
+    const [typeSelect, setTypeSelect] = useState('file');
+    const [search, setSearch] = useState('');
+    const [productType, setProductType] = useState(null);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -59,10 +59,21 @@ const SellerPage = ({ seller }) => {
             setSellerr(respons?.data);
         }
     };
+    const getSellerDocumentType = async (slug) => {
+        const respons = await ProductRepository.getSellerProductNameSlug(slug);
+        if (respons) {
+            setProductType(respons?.data);
+        }
+    };
 
     const handlePagination = async (e) => {
         setPage(e);
-        const respons = await ProductRepository.getSellerProductSlugProducts(pid, e, typeSelect, search);
+        const respons = await ProductRepository.getSellerProductSlugProducts(
+            pid,
+            e,
+            typeSelect,
+            search
+        );
         if (respons) {
             setData(respons.data);
         }
@@ -101,6 +112,7 @@ const SellerPage = ({ seller }) => {
     useEffect(() => {
         if (pid) {
             getSellerUser(pid);
+            getSellerDocumentType(pid);
         }
     }, [pid]);
 
@@ -109,7 +121,6 @@ const SellerPage = ({ seller }) => {
             getSellerProduct(pid);
         }
     }, [pid, typeSelect, search]);
-
 
     // let productView = <SkeletonProductDetail />;
     return (
@@ -155,26 +166,40 @@ const SellerPage = ({ seller }) => {
                 <div className="seller-account-page">
                     <div className="container">
                         <div className="user_profile_container mt-5">
-                            <div className="user_profile_card" style={{ backgroundImage: `url(${sellerr?.seller?.background_image ? sellerr?.seller?.background_image : "/static/img/orqafon1.avif"})` }}>
-
-                                <div className="profile_images_card"  >
-                                    <Image.PreviewGroup >
+                            <div
+                                className="user_profile_card"
+                                style={{
+                                    backgroundImage: `url(${
+                                        sellerr?.seller?.background_image
+                                            ? sellerr?.seller?.background_image
+                                            : '/static/img/orqafon1.avif'
+                                    })`,
+                                }}>
+                                <div className="profile_images_card">
+                                    <Image.PreviewGroup>
                                         <Image
                                             width={200}
-                                            src={`${sellerr?.seller?.image ? sellerr?.seller?.image : "/static/img/ozodbek.png"}`}
+                                            src={`${
+                                                sellerr?.seller?.image
+                                                    ? sellerr?.seller?.image
+                                                    : '/static/img/ozodbek.png'
+                                            }`}
                                         />
                                     </Image.PreviewGroup>
                                 </div>
-
                             </div>
-                            <div className='user_profile_body usr_bodyy'>
-                                {
-                                    sellerr?.seller &&
-                                    <div className='d-flex justify-content-between user_titleCard '>
+                            <div className="user_profile_body usr_bodyy">
+                                {sellerr?.seller && (
+                                    <div className="d-flex justify-content-between user_titleCard ">
                                         <div>
-                                            <h1>{sellerr?.seller?.full_name} </h1>
+                                            <h1>
+                                                {sellerr?.seller?.full_name}{' '}
+                                            </h1>
 
-                                            <p >Ro'yxatdan o'tgan sana: {sellerr?.created_at} </p>
+                                            <p>
+                                                Ro'yxatdan o'tgan sana:{' '}
+                                                {sellerr?.created_at}{' '}
+                                            </p>
                                         </div>
                                         <div className="col-12 col-md-9 user_cardss">
                                             <div className="row justify-content-center">
@@ -189,7 +214,8 @@ const SellerPage = ({ seller }) => {
                                                                 ta
                                                             </p>
                                                             <p className="h4">
-                                                                Jami mahsulotlar soni
+                                                                Jami mahsulotlar
+                                                                soni
                                                             </p>
                                                         </div>
                                                     </div>
@@ -205,7 +231,9 @@ const SellerPage = ({ seller }) => {
                                                                 ta
                                                             </p>
                                                             <p className="h4">
-                                                                Sotilgan mahsulotlari soni
+                                                                Sotilgan
+                                                                mahsulotlari
+                                                                soni
                                                             </p>
                                                         </div>
                                                     </div>
@@ -220,68 +248,112 @@ const SellerPage = ({ seller }) => {
                                                                 )}{' '}
                                                                 so'm
                                                             </p>
-                                                            <p className="h4">Daromad</p>
+                                                            <p className="h4">
+                                                                Daromad
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ">
                                                 <a
-                                                    href='#products'
-                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1' ? 'donate-color-btn' : ''}`} style={{ textDecoration: 'none' }}
-                                                    onClick={() => setTab('tab-1')}
-                                                >
+                                                    href="#products"
+                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${
+                                                        tab === 'tab-1'
+                                                            ? 'donate-color-btn'
+                                                            : ''
+                                                    }`}
+                                                    style={{
+                                                        textDecoration: 'none',
+                                                    }}
+                                                    onClick={() =>
+                                                        setTab('tab-1')
+                                                    }>
                                                     {' '}
                                                     <i className="fa-regular fa-pen-to-square"></i>{' '}
                                                     Mahsulotlari
                                                 </a>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2' ? 'donate-color-btn' : ''}`}
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
+                                                        tab === 'tab-2'
+                                                            ? 'donate-color-btn'
+                                                            : ''
+                                                    }`}
                                                     onClick={showModal}>
                                                     {' '}
                                                     <i className="fa-regular fa-pen-to-square"></i>{' '}
                                                     Buyurtma berish
                                                 </button>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3' ? 'donate-color-btn' : ''}`}
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
+                                                        tab === 'tab-3'
+                                                            ? 'donate-color-btn'
+                                                            : ''
+                                                    }`}
                                                     // onClick={showModalDonate}
-                                                    onClick={() => setTab('tab-3')}
-                                                >
+                                                    onClick={() =>
+                                                        setTab('tab-3')
+                                                    }>
                                                     {' '}
                                                     <i className="fa-solid fa-hand-holding-medical"></i>{' '}
                                                     Qo'llab quvvatlash
                                                 </button>
                                             </div>
                                         </div>
-
-
                                     </div>
-                                }
+                                )}
                             </div>
-                            <div className='seller_contaoner2'>
-                                <select  onChange={(e) => (setTypeSelect(e.target.value))} className='form-control seller_filter rounded-3'>
-                                    <option value="file">Hujjatli materiallar</option>
-                                    <option value="template">Shablon materiallar</option>
-                                    <option value="audio">Audio materiallar</option>
-                                    <option value="video">Video materiallar</option>
+                            <div className="seller_contaoner2">
+                                <select
+                                    onChange={(e) =>
+                                        setTypeSelect(e.target.value)
+                                    }
+                                    className="form-control seller_filter rounded-3">
+                                        {/* {
+                                            productType?.map((e) =>{
+                                                return  <option value={e.name}>
+                                               {e.name}
+                                            </option>
+                                            })
+                                        } */}
+                                    <option value="file">
+                                        Hujjatli materiallar
+                                    </option>
+                                    <option value="template">
+                                        Shablon materiallar
+                                    </option>
+                                    <option value="audio">
+                                        Audio materiallar
+                                    </option>
+                                    <option value="video">
+                                        Video materiallar
+                                    </option>
                                 </select>
-                                <input type="text" placeholder='Qidiruv...' onInput={(e)=>(setSearch(e.target.value))}
-                                 className='form-control  rounded-3 seller_filter_option' />
+                                <input
+                                    type="text"
+                                    placeholder="Qidiruv..."
+                                    onInput={(e) => setSearch(e.target.value)}
+                                    className="form-control  rounded-3 seller_filter_option"
+                                />
                             </div>
                         </div>
-
-
                     </div>
                 </div>
-                {
-                    tab === 'tab-1' ? (
-                        <SellerProducts data={data} page={page} handlePagination={handlePagination} />
-                    ) : tab === 'tab-2' ? (
-                        <SellerProducts data={data} page={page} handlePagination={handlePagination} />
-                    ) : (
-                        <SellerDonateForm />
-                    )
-                }
+                {tab === 'tab-1' ? (
+                    <SellerProducts
+                        data={data}
+                        page={page}
+                        handlePagination={handlePagination}
+                    />
+                ) : tab === 'tab-2' ? (
+                    <SellerProducts
+                        data={data}
+                        page={page}
+                        handlePagination={handlePagination}
+                    />
+                ) : (
+                    <SellerDonateForm />
+                )}
             </div>
         </PageContainer>
     );

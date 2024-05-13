@@ -344,6 +344,21 @@ class ProductRepository {
             });
         return reponse;
     }
+    async getSellerProductNameSlug(slug) {
+        const endPoint = `customer/top-sellers/${slug}`;
+        const reponse = await Repository.get(baseUrl + endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return error.response;
+            });
+        return reponse;
+    }
 }
 
 export default new ProductRepository();
