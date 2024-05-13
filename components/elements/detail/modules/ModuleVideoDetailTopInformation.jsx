@@ -200,7 +200,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                         {' '}
                         <i class="fa-solid fa-eye"></i>{' '}
                         <span>
-                            {product?.view ? product?.view : views?.count || views}
+                            {views?.view_count}
                         </span>
                     </div>
                     <div className="video_send" onClick={() => copyVideoUrl()}>
