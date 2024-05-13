@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { Spin } from 'antd';
-
 import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import PostRepository from '~/repositories/PostRepository';
-import SearchHeadersPages from '~/components/shared/headers/SearchHeadersPages';
+import Link from 'next/link';
+import NextImageCard from '~/components/nextImagecard';
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -23,21 +23,21 @@ function useDebounce(value, delay) {
     return debouncedValue;
 }
 
-
-const NewSearchHomePages = () => {
+const Products_Search_Results = () => {
 
     const inputEl = useRef(null);
-    const [isSearch, setIsSearch] = useState(false);
     const [keyword, setKeyword] = useState('');
     const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [typeSelect, setTypeSelect] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
+    const { query } = useRouter()
 
 
     function handleClearKeyword() {
         setKeyword('');
-        setIsSearch(false);
         setLoading(false);
+        Router.push(`/search-pages/products`);
     }
 
     function handleSubmit(e) {
@@ -50,26 +50,24 @@ const NewSearchHomePages = () => {
     useEffect(() => {
         if (debouncedSearchTerm) {
             setLoading(true);
-            if (keyword) {
-                const products = PostRepository.postSearchFilter(keyword);
-
+            if (keyword || typeSelect) {
+                const products = PostRepository.postSearchFilter(keyword, typeSelect);
                 products.then((result) => {
                     setLoading(false);
-                    setIsSearch(true);
                     setResultItems(result);
                 });
             } else {
-                setIsSearch(false);
                 setKeyword('');
-            }
-            if (loading) {
-                setIsSearch(false);
             }
         } else {
             setLoading(false);
-            setIsSearch(false);
         }
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm, keyword, typeSelect]);
+
+    useEffect(() => (
+        setKeyword(query.keyword)
+
+    ), [query?.keyword])
 
 
     // Views
@@ -78,7 +76,7 @@ const NewSearchHomePages = () => {
         loadingView
     if (!loading) {
         if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0 && resultItems?.video?.length === 0)) {
-            productItemsView = <p>Mahsulot topilmadi</p>;
+            productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'><p>Mahsulot topilmadi</p></div>;
         }
         else {
             resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 || resultItems?.video?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || [], ...resultItems?.video || []].map((product) => (
@@ -101,16 +99,45 @@ const NewSearchHomePages = () => {
         );
     }
 
-
+    const itemsType = [
+        {
+            id: 1,
+            name: "Barchasi",
+            value: ""
+        },
+        {
+            id: 2,
+            name: "Videolar",
+            value: "video"
+        },
+        {
+            id: 3,
+            name: "Audiolar",
+            value: "audio"
+        },
+        {
+            id: 4,
+            name: "Shablonlar",
+            value: "template"
+        },
+    ]
 
 
     return (
-        <>
-            <SearchHeadersPages />
-            <div className="search_home_pages">
-                <div className="container">
-                    <div className="search_home_box">
-                        <h1 >From <span className='span_saecrh'>Idea to Launch, </span> <br />Discover best tools for your Startup</h1>
+        <div className='global_search_results'>
+            <nav className='global_navbar'>
+                <div className='container d-flex align-items-center'>
+                    <div className='d-flex align-items-center gap-5 width_full_screen'>
+                        <Link href="/">
+                            <a className="ps-logo">
+                                <NextImageCard
+                                    url="/static/img/soff/logo-dark.png"
+                                    clasS="logoo"
+                                    width="150px"
+                                    height="50px"
+                                />
+                            </a>
+                        </Link>
                         <form
                             className="ps-form--quick-search"
                             method="get"
@@ -122,7 +149,7 @@ const NewSearchHomePages = () => {
                                     ref={inputEl}
                                     className={keyword === '' ? "form-control input2" : "input1 form-control active_search_input"}
                                     type="text"
-                                    value={keyword}
+                                    defaultValue={keyword}
                                     placeholder="Qidiruv..."
                                     onChange={(e) => {
                                         const value = e.target.value;
@@ -134,24 +161,38 @@ const NewSearchHomePages = () => {
                                 {clearTextView}
                                 {loadingView}
                             </div>
-                            <button className={keyword === '' ? 'button_search' : " button_search active_search_button"}>Qidiruv</button>
-                            <div
-                                className={`ps-panel--search-result${isSearch ? ' active ' : ''
-                                    }`}>
-                                <div className="ps-panel__content">{productItemsView}</div>
-                            </div>
-
+                            <button className={"button_search_icon"}> <i className='fa-solid fa-search'></i>  </button>
                         </form>
+                    </div>
+                    <button className='btn btn-primary d-block button_sign'>Kirish</button>
+
+                </div>
+            </nav>
+            <nav className='global_navbar_bottom'>
+                <div className="container ">
+                    <div className='navbar-container'>
+                        <ul className='d-flex align-items-end p-0 gap-5'>
+                            {
+                                itemsType?.map(item => (
+                                    <li onClick={() => setTypeSelect(item?.value)} key={item.id} className={`d-flex align-items-center gap-3 ${typeSelect === item.value && "active_type"}`}>
+                                        <i className='fa-solid fa-search'></i>
+                                        {item.name}
+                                    </li>
+
+                                ))
+                            }
+                        </ul>
 
                     </div>
                 </div>
+            </nav>
+            <div className="results mt-3">
+                <div className="container">
+                    {!loading ? productItemsView : <div className='w-full d-flex align-items-center justify-content-center pt-5'><Spin size="large" /></div>}
+                </div>
             </div>
-        </>
+        </div>
     )
 }
 
-export default NewSearchHomePages
-
-
-
-
+export default Products_Search_Results
