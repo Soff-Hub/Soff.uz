@@ -35,7 +35,6 @@ function ProductsLists() {
     const [dataValStatus, setDataCatStatus] = useState("");
     const [filterType, setFiltertype] = useState('');
     const [date, setDate] = useState(null);
-    const [dateArxiv, setDateArxiv] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [pageCount, setPageCount] = useState(0);
@@ -71,10 +70,9 @@ function ProductsLists() {
     async function GetItemsProductsLists(
         page,
         category,
-        dataValStatus,
+        status,
         dataFormat,
         id,
-        arxiv,
         search,
         filterType,
     ) {
@@ -83,10 +81,9 @@ function ProductsLists() {
             null,
             page,
             category,
-            router.query.status,
+            status,
             dataFormat,
             id,
-            arxiv,
             search,
             filterType,
             user?.access
@@ -146,9 +143,6 @@ function ProductsLists() {
 
     }
 
-    function handleCLickArxiv() {
-        setDateArxiv(!dateArxiv);
-    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -238,7 +232,6 @@ function ProductsLists() {
                 router.query.status,
                 dataFormat,
                 null,
-                dateArxiv,
                 search
             );
         }
@@ -252,15 +245,14 @@ function ProductsLists() {
                 router.query.status,
                 dataFormat,
                 null,
-                dateArxiv,
-                search, filterType
+                search, 
+                filterType
             );
         }
     }, [
         category_id,
         router.query.status,
         dataFormat,
-        dateArxiv,
         searchDebounce,
         router.query.page,
         filterType,
@@ -277,7 +269,7 @@ function ProductsLists() {
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster',
+            dataIndex: 'poster_url',
             key: 'name',
             render: (poster_url) => (
                 <div>
@@ -375,7 +367,7 @@ function ProductsLists() {
                             Bekor qilingan{' '}
                         </span>
                     </Tooltip>
-                ) : datastatus?.status === 'Arxivlangan' ? (
+                ) : datastatus?.status === 'deleted' ? (
                     <span>
                         <i className="fa-solid fa-inbox text-danger"></i>{' '}
                         Arxivlangan
@@ -528,27 +520,19 @@ function ProductsLists() {
                                                                 value="cancelled">
                                                                 Bekor qilingan
                                                             </option>
+                                                            <option
+                                                                className="fs-3"
+                                                                value="deleted">
+                                                                Arxivlangan
+                                                            </option>
                                                         </select>
                                                         <button onClick={handleClickProductsAll} className='btn btn-success col-md-2'><span className='fs-5' style={{ lineHeight: "12px" }}>Bracha mahsulotlar</span></button>
                                                         <RangePicker
-                                                            className="w-100 py-3 col-md-4 rounded-3"
+                                                            className="w-100 py-3 col-md-5 rounded-3"
                                                             onChange={(e) =>
                                                                 setDate(e)
                                                             }
                                                         />
-                                                        <Button
-                                                            onClick={
-                                                                handleCLickArxiv
-                                                            }
-                                                            className="col-md-3 input py-3"
-                                                            style={{
-                                                                height: '48px',
-                                                            }}>
-                                                            <span className="fs-4 text-dark">
-                                                                Arxivlangan
-                                                                holatlar
-                                                            </span>
-                                                        </Button>
 
                                                         <select
                                                             className="form-select col-md-4 fs-3 py-3 rounded-3"
@@ -656,7 +640,7 @@ function ProductsLists() {
                                                 <div className="col-12">
                                                     <DefaultAudioLive
                                                         product={deleteIdView ? deleteIdView : ''}
-                                                        liveFile={deleteIdView?.poster}
+                                                        liveFile={deleteIdView?.poster_url}
                                                         title={deleteIdView?.title}
                                                         categoryName={deleteIdView?.category?.name}
                                                     />

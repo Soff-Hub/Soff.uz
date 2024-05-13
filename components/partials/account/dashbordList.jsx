@@ -21,9 +21,12 @@ function DashbordList({ setOpen }) {
     const [currPage, setCurrPage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
+    const [yearGet, setYearGet] = useState([]);
+    const [donats, setDonats] = useState([]);
     const [month, setMonth] = useState(null);
 
     const { accountLinks, user } = useSelector((state) => state.auth);
+
 
 
     function addPeriodToThousands(number) {
@@ -78,7 +81,6 @@ function DashbordList({ setOpen }) {
         setLoading(false);
     }
 
-
     const handleChangeYear = (value) => {
         setYear(+value);
     };
@@ -86,11 +88,31 @@ function DashbordList({ setOpen }) {
         setMonth(value);
     };
 
+    async function GetItemsSeller_Yearch() {
+        const ItemsData = await GetRepository.getSellerDashbordYearch(user?.access);
+        if (ItemsData) {
+            setYearGet(ItemsData);
+        }
+    }
+
+    async function getSellerDashbordDonatSS() {
+        const ItemsData = await GetRepository.getSellerDashbordDonat(user?.access);
+        if (ItemsData?.results) {
+            setDonats(ItemsData);
+        }
+    }
+
+
+
     useEffect(() => {
         GetItemsProducts();
         GetItemsProductsOrders(1);
         GetItemsProductsPopular();
+        GetItemsSeller_Yearch()
+        getSellerDashbordDonatSS()
     }, []);
+
+
 
     const columns = [
         {
@@ -156,6 +178,51 @@ function DashbordList({ setOpen }) {
                 </a>
             ),
         },
+    ];
+
+    const columnsDonat = [
+        {
+            title: 'id',
+            dataIndex: 'id',
+            key: 'age',
+            width: 100,
+        },
+        {
+            title: 'Donat qiluvchi',
+            dataIndex: 'sponsor_info',
+            key: 'age',
+            width: 350,
+        },
+        {
+            title: "So'mma",
+            dataIndex: 'amount',
+            key: 'age',
+            render: (discount_price) => (
+                <span>
+                    <i className="fa-solid fa-coins text-warning"></i>{' '}
+                    {addPeriodToThousands(discount_price)}
+                </span>
+            ),
+        },
+        {
+            title: 'Donat qilingan sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    <CalculateTimeDifference targetDate={created_at} />
+                </span>
+            ),
+        },
+        {
+            title: 'Donat haqida',
+            dataIndex: 'description',
+            key: 'age',
+            width: 350,
+        },
+
     ];
 
     const columnsOrders = [
@@ -352,26 +419,45 @@ function DashbordList({ setOpen }) {
         },
     ];
 
-    const labels = [
-        { name: 'Yanvar', value: '01' },
-        { name: 'Fevral', value: '02' },
-        { name: 'Mart', value: '03' },
-        { name: 'Aprel', value: '04' },
-        { name: 'May', value: '05' },
-        { name: 'Iyun', value: '06' },
-        { name: 'Iyul', value: '07' },
-        { name: 'Avgust', value: '08' },
-        { name: 'Sentyabr', value: '09' },
-        { name: 'Oktyabr', value: '10' },
-        { name: 'Noyabr', value: '11' },
-        { name: 'Dekabr', value: '12' },
-    ];
+    const items = [
+        {
+            key: '1',
+            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight:"600" }} >Ommabop Mahsulotlar</span>,
+            children: <div>
+                <Table
+                    scroll={{ x: 1250 }}
+                    dataSource={dataProducts}
+                    columns={columns}
+                    className="pb-5"
+                    pagination={false}
+                />
+            </div>,
+
+
+        },
+        {
+            key: '2',
+            label: <span style={{ marginLeft: "30px", fontSize: "16px", fontWeight:"600" }}>Donatlar ro'yxati  <strong className='mx-2'>({donats?.total_amount ? (addPeriodToThousands(donats?.total_amount)) : 0} so'm)</strong></span>,
+            children: <div>
+             
+                <Table
+                    scroll={{ x: 1250 }}
+                    dataSource={donats?.results}
+                    columns={columnsDonat}
+                    className="pb-5"
+                    pagination={false}
+                />
+            </div>,
+
+        },
+    ]
+
 
     return (
         <section className="ps-my-account ps-page--account p-0">
             <p className='step-0 m-0'></p>
             <div className="container">
-                { user?.role != 'admin' && window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
+                {user?.role != 'admin' && window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
                     <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}><i className='fa-regular fa-circle-question'></i> Saytdan foydalanish bo'yicha savolingiz bormi?</p>
                 </div>}
                 {user?.role === 'admin' ? (
@@ -747,7 +833,7 @@ function DashbordList({ setOpen }) {
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        {user?.role === 'admin' || user?.role === 'seller' && (
+                        {(user?.role === 'admin' || user?.role === 'seller') && (
                             <div className="dashboard-div mb-2">
                                 <Select
                                     defaultValue={{
@@ -758,12 +844,9 @@ function DashbordList({ setOpen }) {
                                         width: 300,
                                     }}
                                     onChange={handleChangeYear}
-                                    options={[
-                                        2023, 2024, 2025, 2026, 2027, 2028,
-                                        2029, 2030, 2031, 2032, 2033,
-                                    ].map((el) => ({
-                                        value: +el,
-                                        label: `${+el}-yil bo'yicha hisobotlar`,
+                                    options={yearGet?.map((el) => ({
+                                        value: +el?.year,
+                                        label: `${+el?.year}-yil bo'yicha hisobotlar`,
                                     }))}
                                     className="me-2"
                                 />
@@ -781,16 +864,18 @@ function DashbordList({ setOpen }) {
                                             label: `Barcha oy ma'lumotlari`,
                                             value: null,
                                         },
-                                        ...labels.map((el) => ({
-                                            label: `${el.name} oyi ma'lumotlari`,
-                                            value: el.value,
-                                        })),
+                                        ...yearGet
+                                            ?.filter(item => item?.year === year)
+                                            .map(item => item?.months?.map((el) => ({
+                                                label: `${el.name} oyi ma'lumotlari`,
+                                                value: el.value,
+                                            })))[0] || []
                                     ]}
                                 />
                             </div>
                         )}
 
-                        {user?.role === 'admin' || user?.role === 'seller' && (
+                        {(user?.role === 'admin' || user?.role === 'seller') && (
                             <div className="dashboard-div">
                                 <Example year={year} month={month} />
                             </div>
@@ -825,18 +910,12 @@ function DashbordList({ setOpen }) {
                     </div>
                 </div>
                 {user?.role === 'admin' ? (
-                    <div>
-                        <h4 className="bg-white m-0 text-center py-4">
-                            Ommabop mahsulotlar
-                        </h4>
-                        <Table
-                            scroll={{ x: 1250 }}
-                            dataSource={dataProducts}
-                            columns={columns}
-                            className="pb-5"
-                            pagination={false}
-                        />
+                    <div className='tabs_select'>
+
+                        <Tabs defaultActiveKey="1" items={items} className='bg-white ' />
+
                     </div>
+
                 ) : (
                     <></>
                 )}
@@ -860,7 +939,7 @@ function DashbordList({ setOpen }) {
                                 {!loading ? (
                                     <div className="ps-product--detail ps-product--fullwidth">
                                         <div className="ps-product__header ">
-                                            <ThumbnailDefault product={View} />
+                                            <ThumbnailDefault product={View} views={View?.view_count} />
                                             <div className="ps-product__info">
                                                 <header>
                                                     <h1>{View?.title}</h1>

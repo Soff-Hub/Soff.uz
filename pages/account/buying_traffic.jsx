@@ -9,8 +9,6 @@ import Meta from '~/components/shared/headers/Meta';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useState } from 'react';
-import { Table, Tag } from 'antd';
-import CreditCard2 from '~/components/partials/account/CreditCard2';
 import { formatCurrency } from '~/utilities/product-helper';
 import BuyTrafficCard from '~/components/partials/account/BuyTrafficCard';
 
@@ -37,9 +35,25 @@ function BuyingTraffic() {
         }
     }
 
-    const data = trafficList.map(el => ({ id: el.id, price: el.price_storage, storage: el.size_storage_to_mb }))
+    const data = trafficList?.map(el => ({ id: el.id, price: el.price_storage, storage: el.size_storage_to_mb }))
 
-    console.log(trafficList);
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}.${decimalPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
 
     const add = (id) => {
         const element = data.find(el => el.id === id)
@@ -102,7 +116,7 @@ function BuyingTraffic() {
                                         textAlign: 'center'
                                     }}>
                                     <h3 className='m-0' style={{ fontWeight: 600, color: '#00A44F' }}>{el.price ? `${formatCurrency(el.price)} so'm` : "Tekin"}</h3>
-                                    <p style={{ color: 'orange', fontSize: 18, fontWeight: 600 }}>{el.storage} GB</p>
+                                    <p style={{ color: 'orange', fontSize: 18, fontWeight: 600 }}>{addPeriodToThousands(el.storage)} MB</p>
 
                                     <div style={{
                                         display: 'flex',
@@ -170,7 +184,7 @@ function BuyingTraffic() {
                             ))
                         }
                     </div>
-                    {value && <strong className="fs-3">Kalkulyator: {allValue.count}x <span style={{ color: 'orange', fontWeight: 600 }}>{allValue.storage}GB </span> = <span style={{ color: 'orange', fontWeight: 600 }}>{allValue.storage * allValue.count}GB </span> va <span style={{ color: '#00A44F', fontWeight: 600 }}>{formatCurrency(allValue.price)} so'm </span></strong>}
+                    {value && <strong className="fs-3">Kalkulyator: {allValue.count}x <span style={{ color: 'orange', fontWeight: 600 }}>{addPeriodToThousands(allValue.storage)} MB </span> = <span style={{ color: 'orange', fontWeight: 600 }}>{addPeriodToThousands(allValue.storage * allValue.count)} MB </span> va <span style={{ color: '#00A44F', fontWeight: 600 }}>{formatCurrency(allValue.price)} so'm </span></strong>}
                     {value && <BuyTrafficCard quantity={allValue.count} traffic={allValue.storageId} />}
                 </div>
             </div>

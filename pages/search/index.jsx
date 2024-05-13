@@ -47,7 +47,7 @@ const SearchPage = () => {
             url: '/',
         },
         {
-            text: 'Qidiruv natijalari',
+            text: 'Qidiruv natijasi',
         },
     ];
 
@@ -56,7 +56,7 @@ const SearchPage = () => {
         <PageContainer title={`Search results for: "${keyword}" `}>
             <div className="ps-page">
                 <Meta
-                    title={"Qidiruv natijalar"}
+                    title={"Qidiruv natijasi"}
                 />
                 <BreadCrumb breacrumb={breadcrumb} />
             </div>
@@ -66,7 +66,7 @@ const SearchPage = () => {
 
                     <div className="mt-5 mb-5">
                         <h3 >
-                            <i style={{ borderBottom: "2px solid black" }} >{keyword}</i> {keyword === '' ? "Qidirish uchun qiymat kiring" : "Bo'yicha qidiruv natijalari"}
+                            <i style={{ borderBottom: "2px solid black" }} >{keyword}</i> {keyword === '' ? "Qidirish uchun qiymat kiring" : "Bo'yicha qidiruv natijasi"}
                         </h3>
                     </div>
 
@@ -92,7 +92,7 @@ const SearchPage = () => {
                                 <div className="ps-section__content">
                                     <div className="d-flex align-content-center row">
                                         {
-                                            resultdata?.file?.slice(0, 6)?.map((item, index) => (
+                                            resultdata?.file?.map((item, index) => (
                                                 <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
                                                     <Product product={item} />{' '}
                                                 </div>
@@ -125,7 +125,7 @@ const SearchPage = () => {
                                 <div className="ps-section__content mb-5">
                                     <div className="d-flex align-content-center row">
                                         {
-                                            resultdata?.audio?.slice(0, 6)?.map((item, index) => (
+                                            resultdata?.audio?.map((item, index) => (
                                                 <div key={index} className="my-3 col-md-12">
                                                     <AudioWaveform product={item} />
                                                 </div>
@@ -158,7 +158,7 @@ const SearchPage = () => {
                                 <div className="ps-section__content">
                                     <div className="d-flex align-content-center row">
                                         {
-                                            resultdata?.template?.slice(0, 6)?.map((item, index) => (
+                                            resultdata?.template?.map((item, index) => (
                                                 <div key={index} className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
                                                     <Product product={item} />{' '}
                                                 </div>
@@ -192,7 +192,7 @@ const SearchPage = () => {
                                 <div className="ps-section__content">
                                     <div className="d-flex align-content-center row">
                                         {
-                                            resultdata?.video?.slice(0, 6)?.map((item, index) => (
+                                            resultdata?.video?.map((item, index) => (
                                                 <div key={index} className="col-md-4 mb-5">
                                                     <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />{' '}
                                                 </div>

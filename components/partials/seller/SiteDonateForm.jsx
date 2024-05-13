@@ -181,7 +181,7 @@ export default function SiteDonateForm() {
             <div style={{ maxWidth: '800px', margin: '0 auto' }}>
                 <div className="ps-tab active" id="register">
                     <form className="ps-form__content" onSubmit={handleSubmit}>
-                        <h3>Qo'llab quvvatlash</h3>
+                      
                         <div className='d-flex align-items-center gap-3'>
                             <div className="form-group flex-grow-1">
                                 <p>Ism yoki nikneym *</p>

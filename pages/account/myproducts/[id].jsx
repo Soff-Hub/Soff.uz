@@ -574,7 +574,7 @@ const PostsMyProducts = () => {
                                 <img
                                     src={
                                         customeFile?.image_url ||
-                                        products.poster
+                                        products.poster_url
                                     }
                                     alt="doc"
                                     className="mb-4 border"
@@ -698,7 +698,8 @@ const PostsMyProducts = () => {
                             <div className="card rounded-3 ">
                                 <div className="image rounded mb-3">
                                     <img
-                                        src={products.poster}
+
+                                        src={products.poster_url || "/static/img/docCopy.png"}
                                         alt="doc"
                                         className="mb-4 border"
                                         style={{ objectFit: 'cover' }}

@@ -385,38 +385,23 @@ function ApplicationLists() {
     ];
     const columnsTextArea = [
         {
-            title: 'Ismi',
-            dataIndex: 'user_name',
-            key: 'address',
-            width: 550,
-        },
-        {
             title: 'Telefon raqam yoki email',
-            dataIndex: 'data',
+            dataIndex: 'seller_info',
             key: 'address',
-            width: 300,
-            render: (data) => (
-                <div className='d-flex flex-column'>
-                    {
-                        data.phone === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.phone}</span>
-                    }
-                    {
-                        data.email === "None" ?
-                            <></> :
-                            <span className="truncate whitespace-nowrap"> {data.email}</span>
-                    }
-
-                </div>
-
-            ),
+            render: (seller_info) => (
+                <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
+                    <span className="truncate whitespace-nowrap">
+                        {' '}
+                        {seller_info.full_name}
+                    </span>
+                    <span>{seller_info.email_or_phone}</span>
+                </a>),
         },
         {
             title: 'Taklif',
             dataIndex: 'offer',
             key: 'address',
-            width: 550,
+            width: 350,
         },
         {
             title: 'Yuborilgan javobi',
@@ -583,7 +568,7 @@ function ApplicationLists() {
                                         user?.role === "admin" ?
                                             (<>
                                                 <div className='row g-3 mx-auto'>
-                                                    <h4 className='py-3 col-md-5'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${allPrice} so'm `}</h4>
+                                                    <h4 className='py-3 col-md-6'>{user?.role === "seller" ? "Arizalar" : `Arizalar Bo'limi - ${addPeriodToThousands(allPrice)} so'm `}</h4>
                                                     <select className='form-select col-md-5  fs-3 py-3 rounded-3' onChange={(e) => setDataCat(e.target.value)}  >
                                                         <option className='fs-3' selected value="">Holatlar</option>
                                                         <option className='fs-3' value="moderation">Moderatsiya</option>
@@ -611,7 +596,7 @@ function ApplicationLists() {
                                                         </span>
                                                     </label>
                                                 </div>
-                                                <Table scroll={{ x: 1450 }} dataSource={dataAdmin} columns={columnsAdmin}
+                                                <Table scroll={{ x: 1700 }} dataSource={dataAdmin} columns={columnsAdmin}
                                                     pagination={false} />
                                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                     onChange={getItemsSellerAdmin} />

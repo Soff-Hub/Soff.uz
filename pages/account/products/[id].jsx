@@ -142,9 +142,9 @@ const PostsProductsEdit = () => {
     }
 
     async function getProducts() {
-        if (routerId) {
+        if (routerId && user?.access) {
             setLoading(true)
-            const ItemsData = await GetRepository.getShopsProducts(null, null, null, null, null, null, routerId, null, null, null, user?.access)
+            const ItemsData = await GetRepository.getShopsProductsAdmin(routerId, user?.access)
             setProducts(ItemsData);
             setLoading(false)
         }
@@ -152,7 +152,7 @@ const PostsProductsEdit = () => {
     }
     useEffect(() => {
         getProducts()
-    }, [routerId])
+    }, [routerId, user?.access])
 
     useEffect(() => {
         GetItemsTag();
@@ -235,7 +235,7 @@ const PostsProductsEdit = () => {
         }
         Router.back();
     }
-    
+
     const dataStatus = [
         {
             id: 1,
@@ -508,16 +508,17 @@ const PostsProductsEdit = () => {
                                 style={{ maxWidth: '370px' }}>
                                 <div className="image rounded ">
                                     <div className="image rounded ">
-                                        {!products.poster ? (
+                                        {!products.poster_url ? (
                                             <img
                                                 src="/static/img/docCopy.png"
                                                 alt="doc"
                                                 className="border mb-4"
                                                 style={{ objectFit: 'cover' }}
                                             />
+
                                         ) : (
                                             <img
-                                                src={products.poster}
+                                                src={products.poster_url}
                                                 alt="doc"
                                                 className="mb-4 border"
                                                 style={{ objectFit: 'cover' }}

@@ -21,7 +21,7 @@ import { OneShopDoc } from '~/store/auth/action';
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
     const { pid } = router.query;
-    const [views, setViews] = useState(null);
+    const [views, setViews] = useState('');
     const [product, setProduct] = useState([]);
     const [similar, setSimilar] = useState([]);
     const [isPlay, setIsPlay] = useState(null)

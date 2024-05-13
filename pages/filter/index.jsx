@@ -47,7 +47,7 @@ const FilterPages = () => {
             url: '/',
         },
         {
-            text: 'Filter natijalari',
+            text: 'Qidiruv natijasi',
         },
     ];
 
@@ -58,7 +58,7 @@ const FilterPages = () => {
         <PageContainer title={`Search results for: "${keyword}" `}>
             <div className="ps-page">
                 <Meta
-                    title={"Qidiruv natijalar"}
+                    title={"Qidiruv natijasi"}
                 />
                 <BreadCrumb breacrumb={breadcrumb} />
             </div>
