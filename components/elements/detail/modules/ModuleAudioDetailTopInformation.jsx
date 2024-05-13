@@ -42,6 +42,9 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
         return formattedNumber;
     }
 
+
+
+
     // Views
     let priceView;
 
@@ -65,7 +68,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
         );
     } else {
         priceView = (
-            <h4 className="ps-product__price " style={{minWidth:"120px"}}>
+            <h4 className="ps-product__price " style={{ minWidth: "120px" }}>
                 {+product.discount_price === 0 ? (
                     <p>Bepul</p>
                 ) : product.discount === 0 ? (
@@ -129,13 +132,12 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                 }}>
             </div>
             <div
-                className={`product__top-information ${
-                    product?.document?.content_type === 'video'
+                className={`product__top-information ${product?.document?.content_type === 'video'
                         ? 'video_user_information'
                         : product?.document?.content_type === 'audio'
-                        ? 'video_user_information'
-                        : ''
-                } `}
+                            ? 'video_user_information'
+                            : ''
+                    } `}
                 style={{ width: '100%' }}>
                 <div>
                     <div
@@ -166,13 +168,12 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                     </div>
                 </div>
                 <div
-                    className={`${
-                        product?.document?.content_type === 'video'
+                    className={`${product?.document?.content_type === 'video'
                             ? 'video_send_container'
                             : product?.document?.content_type === 'audio'
-                            ? 'video_send_container'
-                            : ''
-                    }`}>
+                                ? 'video_send_container'
+                                : ''
+                        }`}>
                     <div className={`ps-product__actions heart_video `}>
                         <a
                             href="#"
@@ -181,23 +182,23 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                                 cursor: `${admin ? 'not-allowed' : 'pointer'}`,
                             }}>
                             <i
-                                className={`${
-                                    wishlist?.some(
-                                        (item) =>
-                                            Number(item.id) ===
-                                            Number(product.id)
-                                    )
+                                className={`${wishlist?.some(
+                                    (item) =>
+                                        Number(item.id) ===
+                                        Number(product.id)
+                                )
                                         ? 'fa-solid fa-heart text-danger'
                                         : 'icon-heart'
-                                } `}></i>
+                                    } `}></i>
                         </a>
                     </div>
                     <div className=" views_video  mt-1">
                         {' '}
                         <i className="fa-solid fa-eye"></i>{' '}
                         <span>
-                            {product?.view ? product?.view : views?.count || views}
+                            {views?.view_count}
                         </span>
+
                     </div>
                     <div className="video_send" onClick={() => copyVideoUrl()}>
                         {copy ? (
@@ -205,11 +206,11 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                         ) : (
                             <>
                                 <i className="fa-solid fa-share-nodes"></i>
-                                ulashish 
+                                ulashish
                             </>
                         )}
                     </div>
-                    
+
 
                     <div className="product__top-information--price buystep-0">
                         {priceView}

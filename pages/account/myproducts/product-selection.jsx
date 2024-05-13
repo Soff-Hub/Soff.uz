@@ -7,7 +7,7 @@ import Page404 from '~/pages/page/page-404';
 import LoginPage from '../login';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Link from 'next/link';
-import { Tooltip } from 'antd';
+import { Tooltip, Badge } from 'antd';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 
@@ -164,11 +164,13 @@ const Posts = () => {
                             </div>
                             <div className="select-col ">
                                 <Link href="/account/myproducts/upload-video">
-                                    <a>
+                                    <a style={{ position: "relative" }}>
+
                                         <div className="select-card ">
+
                                             <Tooltip
                                                 className="toltip"
-                                                title={category?.audio
+                                                title={category?.video
                                                     ?.map((item) => item)
                                                     .join(', ')}
                                                 overlayStyle={{
@@ -182,11 +184,20 @@ const Posts = () => {
                                                     }}
                                                     className="fa-regular fa-circle-question px-4 mt-2"></i>
                                             </Tooltip>
+
                                             <div className="d-flex flex-column gap-3">
                                                 <i className="fa-solid fa-video"></i>
                                                 <span>Video Material</span>
                                             </div>
                                         </div>
+                                        <Badge.Ribbon
+                                            text={"Yangi funksiya"}
+                                            color={"green"}
+                                            placement='end'
+                                            style={{marginTop:"-90px"}}
+                                        
+                                        >
+                                        </Badge.Ribbon>
                                     </a>
                                 </Link>
                             </div>

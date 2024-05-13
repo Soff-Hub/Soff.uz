@@ -321,7 +321,7 @@ function MyProductsLists() {
             ? View?.document?.file_url.split('?')[0]
             : View?.document?.file_url;
         try {
-            setLoading(true);
+            setLoading2(true);
             const response = await axios.get(file, {
                 responseType: 'blob',
             });
@@ -340,7 +340,7 @@ function MyProductsLists() {
         } catch (error) {
             console.error('Error downloading file: ', error);
         } finally {
-            setLoading(false);
+            setLoading2(false);
         }
     };
 
@@ -534,15 +534,13 @@ function MyProductsLists() {
                             el.id == content_type_id?.id &&
                             el.data_status?.status === 'moderation'
                     ) ? (
-                        <Link href={'#'}>
-                            <a>
+                            <span style={{cursor:"pointer"}}>
                                 <i
                                     className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
                                     onClick={() =>
                                         handleClickIdEdit(content_type_id)
                                     }></i>
-                            </a>
-                        </Link>
+                            </span>
                     ) : data.some(
                         (el) =>
                             el.id == content_type_id?.id &&
@@ -636,27 +634,24 @@ function MyProductsLists() {
                                                             <strong>
                                                                 Umumiy xotira :{' '}
                                                                 {
-                                                                    videosize?.storage_size
-                                                                }{' '}
-                                                                {videosize?.storage_size ? "mb" : ''}
+                                                                    addPeriodToThousands(videosize?.storage_size)
+                                                                } MB
                                                             </strong>
                                                         </div>
                                                         <div className="btn btn-outline-primary px-3 py-2 fs-5 rounded-3">
                                                             <strong>
                                                                 Band qilingan xotira :{' '}
                                                                 {
-                                                                    videosize?.full_storage_size
-                                                                }
-                                                                {videosize?.full_storage_size ? 'mb' : ''}
+                                                                    addPeriodToThousands(videosize?.full_storage_size)
+                                                                } MB
                                                             </strong>
                                                         </div>
                                                         <div className="btn btn-outline-danger px-3 py-2 fs-5 rounded-3">
                                                             <strong>
                                                                 Bo'sh xotira :{' '}
                                                                 {
-                                                                    videosize?.empty_storage_size
-                                                                }{' '}
-                                                                {videosize?.empty_storage_size ? 'mb' : ''}
+                                                                    addPeriodToThousands(videosize?.empty_storage_size)
+                                                                } MB
                                                             </strong>
                                                         </div>
                                                     </div>
@@ -934,7 +929,7 @@ function MyProductsLists() {
                                                         product={
                                                             View ? View : ''
                                                         }
-                                                        liveFile={View?.poster}
+                                                        liveFile={View?.poster_url}
                                                         title={View?.title}
                                                         categoryName={
                                                             View?.category?.name
@@ -1159,6 +1154,7 @@ function MyProductsLists() {
                                                 <div className="ps-product__header ">
                                                     <ThumbnailDefault
                                                         product={View}
+                                                        views={View?.view_count}
                                                     />
                                                     <div className="ps-product__info">
                                                         {View?.status ===

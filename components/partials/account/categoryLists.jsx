@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Modal } from 'antd';
+import { Modal, Select, Space, Collapse, Switch } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -12,14 +12,15 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
-import { Collapse } from 'antd';
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+
 function CategoryLists() {
     const [search, setSerach] = useState('');
     const [tagItems, setTagItems] = useState([]);
     const [deleteId, setDeleteId] = useState(null);
     const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [file, setFile] = useState(null);
-    const [tagName, setTagName] = useState(null);
+    const [tagName, setTagName] = useState([]);
     const [tagNameIcon, setTagNameIcon] = useState(null);
     const [tagNameUser, setTagNameUsers] = useState(null);
     const [tagNameTop, setTagNameTop] = useState(null);
@@ -29,6 +30,7 @@ function CategoryLists() {
     const [isHomeVal, setIsHomeVal] = useState(false);
     const searchVal = useDebounce(search, 1000);
     const [categoryData, setCategoryData] = useState(null);
+    const [allParents, setAllParents] = useState(false)
 
     // async function GetItemsProducts(page, search, id) {
     //     setCurrPage(page);
@@ -51,7 +53,6 @@ function CategoryLists() {
         );
         if (ItemsData?.results) {
             setCategoryData([...ItemsData.results]);
-            console.log('results', ItemsData?.results);
         }
     }
 
@@ -97,21 +98,30 @@ function CategoryLists() {
         }
         formData.append('name', values?.name);
 
-        if (tagName) {
-            formData.append('parent', tagName);
+        if (allParents) {
+            formData.append('all_parents', allParents);
         }
+
+        if (allParents === false && tagName?.length > 0) {
+            formData.append('parents', JSON.stringify(tagName));
+        }
+
         const postsItems = await PostsRepository.PostsCategory(
             formData,
             user?.access
         );
-        if (postsItems?.status === 201) {
+        if (postsItems) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: `Siz  yangi malumot qo'shdingiz`,
+                content: `Siz  yangi categoriya qo'shdingiz`,
             });
+
         }
         GetItemsProductsList(search, null);
+        getParentLists()
+        setTagName([])
+        setAllParents(false)
     }
 
     async function handleItemsEdit() {
@@ -180,75 +190,6 @@ function CategoryLists() {
         GetItemsProductsList(searchVal, null);
     }, [searchVal]);
 
-    // const columns = [
-    //     {
-    //         title: 'Belgi',
-    //         dataIndex: 'icon',
-    //         key: 'address',
-    //         render: (icon) => <i className={icon}></i>,
-    //     },
-    //     {
-    //         title: 'Nomi',
-    //         dataIndex: 'name',
-    //         key: 'address',
-    //     },
-    //     {
-    //         title: 'Parent',
-    //         dataIndex: 'parent',
-    //         key: 'address',
-    //         render: (parent) => <span>{parent?.name}</span>,
-    //     },
-    //     {
-    //         title: 'Rasm',
-    //         dataIndex: 'image',
-    //         key: 'address',
-    //         render: (poster_url) => (
-    //             <div>
-    //                 {poster_url ? (
-    //                     <a href={poster_url} target="blank">
-    //                         {' '}
-    //                         <NextImageCard
-    //                             url={poster_url}
-    //                             clasS="rounded-3 mb-2"
-    //                             width="54px"
-    //                             height="54px"
-    //                         />
-    //                     </a>
-    //                 ) : (
-    //                     <i className="fa-solid fa-image fa-2x"></i>
-    //                 )}
-    //             </div>
-    //         ),
-    //     },
-    //     {
-    //         title: 'Harakatlar',
-    //         dataIndex: 'id',
-    //         key: 'address',
-    //         render: (id) => (
-    //             <div>
-    //                 <a
-    //                     data-bs-target="#exampleModalToggleEditCategory"
-    //                     data-bs-toggle="modal">
-    //                     <i
-    //                         className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
-    //                         onClick={() => GetItemsProductsEdit(id)}></i>
-    //                 </a>
-    //                 {data.some((el) => el.id == id && el.is_delete === true) ? (
-    //                     <a
-    //                         data-bs-target="#exampleModalToggle"
-    //                         data-bs-toggle="modal">
-    //                         <i
-    //                             className="fa-solid fa-trash-can text-danger mx-3"
-    //                             onClick={() => setDeleteId(id)}></i>
-    //                     </a>
-    //                 ) : (
-    //                     <></>
-    //                 )}
-    //             </div>
-    //         ),
-    //     },
-    // ];
-
     const itemArr = categoryData?.map((e) => ({
         key: e?.id,
         label: (
@@ -276,8 +217,7 @@ function CategoryLists() {
                                 className="fa-solid fa-pen-to-square mx-4 text-success-emphasis ml-5"
                                 onClick={() => GetItemsProductsEdit(e?.id)}></i>
                         </a>
-                        {e?.is_delete === true
-                          ? (
+                        {e?.is_delete === true ? (
                             <a
                                 data-bs-target="#exampleModalToggle"
                                 data-bs-toggle="modal">
@@ -298,7 +238,7 @@ function CategoryLists() {
                     <div className="col-md-6">{e?.name}</div>
                     <div className="col-md-6 text-end">
                         <div className="d-flex align-items-center justify-content-end">
-                        {  e?.is_delete === true ? (
+                            {e?.is_delete === true ? (
                                 <a
                                     data-bs-target="#exampleModalToggle"
                                     data-bs-toggle="modal">
@@ -318,7 +258,6 @@ function CategoryLists() {
                                         GetItemsProductsEdit(e?.id)
                                     }></i>
                             </a>
-                           
                         </div>
                     </div>
                 </div>
@@ -326,7 +265,14 @@ function CategoryLists() {
         }),
     }));
 
+    const options = tagItems?.map((e) => ({
+        label: e?.name,
+        value: e?.id,
+    }));
 
+    const handleChange = (value) => {
+        setTagName(value);
+    };
 
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -370,7 +316,8 @@ function CategoryLists() {
                                         <button
                                             className="btn btn-success col-md-3 py-3 "
                                             data-bs-target="#addcategory"
-                                            data-bs-toggle="modal">
+                                            data-bs-toggle="modal"
+                                            >
                                             <span className="fs-4">
                                                 {' '}
                                                 <i className="fa-solid fa-plus"></i>{' '}
@@ -378,20 +325,6 @@ function CategoryLists() {
                                             </span>
                                         </button>
                                     </div>
-                                    {/* <Table
-                                        scroll={{ x: 750 }}
-                                        dataSource={data}
-                                        columns={columns}
-                                        pagination={false}
-                                    />
-                                    <Pagination
-                                        className="mt-3"
-                                        defaultCurrent={currPage || 1}
-                                        total={pageCount}
-                                        onChange={(page) =>
-                                            GetItemsProducts(page, search)
-                                        }
-                                    /> */}
 
                                     <Collapse
                                         items={itemArr}
@@ -567,7 +500,7 @@ function CategoryLists() {
                         <></>
                     )}
 
-                    <select
+                    {/* <select
                         className="form-select  rounded-3 py-3 fs-3"
                         onChange={(e) => setTagName(e.target.value)}>
                         <option value="">Parent</option>
@@ -577,7 +510,36 @@ function CategoryLists() {
                                     {item.name}
                                 </option>
                             ))}
-                    </select>
+                    </select> */}
+                    <div>
+                        <Switch
+                        size='small'
+                            checkedChildren={<CheckOutlined />}
+                            unCheckedChildren={<CloseOutlined />}
+                            defaultValue={allParents}
+                            onChange={(e) => (setAllParents(e))}
+                        />{' '}
+                        <span>Barcha parentni tanlash</span>
+                    </div>
+                    <Space
+                        style={{
+                            width: '100%',
+                        }}
+                        direction="vertical"
+                        >
+                        <Select
+                        disabled={allParents}
+                            mode="multiple"
+                            allowClear
+                            style={{
+                                width: '100%',
+                            }}
+                            placeholder="Parentlarni tanlang"
+                            onChange={handleChange}
+                            options={options}
+                            optionFilterProp="label"
+                        />
+                    </Space>
                     <input
                         type="text"
                         placeholder="Belgi"
@@ -585,6 +547,7 @@ function CategoryLists() {
                         name="icon"
                     />
                     <input
+                        required
                         type="text"
                         placeholder="Nomi"
                         className="form-control rounded-3"

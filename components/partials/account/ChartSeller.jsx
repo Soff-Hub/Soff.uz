@@ -54,15 +54,15 @@ function getMonthName(monthNumber) {
 function ChartSeller({ year, month }) {
     const { user } = useSelector((state) => state.auth);
     const router = useRouter()
-    const {pid} = router.query
+    const { pid } = router.query
     const [tableData, setTableData] = useState({ data: [], count: [] });
     const [labels, setLabels] = useState([])
 
-    async function getChartItems(id) {
+    async function getChartItems() {
         const arr = []
         const arr2 = []
         const arr3 = []
-        const ItemsChartData = await GetRepository.getChartListsSeller(user?.access, year, month, id);
+        const ItemsChartData = await GetRepository.getChartListsSeller(user?.access, year, month, pid);
         if (ItemsChartData) {
             for (let i = 0; i < ItemsChartData.length; i++) {
                 arr.push(ItemsChartData[i].total_price);
@@ -83,7 +83,9 @@ function ChartSeller({ year, month }) {
     }
 
     useEffect(() => {
-        getChartItems(pid);
+        if (pid) {
+            getChartItems(pid);
+        }
     }, [year, month, pid]);
 
 
