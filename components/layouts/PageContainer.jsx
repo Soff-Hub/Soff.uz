@@ -8,16 +8,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { accountLinksReducers, isLoginning } from '~/store/auth/action';
 import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
+import NewSearchHeader from '../shared/headers/NewSearchHeader';
 
 const initHeaders = (
     <>
-        <HeaderElectronic />
-        <HeaderMobileElectronic />
+        {/* <HeaderElectronic /> */}
+        <NewSearchHeader/>
+        {/* <HeaderMobileElectronic /> */}
     </>
 );
 const initFooters = (
     <>
-        <FooterSecond />
+        {/* <FooterSecond /> */}
     </>
 );
 
@@ -131,7 +133,7 @@ export let accountSellerLink = [
     },
 ];
 export let cutomerAccountLink = [
-   {
+    {
         text: 'Sotib olinganlar',
         url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
@@ -194,29 +196,29 @@ const PageContainer = ({
             <div >
                 <div
                     className={`${query === '/page/form'
+                        ? 'container faq-page-container'
+                        : query === '/page/questions'
                             ? 'container faq-page-container'
-                            : query === '/page/questions'
+                            : query === '/page/about-us'
                                 ? 'container faq-page-container'
-                                : query === '/page/about-us'
+                                : query === '/page/become-a-seller'
                                     ? 'container faq-page-container'
-                                    : query === '/page/become-a-seller'
+                                    : query === '/page/video-list'
                                         ? 'container faq-page-container'
-                                        : query === '/page/video-list'
-                                            ? 'container faq-page-container'
-                                            : ''
+                                        : ''
                         }  `}>
                     <div
                         className={` ${query === '/page/form'
+                            ? ''
+                            : query === '/page/questions'
                                 ? ''
-                                : query === '/page/questions'
+                                : query === '/page/about-us'
                                     ? ''
-                                    : query === '/page/about-us'
+                                    : query === '/page/become-a-seller'
                                         ? ''
-                                        : query === '/page/become-a-seller'
+                                        : query === '/page/video-list'
                                             ? ''
-                                            : query === '/page/video-list'
-                                                ? ''
-                                                : 'd-none'
+                                            : 'd-none'
                             }`}>
                         <FaqSaidbar />
                     </div>
