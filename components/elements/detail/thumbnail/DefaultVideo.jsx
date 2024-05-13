@@ -24,7 +24,7 @@ export default function DefaultVideo({
     const handleMouseLeave = (id) => {
         const player = document.getElementById(`videoPlayer-${id}`);
         if (id) {
-            setIsPlay(id);
+            setIsPlay?.(id);
             player.muted = true;
             setShowControls(true);
         }
@@ -53,7 +53,7 @@ export default function DefaultVideo({
                 maxHeight: class_products ? '' : '380px',
                 objectFit: 'cover',
             }}
-            onPlay={(e) => setIsPlay(product?.id)}
+            onPlay={(e) => setIsPlay?.(product?.id)}
             controls={showControls}
             preload="none"
             poster={product?.poster_url ? product?.poster_url : product?.poster}
