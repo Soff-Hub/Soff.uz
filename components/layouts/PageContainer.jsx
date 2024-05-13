@@ -8,18 +8,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { accountLinksReducers, isLoginning } from '~/store/auth/action';
 import FaqSaidbar from '../partials/faqs/faqSaidbar';
 import { useRouter } from 'next/router';
-import NewSearchHeader from '../shared/headers/NewSearchHeader';
 
 const initHeaders = (
     <>
-        {/* <HeaderElectronic /> */}
-        <NewSearchHeader/>
-        {/* <HeaderMobileElectronic /> */}
+        <HeaderElectronic />
+        <HeaderMobileElectronic />
     </>
 );
 const initFooters = (
     <>
-        {/* <FooterSecond /> */}
+        <FooterSecond />
     </>
 );
 
