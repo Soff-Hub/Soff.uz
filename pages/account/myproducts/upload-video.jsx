@@ -580,7 +580,7 @@ const Posts = () => {
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video(asosiy): *</p>{' '}
 
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: video/*">
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rishi mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: video/mp4">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
