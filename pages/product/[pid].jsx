@@ -46,8 +46,6 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                 }
             );
 
-            console.log('response =>>>', response.data)
-
             setProduct(response?.data);
         } catch (error) {
             console.error('Error fetching document:', error);
