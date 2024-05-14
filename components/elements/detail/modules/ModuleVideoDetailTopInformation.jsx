@@ -148,10 +148,10 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                         style={{ cursor: 'pointer' }}
                         onClick={() => SellerPage(product?.seller?.id)}>
                         <div>
-                            {product?.seller?.image ? (
+                            {product?.seller?.image_url ? (
                                 <img
                                     alt="soff"
-                                    src={product?.seller?.image}
+                                    src={product?.seller?.image_url}
                                     className="profile__image-client"
                                 />
                             ) : (
