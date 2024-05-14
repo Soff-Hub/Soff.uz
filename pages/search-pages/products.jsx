@@ -123,7 +123,7 @@ const Products_Search_Results = () => {
         {
             id: 4,
             name: "Audiolar",
-            icon: "fa-solid fa-headphones",
+            icon: "fa-solid fa-music",
             value: "audio"
         },
         {
@@ -176,7 +176,7 @@ const Products_Search_Results = () => {
                             <button className={"button_search_icon"}> <i className='fa-solid fa-search'></i>  </button>
                         </form>
                     </div>
-                    <button className='btn btn-primary d-block button_sign'>Kirish</button>
+                    {/* <button className='btn btn-primary d-block  button_sign'>Sign in</button> */}
 
                 </div>
             </nav>
@@ -187,7 +187,7 @@ const Products_Search_Results = () => {
                             {
                                 itemsType?.map(item => (
                                     <li onClick={() => setTypeSelect(item?.value)} key={item.id} className={`d-flex align-items-center gap-3 ${typeSelect === item.value && "active_type"}`}>
-                                        <i className={item.icon}></i>
+                                        <i style={{fontSize:"18px"}} className={item.icon}></i>
                                         {item.name}
                                     </li>
 
@@ -200,10 +200,34 @@ const Products_Search_Results = () => {
             </nav>
             <div className="results mt-3">
                 <div className="container">
-                    {!loading ? productItemsView : <div className='w-full d-flex align-items-center justify-content-center pt-5'><Spin size="large" /></div>}
+                    {!loading ? productItemsView :
+                        <>
+                            {
+                                Array(10).fill(0).map((_, index) => (
+                                    <div key={index} className="search_products_head">
+                                        <div className="search_products_box_cards">
+                                            <div className="search_products_box_cards">
+                                                <p  className='descripton_title placeholder bg-secondary w-25'>
+                                                </p>
+                                                <p className='descripton_title placeholder bg-secondary w-50'>
+                                                </p>
+                                                <p className='descripton_title placeholder bg-secondary'>
+                                                </p>
+                                                <p className='descripton_title placeholder bg-secondary w-75'>
+                                                </p>
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                ))}
+                        </>
+
+                    }
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
