@@ -189,7 +189,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
                 <div className="container" style={{ position: 'relative' }}>
                     <div className='text-end m-0'>
-                        {(defaultProducts?.price !== 0 || defaultProducts?.discpunt_price) !== 0 && <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>}
+                        {defaultProducts?.discpunt_price === 0 && <p onClick={handleClickStepper} style={{ cursor: 'pointer', margin: 0 }}>Sotib olish bo'yicha qo'llanma</p>
+                        }
                     </div>
 
                     <Joyride
