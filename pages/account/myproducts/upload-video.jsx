@@ -593,7 +593,7 @@ const Posts = () => {
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video(asosiy): *</p>{' '}
 
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: video/*">
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -781,7 +781,7 @@ const Posts = () => {
                                         <div className="col-md-12  d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video poster rasmi: *</p>
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: video/*">
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: .jpeg yoki .jpg, .png, .psd, .svg">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -952,7 +952,7 @@ const Posts = () => {
                             <div className="col-md-12 d-flex flex-column ">
                                 <div className=" mt-2 d-flex justify-content-between p-0">
                                     <p>Qo'shimcha fayllar uchun (.zip)</p>{' '}
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
                                         <i
                                             style={{
                                                 cursor: 'pointer',
