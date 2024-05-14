@@ -184,7 +184,7 @@ const Posts = () => {
                                             </Tooltip>
                                             <div className="d-flex flex-column gap-3">
                                                 <i className="fa-solid fa-video"></i>
-                                                <span>Video Material</span>
+                                                <span>Video Materiallar</span>
                                             </div>
                                         </div>
                                     </a>
