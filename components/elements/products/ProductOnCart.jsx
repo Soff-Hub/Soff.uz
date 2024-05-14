@@ -17,7 +17,7 @@ const ProductOnCart = ({ product, children }) => {
 
         const formattedNumber =
             decimalPart !== undefined
-                ? `${formattedIntegerPart}.${decimalPart}`
+                ? `${formattedIntegerPart}`
                 : formattedIntegerPart;
 
         return formattedNumber;

@@ -27,7 +27,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
 
         const formattedNumber =
             decimalPart !== undefined
-                ? `${formattedIntegerPart}.${decimalPart}`
+                ? `${formattedIntegerPart}`
                 : formattedIntegerPart;
 
         return formattedNumber;
