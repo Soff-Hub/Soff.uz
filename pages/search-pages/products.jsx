@@ -27,7 +27,7 @@ const Products_Search_Results = () => {
 
     const inputEl = useRef(null);
     const [keyword, setKeyword] = useState('');
-    const [resultItems, setResultItems] = useState(null);
+    const [resultItems, setResultItems] = useState([]);
     const [loading, setLoading] = useState(false);
     const [typeSelect, setTypeSelect] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
@@ -66,7 +66,6 @@ const Products_Search_Results = () => {
 
     useEffect(() => (
         setKeyword(query.keyword)
-
     ), [query?.keyword])
 
 
@@ -75,16 +74,13 @@ const Products_Search_Results = () => {
         clearTextView,
         loadingView
     if (!loading) {
-        if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0 && resultItems?.video?.length === 0)) {
-            productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'><p>Mahsulot topilmadi</p></div>;
-        }
-        else {
-            resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 || resultItems?.video?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || [], ...resultItems?.video || []].map((product) => (
+        (resultItems?.file?.length < 0 || resultItems?.audio?.length < 0 || resultItems?.template?.length < 0 || resultItems?.video?.length < 0)
+            ? productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
+                <p> Mahsulot topilmadi </p>
+            </div> :
+            productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || [], ...resultItems?.video || []].map((product) => (
                 <ProductSearchGoogle product={product} key={product.id} />
-            )) : productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
-                <p>Mahsulot topilmadi</p>
-            </div>
-        }
+            ))
 
         if (keyword !== '') {
             clearTextView = (
@@ -134,6 +130,7 @@ const Products_Search_Results = () => {
         },
     ]
 
+    console.log(resultItems);
 
     return (
         <div className='global_search_results'>
@@ -178,6 +175,7 @@ const Products_Search_Results = () => {
                     </div>
                     {/* <button className='btn btn-primary d-block  button_sign'>Sign in</button> */}
 
+
                 </div>
             </nav>
             <nav className='global_navbar_bottom'>
@@ -187,7 +185,7 @@ const Products_Search_Results = () => {
                             {
                                 itemsType?.map(item => (
                                     <li onClick={() => setTypeSelect(item?.value)} key={item.id} className={`d-flex align-items-center gap-3 ${typeSelect === item.value && "active_type"}`}>
-                                        <i style={{fontSize:"18px"}} className={item.icon}></i>
+                                        <i style={{ fontSize: "18px" }} className={item.icon}></i>
                                         {item.name}
                                     </li>
 
@@ -207,7 +205,7 @@ const Products_Search_Results = () => {
                                     <div key={index} className="search_products_head">
                                         <div className="search_products_box_cards">
                                             <div className="search_products_box_cards">
-                                                <p  className='descripton_title placeholder bg-secondary w-25'>
+                                                <p className='descripton_title placeholder bg-secondary w-25'>
                                                 </p>
                                                 <p className='descripton_title placeholder bg-secondary w-50'>
                                                 </p>
