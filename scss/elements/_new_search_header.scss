@@ -200,3 +200,16 @@
 
     }
 }
+
+.search_products_head {
+    max-width: 730px;
+    width: 100%;
+
+    .search_products_box_cards {
+        max-width: 652px;
+        height: 98px;
+        gap: 30px;
+        opacity: 0px;
+
+    }
+}

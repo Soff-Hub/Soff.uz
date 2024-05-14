@@ -580,7 +580,7 @@ const Posts = () => {
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video(asosiy): *</p>{' '}
 
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: video/*">
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -676,7 +676,7 @@ const Posts = () => {
                                                     Video(qisqa ko'rish uchun):
                                                     *
                                                 </p>{' '}
-                                                <Tooltip title="Mijozlar videoni nima haqida ekanligini bilib olishlari uchun. Video quyidagi turdagi video bo’lishi mumkin: video/*">
+                                                <Tooltip title="Mijozlar videoni nima haqida ekanligini bilib olishlari uchun. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -764,7 +764,7 @@ const Posts = () => {
                                         <div className="col-md-12  d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video poster rasmi: *</p>
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: video/*">
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz rasmi  ixtiyoriy turdagi video bo’lishi mumkin.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',

@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import { Spin } from 'antd';
-import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import PostRepository from '~/repositories/PostRepository';
 import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
+import ProductSearchGoogle from '~/components/elements/products/ProductSearchGoogle';
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -80,8 +80,10 @@ const Products_Search_Results = () => {
         }
         else {
             resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 || resultItems?.video?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || [], ...resultItems?.video || []].map((product) => (
-                <ProductSearchResult product={product} key={product.id} />
-            )) : productItemsView = <p>Mahsulot topilmadi</p>
+                <ProductSearchGoogle product={product} key={product.id} />
+            )) : productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
+                <p>Mahsulot topilmadi</p>
+            </div>
         }
 
         if (keyword !== '') {
@@ -103,21 +105,31 @@ const Products_Search_Results = () => {
         {
             id: 1,
             name: "Barchasi",
+            icon: "fa-solid fa-search",
             value: ""
         },
         {
             id: 2,
-            name: "Videolar",
-            value: "video"
+            name: "Hujjatlar",
+            icon: "fa-solid fa-file",
+            value: "file"
         },
         {
             id: 3,
-            name: "Audiolar",
-            value: "audio"
+            name: "Videolar",
+            icon: "fa-solid fa-video",
+            value: "video"
         },
         {
             id: 4,
+            name: "Audiolar",
+            icon: "fa-solid fa-headphones",
+            value: "audio"
+        },
+        {
+            id: 5,
             name: "Shablonlar",
+            icon: "fa-solid fa-file-lines",
             value: "template"
         },
     ]
@@ -175,7 +187,7 @@ const Products_Search_Results = () => {
                             {
                                 itemsType?.map(item => (
                                     <li onClick={() => setTypeSelect(item?.value)} key={item.id} className={`d-flex align-items-center gap-3 ${typeSelect === item.value && "active_type"}`}>
-                                        <i className='fa-solid fa-search'></i>
+                                        <i className={item.icon}></i>
                                         {item.name}
                                     </li>
 
