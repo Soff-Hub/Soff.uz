@@ -1,6 +1,6 @@
 .search_navbars {
     width: 100%;
-    background-color: #5C4FFF;
+    background-color: #022335;
 
     .navbar_serach {
         height: 100px;
@@ -8,6 +8,7 @@
         align-items: center;
         justify-content: space-between;
     }
+
 
 
     .search_button {
@@ -18,7 +19,8 @@
         border-radius: 50px;
         border: none;
         opacity: 0px;
-        background: #FBFF28;
+        background-color: #00a44f;
+        color: #fff;
     }
 
     .span_search {
@@ -82,7 +84,7 @@
                 .button_search {
                     border-top-right-radius: 50px;
                     border-bottom-right-radius: 50px;
-                    background: #5C4FFF;
+                    background-color: #00a44f;
                     border: 1px solid #DBDBDB;
                     transition: all 0.3 linear !important;
 
@@ -181,6 +183,9 @@
         align-items: end;
 
         ul {
+            width: 100%;
+            overflow-x: auto;
+
             li {
                 font-family: Arial;
                 font-size: 14px;
@@ -232,10 +237,10 @@
             line-height: 26px;
             text-align: left;
             color: #1A0DAB;
-            text-transform: lowercase;
-        }
-        .title_elh4:first-letter {
-            text-transform: uppercase;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            -webkit-line-clamp: 2;
         }
 
         .descripton_title {
@@ -249,13 +254,64 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             -webkit-line-clamp: 2;
-            text-transform: lowercase;
+
 
 
         }
+    }
+}
 
-        .descripton_title:first-letter {
-            text-transform: uppercase;
+@media (min-width:800px) and (max-width:1200px) {
+    .width_full_screen {
+        .ps-form--quick-search {
+            .ps-form__input {
+                border-radius: 20px !important;
+            }
+
+            .active_search_input {
+                border-radius: 20px !important;
+            }
+
+            .button_search_icon {
+                display: none;
+            }
+
+            .input1 {
+                border-radius: 20px !important;
+                padding: 0 15px !important;
+            }
+
+            .active_search_input {
+                border-radius: 20px !important;
+            }
+        }
+    }
+}
+
+
+@media (max-width:800px) {
+    .width_full_screen {
+        .ps-form--quick-search {
+            .ps-form__input {
+                border-radius: 20px !important;
+            }
+
+            .active_search_input {
+                border-radius: 20px !important;
+            }
+
+            .button_search_icon {
+                display: none;
+            }
+
+            .input1 {
+                border-radius: 20px !important;
+                padding: 0 15px !important;
+            }
+
+            .active_search_input {
+                border-radius: 20px !important;
+            }
         }
     }
 }
