@@ -57,12 +57,7 @@ export default function DefaultVideo({
             controls
             preload="none"
             poster={product?.poster_url ? product?.poster_url : product?.poster}
-            src={
-                (user?.role === 'admin' || user?.role === 'seller') &&
-                (asPath === '/account/products?page=1' || asPath === '/account/myproducts')
-                    ? product?.document?.file_url
-                    : (product?.document?.short_content_url || product?.file_url)
-            }>
+            src={product?.document?.file_url}>
             Your browser does not support the video tag.
         </video>
     );
