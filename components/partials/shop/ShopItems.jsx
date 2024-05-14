@@ -347,7 +347,7 @@ const ShopItems = ({
                         ) :
 
                             item?.document?.content_type === 'video' ? (
-                                <div className="col-md-4  my-3">
+                                <div style={{maxWidth:"280px"}} className="col-md-4  my-3 mx-2">
                                     <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
                                 </div>
                             ) : (
@@ -367,7 +367,7 @@ const ShopItems = ({
                 ));
             productItemsView = (
                 <div className="ps-shop-items">
-                    <div className="row">{items}</div>
+                    <div className="row ">{items}</div>
                 </div>
             );
         } else {
