@@ -336,7 +336,16 @@ const Posts = () => {
                                 Agar qo'shimcha joy sotib olishni istasangiz
                                 Xotira sotib olish tugmasiga bosing!
                             </p>
-                            <p className='btn btn-outline-success fs-5' style={{ cursor: 'pointer' }} onClick={() => (Router.push("/account/buying_traffic"), modal.destroy())} > Xotira sotib olish </p>
+                            <p
+                                className="btn btn-outline-success fs-5"
+                                style={{ cursor: 'pointer' }}
+                                onClick={() => (
+                                    Router.push('/account/buying_traffic'),
+                                    modal.destroy()
+                                )}>
+                                {' '}
+                                Xotira sotib olish{' '}
+                            </p>
                         </div>
                     ),
                 });
@@ -424,8 +433,6 @@ const Posts = () => {
         }
     }, [user?.access]);
 
-
-
     return user?.role === 'seller' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -468,7 +475,19 @@ const Posts = () => {
                             <div className="col-md-12 p-0  mt-3">
                                 <div className="col-md-12  d-flex justify-content-between p-0 ">
                                     <h4 className="p-0">Video Mahsulot </h4>
-                                    <p className={videosize?.empty_storage_size < 100 ? 'text-danger' : "text-success"}><i className="fa-solid fa-circle-exclamation"></i> Sizda Video yuklash uchun  qolgan joy {addPeriodToThousands(videosize?.empty_storage_size)} MB</p>
+                                    <p
+                                        className={
+                                            videosize?.empty_storage_size < 100
+                                                ? 'text-danger'
+                                                : 'text-success'
+                                        }>
+                                        <i className="fa-solid fa-circle-exclamation"></i>{' '}
+                                        Sizda Video yuklash uchun qolgan joy{' '}
+                                        {addPeriodToThousands(
+                                            videosize?.empty_storage_size
+                                        )}{' '}
+                                        MB
+                                    </p>
                                 </div>
                             </div>
                             <div className="row">
@@ -592,8 +611,7 @@ const Posts = () => {
                                             
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video(asosiy): *</p>{' '}
-
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
+                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rishi mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: .mp4 , .mov , .avi">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -616,7 +634,7 @@ const Posts = () => {
                                                         width: '100%',
                                                     }}>
                                                     {!fileImgFileID ||
-                                                        livePosterFile === '' ? (
+                                                    livePosterFile === '' ? (
                                                         <span
                                                             className="d-flex flex-column align-items-center"
                                                             style={{
@@ -642,7 +660,6 @@ const Posts = () => {
                                                                         Asosiy
                                                                         video
                                                                     </span>
-
                                                                 </span>
                                                             )}
                                                         </span>
@@ -868,6 +885,10 @@ const Posts = () => {
                                                             style={{
                                                                 width: '100%',
                                                                 height: '100%',
+                                                                backgroundPosition:
+                                                                    'center',
+                                                                objectFit:
+                                                                    'contain',
                                                             }}
                                                             src={
                                                                 customePoster?.url ||
