@@ -24,7 +24,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
 
         const formattedNumber =
             decimalPart !== undefined
-                ? `${formattedIntegerPart}.${decimalPart}`
+                ? `${formattedIntegerPart}`
                 : formattedIntegerPart;
 
         return formattedNumber;
