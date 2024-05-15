@@ -27,6 +27,18 @@ class PostRepository {
         return reponse;
     }
 
+    async postSearchFilterNews(payload, file) {
+        const reponse = await Repository.get(
+            `${baseUrl}customer/same-google-search/?search=${payload ? payload : ''}&type=${file ? file : 'all'}`
+        )
+            .then((response) => {
+                return response.data;
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+
     async getPostItemsByCategory(payload) {
         const reponse = await Repository.get(
             `${basePostUrl}/posts?title_contains=${payload}`

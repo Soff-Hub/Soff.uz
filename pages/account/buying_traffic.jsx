@@ -27,12 +27,15 @@ function BuyingTraffic() {
     const { user } = useSelector((state) => state.auth);
     const [trafficList, setTrafficList] = useState([]);
     const [value, setValue] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     async function getTrafficList(token) {
+        setLoading(false)
         const ItemsData = await GetRepository.getTrafficListData(token);
         if (ItemsData) {
             setTrafficList(ItemsData);
         }
+        setLoading(true)
     }
 
     const data = trafficList?.map(el => ({ id: el.id, price: el.price_storage, storage: el.size_storage_to_mb }))
@@ -103,8 +106,8 @@ function BuyingTraffic() {
                 <Meta title={'Yangi mahsulot yaratishni tanlash'} />
                 <BreadCrumb breacrumb={breadCrumb} />
                 <div className="container">
-                    <div className='py-5' style={{ display: 'flex', justifyContent: 'flex-start', gap: 10, flexWrap: 'wrap' }}>
-                        {
+                    <div className='py-5' style={{ display: 'flex', justifyContent: 'center', gap: 10, flexWrap: 'wrap' }}>
+                        {loading ?
                             data.map(el => (
                                 <div
                                     key={el.id}
@@ -115,6 +118,7 @@ function BuyingTraffic() {
                                         flex: 0.25,
                                         textAlign: 'center'
                                     }}>
+                                        <span  className='text-secondary' style={{fontSize: 16, fontWeight: 600 }}>Bir umrga</span>
                                     <h3 className='m-0' style={{ fontWeight: 600, color: '#00A44F' }}>{el.price ? `${formatCurrency(el.price)} so'm` : "Tekin"}</h3>
                                     <p style={{ color: 'orange', fontSize: 18, fontWeight: 600 }}>{addPeriodToThousands(el.storage)} MB</p>
 
@@ -179,6 +183,31 @@ function BuyingTraffic() {
                                                 Sotib Olish
                                             </button>
                                         }
+                                    </div>
+                                </div>
+
+
+
+                            )) :
+                            Array(4).fill(0).map((_, index) => (
+                                <div key={index} class="card" aria-hidden="true" style={{
+                                    boxShadow: "rgba(149, 157, 165, 0.2) 0px 8px 24px",
+                                    borderRadius: '12px',
+                                    padding: '30px 20px 20px',
+                                    flex: 0.25,
+                                    textAlign: 'center'
+                                }}>
+                                    <div class="card-body">
+                                    <p class="card-text placeholder-glow">
+                                            <span class="placeholder col-4"></span>
+
+                                        </p>
+                                        <a class="btn btn-secondary py-1 disabled placeholder col-10 mb-2" aria-disabled="true"></a>
+                                        <p class="card-text placeholder-glow">
+                                            <span class="placeholder col-8"></span>
+
+                                        </p>
+                                        <a class="btn btn-secondary py-2 disabled placeholder col-12" aria-disabled="true"></a>
                                     </div>
                                 </div>
                             ))

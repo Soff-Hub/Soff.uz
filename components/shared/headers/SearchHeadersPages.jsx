@@ -25,7 +25,8 @@ const SearchHeadersPages = () => {
                                 <a> <span className='text-white span_search'>Bizga qo'shiling</span></a>
                             </Link>
 
-                            <button onClick={() => Router.push("/soff-market")} className='search_button'>Soff Market</button>
+                            <button onClick={() => Router.push("/soff-market")} className='search_button' >
+                                Soff Market </button>
                         </div>
                     </div>
                 </div>

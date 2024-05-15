@@ -6,10 +6,10 @@ const VideoDetailsDescription = ({ product, views }) => {
             <strong className="fs-4 pl-4 mb"> Qisqa tavsif </strong>
             <ul style={{ listStyleType: 'revert', marginTop: '20px' }}>
                 {
-                    product?.document?.page_count ?
+                    product?.document?.content_duration ?
                         <li style={{ fontSize: "12px", padding: "10px 0" }} >
                             <strong>Davomiyligi : </strong> <div></div>{' '}
-                            <span>{product?.document?.page_count} 10:00</span>
+                            <span>{product?.document?.content_duration}</span>
                         </li> : ''
 
                 }

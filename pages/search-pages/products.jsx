@@ -29,16 +29,16 @@ const Products_Search_Results = () => {
     const [keyword, setKeyword] = useState('');
     const [resultItems, setResultItems] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [typeSelect, setTypeSelect] = useState('');
+    const [typeSelect, setTypeSelect] = useState('all');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
     const { query } = useRouter()
 
 
-    function handleClearKeyword() {
-        setKeyword('');
-        setLoading(false);
-        Router.push(`/search-pages/products`);
-    }
+    // function handleClearKeyword() {
+    //     setKeyword('');
+    //     setLoading(false);
+    //     Router.push(`/search-pages/products`);
+    // }
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -51,7 +51,7 @@ const Products_Search_Results = () => {
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword || typeSelect) {
-                const products = PostRepository.postSearchFilter(keyword, typeSelect);
+                const products = PostRepository.postSearchFilterNews(keyword, typeSelect);
                 products.then((result) => {
                     setLoading(false);
                     setResultItems(result);
@@ -70,25 +70,20 @@ const Products_Search_Results = () => {
 
 
     // Views
-    let productItemsView,
-        clearTextView,
+    let clearTextView,
         loadingView
     if (!loading) {
-        (resultItems?.file?.length < 0 || resultItems?.audio?.length < 0 || resultItems?.template?.length < 0 || resultItems?.video?.length < 0)
-            ? productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
-                <p> Mahsulot topilmadi </p>
-            </div> :
-            productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || [], ...resultItems?.video || []].map((product) => (
-                <ProductSearchGoogle product={product} key={product.id} />
-            ))
+        // if (keyword !== '') {
+        //     clearTextView = (
+        //         <span className="ps-form__action" onClick={handleClearKeyword}>
+        //             <i className="icon icon-cross2"></i>
+        //         </span>
+        //     );
+        // }
 
-        if (keyword !== '') {
-            clearTextView = (
-                <span className="ps-form__action" onClick={handleClearKeyword}>
-                    <i className="icon icon-cross2"></i>
-                </span>
-            );
-        }
+        clearTextView = <span className="ps-form__action">
+            <i className='fa-solid fa-search button_search_icon text-success' ></i>
+        </span>
     } else {
         loadingView = (
             <span className="ps-form__action">
@@ -102,7 +97,7 @@ const Products_Search_Results = () => {
             id: 1,
             name: "Barchasi",
             icon: "fa-solid fa-search",
-            value: ""
+            value: "all"
         },
         {
             id: 2,
@@ -130,7 +125,6 @@ const Products_Search_Results = () => {
         },
     ]
 
-    console.log(resultItems);
 
     return (
         <div className='global_search_results'>
@@ -160,20 +154,17 @@ const Products_Search_Results = () => {
                                     type="text"
                                     defaultValue={keyword}
                                     placeholder="Qidiruv..."
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (value !== '') {
-                                            setKeyword(value);
-                                        }
+                                    onInput={(e) => {
+                                        const value = e.target.value.trim();
+                                        setKeyword(value);
                                     }}
                                 />
                                 {clearTextView}
                                 {loadingView}
                             </div>
-                            <button className={"button_search_icon"}> <i className='fa-solid fa-search'></i>  </button>
+
                         </form>
                     </div>
-                    {/* <button className='btn btn-primary d-block  button_sign'>Sign in</button> */}
 
 
                 </div>
@@ -198,29 +189,27 @@ const Products_Search_Results = () => {
             </nav>
             <div className="results mt-3">
                 <div className="container">
-                    {!loading ? productItemsView :
+                    {!loading ?
                         <>
+                            <p style={{ fontWeight: "600", color: "#00a44f" }} >Qidiruv natijasida topilgan ma'lumotlar soni  {resultItems?.count} ta</p>
                             {
-                                Array(10).fill(0).map((_, index) => (
-                                    <div key={index} className="search_products_head">
-                                        <div className="search_products_box_cards">
-                                            <div className="search_products_box_cards">
-                                                <p className='descripton_title placeholder bg-secondary w-25'>
-                                                </p>
-                                                <p className='descripton_title placeholder bg-secondary w-50'>
-                                                </p>
-                                                <p className='descripton_title placeholder bg-secondary'>
-                                                </p>
-                                                <p className='descripton_title placeholder bg-secondary w-75'>
-                                                </p>
-
-                                            </div>
-
-
-                                        </div>
-                                    </div>
-                                ))}
+                                (resultItems?.results?.length < 0)
+                                    ? (<div className='d-flex align-items-center justify-content-center pt-5'>
+                                        <p> Mahsulot topilmadi </p>
+                                    </div>) :
+                                    resultItems?.results?.map((product) => (
+                                        <ProductSearchGoogle product={product} key={product.id} />
+                                    ))
+                            }
                         </>
+                        :
+                        <div className='d-flex align-items-center justify-content-center pt-5'>
+
+                            <span className="ps-form__action">
+                                <Spin size="large" />
+                            </span>
+                        </div>
+
 
                     }
                 </div>
