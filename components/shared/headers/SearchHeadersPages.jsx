@@ -21,7 +21,7 @@ const SearchHeadersPages = () => {
                             </a>
                         </Link>
                         <div className='d-flex align-items-center gap-5'>
-                            <Link href="/account/selection">
+                            <Link href="/page/become-a-seller">
                                 <a> <span className='text-white span_search'>Bizga qo'shiling</span></a>
                             </Link>
 
