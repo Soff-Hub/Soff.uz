@@ -137,11 +137,6 @@ export let cutomerAccountLink = [
         icon: 'fa-solid fa-bag-shopping',
     },
     {
-        text: 'Donatlar ro\'yxati',
-        url: '/account/donate-page',
-        icon: 'fa-solid fa-hand-holding-dollar',
-    },
-    {
         text: 'Buyurtma berish',
         url: 'b',
         icon: 'fa-regular fa-handshake',

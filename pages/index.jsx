@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import { Spin } from 'antd';
-
-import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 import PostRepository from '~/repositories/PostRepository';
 import SearchHeadersPages from '~/components/shared/headers/SearchHeadersPages';
+import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -51,8 +50,7 @@ const NewSearchHomePages = () => {
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword) {
-                const products = PostRepository.postSearchFilter(keyword);
-
+                const products = PostRepository.postSearchFilterNews(keyword);
                 products.then((result) => {
                     setLoading(false);
                     setIsSearch(true);
@@ -77,14 +75,13 @@ const NewSearchHomePages = () => {
         clearTextView,
         loadingView
     if (!loading) {
-        if (!resultItems || (resultItems?.file?.length === 0 && resultItems?.audio?.length === 0 && resultItems?.template?.length === 0 && resultItems?.video?.length === 0)) {
-            productItemsView = <p>Mahsulot topilmadi</p>;
-        }
-        else {
-            resultItems?.file?.length > 0 || resultItems?.audio?.length > 0 || resultItems?.template?.length > 0 || resultItems?.video?.length > 0 ? productItemsView = [...resultItems?.file || [], ...resultItems?.audio || [], ...resultItems?.template || [], ...resultItems?.video || []].map((product) => (
+        (resultItems?.results?.length < 0)
+            ? (productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
+                <p> Mahsulot topilmadi </p>
+            </div>) :
+            productItemsView = resultItems?.results?.map((product) => (
                 <ProductSearchResult product={product} key={product.id} />
-            )) : productItemsView = <p>Mahsulot topilmadi</p>
-        }
+            ))
 
         if (keyword !== '') {
             clearTextView = (
@@ -92,6 +89,11 @@ const NewSearchHomePages = () => {
                     <i className="icon icon-cross2"></i>
                 </span>
             );
+        }
+        if (keyword === '' || keyword === undefined) {
+            (clearTextView = <span className="ps-form__action">
+                <i className='fa-solid fa-search button_search_icon text-success'></i>
+            </span>)
         }
     } else {
         loadingView = (
@@ -102,15 +104,23 @@ const NewSearchHomePages = () => {
     }
 
 
-
-
     return (
-        <>
+        <div>
             <SearchHeadersPages />
             <div className="search_home_pages">
                 <div className="container">
                     <div className="search_home_box">
-                        <h1 >From <span className='span_saecrh'>Idea to Launch, </span> <br />Discover best tools for your Startup</h1>
+                    <h1 > <span className='span_saecrh ' style={{color:"#333"}}>Soff.uz - </span>
+                        <span className="span_saecrh ">
+                            qidiruv tizimi
+                        </span> 
+
+                        </h1>
+                        <h1 >  Uzbek tilida saralanib borilayotgan 
+                        sifatli ma'lumotlar jamlanmasini, faylar, tasvirlar,  videolar, audiolar ko'rinishida qidirib topish imkonini beradi.
+
+
+                        </h1>
                         <form
                             className="ps-form--quick-search"
                             method="get"
@@ -124,11 +134,9 @@ const NewSearchHomePages = () => {
                                     type="text"
                                     value={keyword}
                                     placeholder="Qidiruv..."
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (value !== '') {
-                                            setKeyword(value);
-                                        }
+                                    onInput={(e) => {
+                                        const value = e.target.value.trim();
+                                        setKeyword(value);
                                     }}
                                 />
                                 {clearTextView}
@@ -136,7 +144,7 @@ const NewSearchHomePages = () => {
                             </div>
                             <button className={keyword === '' ? 'button_search' : " button_search active_search_button"}>Qidiruv</button>
                             <div
-                                className={`ps-panel--search-result${isSearch ? ' active ' : ''
+                                className={`ps-panel--search-result ${isSearch ? ' active ' : ''
                                     }`}>
                                 <div className="ps-panel__content">{productItemsView}</div>
                             </div>
@@ -146,7 +154,7 @@ const NewSearchHomePages = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 
