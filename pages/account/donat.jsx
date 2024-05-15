@@ -1,12 +1,15 @@
-import { Modal } from 'antd';
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
+import { useSelector } from 'react-redux';
 import PageContainer from '~/components/layouts/PageContainer';
 import SiteDonateForm from '~/components/partials/seller/SiteDonateForm';
+import Page404 from '../page/page-404';
+import Selection from './selection';
 
 const Donat = () => {
+    const { user } = useSelector(state => state.auth)
 
 
-    return (
+    return ((user?.role === 'admin' || user?.role === 'seller') ?
         <PageContainer>
             <div className="container my-5 ">
                 <h2 className="text-center mb-5">
@@ -16,7 +19,8 @@ const Donat = () => {
                 <SiteDonateForm/>
 
             </div>
-        </PageContainer>
+        </PageContainer> 
+        : user?.access ? <Page404 /> : <Selection />
     );
 };
 

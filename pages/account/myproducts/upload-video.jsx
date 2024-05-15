@@ -227,7 +227,9 @@ const Posts = () => {
 
             formData.append('category', category_id[0]);
             formData.append('document', livePosterFile?.id);
-            formData.append('short_content', fileImgFile?.file);
+            if (!free) {
+                formData.append('short_content', fileImgFile?.file);
+            }
 
             if (extraFiles) {
                 formData.append('extra_file', extraFiles);
@@ -370,7 +372,7 @@ const Posts = () => {
 
         const formattedNumber =
             decimalPart !== undefined
-                ? `${formattedIntegerPart}.${decimalPart}`
+                ? `${formattedIntegerPart}`
                 : formattedIntegerPart;
 
         return formattedNumber;
@@ -399,11 +401,21 @@ const Posts = () => {
     }, [watch('file')]);
 
     useEffect(() => {
-        const file = watch('file_video[0]');
-        if (file) {
-            const video = window.URL.createObjectURL(file);
-            setFileImgFile({ file: file, video: video });
+        if (Math.round((watch('file_video[0]')?.size / 1024) / 1024) < 50) {
+            const file = watch('file_video[0]');
+            if (file) {
+                const video = window.URL.createObjectURL(file);
+                setFileImgFile({ file: file, video: video });
+            }
+        } else if (Math.round((watch('file_video[0]')?.size / 1024) / 1024) > 50) {
+            const modal = Modal.warning({
+                centered: true,
+                title: 'Ogohlantirish!',
+                content:
+                    "Qisqa videoga 50 MB dan kichik bo'lishi kerak!",
+            });
         }
+
     }, [watch('file_video')]);
 
     useEffect(() => {
@@ -596,6 +608,7 @@ const Posts = () => {
                                 <div className="col-md-6">
                                     <div className="row">
                                         <div className="col-md-12 d-flex flex-column ">
+                                            
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video(asosiy): *</p>{' '}
                                                 <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rishi mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: .mp4 , .mov , .avi">
@@ -686,102 +699,106 @@ const Posts = () => {
                                                 </p>
                                             </div>
                                         </div>
-
-                                        <div className="col-md-12 d-flex flex-column ">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>
-                                                    Video(qisqa ko'rish uchun):
-                                                    *
-                                                </p>{' '}
-                                                <Tooltip title="Mijozlar videoni nima haqida ekanligini bilib olishlari uchun. Video quyidagi turdagi video bo’lishi mumkin: video/*">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
-                                            </div>
-                                            <div className="w-full">
-                                                <label
-                                                    className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
-                                                    style={{
-                                                        backgroundColor: errors
-                                                            .file_video?.message
-                                                            ? ' #fff'
-                                                            : '#F1F1F1',
-                                                        border: errors
-                                                            .file_video?.message
-                                                            ? '1px solid red'
-                                                            : '1px dashed green',
-                                                        width: '100%',
-                                                    }}>
-                                                    {!fileImgFile ? (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center"
+                                        {free ? <></> :
+                                            <div className="col-md-12 d-flex flex-column ">
+                                                <p className='text-warning p-0 m-0 mt-3'>Qisqa video 50 MB dan kichik bo'lishi kerak!</p>
+                                             
+                                                <div className="d-flex justify-content-between p-0">
+                                                    <p>
+                                                        Video(qisqa ko'rish uchun):
+                                                        *
+                                                    </p>{' '}
+                                                    <Tooltip title="Mijozlar mahsulotingizni sotib olishdan oldin ushbu qisa 50MB'dan oshmagan treylerni ko'rib ishonch hosil qilishadi va mahsulotingizni sotib olishadi. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
+                                                        <i
                                                             style={{
                                                                 cursor: 'pointer',
-                                                            }}>
+                                                            }}
+                                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                    </Tooltip>
+                                                </div>
+                                                <div className="w-full">
+                                                    <label
+                                                        className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
+                                                        style={{
+                                                            backgroundColor: errors
+                                                                .file_video?.message
+                                                                ? ' #fff'
+                                                                : '#F1F1F1',
+                                                            border: errors
+                                                                .file_video?.message
+                                                                ? '1px solid red'
+                                                                : '1px dashed green',
+                                                            width: '100%',
+                                                        }}>
+                                                        {!fileImgFile ? (
                                                             <span
-                                                                className="d-flex flex-column align-items-center "
+                                                                className="d-flex flex-column align-items-center"
                                                                 style={{
                                                                     cursor: 'pointer',
                                                                 }}>
-                                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                                <span>
-                                                                    Qisqa
-                                                                    ko'rish
-                                                                    uchun video
+                                                                <span
+                                                                    className="d-flex flex-column align-items-center "
+                                                                    style={{
+                                                                        cursor: 'pointer',
+                                                                    }}>
+                                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                                    <span>
+                                                                        Qisqa
+                                                                        ko'rish
+                                                                        uchun video
+                                                                    </span>
                                                                 </span>
                                                             </span>
-                                                        </span>
-                                                    ) : (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center"
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            <span>
-                                                                {' '}
-                                                                Siz mahsulot
-                                                                yukladingiz{' '}
-                                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                        ) : (
+                                                            <span
+                                                                className="d-flex flex-column align-items-center"
+                                                                style={{
+                                                                    cursor: 'pointer',
+                                                                }}>
+                                                                <span>
+                                                                    {' '}
+                                                                    Siz mahsulot
+                                                                    yukladingiz{' '}
+                                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                                </span>
                                                             </span>
-                                                        </span>
-                                                    )}
-                                                    <input
-                                                        name="file_video"
-                                                        type="file"
-                                                        {...register(
-                                                            'file_video',
-                                                            {
-                                                                required:
-                                                                    "Qisqa video qo'shish majburiy",
-                                                                validate: (
-                                                                    value
-                                                                ) =>
-                                                                    !!value[0] ||
-                                                                    'Qisqa video tanlanishi majburiy',
-                                                            }
                                                         )}
-                                                        accept="video/*"
-                                                    />
-                                                </label>
-                                                <p
-                                                    className={
-                                                        'my-2  text-danger'
-                                                    }>
-                                                    {
-                                                        errors?.file_video
-                                                            ?.message
-                                                    }
-                                                </p>
+                                                        <input
+                                                            name="file_video"
+                                                            type="file"
+                                                            {...register(
+                                                                'file_video',
+                                                                {
+                                                                    required:
+                                                                        "Qisqa video qo'shish majburiy",
+                                                                    validate: (
+                                                                        value
+                                                                    ) =>
+                                                                        !!value[0] ||
+                                                                        'Qisqa video tanlanishi majburiy',
+                                                                }
+                                                            )}
+                                                            accept="video/*"
+                                                        />
+                                                    </label>
+                                                    <p
+                                                        className={
+                                                            'my-2  text-danger'
+                                                        }>
+                                                        {
+                                                            errors?.file_video
+                                                                ?.message
+                                                        }
+                                                    </p>
+                                                </div>
                                             </div>
-                                        </div>
+
+                                        }
 
                                         <div className="col-md-12  d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video poster rasmi: *</p>
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan video. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: video/*">
+                                                <Tooltip title="Mijozlarni mahsulotingizga e'tiborini tortib qiziqtirish uchun video poster yuklang. U posterni maxsus yasashingiz yoki videoingizni eng qiziq bo'lgan qismini screenshot qilib yuklashingiz mumkin bo'ladi.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -956,7 +973,7 @@ const Posts = () => {
                             <div className="col-md-12 d-flex flex-column ">
                                 <div className=" mt-2 d-flex justify-content-between p-0">
                                     <p>Qo'shimcha fayllar uchun (.zip)</p>{' '}
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
+                                    <Tooltip title="Mijozlar mahsulotingizni sotib olgandan so'ng, unga tegishli bo'lgan yana boshqa qo'shimcha faylar bo'lsa yuklang. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
                                         <i
                                             style={{
                                                 cursor: 'pointer',
