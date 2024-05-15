@@ -691,7 +691,7 @@ const Posts = () => {
                                                         Video(qisqa ko'rish uchun):
                                                         *
                                                     </p>{' '}
-                                                    <Tooltip title="Mijozlar videoni nima haqida ekanligini bilib olishlari uchun. Video quyidagi turdagi video bo’lishi mumkin: video/*">
+                                                    <Tooltip title="Mijozlar mahsulotingizni sotib olishdan oldin ushbu qisa 50MB'dan oshmagan treylerni ko'rib ishonch hosil qilishadi va mahsulotingizni sotib olishadi. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
                                                         <i
                                                             style={{
                                                                 cursor: 'pointer',
@@ -781,7 +781,7 @@ const Posts = () => {
                                         <div className="col-md-12  d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video poster rasmi: *</p>
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: .jpeg yoki .jpg, .png, .psd, .svg">
+                                                <Tooltip title="Mijozlarni mahsulotingizga e'tiborini tortib qiziqtirish uchun video poster yuklang. U posterni maxsus yasashingiz yoki videoingizni eng qiziq bo'lgan qismini screenshot qilib yuklashingiz mumkin bo'ladi.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -952,7 +952,7 @@ const Posts = () => {
                             <div className="col-md-12 d-flex flex-column ">
                                 <div className=" mt-2 d-flex justify-content-between p-0">
                                     <p>Qo'shimcha fayllar uchun (.zip)</p>{' '}
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
+                                    <Tooltip title="Mijozlar mahsulotingizni sotib olgandan so'ng, unga tegishli bo'lgan yana boshqa qo'shimcha faylar bo'lsa yuklang. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
                                         <i
                                             style={{
                                                 cursor: 'pointer',
