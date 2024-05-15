@@ -345,7 +345,7 @@ class ProductRepository {
         return reponse;
     }
     async getSellerProductNameSlug(slug) {
-        const endPoint = `customer/top-sellers/${slug}`;
+        const endPoint = `customer/seller-counts/${slug}/`;
         const reponse = await Repository.get(baseUrl + endPoint)
             .then((response) => {
                 if (response.data) {

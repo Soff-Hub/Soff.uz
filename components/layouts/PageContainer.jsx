@@ -136,11 +136,11 @@ export let cutomerAccountLink = [
         url: '/account/sellerproducts',
         icon: 'fa-solid fa-bag-shopping',
     },
-    {
-        text: 'Donatlar ro\'yxati',
-        url: '/account/donate-page',
-        icon: 'fa-solid fa-hand-holding-dollar',
-    },
+    // {
+    //     text: 'Donatlar ro\'yxati',
+    //     url: '/account/donate-page',
+    //     icon: 'fa-solid fa-hand-holding-dollar',
+    // },
     {
         text: 'Buyurtma berish',
         url: 'b',
