@@ -122,6 +122,8 @@ const SellerPage = ({ seller }) => {
         }
     }, [pid, typeSelect, search]);
 
+    console.log('log', productType);
+
     // let productView = <SkeletonProductDetail />;
     return (
         <PageContainer>
@@ -309,14 +311,14 @@ const SellerPage = ({ seller }) => {
                                         setTypeSelect(e.target.value)
                                     }
                                     className="form-control seller_filter rounded-3">
-                                        {/* {
+                                        {
                                             productType?.map((e) =>{
-                                                return  <option value={e.name}>
-                                               {e.name}
+                                                return  <option value={e.type}>
+                                               {e?.type.charAt(0).toUpperCase() + e?.type.slice(1)} {" "} {e?.count !== 0 ? ` - ${e?.count} ta  ` : ""}
                                             </option>
                                             })
-                                        } */}
-                                    <option value="file">
+                                        }
+                                    {/* <option value="file">
                                         Hujjatli materiallar
                                     </option>
                                     <option value="template">
@@ -327,7 +329,7 @@ const SellerPage = ({ seller }) => {
                                     </option>
                                     <option value="video">
                                         Video materiallar
-                                    </option>
+                                    </option> */}
                                 </select>
                                 <input
                                     type="text"
