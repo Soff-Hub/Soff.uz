@@ -26,8 +26,8 @@ class DeleteRepositoriyLists {
             },
         })
             .then((response) => {
-                if (response.status === 200) {
-                    return response.data;
+                if (response) {
+                    return response;
                 } else {
                     return null;
                 }

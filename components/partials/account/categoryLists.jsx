@@ -31,6 +31,8 @@ function CategoryLists() {
     const searchVal = useDebounce(search, 1000);
     const [categoryData, setCategoryData] = useState(null);
     const [allParents, setAllParents] = useState(false);
+    const [chaild, setchaild] = useState(null)
+    const [chaildId, setChaildId] = useState(null)
 
     // async function GetItemsProducts(page, search, id) {
     //     setCurrPage(page);
@@ -46,13 +48,26 @@ function CategoryLists() {
     //     }
     // }
     async function GetItemsProductsList(search, id) {
-        const ItemsData = await GetRepository.getCategoryParentAndChaild(
+        const ItemsData = await GetRepository.getCategoryParentList(
             search,
             id,
             user?.access
         );
-        if (ItemsData?.results) {
-            setCategoryData([...ItemsData.results]);
+        if (ItemsData) {
+            setCategoryData([...ItemsData]);
+        }
+    }
+
+
+    async function GetCategoryChaildItem(id) {
+        setChaildId(id)
+        const ItemsData = await GetRepository.getCategoryChaildItem(
+            id,
+            user?.access,
+            search
+        );
+        if (ItemsData) {
+            setchaild([...ItemsData]);
         }
     }
 
@@ -80,12 +95,21 @@ function CategoryLists() {
             deleteId,
             user?.access
         );
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  malumotlarni o'chirdingiz`,
-        });
+        if (deleteIdItems?.status === 204) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz  malumotlarni o'chirdingiz`,
+            });
+        }else{
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatsiz!',
+                content: `Siz  malumotlarni o'chirolmadingiz`,
+            });
+        }
         GetItemsProductsList(search, null);
+        GetCategoryChaildItem(chaildId)
     }
 
     async function handleItemsPost(values) {
@@ -157,7 +181,7 @@ function CategoryLists() {
                 deleteIdEdit?.id,
                 user?.access
             );
-            if (patchItems?.statusi === 200) {
+            if (patchItems?.statusi === 200 || 201) {
                 const modal = Modal.success({
                     centered: true,
                     title: 'Muvaffaqqiyatli!',
@@ -165,6 +189,7 @@ function CategoryLists() {
                 });
             }
             GetItemsProductsList(search, null);
+            GetCategoryChaildItem(chaildId)
 
             setTagNameTop(null);
             setTagName(null);
@@ -195,7 +220,7 @@ function CategoryLists() {
     const itemArr = categoryData?.map((e) => ({
         key: e?.id,
         label: (
-            <div className="row">
+            <div className="row" onClick={() => GetCategoryChaildItem(e?.id)}  >
                 <div className="col-md-6">{e?.name}</div>
                 <div className="col-md-6 text-end">
                     <div className="d-flex align-items-center justify-content-end">
@@ -234,13 +259,13 @@ function CategoryLists() {
                 </div>
             </div>
         ),
-        children: e?.children?.map((el) => {
+        children: chaild?.map((el) => {
             return (
                 <div className="row border-bottom py-3">
                     <div className="col-md-6">{el?.name}</div>
                     <div className="col-md-6 text-end">
                         <div className="d-flex align-items-center justify-content-end">
-                            {e?.is_delete === true ? (
+                            {el?.is_delete === true ? (
                                 <a
                                     data-bs-target="#exampleModalToggle"
                                     data-bs-toggle="modal">
