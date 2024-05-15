@@ -11,7 +11,7 @@ import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 
-const SellerPage = ({ seller }) => {
+const SellerPage = ({ seller,sellerr }) => {
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
@@ -53,12 +53,7 @@ const SellerPage = ({ seller }) => {
         }
     };
 
-    const getSellerUser = async (slug) => {
-        const respons = await ProductRepository.getSellerProfileSlug(slug);
-        if (respons) {
-            setSellerr(respons?.data);
-        }
-    };
+
     const getSellerDocumentType = async (slug) => {
         const respons = await ProductRepository.getSellerProductNameSlug(slug);
         if (respons) {
@@ -113,7 +108,6 @@ const SellerPage = ({ seller }) => {
 
     useEffect(() => {
         if (pid) {
-            getSellerUser(pid);
             getSellerDocumentType(pid);
         }
     }, [pid]);
@@ -172,19 +166,21 @@ const SellerPage = ({ seller }) => {
                             <div
                                 className="user_profile_card"
                                 style={{
-                                    backgroundImage: `url(${sellerr?.seller?.background_image
+                                    backgroundImage: `url(${
+                                        sellerr?.seller?.background_image
                                             ? sellerr?.seller?.background_image
                                             : '/static/img/orqafon1.avif'
-                                        })`,
+                                    })`,
                                 }}>
                                 <div className="profile_images_card">
                                     <Image.PreviewGroup>
                                         <Image
                                             width={200}
-                                            src={`${sellerr?.seller?.image
+                                            src={`${
+                                                sellerr?.seller?.image
                                                     ? sellerr?.seller?.image
                                                     : '/static/img/ozodbek.png'
-                                                }`}
+                                            }`}
                                         />
                                     </Image.PreviewGroup>
                                 </div>
@@ -259,10 +255,11 @@ const SellerPage = ({ seller }) => {
                                             <div className="d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ">
                                                 <a
                                                     href="#products"
-                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1'
+                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${
+                                                        tab === 'tab-1'
                                                             ? 'donate-color-btn'
                                                             : ''
-                                                        }`}
+                                                    }`}
                                                     style={{
                                                         textDecoration: 'none',
                                                     }}
@@ -274,20 +271,22 @@ const SellerPage = ({ seller }) => {
                                                     Mahsulotlari
                                                 </a>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2'
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
+                                                        tab === 'tab-2'
                                                             ? 'donate-color-btn'
                                                             : ''
-                                                        }`}
+                                                    }`}
                                                     onClick={showModal}>
                                                     {' '}
                                                     <i className="fa-regular fa-pen-to-square"></i>{' '}
                                                     Buyurtma berish
                                                 </button>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3'
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
+                                                        tab === 'tab-3'
                                                             ? 'donate-color-btn'
                                                             : ''
-                                                        }`}
+                                                    }`}
                                                     // onClick={showModalDonate}
                                                     onClick={() =>
                                                         setTab('tab-3')
@@ -355,15 +354,17 @@ export async function getServerSideProps({ query }) {
     const resquest_boolen = await fetch(
         baseUrl + `customer/documents/?seller__id=${query.pid}`
     );
-
+    const resquest = await fetch(
+        baseUrl + `customer/top-sellers/${query.pid}`
+    );
     const seller = await resquest_boolen?.json();
 
-
+    const sellerr = await resquest.json();
 
     return {
         props: {
             seller,
-
+            sellerr
         },
     };
 }
