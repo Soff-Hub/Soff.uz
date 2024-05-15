@@ -67,24 +67,7 @@ const VideoDetailShoppingActions = ({ product }) => {
         );
     };
 
-    const copyVideoUrl = () => {
-        const videoUrl = `https://soff.uz${Router?.asPath}`;
-        navigator.clipboard
-            .writeText(videoUrl)
-            .then(() => {
-                setCopy(true);
-                setTimeout(() => {
-                    setCopy(false);
-                }, 2500);
-                infoSuccess(videoUrl);
-                //   alert(`Video URL copied to clipboard! ${}`);
-            })
-            .catch((error) => {
-                infoError(error);
-                console.error('Error copying video URL: ', error);
-                // alert('Error copying video URL!');
-            });
-    };
+ 
 
     const audioDownloaderSale = async (file) => {
         const filee = 'http://192.168.1.14/media/Images/new__Abdurahimov_Ahmad.zip';
@@ -110,7 +93,6 @@ const VideoDetailShoppingActions = ({ product }) => {
             return Promise.reject(error);
         }
     };
-    console.log(product)
 
 
     if (true) {
