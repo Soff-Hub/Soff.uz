@@ -142,7 +142,7 @@ const NewSearchHomePages = () => {
                                 {clearTextView}
                                 {loadingView}
                             </div>
-                            <button className={keyword === '' ? 'button_search' : " button_search active_search_button"}>Qidiruv</button>
+                            <button className={keyword === '' ? 'button_search shadow' : " button_search active_search_button"}>Qidiruv</button>
                             <div
                                 className={`ps-panel--search-result ${isSearch ? ' active ' : ''
                                     }`}>
