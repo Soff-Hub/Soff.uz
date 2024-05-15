@@ -183,7 +183,7 @@ const AccountMenuSidebar = ({
 
         const formattedNumber =
             decimalPart !== undefined
-                ? `${formattedIntegerPart}.${decimalPart}`
+                ? `${formattedIntegerPart}`
                 : formattedIntegerPart;
 
         return formattedNumber;

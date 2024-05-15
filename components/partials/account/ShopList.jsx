@@ -54,7 +54,7 @@ function Notifications() {
         },
         {
             title: 'Avatar',
-            dataIndex: 'image',
+            dataIndex: 'image_url',
             key: 'name',
             render: (image) => (
                 <div>
