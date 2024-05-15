@@ -9,7 +9,7 @@ export default function DefaultVideo({
     setIsPlay,
 }) {
     const { user } = useSelector((state) => state.auth);
-    const { asPath } = useRouter();
+    const { asPath, pathname } = useRouter();
     const [showControls, setShowControls] = useState(false);
 
     useEffect(() => {
@@ -39,6 +39,15 @@ export default function DefaultVideo({
     //     }
     // };
 
+    const url = pathname === '/product/[pid]' ?
+        product?.discount_price > 0 ?
+            user?.access && product.file_url !== "No" ?
+                product?.file_url
+                : product?.document?.short_content_url
+            : product?.file_url
+        :
+        product?.discount_price > 0 ? product?.document?.short_content_url : product?.file_url
+
     return (
         <video
             // onMouseEnter={() => handleMouseLeave(product?.id)}
@@ -57,12 +66,7 @@ export default function DefaultVideo({
             controls
             preload="none"
             poster={product?.poster_url ? product?.poster_url : product?.poster}
-            src={
-                (user?.role === 'admin' || user?.role === 'seller') &&
-                (asPath === '/account/products?page=1' || asPath === '/account/myproducts')
-                    ? product?.document?.file_url
-                    : (product?.document?.short_content_url || product?.file_url)
-            }>
+            src={url}>
             Your browser does not support the video tag.
         </video>
     );
