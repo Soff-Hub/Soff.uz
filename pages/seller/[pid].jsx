@@ -122,6 +122,8 @@ const SellerPage = ({ seller }) => {
         }
     }, [pid, typeSelect, search]);
 
+    console.log('sdca', productType);
+
     // let productView = <SkeletonProductDetail />;
     return (
         <PageContainer>
@@ -309,25 +311,17 @@ const SellerPage = ({ seller }) => {
                                         setTypeSelect(e.target.value)
                                     }
                                     className="form-control seller_filter rounded-3">
-                                        {/* {
-                                            productType?.map((e) =>{
-                                                return  <option value={e.name}>
-                                               {e.name}
+                                    {productType?.map((e) => {
+                                        return (
+                                            <option value={e.type}>
+                                                {e?.type.charAt(0).toUpperCase() +
+                                                    e?.type.slice(1)}{' '}
+                                                {e?.count !== 0
+                                                    ? `- ${e?.count} ta`
+                                                    : ''}
                                             </option>
-                                            })
-                                        } */}
-                                    <option value="file">
-                                        Hujjatli materiallar
-                                    </option>
-                                    <option value="template">
-                                        Shablon materiallar
-                                    </option>
-                                    <option value="audio">
-                                        Audio materiallar
-                                    </option>
-                                    <option value="video">
-                                        Video materiallar
-                                    </option>
+                                        );
+                                    })}
                                 </select>
                                 <input
                                     type="text"
