@@ -303,15 +303,22 @@ const SellerPage = ({ seller,sellerr }) => {
 
                             <div className="seller_contaoner2">
                                 <select
+                                
                                     onChange={(e) =>
                                         setTypeSelect(e.target.value)
                                     }
                                     className="form-control seller_filter rounded-3">
                                     {productType?.map((e) => {
                                         return (
-                                            <option value={e.type}>
-                                                {e?.type.charAt(0).toUpperCase() +
-                                                    e?.type.slice(1)}{' '}
+                                            <option value={e.type} selected={e?.type===typeSelect} >
+                                                {
+                                                
+                                                e?.type==='audio' ? "Audio materiallar" :
+                                                e?.type==='video' ? "Video materiallar" :
+                                                e?.type==='template' ? "Shablon materiallar" :"Hujjat materiallar"
+
+                                                    
+                                                    }
                                                 {e?.count !== 0
                                                     ? `- ${e?.count} ta`
                                                     : ''}

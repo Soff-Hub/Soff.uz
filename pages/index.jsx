@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import { Spin } from 'antd';
-import PostRepository from '~/repositories/PostRepository';
 import SearchHeadersPages from '~/components/shared/headers/SearchHeadersPages';
-import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
+
+// import PostRepository from '~/repositories/PostRepository';
+// import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
 
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
@@ -26,62 +27,71 @@ function useDebounce(value, delay) {
 const NewSearchHomePages = () => {
 
     const inputEl = useRef(null);
-    const [isSearch, setIsSearch] = useState(false);
     const [keyword, setKeyword] = useState('');
-    const [resultItems, setResultItems] = useState(null);
     const [loading, setLoading] = useState(false);
+
+    // const [isSearch, setIsSearch] = useState(false);
+    // const [resultItems, setResultItems] = useState(null);
     const debouncedSearchTerm = useDebounce(keyword, 1000);
 
 
     function handleClearKeyword() {
         setKeyword('');
-        setIsSearch(false);
+        // setIsSearch(false);
         setLoading(false);
     }
 
     function handleSubmit(e) {
         e.preventDefault();
         if (keyword) {
-            Router.push(`/search-pages/products?keyword=${keyword}`);
+            Router.push(`/search-page?keyword=${keyword}`);
         }
     }
 
+
+
+    // useEffect(() => {
+    //     if (debouncedSearchTerm) {
+    //         setLoading(true);
+    //         if (keyword) {
+    //             const products = PostRepository.postSearchFilterNews(keyword);
+    //             products.then((result) => {
+    //                 setLoading(false);
+    //                 setIsSearch(true);
+    //                 setResultItems(result);
+    //             });
+    //         } else {
+    //             setIsSearch(false);
+    //             setKeyword('');
+    //         }
+    //         if (loading) {
+    //             setIsSearch(false);
+    //         }
+    //     } else {
+    //         setLoading(false);
+    //         setIsSearch(false);
+    //     }
+    // }, [debouncedSearchTerm]);
+
+
     useEffect(() => {
-        if (debouncedSearchTerm) {
-            setLoading(true);
-            if (keyword) {
-                const products = PostRepository.postSearchFilterNews(keyword);
-                products.then((result) => {
-                    setLoading(false);
-                    setIsSearch(true);
-                    setResultItems(result);
-                });
-            } else {
-                setIsSearch(false);
-                setKeyword('');
-            }
-            if (loading) {
-                setIsSearch(false);
-            }
-        } else {
-            setLoading(false);
-            setIsSearch(false);
+        if (keyword) {
+            Router.push(`/search-page?keyword=${keyword}`);
         }
-    }, [debouncedSearchTerm]);
+    }, [debouncedSearchTerm])
 
 
-    // Views
     let productItemsView,
         clearTextView,
         loadingView
     if (!loading) {
-        (resultItems?.results?.length < 0)
-            ? (productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
-                <p> Mahsulot topilmadi </p>
-            </div>) :
-            productItemsView = resultItems?.results?.map((product) => (
-                <ProductSearchResult product={product} key={product.id} />
-            ))
+        // (resultItems?.results?.length < 0)
+        //     ? (productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
+        //         <p> Mahsulot topilmadi </p>
+        //     </div>) :
+        //     productItemsView = resultItems?.results?.map((product) => (
+        //         <ProductSearchResult product={product} key={product.id} />
+        //     ))
 
         if (keyword !== '') {
             clearTextView = (
@@ -110,18 +120,18 @@ const NewSearchHomePages = () => {
             <div className="search_home_pages">
                 <div className="container">
                     <div className="search_home_box">
-                    <h1 > <span className='span_saecrh ' style={{color:"#333"}}>Soff.uz - </span>
-                        <span className="span_saecrh ">
-                            qidiruv tizimi
-                        </span> 
+                        <h1 > <span className='span_saecrh ' style={{ color: "#333" }}>Soff.uz - </span>
+                            <span className="span_saecrh ">
+                                qidiruv tizimi
+                            </span>
 
                         </h1>
-                        <h1 >  Uzbek tilida saralanib borilayotgan 
-                        sifatli ma'lumotlar jamlanmasini, faylar, tasvirlar,  videolar, audiolar ko'rinishida qidirib topish imkonini beradi.
+                        <h1 >  Uzbek tilida saralanib borilayotgan
+                            sifatli ma'lumotlar jamlanmasini, faylar, tasvirlar,  videolar, audiolar ko'rinishida qidirib topish imkonini beradi.
 
 
                         </h1>
-                        <form
+                        {/* <form
                             className="ps-form--quick-search"
                             method="get"
                             action="/"
@@ -148,6 +158,31 @@ const NewSearchHomePages = () => {
                                     }`}>
                                 <div className="ps-panel__content">{productItemsView}</div>
                             </div>
+
+                        </form> */}
+
+                        <form
+                            className="ps-form--quick-search"
+                            method="get"
+                            action="/"
+                            onSubmit={handleSubmit}
+                        >
+                            <div className={"ps-form__input"}>
+                                <input
+                                    ref={inputEl}
+                                    className={"form-control input2"}
+                                    type="text"
+                                    value={keyword}
+                                    placeholder="Qidiruv..."
+                                    onInput={(e) => {
+                                        const value = e.target.value.trim();
+                                        setKeyword(value);
+                                    }}
+                                />
+                                {clearTextView}
+                                {loadingView}
+                            </div>
+                            <button className={'button_search shadow'}>Qidiruv</button>
 
                         </form>
 

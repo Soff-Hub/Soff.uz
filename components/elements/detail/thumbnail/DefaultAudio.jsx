@@ -27,6 +27,7 @@ export default function DefaultAudio({ product }) {
             );
         }
     }, [wavesurferObj]);
+    
 
     useEffect(() => {
         if (product?.file_url === 'No') {
