@@ -53,7 +53,7 @@ const VideoDetailsDescription = ({ product, views }) => {
                 {product?.category?.name && (
                     <li style={{ fontSize: "12px", paddingBottom: "5px" }} >
                         <strong> Kategoriyasi</strong> : <div></div>{' '}
-                        <span> {product?.category?.name}</span>
+                        <span className='text-truncate'> {product?.category?.name}</span>
                     </li>
                 )}
                 {views?.approved > 0 && (

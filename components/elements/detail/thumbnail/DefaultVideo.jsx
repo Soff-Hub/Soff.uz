@@ -1,6 +1,4 @@
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 
 export default function DefaultVideo({
     product,
@@ -8,9 +6,7 @@ export default function DefaultVideo({
     isPlay,
     setIsPlay,
 }) {
-    const { user } = useSelector((state) => state.auth);
-    const { asPath, pathname } = useRouter();
-    const [showControls, setShowControls] = useState(false);
+
 
     useEffect(() => {
         const player = document.getElementById(`videoPlayer-${product.id}`);
@@ -39,14 +35,10 @@ export default function DefaultVideo({
     //     }
     // };
 
-    const url = pathname === '/product/[pid]' ?
-        product?.discount_price > 0 ?
-            user?.access && product.file_url !== "No" ?
-                product?.file_url
-                : product?.document?.short_content_url
-            : product?.file_url
-        :
-        product?.discount_price > 0 ? product?.document?.short_content_url : product?.file_url
+    const url = product?.document?.file_url 
+    ? product?.document?.file_url
+    : product?.document?.short_content_url
+
 
     return (
         <video

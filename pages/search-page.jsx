@@ -37,13 +37,13 @@ const Products_Search_Results = () => {
     // function handleClearKeyword() {
     //     setKeyword('');
     //     setLoading(false);
-    //     Router.push(`/search-pages/products`);
+    //     Router.push(`/search-page`);
     // }
 
     function handleSubmit(e) {
         e.preventDefault();
         if (keyword) {
-            Router.push(`/search-pages/products?keyword=${keyword}`);
+            Router.push(`/search-page?keyword=${keyword}`);
         }
     }
 
@@ -67,6 +67,14 @@ const Products_Search_Results = () => {
     useEffect(() => (
         setKeyword(query.keyword)
     ), [query?.keyword])
+
+    useEffect(() => {
+        if (inputEl.current && keyword !== '') {
+            inputEl.current.value = keyword;
+            inputEl.current.selectionStart = inputEl.current.selectionEnd = keyword.length;
+        }
+    }, [keyword]);
+
 
 
     // Views
@@ -150,6 +158,7 @@ const Products_Search_Results = () => {
                             <div className={keyword === '' ? "ps-form__input" : "ps-form__input active_search_input"}>
                                 <input
                                     ref={inputEl}
+                                    autoFocus
                                     className={keyword === '' ? "form-control input2" : "input1 form-control active_search_input"}
                                     type="text"
                                     defaultValue={keyword}

@@ -124,7 +124,7 @@ const VideoDetailShoppingActions = ({ product }) => {
                     <div className="w-100 d-flex justify-content-between m-0">
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.file_url !== 'No' ? (
+                                {product?.file_url  ? (
                                     ''
                                 ) : (
                                     <>
