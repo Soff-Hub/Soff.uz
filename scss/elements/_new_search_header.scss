@@ -330,8 +330,11 @@
     .search_products_head {
         .search_products_box_cards {
             .title_elh4 {
-                font-size: 14px !important;
-                line-height: 20px;
+                line-height: 32px;
+                display: -webkit-box !important;
+                -webkit-box-orient: vertical !important;
+                overflow: hidden !important;
+                -webkit-line-clamp: 2 !important;
             }
 
         }
