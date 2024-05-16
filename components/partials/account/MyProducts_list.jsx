@@ -1076,7 +1076,7 @@ function MyProductsLists() {
                                                             className="btn btn-success p-2 px-5 fs-4 ">
                                                             <i className="fa-solid fa-download mx-1"></i>{' '}
                                                             <span className="fs-3">
-                                                                File ochish
+                                                                File ochish 
                                                             </span>
                                                         </button>
                                                     )}
@@ -1168,7 +1168,7 @@ function MyProductsLists() {
                                                     </Tabs>
                                                 </div>
 
-                                                <div className="d-flex justify-content-end p-5 ">
+                                                {/* <div className="d-flex justify-content-end p-5 ">
                                                     {loading2 ? (
                                                         <button
                                                             className="btn btn-success  p-2 px-5 fs-4 "
@@ -1192,11 +1192,11 @@ function MyProductsLists() {
                                                             className="btn btn-success p-2 px-5 fs-4 ">
                                                             <i className="fa-solid fa-download mx-1"></i>{' '}
                                                             <span className="fs-3">
-                                                                File ochish
+                                                                File ochish 
                                                             </span>
                                                         </button>
                                                     )}
-                                                </div>
+                                                </div> */}
                                             </div>
                                         ) : (
                                             <div className="ps-product--detail ps-product--fullwidth">
