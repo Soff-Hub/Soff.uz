@@ -24,6 +24,7 @@ import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudi
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import DefaultVideo from '~/components/elements/detail/thumbnail/DefaultVideo';
+import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
 
 function ProductsLists() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -65,6 +66,7 @@ function ProductsLists() {
     const dataFormat = date
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
         : '';
+        const [short, setShort] = useState(true)
 
     async function GetItemsProductsLists(
         page,
@@ -394,6 +396,45 @@ function ProductsLists() {
                                 handleClickIdEditProducts(content_type_id)
                             }></i>
                     </span>
+                </div>
+            ),
+        },
+    ];
+
+    const items = [
+        {
+            key: '1',
+            label: (
+                <span
+                    style={{
+                        margin: ' 0 20px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Qisqa video ko'rish
+                </span>
+            ),
+            children: (
+                <div>
+                    <DefaultVideoAdmin product={deleteIdView} short={short} />
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <span
+                    style={{
+                        margin: '0 30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                   To'liq video
+                </span>
+            ),
+            children: (
+                <div>
+                    <DefaultVideoAdmin product={deleteIdView} short={short} />
                 </div>
             ),
         },
@@ -776,8 +817,14 @@ function ProductsLists() {
                                               ?.content_type === 'video' ? (
                                             <div className="row">
                                                 <div className="col-md-12">
-                                                    <DefaultVideo
+                                                    {/* <DefaultVideo
                                                         product={deleteIdView}
+                                                    /> */}
+                                                    <Tabs
+                                                        defaultActiveKey="1"
+                                                        items={items}
+                                                        className="bg-white "
+                                                        onChange={(e) => setShort(e == 1 ? true : false)}
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
                                                         product={

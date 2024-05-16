@@ -26,6 +26,7 @@ import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudi
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import DefaultVideo from '~/components/elements/detail/thumbnail/DefaultVideo';
+import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
 const { TabPane } = Tabs;
 var parse = require('html-react-parser');
 
@@ -74,6 +75,7 @@ function MyProductsLists() {
     const { accountLinks, user, products } = useSelector((state) => state.auth);
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
+    const [short, setShort] = useState(true)
 
     async function GetItemsProducts(
         page,
@@ -583,6 +585,47 @@ function MyProductsLists() {
         },
     ];
 
+
+    const items = [
+        {
+            key: '1',
+            label: (
+                <span
+                    style={{
+                        margin: ' 0 20px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Qisqa video ko'rish
+                </span>
+            ),
+            children: (
+                <div>
+                    <DefaultVideoAdmin product={View} short={short} />
+                </div>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <span
+                    style={{
+                        margin: '0 30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                   To'liq video
+                </span>
+            ),
+            children: (
+                <div>
+                    <DefaultVideoAdmin product={View} short={short} />
+                </div>
+            ),
+        },
+    ];
+
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -1043,8 +1086,14 @@ function MyProductsLists() {
                                             'video' ? (
                                             <div className="row">
                                                 <div className="col-12">
-                                                    <DefaultVideo
+                                                    {/* <DefaultVideo
                                                         product={View}
+                                                    /> */}
+                                                      <Tabs
+                                                        defaultActiveKey="1"
+                                                        items={items}
+                                                        className="bg-white "
+                                                        onChange={(e) => setShort(e == 1 ? true : false)}
                                                     />
                                                     <ModuleAudioDetailTopInformationLive
                                                         product={View}
