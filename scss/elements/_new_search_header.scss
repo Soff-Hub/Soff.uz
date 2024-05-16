@@ -206,6 +206,7 @@
             width: 100%;
             overflow-x: auto;
             padding-bottom: 8px !important;
+
             li {
 
                 font-size: 14px;
@@ -275,7 +276,7 @@
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            -webkit-line-clamp: 1;
+            -webkit-line-clamp: 2;
         }
 
         .descripton_title {
@@ -289,6 +290,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             -webkit-line-clamp: 2;
+
 
 
 
@@ -325,7 +327,15 @@
 
 
 @media (max-width:800px) {
+    .search_products_head {
+        .search_products_box_cards {
+            .title_elh4 {
+                font-size: 14px !important;
+                line-height: 20px;
+            }
 
+        }
+    }
 
     .search_home_pages {
         .container {
@@ -428,8 +438,8 @@
     display: none !important;
 }
 
-.ant-tabs{
-    .ant-tabs-nav{
+.ant-tabs {
+    .ant-tabs-nav {
         padding: 0 20px !important;
     }
 }
