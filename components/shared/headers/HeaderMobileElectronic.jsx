@@ -13,7 +13,7 @@ class HeaderMobileElectronic extends Component {
             <header className="header header--mobile electronic">
                 <div className="navigation--mobile">
                     <div className="navigation__left">
-                        <Link href="/">
+                        <Link href="/soff-market">
                             <a className="ps-logo">
                                 <NextImageCard
                                     url="/static/img/soff/soff_green_white.png"

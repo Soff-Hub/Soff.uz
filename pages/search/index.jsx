@@ -18,7 +18,7 @@ const SearchPage = () => {
     const [isPlay, setIsPlay] = useState(null)
 
     async function getSearchData() {
-        const responseData = await PostRepository.postSearchFilter(query?.keyword, query?.type);
+        const responseData = await PostRepository.postSearchFilter(query?.keyword, query?.type,'true');
         if (responseData) {
             setresultData(responseData);
         }

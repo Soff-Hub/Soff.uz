@@ -347,7 +347,7 @@ const ShopItems = ({
                         ) :
 
                             item?.document?.content_type === 'video' ? (
-                                <div style={{maxWidth:"280px"}} className="col-md-4  my-3 mx-2">
+                                <div  className="col-md-4 mobile_category_lists_cards  my-3 ">
                                     <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
                                 </div>
                             ) : (
@@ -416,9 +416,7 @@ const ShopItems = ({
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </label>
-                    {slug !== 'bepul-mahsulotlar' && (
-                        <span style={{ margin: '0 10px' }}>Saralash</span>
-                    )}
+              
                     {slug !== 'bepul-mahsulotlar' && (
                         <select
                             className="ps-select form-control"

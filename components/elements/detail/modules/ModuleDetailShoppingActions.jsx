@@ -117,7 +117,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <div>
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.file_url !== "No" ? (
+                                {product?.document?.file_url  ? (
                                     <a
                                         style={{
                                             cursor: 'pointer',

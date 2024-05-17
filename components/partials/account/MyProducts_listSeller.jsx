@@ -142,16 +142,19 @@ function MyProductsListsSeller() {
     const columns = [
         {
             title: 'Yuklab olish',
-            dataIndex: 'id',
-            key: 'id',
-            render: (id) => (
+            dataIndex: 'content_type_id',
+            key: 'content_type_id',
+            render: (content_type_id) => (
+                content_type_id?.content_type==='video' ?
+                <></>
+                :
                 <>
                     {
-                        id !== loading2 ?
+                        content_type_id?.id !== loading2 ?
                             <a>
                                 <i
                                     className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                                    onClick={() => handleButtonClick(id)}></i>
+                                    onClick={() => handleButtonClick(content_type_id?.id)}></i>
                             </a>
                             :
                             <div className="spinner-border" role="status">

@@ -362,6 +362,7 @@ const Posts = () => {
                                                     Video(qisqa ko'rish uchun):
                                                     *
                                                 </p>{' '}
+
                                                 <Tooltip title="Mijozlar mahsulotingizni sotib olishdan oldin ushbu qisa 50MB'dan oshmagan treylerni ko'rib ishonch hosil qilishadi va mahsulotingizni sotib olishadi. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
                                                     <i
                                                         style={{
@@ -426,6 +427,7 @@ const Posts = () => {
                                         <div className="col-md-12  d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video poster rasmi: *</p>
+
                                                 <Tooltip title="Mijozlarni mahsulotingizga e'tiborini tortib qiziqtirish uchun video poster yuklang. U posterni maxsus yasashingiz yoki videoingizni eng qiziq bo'lgan qismini screenshot qilib yuklashingiz mumkin bo'ladi.">
                                                     <i
                                                         style={{
