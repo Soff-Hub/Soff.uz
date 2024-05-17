@@ -208,7 +208,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                            </>
                         ) : (
                             <>
-                                <i className="fa-solid fa-share-nodes"></i>  ulashishg
+                                <i className="fa-solid fa-share-nodes"></i>  ulashish
                             </>
                         )}
                     </div>
