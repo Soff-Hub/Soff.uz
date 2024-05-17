@@ -57,6 +57,7 @@ export default function DefaultVideo({
             onPlay={() => setIsPlay?.(product?.id)}
             controls
             preload="none"
+            controlsList="nodownload"
             poster={product?.poster_url ? product?.poster_url : product?.poster}
             src={url}>
             Your browser does not support the video tag.

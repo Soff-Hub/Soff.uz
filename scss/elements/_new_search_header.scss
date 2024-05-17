@@ -427,6 +427,16 @@
 
             }
         }
+        .global_navbar_bottom{
+           .navbar-container{
+            ul{
+                .active_type {
+                    border-bottom: none !important;
+                    color: #00a44f;
+                }
+            }
+           } 
+        }
     }
 }
 
