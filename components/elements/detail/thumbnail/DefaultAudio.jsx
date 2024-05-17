@@ -139,10 +139,7 @@ export default function DefaultAudio({ product }) {
                         </div>
                     ) : (
                         <div className="row  audio-style">
-                            {/* <audio
-                                id="audioPlayer"
-                                controls
-                                src={product?.file_url}></audio> */}
+                           
 
                             <div
                                 className="col-1 audio-play"
