@@ -63,7 +63,7 @@ const HeaderElectronic = ({ kk }) => {
             <div className="header__content">
                 <div className="container">
                     <div className="header__content-left">
-                        <Link href="/">
+                        <Link href="/soff-market">
                             <a className="ps-logo">
                                 <NextImageCard
                                     url="/static/img/soff/soff_green_white.png"

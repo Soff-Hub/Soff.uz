@@ -158,8 +158,7 @@ const SearchHeader = ({ setSearch }) => {
                 {clearTextView}
                 {loadingView}
             </div>
-
-            <button className={keyword === '' ? 'button_search' : "d-block button_serach_color"}>Qidiruv</button>
+            <button className={keyword === '' ? 'button_search ' : "d-block button_serach_color"}>Qidiruv</button>
             <div
                 className={`ps-panel--search-result${isSearch ? ' active ' : ''
                     }`}>

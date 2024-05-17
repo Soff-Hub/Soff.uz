@@ -30,7 +30,9 @@ function CategoryLists() {
     const [isHomeVal, setIsHomeVal] = useState(false);
     const searchVal = useDebounce(search, 1000);
     const [categoryData, setCategoryData] = useState(null);
-    const [allParents, setAllParents] = useState(false)
+    const [allParents, setAllParents] = useState(false);
+    const [chaild, setchaild] = useState(null)
+    const [chaildId, setChaildId] = useState(null)
 
     // async function GetItemsProducts(page, search, id) {
     //     setCurrPage(page);
@@ -46,13 +48,26 @@ function CategoryLists() {
     //     }
     // }
     async function GetItemsProductsList(search, id) {
-        const ItemsData = await GetRepository.getCategoryParentAndChaild(
+        const ItemsData = await GetRepository.getCategoryParentList(
             search,
             id,
             user?.access
         );
-        if (ItemsData?.results) {
-            setCategoryData([...ItemsData.results]);
+        if (ItemsData) {
+            setCategoryData([...ItemsData]);
+        }
+    }
+
+
+    async function GetCategoryChaildItem(id) {
+        setChaildId(id)
+        const ItemsData = await GetRepository.getCategoryChaildItem(
+            id,
+            user?.access,
+            search
+        );
+        if (ItemsData) {
+            setchaild([...ItemsData]);
         }
     }
 
@@ -80,12 +95,21 @@ function CategoryLists() {
             deleteId,
             user?.access
         );
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz  malumotlarni o'chirdingiz`,
-        });
+        if (deleteIdItems?.status === 204) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz  malumotlarni o'chirdingiz`,
+            });
+        }else{
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatsiz!',
+                content: `Siz  malumotlarni o'chirolmadingiz`,
+            });
+        }
         GetItemsProductsList(search, null);
+        GetCategoryChaildItem(chaildId)
     }
 
     async function handleItemsPost(values) {
@@ -116,12 +140,12 @@ function CategoryLists() {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz  yangi categoriya qo'shdingiz`,
             });
-
         }
         GetItemsProductsList(search, null);
-        getParentLists()
-        setTagName([])
-        setAllParents(false)
+        getParentLists();
+        setTagName([]);
+        setAllParents(false);
+        setIsHomeVal(false)
     }
 
     async function handleItemsEdit() {
@@ -157,21 +181,24 @@ function CategoryLists() {
                 deleteIdEdit?.id,
                 user?.access
             );
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
+            if (patchItems?.statusi === 200 || 201) {
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content: "Siz  malumotlarni o'zgartirdingiz ",
+                });
+            }
             GetItemsProductsList(search, null);
+            GetCategoryChaildItem(chaildId)
 
             setTagNameTop(null);
             setTagName(null);
             setFile(null);
             setTagNameIcon(null);
             setTagNameUsers(null);
-            setIsHomeVal(null);
+            setIsHomeVal(false);
         } else {
-            const modal = Modal.info({
+            const modal = Modal.error({
                 centered: true,
                 title: "Qayta urinib ko'ring",
                 content: "O'zgartirish uchun malumot kiritilmadi ",
@@ -193,7 +220,7 @@ function CategoryLists() {
     const itemArr = categoryData?.map((e) => ({
         key: e?.id,
         label: (
-            <div className="row">
+            <div className="row" onClick={() => GetCategoryChaildItem(e?.id)}  >
                 <div className="col-md-6">{e?.name}</div>
                 <div className="col-md-6 text-end">
                     <div className="d-flex align-items-center justify-content-end">
@@ -232,19 +259,19 @@ function CategoryLists() {
                 </div>
             </div>
         ),
-        children: e?.children?.map((e) => {
+        children: chaild?.map((el) => {
             return (
                 <div className="row border-bottom py-3">
-                    <div className="col-md-6">{e?.name}</div>
+                    <div className="col-md-6">{el?.name}</div>
                     <div className="col-md-6 text-end">
                         <div className="d-flex align-items-center justify-content-end">
-                            {e?.is_delete === true ? (
+                            {el?.is_delete === true ? (
                                 <a
                                     data-bs-target="#exampleModalToggle"
                                     data-bs-toggle="modal">
                                     <i
                                         className="fa-solid fa-trash-can text-danger mx-3"
-                                        onClick={() => setDeleteId(e?.id)}></i>
+                                        onClick={() => setDeleteId(el?.id)}></i>
                                 </a>
                             ) : (
                                 <></>
@@ -252,10 +279,11 @@ function CategoryLists() {
                             <a
                                 data-bs-target="#exampleModalToggleEditCategory"
                                 data-bs-toggle="modal">
+                                
                                 <i
                                     className="fa-solid fa-pen-to-square mx-4 text-success-emphasis"
                                     onClick={() =>
-                                        GetItemsProductsEdit(e?.id)
+                                       ( GetItemsProductsEdit(el?.id), setTagName(e?.id))
                                     }></i>
                             </a>
                         </div>
@@ -316,8 +344,7 @@ function CategoryLists() {
                                         <button
                                             className="btn btn-success col-md-3 py-3 "
                                             data-bs-target="#addcategory"
-                                            data-bs-toggle="modal"
-                                            >
+                                            data-bs-toggle="modal">
                                             <span className="fs-4">
                                                 {' '}
                                                 <i className="fa-solid fa-plus"></i>{' '}
@@ -513,11 +540,11 @@ function CategoryLists() {
                     </select> */}
                     <div>
                         <Switch
-                        size='small'
+                            size="small"
                             checkedChildren={<CheckOutlined />}
                             unCheckedChildren={<CloseOutlined />}
                             defaultValue={allParents}
-                            onChange={(e) => (setAllParents(e))}
+                            onChange={(e) => setAllParents(e)}
                         />{' '}
                         <span>Barcha parentni tanlash</span>
                     </div>
@@ -525,10 +552,9 @@ function CategoryLists() {
                         style={{
                             width: '100%',
                         }}
-                        direction="vertical"
-                        >
+                        direction="vertical">
                         <Select
-                        disabled={allParents}
+                            disabled={allParents}
                             mode="multiple"
                             allowClear
                             style={{
