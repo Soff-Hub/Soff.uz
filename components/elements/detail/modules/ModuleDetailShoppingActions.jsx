@@ -56,7 +56,6 @@ const ModuleDetailShoppingActions = ({ product }) => {
     };
 
     const [messageApi, contextHolder] = message.useMessage();
-    
     const infoSuccess = (url) => {
         messageApi.success(
             `Soff | Audio mahsulot dan nusxa ko\'chirildi (${url})`
@@ -114,6 +113,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
                 <div className="ps-product__shopping">
+                {contextHolder}
                     <div>
                         {product?.discount_price > 0 ? (
                             <>
@@ -193,7 +193,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <div className="p-3 rounded-3 " style={{ backgroundColor: "#F1F1F1", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
                         {copy ? (
                             <div className='text-center'>
-                                <i className="fa-solid fa-check "></i>
+                                <i className="fa-solid fa-check "></i> nusxalandi
                             </div>
                         ) : (
                             <div style={{ cursor: "pointer" }} className='w-full d-flex justify-content-center align-items-center'>
