@@ -109,7 +109,6 @@ function ApplicationLists() {
         const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin", sellerSearch);
         if (Items && user?.role === "admin") {
             setAllPrice(Items?.total_amount?.amount__sum)
-            console.log('item', Items);
             return setDataAdmin([...Items.results]);
         }
         if (Items.results) {
@@ -164,20 +163,24 @@ function ApplicationLists() {
 
                 const response = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
 
-                if (response || response?.status === 201 || response?.status == 200) {
+                if (response?.status === 201 || response?.status == 200) {
                     const modal = Modal.success({
                         centered: true,
                         title: 'Muvaffaqqiyatli!',
                         content: "Siz malumotlarni o'zgartirdingiz",
                     });
 
-                    // Reload the data after successful update
                     getItemsSellerAdmin(1, dataCat);
                     setDataCardModalStatus(null);
                     setDataCardModalDes(null);
                     setDataCardModalImg(null);
                 } else {
-                    throw new Error("An error occurred while updating data");
+                    const modal = Modal.error({
+                        centered: true,
+                        title: "Xatolik",
+                        content: response?.data?.receipt,
+                    });
+                    throw new Error(response?.data?.receipt);
                 }
             } else {
                 const modal = Modal.info({
@@ -188,12 +191,7 @@ function ApplicationLists() {
             }
         } catch (error) {
             console.log(error);
-            // Display error message to the user
-            const modal = Modal.error({
-                centered: true,
-                title: "Xatolik",
-                content: "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
-            });
+
         }
     }
 
