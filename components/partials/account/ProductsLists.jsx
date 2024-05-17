@@ -410,6 +410,7 @@ function ProductsLists() {
                         margin: ' 0 20px',
                         fontSize: '16px',
                         fontWeight: '600',
+                      
                     }}>
                     Qisqa video ko'rish
                 </span>
@@ -428,6 +429,7 @@ function ProductsLists() {
                         margin: '0 30px',
                         fontSize: '16px',
                         fontWeight: '600',
+                      
                     }}>
                    To'liq video
                 </span>
@@ -817,13 +819,12 @@ function ProductsLists() {
                                               ?.content_type === 'video' ? (
                                             <div className="row">
                                                 <div className="col-md-12">
-                                                    {/* <DefaultVideo
-                                                        product={deleteIdView}
-                                                    /> */}
+                                                   
                                                     <Tabs
+                                                  
                                                         defaultActiveKey="1"
                                                         items={items}
-                                                        className="bg-white "
+                                                        className="bg-white"
                                                         onChange={(e) => setShort(e == 1 ? true : false)}
                                                     />
                                                     <ModuleAudioDetailTopInformationLive

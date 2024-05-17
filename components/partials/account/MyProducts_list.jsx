@@ -592,7 +592,7 @@ function MyProductsLists() {
             label: (
                 <span
                     style={{
-                        margin: ' 0 20px',
+                        margin: '0 20px',
                         fontSize: '16px',
                         fontWeight: '600',
                     }}>
@@ -1086,9 +1086,7 @@ function MyProductsLists() {
                                             'video' ? (
                                             <div className="row">
                                                 <div className="col-12">
-                                                    {/* <DefaultVideo
-                                                        product={View}
-                                                    /> */}
+                                                 
                                                       <Tabs
                                                         defaultActiveKey="1"
                                                         items={items}

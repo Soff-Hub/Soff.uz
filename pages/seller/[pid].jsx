@@ -11,9 +11,8 @@ import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 
-const SellerPage = ({ seller }) => {
+const SellerPage = ({ seller,sellerr }) => {
     const [data, setData] = useState(seller);
-    const [sellerr, setSellerr] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
     const { pid } = router.query;
@@ -53,18 +52,15 @@ const SellerPage = ({ seller }) => {
             setData(respons.data);
         }
     };
-    const getSellerUser = async (slug) => {
-        const respons = await ProductRepository.getSellerProfileSlug(slug);
-        if (respons) {
-            setSellerr(respons?.data);
-        }
-    };
+
+
     const getSellerDocumentType = async (slug) => {
         const respons = await ProductRepository.getSellerProductNameSlug(slug);
         if (respons) {
             setProductType(respons?.data);
         }
     };
+
 
     const handlePagination = async (e) => {
         setPage(e);
@@ -109,12 +105,13 @@ const SellerPage = ({ seller }) => {
         return formattedNumber;
     }
 
+
     useEffect(() => {
         if (pid) {
-            getSellerUser(pid);
             getSellerDocumentType(pid);
         }
     }, [pid]);
+
 
     useEffect(() => {
         if (pid) {
@@ -122,9 +119,7 @@ const SellerPage = ({ seller }) => {
         }
     }, [pid, typeSelect, search]);
 
-    console.log('sdca', productType);
 
-    // let productView = <SkeletonProductDetail />;
     return (
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
@@ -305,17 +300,25 @@ const SellerPage = ({ seller }) => {
                                     </div>
                                 )}
                             </div>
+
                             <div className="seller_contaoner2">
                                 <select
+                                
                                     onChange={(e) =>
                                         setTypeSelect(e.target.value)
                                     }
                                     className="form-control seller_filter rounded-3">
                                     {productType?.map((e) => {
                                         return (
-                                            <option value={e.type}>
-                                                {e?.type.charAt(0).toUpperCase() +
-                                                    e?.type.slice(1)}{' '}
+                                            <option value={e.type} selected={e?.type===typeSelect} >
+                                                {
+                                                
+                                                e?.type==='audio' ? "Audio materiallar" :
+                                                e?.type==='video' ? "Video materiallar" :
+                                                e?.type==='template' ? "Shablon materiallar" :"Hujjat materiallar"
+
+                                                    
+                                                    }
                                                 {e?.count !== 0
                                                     ? `- ${e?.count} ta`
                                                     : ''}
@@ -329,6 +332,7 @@ const SellerPage = ({ seller }) => {
                                     onInput={(e) => setSearch(e.target.value)}
                                     className="form-control  rounded-3 seller_filter_option"
                                 />
+
                             </div>
                         </div>
                     </div>
@@ -354,14 +358,20 @@ const SellerPage = ({ seller }) => {
 };
 
 export async function getServerSideProps({ query }) {
-    const resquest = await fetch(
+    const resquest_boolen = await fetch(
         baseUrl + `customer/documents/?seller__id=${query.pid}`
     );
-    const seller = await resquest.json();
+    const resquest = await fetch(
+        baseUrl + `customer/top-sellers/${query.pid}`
+    );
+    const seller = await resquest_boolen?.json();
+
+    const sellerr = await resquest.json();
 
     return {
         props: {
             seller,
+            sellerr
         },
     };
 }

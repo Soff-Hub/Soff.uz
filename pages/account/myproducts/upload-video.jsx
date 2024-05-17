@@ -699,6 +699,7 @@ const Posts = () => {
                                                 </p>
                                             </div>
                                         </div>
+
                                         {free ? <></> :
                                             <div className="col-md-12 d-flex flex-column ">
                                                 <p className='text-warning p-0 m-0 mt-3'>Qisqa video 50 MB dan kichik bo'lishi kerak!</p>
@@ -798,6 +799,7 @@ const Posts = () => {
                                         <div className="col-md-12  d-flex flex-column ">
                                             <div className=" mt-2 d-flex justify-content-between p-0">
                                                 <p>Video poster rasmi: *</p>
+
                                                 <Tooltip title="Mijozlarni mahsulotingizga e'tiborini tortib qiziqtirish uchun video poster yuklang. U posterni maxsus yasashingiz yoki videoingizni eng qiziq bo'lgan qismini screenshot qilib yuklashingiz mumkin bo'ladi.">
                                                     <i
                                                         style={{
