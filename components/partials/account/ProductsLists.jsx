@@ -815,8 +815,7 @@ function ProductsLists() {
                                                     )}
                                                 </div>
                                             </div>
-                                        ) : deleteIdView?.document
-                                              ?.content_type === 'video' ? (
+                                        ) : deleteIdView?.document?.content_type === 'video' ? (
                                             <div className="row">
                                                 <div className="col-md-12">
                                                    

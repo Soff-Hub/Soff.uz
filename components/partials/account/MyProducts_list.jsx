@@ -536,26 +536,33 @@ function MyProductsLists() {
                             el.id == content_type_id?.id &&
                             el.data_status?.status === 'moderation'
                     ) ? (
-                            <span style={{cursor:"pointer"}}>
-                                <i
-                                    className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                                    onClick={() =>
-                                        handleClickIdEdit(content_type_id)
-                                    }></i>
-                            </span>
+                        <span style={{ cursor: "pointer" }}>
+                            <i
+                                className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
+                                onClick={() =>
+                                    handleClickIdEdit(content_type_id)
+                                }></i>
+                        </span>
                     ) : data.some(
                         (el) =>
                             el.id == content_type_id?.id &&
                             el.data_status?.status === 'approved'
                     ) ? (
-                        <a
-                            data-bs-target="#exampleModalMyProductsPrice"
-                            data-bs-toggle="modal"
-                            onClick={() =>
-                                handleClickIdEditModal(content_type_id?.id)
-                            }>
-                            <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
-                        </a>
+
+                        <>
+                            {
+                                (content_type_id?.content_type === "video" && content_type_id?.discount_price === 0) ? <></> :
+                                    <a
+                                        data-bs-target="#exampleModalMyProductsPrice"
+                                        data-bs-toggle="modal"
+                                        onClick={() =>
+                                            handleClickIdEditModal(content_type_id?.id)
+                                        }>
+                                        <i className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"></i>
+                                    </a>
+                            }
+                        </>
+
                     ) : data.some(
                         (el) =>
                             el.id == content_type_id?.id &&
@@ -614,7 +621,7 @@ function MyProductsLists() {
                         fontSize: '16px',
                         fontWeight: '600',
                     }}>
-                   To'liq video
+                    To'liq video
                 </span>
             ),
             children: (
@@ -668,7 +675,7 @@ function MyProductsLists() {
                                             <br />
                                             <div className="border px-2 py-3 rounded-2">
                                                 <p className="px-2">
-                                                <i className="fa-solid fa-triangle-exclamation text-warning"></i> Video yuklash uchun  xotira
+                                                    <i className="fa-solid fa-triangle-exclamation text-warning"></i> Video yuklash uchun  xotira
                                                     haqida ma'lumot{' '}
                                                 </p>
                                                 <div className=" d-flex justify-content-between flex-wrap gap-5   p-2 ">
@@ -1076,7 +1083,7 @@ function MyProductsLists() {
                                                             className="btn btn-success p-2 px-5 fs-4 ">
                                                             <i className="fa-solid fa-download mx-1"></i>{' '}
                                                             <span className="fs-3">
-                                                                File ochish 
+                                                                File ochish
                                                             </span>
                                                         </button>
                                                     )}
@@ -1086,8 +1093,8 @@ function MyProductsLists() {
                                             'video' ? (
                                             <div className="row">
                                                 <div className="col-12">
-                                                 
-                                                      <Tabs
+
+                                                    <Tabs
                                                         defaultActiveKey="1"
                                                         items={items}
                                                         className="bg-white "

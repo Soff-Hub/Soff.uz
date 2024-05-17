@@ -120,6 +120,8 @@ const SellerPage = ({ seller,sellerr }) => {
     }, [pid, typeSelect, search]);
 
 
+    
+
     return (
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
