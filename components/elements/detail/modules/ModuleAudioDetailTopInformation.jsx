@@ -99,8 +99,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
     };
 
     const copyVideoUrl = () => {
-        const videoElement = document.getElementById('audioPlayer');
-        if (videoElement) {
+    
             const videoUrl = `https://soff.uz${pid}`;
             navigator.clipboard
                 .writeText(videoUrl)
@@ -117,8 +116,10 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                     console.error('Error copying video URL: ', error);
                     // alert('Error copying video URL!');
                 });
-        }
+        
     };
+
+
 
     return (
         <header>
@@ -202,11 +203,12 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
                     </div>
                     <div className="video_send" onClick={() => copyVideoUrl()}>
                         {copy ? (
-                            <i className="fa-solid fa-check"></i>
+                           <>
+                            <i className="fa-solid fa-check"></i> nusxalandi
+                           </>
                         ) : (
                             <>
-                                <i className="fa-solid fa-share-nodes"></i>
-                                ulashish
+                                <i className="fa-solid fa-share-nodes"></i>  ulashishg
                             </>
                         )}
                     </div>
