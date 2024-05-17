@@ -641,7 +641,7 @@ function ApplicationLists() {
                                 <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
                         }
 
-                        <input type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
+                        <input  accept='image/*' type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
                     </label>
                     <select className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
                         {
