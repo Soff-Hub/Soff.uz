@@ -27,7 +27,7 @@ export default function DefaultAudio({ product }) {
             );
         }
     }, [wavesurferObj]);
-    
+
 
     useEffect(() => {
         if (!product?.document?.file_url) {
@@ -73,11 +73,10 @@ export default function DefaultAudio({ product }) {
                     <div
                         className="audio__poster"
                         style={{
-                            backgroundImage: `url( ${
-                                product?.poster_url
+                            backgroundImage: `url( ${product?.poster_url
                                     ? product?.poster_url
                                     : 'https://png.pngtree.com/background/20230612/original/pngtree-colorful-musical-notes-and-music-notes-picture-image_3176403.jpg'
-                            } )`,
+                                } )`,
                             borderRadius: '5px',
                             backgroundPositionX: 'center',
                             backgroundPositionY: 'center',
@@ -100,7 +99,7 @@ export default function DefaultAudio({ product }) {
                             {' '}
                             Davomiyligi {product?.document?.content_duration}
                         </span>
-                        {!product?.document?.file_url ? (
+                        {product?.discount_price !== 0 ? (
                             <span style={{ color: '#F4CA16' }}>
                                 Batafsil eshitish uchun sotib oling
                             </span>
@@ -111,12 +110,7 @@ export default function DefaultAudio({ product }) {
 
                     {!product?.document?.file_url ? (
                         <div className="row audio-style">
-                            {/* <audio
-                                id="audioPlayer"
-                                controls
-                                src={
-                                    product?.document?.short_content_url
-                                }></audio> */}
+
                             <div className="audio-none">
                                 <span></span>
                             </div>
@@ -139,7 +133,7 @@ export default function DefaultAudio({ product }) {
                         </div>
                     ) : (
                         <div className="row  audio-style">
-                           
+
 
                             <div
                                 className="col-1 audio-play"
