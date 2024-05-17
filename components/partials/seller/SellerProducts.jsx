@@ -7,7 +7,6 @@ import AudioWaveform from '~/components/elements/products/AudioProductCart';
 export default function SellerProducts({ data = [], page, handlePagination }) {
     const [isPlay, setIsPlay] = useState(null)
 
-    console.log(data?.results?.length > 0);
 
     return (
         <div className="container" id='products'>

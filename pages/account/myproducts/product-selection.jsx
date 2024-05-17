@@ -187,7 +187,9 @@ const Posts = () => {
 
                                             <div className="d-flex flex-column gap-3">
                                                 <i className="fa-solid fa-video"></i>
-                                                <span>Video Materiallar</span>
+
+                                                <span>Video materiallar</span>
+
 
                                             </div>
                                         </div>

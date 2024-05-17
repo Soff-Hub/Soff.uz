@@ -95,25 +95,23 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
     };
 
     const copyVideoUrl = () => {
-        const videoElement = document.getElementById('videoPlayer');
-        if (videoElement) {
-            const videoUrl = videoElement.querySelector('source').src;
-            navigator.clipboard
-                .writeText(videoUrl)
-                .then(() => {
-                    setCopy(true)
-                    setTimeout(() => {
-                        setCopy(false)
-                    }, 2500);
-                    infoSuccess(videoUrl);
-                    //   alert(`Video URL copied to clipboard! ${}`);
-                })
-                .catch((error) => {
-                    infoError(error);
-                    console.error('Error copying video URL: ', error);
-                    // alert('Error copying video URL!');
-                });
-        }
+        const videoUrl = `https://soff.uz${pid}`;
+        navigator.clipboard
+            .writeText(videoUrl)
+            .then(() => {
+                setCopy(true)
+                setTimeout(() => {
+                    setCopy(false)
+                }, 2500);
+                infoSuccess(videoUrl);
+                //   alert(`Video URL copied to clipboard! ${}`);
+            })
+            .catch((error) => {
+                infoError(error);
+                console.error('Error copying video URL: ', error);
+                // alert('Error copying video URL!');
+            });
+
     };
 
     return (
@@ -206,7 +204,9 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                     <div className="video_send" onClick={() => copyVideoUrl()}>
                         {
                             copy ?
-                                <i class="fa-solid fa-check"></i>
+                               <>
+                                <i class="fa-solid fa-check"></i> nusxalandi
+                               </>
                                 :
                                 <>
                                     <i class="fa-solid fa-share-nodes mr-2"></i>

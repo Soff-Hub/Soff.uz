@@ -91,7 +91,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                             } `}>
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.file_url !== "No" ? (
+                                {product?.document?.file_url  ? (
                                     (
                                         <a
                                             style={{
