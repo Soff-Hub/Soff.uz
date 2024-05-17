@@ -30,17 +30,17 @@ export default function DefaultAudio({ product }) {
     
 
     useEffect(() => {
-        if (product?.file_url === 'No') {
+        if (!product?.document?.file_url) {
             if (wavesurferObj && product?.document?.short_content_url) {
                 wavesurferObj.load(product?.document?.short_content_url);
             }
         } else {
-            if (wavesurferObj && product?.file_url) {
-                wavesurferObj.load(product?.file_url);
+            if (wavesurferObj && product?.document?.file_url) {
+                wavesurferObj.load(product?.document?.file_url);
             }
         }
     }, [
-        product?.file_url,
+        product?.document?.file_url,
         product?.document?.short_content_url,
         wavesurferObj,
     ]);
@@ -100,7 +100,7 @@ export default function DefaultAudio({ product }) {
                             {' '}
                             Davomiyligi {product?.document?.content_duration}
                         </span>
-                        {product?.file_url === 'No' ? (
+                        {!product?.document?.file_url ? (
                             <span style={{ color: '#F4CA16' }}>
                                 Batafsil eshitish uchun sotib oling
                             </span>
@@ -109,7 +109,7 @@ export default function DefaultAudio({ product }) {
                         )}
                     </div>
 
-                    {product?.file_url === 'No' ? (
+                    {!product?.document?.file_url ? (
                         <div className="row audio-style">
                             {/* <audio
                                 id="audioPlayer"
@@ -158,7 +158,7 @@ export default function DefaultAudio({ product }) {
                                 )}
                             </div>
                             <div className="col-12 col-xxl-11 col-xl-11 col-lg-11 col-md-11 col-sm-11 pl-0">
-                                {product?.file_url ? (
+                                {product?.document?.file_url ? (
                                     <div
                                         ref={wavesurferRef}
                                         id="waveform"></div>
