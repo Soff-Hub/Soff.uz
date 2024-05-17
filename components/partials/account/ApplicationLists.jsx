@@ -157,9 +157,9 @@ function ApplicationLists() {
                 if (dataCardModalStatus) {
                     formData.append("status", dataCardModalStatus)
                 }
-                if (dataCardModalDes) {
+            
                     formData.append("description", dataCardModalDes)
-                }
+             
 
                 const response = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
 
