@@ -25,8 +25,6 @@ const Posts = () => {
     const [tagSearchResult, setTagSearchResult] = useState(null);
     const [tagSearchResult1, setTagSearchResult2] = useState(null);
     const [tegProductsLists, setTegProdcutsLists] = useState([]);
-    const [fileImgFile, setFileImgFile] = useState(null);
-    const [extraFiles, setExtraFiles] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [dataCatStatus, setDataCatStatus] = useState(null);
     const [tagItems, setTagItems] = useState([]);
@@ -38,7 +36,6 @@ const Posts = () => {
     const [loading, setLoading] = useState(false);
     const [loadingIs, setLoadingIs] = useState(false);
     const [free, setFree] = useState(false);
-    const [customePoster, setCustomePoster] = useState(false);
     const [profile, setProfile] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const [products, setProducts] = useState(null)
@@ -132,7 +129,7 @@ const Posts = () => {
 
     async function handleClickPosts() {
 
-        if (extraFiles || watch('title' || Fulldata) || customePoster.file || fileImgFile?.file) {
+        if (watch('title' || Fulldata)) {
             const formData = new FormData();
 
             if (watch('title')) {
@@ -147,23 +144,15 @@ const Posts = () => {
             if (results3) {
                 formData.append('tags', JSON.stringify(results3));
             }
-            if (customePoster.file) {
-                formData.append('poster', customePoster.file);
-            }
+    
             if (category_id) {
                 formData.append('category', category_id);
             }
-            if (fileImgFile?.file) {
-                formData.append('short_content', fileImgFile?.file);
-            }
+ 
             if (dataCatStatus) {
                 formData.append('status', dataCatStatus);
             }
 
-
-            if (extraFiles) {
-                formData.append('extra_file', extraFiles);
-            }
 
             try {
                 const resp = await axios.patch(
@@ -221,22 +210,7 @@ const Posts = () => {
     }, [user?.access]);
 
 
-    function LivePoster(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const img = window.URL.createObjectURL(file);
-            setCustomePoster({ file: file, url: img });
-        }
-    }
 
-
-    function LivePosterLive(e) {
-        const file = e.target.files[0];
-        if (file) {
-            const video = window.URL.createObjectURL(file);
-            setFileImgFile({ file: file, video: video });
-        }
-    }
 
     useEffect(() => {
         if (user?.access) {
@@ -313,7 +287,7 @@ const Posts = () => {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <div className="row mt-2">
                                         <div className="col-md-12  d-flex flex-column p-0">
                                             <div className=" d-flex justify-content-between p-0 ">
@@ -338,6 +312,81 @@ const Posts = () => {
                                                 error={errors.title?.message}
                                                 defaultValue={products?.title}
                                             />
+
+                                        </div>
+                                        <div className=" col-md-12 d-flex flex-column mt-3 p-0">
+                                            <div className=" mt-2 d-flex justify-content-between p-0">
+                                                {' '}
+                                                <p>Mahsulot holati: *</p>
+                                                <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
+                                                    <i
+                                                        style={{ cursor: 'pointer' }}
+                                                        className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                                </Tooltip>
+                                            </div>
+
+                                            <div className="rounded-3  p-0 m-0 d-flex flex-column">
+                                                <select
+                                                    className="form-select fs-3 rounded-3 col-md-12 py-3"
+                                                    onChange={(e) =>
+                                                        setDataCatStatus(e.target.value)
+                                                    }>
+                                                    {dataStatus?.map((item, i) =>
+                                                        products.status === item.status ? (
+                                                            <option
+                                                                selected
+                                                                key={i}
+                                                                value={item.status}>
+                                                                {products.status === 'moderation'
+                                                                    ? 'Moderatsiya'
+                                                                    : products.status ===
+                                                                        'cancelled'
+                                                                        ? 'Bekor qilingan'
+                                                                        : products.status === 'approved'
+                                                                            ? 'Tasdiqlangan'
+                                                                            : ''}
+                                                            </option>
+                                                        )
+                                                            : (
+                                                                <option value={item.status}>
+                                                                    {item.status === 'moderation'
+                                                                        ? 'Moderatsiya'
+                                                                        : item.status ===
+                                                                            'cancelled'
+                                                                            ? 'Bekor qilingan'
+                                                                            : item.status === 'approved'
+                                                                                ? 'Tasdiqlangan'
+                                                                                : ''}
+                                                                </option>
+                                                            )
+                                                    )}
+                                                </select>
+                                            </div>
+                                            {
+                                                dataCatStatus === 'cancelled' ||
+                                                    products.status === 'cancelled' ?
+                                                    <div className="col-md-12  d-flex flex-column mt-3 p-0">
+                                                        <div className=" d-flex justify-content-between p-0 ">
+                                                            <p>Holat to'g'risida sabab: *</p>{' '}
+                                                            <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
+                                                                <i
+                                                                    style={{ cursor: 'pointer' }}
+                                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                            </Tooltip>
+                                                        </div>
+
+                                                        <div className="col-md-12 p-0 mb-3">
+                                                            <textarea
+                                                                defaultValue={products?.reason}
+                                                                onChange={(e) =>
+                                                                    setTextAreaItmes(e.target.value)
+                                                                }
+                                                                required
+                                                                rows={4}
+                                                                className="rounded w-100 border p-3 border-danger"></textarea>
+                                                        </div>
+                                                    </div> : <></>
+                                            }
 
                                         </div>
 
@@ -421,230 +470,7 @@ const Posts = () => {
 
                                     </div>
                                 </div>
-                                <div className="col-md-6">
-                                    <div className="row">
 
-
-                                        <div className="col-md-12 d-flex flex-column ">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>
-                                                    Video(qisqa ko'rish uchun):
-                                                    *
-                                                </p>{' '}
-
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan video. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin">
-
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
-                                            </div>
-                                            <div className='w-full'>
-
-                                                <label
-                                                    className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
-                                                    style={{
-                                                        backgroundColor: '#F1F1F1',
-                                                        border: "1px dashed green",
-                                                        width: '100%',
-                                                    }}>
-                                                    {!fileImgFile || products?.document?.short_content_url ? (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center"
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            <span
-                                                                className="d-flex flex-column align-items-center "
-                                                                style={{
-                                                                    cursor: 'pointer',
-                                                                }}>
-                                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                                <span>
-                                                                    Qisqa
-                                                                    ko'rish
-                                                                    uchun video
-                                                                </span>
-                                                            </span>
-                                                        </span>
-                                                    ) : (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center"
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            <span>
-                                                                {' '}
-                                                                Siz mahsulot
-                                                                yukladingiz{' '}
-                                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                            </span>
-                                                        </span>
-                                                    )}
-                                                    <input
-                                                        name='file_video'
-                                                        type="file"
-                                                        onChange={LivePosterLive}
-                                                        accept="video/*"
-
-                                                    />
-                                                </label>
-                                            </div>
-                                        </div>
-
-                                        <div className="col-md-12  d-flex flex-column ">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Video poster rasmi: *</p>
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rish mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
-                                            </div>
-                                            <div className='w-full'>
-
-                                                <div
-                                                    className="add-product-user-image d-flex justify-content-between gap-3  form-control p-2 pt-2 rounded-3"
-                                                    style={{
-                                                        backgroundColor: '#F1F1F1',
-                                                        border: "1px dashed green",
-                                                        width: '100%',
-                                                        height: "100px"
-                                                    }}>
-                                                    <label
-                                                        className='m-0'
-                                                        style={{
-                                                            width: '45%',
-                                                            cursor: 'pointer',
-                                                            backgroundColor: '#F1F1F1',
-                                                            border: "1px dashed green",
-                                                            borderRadius: '5px',
-                                                            position: 'relative',
-                                                        }}>
-                                                        <i className="fa-solid fa-plus fs-1 mt-5  mx-3 plus-icon-style "></i>
-                                                        <input
-                                                            name='image'
-                                                            type="file"
-                                                            onChange={LivePoster}
-                                                            accept="image/*"
-                                                            style={{
-                                                                width: '50px',
-                                                            }}
-
-                                                        />
-                                                    </label>
-                                                    <div className=""
-                                                        style={{
-                                                            width: '50%',
-                                                            cursor: 'pointer',
-                                                            backgroundColor: '#F1F1F1',
-                                                            border: "1px dashed green",
-                                                            borderRadius: '5px',
-                                                            position: 'relative',
-                                                        }}
-                                                    >
-                                                        <img
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '100%',
-                                                            }}
-                                                            src={customePoster?.url ? customePoster?.url : products?.poster_url
-
-
-                                                            }
-                                                            alt="poster/video"
-                                                        />
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                        </div>
-
-                                        <div className=" col-md-12 d-flex flex-column mt-3">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                {' '}
-                                                <p>Mahsulot holati: *</p>
-                                                <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
-                                                    <i
-                                                        style={{ cursor: 'pointer' }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                                                </Tooltip>
-                                            </div>
-
-                                            <div className="rounded-3  p-0 m-0 d-flex flex-column">
-                                                <select
-                                                    className="form-select fs-3 rounded-3 col-md-12 py-3"
-                                                    onChange={(e) =>
-                                                        setDataCatStatus(e.target.value)
-                                                    }>
-                                                    {dataStatus?.map((item, i) =>
-                                                        products.status === item.status ? (
-                                                            <option
-                                                                selected
-                                                                key={i}
-                                                                value={item.status}>
-                                                                {products.status === 'moderation'
-                                                                    ? 'Moderatsiya'
-                                                                    : products.status ===
-                                                                        'cancelled'
-                                                                        ? 'Bekor qilingan'
-                                                                        : products.status === 'approved'
-                                                                            ? 'Tasdiqlangan'
-                                                                            : ''}
-                                                            </option>
-                                                        )
-                                                            : (
-                                                                <option value={item.status}>
-                                                                    {item.status === 'moderation'
-                                                                        ? 'Moderatsiya'
-                                                                        : item.status ===
-                                                                            'cancelled'
-                                                                            ? 'Bekor qilingan'
-                                                                            : item.status === 'approved'
-                                                                                ? 'Tasdiqlangan'
-                                                                                : ''}
-                                                                </option>
-                                                            )
-                                                    )}
-                                                </select>
-                                            </div>
-                                            {
-                                                dataCatStatus === 'cancelled' ||
-                                                    products.status === 'cancelled' ?
-                                                    <div className="col-md-12  d-flex flex-column mt-3 p-0">
-                                                        <div className=" d-flex justify-content-between p-0 ">
-                                                            <p>Holat to'g'risida sabab: *</p>{' '}
-                                                            <Tooltip title="Mijozlarga mahsulot haqida qanaqadir xatolik bo'lsa o'sha xatolik to'g'risida sabab yozish ">
-                                                                <i
-                                                                    style={{ cursor: 'pointer' }}
-                                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                            </Tooltip>
-                                                        </div>
-
-                                                        <div className="col-md-12 p-0 mb-3">
-                                                            <textarea
-                                                                defaultValue={products?.reason}
-                                                                onChange={(e) =>
-                                                                    setTextAreaItmes(e.target.value)
-                                                                }
-                                                                required
-                                                                rows={4}
-                                                                className="rounded w-100 border p-3 border-danger"></textarea>
-                                                        </div>
-                                                    </div> : <></>
-                                            }
-
-                                        </div>
-
-
-
-                                    </div>
-                                </div>
 
                                 <div className="col-md-12 row pr-0 mt-4">
                                     <div className="col-md-12  d-flex flex-column mt-3 p-0">
@@ -708,70 +534,11 @@ const Posts = () => {
                                 className=" border w-100"
                                 controls
                                 preload="none"
-                                src={fileImgFile?.video ? fileImgFile?.video : products?.document?.short_content_url}
-                                poster={customePoster?.url ? customePoster?.url : products?.poster_url}
+                                src={products?.document?.short_content_url}
+                                poster={products?.poster_url}
                                 style={{ maxHeight: '250px' }}>
 
                             </video>
-                            <div className="col-md-12 d-flex flex-column ">
-                                <div className=" mt-2 d-flex justify-content-between p-0">
-                                    <p>Qo'shimcha fayllar uchun (.zip)</p>{' '}
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
-                                        <i
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
-                                {/* <div className="row"> */}
-                                <label
-                                    className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
-                                    style={{
-                                        backgroundColor: '#F1F1F1',
-                                        border: '1px dashed green',
-                                        width: '100%',
-                                    }}>
-                                    {!extraFiles ? (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}>
-                                            <span
-                                                className="d-flex flex-column align-items-center "
-                                                style={{
-                                                    cursor: 'pointer',
-                                                }}>
-                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                <span>
-                                                    Qo'shimcha fayllar
-                                                </span>
-                                            </span>
-                                        </span>
-                                    ) : (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}>
-                                            <span>
-                                                {' '}
-                                                Tanlangan{' '}
-                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                            </span>
-                                        </span>
-                                    )}
-                                    <input
-                                        required
-                                        type="file"
-                                        onChange={(e) =>
-                                            setExtraFiles(e.target.files[0])
-                                        }
-                                        accept=".zip"
-                                    />
-                                </label>
-                            </div>
                         </div>
                     </div>
 
@@ -830,8 +597,8 @@ const Posts = () => {
                                                                 className=" border w-100"
                                                                 controls
                                                                 preload="none"
-                                                                src={fileImgFile?.video ? fileImgFile?.video : products?.document?.short_content_url}
-                                                                poster={customePoster?.url ? customePoster?.url : products?.poster_url}
+                                                                src={products?.document?.short_content_url}
+                                                                poster={products?.poster_url}
                                                                 style={{
                                                                     maxHeight:
                                                                         '250px',

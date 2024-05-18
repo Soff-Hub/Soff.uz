@@ -2,17 +2,19 @@ import React, { useEffect, useState } from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
 import Meta from '~/components/shared/headers/Meta';
-import { Select, Table, Tooltip } from 'antd';
+import { Select, Table, Tabs, Tooltip } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useSelector } from 'react-redux';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 import { useRouter } from 'next/router';
 import ChartSeller from '~/components/partials/account/ChartSeller';
+import NextImageCard from '~/components/nextImagecard';
 
 const SellerAccount = ({ seller }) => {
     const [data, setData] = useState([]);
     const [dashboardData, setDashboardData] = useState([]);
     const [tableData, setTableData] = useState([]);
+    const [tableDataOffer, setTableDataOffer] = useState([]);
     const router = useRouter();
     const { pid } = router.query;
 
@@ -22,20 +24,7 @@ const SellerAccount = ({ seller }) => {
     const [month, setMonth] = useState(null);
     const [yearGet, setYearGet] = useState([]);
 
-    const labels = [
-        { name: 'Yanvar', value: '01' },
-        { name: 'Fevral', value: '02' },
-        { name: 'Mart', value: '03' },
-        { name: 'Aprel', value: '04' },
-        { name: 'May', value: '05' },
-        { name: 'Iyun', value: '06' },
-        { name: 'Iyul', value: '07' },
-        { name: 'Avgust', value: '08' },
-        { name: 'Sentyabr', value: '09' },
-        { name: 'Oktyabr', value: '10' },
-        { name: 'Noyabr', value: '11' },
-        { name: 'Dekabr', value: '12' },
-    ];
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -88,6 +77,7 @@ const SellerAccount = ({ seller }) => {
             // setPageCount(ItemsData.count);
             setData(ItemsData);
             setTableData(ItemsData.documents);
+            setTableDataOffer(ItemsData.offer_list);
         }
     }
 
@@ -107,6 +97,8 @@ const SellerAccount = ({ seller }) => {
             GetItemsSeller_Yearch()
         }
     }, [pid]);
+
+
 
     const columns = [
         {
@@ -171,6 +163,98 @@ const SellerAccount = ({ seller }) => {
                 ),
         },
     ];
+
+    const columnsOffer = [
+        {
+            title: 'Summa',
+            dataIndex: 'amount',
+            key: 'address',
+            render: (price) => (
+                <span><i className="fa-solid fa-coins text-warning"></i>  {addPeriodToThousands(price)} so'm</span>
+            )
+        },
+        {
+            title: 'Karta raqam',
+            dataIndex: 'credit_card',
+            key: 'address',
+        },
+        {
+            title: 'Tavsif',
+            dataIndex: 'description',
+            key: 'address',
+            width: 350,
+        },
+        {
+            title: 'Chek',
+            dataIndex: 'receipt',
+            key: 'address',
+            render: (image) => (
+                <div>
+                    {
+                        image ?
+                            <a href={image} download target='_blank'>
+                                <NextImageCard url={image} clasS=' rounded-3 mb-2' width='74px' height='46px' />
+                            </a>
+                            :
+                            <i className="fa-solid fa-file fa-2x"></i>
+                    }
+                </div>
+            ),
+        },
+        {
+            title: ' Yuborilgan sana',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => <span key={created_at}> <i className="fa-solid fa-clock text-info-emphasis"></i> <CalculateTimeDifference targetDate={created_at} /></span>
+        },
+        {
+            title: 'Holat',
+            dataIndex: 'status',
+            key: 'address',
+            render: (status) => (
+                status === "moderation" ?
+                    (<span><i className="text-primary-emphasis fa-solid fa-circle-info"></i> Moderatsiya</span>) :
+                    status === 'approved' ?
+                        (<span><i className="fa-solid text-success fa-circle-check"></i> Tasdiqlangan</span>) :
+                        status === 'cancelled' ?
+                            (<span><i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan</span>) :
+                            <></>
+            ),
+        },
+    ];
+
+    const items = [
+        {
+            key: '1',
+            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight: "600" }} >Sotuvchi mahsulotlari</span>,
+            children: <Table
+                dataSource={tableData}
+                scroll={{ x: 800 }}
+                columns={columns}
+                pagination={false}
+            />,
+
+
+        },
+        {
+            key: '2',
+            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight: "600" }} >Sotuvchi Arizalari</span>,
+            children: <div>
+
+                <Table
+                    scroll={{ x: 1250 }}
+                    dataSource={tableDataOffer}
+                    columns={columnsOffer}
+                    className="pb-5"
+                    pagination={false}
+                />
+            </div>,
+
+        },
+    ]
+
+
+    console.log(tableDataOffer);
 
     return (
         <PageContainer>
@@ -458,12 +542,7 @@ const SellerAccount = ({ seller }) => {
                             <div className="ps-page__content">
                                 <div className="ps-section--account-setting">
                                     <div className="ps-section__content">
-                                        <Table
-                                            dataSource={tableData}
-                                            scroll={{ x: 800 }}
-                                            columns={columns}
-                                            pagination={false}
-                                        />
+                                        <Tabs defaultActiveKey="1" items={items} className='bg-white ' />
                                     </div>
                                 </div>
                             </div>
