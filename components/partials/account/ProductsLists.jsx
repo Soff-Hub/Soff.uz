@@ -42,8 +42,6 @@ function ProductsLists() {
     const [category_id, setCategoryID] = useState(null);
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 800);
-    const [keywordIs, setKeywordIs] = useState('');
-    const debouncedSearchTermCat = useDebounce(keywordIs, 800);
     const [adminModal, setAdminModal] = useState(false);
     const [allProducts, setAllProducts] = useState(false);
     const router = useRouter();
@@ -116,8 +114,8 @@ function ProductsLists() {
 
 
     const onSearchCategory = async (value) => {
-        setKeywordIs(value)
-        const ItemsData = await GetRepository.getAllCategoryListsGlobal(debouncedSearchTermCat);
+    
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal(value);
         setDataVal(ItemsData);
     }
 

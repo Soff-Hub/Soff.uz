@@ -6,11 +6,10 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import ModalDelete from './Modal';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
-import { MyProductsEdit } from '~/store/auth/action';
 import ModalDeletePostEdit from './ModalPostEdit';
 import axios from 'axios';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
@@ -55,10 +54,7 @@ function MyProductsLists() {
     const [currPage, setCurrPage] = useState(1);
     const [count, setCount] = useState('');
     const [videosize, setVideoSize] = useState(null);
-    const [keyword, setKeyword] = useState('');
-    const [keywordIs, setKeywordIs] = useState('');
-    const debouncedSearchTerm = useDebounce(keyword, 800);
-    const debouncedSearchTermCat = useDebounce(keywordIs, 800);
+
 
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
@@ -153,16 +149,16 @@ function MyProductsLists() {
     }
 
     const onSearchTegs = async (value) => {
-        setKeyword(value)
-        const ItemsData = await MediaRepository.getTagItmesAktive(debouncedSearchTerm);
+     
+        const ItemsData = await MediaRepository.getTagItmesAktive(value);
         if (ItemsData) {
             setTagItems(ItemsData);
         }
     }
 
     const onSearchCategory = async (value) => {
-        setKeywordIs(value)
-        const ItemsData = await GetRepository.getAllCategoryListsGlobal(debouncedSearchTermCat);
+
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal(value);
         setDataCategory(ItemsData);
     }
 

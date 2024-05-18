@@ -16,7 +16,6 @@ import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
-import useDebounce from '~/hooks/useDebounce';
 
 
 
@@ -40,8 +39,7 @@ const PostsMyProducts = () => {
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
     const [page_count, setPageCount] = useState(0)
-    const [keyword, setKeywordIs] = useState('');
-    const debouncedSearchTerm = useDebounce(keyword, 800);
+   
 
 
     const breadCrumb = [
@@ -103,8 +101,7 @@ const PostsMyProducts = () => {
     }
 
     const onSearchTegsAktiv = async (value)=>{
-        setKeywordIs(value)
-        const ItemsData = await MediaRepository.getTagItmesAktive(debouncedSearchTerm);
+        const ItemsData = await MediaRepository.getTagItmesAktive(value);
         if (ItemsData) {
             setTagItems(ItemsData);
         }

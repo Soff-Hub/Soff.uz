@@ -37,8 +37,6 @@ function MyProductsListsSeller() {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
-    const [keywordIs, setKeywordIs] = useState('');
-    const debouncedSearchTerm = useDebounce(keywordIs, 800);
 
     async function GetItemsProducts(page, category, dataFormat) {
         const ItemsData = await GetRepository.getMyProductsSeller(
@@ -62,8 +60,7 @@ function MyProductsListsSeller() {
     }
 
     const onSearchCategory = async (value) => {
-        setKeywordIs(value)
-        const ItemsData = await GetRepository.getAllCategoryListsGlobal(debouncedSearchTerm);
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal(value);
         setDataCategory(ItemsData);
     }
 
