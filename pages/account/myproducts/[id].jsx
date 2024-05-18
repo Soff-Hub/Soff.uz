@@ -106,9 +106,9 @@ const PostsMyProducts = () => {
                 formData.append('title', data?.title);
             }
             if (free && !taxminiyNarx) {
-                formData.append('price', 0);
+                formData.append('price', products?.price);
             } else {
-                formData.append('price', taxminiyNarx);
+                formData.append('price', taxminiyNarx ? taxminiyNarx : products?.price);
             }
             if (Fulldata) {
                 formData.append('description', Fulldata);
@@ -260,6 +260,7 @@ const PostsMyProducts = () => {
         setCategory_ID(products?.category?.id)
     }, [])
 
+  console.log(customePoster);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -517,7 +518,7 @@ const PostsMyProducts = () => {
 
                                 <InputNumber
                                     disabled={free}
-                                    value={products?.price}
+                                    defaultValue={products?.price}
                                     className="col-md-6 p-2 post-price"
                                     onValueChange={(e) => setTaxminiyNarx(e.target.value)}
                                 />
