@@ -15,6 +15,7 @@ import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
 
 
+
 const PostsProductsEdit = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
@@ -34,6 +35,7 @@ const PostsProductsEdit = () => {
     const [category_id, setCategory_ID] = useState(null)
     const routerId = Router.query?.id
     const [products, setProducts] = useState(null)
+    const [page_count, setPageCount] = useState(0)
 
 
     const breadCrumb = [
@@ -211,6 +213,9 @@ const PostsProductsEdit = () => {
             }
             if (textAreaItems) {
                 Object.assign(data, { reason: textAreaItems });
+            }
+            if (page_count) {
+                Object.assign(data, { page_count: page_count ? page_count : products?.document?.page_count });
             }
             if (Fulldata) {
                 Object.assign(data, { description: Fulldata });
@@ -457,6 +462,28 @@ const PostsProductsEdit = () => {
                                         </Select>
                                     </div>
                                 </div>
+
+                                <div className="row">
+                                    <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                        {' '}
+                                        <p>Sahifa soni: *</p>
+                                        <Tooltip title="Mijozlarga  mahsulotingiz sahifalari sonini ko'rinishi uchun kiritishingiz kerak.">
+                                            <i
+                                                style={{ cursor: 'pointer' }}
+                                                className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                        </Tooltip>
+                                    </div>
+
+                                    <input
+                                        type="number"
+                                        className="form-control  rounded-3 col-md-8 mb-3 "
+                                        placeholder="Sahifa soni"
+                                        name="title"
+                                        onChange={(e) => setPageCount(e.target.value)}
+                                        defaultValue={products?.document?.page_count}
+                                    />
+                                </div>
+
                                 <div className="row">
                                     <div className="col-md-4 d-flex justify-content-between p-0">
                                         <p>Mahsulot to’liq tavsifi: *</p>{' '}
