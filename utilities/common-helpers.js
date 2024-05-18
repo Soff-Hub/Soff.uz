@@ -29,7 +29,7 @@ export const generateTempArray = (maxItems) => {
 
 
 export const audioDownloaderSale = async (file, product) => {
-    const filee = file?.file_url.includes('?AWSAccessKeyId=') ? file?.file_url.split('?')[0] : file?.file_url
+    const filee = file?.document?.file_url.includes('?AWSAccessKeyId=') ? file?.document?.file_url.split('?')[0] : file?.document?.file_url
     try {
         const response = await Axios.get(filee, {
             responseType: 'blob',
