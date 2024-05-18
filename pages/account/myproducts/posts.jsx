@@ -18,7 +18,9 @@ import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
+import useDebounce from '~/hooks/useDebounce';
 const category_id = [];
+
 
 const Posts = () => {
     const { TabPane } = Tabs;
@@ -41,6 +43,8 @@ const Posts = () => {
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const [keyword, setKeywordIs] = useState('');
+    const debouncedSearchTerm = useDebounce(keyword, 1000);
 
 
 
@@ -118,6 +122,15 @@ const Posts = () => {
             setTagItems(ItemsData);
         }
     }
+
+    const onSearchTegsAktiv = async (value)=>{
+        setKeywordIs(value)
+        const ItemsData = await MediaRepository.getTagItmesAktive(debouncedSearchTerm);
+        if (ItemsData) {
+            setTagItems(ItemsData);
+        }
+    }
+
 
     const children = [];
     const options = [];
@@ -636,7 +649,9 @@ const Posts = () => {
                                     <Select
                                         mode="tags"
                                         style={{ width: '100%' }}
-                                        onChange={handleChange}>
+                                        onChange={handleChange}
+                                         onSearch={onSearchTegsAktiv}
+                                        >
                                         {children}
                                     </Select>
                                 </div>
