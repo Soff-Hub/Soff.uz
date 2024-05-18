@@ -32,8 +32,8 @@ class MediaRespository {
             });
         return reponse;
     }
-    async getTagItmesAktive() {
-        const endPoint = `seller/active-tags/`;
+    async getTagItmesAktive(search) {
+        const endPoint = `seller/tags-for-product-create/?search=${search || ''}`;
 
         const reponse = await Repository.get(`${baseUrl}${endPoint}`)
             .then((response) => {

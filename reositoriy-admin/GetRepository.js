@@ -403,6 +403,24 @@ class GetRepository {
         return reponse;
     }
 
+    async getAllCategoryListsGlobal(search) {
+        const endPoint = `admin/global-childern/?search=${search || ''}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+
     async getAllCategoryLists(search) {
         const endPoint = `admin/category-children/file/?search=${search || ''}`;
         const reponse = await Repository({
@@ -699,8 +717,8 @@ class GetRepository {
         return reponse;
     }
 
-    async getTagListsDeaktiv(token) {
-        const endPoint = `deactive-tags/`;
+    async getTagListsDeaktiv(token,search) {
+        const endPoint = `deactive-tags/?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

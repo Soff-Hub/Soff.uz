@@ -16,6 +16,8 @@ import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
+import useDebounce from '~/hooks/useDebounce';
+
 
 
 const PostsMyProducts = () => {
@@ -35,10 +37,11 @@ const PostsMyProducts = () => {
     const routerId = Router.query?.id
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(false);
-
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
     const [page_count, setPageCount] = useState(0)
+    const [keyword, setKeywordIs] = useState('');
+    const debouncedSearchTerm = useDebounce(keyword, 800);
 
 
     const breadCrumb = [
@@ -97,6 +100,14 @@ const PostsMyProducts = () => {
         children.push(
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
+    }
+
+    const onSearchTegsAktiv = async (value)=>{
+        setKeywordIs(value)
+        const ItemsData = await MediaRepository.getTagItmesAktive(debouncedSearchTerm);
+        if (ItemsData) {
+            setTagItems(ItemsData);
+        }
     }
 
     async function handleClickPostsEdit(data) {
@@ -339,6 +350,7 @@ const PostsMyProducts = () => {
                                     mode="tags"
                                     style={{ width: '100%' }}
                                     onChange={(e) => setTagSearchResult(e)}
+                                    onSearch={onSearchTegsAktiv}
                                     defaultValue={
                                         products?.tag &&
                                         products?.tag?.map((item) => item.name)

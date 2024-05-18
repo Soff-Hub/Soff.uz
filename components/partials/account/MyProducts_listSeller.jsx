@@ -37,6 +37,8 @@ function MyProductsListsSeller() {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
+    const [keywordIs, setKeywordIs] = useState('');
+    const debouncedSearchTerm = useDebounce(keywordIs, 800);
 
     async function GetItemsProducts(page, category, dataFormat) {
         const ItemsData = await GetRepository.getMyProductsSeller(
@@ -53,10 +55,16 @@ function MyProductsListsSeller() {
         }
     }
     async function GetItemsCategory() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal();
         if (ItemsData) {
             setDataCategory(ItemsData);
         }
+    }
+
+    const onSearchCategory = async (value) => {
+        setKeywordIs(value)
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal(debouncedSearchTerm);
+        setDataCategory(ItemsData);
     }
 
     const onChange = async (name) => {
@@ -115,7 +123,7 @@ function MyProductsListsSeller() {
                 filee?.split('.')[
                 filee?.split('.').length - 1
                 ];
-                
+
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
@@ -145,26 +153,26 @@ function MyProductsListsSeller() {
             dataIndex: 'content_type_id',
             key: 'content_type_id',
             render: (content_type_id) => (
-                content_type_id?.content_type==='video' ?
-                <></>
-                :
-                <>
-                    {
-                        content_type_id?.id !== loading2 ?
-                            <a>
-                                <i
-                                    className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
-                                    onClick={() => handleButtonClick(content_type_id?.id)}></i>
-                            </a>
-                            :
-                            <div className="spinner-border" role="status">
-                                <span className="visually-hidden">
-                                    Loading...
-                                </span>
-                            </div>
-                    }
+                content_type_id?.content_type === 'video' ?
+                    <></>
+                    :
+                    <>
+                        {
+                            content_type_id?.id !== loading2 ?
+                                <a>
+                                    <i
+                                        className="fa-solid fa-file-arrow-down text-success-emphasis mx-3 fs-3"
+                                        onClick={() => handleButtonClick(content_type_id?.id)}></i>
+                                </a>
+                                :
+                                <div className="spinner-border" role="status">
+                                    <span className="visually-hidden">
+                                        Loading...
+                                    </span>
+                                </div>
+                        }
 
-                </>
+                    </>
             ),
         },
         {
@@ -312,6 +320,7 @@ function MyProductsListsSeller() {
                                                                 height: '47px',
                                                             }}
                                                             onChange={onChange}
+                                                            onSearch={onSearchCategory}
                                                             placeholder="Barcha kategoriyalar">
                                                             <Option value="all">
                                                                 Barcha

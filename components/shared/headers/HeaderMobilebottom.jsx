@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import MobileHeaderActions from './modules/MobileHeaderActions';
 import { Drawer } from 'antd';
 import PanelCategories from '../panel/PanelCategories';
 import { useState } from 'react';
