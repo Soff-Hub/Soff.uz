@@ -105,6 +105,11 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-circle-plus',
     },
     {
+        text: 'Mening bitimlarim',
+        url: '/account/deals',
+        icon: 'fa-regular fa-handshake',
+    },
+    {
         text: 'Olingan buyurtmalar',
         url: '#',
         icon: 'fa-solid fa-folder-open',
