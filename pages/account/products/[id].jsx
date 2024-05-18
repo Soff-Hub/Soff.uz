@@ -13,7 +13,6 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
-import useDebounce from '~/hooks/useDebounce';
 
 
 const PostsProductsEdit = () => {
@@ -36,10 +35,7 @@ const PostsProductsEdit = () => {
     const routerId = Router.query?.id
     const [products, setProducts] = useState(null)
     const [page_count, setPageCount] = useState(0)
-    const [keyword, setKeyword] = useState('');
-    const [keywordIs, setKeywordIs] = useState('');
-    const debouncedSearchTerm = useDebounce(keyword, 800);
-    const debouncedSearchTermIs = useDebounce(keywordIs, 800);
+
 
 
 
@@ -146,16 +142,14 @@ const PostsProductsEdit = () => {
 
     const onSearchTegsAktiv = async (value) => {
 
-        setKeyword(value)
-        const ItemsData = await MediaRepository.getTagItmesAktive(debouncedSearchTerm);
+        const ItemsData = await MediaRepository.getTagItmesAktive(value);
         if (ItemsData) {
             setTagItems(ItemsData);
         }
     }
 
     const onSearchTegsDeAktiv = async (value) => {
-        setKeywordIs(value)
-        const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access, debouncedSearchTermIs);
+        const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access, value);
         if (ItemsData) {
             setTegProdcutsLists(ItemsData);
         }

@@ -18,7 +18,6 @@ import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
-import useDebounce from '~/hooks/useDebounce';
 const category_id = [];
 
 
@@ -43,10 +42,7 @@ const Posts = () => {
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-    const [keyword, setKeywordIs] = useState('');
-    const debouncedSearchTerm = useDebounce(keyword, 1000);
-
-
+  
 
     const breadCrumb = [
         {
@@ -124,8 +120,7 @@ const Posts = () => {
     }
 
     const onSearchTegsAktiv = async (value)=>{
-        setKeywordIs(value)
-        const ItemsData = await MediaRepository.getTagItmesAktive(debouncedSearchTerm);
+        const ItemsData = await MediaRepository.getTagItmesAktive(value);
         if (ItemsData) {
             setTagItems(ItemsData);
         }
