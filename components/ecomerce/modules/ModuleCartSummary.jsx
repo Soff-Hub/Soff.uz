@@ -65,18 +65,6 @@ const ModuleCartSummary = ({ source }) => {
                         </a>
                     </Link>
                 </div>{' '}
-                {percentage > 0 && (
-                    <div className="d-flex justify-content-between">
-                        <span>Sayt xizmati uchun</span>
-                        <span>
-                            {' '}
-                            {addPeriodToThousands(
-                                item?.price * percentage
-                            )}{' '}
-                            so'm
-                        </span>
-                    </div>
-                )}
             </li>
         ));
     }
@@ -88,8 +76,12 @@ const ModuleCartSummary = ({ source }) => {
                     <p>
                         Umumiy hisob <span> {hisob} so'm </span>
                     </p>
+                   
+                </div>
+                <div className="ps-block__content">
+                    <ul className="ps-block__product">{productItemsView}</ul>
                     {percentage > 0 && (
-                        <p>
+                        <p className='d-flex justify-content-between' >
                             Sayt xizmati uchun{' '}
                             <span>
                                 {' '}
@@ -98,9 +90,6 @@ const ModuleCartSummary = ({ source }) => {
                             </span>
                         </p>
                     )}
-                </div>
-                <div className="ps-block__content">
-                    <ul className="ps-block__product">{productItemsView}</ul>
                     <h3>
                         Jami: <span>{allPercentage} so'm</span>
                     </h3>

@@ -62,12 +62,12 @@ const Products_Search_Results = () => {
         setKeyword(query.keyword)
     ), [query?.keyword])
 
-    // useEffect(() => {
-    //     if (inputEl?.current && keyword !== '') {
-    //         inputEl?.current?.value = keyword;
-    //         inputEl?.current?.selectionStart = inputEl?.current?.selectionEnd = keyword?.length;
-    //     }
-    // }, [keyword]);
+    useEffect(() => {
+        if (inputEl?.current && keyword !== '') {
+            inputEl?.current?.value = keyword;
+            inputEl?.current?.selectionStart = inputEl?.current?.selectionEnd = keyword?.length;
+        }
+    }, [keyword, inputEl]);
 
 
 
@@ -132,7 +132,7 @@ const Products_Search_Results = () => {
                                 <NextImageCard
                                     url="/static/img/soff/logo-dark.png"
                                     clasS="logoo"
-                                    width="150px"
+                                    width="120px"
                                     height="50px"
                                 />
                             </a>
@@ -204,7 +204,7 @@ const Products_Search_Results = () => {
 
                         :
                         (<div className='d-flex align-items-center justify-content-center pt-5'>
-                            <p> Mahsulot topilmadi </p>
+                            <p> Ma'lumot topilmadi </p>
                         </div>)
                     }
                 </div>

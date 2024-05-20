@@ -34,6 +34,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
         return formattedNumber;
     }
     const hisob = addPeriodToThousands(amount + amount * percentage);
+    const hisobb = addPeriodToThousands(amount * percentage);
 
     // view
     let listItemsView, totalView;
@@ -109,18 +110,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                                         so'm
                                     </strong>
                                 </div>
-                                {percentage > 0 && (
-                                    <div className="product_price_click my-3">
-                                        <p>Sayt xizmati uchun</p>
-                                        <div></div>
-                                        <strong>
-                                            {addPeriodToThousands(
-                                                el?.discount_price * percentage
-                                            )}{' '}
-                                            so`m {`(${percentage * 100} %)`}
-                                        </strong>
-                                    </div>
-                                )}
+                               
                             </figure>
                         ))
                     ) : (
@@ -132,8 +122,20 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                 <div className="checkout_footer">
                     {ecomerce.cartDataItems &&
                         ecomerce.cartDataItems.length > 0 && (
+                            
                             <figure>
+                                 {percentage > 0 && (
+                                    <div className="product_price_click my-3">
+                                        <p>Sayt xizmati uchun</p>
+                                        <div></div>
+                                        <strong> {hisobb}
+                                           {' '}
+                                            so`m {`(${percentage * 100} %)`}
+                                        </strong>
+                                    </div>
+                                )}
                                 <figcaption className="product_price_click_all">
+                               
                                     <strong>Jami narx</strong>
                                     <div></div>
                                     <strong>{hisob} so'm </strong>
