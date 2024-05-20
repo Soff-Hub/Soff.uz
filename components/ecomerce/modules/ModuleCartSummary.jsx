@@ -59,11 +59,16 @@ const ModuleCartSummary = ({ source }) => {
                             {i + 1}. {item.title}
                         </a>
                     </Link>
-                    <Link href="/product/[pid]" as={`/product/${item.slug}`}>
+                   <Link href="/product/[pid]" as={`/product/${item.slug}`}>
                         <a className="ps-product__price">
                             {addPeriodToThousands(item?.price)} so'm
                         </a>
                     </Link>
+                   
+                </div> {" "}
+                <div className='d-flex justify-content-between' >
+                    <span>Sayt xizmati uchun</span>
+                    <span> {addPeriodToThousands(item?.price * percentage)} so'm</span>
                 </div>
             </li>
         ));
