@@ -59,17 +59,24 @@ const ModuleCartSummary = ({ source }) => {
                             {i + 1}. {item.title}
                         </a>
                     </Link>
-                   <Link href="/product/[pid]" as={`/product/${item.slug}`}>
+                    <Link href="/product/[pid]" as={`/product/${item.slug}`}>
                         <a className="ps-product__price">
                             {addPeriodToThousands(item?.price)} so'm
                         </a>
                     </Link>
-                   
-                </div> {" "}
-                <div className='d-flex justify-content-between' >
-                    <span>Sayt xizmati uchun</span>
-                    <span> {addPeriodToThousands(item?.price * percentage)} so'm</span>
-                </div>
+                </div>{' '}
+                {percentage > 0 && (
+                    <div className="d-flex justify-content-between">
+                        <span>Sayt xizmati uchun</span>
+                        <span>
+                            {' '}
+                            {addPeriodToThousands(
+                                item?.price * percentage
+                            )}{' '}
+                            so'm
+                        </span>
+                    </div>
+                )}
             </li>
         ));
     }
@@ -81,13 +88,16 @@ const ModuleCartSummary = ({ source }) => {
                     <p>
                         Umumiy hisob <span> {hisob} so'm </span>
                     </p>
-                    <p>
-                        Sayt xizmati uchun{' '}
-                        <span>
-                            {' '}
-                            {hisobPercentage} so`m {`(${percentage * 100} %)`}{' '}
-                        </span>
-                    </p>
+                    {percentage > 0 && (
+                        <p>
+                            Sayt xizmati uchun{' '}
+                            <span>
+                                {' '}
+                                {hisobPercentage} so`m{' '}
+                                {`(${percentage * 100} %)`}{' '}
+                            </span>
+                        </p>
+                    )}
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-block__product">{productItemsView}</ul>
