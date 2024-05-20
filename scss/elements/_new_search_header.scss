@@ -1,7 +1,9 @@
 * {
     box-sizing: border-box;
 
-    font-feature-settings: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-feature-settings: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+        'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+        'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
 .search_navbars {
@@ -15,10 +17,7 @@
         justify-content: space-between;
     }
 
-
-
     .search_button {
-
         padding: 10px 25px;
         gap: 10px;
         border-radius: 50px;
@@ -33,14 +32,10 @@
         font-weight: 400;
         line-height: 32px;
         text-align: center;
-
     }
-
 }
 
-
 .search_home_pages {
-
     // height: 100vh;
     // background-image: url(../../public/static/img/baground.jpeg);
     // background-size: cover;
@@ -50,15 +45,11 @@
     //  z-index: -1;
     //  padding-top: 100px;
 
-
-
-
     .container {
         .search_home_box {
             padding: 50px 0;
 
             h1 {
-
                 font-size: 30px;
                 font-weight: 500;
                 line-height: 45px;
@@ -66,7 +57,6 @@
                 max-width: 1200px;
                 margin: 0 auto;
                 margin-bottom: 20px;
-
             }
 
             .span_saecrh {
@@ -76,23 +66,18 @@
                 text-align: center;
                 color: #00a44f;
                 margin-bottom: 50px !important;
-
-
             }
 
-
             .ps-form--quick-search {
-                max-width: 802px !important;
                 margin: 0 auto;
+                max-width: 802px !important;
 
                 .ps-form__input {
-                    border: 1px solid #DBDBDB;
+                    border: 1px solid #dbdbdb;
                     border-top-left-radius: 50px;
                     border-bottom-left-radius: 50px;
                     transition: all 0.3 linear !important;
-                    box-shadow: 0px 0px 5px 1px #403C4329;
-
-
+                    box-shadow: 0px 0px 5px 1px #403c4329;
 
                     input {
                         border-top-left-radius: 50px;
@@ -100,7 +85,6 @@
                         height: 50px;
                         transition: all 0.3 linear !important;
                     }
-
                 }
 
                 .button_search {
@@ -109,9 +93,7 @@
                     background-color: #00a44f;
                     border: 1px solid #fff;
                     transition: all 0.3 linear !important;
-                    box-shadow: 0px 0px 5px 1px #403C4329 !important;
-
-
+                    box-shadow: 0px 0px 5px 1px #403c4329 !important;
                 }
 
                 .active_search_button {
@@ -128,7 +110,6 @@
                     transition: all 0.3 linear !important;
                 }
             }
-
         }
     }
 }
@@ -150,10 +131,10 @@
             max-width: 730px;
             width: 100%;
             border-radius: 50px;
-            box-shadow: 0px 2px 5px 1px #403C4329;
+            box-shadow: 0px 2px 5px 1px #403c4329;
 
             .ps-form__input {
-                border: 1px solid #DBDBDB;
+                border: 1px solid #dbdbdb;
                 border-radius: 50px;
 
                 input {
@@ -166,14 +147,11 @@
                 cursor: pointer;
                 max-width: 60px;
                 width: 100%;
-                color: #4285F4;
-
-
+                color: #4285f4;
             }
         }
 
         .button_sign {
-
             font-size: 14px;
             font-weight: 700;
             line-height: 16px;
@@ -182,25 +160,21 @@
             gap: 10px;
             border-radius: 4px;
             opacity: 0px;
-            background: #1A73E8;
+            background: #1a73e8;
             color: #fff;
             width: 120px;
             text-align: center;
-
-
-
         }
     }
 }
 
 .global_navbar_bottom {
-    border-bottom: 1px solid #DBDBDB;
+    border-bottom: 1px solid #dbdbdb;
 
     .navbar-container {
         height: 55px;
         display: flex;
         align-items: end;
-
 
         ul {
             width: 100%;
@@ -208,16 +182,14 @@
             padding-bottom: 8px !important;
 
             li {
-
                 font-size: 14px;
                 font-weight: 400;
                 line-height: 16px;
                 text-align: left;
-                color: #5F6368;
+                color: #5f6368;
                 padding-bottom: 8px;
                 cursor: pointer;
                 transition: border-bottom 0.1s linear;
-
             }
 
             .active_type {
@@ -225,21 +197,19 @@
                 color: #00a44f;
             }
         }
-
     }
 }
 
 .search_products_head {
     max-width: 910px;
     width: 100%;
-    border-bottom: 0.5px solid #DBDBDB;
+    border-bottom: 0.5px solid #dbdbdb;
 
     .search_products_box_cards {
         width: 100%;
         padding: 5px 0;
 
         .body_span_title {
-
             font-size: 14px;
             font-weight: 400;
             line-height: 18px;
@@ -248,12 +218,9 @@
             padding: 0;
             margin: 0;
             margin-bottom: 5px;
-
-
         }
 
         .title_elh4 {
-
             font-size: 20px;
             font-weight: 400;
             line-height: 30px;
@@ -266,7 +233,6 @@
         }
 
         .title_elh44 {
-
             font-size: 16px;
             font-weight: 400;
 
@@ -280,25 +246,41 @@
         }
 
         .descripton_title {
-
             font-size: 14px;
             font-weight: 400;
             line-height: 22px;
             text-align: left;
-            color: #4D5156;
+            color: #4d5156;
             display: -webkit-box;
             -webkit-box-orient: vertical;
             overflow: hidden;
             -webkit-line-clamp: 2;
-
-
-
-
         }
     }
 }
 
-@media (min-width:800px) and (max-width:1200px) {
+@media screen and (max-width: 1200px) {
+    .search_home_pages {
+        // height: 100vh;
+        // background-image: url(../../public/static/img/baground.jpeg);
+        // background-size: cover;
+        // overflow: hidden;
+        // position: absolute;
+        //  inset: 0;
+        //  z-index: -1;
+        //  padding-top: 100px;
+
+        .container {
+            .search_home_box {
+                .ps-form--quick-search {
+                    display: none;
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 800px) and (max-width: 1200px) {
     .width_full_screen {
         .ps-form--quick-search {
             .ps-form__input {
@@ -325,8 +307,7 @@
     }
 }
 
-
-@media (max-width:800px) {
+@media (max-width: 800px) {
     .search_products_head {
         .search_products_box_cards {
             .title_elh4 {
@@ -336,7 +317,6 @@
                 overflow: hidden !important;
                 -webkit-line-clamp: 2 !important;
             }
-
         }
     }
 
@@ -356,7 +336,6 @@
                     font-size: 30px;
                     line-height: 30px;
                     line-height: 30px;
-
                 }
 
                 .ps-form--quick-search {
@@ -382,7 +361,6 @@
                         border-bottom-left-radius: 0px !important;
                     }
                 }
-
             }
         }
     }
@@ -396,8 +374,6 @@
 
         .search_button {
             padding: 10px 20px;
-
-
         }
     }
 
@@ -423,30 +399,27 @@
                         }
                     }
                 }
-
-
             }
         }
-        .global_navbar_bottom{
-           .navbar-container{
-            ul{
-                .active_type {
-                    border-bottom: none !important;
-                    color: #00a44f;
+        .global_navbar_bottom {
+            .navbar-container {
+                ul {
+                    .active_type {
+                        border-bottom: none !important;
+                        color: #00a44f;
+                    }
                 }
             }
-           } 
         }
     }
 }
 
-@media (min-width:800px) and (max-width:1920px) {
+@media (min-width: 800px) and (max-width: 1920px) {
     .mobile_category_lists_cards {
         max-width: 280px;
         margin-right: 10px;
     }
 }
-
 
 .ant-tabs {
     .ant-tabs-nav {
