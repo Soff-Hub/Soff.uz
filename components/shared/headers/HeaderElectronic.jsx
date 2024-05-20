@@ -73,7 +73,7 @@ const HeaderElectronic = ({ kk }) => {
                                 />
                             </a>
                         </Link>
-                        <div className="menu--product-categories">
+                        {/* <div className="menu--product-categories">
                             <div className="menu__toggle">
                                 <i className="icon-menu"></i>
                                 <span> Kategoriya </span>
@@ -84,24 +84,24 @@ const HeaderElectronic = ({ kk }) => {
                                     className="menu--dropdown"
                                 />
                             </div>
-                        </div>
+                        </div> */}
                     </div>
-                    <div className="header__content-center">
+                    {/* <div className="header__content-center">
                         <SearchHeader setSearch={setSearch} />
-                    </div>
+                    </div> */}
                     <div className="header__content-right">
                         <ElectronicHeaderActions />
                     </div>
                 </div>
             </div>
-            <nav className="navigation">
+            {/* <nav className="navigation">
                 <div className="container">
                     <Menu
                         source={topCategoryData}
                         className="menu menu--electronic"
                     />
                 </div>
-            </nav>
+            </nav> */}
         </header>
     );
 };
