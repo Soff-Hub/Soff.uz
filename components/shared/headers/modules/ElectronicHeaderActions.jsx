@@ -86,7 +86,7 @@ const ElectronicHeaderActions = ({ auth }) => {
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
             </Link>
-            {user?.access && (
+            {user?.access && socket?.count > 0 ? (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>
                         <i className="fa-regular fa-bell fa-lg"></i>
@@ -99,8 +99,10 @@ const ElectronicHeaderActions = ({ auth }) => {
                         )}
                     </a>
                 </Link>
-            )}
+            ) : ""}
 
+            {
+                wishlist?.length > 0 ?
             <Link href="/account/wishlist">
                 <a className="header__extra">
                     <i className="icon-heart"></i>
@@ -109,6 +111,8 @@ const ElectronicHeaderActions = ({ auth }) => {
                     </span>
                 </a>
             </Link>
+            : " "
+            }
             <MiniCart />
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinks isLoggedIn={true} />
