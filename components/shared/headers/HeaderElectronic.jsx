@@ -68,7 +68,7 @@ const HeaderElectronic = ({ kk }) => {
                                 <NextImageCard
                                     url="/static/img/soff/soff_green_white.png"
                                     clasS="logoo"
-                                    width="200px"
+                                    width="140px"
                                     height="60px"
                                 />
                             </a>

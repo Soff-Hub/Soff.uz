@@ -46,6 +46,7 @@ const ModulePaymentOrderSummaryOne = () => {
         return formattedNumber;
     }
     const hisob = addPeriodToThousands(data?.discount_price + data?.discount_price * percentage);
+    const hisobb = addPeriodToThousands(data?.discount_price * percentage);
 
     return (
         <div className="ps-block--checkout-order">
@@ -73,19 +74,7 @@ const ModulePaymentOrderSummaryOne = () => {
                                     so'm
                                 </strong>
                             </div>
-                            {
-                                percentage > 0 &&
-                            <div className="product_price_click my-3">
-                                <p>Sayt xizmati uchun</p>
-                                <div></div>
-                                <strong>
-                                    {addPeriodToThousands(
-                                        data?.discount_price * percentage
-                                    )}{' '}
-                                    so`m {`(${percentage * 100} %)`}
-                                </strong>
-                            </div>
-                            }
+                            
                         </figure>
                     ) : (
                         <figure className="ps-block__total">
@@ -96,6 +85,17 @@ const ModulePaymentOrderSummaryOne = () => {
                 <div className="checkout_footer">
                     {data && (
                         <figure>
+                            {
+                                percentage > 0 &&
+                            <div className="product_price_click my-3">
+                                <p>Sayt xizmati uchun</p>
+                                <div></div>
+                                <strong>{hisobb}
+                                   {' '}
+                                    so`m {`(${percentage * 100} %)`}
+                                </strong>
+                            </div>
+                            }
                             <figcaption className="product_price_click_all">
                                 <strong>Jami narx</strong>
                                 <div></div>
