@@ -359,6 +359,21 @@ class ProductRepository {
             });
         return reponse;
     }
+    async getOrderPercentage() {
+        const endPoint = `seller/get-customer-percentage/`;
+        const reponse = await Repository.get(baseUrl + endPoint)
+            .then((response) => {
+                if (response.data) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return error.response;
+            });
+        return reponse;
+    }
 }
 
 export default new ProductRepository();

@@ -2,9 +2,21 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import ProductRepository from '~/repositories/ProductRepository';
+import { useState } from 'react';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
-    let amount = calculateAmount(ecomerce.cartDataItems);
+    const [percentage, setPercentage] = useState(0);
+    let amount = calculateAmount(
+        ecomerce.cartDataItems
+    );
+
+    async function getPercentage() {
+        const responseData = await ProductRepository.getOrderPercentage();
+        if (responseData) {
+            setPercentage(responseData?.data?.percentage);
+        }
+    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -23,7 +35,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
 
         return formattedNumber;
     }
-    const hisob = addPeriodToThousands(amount);
+    const hisob = addPeriodToThousands(amount + amount * percentage);
 
     // view
     let listItemsView, totalView;
@@ -65,52 +77,71 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
         </figure>
     );
 
+    useEffect(() => {
+        getPercentage()
+    },[])
+
     return (
         <div className="ps-block--checkout-order">
-             <h3>Buyurtma mahsulotlari</h3>
-             <div className='shot' >
-            <div className="ps-block__content">
-                { ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
-                    ecomerce.cartDataItems?.map((el, i) => (
-                        <figure key={el?.slug}>
-                            <p>Mahsulot</p>
-                            <div className="my-2">
-                                <Link href={`/product/${el?.slug}`}>
-                                    <a>
-                                        <strong>{el?.title}</strong>
-                                    </a>
-                                </Link>
-                            </div>
-                            <span className="product_type  ">
-                                {el?.file_type}
-                            </span>
-                            <div className="product_price_click my-3">
-                                <p>Narxi</p>
-                                <div></div>
-                                <strong>
-                                    {addPeriodToThousands(el?.discount_price)}{' '}
-                                    so'm
-                                </strong>
-                            </div>
-                        </figure>
-                    ))
-                ) : (
-                    <figure className="ps-block__total">
-                        <p>Mahsulot yo'q.</p>
-                    </figure>
-                )}
-            </div>
-            <div className="checkout_footer">
-                    {(ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ) && (
-                        <figure>
-                            <figcaption className="product_price_click_all">
-                                <strong>Jami narx</strong>
-                                <div></div>
-                                <strong>{hisob} so'm </strong>
-                            </figcaption>
+            <h3>Buyurtma mahsulotlari</h3>
+            <div className="shot">
+                <div className="ps-block__content">
+                    {ecomerce.cartDataItems &&
+                    ecomerce.cartDataItems.length > 0 ? (
+                        ecomerce.cartDataItems?.map((el, i) => (
+                            <figure key={el?.slug}>
+                                <p>Mahsulot</p>
+                                <div className="my-2">
+                                    <Link href={`/product/${el?.slug}`}>
+                                        <a>
+                                            <strong>{el?.title}</strong>
+                                        </a>
+                                    </Link>
+                                </div>
+                                <span className="product_type  ">
+                                    {el?.file_type}
+                                </span>
+                                <div className="product_price_click my-3">
+                                    <p>Narxi</p>
+                                    <div></div>
+                                    <strong>
+                                        {addPeriodToThousands(
+                                            el?.discount_price
+                                        )}{' '}
+                                        so'm
+                                    </strong>
+                                </div>
+                                <div className="product_price_click my-3">
+                                    <p>Sayt xizmati uchun</p>
+                                    <div></div>
+                                    <strong>
+                                        {addPeriodToThousands(
+                                            el?.discount_price * percentage
+                                        )}{' '}
+                                        so`m {`(${percentage * 100} %)`}
+                                    </strong>
+                                </div>
+                            </figure>
+                        ))
+                    ) : (
+                        <figure className="ps-block__total">
+                            <p>Mahsulot yo'q.</p>
                         </figure>
                     )}
-                    {ecomerce.cartDataItems && ecomerce.cartDataItems.length > 0 ? (
+                </div>
+                <div className="checkout_footer">
+                    {ecomerce.cartDataItems &&
+                        ecomerce.cartDataItems.length > 0 && (
+                            <figure>
+                                <figcaption className="product_price_click_all">
+                                    <strong>Jami narx</strong>
+                                    <div></div>
+                                    <strong>{hisob} so'm </strong>
+                                </figcaption>
+                            </figure>
+                        )}
+                    {ecomerce.cartDataItems &&
+                    ecomerce.cartDataItems.length > 0 ? (
                         <Link href={'/account/shopping-cart'}>
                             <a>
                                 <div className="prevev_button">
@@ -124,7 +155,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                         ''
                     )}
                 </div>
-             </div>
+            </div>
         </div>
     );
 };

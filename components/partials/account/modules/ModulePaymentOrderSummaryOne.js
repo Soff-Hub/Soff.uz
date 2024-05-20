@@ -9,6 +9,14 @@ const ModulePaymentOrderSummaryOne = () => {
     const Router = useRouter();
     const { id } = Router.query;
     const [data, setData] = useState(null);
+    const [percentage, setPercentage] = useState(0);
+
+    async function getPercentage() {
+        const responseData = await ProductRepository.getOrderPercentage();
+        if (responseData) {
+            setPercentage(responseData?.data?.percentage);
+        }
+    }
 
     const getOneProductData = async () => {
         const res = await ProductRepository.postCartData([id]);
@@ -17,6 +25,7 @@ const ModulePaymentOrderSummaryOne = () => {
 
     useEffect(() => {
         getOneProductData();
+        getPercentage();
     }, [id]);
 
     function addPeriodToThousands(number) {
@@ -36,7 +45,7 @@ const ModulePaymentOrderSummaryOne = () => {
 
         return formattedNumber;
     }
-    const hisob = addPeriodToThousands(data?.discount_price);
+    const hisob = addPeriodToThousands(data?.discount_price + data?.discount_price * percentage);
 
     return (
         <div className="ps-block--checkout-order">
@@ -64,6 +73,7 @@ const ModulePaymentOrderSummaryOne = () => {
                                     so'm
                                 </strong>
                             </div>
+                           c
                         </figure>
                     ) : (
                         <figure className="ps-block__total">

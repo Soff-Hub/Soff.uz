@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
+import ProductRepository from '~/repositories/ProductRepository';
 
 const ModuleCartSummary = ({ source }) => {
+    const [percentage, setPercentage] = useState(0);
+
+    async function getPercentage() {
+        const responseData = await ProductRepository.getOrderPercentage();
+        if (responseData) {
+            setPercentage(responseData?.data?.percentage);
+        }
+    }
+
+    useEffect(() => {
+        getPercentage();
+    }, []);
+
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -22,7 +36,8 @@ const ModuleCartSummary = ({ source }) => {
 
     const amount = calculateAmount(source);
     const hisob = addPeriodToThousands(amount);
-
+    const hisobPercentage = addPeriodToThousands(amount * percentage);
+    const allPercentage = addPeriodToThousands(amount + amount * percentage);
 
     // View
     let productItemsView;
@@ -61,11 +76,18 @@ const ModuleCartSummary = ({ source }) => {
                     <p>
                         Umumiy hisob <span> {hisob} so'm </span>
                     </p>
+                    <p>
+                        Sayt xizmati uchun{' '}
+                        <span>
+                            {' '}
+                            {hisobPercentage} so`m {`(${percentage * 100} %)`}{' '}
+                        </span>
+                    </p>
                 </div>
                 <div className="ps-block__content">
                     <ul className="ps-block__product">{productItemsView}</ul>
                     <h3>
-                        Jami: <span>{hisob} so'm</span>
+                        Jami: <span>{allPercentage} so'm</span>
                     </h3>
                 </div>
             </div>
