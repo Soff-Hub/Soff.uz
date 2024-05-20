@@ -5,18 +5,18 @@ import { PropagateLoader } from 'react-spinners';
 import ProductRepository from '~/repositories/ProductRepository';
 
 function PanelCategories({
-    setMenuDrawer,
-    setCartDrawer,
+    // setMenuDrawer,
+    // setCartDrawer,
     setCategoriesDrawer,
-    setSearchDrawer,
+    // setSearchDrawer,
 }) {
     const [data, setData] = useState([]);
 
     const handleDrawerClose = () => {
-        setMenuDrawer(false);
-        setCartDrawer(false);
+        // setMenuDrawer(false);
+        // setCartDrawer(false);
         setCategoriesDrawer(false);
-        setSearchDrawer(false);
+        // setSearchDrawer(false);
     };
 
     const Router = useRouter();
@@ -53,7 +53,7 @@ function PanelCategories({
 
     const renderChildLinks = (children, parentSlug) => {
         return children?.map((item, i) => (
-            <Link key={i} href={`/category/${item.id}`}>
+            <Link key={i} href={`/category/${item.slug}`}>
                 <a
                     onClick={handleDrawerClose}
                     className={` acc-body-child-a  ${
@@ -118,7 +118,7 @@ function PanelCategories({
                         </div>
                     </div>
                 ) : (
-                    <Link href={`/category/${item.id}`}>
+                    <Link href={`/category/${item.slug}`}>
                         <a
                             onClick={() => handleDrawerClose()}
                             className="category-list-item">
