@@ -73,7 +73,16 @@ const ModulePaymentOrderSummaryOne = () => {
                                     so'm
                                 </strong>
                             </div>
-                           c
+                            <div className="product_price_click my-3">
+                                <p>Sayt xizmati uchun</p>
+                                <div></div>
+                                <strong>
+                                    {addPeriodToThousands(
+                                        data?.discount_price * percentage
+                                    )}{' '}
+                                    so`m {`(${percentage * 100} %)`}
+                                </strong>
+                            </div>
                         </figure>
                     ) : (
                         <figure className="ps-block__total">
