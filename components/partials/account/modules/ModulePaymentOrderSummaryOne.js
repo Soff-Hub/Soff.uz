@@ -73,6 +73,8 @@ const ModulePaymentOrderSummaryOne = () => {
                                     so'm
                                 </strong>
                             </div>
+                            {
+                                percentage > 0 &&
                             <div className="product_price_click my-3">
                                 <p>Sayt xizmati uchun</p>
                                 <div></div>
@@ -83,6 +85,7 @@ const ModulePaymentOrderSummaryOne = () => {
                                     so`m {`(${percentage * 100} %)`}
                                 </strong>
                             </div>
+                            }
                         </figure>
                     ) : (
                         <figure className="ps-block__total">

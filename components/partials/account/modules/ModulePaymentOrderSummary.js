@@ -7,9 +7,7 @@ import { useState } from 'react';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
     const [percentage, setPercentage] = useState(0);
-    let amount = calculateAmount(
-        ecomerce.cartDataItems
-    );
+    let amount = calculateAmount(ecomerce.cartDataItems);
 
     async function getPercentage() {
         const responseData = await ProductRepository.getOrderPercentage();
@@ -78,8 +76,8 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
     );
 
     useEffect(() => {
-        getPercentage()
-    },[])
+        getPercentage();
+    }, []);
 
     return (
         <div className="ps-block--checkout-order">
@@ -111,16 +109,18 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                                         so'm
                                     </strong>
                                 </div>
-                                <div className="product_price_click my-3">
-                                    <p>Sayt xizmati uchun</p>
-                                    <div></div>
-                                    <strong>
-                                        {addPeriodToThousands(
-                                            el?.discount_price * percentage
-                                        )}{' '}
-                                        so`m {`(${percentage * 100} %)`}
-                                    </strong>
-                                </div>
+                                {percentage > 0 && (
+                                    <div className="product_price_click my-3">
+                                        <p>Sayt xizmati uchun</p>
+                                        <div></div>
+                                        <strong>
+                                            {addPeriodToThousands(
+                                                el?.discount_price * percentage
+                                            )}{' '}
+                                            so`m {`(${percentage * 100} %)`}
+                                        </strong>
+                                    </div>
+                                )}
                             </figure>
                         ))
                     ) : (

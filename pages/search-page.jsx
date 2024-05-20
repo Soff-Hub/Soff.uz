@@ -119,6 +119,7 @@ const Products_Search_Results = () => {
             value: "template"
         },
     ]
+    
 
 
     return (
@@ -185,7 +186,7 @@ const Products_Search_Results = () => {
             </nav>
             <div className="results mt-3">
                 <div className="container">
-                    {(resultItems?.results?.length > 1) ?
+                    {(resultItems?.results?.length > 0) ?
 
                        (loading ?
                             <div className='d-flex align-items-center justify-content-center pt-5'>
