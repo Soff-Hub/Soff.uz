@@ -6,6 +6,7 @@ import { Category } from '~/store/auth/action';
 import Image from 'next/image';
 import NextImage from '~/components/nextImage';
 import HotTopic from '~/components/HotTopic';
+import SearchPage from './SearchPage';
 
 function ElectronicBanner() {
     const [bannerItem, setBannerItems] = useState([]);
@@ -55,7 +56,7 @@ function ElectronicBanner() {
     return (
         <>
             <section className="ps-home-banner">
-                <div className="container">
+                {/* <div className="container">
                     <div className="ps-section__left">
                         <div className="item banner-left-one">
                             {bannerItem?.[0]?.image ? (
@@ -114,7 +115,6 @@ function ElectronicBanner() {
                                                 backgroundRepeat: 'no-repeat',
                                                 backgroundSize: 'cover',
                                             }}></div>
-                                        {/* <NextImage url={bannerItem?.[1]?.image} width='400px' height='170px' /> */}
                                     </a>
                                 </Link>
                                 <Link
@@ -133,7 +133,6 @@ function ElectronicBanner() {
                                             }}>
                                             {' '}
                                         </div>
-                                        {/* <NextImage url={bannerItem?.[2]?.image} width='400px' height='170px' /> */}
                                     </a>
                                 </Link>
                             </div>
@@ -160,7 +159,8 @@ function ElectronicBanner() {
                             </div>
                         )}
                     </div>
-                </div>
+                </div> */}
+                <SearchPage/>
             </section>
         </>
     );
