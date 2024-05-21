@@ -12,9 +12,9 @@ export default function DealsList() {
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
     const [lifetime, setDLifetime] = useState('');
     const [type, setType] = useState('');
-    const [price, setPrice] = useState('');
     const [pageType, setPageType] = useState(true);
 
     async function postOrder() {
