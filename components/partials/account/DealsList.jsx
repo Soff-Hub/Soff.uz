@@ -262,7 +262,7 @@ export default function DealsList() {
                                         </div>
                                         <div className="row py-3 pb-5">
                                             <div className="col-md-12">
-                                              <DealCart/>
+                                              <DealCart type='application' />
                                             </div>
                                         </div>
                                     </div>
