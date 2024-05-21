@@ -91,18 +91,27 @@ export default function ApplyForDeal() {
     // }
 
     return (
-        <div className="container">
-            <div className="my-5">
+        <div className="container-deal ">
+            <div className="my-5 row">
+                <h3>Предложить услугу</h3>
+                <h4 className='mt-3' > Mahsulot detaili </h4>
                 <DealCart />
             </div>
             <h3 className="mb-4">
                 {' '}
-                <u>Mahsulot uchun ariza topshirish</u>{' '}
+                Mahsulot uchun ariza topshirish{' '}
             </h3>
             <Form
                 form={form}
                 // onFinish={postOrder}
                 className="row  py-4 border border-3 rounded-3 px-4 mb-5 ">
+                    <div >
+                        <h4> Интегрировать платежную систему на сайт ларавел </h4>
+                        <p>1.сайт интернет магазин чтобы показавилось на фронте как платежный метнод , также показала статус платежа</p>
+                        <p>2.сайт интернет магазин чтобы показавилось на фронте как айт интернет магазин чтобы показавилось на фронте  платежный метнод , также показала статус платежа</p>
+                        <p>3.сайт интернет магазин чтобы показавилось на фронте как платежный метнод , также показала статус платежа</p>
+                        <p>4.сайт интернет магазин чтобы показавилось на фронте как айт интернет магазин чтобы показавилось на фронте  платежный метнод , также показала статус платежа</p>
+                    </div>
                 <div className="col-md-12 p-0 mb-3">
                     <span className="d-block p-2 fw-bold ">
                         Buyurtma qabul qilish uchun tavsif
