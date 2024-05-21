@@ -62,12 +62,12 @@ const Products_Search_Results = () => {
         setKeyword(query.keyword)
     ), [query?.keyword])
 
-    // useEffect(() => {
-    //     if (inputEl?.current && keyword !== '') {
-    //         inputEl?.current?.value = keyword;
-    //         inputEl?.current?.selectionStart = inputEl?.current?.selectionEnd = keyword?.length;
-    //     }
-    // }, [keyword, inputEl]);
+    useEffect(() => {
+        if (inputEl?.current && keyword !== '') {
+            inputEl.current.setSelectionRange(keyword?.length, keyword?.length);
+            inputEl.current.focus();
+        }
+    }, [keyword, inputEl]);
 
 
 
