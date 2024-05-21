@@ -3,7 +3,7 @@ import React from 'react';
 
 export default function DealCart({ type }) {
     return (
-        <div className="border border-2 rounded-3 p-3">
+        <div className="border border-2 rounded-3 p-4">
             <div className="d-md-flex justify-content-between  ">
                 <h3 className="text-success">Mustqil ish kerak</h3>
                 <div>
@@ -35,25 +35,44 @@ export default function DealCart({ type }) {
                         <span className="fw-medium "> 2</span>
                     </div>
                 </div>
+            ) : type === 'apply' ? (
+                <div className="d-flex justify-content-between gap-4">
+                    <div>
+                        <div className="text-end">
+                            <span className="text-success fs-3 fw-medium">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>{' '}
+                            <span className="fw-medium ">17-iyul 2025-yil</span>
+                        </div>
+                        <div>
+                            <span className="text-success fs-3 fw-medium">
+                                arizalar :{' '}
+                            </span>{' '}
+                            <span className="fw-medium "> 2</span>
+                        </div>
+                    </div>
+                    <button
+                        className="btn btn-outline-success px-3 fs-4"
+                        onClick={() => Router.push('/deal/123')}>
+                        Ariza topshirish
+                    </button>
+                </div>
             ) : (
                 <div className="d-flex justify-content-between gap-4">
-                   <div>
-                   <div className="text-end">
-                        <span className="text-success fs-3 fw-medium">
-                            <i class="fa-solid fa-calendar-days"></i>
-                        </span>{' '}
-                        <span className="fw-medium ">17-iyul 2025-yil</span>
-                    </div>
                     <div>
-                        <span className="text-success fs-3 fw-medium">
-                            arizalar :{' '}
-                        </span>{' '}
-                        <span className="fw-medium "> 2</span>
+                        <div className="text-end">
+                            <span className="text-success fs-3 fw-medium">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>{' '}
+                            <span className="fw-medium ">17-iyul 2025-yil</span>
+                        </div>
+                        <div>
+                            <span className="text-success fs-3 fw-medium">
+                                arizalar :{' '}
+                            </span>{' '}
+                            <span className="fw-medium "> 2</span>
+                        </div>
                     </div>
-                   </div>
-                   <button className='btn btn-outline-success px-3 fs-4' onClick={() => Router.push("/")}  >
-                    Ariza topshirish
-                   </button>
                 </div>
             )}
         </div>
