@@ -1,4 +1,4 @@
-import { DatePicker, Slider } from 'antd';
+import { DatePicker, Select, Slider, Space } from 'antd';
 import React from 'react';
 import DealCart from './modules/DealCart';
 
@@ -6,32 +6,77 @@ export default function DealListPage() {
     return (
         <div className="container">
             <div className="row my-4">
-                <div className="col-md-4">
+            <h3 className='p-4' >Buyurtmalar ro'yxati</h3>
+                <div className="col-md-3">
                     <div className="border border-3 p-3">
-                        <ul className="p-0 m-0">
-                            <li className="list-unstyled border border-3 rounded-3 px-3 py-2 fs-3 my-3">
-                                Fayl materiallar
-                            </li>
-                            <li className="list-unstyled border border-3 rounded-3 px-3 py-2 fs-3 my-3">
-                                Audio materiallar
-                            </li>
-                            <li className="list-unstyled border border-3 rounded-3 px-3 py-2 fs-3 my-3">
-                                Shablon materiallar
-                            </li>
-                            <li className="list-unstyled border border-3 rounded-3 px-3 py-2 fs-3 my-3">
-                                Video materiallar
-                            </li>
-                        </ul>
-                        <DatePicker className="w-100 my-4 p-4" placement="" />
+                        <span className="d-block p-2 fw-bold ">
+                            Buyurtmalar
+                        </span>
+                        <Select
+                            defaultValue="jack"
+                            style={{
+                                width: '100%',
+                            }}
+                            size="large"
+                            className="w-100"
+                            // onChange={handleChange}
+                            options={[
+                                {
+                                    value: 'jack',
+                                    label: 'Barchasi',
+                                },
+                                {
+                                    value: 'lucy',
+                                    label: 'Ariza topshirilganlar',
+                                },
+                            ]}
+                        />
+                        <span className="d-block p-2 mt-4 fw-bold ">
+                            Buyurtma turlari
+                        </span>
+                        <Select
+                            defaultValue="lucy"
+                            style={{
+                                width: '100%',
+                            }}
+                            size="large"
+                            className="w-100"
+                            // onChange={handleChange}
+                            options={[
+                                {
+                                    value: 'jack',
+                                    label: 'Fayl materiallar',
+                                },
+                                {
+                                    value: 'lucy',
+                                    label: ' Audio materiallar',
+                                },
+                                {
+                                    value: 'Yiminghe',
+                                    label: 'Shablon materiallar',
+                                },
+                                {
+                                    value: 'Yiminghe',
+                                    label: 'Video materiallar',
+                                },
+                            ]}
+                        />
+                        <span className="d-block p-2 mt-4 fw-bold ">
+                            Buyurtma muddati
+                        </span>
+                        <DatePicker className="w-100  p-2" placement="" />
+                        <span className="d-block p-2 fw-bold mt-4">
+                            Buyurtma narxi
+                        </span>
                         <Slider defaultValue={30} disabled={false} />
                     </div>
                 </div>
-                <div className="col-md-8">
-                    <div className=" p-3">
-                        <h3>Buyurtmalar listi</h3>
-                        <div className="row py-3 pb-5">
+                <div className="col-md-9">
+                    <div className=" px-3">
+                       
+                        <div className="row pb-5">
                             <div className="col-md-12">
-                                <DealCart />
+                                <DealCart type='apply' />
                             </div>
                         </div>
                     </div>
