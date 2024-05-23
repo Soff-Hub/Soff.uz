@@ -249,8 +249,35 @@ export default function DealsList() {
                                     </div>
                                 ) : (
                                     <div className="px-5 pt-4">
+                                         <div className="d-flex flex-column gap-2 my-3">
+                                            <span className="fs-4">
+                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                <strong>Moderatsiya</strong>{' '}
+                                                <em>
+                                                    ma'lumotlar ko'rib
+                                                    chiqilmoqda...
+                                                </em>
+                                            </span>
+                                            <span className="fs-4">
+                                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                                <strong>Tasdiqlangan </strong>{' '}
+                                                <em>
+                                                    ma'lumotlaringiz
+                                                    muvaffaqqiyatli tasdiqlandi!
+                                                </em>
+                                            </span>
+                                            <span className="fs-4">
+                                                <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
+                                                <strong>Bekor qilingan</strong>{' '}
+                                                <em>
+                                                    ma'lumotlaringiz bekor
+                                                    qilindi
+                                                </em>
+                                            </span>
+                                           
+                                        </div>
                                         <div className="py-4 d-md-flex justify-content-between ">
-                                            <h3>Buyurtmalar listi</h3>
+                                            <h3>Buyurtmalar ro'yxati</h3>
                                             <button
                                                 className="btn btn-success fs-4 "
                                                 onClick={() =>

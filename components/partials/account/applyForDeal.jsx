@@ -93,13 +93,13 @@ export default function ApplyForDeal() {
     return (
         <div className="container-deal ">
             <div className="my-5 row">
-                <h3>Предложить услугу</h3>
-                <h4 className='mt-3' > Mahsulot detaili </h4>
-                <DealCart />
+                <h3>Taklif yuborish</h3>
+                <h4 className='mt-3' > Buyurtma tavsifi </h4>
+                <DealCart type="apply_detail" />
             </div>
             <h3 className="mb-4">
                 {' '}
-                Mahsulot uchun ariza topshirish{' '}
+               Buyurtma uchun taklif yuborish {' '}
             </h3>
             <Form
                 form={form}
@@ -114,11 +114,11 @@ export default function ApplyForDeal() {
                     </div>
                 <div className="col-md-12 p-0 mb-3">
                     <span className="d-block p-2 fw-bold ">
-                        Buyurtma qabul qilish uchun tavsif
+                        Taklif
                     </span>
                     <TextArea
                         rows={6}
-                        placeholder="Buyurtma uchun tavsif"
+                        placeholder="Taklif"
                         onChange={(e) => setDescription(e.target.value)}
                     />
                 </div>
@@ -126,7 +126,7 @@ export default function ApplyForDeal() {
                 <div className=" col-md-6 my-3 p-0 w-100 ">
                     {' '}
                     <span className="d-block p-2 fw-bold">
-                        Buyurtma qabul qilish uchun sana
+                        Bajarilish muddati
                     </span>
                     <DatePicker
                         className="w-100 py-3 col-md-6 my-3 rounded-3"
@@ -136,7 +136,7 @@ export default function ApplyForDeal() {
 
                 <div className="col-md-6 p-0 my-3 ">
                     <span className="d-block p-2 fw-bold -100">
-                        Buyurtma qabul qilish uchun narx
+                        Narx
                     </span>
                     <Form.Item
                         name="title"
