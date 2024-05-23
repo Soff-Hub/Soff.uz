@@ -121,10 +121,7 @@ const SearchPage = () => {
                         </h1>
                         <h1>
                             {' '}
-                            O'zbek tilida saralanib borilayotgan sifatli
-                            ma'lumotlar jamlanmasini, faylar, tasvirlar,
-                            videolar, audiolar ko'rinishida qidirib topish
-                            imkonini beradi.
+                            O‘zbek tilida saralanib borilayotgan sifatli ma’lumotlar jamlanmasini, fayllar, tasvirlar, videolar, audiolar ko‘rinishida qidirib topish imkonini beradi.
                         </h1>
                         {/* <form
                             className="ps-form--quick-search"
