@@ -20,6 +20,7 @@ import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
 const category_id = [];
 
+
 const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
@@ -41,8 +42,7 @@ const Posts = () => {
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
-
+  
 
     const breadCrumb = [
         {
@@ -118,6 +118,14 @@ const Posts = () => {
             setTagItems(ItemsData);
         }
     }
+
+    const onSearchTegsAktiv = async (value)=>{
+        const ItemsData = await MediaRepository.getTagItmesAktive(value);
+        if (ItemsData) {
+            setTagItems(ItemsData);
+        }
+    }
+
 
     const children = [];
     const options = [];
@@ -636,7 +644,9 @@ const Posts = () => {
                                     <Select
                                         mode="tags"
                                         style={{ width: '100%' }}
-                                        onChange={handleChange}>
+                                        onChange={handleChange}
+                                         onSearch={onSearchTegsAktiv}
+                                        >
                                         {children}
                                     </Select>
                                 </div>

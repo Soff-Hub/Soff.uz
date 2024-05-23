@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import MobileHeaderActions from './modules/MobileHeaderActions';
 import { Drawer } from 'antd';
 import PanelCategories from '../panel/PanelCategories';
 import { useState } from 'react';
@@ -22,6 +21,7 @@ function HeaderMobileBottom() {
 
 
     useEffect(() => {
+        
         document.addEventListener("scroll", () => {
             const scrollCheck = window.scrollY > 100;
             if (scrollCheck !== scroll) {

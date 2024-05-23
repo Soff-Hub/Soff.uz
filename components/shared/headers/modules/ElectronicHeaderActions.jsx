@@ -15,6 +15,7 @@ const ElectronicHeaderActions = ({ auth }) => {
     const [socket, setSocket] = useState(null);
     const [api, contextHolder] = notification.useNotification();
     const { user } = useSelector((state) => state.auth);
+    const data = useSelector((state) => state.ecomerce.cartDataItems);
 
     const openNotification = () => {
         api.open({
@@ -86,7 +87,7 @@ const ElectronicHeaderActions = ({ auth }) => {
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
             </Link>
-            {user?.access && (
+            {user?.access ? (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>
                         <i className="fa-regular fa-bell fa-lg"></i>
@@ -99,17 +100,23 @@ const ElectronicHeaderActions = ({ auth }) => {
                         )}
                     </a>
                 </Link>
+            ) : (
+                ''
             )}
 
-            <Link href="/account/wishlist">
-                <a className="header__extra">
-                    <i className="icon-heart"></i>
-                    <span>
-                        <i>{wishlist.length}</i>
-                    </span>
-                </a>
-            </Link>
-            <MiniCart />
+            {wishlist?.length > 0 ? (
+                <Link href="/account/wishlist">
+                    <a className="header__extra">
+                        <i className="icon-heart"></i>
+                        <span>
+                            <i>{wishlist.length}</i>
+                        </span>
+                    </a>
+                </Link>
+            ) : (
+                ''
+            )}
+            {data?.length > 0 && <MiniCart />}
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinks isLoggedIn={true} />
             ) : (

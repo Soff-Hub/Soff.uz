@@ -39,12 +39,15 @@ const MiniCart = () => {
 
     return (
         <div className="ps-cart--mini">
+            {
+                data?.length > 0  ?
             <Link href="/account/shopping-cart">
                 <a className="header__extra">
                     <i className="icon-bag2"></i>
                     <span>{<i>{data.length}</i>}</span>
                 </a>
-            </Link>
+            </Link> : ""
+            }
             {data && data.length > 0 ? (
                 <div className="ps-cart__content">
                     <div className="ps-cart__items">
