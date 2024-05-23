@@ -97,7 +97,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
             </Link>
-            {user?.access && socket?.count > 0 ? (
+            {user?.access ? (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>
                         <i className="fa-regular fa-bell fa-lg"></i>

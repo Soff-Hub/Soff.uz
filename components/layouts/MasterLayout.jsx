@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { FloatButton } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { useCookies } from 'react-cookie';
-import { setCompareItems, setWishlistTtems } from '~/store/ecomerce/action';
+import { useSelector } from 'react-redux';
 import PageLoader from '~/components/elements/common/PageLoader';
 import NavigationList from '~/components/shared/navigation/NavigationList';
 import NavigationListAdmin from '../shared/navigation/NavigationListAdmin';

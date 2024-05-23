@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
 import Link from 'next/link';
-import SearchHeader from '~/components/shared/headers/modules/SearchHeader';
 import ElectronicHeaderActions from '~/components/shared/headers/modules/ElectronicHeaderActions';
-import Menu from '~/components/elements/menu/Menu';
 import { stickyHeader } from '~/utilities/common-helpers';
 import CollectionRepository from '~/repositories/CollectionRepository';
 import ProductRepository from '~/repositories/ProductRepository';
 
-import MenuCategory from '~/components/elements/menu/MenuCategory';
 import { useDispatch, useSelector } from 'react-redux';
 import { Category_Lists, TopCategory_Lists } from '~/store/auth/action';
 import NextImageCard from '~/components/nextImagecard';
@@ -20,7 +17,6 @@ const HeaderElectronic = ({ kk }) => {
     } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
     const [run, setRun] = useState(false)
-    const [search, setSearch] = useState('')
 
     async function getCategoryFunc() {
         const responseData = await CollectionRepository.getCategoryData(
@@ -73,35 +69,15 @@ const HeaderElectronic = ({ kk }) => {
                                 />
                             </a>
                         </Link>
-                        {/* <div className="menu--product-categories">
-                            <div className="menu__toggle">
-                                <i className="icon-menu"></i>
-                                <span> Kategoriya </span>
-                            </div>
-                            <div className="menu__content">
-                                <MenuCategory
-                                    source={categoryData}
-                                    className="menu--dropdown"
-                                />
-                            </div>
-                        </div> */}
+
                     </div>
-                    {/* <div className="header__content-center">
-                        <SearchHeader setSearch={setSearch} />
-                    </div> */}
+        
                     <div className="header__content-right">
                         <ElectronicHeaderActions />
                     </div>
                 </div>
             </div>
-            {/* <nav className="navigation">
-                <div className="container">
-                    <Menu
-                        source={topCategoryData}
-                        className="menu menu--electronic"
-                    />
-                </div>
-            </nav> */}
+ 
         </header>
     );
 };
