@@ -1,10 +1,41 @@
-import { DatePicker, Select, Slider, Space } from 'antd';
+import { DatePicker, Select, Slider, Tabs } from 'antd';
 import React, { useState } from 'react';
 import DealCart from './modules/DealCart';
 import MyDealCart from './modules/MyDealCart';
 
 export default function DealListPage() {
     const [type, setType] = useState('all');
+
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
+    const onChange = (key) => {
+        console.log(key);
+    };
+
+    const items = [
+        {
+            key: '1',
+            label: <span className="pr-4 fw-bolder fs-3 text-info ">Qabul qilingan</span>,
+            children: (
+                <>
+                    <MyDealCart/>
+                </>
+            ),
+        },
+        {
+            key: '2',
+            label: <span className="pr-4 fw-bolder fs-3 text-warning ">Jarayonda</span>,
+            children: 'Content of Tab Pane 2',
+        },
+        {
+            key: '3',
+            label: <span className="pr-4 fw-bolder fs-3 text-success ">Topshirilgan</span>,
+            children: 'Content of Tab Pane 2',
+        },
+    ];
+
+
     return (
         <div className="container">
             <div className="row my-4">
@@ -86,7 +117,8 @@ export default function DealListPage() {
                                 </div>
                             ) : (
                                 <div className="col-md-12">
-                                    <MyDealCart/>
+                                     <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+                                   
                                 </div>
                             )}
                         </div>
