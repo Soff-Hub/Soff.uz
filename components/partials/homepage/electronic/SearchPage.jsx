@@ -121,7 +121,7 @@ const SearchPage = () => {
                         </h1>
                         <h1>
                             {' '}
-                            Uzbek tilida saralanib borilayotgan sifatli
+                            O'zbek tilida saralanib borilayotgan sifatli
                             ma'lumotlar jamlanmasini, faylar, tasvirlar,
                             videolar, audiolar ko'rinishida qidirib topish
                             imkonini beradi.
