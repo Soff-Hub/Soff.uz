@@ -19,6 +19,7 @@ import Input from '~/components/form/Input';
 
 
 
+
 const PostsMyProducts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
@@ -39,7 +40,7 @@ const PostsMyProducts = () => {
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
     const [page_count, setPageCount] = useState(0)
-   
+
 
 
     const breadCrumb = [
@@ -79,12 +80,28 @@ const PostsMyProducts = () => {
 
     const Option = Select.Option;
 
+
     async function GetItemsCategoryLists() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
-        if (ItemsData) {
-            setDataCategory(ItemsData);
+        if (products?.document?.content_type === 'file') {
+            const ItemsData = await GetRepository.getAllCategoryLists();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'audio') {
+            const ItemsData = await GetRepository.getAllCategoryListsAudio();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
+        }
+        if (products?.document?.content_type === 'template') {
+            const ItemsData = await GetRepository.getAllCategoryListsDesign();
+            if (ItemsData) {
+                setDataCategory(ItemsData);
+            }
         }
     }
+
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
@@ -100,7 +117,7 @@ const PostsMyProducts = () => {
         );
     }
 
-    const onSearchTegsAktiv = async (value)=>{
+    const onSearchTegsAktiv = async (value) => {
         const ItemsData = await MediaRepository.getTagItmesAktive(value);
         if (ItemsData) {
             setTagItems(ItemsData);
@@ -211,14 +228,15 @@ const PostsMyProducts = () => {
     }
 
     const onChange = async (e) => {
-        category_id.length = 0;
         setCategoryName(e);
         for (let j = 0; j < dataCategory.length; j++) {
             if (dataCategory[j].name === e) {
-                category_id.push(dataCategory[j].id);
+                setCategory_ID(dataCategory[j].id);
             }
         }
     };
+
+
 
     const onSearch = async (value) => {
         const ItemsData = await GetRepository.getAllCategoryLists(value);
@@ -269,11 +287,13 @@ const PostsMyProducts = () => {
         GetItemsCategoryLists();
     }, []);
 
+
     useEffect(() => {
         setCategory_ID(products?.category?.id)
-    }, [])
+    }, [products?.category?.id])
 
-  
+    console.log(products);
+
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -514,27 +534,18 @@ const PostsMyProducts = () => {
                                     </Tooltip>
                                 </div>
                                 <Checkbox
-                                    checked={free}
+                                    checked={products?.discount_price === 0}
                                     className="col-md-2 d-flex align-items-center justify-content-start px-0 py-2"
                                     onChange={handleFreeChange}>
                                     Bepul
                                 </Checkbox>
-                                {/* <input
-                                    type="number"
-                                    className="form-control  rounded-3 col-md-6 mb-3"
-                                    name="price"
-                                    disabled={free}
-                                    defaultValue={products?.price}
-                                    onChange={(e) =>
-                                        setTaxminiyNarx(e.target.value)
-                                    }
-                                /> */}
+
 
                                 <InputNumber
-                                    disabled={free}
-                                    defaultValue={products?.price}
+                                    disabled={products?.discount_price === 0} 
                                     className="col-md-6 p-2 post-price"
                                     onValueChange={(e) => setTaxminiyNarx(e.target.value)}
+                                    value={products?.discount_price}
                                 />
                             </div>
 
