@@ -5,7 +5,7 @@ export default function DealCart({ type }) {
     return (
         <div className="border border-2 rounded-3 p-4">
             <div className="d-md-flex justify-content-between  ">
-                <h3 className="text-success">Mustqil ish kerak</h3>
+                <h3 className="text-success">Mustaqil ish kerak </h3>
                 <div>
                     {' '}
                     <span className="fw-medium">narxi:</span>{' '}
@@ -22,11 +22,32 @@ export default function DealCart({ type }) {
             </p>
             {type === 'application' ? (
                 <div className="d-flex justify-content-between gap-4">
-                    <div className="text-end">
-                        <span className="text-success fs-3 fw-medium">
-                            <i class="fa-solid fa-calendar-days"></i>
-                        </span>{' '}
-                        <span className="fw-medium ">17-iyul 2025-yil</span>
+                    <div className="text-start">
+                        <div>
+                            {' '}
+                            <span className="text-success fs-3 fw-medium">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </span>{' '}
+                            <span className="fw-medium ">17-iyul 2025-yil</span>
+                        </div>
+                        <div>
+                            {' '}
+                            <span className="text-success fs-3 fw-medium">
+                                <i class="fa-solid fa-eye"></i>
+                            </span>{' '}
+                            <span className="fw-medium ">
+                                Ko'rishlar soni : <span>2</span>{' '}
+                            </span>
+                        </div>
+                        <div className="bg-warning rounded-3 d-flex justify-content-center align-items-center gap-2 py-1 mt-3 ">
+                            {' '}
+                            <span className="text-success fs-3 fw-medium d-block">
+                                <i class="fa-regular fa-clock"></i>
+                            </span>{' '}
+                            <span className="fw-medium  d-block">
+                                moderatsiya
+                            </span>
+                        </div>
                     </div>
                     <div>
                         <span className="text-success fs-3 fw-medium">
@@ -36,26 +57,94 @@ export default function DealCart({ type }) {
                     </div>
                 </div>
             ) : type === 'apply' ? (
-                <div className="d-flex justify-content-between gap-4">
-                    <div>
-                        <div className="text-end">
-                            <span className="text-success fs-3 fw-medium">
-                                <i class="fa-solid fa-calendar-days"></i>
-                            </span>{' '}
-                            <span className="fw-medium ">17-iyul 2025-yil</span>
+                <div>
+                    <div className="d-md-flex justify-content-between gap-4 ">
+                        <div className="d-flex ">
+                            <img
+                                className="d-block"
+                                width={80}
+                                src="/static/img/docCopy.jpg"
+                                alt="sca"
+                            />
+                            <div>
+                                <div className="text-start">
+                                    <span className="text-success fs-3 fw-medium">
+                                        <i class="fa-solid fa-user"></i>
+                                    </span>{' '}
+                                    <span className="fw-medium ">
+                                        Jasue Baxtiyarov
+                                    </span>
+                                </div>
+                                <div className="text-start">
+                                    <span className="text-success fs-3 fw-medium">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </span>{' '}
+                                    <span className="fw-medium ">
+                                        17-iyul 2025-yil
+                                    </span>
+                                </div>
+                                <div className="text-start">
+                                    <span className="text-success fs-3 fw-medium">
+                                        arizalar :{' '}
+                                    </span>{' '}
+                                    <span className="fw-medium "> 2</span>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <span className="text-success fs-3 fw-medium">
-                                arizalar :{' '}
-                            </span>{' '}
-                            <span className="fw-medium "> 2</span>
+                        <div
+                            className="border h-25 fs-4 p-3 bg-success text-white fw-bold text-center"
+                            onClick={() => Router.push('/deal/123')}>
+                            Ariza topshirish
                         </div>
                     </div>
-                    <button
-                        className="btn btn-outline-success px-3 fs-4"
-                        onClick={() => Router.push('/deal/123')}>
-                        Ariza topshirish
-                    </button>
+                    <p className="mt-5">
+                        Ko'rishlar soni : <span>2</span>{' '}
+                    </p>
+                </div>
+            ) : type === 'apply_detail' ? (
+                <div>
+                    <div className="d-md-flex justify-content-between gap-4 ">
+                        <div className="d-flex ">
+                            <img
+                                className="d-block"
+                                width={80}
+                                src="/static/img/docCopy.jpg"
+                                alt="sca"
+                            />
+                            <div>
+                                <div className="text-start">
+                                    <span className="text-success fs-3 fw-medium">
+                                        <i class="fa-solid fa-user"></i>
+                                    </span>{' '}
+                                    <span className="fw-medium ">
+                                        Jasue Baxtiyarov
+                                    </span>
+                                </div>
+                                <div className="text-start">
+                                    <span className="text-success fs-3 fw-medium">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                    </span>{' '}
+                                    <span className="fw-medium ">
+                                        17-iyul 2025-yil
+                                    </span>
+                                </div>
+                                <div className="text-start">
+                                    <span className="text-success fs-3 fw-medium">
+                                        arizalar :{' '}
+                                    </span>{' '}
+                                    <span className="fw-medium "> 2</span>
+                                </div>
+                            </div>
+                        </div>
+                        {/* <div
+                            className="border h-25 fs-4 p-3 bg-success text-white fw-bold text-center"
+                            onClick={() => Router.push('/deal/123')}>
+                            Ariza topshirish
+                        </div> */}
+                    </div>
+                    <p className="mt-5">
+                        Ko'rishlar soni : <span>2</span>{' '}
+                    </p>
                 </div>
             ) : (
                 <div className="d-flex justify-content-between gap-4">
