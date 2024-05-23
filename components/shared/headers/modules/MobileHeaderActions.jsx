@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import AccountQuickLinksMobile from './AccountQuickLinksMobile';
@@ -7,7 +7,7 @@ import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-const MobileHeaderActions = ({ auth, ecomerce }) => {
+const MobileHeaderActions = ({ auth }) => {
     const state = useSelector((state) => state.ecomerce.cartDataItems);
     const menu = (
         <Menu>
@@ -55,6 +55,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
         });
     };
 
+
     useEffect(() => {
         if (user?.access) {
             // Agar user?.access mavjud bo'lsa
@@ -63,7 +64,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             );
 
             // Yangi WebSocket ulanishini yaratish
-            newSocket.onopen = function () {};
+            newSocket.onopen = function () { };
 
             // Xabarlarni qabul qilish uchun funksiya
             if (newSocket) {
@@ -85,9 +86,14 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
         }
     }, [user?.access]);
 
+
     useEffect(() => {
-        socket?.count > 0 && openNotification();
-    }, [socket?.count]);
+        if (socket?.count > 0) {
+            openNotification();
+        }
+    }, []);
+
+    console.log(socket);
 
     return (
         <div className="navigation__right">
@@ -113,15 +119,15 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
             ) : " "}
             {
                 state?.length > 0 ?
-            <Link href="/account/shopping-cart">
-                <a className="header__extra" href="#">
-                    <i className="icon-bag2"></i>
-                    <span>
-                        <i>{state ? state?.length : 0}</i>
-                    </span>
-                </a>
-            </Link>
-            : " "
+                    <Link href="/account/shopping-cart">
+                        <a className="header__extra" href="#">
+                            <i className="icon-bag2"></i>
+                            <span>
+                                <i>{state ? state?.length : 0}</i>
+                            </span>
+                        </a>
+                    </Link>
+                    : " "
             }
 
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
