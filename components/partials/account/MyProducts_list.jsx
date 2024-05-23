@@ -6,18 +6,16 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector} from 'react-redux';
 import ModalDelete from './Modal';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
-import { MyProductsEdit } from '~/store/auth/action';
 import ModalDeletePostEdit from './ModalPostEdit';
 import axios from 'axios';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import { Tabs } from 'antd';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
-import Axios from 'axios';
 import Router from 'next/router';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
@@ -25,10 +23,12 @@ import ModuleDetailTopInformation from '~/components/elements/detail/modules/Mod
 import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudioLive';
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
-import DefaultVideo from '~/components/elements/detail/thumbnail/DefaultVideo';
 import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
 const { TabPane } = Tabs;
 var parse = require('html-react-parser');
+
+
+
 
 function MyProductsLists() {
     const [data, setData] = useState([]);
@@ -54,6 +54,7 @@ function MyProductsLists() {
     const [currPage, setCurrPage] = useState(1);
     const [count, setCount] = useState('');
     const [videosize, setVideoSize] = useState(null);
+
 
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
@@ -104,7 +105,7 @@ function MyProductsLists() {
         }
     }
     async function GetItemsCategory() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal();
         setDataCategory(ItemsData);
     }
 
@@ -133,7 +134,7 @@ function MyProductsLists() {
     }
 
     async function GetItemsTag() {
-        const ItemsData = await MediaRepository.getTagItmes(user?.access);
+        const ItemsData = await MediaRepository.getTagItmesAktive();
         if (ItemsData?.results) {
             setTagItems(ItemsData.results);
         }
@@ -146,6 +147,22 @@ function MyProductsLists() {
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
+
+    const onSearchTegs = async (value) => {
+     
+        const ItemsData = await MediaRepository.getTagItmesAktive(value);
+        if (ItemsData) {
+            setTagItems(ItemsData);
+        }
+    }
+
+    const onSearchCategory = async (value) => {
+
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal(value);
+        setDataCategory(ItemsData);
+    }
+
+
 
     const handleChange = async (name) => {
         if (name !== 'tags') {
@@ -351,6 +368,7 @@ function MyProductsLists() {
         GetItemsTag();
         getVideoFunk();
     }, []);
+
     useEffect(() => {
         GetItemsProducts(
             currPage,
@@ -798,6 +816,7 @@ function MyProductsLists() {
                                                                 height: '47px',
                                                             }}
                                                             onChange={onChange}
+                                                            onSearch={onSearchCategory}
                                                             placeholder="Barcha kategoriyalar">
                                                             <Option value="all">
                                                                 Barcha
@@ -820,6 +839,7 @@ function MyProductsLists() {
                                                                 onChange={
                                                                     handleChange
                                                                 }
+                                                                onSearch={onSearchTegs}
                                                                 placeholder="Barcha teglar">
                                                                 <Option value="tags">
                                                                     Barcha

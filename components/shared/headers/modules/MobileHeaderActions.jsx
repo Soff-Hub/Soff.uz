@@ -97,7 +97,7 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
                     <i className="fa-regular fa-circle-question"></i>
                 </a>
             </Link>
-            {user?.access && (
+            {user?.access ? (
                 <Link href={`/account/notification`}>
                     <a className="header__extra" style={{ cursor: 'pointer' }}>
                         <i className="fa-regular fa-bell fa-lg"></i>
@@ -110,7 +110,9 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
                         )}
                     </a>
                 </Link>
-            )}
+            ) : " "}
+            {
+                state?.length > 0 ?
             <Link href="/account/shopping-cart">
                 <a className="header__extra" href="#">
                     <i className="icon-bag2"></i>
@@ -119,6 +121,8 @@ const MobileHeaderActions = ({ auth, ecomerce }) => {
                     </span>
                 </a>
             </Link>
+            : " "
+            }
 
             {auth.isLoggedIn && Boolean(auth.isLoggedIn) === true ? (
                 <AccountQuickLinksMobile />

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { DatePicker } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
+import {useSelector } from 'react-redux';
 import Link from 'next/link';
 import Axios from 'axios';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
@@ -23,7 +23,6 @@ import ModuleDetailTopInformation from '~/components/elements/detail/modules/Mod
 import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudioLive';
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
-import DefaultVideo from '~/components/elements/detail/thumbnail/DefaultVideo';
 import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
 
 function ProductsLists() {
@@ -92,8 +91,10 @@ function ProductsLists() {
         setPageCount(ItemsData?.count);
         setData([...ItemsData?.results]);
     }
+
+
     async function GetItemsCategory() {
-        const ItemsData = await GetRepository.getAllCategoryLists();
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal();
         if (ItemsData) {
             setDataVal(ItemsData);
         }
@@ -110,6 +111,13 @@ function ProductsLists() {
             setCategoryID('');
         }
     };
+
+
+    const onSearchCategory = async (value) => {
+    
+        const ItemsData = await GetRepository.getAllCategoryListsGlobal(value);
+        setDataVal(ItemsData);
+    }
 
     const options = [];
 
@@ -517,6 +525,7 @@ function ProductsLists() {
                                                                 height: '47px',
                                                             }}
                                                             onChange={onChange}
+                                                            onSearch={onSearchCategory}
                                                             placeholder="Barcha kategoriyalar">
                                                             <Option
                                                                 value="all"

@@ -25,14 +25,14 @@ export default function ProductCategoryScreen({ category2 }) {
     // const [breadCrumbName, setBreadCrumb] = useState(null)
 
     async function getCategry() {
-        // const responseData = await ProductRepository.getCategoryParent();
+        const responseData = await ProductRepository.getCategoryParent();
         if (category2?.length > 0) {
             if (category2?.every((cat) => cat.slug !== slug)) {
-                // setchaildId(slug);
-                // setParentId(null)
+                setchaildId(slug);
+                setParentId(null)
             } else {
-                // setParentId(slug);
-                // setchaildId(null)
+                setParentId(slug);
+                setchaildId(null)
             }
         }
     }

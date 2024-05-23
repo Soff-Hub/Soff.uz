@@ -18,6 +18,7 @@ import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
 
 
+
 const PostsMyProducts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
@@ -35,9 +36,10 @@ const PostsMyProducts = () => {
     const routerId = Router.query?.id
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(false);
-
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
+    const [page_count, setPageCount] = useState(0)
+   
 
 
     const breadCrumb = [
@@ -98,6 +100,13 @@ const PostsMyProducts = () => {
         );
     }
 
+    const onSearchTegsAktiv = async (value)=>{
+        const ItemsData = await MediaRepository.getTagItmesAktive(value);
+        if (ItemsData) {
+            setTagItems(ItemsData);
+        }
+    }
+
     async function handleClickPostsEdit(data) {
 
         if (data?.title || taxminiyNarx || tagSearchResult || category_id) {
@@ -105,6 +114,7 @@ const PostsMyProducts = () => {
             if (watch('title')) {
                 formData.append('title', data?.title);
             }
+
             if (free && !taxminiyNarx) {
                 formData.append('price', products?.price);
             } else {
@@ -118,6 +128,9 @@ const PostsMyProducts = () => {
             }
             if (tagSearchResult) {
                 formData.append('tags', tagSearchResult);
+            }
+            if (page_count) {
+                formData.append('page_count', page_count ? page_count : products?.document?.page_count);
             }
 
             const customePosters = customePoster
@@ -260,7 +273,7 @@ const PostsMyProducts = () => {
         setCategory_ID(products?.category?.id)
     }, [])
 
-  console.log(customePoster);
+  
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -334,6 +347,7 @@ const PostsMyProducts = () => {
                                     mode="tags"
                                     style={{ width: '100%' }}
                                     onChange={(e) => setTagSearchResult(e)}
+                                    onSearch={onSearchTegsAktiv}
                                     defaultValue={
                                         products?.tag &&
                                         products?.tag?.map((item) => item.name)
@@ -523,6 +537,28 @@ const PostsMyProducts = () => {
                                     onValueChange={(e) => setTaxminiyNarx(e.target.value)}
                                 />
                             </div>
+
+                            <div className="row">
+                                <div className="col-md-4  d-flex justify-content-between p-0 ">
+                                    {' '}
+                                    <p>Sahifa soni: *</p>
+                                    <Tooltip title="Mijozlarga  mahsulotingiz sahifalari sonini ko'rinishi uchun kiritishingiz kerak.">
+                                        <i
+                                            style={{ cursor: 'pointer' }}
+                                            className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                    </Tooltip>
+                                </div>
+
+                                <input
+                                    type="number"
+                                    className="form-control  rounded-3 col-md-8 mb-3 "
+                                    placeholder="Sahifa soni"
+                                    name="title"
+                                    onChange={(e) => setPageCount(e.target.value)}
+                                    defaultValue={products?.document?.page_count}
+                                />
+                            </div>
+
                             <div className="row">
                                 <div className="col-md-4 d-flex justify-content-between p-0">
                                     <p>Mahsulot to’liq tavsifi: *</p>{' '}
