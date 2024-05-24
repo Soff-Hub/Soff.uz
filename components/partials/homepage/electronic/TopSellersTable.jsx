@@ -150,6 +150,7 @@ export default function TopSellersTable() {
                 </label>
                 <select
                     className="ps-select form-control select2"
+                    style={{backgroundColor:'#fff'}}
                     data-placeholder="Sort Items"
                     onChange={(e) => handleSelect(e)}>
                     <option selected disabled>Saralash</option>
@@ -166,7 +167,7 @@ export default function TopSellersTable() {
                 dataSource={sellerData}
                 columns={columns}
                 pagination={false}
-                className="text-center"
+                className="text-center bg-white"
                 // onRow={(e) => navigateSeller(e)}
                 scroll={{ x: 1200 }}
             />

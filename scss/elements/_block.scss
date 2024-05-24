@@ -132,10 +132,11 @@
 }
 
 .ps-block--category-2 {
+    background-color: #fff;
     display: flex;
     // justify-content: center;
     margin-bottom: 30px;
-    border: 1px solid #bfbfbf;
+    border: 1px solid #e4e2e2;
     transition: all 0.4s ease;
     @extend %list-reset;
 
@@ -1490,7 +1491,7 @@
         font-size: 17px;
         line-height: 21px;
         font-weight: 400;
-        margin-bottom: 20px;
+        padding-bottom: 20px;
     }
 }
 

@@ -37,7 +37,7 @@
 }
 
 .product__top-information--price {
-    background-color: #f1f1f1;
+    background-color: #fff;
     padding: 12px;
     border-radius: 5px;
     text-align: center;
@@ -57,7 +57,7 @@
 }
 
 .product__top-information-account {
-    background-color: #f1f1f1;
+    background-color: #fff;
     padding: 4px 7px;
     border-radius: 10px;
     display: flex;
@@ -96,6 +96,7 @@
 }
 
 .ps-product {
+    background-color: #fff;
     position: relative;
     // padding: 20px 20px 0;
     border: 1px solid transparent;
@@ -663,7 +664,7 @@
 }
 
 .tag-product {
-    background-color: #f1f1f1;
+    background-color: #fff;
     padding: 5px;
     border-radius: 3px;
 }
@@ -925,7 +926,7 @@
     .ps-product__desc {
         margin-bottom: 20px;
         border-radius: 10px;
-        background-color: #f1f1f1;
+        background-color: #fff;
         padding: 13px;
 
         p {

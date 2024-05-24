@@ -77,7 +77,7 @@
                     border-top-left-radius: 50px;
                     border-bottom-left-radius: 50px;
                     transition: all 0.3 linear !important;
-                    box-shadow: 0px 0px 5px 1px #403c4329;
+                    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 12px;
 
                     input {
                         border-top-left-radius: 50px;
@@ -91,7 +91,6 @@
                     border-top-right-radius: 50px;
                     border-bottom-right-radius: 50px;
                     background-color: #00a44f;
-                    border: 1px solid #fff;
                     transition: all 0.3 linear !important;
                     box-shadow: 0px 0px 5px 1px #403c4329 !important;
                 }

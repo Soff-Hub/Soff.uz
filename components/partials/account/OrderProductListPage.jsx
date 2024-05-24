@@ -49,6 +49,11 @@ export default function OrderProductListPage() {
         },
         {
             key: '2',
+            label: <span className="pr-4 fw-bolder fs-3 px-3">Jarayonda</span>,
+            children: 'Content of Tab Pane 2',
+        },
+        {
+            key: '3',
             label: <span className="pr-4 fw-bolder fs-3 ">Tugatilgan</span>,
             children: 'Content of Tab Pane 2',
         },
