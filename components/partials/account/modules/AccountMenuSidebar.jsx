@@ -383,7 +383,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                         }>
                                         <Card size="small">
                                             {link?.url ===
-                                            '/account/donate-page' ? (
+                                            '/account/deals' ? (
                                                 <li
                                                     className={`${
                                                         link.url === asPath
