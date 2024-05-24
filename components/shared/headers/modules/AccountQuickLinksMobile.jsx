@@ -33,11 +33,12 @@ function AccountQuickLinks() {
         }
     };
 
+
     const menu = (
         <Menu>
             {accountLinks.map((link) => (
                 <div className="order">
-                    {link?.url == '#' ? (
+                    {link?.url == '/account/deals' ? (
                         <Badge.Ribbon text="Tez kunda" color="volcano">
                             <Card size="small">
                                 <Menu.Item key={link.url}>
@@ -45,7 +46,7 @@ function AccountQuickLinks() {
                                         <a>
                                             {' '}
                                             <span>
-                                                <i className="fa-regular fa-handshake"></i>{' '}
+                                                <i  className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
                                             </span>{' '}
                                             Mening bitimlarim
                                         </a>
