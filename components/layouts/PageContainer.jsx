@@ -191,7 +191,7 @@ const PageContainer = ({
                 <meta property="og:title" content={title} />
             </Head>
             {header}
-            <div >
+            <div className='bg-soff' >
                 <div
                     className={`${query === '/page/form'
                         ? 'container faq-page-container'

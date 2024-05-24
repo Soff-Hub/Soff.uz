@@ -11,7 +11,7 @@ import Meta from '~/components/shared/headers/Meta';
 const AccountOrdersPage = () => {
     const breadCrumb = [
         {
-            text: 'Home',
+            text: 'Asosiy sahifa',
             url: '/',
         },
         {
