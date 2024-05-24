@@ -382,8 +382,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                                 : 'blue'
                                         }>
                                         <Card size="small">
-                                            {link?.url ===
-                                            '/account/deals' ? (
+                                            {link?.url === '/account/deals' ? (
                                                 <li
                                                     className={`${
                                                         link.url === asPath
