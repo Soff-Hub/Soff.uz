@@ -1,10 +1,13 @@
-import { Button, DatePicker, Form, Input, Select } from 'antd';
+import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import Router from 'next/router';
 import DealCart from './modules/DealCart';
+import GetRepository from '~/reositoriy-admin/GetRepository';
+import { useEffect } from 'react';
+import PostsRepository from '~/reositoriy-admin/PostsRepository';
 const { TextArea } = Input;
 
 export default function DealsList() {
@@ -13,90 +16,86 @@ export default function DealsList() {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [lifetime, setDLifetime] = useState('');
+    const [lifetime, setLifetime] = useState('');
     const [type, setType] = useState('');
     const [pageType, setPageType] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const [dealList, setDealList] = useState(null);
+    const [dealType, setDealType] = useState(null);
+    const [dealDeadlines, setDeadlines] = useState(null);
 
     async function postOrder() {
-        if (name) {
-            form.resetFields();
-            setLoading(true);
-            setEmail(null);
-            setText(null);
-            setSubject(null);
+        form.resetFields();
+        setLoading(true);
 
-            if (userRole) {
-                const data = {
-                    user_type: userRole,
-                    title: title,
-
-                    body_text: text,
-                };
-                const ItemsData = await PostsRepository.EmailSend(
-                    data,
-                    user?.access,
-                    dataFormat
-                );
-                if (ItemsData?.status == 201) {
-                    const modal = Modal.success({
-                        centered: true,
-                        title: 'Muvaffaqqiyatli!',
-                        content: ` ${
-                            ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : 'Sizning xabaringiz yuborildi'
-                        } `,
-                    });
-                    modal.update;
-                } else {
-                    const modal = Modal.error({
-                        centered: true,
-                        title: 'Xato!',
-                        content: `Nimadir xato ketdi `,
-                    });
-                    modal.update;
-                }
-            } else {
-                const data = {
-                    users: email ? email : [],
-                    title: title,
-                    body_text: text,
-                };
-                const ItemsData = await PostsRepository.EmailSend(
-                    data,
-                    user?.access,
-                    dataFormat
-                );
-                if (ItemsData?.status == 201) {
-                    const modal = Modal.success({
-                        centered: true,
-                        title: 'Muvaffaqqiyatli!',
-                        content: ` ${
-                            ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : 'Sizning xabaringiz yuborildi'
-                        } `,
-                    });
-                    modal.update;
-                } else {
-                    const modal = Modal.error({
-                        centered: true,
-                        title: 'Xato!',
-                        content: `Nimadir xato ketdi `,
-                    });
-                    modal.update;
-                }
-            }
+        const data = {
+            title: name,
+            description: description,
+            price: price,
+            deadline: lifetime,
+            type: type,
+        };
+        const ItemsData = await PostsRepository.postDeal(data, user?.access);
+        if (ItemsData?.status == 201) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: ` ${
+                    ItemsData?.data?.msg
+                        ? ItemsData?.data?.msg
+                        : 'Sizning arizangiz yuborildi'
+                } `,
+            });
+            modal.update;
+            setPageType(true);
         } else {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xato!',
-                content: `Malumot to'g'ri kiritilmadi`,
+                content: `Nimadir xato ketdi `,
             });
             modal.update;
         }
+
         setLoading(false);
     }
+    async function getDealList() {
+        const data = await GetRepository.getDealList();
+        if (data?.results) {
+            setDealList(data?.results);
+        }
+    }
+    async function getDealType(token) {
+        const data = await GetRepository.getDealType(token);
+        if (data?.results) {
+            setDealType(data?.results);
+        }
+    }
+    async function getDeadLines(token) {
+        const data = await GetRepository.getDeadline(token);
+        if (data?.results) {
+            setDeadlines(data?.results);
+        }
+    }
+    useEffect(() => {
+        getDealList();
+        if (user?.access) {
+            getDealType(user?.access);
+            getDeadLines(user?.access);
+        }
+    }, []);
+
+    const optionType = dealType?.map((e) => ({
+        label: e?.name,
+        value: e?.id,
+    }));
+    const optiondeadline = dealDeadlines?.map((e) => ({
+        label: e?.name,
+        value: e?.id,
+    }));
+
+    console.log('dealList', dealList);
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -156,7 +155,16 @@ export default function DealsList() {
                                                         }
                                                         placeholder="Buyurtma nomi"></Input>
                                                 </Form.Item>
-                                                <div className="col-md-12 p-0 mb-3">
+                                                <div className="col-md-12 p-0 mb-3"></div>
+                                                <Form.Item
+                                                    name="description"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message:
+                                                                'Buyurtma tavsifini kiritish majburiy',
+                                                        },
+                                                    ]}>
                                                     <TextArea
                                                         rows={4}
                                                         placeholder="Buyurtma uchun tavsif"
@@ -166,17 +174,41 @@ export default function DealsList() {
                                                             )
                                                         }
                                                     />
-                                                </div>
-                                                <DatePicker
-                                                    className="w-100 py-3 col-md-6 my-3 rounded-3"
-                                                    onChange={(e) =>
-                                                        setDLifetime(e)
-                                                    }
-                                                />
+                                                </Form.Item>
 
                                                 <Form.Item
                                                     className="col-md-6 p-0 my-3 "
-                                                    name="userRole">
+                                                    name="userRole"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message:
+                                                                'Buyurtma muddatini kiritish majburiy',
+                                                        },
+                                                    ]}>
+                                                    <Select
+                                                        onChange={(e) =>
+                                                            setLifetime(e)
+                                                        }
+                                                        style={{
+                                                            width: '100%',
+                                                            height: '45px',
+                                                        }}
+                                                        placeholder="Muddati"
+                                                        options={
+                                                            optiondeadline
+                                                        }></Select>
+                                                </Form.Item>
+                                                <Form.Item
+                                                    className="col-md-6 p-0 my-3 "
+                                                    name="type"
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message:
+                                                                'Buyurtma turini kiritish majburiy',
+                                                        },
+                                                    ]}>
                                                     <Select
                                                         onChange={(e) =>
                                                             setType(e)
@@ -186,29 +218,13 @@ export default function DealsList() {
                                                             height: '45px',
                                                         }}
                                                         placeholder="Buyurtma turi"
-                                                        options={[
-                                                            {
-                                                                label: 'File materiallar',
-                                                                value: 'all',
-                                                            },
-                                                            {
-                                                                label: 'Audio materiallar',
-                                                                value: 'seller',
-                                                            },
-                                                            {
-                                                                label: 'Video materiallar',
-                                                                value: 'customer',
-                                                            },
-                                                            {
-                                                                label: 'Shablon materiallar',
-                                                                value: 'customer',
-                                                            },
-                                                        ]}></Select>
+                                                        options={
+                                                            optionType
+                                                        }></Select>
                                                 </Form.Item>
-
                                                 <Form.Item
                                                     className="col-md-12 p-0 my-3"
-                                                    name="title"
+                                                    name="price"
                                                     rules={[
                                                         {
                                                             required: true,
@@ -224,10 +240,9 @@ export default function DealsList() {
                                                         }
                                                         placeholder="Narxi"></Input>
                                                 </Form.Item>
-
                                                 <Form.Item className="col-md-2 p-0 mt-3">
                                                     <Button
-                                                        // loading={loading}
+                                                        loading={loading}
                                                         htmlType="submit"
                                                         style={{
                                                             width: '100%',
@@ -249,7 +264,7 @@ export default function DealsList() {
                                     </div>
                                 ) : (
                                     <div className="px-5 pt-4">
-                                         <div className="d-flex flex-column gap-2 my-3">
+                                        <div className="d-flex flex-column gap-2 my-3">
                                             <span className="fs-4">
                                                 <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                                 <strong>Moderatsiya</strong>{' '}
@@ -274,7 +289,6 @@ export default function DealsList() {
                                                     qilindi
                                                 </em>
                                             </span>
-                                           
                                         </div>
                                         <div className="py-4 d-md-flex justify-content-between ">
                                             <h3>Buyurtmalar ro'yxati</h3>
@@ -288,9 +302,15 @@ export default function DealsList() {
                                             </button>
                                         </div>
                                         <div className="row py-3 pb-5">
-                                            <div className="col-md-12">
-                                              <DealCart type='application' />
-                                            </div>
+                                            {dealList?.map((e) => {
+                                                return (
+                                                    <div
+                                                        key={e?.id}
+                                                        className="col-md-12">
+                                                        <DealCart  description={e?.description} title={e?.title} deadline={e?.deadline} price={e?.price}  type="application" />
+                                                    </div>
+                                                );
+                                            })}
                                         </div>
                                     </div>
                                 )}
