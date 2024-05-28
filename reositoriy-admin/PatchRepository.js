@@ -1,3 +1,4 @@
+import { baseDomain } from '~/repositories/NewRepository';
 import Repository, { baseUrl, baseUrlProfie } from './Repository';
 
 class PatchRepository {
@@ -230,6 +231,26 @@ class PatchRepository {
         })
             .then((response) => {
                 if (response.status === 201) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return reponse;
+    }
+    async patchDealadmin(id, data, token) {
+        const endPoint = `deals/admin/deals/${id}/`;
+        const reponse = await Repository({
+            url: baseDomain + endPoint,
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response.status === 200) {
                     return response;
                 } else {
                     return null;

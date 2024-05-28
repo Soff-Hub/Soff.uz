@@ -60,8 +60,8 @@ export default function DealsList() {
 
         setLoading(false);
     }
-    async function getDealList() {
-        const data = await GetRepository.getDealList();
+    async function getDealList(token) {
+        const data = await GetRepository.getDealList(token);
         if (data?.results) {
             setDealList(data?.results);
         }
@@ -79,10 +79,10 @@ export default function DealsList() {
         }
     }
     useEffect(() => {
-        getDealList();
         if (user?.access) {
             getDealType(user?.access);
             getDeadLines(user?.access);
+            getDealList(user?.access);
         }
     }, []);
 
@@ -95,7 +95,6 @@ export default function DealsList() {
         value: e?.id,
     }));
 
-    console.log('dealList', dealList);
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -307,7 +306,7 @@ export default function DealsList() {
                                                     <div
                                                         key={e?.id}
                                                         className="col-md-12">
-                                                        <DealCart  description={e?.description} title={e?.title} deadline={e?.deadline} price={e?.price}  type="application" />
+                                                        <DealCart application_count={e?.application_count}  description={e?.description} title={e?.title} deadline={e?.deadline} price={e?.price} status={e?.status} deal_type={e?.type}  type="application" />
                                                     </div>
                                                 );
                                             })}

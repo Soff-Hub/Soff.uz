@@ -43,9 +43,14 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-layer-group',
     },
     {
-        text: 'Buyurtmalar',
+        text: 'Sotilgan mahsulotlar',
         url: '/account/orders',
         icon: 'fa-solid fa-truck',
+    },
+    {
+        text: 'Buyurtmalar',
+        url: '/account/dealOrder',
+        icon: 'fa-solid fa-sliders',
     },
     {
         text: 'Xaridorlar',

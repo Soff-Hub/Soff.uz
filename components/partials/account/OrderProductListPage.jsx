@@ -75,38 +75,6 @@ export default function OrderProductListPage() {
         },
     ];
 
-    const showDeleteConfirm = () => {
-        confirm({
-            title: 'Are you sure delete this task?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Some descriptions',
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            onOk() {
-                console.log('OK');
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
-    const showOkConfirm = () => {
-        confirm({
-            title: 'Are you sure delete this task?',
-            icon: <ExclamationCircleFilled />,
-            content: 'Some descriptions',
-            okText: 'Yes',
-            okType: 'danger',
-            cancelText: 'No',
-            onOk() {
-                console.log('OK');
-            },
-            onCancel() {
-                console.log('Cancel');
-            },
-        });
-    };
 
     const onChange = (key) => {
         console.log(key);

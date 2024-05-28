@@ -46,7 +46,7 @@ export default function DealListPage() {
                             Buyurtmalar
                         </span>
                         <Select
-                            defaultValue="jack"
+                            defaultValue="Barchasi"
                             style={{
                                 width: '100%',
                             }}

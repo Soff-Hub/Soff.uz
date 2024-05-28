@@ -1023,11 +1023,33 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getDealList() {
-        const endPoint = `deals/`;
+    async getDealList(token) {
+        const endPoint = `deals/owner-admin/`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getDealItems(id, token) {
+        const endPoint = `deals/admin/deals/${id}/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         })
             .then((response) => {
                 if (response.status === 200) {
