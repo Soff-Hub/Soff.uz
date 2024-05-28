@@ -1,22 +1,29 @@
 import Router from 'next/router';
 import React from 'react';
 
-export default function DealCart({ type, deadline, description, title, price }) {
+export default function DealCart({
+    type,
+    deadline,
+    description,
+    title,
+    price,
+    application_count,
+    status,
+    deal_type
+}) {
     return (
-        <div className="border border-2 rounded-3 p-4">
+        <div className="border border-2 rounded-3 p-4 bg-white">
             <div className="d-md-flex justify-content-between  ">
-                <h3 className="text-success"> {title} </h3>
+                <h3 className="text-success"> {title ? title : "Kurs ishi kerak"} </h3>
                 <div>
                     {' '}
                     <span className="fw-medium">narxi:</span>{' '}
                     <span className="text-success fs-3 fw-bold">
-                        {price ? JSON.parse(price) + " so'm" : ''}
+                        {price ? JSON.parse(price) + " so'm" : '23 000 so\'m'}
                     </span>
                 </div>
             </div>
-            <p>
-               {description}
-            </p>
+            <p>{description ? description : 'Description'}</p>
             {type === 'application' ? (
                 <div className="d-flex justify-content-between gap-4">
                     <div className="text-start">
@@ -25,7 +32,18 @@ export default function DealCart({ type, deadline, description, title, price }) 
                             <span className="text-success fs-3 fw-medium">
                                 <i class="fa-solid fa-calendar-days"></i>
                             </span>{' '}
-                            <span className="fw-medium ">{deadline ? deadline + " kun" : ''} </span>
+                            <span className="fw-medium ">
+                                {deadline ? deadline + ' kun' : ''}{' '}
+                            </span>
+                        </div>
+                        <div>
+                            {' '}
+                            <span className="text-success fs-3 fw-medium">
+                            <i class="fa-regular fa-folder-open"></i>
+                            </span>{' '}
+                            <span className="fw-medium ">
+                              Turi : <span> {deal_type?.name} </span>{' '}
+                            </span>
                         </div>
                         {/* <div>
                             {' '}
@@ -36,21 +54,46 @@ export default function DealCart({ type, deadline, description, title, price }) 
                                 Ko'rishlar soni : <span>2</span>{' '}
                             </span>
                         </div> */}
-                        <div className="bg-warning rounded-3 d-flex justify-content-center align-items-center gap-2 py-1 mt-3 ">
-                            {' '}
-                            <span className="text-success fs-3 fw-medium d-block">
-                                <i class="fa-regular fa-clock"></i>
-                            </span>{' '}
-                            <span className="fw-medium  d-block">
-                                moderatsiya
-                            </span>
-                        </div>
+                        {status === 'active' ? (
+                            <div className="bg-success rounded-3 d-flex justify-content-center align-items-center gap-2 p-1  mt-3 ">
+                                {' '}
+                                <span className="text-white fs-3 fw-medium d-block">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </span>{' '}
+                                <span className="fw-medium text-white  d-block">
+                                    tasdiqlangan
+                                </span>
+                            </div>
+                        ) : status === 'moderatsiya' ? (
+                            <div className="bg-warning rounded-3 d-flex justify-content-center align-items-center gap-2 p-1 mt-3 ">
+                                {' '}
+                                <span className="text-success fs-3 fw-medium d-block">
+                                    <i class="fa-regular fa-clock"></i>
+                                </span>{' '}
+                                <span className="fw-medium  d-block">
+                                    moderatsiya
+                                </span>
+                            </div>
+                        ) : (
+                            <div className="bg-danger rounded-3 d-flex justify-content-center align-items-center gap-2 p-1 mt-3 ">
+                                {' '}
+                                <span className="text-white fs-3 fw-medium d-block">
+                                    <i class="fa-solid fa-circle-xmark"></i>
+                                </span>{' '}
+                                <span className="fw-medium text-white  d-block">
+                                    bekor qilingan
+                                </span>
+                            </div>
+                        )}
                     </div>
                     <div>
                         <span className="text-success fs-3 fw-medium">
                             arizalar :{' '}
                         </span>{' '}
-                        <span className="fw-medium "> 2</span>
+                        <span className="fw-medium ">
+                            {' '}
+                            {application_count}{' '}
+                        </span>
                     </div>
                 </div>
             ) : type === 'apply' ? (
