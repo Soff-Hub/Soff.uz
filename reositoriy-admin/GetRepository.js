@@ -213,6 +213,7 @@ class GetRepository {
         status,
         search,
         document__content_type,
+        viewsAll,
         token
     ) {
         const endPoint = `product-list/?page=${page}&category=${
@@ -221,7 +222,7 @@ class GetRepository {
             date || ''
         }&status=${status || ''}&search=${search}&document__content_type=${
             document__content_type || ''
-        }`;
+        }&sort=${viewsAll || ''}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -363,7 +364,9 @@ class GetRepository {
         return reponse;
     }
     async getCategoryChaildItem(id, token, search) {
-        const endPoint = `admin/childen-list/${id ? id + '/' : ''}?search=${search}`;
+        const endPoint = `admin/childen-list/${
+            id ? id + '/' : ''
+        }?search=${search}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -419,7 +422,6 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
 
     async getAllCategoryLists(search) {
         const endPoint = `admin/category-children/file/?search=${search || ''}`;
@@ -717,7 +719,7 @@ class GetRepository {
         return reponse;
     }
 
-    async getTagListsDeaktiv(token,search) {
+    async getTagListsDeaktiv(token, search) {
         const endPoint = `deactive-tags/?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,

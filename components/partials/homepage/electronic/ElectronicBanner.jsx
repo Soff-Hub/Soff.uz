@@ -55,7 +55,7 @@ function ElectronicBanner() {
 
     return (
         <>
-            <section className="ps-home-banner">
+            <section className="ps-home-banner py-0">
                 {/* <div className="container">
                     <div className="ps-section__left">
                         <div className="item banner-left-one">

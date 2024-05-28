@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import MediaRepository from '~/repositories/MediaRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { useSelector} from 'react-redux';
+import { useSelector } from 'react-redux';
 import ModalDelete from './Modal';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
@@ -54,6 +54,7 @@ function MyProductsLists() {
     const [currPage, setCurrPage] = useState(1);
     const [count, setCount] = useState('');
     const [videosize, setVideoSize] = useState(null);
+    const [viewsAll, setViewsAll] = useState('')
 
 
     const [copy, setCopy] = useState(null);
@@ -85,7 +86,8 @@ function MyProductsLists() {
         dataFormat,
         status,
         search,
-        filterType
+        filterType,
+        viewsAll
     ) {
         const ItemsData = await GetRepository.getMyProducts(
             page,
@@ -95,6 +97,7 @@ function MyProductsLists() {
             status,
             search,
             filterType,
+            viewsAll,
             user?.access
         );
         if (ItemsData?.results) {
@@ -149,7 +152,7 @@ function MyProductsLists() {
     }
 
     const onSearchTegs = async (value) => {
-     
+
         const ItemsData = await MediaRepository.getTagItmesAktive(value);
         if (ItemsData) {
             setTagItems(ItemsData);
@@ -207,7 +210,7 @@ function MyProductsLists() {
             tagName,
             dataFormat,
             selectValStatus,
-            search
+            search,
         );
     }
 
@@ -377,7 +380,8 @@ function MyProductsLists() {
             dataFormat,
             selectValStatus,
             search,
-            filterType
+            filterType,
+            viewsAll
         );
     }, [
         dataValCat,
@@ -386,6 +390,7 @@ function MyProductsLists() {
         selectValStatus,
         searchDebounce,
         filterType,
+        viewsAll
     ]);
 
     const columns = [
@@ -442,6 +447,18 @@ function MyProductsLists() {
                     {' '}
                     <i className="fa-solid fa-coins text-warning"></i>{' '}
                     {+price == 0 ? 'Bepul' : addPeriodToThousands(price)}
+                </span>
+            ),
+        },
+        {
+            title: 'Ko\'rilganlar soni',
+            dataIndex: 'view_count',
+            key: 'address',
+
+            render: (view_count) => (
+                <span key={view_count} className='text-center'>
+                    <i className="fa-solid fa-eye"></i>{' '}
+                    {view_count} ta
                 </span>
             ),
         },
@@ -650,6 +667,7 @@ function MyProductsLists() {
         },
     ];
 
+    console.log(viewsAll);
 
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -806,8 +824,9 @@ function MyProductsLists() {
                                                     className="accordion-collapse collapse"
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
+
                                                         <Select
-                                                            className="col-md-6 p-0"
+                                                            className="col-md-4 p-0"
                                                             mode="select"
                                                             showSearch
                                                             allowClear
@@ -825,10 +844,11 @@ function MyProductsLists() {
 
                                                             {options}
                                                         </Select>
+
                                                         {user?.role ===
                                                             'seller' ? (
                                                             <Select
-                                                                className="col-md-5 p-0"
+                                                                className="col-md-4 p-0"
                                                                 mode="select"
                                                                 showSearch
                                                                 allowClear
@@ -851,10 +871,11 @@ function MyProductsLists() {
                                                         ) : (
                                                             <></>
                                                         )}
+                                                        <button onClick={() => setViewsAll("view_count")} className='btn btn-success col-md-3 fs-4'>Eng ko'p ko'rilganlar</button>
                                                         {user?.role ===
                                                             'seller' ? (
                                                             <select
-                                                                className="form-select col-md-3 fs-3 py-3 rounded-3"
+                                                                className="form-select col-md-4 fs-3 py-3 rounded-3"
                                                                 onChange={(e) =>
                                                                     setSelectValStatus(
                                                                         e.target
@@ -889,6 +910,7 @@ function MyProductsLists() {
                                                             <></>
                                                         )}
 
+
                                                         <RangePicker
                                                             className="col-md-4 py-3   rounded-3"
                                                             onChange={(e) =>
@@ -896,7 +918,7 @@ function MyProductsLists() {
                                                             }
                                                         />
                                                         <select
-                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
+                                                            className="form-select col-md-3 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
                                                                 setFiltertype(
                                                                     e.target
@@ -937,7 +959,7 @@ function MyProductsLists() {
                                             </h4>
                                             <Table
                                                 dataSource={data}
-                                                scroll={{ x: 1600 }}
+                                                scroll={{ x: 1700 }}
                                                 columns={columns}
                                                 pagination={false}
                                             />
@@ -952,7 +974,7 @@ function MyProductsLists() {
                                         <>
                                             <Table
                                                 dataSource={data}
-                                                scroll={{ x: 1300 }}
+                                                scroll={{ x: 1500 }}
                                                 columns={columns}
                                                 pagination={false}
                                             />

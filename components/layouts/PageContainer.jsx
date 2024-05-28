@@ -72,11 +72,11 @@ export let accountAdminLinks = [
         url: '/account/pemium-sellers',
         icon: 'fa-solid fa-star',
     },
-    {
-        text: 'Context',
-        url: '/account/context',
-        icon: 'fa-solid fa-sliders',
-    },
+    // {
+    //     text: 'Context',
+    //     url: '/account/context',
+    //     icon: 'fa-solid fa-sliders',
+    // },
     // {
     //     text: 'Sozlamalar',
     //     url: '/account/settings',
