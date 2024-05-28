@@ -22,7 +22,7 @@ export default function DealOrderEdit() {
     const [lifetime, setLifetime] = useState('');
     const [type, setType] = useState('');
     const [status, setStatus] = useState('');
-    // const [pageType, setPageType] = useState(true);
+    const [pageType, setPageType] = useState(true);
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => state.auth);
     const [dealItem, setDealItem] = useState(null);

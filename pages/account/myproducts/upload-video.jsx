@@ -115,8 +115,8 @@ const Posts = () => {
         }
     };
 
-    async function ProfileUsers() {
-        const ItemsData = await GetRepository.getProfile(user?.access);
+    async function ProfileUsers(token) {
+        const ItemsData = await GetRepository.getProfile(token);
         setProfile(ItemsData);
     }
 
@@ -428,7 +428,7 @@ const Posts = () => {
 
     useEffect(() => {
         if (user?.access) {
-            ProfileUsers();
+            ProfileUsers(user?.access);
             getVideoFunk();
         }
     }, [user?.access]);

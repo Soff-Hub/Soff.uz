@@ -60,16 +60,16 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     };
 
-    async function ProfileUsersToken() {
-        const ItemsData = await GetRepository.getProfileToken(user?.access);
+    async function ProfileUsersToken(token) {
+        const ItemsData = await GetRepository.getProfileToken(token);
         if (Number(ItemsData?.status) == 403) {
             handleLogoutToken();
         }
     }
 
-    async function ProfileUsers() {
+    async function ProfileUsers(token) {
         setLoading(true);
-        const ItemsData = await GetRepository.getProfile(user?.access);
+        const ItemsData = await GetRepository.getProfile(token);
         setProfile(ItemsData);
         setLoading(false);
     }
@@ -162,12 +162,16 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, []);
 
     useEffect(() => {
-        ProfileUsers();
+        if (user?.access) {
+            ProfileUsers(user?.access);
+        }
     }, [renderProfile]);
 
     useEffect(() => {
-        ProfileUsersToken();
-    }, []);
+        if (user?.access) {
+            ProfileUsersToken(user?.access);
+        }
+    }, [user?.access]);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);

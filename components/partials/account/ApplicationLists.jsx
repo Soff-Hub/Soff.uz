@@ -46,8 +46,8 @@ function ApplicationLists() {
     const [alertMess, setAlertMess] = useState("")
 
 
-    async function ProfileUsers() {
-        const ItemsData = await GetRepository.getProfile(user?.access);
+    async function ProfileUsers(token) {
+        const ItemsData = await GetRepository.getProfile(token);
         if (ItemsData) {
             setProfile(ItemsData)
         }
@@ -475,8 +475,11 @@ function ApplicationLists() {
     }, [dataCat, sellerSearch])
 
     useEffect(() => {
+        if (user?.access) {
+            ProfileUsers(user?.access);
+            
+        }
         getItemsSeller(currPage);
-        ProfileUsers();
         getItemsSellerCardList()
         getItemsSellerTaklif(currPage)
     }, [])
