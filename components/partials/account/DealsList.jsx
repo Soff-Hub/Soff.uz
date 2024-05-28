@@ -95,6 +95,7 @@ export default function DealsList() {
         value: e?.id,
     }));
 
+    console.log('dealList', dealList);
 
     return (
         <section className="ps-my-account ps-page--account ">
