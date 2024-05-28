@@ -33,7 +33,7 @@ export default function DealCart({
                                 <i class="fa-solid fa-calendar-days"></i>
                             </span>{' '}
                             <span className="fw-medium ">
-                                {deadline ? deadline + ' kun' : ''}{' '}
+                              Muddati :  {deadline ? deadline + ' kun' : ''}{' '}
                             </span>
                         </div>
                         <div>
@@ -64,7 +64,7 @@ export default function DealCart({
                                     tasdiqlangan
                                 </span>
                             </div>
-                        ) : status === 'moderatsiya' ? (
+                        ) : status === 'new' ? (
                             <div className="bg-warning rounded-3 d-flex justify-content-center align-items-center gap-2 p-1 mt-3 ">
                                 {' '}
                                 <span className="text-success fs-3 fw-medium d-block">
@@ -88,7 +88,8 @@ export default function DealCart({
                     </div>
                     <div>
                         <span className="text-success fs-3 fw-medium">
-                            arizalar :{' '}
+                            arizalar 
+                            :{' '}
                         </span>{' '}
                         <span className="fw-medium ">
                             {' '}

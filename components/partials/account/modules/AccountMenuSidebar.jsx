@@ -162,9 +162,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, []);
 
     useEffect(() => {
-        if (user?.access) {
             ProfileUsers(user?.access);
-        }
     }, [renderProfile]);
 
     useEffect(() => {
