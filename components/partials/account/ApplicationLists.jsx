@@ -157,9 +157,9 @@ function ApplicationLists() {
                 if (dataCardModalStatus) {
                     formData.append("status", dataCardModalStatus)
                 }
-            
-                    formData.append("description", dataCardModalDes)
-             
+
+                formData.append("description", dataCardModalDes)
+
 
                 const response = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
 
@@ -232,9 +232,6 @@ function ApplicationLists() {
         setCurrPage(pageNum)
         getItemsSeller(pageNum, dataCat)
     }
-
-    const dataDescripton = data1.find(item => (item?.id == textItemsId && item))
-
 
     const columns = [
         {
@@ -424,7 +421,13 @@ function ApplicationLists() {
             key: 'address',
             width: 150,
             render: (id) => (
-                <span style={{ cursor: "pointer" }} data-bs-target="#exampleModalToggleEditAdminSellerID" data-bs-toggle="modal" ><i className='fa-solid fa-edit mx-5' onClick={() => setTextItemsId(id)}></i></span>
+                <span
+                    style={{ cursor: "pointer" }}
+                    data-bs-target="#exampleModalToggleEditAdminSellerID"
+                    data-bs-toggle="modal" ><i className='fa-solid fa-edit mx-5'
+                        onClick={() => (setTextItemsId(id))
+
+                        }></i></span>
             )
         },
     ];
@@ -482,7 +485,7 @@ function ApplicationLists() {
     }, [])
 
     useEffect(() => {
-        ProfileUsersTextItems(currPage, dataFormat)
+        ProfileUsersTextItems(currPage, dataFormat);
     }, [dataFormat])
 
 
@@ -641,7 +644,7 @@ function ApplicationLists() {
                                 <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
                         }
 
-                        <input  accept='image/*' type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
+                        <input accept='image/*' type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
                     </label>
                     <select className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
                         {
@@ -677,7 +680,15 @@ function ApplicationLists() {
                                 onSubmit={ProfileUsersTextItem}
                                 className="w-100 px-4 py-4 d-flex row-gap-3 flex-column"
                                 id="edit-phone-adminID">
-                                <textarea onChange={(e) => (setDataCardModalDesID(e.target.value))} defaultValue={data1 ? dataDescripton?.description : ""} className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflarga  yuboring"></textarea>
+                                <textarea
+                                    onChange={(e) => (setDataCardModalDesID(e.target.value))}
+                                    defaultValue={textItemsId}
+                                    className='w-100 p-3 border border-success rounded' rows={4}
+                                    placeholder="Bu qismga takliflarga  yuboring"></textarea>
+
+                                    <input type="text" onChange={(e) => (setDataCardModalDesID(e.target.value))}
+                                    defaultValue={textItemsId} />
+
                                 <div className="d-flex justify-content-end  py-3">
                                     <button
                                         type="submit"

@@ -106,7 +106,7 @@ const SearchPage = () => {
     }
 
     return (
-        <div>
+        <div className='image_background'>
             <div className="search_home_pages">
                 <div className="container">
                     <div className="search_home_box">

@@ -21,7 +21,7 @@ const AccountNotificationsPage = () => {
     const { user } = useSelector(state => state.auth)
     return (
 
-        user?.role === 'admin' ?
+        user?.role === 'adminsuper' ?
             <PageContainer footer={<FooterDefault />} title="Notifications">
                 <div className="ps-page--my-account">
                     <Meta
