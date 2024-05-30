@@ -1,15 +1,17 @@
-import { DatePicker, Select, Slider, Spin, Tabs } from 'antd';
+import { DatePicker, Modal, Select, Slider, Tabs } from 'antd';
 import React, { useEffect, useState } from 'react';
 import DealCart from './modules/DealCart';
 import MyDealCart from './modules/MyDealCart';
 import { useRouter } from 'next/router';
 import axios from 'axios'
 import { baseDomain } from '~/repositories/NewRepository';
+import DealsList from './DealsList';
 
 
 function DealListPage({ deals, tab }) {
     const [type, setType] = useState('all');
     const [data, setData] = useState(deals)
+    const [open, setOpen] = useState(false)
 
     const { query, push } = useRouter()
 
@@ -28,9 +30,6 @@ function DealListPage({ deals, tab }) {
         }
     ]
 
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
 
     const onChange = (key) => {
         console.log(key);
@@ -65,12 +64,6 @@ function DealListPage({ deals, tab }) {
         clearTextView = <span className="ps-form__action position-absolute" style={{ right: '15px' }}>
             <i className='fa-solid fa-search button_search_icon text-success' ></i>
         </span>
-    } else {
-        loadingView = (
-            <span className="ps-form__action">
-                <Spin size="small" />
-            </span>
-        );
     }
 
     const getList = async () => {
@@ -85,25 +78,25 @@ function DealListPage({ deals, tab }) {
 
     return (
         <div className="container">
+           <div class="animated-border"></div>
+
             <div className="row my-4">
-                <div className='col-12 d-flex justify-content-between gap-2'>
+                <h3 className="my-4 px-4">{sidebarMenu.find(el => el.tab === tab)?.label}</h3>
+                <div className='col-12 d-flex justify-content-between gap-4 mb-4'>
                     <div className={'ps-form__input d-flex align-items-center position-relative'} style={{ flex: 1 }}>
                         <input
-                            className={'form-control input2 bg-white'}
+                            className={'form-control input2 bg-white rounded-3 '}
                             type="text"
                             placeholder="Qidiruv..."
                         />
                         {clearTextView}
                         {loadingView}
                     </div>
-                    <button className='col-2 ps-btn text-white'>
-                        Qidrish
-                    </button>
-                    <button className='col-2 ps-btn bg-white text-success'>
-                        Qidrish
+                    <button className='col-md-2  btn btn-success rounded-3 fs-4'
+                        onClick={() => setOpen(true)} >
+                        Buyurtma yaratish
                     </button>
                 </div>
-                <h3 className="p-4">{sidebarMenu.find(el => el.tab === tab)?.label}</h3>
                 <div className="col-md-3">
                     <div className="p-3 bg-white mb-4">
                         <h4 className="d-block p-2 fw-bold">
@@ -186,6 +179,30 @@ function DealListPage({ deals, tab }) {
                     </div>
                 </div>
             </div>
+
+            <Modal
+                title="Buyurtma yaratish"
+                width={550}
+                centered
+                open={open}
+                onOk={() => setOpen(false)}
+                okText="Yopish"
+                cancelButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+
+                onCancel={() => setOpen(false)}>
+
+                <DealsList />
+            </Modal>
+
         </div>
     );
 }

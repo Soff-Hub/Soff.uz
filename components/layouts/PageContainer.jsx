@@ -82,11 +82,6 @@ export let accountAdminLinks = [
         url: '/account/context',
         icon: 'fa-solid fa-sliders',
     },
-    // {
-    //     text: 'Sozlamalar',
-    //     url: '/account/settings',
-    //     icon: 'fa-solid fa-gear',
-    // },
 ];
 export let accountSellerLink = [
     {
@@ -108,16 +103,6 @@ export let accountSellerLink = [
         text: 'Yangi mahsulot',
         url: '/account/myproducts/product-selection',
         icon: 'fa-solid fa-circle-plus',
-    },
-    {
-        text: 'Mening bitimlarim',
-        url: '/account/deals',
-        icon: 'fa-regular fa-handshake',
-    },
-    {
-        text: 'Olingan buyurtmalar',
-        url: '#',
-        icon: 'fa-solid fa-folder-open',
     },
     {
         text: 'Buyurtmalar',

@@ -1,6 +1,7 @@
 import { Modal } from 'antd';
 import React, { useState } from 'react';
 
+
 export default function MyDealCart() {
     const [type, setType] = useState('false');
     const [isModalOpen, setIsModalOpen] = useState(false);
