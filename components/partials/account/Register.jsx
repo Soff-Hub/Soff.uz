@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import Router from 'next/router';
 import { Form, Input, Modal, Tooltip } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';

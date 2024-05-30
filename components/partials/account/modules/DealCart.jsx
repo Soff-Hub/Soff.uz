@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import React, { useState } from 'react';
+import React  from 'react';
 
 export default function DealCart({
     type,
@@ -13,7 +13,6 @@ export default function DealCart({
     id
 }) {
 
-    const [isHovered, setIsHovered] = useState(false);
 
     const onClickCard = () => {
         if (type === 'apply') {
@@ -25,15 +24,13 @@ export default function DealCart({
         <div
             className="rounded-3 px-4 py-4 bg-white"
             style={{ cursor: 'pointer' }}
-            onMouseEnter={() => setIsHovered(true)}
-            onMouseLeave={() => setIsHovered(false)}
             onClick={onClickCard}
         >
             <div className="d-md-flex justify-content-between  ">
                 <h3 className="text-success"> {title ? title : "Kurs ishi kerak"} </h3>
                 <div>
                     {' '}
-                    <span className="fw-medium">narxi:</span>{' '}
+                    <strong className="fw-medium">Narxi:</strong>{' '}
                     <span className="text-success fs-3 fw-bold">
                         {price ? JSON.parse(price) + " so'm" : '23 000 so\'m'}
                     </span>
@@ -60,7 +57,7 @@ export default function DealCart({
                                 Turi : <span> {deal_type?.name} </span>{' '}
                             </span>
                         </div>
-                        {/* <div>
+                        <div>
                             {' '}
                             <span className="text-success fs-3 fw-medium">
                                 <i class="fa-solid fa-eye"></i>
@@ -68,7 +65,7 @@ export default function DealCart({
                             <span className="fw-medium ">
                                 Ko'rishlar soni : <span>2</span>{' '}
                             </span>
-                        </div> */}
+                        </div>
                         {status === 'active' ? (
                             <div className="bg-success rounded-3 d-flex justify-content-center align-items-center gap-2 p-1  mt-3 ">
                                 {' '}
@@ -137,16 +134,16 @@ export default function DealCart({
                                     </span>{' '}
                                     <span className="fw-medium ">{application_count || "Hechkim topshirmagan"}</span>
                                 </div>
-                                {/* <div className="text-start">
+                                <div className="text-start">
                                     <span className="text-success fs-5 fw-medium">
                                         <i class="fa-solid fa-eye"></i>{' '}
                                     </span>{' '}
                                     <span className="fw-medium ">{19}</span>
-                                </div> */}
+                                </div>
                             </div>
                         </div>
-                        {isHovered && <div
-                            className="border h-25 fs-4 px-3 py-2 bg-white text-success fw-md text-center"
+                        { <div
+                            className="border h-25 fs-4 px-3 py-2 rounded-3 btn-outline-success fw-md text-center"
                             style={{ cursor: 'pointer' }}
                             onClick={() => Router.push(`/deal/${id}`)}>
                             Ariza topshirish
@@ -188,11 +185,11 @@ export default function DealCart({
                                 </div>
                             </div>
                         </div>
-                        {/* <div
-                            className="border h-25 fs-4 p-3 bg-success text-white fw-bold text-center"
+                        <div
+                            className="border h-25 fs-4 p-3 bg-success rounded-3 text-white fw-bold text-center"
                             onClick={() => Router.push('/deal/123')}>
                             Ariza topshirish
-                        </div> */}
+                        </div>
                     </div>
                     <p className="mt-5">
                         Ko'rishlar soni : <span>2</span>{' '}

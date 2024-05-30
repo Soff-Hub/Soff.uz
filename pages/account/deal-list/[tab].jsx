@@ -17,6 +17,7 @@ const DealList = (props) => {
         },
     ];
 
+    
     return (
         <PageContainer footer={<FooterDefault />} title="Notifications">
             <div className="ps-page--my-account">

@@ -93,14 +93,13 @@ export default function ApplyForDeal() {
     return (
         <div className="container-deal ">
             <div className="my-5 row">
-                <h3>Taklif yuborish</h3>
                 <h4 className='mt-3' > Buyurtma tavsifi </h4>
                 <DealCart type="apply_detail" />
             </div>
-            <h3 className="mb-4">
+            <h4 className="mb-4">
                 {' '}
                Buyurtma uchun taklif yuborish {' '}
-            </h3>
+            </h4>
             <Form
                 form={form}
                 // onFinish={postOrder}
@@ -123,22 +122,23 @@ export default function ApplyForDeal() {
                     />
                 </div>
 
-                <div className=" col-md-6 my-3 p-0 w-100 ">
+                <div className="col-md-6 mb-3 pl-0">
                     {' '}
                     <span className="d-block p-2 fw-bold">
                         Bajarilish muddati
                     </span>
                     <DatePicker
-                        className="w-100 py-3 col-md-6 my-3 rounded-3"
+                        className="w-100 py-3  rounded-3"
                         onChange={(e) => setDLifetime(e)}
                     />
                 </div>
 
-                <div className="col-md-6 p-0 my-3 ">
-                    <span className="d-block p-2 fw-bold -100">
+                <div className="col-md-6 mb-3  pr-0 ">
+                    <span className="d-block p-2 fw-bold ">
                         Narx
                     </span>
                     <Form.Item
+                    className='m-0'
                         name="title"
                         rules={[
                             {
@@ -152,13 +152,15 @@ export default function ApplyForDeal() {
                     </Form.Item>
                 </div>
 
-                <Form.Item className="col-md-2 p-0 mt-3">
+                <Form.Item className="col-md-12 d-flex justify-content-end ">
                     <Button
                         // loading={loading}
                         htmlType="submit"
+                        
                         style={{
                             width: '100%',
-                            height: '45px',
+                            height: '40px',
+                            padding:"1px 30px"
                         }}
                         className="btn-success btn-send-email">
                         <span
