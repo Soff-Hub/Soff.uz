@@ -262,8 +262,8 @@ const Posts = () => {
         if (customeFile.file) {
             formData.append('poster', customeFile.file);
         }
-        if (livePosterFile?.images?.length < 1) {
-            formData.append('page_count', watch('page_count'));
+        if (!livePosterFile?.page_count || livePosterFile?.page_count === undefined) {
+            formData.append('page_count', livePosterFile?.page_count || watch('page_count'));
         }
         formData.append('category', category_id[0]);
 
@@ -294,6 +294,7 @@ const Posts = () => {
         }
 
     }
+
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -499,7 +500,8 @@ const Posts = () => {
                             </div>
 
                             {
-                                (!livePosterFile?.page_count && livePosterFile?.page_count !== undefined) ?
+                                (livePosterFile?.page_count || livePosterFile?.page_count === undefined) ?
+                                    <></> :
                                     <div className="row   mt-3">
                                         <div className="col-md-4  d-flex justify-content-between p-0 ">
                                             <p>Mahsulot sahifalar soni: *</p>
@@ -528,8 +530,6 @@ const Posts = () => {
 
 
                                     </div>
-                                    :
-                                    <></>
 
                             }
 

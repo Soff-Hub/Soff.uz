@@ -64,7 +64,8 @@ const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loa
                 }
 
                 if (response?.images) {
-                    setDocument({ ...response, images: [] });
+                    setDocument({ ...response});
+                    setCustomeFile({ image_url: response.images[0]?.image_url })
                 } else {
                     setDocument(response);
                     setCustomeFile({ image_url: response.images[0]?.image_url })
