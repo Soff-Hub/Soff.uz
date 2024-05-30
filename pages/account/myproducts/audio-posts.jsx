@@ -9,7 +9,7 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Button, Checkbox, Modal, Progress, Select, Tabs, Tooltip } from 'antd';
+import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -21,13 +21,15 @@ import Link from 'next/link';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
+import Progress from '~/components/progress/progress';
+
+
 
 const category_id = [];
 
 const AudioPosts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [fileImgAudio, setFileImgAudio] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
@@ -36,19 +38,16 @@ const AudioPosts = () => {
     const [narxNomi, setNarxNomi] = useState(true);
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [Fulldata, setFullData] = useState('');
-    const [livePosterAudio, setLivePosterAudio] = useState('');
     const [categoryName, setCategoryName] = useState('');
     const [fileImgPoster, setFileImgPoster] = useState('');
     const [liveFile, setLiveFile] = useState('');
     const [narx, setNarx] = useState('');
-    const [loadingAudio, setLoadingAudio] = useState(false);
     const [free, setFree] = useState(false);
     const [audioPost, setAudioPost] = useState(null);
-    const [completed, setCompleted] = useState(0);
     const [profile, setProfile] = useState(null);
-    const maxCompleted = 100;
-    const [progress, setProgress] = useState(0);
-    const [socket, setSocket] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [loading2, setLoading2] = useState(false);
+
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
@@ -201,99 +200,50 @@ const AudioPosts = () => {
     }
 
     async function handleClickPosts(data) {
-
-        const formData = new FormData();
-        formData.append('title', data?.title);
-        if (free) {
-            formData.append('price', 0);
-        } else {
-            formData.append('price', narx);
-        }
-        formData.append('description', Fulldata);
-        formData.append('tags', tagSearchResult);
-        formData.append('document', livePosterAudio?.id);
-        formData.append('poster', fileImgPoster)
-        formData.append('category', category_id?.[0])
-
-        const patchItems = await PatchRepository.getPatchPoster(
-            formData,
-            user?.access
-        );
-        if (patchItems?.status === 201) {
-            Router.push('/account/myproducts');
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            });
-        } else {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: patchItems?.data.msg,
-            });
-        }
-    }
-
-    async function PostAudioPoster() {
-        if (fileImgAudio) {
-            const progresInterval = setInterval(() => {
-                if (maxCompleted <= completed) {
-                    clearInterval(progresInterval);
-                } else {
-                    setCompleted((completed += 1));
-                }
-            }, 1000);
-            setLiveFile('');
-            setLivePosterAudio('');
+        if (audioPost?.id) {
+            setLoading2(true);
             const formData = new FormData();
-            setLoadingAudio(true);
-            formData.append('file', fileImgAudio);
-            formData.append('content_type', 'audio');
+            formData.append('title', data?.title);
+            if (free) {
+                formData.append('price', 0);
+            } else {
+                formData.append('price', narx);
+            }
+            formData.append('description', Fulldata);
+            formData.append('tags', tagSearchResult);
+            formData.append('document', audioPost?.id);
+            formData.append('poster', fileImgPoster)
+            formData.append('category', category_id?.[0])
 
-            const ItemsData = await PostsRepository.PostsMyProductsPoster(
+            const patchItems = await PatchRepository.getPatchPoster(
                 formData,
                 user?.access
             );
-            if (ItemsData?.status === 201) {
-                clearInterval(progresInterval);
-                setCompleted(100);
-                setLivePosterAudio(ItemsData?.data);
-                setAudioPost(ItemsData);
-                if (progress == 100) {
-                    setTimeout(() => {
-                        setProgress(0);
-                    }, 1000);
-                }
-                const modal = Modal.success({
+            if (patchItems?.status === 201) {
+                Router.push('/account/myproducts');
+                const modal = Modal.warning({
                     centered: true,
                     title: 'Muvaffaqqiyatli!',
-                    content: "Yangi audio qo'shdingiz ",
+                    content:
+                        "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
                 });
+                setLoading2(false);
             } else {
-                if (progress == 100) {
-                    setTimeout(() => {
-                        setProgress(0);
-                    }, 1000);
-                }
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: `${ItemsData?.status === 400
-                        ? ItemsData?.data?.msg
-                            ? ItemsData?.data?.msg
-                            : "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlamaydi "
-                        : ItemsData?.status === 413
-                            ? "Sizning mahsulotingiz belgilangan hajmdan oshib ketti, bunday hajmli mahsulot qo'llab quvvatlanmaydi "
-                            : "Audio mahsulot qo'sha olmadingiz "
-                        }`,
+                    content: patchItems?.data.msg,
                 });
             }
-            setLoadingAudio(false);
+        }
+        else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: "Iltimos audio yuklab davom etishingiz mumkin!",
+            });
         }
     }
-
 
 
     useEffect(() => {
@@ -335,16 +285,6 @@ const AudioPosts = () => {
         GetItemsCategoryLists();
     }, []);
 
-    useEffect(() => {
-        PostAudioPoster();
-    }, [fileImgAudio]);
-
-
-    useEffect(() => {
-        if (watch('file')) {
-            setFileImgAudio(watch('file[0]'));
-        }
-    }, [watch('file')]);
 
 
     useEffect(() => {
@@ -353,78 +293,6 @@ const AudioPosts = () => {
         }
     }, [user?.access]);
 
-    useEffect(() => {
-        if (user?.access) {
-            setSocket(
-                new WebSocket(
-                    `wss://api.soff.uz/ws/document-progress/?token=${user?.access}`
-                )
-            );
-
-            // Agar user?.access mavjud bo'lsa
-            const newSocket = new WebSocket(
-                `wss://api.soff.uz/ws/document-progress/?token=${user?.access}`
-            );
-
-            // Yangi WebSocket ulanishini yaratish
-            newSocket.onopen = function () {
-                // console.log('WebSocket progress ulanishi amalga oshirildi.');
-            };
-
-            // Xabarlarni qabul qilish uchun funksiya
-            if (newSocket) {
-                newSocket.onmessage = function (event) {
-                    // console.log('socketttt', JSON.parse(event.data).progress);
-                    setProgress(JSON.parse(event.data).progress);
-                };
-            }
-
-            // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
-            newSocket.onerror = function (error) {
-                console.error('WebSocket xatosi:', error);
-            };
-
-            // useEffect funksiyasiga qaytariladigan cleanup funksiya
-            return () => {
-                // WebSocket ulanishini yopish
-                newSocket.close();
-            };
-        }
-    }, [user?.access]);
-
-    useEffect(() => {
-        if (user?.access) {
-            // Agar user?.access mavjud bo'lsa
-            const newSocket = new WebSocket(
-                `wss://api.soff.uz/ws/document-progress/?token=${user?.access}`
-            );
-
-            // Yangi WebSocket ulanishini yaratish
-            newSocket.onopen = function () {
-                // console.log('WebSocket progress ulanishi amalga oshirildi.');
-            };
-
-            // Xabarlarni qabul qilish uchun funksiya
-            if (newSocket) {
-                newSocket.onmessage = function (event) {
-                    setSocket(JSON.parse(event.data));
-                };
-            }
-
-            // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
-            newSocket.onerror = function (error) {
-                console.error('WebSocket xatosi:', error);
-            };
-
-            // useEffect funksiyasiga qaytariladigan cleanup funksiya
-            return () => {
-                // WebSocket ulanishini yopish
-                newSocket.close();
-            };
-        }
-    }, [user?.access]);
-
-console.log(livePosterAudio);
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
         <PageContainer
@@ -496,6 +364,7 @@ console.log(livePosterAudio);
                                         error={errors.title?.message}
                                     />
                                 </div>
+
                                 <div className="row ">
                                     <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                         <p>Audio: *</p>{' '}
@@ -505,74 +374,20 @@ console.log(livePosterAudio);
                                                 className="fa-regular fa-circle-question px-4 mt-2"></i>
                                         </Tooltip>
                                     </div>
-                                    <div className="col-md-8 p-0">
-                                        <label
-                                            className="add-product-user-image d-flex flex-column justify-content-center 
-                                        align-content-center form-control py-5 rounded-3 text-truncate"
-                                            style={{
-                                                backgroundColor: errors.file?.message ? " #fff" : '#F1F1F1',
-                                                border: errors.file?.message ? '1px solid red' : "1px dashed green",
-                                                width: '100%',
-                                            }}>
-                                            {livePosterAudio === '' ? (
-                                                <span
-                                                    className="d-flex flex-column align-items-center"
-                                                    style={{ cursor: 'pointer' }}>
-                                                    {loadingAudio ? (
-                                                        <Tooltip title="Mahsulot yuklash davom etmoqda">
-                                                            <Progress
-                                                                percent={
-                                                                    socket?.progress
-                                                                }
-                                                                success={{
-                                                                    percent: 30,
-                                                                }}
-                                                            />
-                                                        </Tooltip>
-                                                    ) : (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center "
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                            <span>
-                                                                Mahsulot (audio)
-                                                                yuklash uchun ushbu
-                                                                hududga bosing
-                                                                (.mp3)
-                                                            </span>
-                                                        </span>
-                                                    )}
-                                                </span>
-                                            ) : (
-                                                <span
-                                                    className="d-flex flex-column align-items-center"
-                                                    style={{ cursor: 'pointer' }}>
-                                                    <span>
-                                                        {' '}
-                                                        Siz audio yukladingiz{' '}
-                                                        <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                    </span>
-                                                </span>
-                                            )}
-                                            <input
-                                                name='file'
-                                                type="file"
-                                                {...register('file', {
-                                                    required: 'Maydon toldirish majburiy',
-                                                    validate: value => !!value[0] || "Audio tanlanishi majburiy"
-                                                })}
-                                                accept="audio/mp3"
-                                            />
-
-                                        </label>
-
-                                        <p className={"my-2  text-danger"}>
-                                            {errors?.file?.message}
-                                        </p>
+                                    <div className='col-md-8 p-0'>
+                                        <Progress
+                                            setDocument={setAudioPost}
+                                            setLoading={setLoading}
+                                            accept={"audio/mp3"}
+                                            inputText={"Mahsulot (audio) yuklash uchun ushbu hududga bosing (.mp3)"}
+                                            loadingText={"Audio tayyorlanmoqda..."}
+                                            content_type={"audio"}
+                                        />
 
                                     </div>
+
+
+
 
                                 </div>
 
@@ -726,15 +541,30 @@ console.log(livePosterAudio);
                                 <div
                                     className="d-flex justify-content-end mt-4 "
                                     style={{ transform: 'translateX(16px)' }}>
-                                    <button
-
-                                        type="submit"
-                                        className="btn btn-success py-3 ">
-                                        <span className="fs-4 px-5">
-                                            Audio qo'shish{' '}
-                                            <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
-                                        </span>
-                                    </button>
+                                    {loading2 ? (
+                                        <button
+                                            type="submit"
+                                            className="btn btn-success py-3 "
+                                            style={{ minWidth: '235px' }}>
+                                            <div
+                                                className="spinner-border"
+                                                role="status">
+                                                <span className="visually-hidden">
+                                                    Loading...
+                                                </span>
+                                            </div>
+                                        </button>
+                                    ) : (
+                                        <button
+                                            disabled={loading}
+                                            type="submit"
+                                            className="btn btn-success py-3 ">
+                                            <span className="fs-4 px-5">
+                                                Audio qo'shish{' '}
+                                                <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
+                                            </span>
+                                        </button>
+                                    )}
                                 </div>
 
                                 <div className="mahsulotingiz">
@@ -756,7 +586,7 @@ console.log(livePosterAudio);
                                 <>
                                     {!liveFile ? (
                                         <>
-                                            {audioPost?.data?.short_content ? (
+                                            {audioPost?.short_content ? (
                                                 <div
                                                     style={{
                                                         display: 'flex',
@@ -769,8 +599,7 @@ console.log(livePosterAudio);
                                                         type="audio/.mp3"
                                                         controls
                                                         src={
-                                                            audioPost?.data
-                                                                ?.short_content
+                                                            audioPost?.short_content
                                                         }></audio>
                                                 </div>
                                             ) : (
@@ -857,8 +686,8 @@ console.log(livePosterAudio);
                                             <strong className="fs-4">
                                                 Davomiyligi:{' '}
                                             </strong>{' '}
-                                            {livePosterAudio?.content_duration
-                                                ? livePosterAudio?.content_duration
+                                            {audioPost?.content_duration
+                                                ? audioPost?.content_duration
                                                 : ' '}{' '}
                                         </li>
                                         <li>
@@ -866,14 +695,14 @@ console.log(livePosterAudio);
                                             <strong className="fs-4">
                                                 Hajmi :{' '}
                                             </strong>{' '}
-                                            {livePosterAudio?.file_size}
+                                            {audioPost?.file_size}
                                         </li>
                                         <li>
                                             {' '}
                                             <strong className="fs-4">
                                                 Turi :{' '}
                                             </strong>{' '}
-                                            {livePosterAudio?.file_type}
+                                            {audioPost?.file_type}
                                         </li>
                                     </ul>
                                 </p>
@@ -987,10 +816,8 @@ console.log(livePosterAudio);
                                                 <strong className="fs-4">
                                                     Davomiyligi:{' '}
                                                 </strong>{' '}
-                                                {livePosterAudio?.data
-                                                    ?.content_duration
-                                                    ? livePosterAudio?.data
-                                                        ?.content_duration
+                                                {audioPost?.content_duration
+                                                    ? audioPost?.content_duration
                                                     : ' '}{' '}
                                             </li>
                                             <li>
@@ -999,8 +826,7 @@ console.log(livePosterAudio);
                                                     Hajmi :{' '}
                                                 </strong>{' '}
                                                 {
-                                                    livePosterAudio?.data
-                                                        ?.file_size
+                                                    audioPost?.file_size
                                                 }
                                             </li>
                                             <li>
@@ -1009,8 +835,7 @@ console.log(livePosterAudio);
                                                     Turi :{' '}
                                                 </strong>{' '}
                                                 {
-                                                    livePosterAudio?.data
-                                                        ?.file_type
+                                                    audioPost?.file_type
                                                 }
                                             </li>
                                         </ul>

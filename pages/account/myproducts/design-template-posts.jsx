@@ -13,18 +13,18 @@ import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
 import { useForm } from 'react-hook-form';
 import { InputNumber } from 'primereact/inputnumber';
 import Input from '~/components/form/Input';
+import Progress from '~/components/progress/progress';
+
 
 const category_id = [];
 
 const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [fileImgFile, setFileImgFile] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
@@ -182,79 +182,59 @@ const Posts = () => {
     }
 
     async function handleClickPosts() {
-        setLoading2(true);
-        const formData = new FormData();
-        formData.append('title', watch('title'));
-        if (free) {
-            formData.append('price', 0);
-        } else {
-            formData.append('price', narx);
-        }
-        formData.append('description', Fulldata);
-        formData.append('tags', tagSearchResult);
-
-        const customePosters = customePoster
-            .filter((el) => el.custome)
-            .map((el) => el.file);
-
-        if (customePosters.length > 0) {
-            for (const file of customePosters) {
-                formData.append('images', file);
-            }
-        }
-        formData.append('poster', customeFile.file);
-        formData.append('category', category_id[0]);
-        formData.append('document', document?.id);
-
-        const patchItems = await PatchRepository.getPatchPoster(
-            formData,
-            user?.access
-        );
-        if (patchItems?.status === 201) {
-            Router.push('/account/myproducts');
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            });
-        } else {
-            const modal = Modal.error({
-                centered: true,
-                title: 'Xatolik!',
-                content: patchItems?.data.msg,
-            });
-        }
-        setLoading2(false);
-    }
-
-    async function PostFilePoster() {
-        if (fileImgFile) {
-            setLivePosterFile('');
+        if (document?.id) {
+            setLoading2(true);
             const formData = new FormData();
-            setLoading(true);
-            formData.append('file', fileImgFile);
-            formData.append('content_type', 'template');
-            const ItemsData = await PostsRepository.PostsMyProductsPoster(
+            formData.append('title', watch('title'));
+            if (free) {
+                formData.append('price', 0);
+            } else {
+                formData.append('price', narx);
+            }
+            formData.append('description', Fulldata);
+            formData.append('tags', tagSearchResult);
+
+            const customePosters = customePoster
+                .filter((el) => el.custome)
+                .map((el) => el.file);
+
+            if (customePosters.length > 0) {
+                for (const file of customePosters) {
+                    formData.append('images', file);
+                }
+            }
+            formData.append('poster', customeFile.file);
+            formData.append('category', category_id[0]);
+            formData.append('document', document?.id);
+
+            const patchItems = await PatchRepository.getPatchPoster(
                 formData,
                 user?.access
             );
-
-            if (ItemsData?.status === 201) {
-                setDocument(ItemsData?.data)
-                setLivePosterFile(ItemsData?.data);
+            if (patchItems?.status === 201) {
+                Router.push('/account/myproducts');
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content:
+                        "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                });
             } else {
                 const modal = Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: "File mahsulot qo'sha olmadingiz ",
+                    content: patchItems?.data.msg,
                 });
             }
-            setLoading(false);
+            setLoading2(false);
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: "Iltimos fayl yuklab davom etishingiz mumkin!",
+            });
         }
     }
-
-
 
 
     useEffect(() => {
@@ -304,18 +284,6 @@ const Posts = () => {
         GetItemsCategoryLists();
     }, []);
 
-    useEffect(() => {
-        PostFilePoster();
-    }, [fileImgFile]);
-
-    useEffect(() => {
-        if (watch('file')) {
-            setFileImgFile(watch('file[0]'));
-        }
-    }, [watch('file')]);
-
-
-
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -355,14 +323,18 @@ const Posts = () => {
                             onSubmit={handleSubmit(handleClickPosts)}
                             style={{ position: 'relative', width: '100%' }}
                             id="FormPostsMyProducts"
-                            className=" col-md-8 pb-5"
+                            className="col-md-8 pb-5"
                             noValidate
                         >
+
+
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
                                     <h4 className=" p-0">Yangi mahsulot </h4>
                                 </div>
                             </div>
+
+
 
                             <div className="row   mt-3">
                                 <div className="col-md-4  d-flex justify-content-between p-0 ">
@@ -397,66 +369,14 @@ const Posts = () => {
                                 </div>
 
                                 <div className='col-md-8 p-0'>
-                                    <label
-                                        className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
-                                        style={{
-                                            backgroundColor: errors.file?.message ? " #fff" : '#F1F1F1',
-                                            border: errors.file?.message ? '1px solid red' : "1px dashed green",
-                                            width: '100%',
-                                        }}>
-                                        {livePosterFile === '' ? (
-                                            <span
-                                                className="d-flex flex-column align-items-center"
-                                                style={{ cursor: 'pointer' }}>
-                                                {loading ? (
-                                                    <span className="d-flex justify-content-center">
-                                                        <ClipLoader
-                                                            size={25}
-                                                            color="#36d7b7"
-                                                        />
-                                                    </span>
-                                                ) : (
-                                                    <span
-                                                        className="d-flex flex-column align-items-center "
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}>
-                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                        <span>
-                                                            Shablon faylini yuklash
-                                                            uchun ushbu hududga
-                                                            bosing (.zip).
-                                                        </span>
-                                                    </span>
-                                                )}
-                                            </span>
-                                        ) : (
-                                            <span
-                                                className="d-flex flex-column align-items-center"
-                                                style={{ cursor: 'pointer' }}>
-                                                <span>
-                                                    {' '}
-                                                    Siz mahsulot yukladingiz{' '}
-                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                </span>
-                                            </span>
-                                        )}
-
-                                        <input
-                                            name='file'
-                                            type="file"
-                                            {...register('file', {
-                                                required: "Shablon qo'shish majburiy",
-                                                validate: value => !!value[0] || "Shablon tanlanishi majburiy"
-                                            })}
-                                            accept=".zip"
-                                        />
-
-
-                                    </label>
-                                    <p className={"my-2  text-danger"}>
-                                        {errors?.file?.message}
-                                    </p>
+                                    <Progress
+                                        setDocument={setDocument}
+                                        setLoading={setLoading}
+                                        accept={".zip"}
+                                        inputText={"Shablon faylini yuklash uchun ushbu hududga bosing (.zip)."}
+                                        loadingText={"Fayl tayyorlanmoqda..."}
+                                        content_type={"template"}
+                                    />
 
                                 </div>
 
@@ -544,9 +464,6 @@ const Posts = () => {
                                 </div>
 
                             </div>
-
-
-
 
                             <div className=" row ">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
