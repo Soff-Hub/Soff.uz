@@ -296,58 +296,56 @@
         color: #6990f2;
     }
 
-
-    .form_border {
-        border: 2px dashed transparent;
-        animation: borderAnimation 2s linear infinite;
-    }
-
     .text_color {
         animation: textAnimation 2s linear infinite;
     }
 
-    @keyframes borderAnimation {
+    .form_border {
+        border: 1px dashed #6990f2;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form_border::before {
+        content: '';
+        position: absolute;
+        border-radius: 5px;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        border: 2px solid transparent;
+        animation: borderMove 2s linear infinite;
+    }
+
+
+    @keyframes borderMove {
+
+
         0% {
-            border-color: red;
+            border-color: transparent transparent #6990f2 #6990f2;
         }
 
         25% {
-            border-color: rgb(201, 201, 64);
+            border-color: #6990f2 transparent transparent #6990f2;
         }
 
         50% {
-            border-color: green;
+            border-color: #6990f2 #6990f2 transparent transparent;
         }
 
         75% {
-            border-color: blue;
+            border-color: transparent #6990f2 #6990f2 transparent;
         }
 
         100% {
-            border-color: red;
+            border-color: transparent transparent #6990f2 #6990f2;
         }
     }
 
-    @keyframes textAnimation {
-        0% {
-            color: red;
-        }
-
-        25% {
-            color: rgb(201, 201, 64);
-        }
-
-        50% {
-            color: green;
-        }
-
-        75% {
-            color: blue;
-        }
-
-        100% {
-            color: red;
-        }
+    .spnniers {
+        color: #6990f2;
+        
     }
 
 
