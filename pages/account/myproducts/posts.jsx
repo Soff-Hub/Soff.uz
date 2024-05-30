@@ -43,7 +43,7 @@ const Posts = () => {
     const [customeFile, setCustomeFile] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-   
+
 
 
     const breadCrumb = [
@@ -637,19 +637,37 @@ const Posts = () => {
                                 </div>
                             </div>
 
+
                             <div
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
-                                <button
-                                    disabled={disabled}
-                                    type="submit"
-                                    className="btn btn-success py-3 ">
-                                    <span className="fs-4 px-5">
-                                        Mahsulot qo'shish{' '}
-                                        <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
-                                    </span>
-                                </button>
+                                {disabled ? (
+                                    <button
+                                        type="submit"
+                                        className="btn btn-success py-3 "
+                                        style={{ minWidth: '235px' }}>
+                                        <div
+                                            className="spinner-border"
+                                            role="status">
+                                            <span className="visually-hidden">
+                                                Loading...
+                                            </span>
+                                        </div>
+                                    </button>
+                                ) : (
+                                    <button
+                                        disabled={loading}
+                                        type="submit"
+                                        className="btn btn-success py-3 ">
+                                        <span className="fs-4 px-5">
+                                            Mahsulot qo'shish{' '}
+                                            <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
+                                        </span>
+                                    </button>
+                                )}
                             </div>
+
+
                             <div className="mahsulotingiz">
                                 <span
                                     className="fixed-btn"
@@ -665,9 +683,10 @@ const Posts = () => {
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
                             <div className="image w-full rounded mb-3 "
-                             style={{display:"flex",
-                                justifyContent:"center"
-                             }}
+                                style={{
+                                    display: "flex",
+                                    justifyContent: "center"
+                                }}
                             >
                                 <img
                                     src={
