@@ -8,8 +8,7 @@ export default function DefaultAudioLive({
     title,
     categoryName,
 }) {
-    // product?.document?.short_content_url
-    // `video/${product?.document?.file_type?.replace('.','' )}`
+   
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
     const [currentTime, setCurrentTime] = useState(0);
@@ -99,13 +98,13 @@ export default function DefaultAudioLive({
                 </marquee>
                 <div className="audio_child">
                     <span>
-                        {product?.data?.file_type || product?.document?.file_type
-                            ? product?.data?.file_type || product?.document?.file_type
+                        {product?.file_type || product?.document?.file_type
+                            ? product?.file_type || product?.document?.file_type
                             : "To'ldirilmadi"}
                     </span>
                     <span>
-                        {product?.data?.file_size || product?.document?.file_size
-                            ? product?.data?.file_size || product?.document?.file_size
+                        {product?.file_size || product?.document?.file_size
+                            ? product?.file_size || product?.document?.file_size
                             : "To'ldirilmadi"}
                     </span>
                 </div>
@@ -115,7 +114,7 @@ export default function DefaultAudioLive({
                 <div className="d-xl-flex d-xxl-flex d-lg-flex d-md-block  align-items-center gap-5 mb-3">
                     <span className="d-md-block d-block d-sm-block d-xxl-inline d-xl-inline d-lg-inline">
                         {' '}
-                        Davomiyligi {product?.document?.content_duration || product?.data?.content_duration}
+                        Davomiyligi {product?.document?.content_duration || product?.content_duration}
                     </span>
                     {document?.file_url ? (
                         ''
@@ -125,7 +124,7 @@ export default function DefaultAudioLive({
                         </span>
                     )}
                 </div>
-                {product?.data?.content_duration ? (
+                {product?.content_duration ? (
                     <div className="audio_content">
                         <div className="audio_play" onClick={togglePlay}>
                             {isPlaying ? (
@@ -141,8 +140,8 @@ export default function DefaultAudioLive({
                         <div>
                             <span>{formatTime(currentTime)}</span> /{' '}
                             <span>
-                                {product?.data?.content_duration || product?.document?.content_duration
-                                    ? product?.data?.content_duration || product?.document?.content_duration
+                                {product?.content_duration || product?.document?.content_duration
+                                    ? product?.content_duration || product?.document?.content_duration
                                     : "To'ldirilmadi"}
                             </span>
                         </div>
@@ -167,7 +166,7 @@ export default function DefaultAudioLive({
                     id="audioPlayer"
                     style={{ display: 'none' }}
                     ref={audioRef}
-                    src={product?.data?.short_content}
+                    src={product?.short_content}
                     controls>
                     Your browser does not support the audio element.
                 </audio>

@@ -264,6 +264,159 @@
     }
 }
 
+
+.wrapper {
+    width: 100%;
+    header {
+        color: #6990f2;
+        font-size: 27px;
+        font-weight: 600;
+        text-align: center;
+
+
+    }
+
+    form {
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        cursor: pointer;
+        border-radius: 5px;
+        margin: 10px 0 5px 0;
+
+        i {
+            font-size: 25px;
+        }
+
+        p {
+            font-size: 14px;
+            margin: 0;
+
+        }
+
+    }
+
+    form :where(i, p) {
+        color: #6990f2;
+    }
+
+
+    .progress-area {
+        .row_cols {
+            background-color: #e9f0ff;
+            margin-bottom: 10px;
+            list-style: none;
+            padding: 15px 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            i {
+                font-size: 30px;
+                color: #6990f2;
+            }
+
+
+            .content {
+                width: 100%;
+                margin-left: 15px;
+
+                .details {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    margin-bottom: 7px;
+
+                    span {
+                        font-size: 14px;
+                    }
+                }
+
+                .progress-bar {
+                    height: 6px;
+                    width: 100%;
+                    background-color: #fff;
+                    margin-bottom: 4px;
+                    border-radius: 30px;
+
+                    .progress {
+                        height: 100%;
+                        background-color: #6990f2;
+                        width: 0%;
+                        border-radius: inherit;
+                    }
+
+                }
+            }
+
+        }
+    }
+
+    .uploaded-area {
+        .row_cols {
+            background-color: #e9f0ff !important;
+            margin-bottom: 10px;
+            list-style: none;
+            padding: 7px 15px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            .content {
+                width: 100%;
+                display: flex;
+                align-items: center;
+
+                .details {
+                    display: flex;
+                    margin-left: 15px;
+                    flex-direction: column;
+
+                    .size {
+                        font-size: 11px;
+                        color: #404040;
+                    }
+                }
+            }
+
+            .fa-file-alt {
+                font-size: 20px;
+                color: #6990f2;
+            }
+
+            .fa-check {
+                font-size: 16px;
+                color: #6990f2;
+            }
+
+
+        }
+    }
+
+    .uploaded-area::-webkit-scrollbar {
+        width: 0px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @media screen and (max-width: 1200px) {
     .search_home_pages {
         // height: 100vh;
