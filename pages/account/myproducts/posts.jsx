@@ -43,6 +43,8 @@ const Posts = () => {
     const [customeFile, setCustomeFile] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
+   
+
 
     const breadCrumb = [
         {
@@ -662,14 +664,18 @@ const Posts = () => {
                         <div
                             className="col-md-4 rounded-3  p-3 cardResponsive  card mt-3"
                             style={{ maxWidth: '370px' }}>
-                            <div className="image rounded mb-3">
+                            <div className="image w-full rounded mb-3 "
+                             style={{display:"flex",
+                                justifyContent:"center"
+                             }}
+                            >
                                 <img
                                     src={
                                         customeFile?.image_url ? customeFile?.image_url :
                                             '/static/img/docCopy.png'
                                     }
                                     alt="doc"
-                                    className=" mb-4"
+                                    className="mb-4"
                                     style={{
                                         objectFit: 'cover',
                                         width: '250px',
@@ -788,7 +794,7 @@ const Posts = () => {
                         </div>
                         <div className="offcanvas-body">
                             <div className="card  rounded-3 ">
-                                <div className="image rounded mb-3">
+                                <div className="image rounded mb-3 ">
                                     <img
                                         src={
                                             customeFile?.image_url ? customeFile?.image_url :

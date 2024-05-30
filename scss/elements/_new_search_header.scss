@@ -267,16 +267,8 @@
 
 .wrapper {
     width: 100%;
-    header {
-        color: #6990f2;
-        font-size: 27px;
-        font-weight: 600;
-        text-align: center;
 
-
-    }
-
-    form {
+    .form {
         height: 70px;
         display: flex;
         align-items: center;
@@ -285,6 +277,8 @@
         cursor: pointer;
         border-radius: 5px;
         margin: 10px 0 5px 0;
+        border: 2px dashed #c5c2c2;
+
 
         i {
             font-size: 25px;
@@ -298,8 +292,62 @@
 
     }
 
-    form :where(i, p) {
+    .form :where(i, p) {
         color: #6990f2;
+    }
+
+
+    .form_border {
+        border: 2px dashed transparent;
+        animation: borderAnimation 2s linear infinite;
+    }
+
+    .text_color {
+        animation: textAnimation 2s linear infinite;
+    }
+
+    @keyframes borderAnimation {
+        0% {
+            border-color: red;
+        }
+
+        25% {
+            border-color: rgb(201, 201, 64);
+        }
+
+        50% {
+            border-color: green;
+        }
+
+        75% {
+            border-color: blue;
+        }
+
+        100% {
+            border-color: red;
+        }
+    }
+
+    @keyframes textAnimation {
+        0% {
+            color: red;
+        }
+
+        25% {
+            color: rgb(201, 201, 64);
+        }
+
+        50% {
+            color: green;
+        }
+
+        75% {
+            color: blue;
+        }
+
+        100% {
+            color: red;
+        }
     }
 
 
@@ -487,6 +535,7 @@
         .container {
             .search_home_box {
                 margin-top: 20px;
+
                 h1 {
                     font-size: 16px;
                     line-height: 24px;

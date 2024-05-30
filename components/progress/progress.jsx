@@ -2,7 +2,17 @@ import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { baseUrl } from '~/repositories/Repository';
 
-const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loadingReq, content_type, setCustomeFile }) => {
+const Progress = ({
+    setDocument,
+    accept,
+    setLoading,
+    inputText,
+    loadingText,
+    content_type,
+    setCustomeFile
+}) => {
+
+
     const { user } = useSelector((state) => state.auth);
     const formRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -59,13 +69,11 @@ const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loa
 
             if (xhr.status === 201) {
                 let response = JSON.parse(xhr.responseText);
-                if (response?.content_type === "file" || response?.content_type === "template") {
+                if (response?.content_type === "audio" || response?.content_type === "template") {
                     setDocument(response);
                 }
-
-                if (response?.images) {
-                    setDocument({ ...response});
-                    setCustomeFile({ image_url: response.images[0]?.image_url })
+                if (!response?.images) {
+                    setDocument({ ...response, images: [] });
                 } else {
                     setDocument(response);
                     setCustomeFile({ image_url: response.images[0]?.image_url })
@@ -87,7 +95,10 @@ const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loa
 
     return (
         <div className="wrapper">
-            <form ref={formRef} action="#" onClick={handleProgress} style={{ border: !loadingReq ? "2px dashed #c5c2c2" : "2px dashed red" }} >
+
+
+            <form ref={formRef} action="#" onClick={handleProgress}
+                className={!loading ? "form" : "form form_border"} >
                 {
                     !loading ?
                         <>
@@ -98,7 +109,7 @@ const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loa
                             <i className="fas fa-cloud-upload-alt"></i>
                             <p className='mt-2'>{inputText}</p>
                         </> :
-                        <p>{loadingText}</p>
+                        <p className={loading ? "text_color" : ""} >{loadingText}</p>
 
                 }
             </form>
