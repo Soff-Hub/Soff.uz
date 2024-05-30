@@ -19,7 +19,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                         <div
                             key={index}
                             className="col-md-12 my-2">
-                            <AudioProductCart product={item} />{' '}
+                            {/* <AudioProductCart product={item} />{' '} */}
                         </div> :
                         item?.document?.content_type === 'video' ?
                             <div

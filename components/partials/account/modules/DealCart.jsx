@@ -1,5 +1,5 @@
 import Router from 'next/router';
-import React from 'react';
+import React, { useState } from 'react';
 
 export default function DealCart({
     type,
@@ -9,10 +9,26 @@ export default function DealCart({
     price,
     application_count,
     status,
-    deal_type
+    deal_type,
+    id
 }) {
+
+    const [isHovered, setIsHovered] = useState(false);
+
+    const onClickCard = () => {
+        if (type === 'apply') {
+            Router.push(`/deal/${id}`)
+        }
+    }
+
     return (
-        <div className="border border-2 rounded-3 p-4 bg-white">
+        <div
+            className="rounded-3 px-4 py-4 bg-white"
+            style={{ cursor: 'pointer' }}
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            onClick={onClickCard}
+        >
             <div className="d-md-flex justify-content-between  ">
                 <h3 className="text-success"> {title ? title : "Kurs ishi kerak"} </h3>
                 <div>
@@ -23,7 +39,6 @@ export default function DealCart({
                     </span>
                 </div>
             </div>
-            <p>{description ? description : 'Description'}</p>
             {type === 'application' ? (
                 <div className="d-flex justify-content-between gap-4">
                     <div className="text-start">
@@ -33,16 +48,16 @@ export default function DealCart({
                                 <i class="fa-solid fa-calendar-days"></i>
                             </span>{' '}
                             <span className="fw-medium ">
-                              Muddati :  {deadline ? deadline + ' kun' : ''}{' '}
+                                Muddati :  {deadline ? deadline + ' kun' : ''}{' '}
                             </span>
                         </div>
                         <div>
                             {' '}
                             <span className="text-success fs-3 fw-medium">
-                            <i class="fa-regular fa-folder-open"></i>
+                                <i class="fa-regular fa-folder-open"></i>
                             </span>{' '}
                             <span className="fw-medium ">
-                              Turi : <span> {deal_type?.name} </span>{' '}
+                                Turi : <span> {deal_type?.name} </span>{' '}
                             </span>
                         </div>
                         {/* <div>
@@ -88,7 +103,7 @@ export default function DealCart({
                     </div>
                     <div>
                         <span className="text-success fs-3 fw-medium">
-                            arizalar 
+                            arizalar
                             :{' '}
                         </span>{' '}
                         <span className="fw-medium ">
@@ -99,8 +114,8 @@ export default function DealCart({
                 </div>
             ) : type === 'apply' ? (
                 <div>
-                    <div className="d-md-flex justify-content-between gap-4 ">
-                        <div className="d-flex ">
+                    <div className="d-md-flex justify-content-between gap-4 align-items-start">
+                        <div className="d-flex align-items-center mb-3">
                             <img
                                 className="d-block"
                                 width={80}
@@ -108,14 +123,6 @@ export default function DealCart({
                                 alt="sca"
                             />
                             <div>
-                                <div className="text-start">
-                                    <span className="text-success fs-3 fw-medium">
-                                        <i class="fa-solid fa-user"></i>
-                                    </span>{' '}
-                                    <span className="fw-medium ">
-                                        Jasue Baxtiyarov
-                                    </span>
-                                </div>
                                 <div className="text-start">
                                     <span className="text-success fs-3 fw-medium">
                                         <i class="fa-solid fa-calendar-days"></i>
@@ -128,19 +135,23 @@ export default function DealCart({
                                     <span className="text-success fs-3 fw-medium">
                                         arizalar :{' '}
                                     </span>{' '}
-                                    <span className="fw-medium "> 2</span>
+                                    <span className="fw-medium ">{application_count || "Hechkim topshirmagan"}</span>
                                 </div>
+                                {/* <div className="text-start">
+                                    <span className="text-success fs-5 fw-medium">
+                                        <i class="fa-solid fa-eye"></i>{' '}
+                                    </span>{' '}
+                                    <span className="fw-medium ">{19}</span>
+                                </div> */}
                             </div>
                         </div>
-                        <div
-                            className="border h-25 fs-4 p-3 bg-success text-white fw-bold text-center"
-                            onClick={() => Router.push('/deal/123')}>
+                        {isHovered && <div
+                            className="border h-25 fs-4 px-3 py-2 bg-white text-success fw-md text-center"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => Router.push(`/deal/${id}`)}>
                             Ariza topshirish
-                        </div>
+                        </div>}
                     </div>
-                    <p className="mt-5">
-                        Ko'rishlar soni : <span>2</span>{' '}
-                    </p>
                 </div>
             ) : type === 'apply_detail' ? (
                 <div>
@@ -205,6 +216,7 @@ export default function DealCart({
                     </div>
                 </div>
             )}
+            <p>{description ? description : 'Description'}</p>
         </div>
     );
 }
