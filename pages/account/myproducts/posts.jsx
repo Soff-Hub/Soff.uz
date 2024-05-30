@@ -237,61 +237,69 @@ const Posts = () => {
 
 
     async function handleClickPosts(data) {
-        setDeisabled(true);
-        const formData = new FormData();
-        formData.append('title', data?.title);
-        if (free) {
-            formData.append('price', 0);
-        } else {
-            formData.append('price', narx);
-        }
-        formData.append('description', Fulldata);
-        formData.append('tags', tagSearchResult);
-
-        livePosterFile?.images?.[0]?.id
-            ? formData.append('poster_id', livePosterFile?.images?.[0]?.id)
-            : 'None';
-
-        const customePosters = customePoster
-            .filter((el) => el.custome)
-            .map((el) => el.file);
-
-        if (customePosters.length > 0) {
-            for (const file of customePosters) {
-                formData.append('images', file);
+        if (livePosterFile?.id) {
+            setDeisabled(true);
+            const formData = new FormData();
+            formData.append('title', data?.title);
+            if (free) {
+                formData.append('price', 0);
+            } else {
+                formData.append('price', narx);
             }
-        }
-        if (customeFile.file) {
-            formData.append('poster', customeFile.file);
-        }
-        if (!livePosterFile?.page_count || livePosterFile?.page_count === undefined) {
-            formData.append('page_count', livePosterFile?.page_count || watch('page_count'));
-        }
-        formData.append('category', category_id[0]);
+            formData.append('description', Fulldata);
+            formData.append('tags', tagSearchResult);
 
-        formData.append('document', livePosterFile?.id);
+            livePosterFile?.images?.[0]?.id
+                ? formData.append('poster_id', livePosterFile?.images?.[0]?.id)
+                : 'None';
 
-        const patchItems = await PatchRepository.getPatchPoster(
-            formData,
-            user?.access
-        );
-        if (patchItems?.status === 201) {
-            Router.push('/account/myproducts');
-            setDeisabled(false);
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content:
-                    "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-            });
+            const customePosters = customePoster
+                .filter((el) => el.custome)
+                .map((el) => el.file);
+
+            if (customePosters.length > 0) {
+                for (const file of customePosters) {
+                    formData.append('images', file);
+                }
+            }
+            if (customeFile.file) {
+                formData.append('poster', customeFile.file);
+            }
+            if (!livePosterFile?.page_count || livePosterFile?.page_count === undefined) {
+                formData.append('page_count', livePosterFile?.page_count || watch('page_count'));
+            }
+            formData.append('category', category_id[0]);
+
+            formData.append('document', livePosterFile?.id);
+
+            const patchItems = await PatchRepository.getPatchPoster(
+                formData,
+                user?.access
+            );
+            if (patchItems?.status === 201) {
+                Router.push('/account/myproducts');
+                setDeisabled(false);
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content:
+                        "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                });
+            } else {
+                setDeisabled(false);
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content:
+                        patchItems?.data?.msg ||
+                        JSON.stringify(patchItems?.data.category),
+                });
+            }
         } else {
-            setDeisabled(false);
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
-                content:
-                    patchItems?.data?.msg ||
-                    JSON.stringify(patchItems?.data.category),
+                content: "Iltimos file yuklab davom etishingiz mumkin!",
             });
         }
 
