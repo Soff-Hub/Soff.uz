@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { baseUrl } from '~/repositories/Repository';
 
-const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loadingReq, content_type }) => {
+const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loadingReq, content_type, setCustomeFile }) => {
     const { user } = useSelector((state) => state.auth);
     const formRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -56,9 +56,19 @@ const Progress = ({ setDocument, accept, setLoading, inputText, loadingText, loa
         xhr.onload = function () {
             setLoading(false);
             setLoading2(false);
+
             if (xhr.status === 201) {
                 let response = JSON.parse(xhr.responseText);
-                setDocument(response);
+                if (response?.content_type === "file" || response?.content_type === "template") {
+                    setDocument(response);
+                }
+
+                if (response?.images) {
+                    setDocument({ ...response, images: [] });
+                } else {
+                    setDocument(response);
+                    setCustomeFile({ image_url: response.images[0]?.image_url })
+                }
                 setStatus(xhr.status)
             } else {
                 let error = xhr.responseText;
