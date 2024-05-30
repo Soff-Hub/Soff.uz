@@ -13,6 +13,7 @@ const Progress = ({
 }) => {
 
 
+
     const { user } = useSelector((state) => state.auth);
     const formRef = useRef(null);
     const fileInputRef = useRef(null);
@@ -107,9 +108,14 @@ const Progress = ({
                                 accept={accept}
                             />
                             <i className="fas fa-cloud-upload-alt"></i>
-                            <p className='mt-2'>{inputText}</p>
+                            <p className='mt-2 text-truncate w-100 px-3 text-center'>{inputText}</p>
                         </> :
-                        <p className={loading ? "text_color" : ""} >{loadingText}</p>
+                        <div className='d-flex align-items-center gap-3 '>
+                            <div className="spinner-border spnniers" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                            <p> {loadingText}</p>
+                        </div>
 
                 }
             </form>
@@ -142,7 +148,7 @@ const Progress = ({
                             <div className="content">
                                 <i className="fas fa-file-alt"></i>
                                 <div className="details">
-                                    <span className="name">{inputName}  <span className='text-success mx-3'>Yuklandi</span></span>
+                                    <span className="name ">{inputName}  <span className='text-success mx-3'>Yuklandi</span></span>
                                     <span className="size">{
                                         fileTotals < 1024
                                             ? (fileTotals + ' ' + "KB")
