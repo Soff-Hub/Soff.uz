@@ -18,13 +18,13 @@ import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
+import Progress from '~/components/progress/progress';
 const category_id = [];
 
 
 const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
-    const [fileImgFile, setFileImgFile] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
@@ -189,49 +189,19 @@ const Posts = () => {
         }
     }
 
-
-    async function PostFilePoster() {
-        if (fileImgFile) {
-            const formData = new FormData();
-            setLoading(true);
-            formData.append('file', fileImgFile);
-            formData.append('content_type', 'file');
-            const ItemsData = await PostsRepository.PostsMyProductsPoster(
-                formData,
-                user?.access
-            );
-
-            if (ItemsData?.status === 201) {
-
-                if (!ItemsData?.data?.images) {
-                    setLivePosterFile({ ...ItemsData?.data, images: [] });
-                } else {
-                    setLivePosterFile(ItemsData?.data);
-                    setCustomeFile({ image_url: ItemsData?.data?.images[0]?.image_url })
-                }
-
-            } else {
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik!',
-                    content: "File mahsulot qo'sha olmadingiz ",
-                });
-            }
-            setLoading(false);
-        }
+    function LiveImage(e) {
+        const img = window?.URL?.createObjectURL(e.target.files[0]);
+        setCustomeFile({ image_url: img, file: e.target.files[0], })
+        setCustomePoster([
+            {
+                id: new Date().getTime(),
+                image_url: img,
+                file: e.target.files[0],
+                custome: true,
+            },
+            ...customePoster,
+        ]);
     }
-
-    useEffect(() => {
-        PostFilePoster();
-    }, [fileImgFile]);
-
-    useEffect(() => {
-        if (watch('file')) {
-            setFileImgFile(watch('file[0]'));
-        }
-    }, [watch('file')]);
-
-
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -276,11 +246,24 @@ const Posts = () => {
         formData.append('description', Fulldata);
         formData.append('tags', tagSearchResult);
 
-        if (watch('file_image[0]')) {
-            formData.append('poster', watch('file_image[0]'));
+        livePosterFile?.images?.[0]?.id
+            ? formData.append('poster_id', livePosterFile?.images?.[0]?.id)
+            : 'None';
+
+        const customePosters = customePoster
+            .filter((el) => el.custome)
+            .map((el) => el.file);
+
+        if (customePosters.length > 0) {
+            for (const file of customePosters) {
+                formData.append('images', file);
+            }
         }
-        if (!livePosterFile?.page_count || livePosterFile?.page_count === undefined) {
-            formData.append('page_count', livePosterFile?.page_count || watch('page_count'));
+        if (customeFile.file) {
+            formData.append('poster', customeFile.file);
+        }
+        if (livePosterFile?.images?.length < 1) {
+            formData.append('page_count', watch('page_count'));
         }
         formData.append('category', category_id[0]);
 
@@ -311,15 +294,6 @@ const Posts = () => {
         }
 
     }
-
-
-    useEffect(() => {
-        const selectedImage = watch('file_image[0]');
-        if (selectedImage) {
-            const img = window?.URL?.createObjectURL(selectedImage);
-            setCustomeFile({ image_url: img })
-        }
-    }, [watch('file_image')]);
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (
@@ -405,70 +379,22 @@ const Posts = () => {
                                 </div>
 
                                 <div className='col-md-8 p-0'>
-                                    <label
-                                        className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
-                                        style={{
-                                            backgroundColor: errors.file?.message ? " #fff" : '#F1F1F1',
-                                            border: errors.file?.message ? '1px solid red' : "1px dashed green",
-                                            width: '100%',
-                                        }}>
-                                        {!fileImgFile || livePosterFile === '' ? (
-                                            <span
-                                                className="d-flex flex-column align-items-center"
-                                                style={{ cursor: 'pointer' }}>
-                                                {loading ? (
-                                                    <span className="d-flex justify-content-center">
-                                                        <ClipLoader
-                                                            size={25}
-                                                            color="#36d7b7"
-                                                        />
-                                                    </span>
-                                                ) : (
-                                                    <span
-                                                        className="d-flex flex-column align-items-center "
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}>
-                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                        <span>
-                                                            Faylni yuklash uchun
-                                                            ushbu hududga bosing.
-                                                        </span>
-                                                    </span>
-                                                )}
-                                            </span>
-                                        ) : (
-                                            <span
-                                                className="d-flex flex-column align-items-center"
-                                                style={{ cursor: 'pointer' }}>
-                                                <span>
-                                                    {' '}
-                                                    Siz mahsulot yukladingiz{' '}
-                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                </span>
-                                            </span>
-                                        )}
-
-                                        <input
-                                            name='file'
-                                            type="file"
-                                            {...register('file', {
-                                                required: "Mahsulot qo'shish majburiy",
-                                                validate: value => !!value[0] || "Mahsulot tanlanishi majburiy"
-                                            })}
-                                            accept=".doc, .docx, .ppt, .pdf, .pptx"
-                                        />
-
-
-                                    </label>
-                                    <p className={"my-2  text-danger"}>
-                                        {errors?.file?.message}
-                                    </p>
+                                    <Progress
+                                        setDocument={setLivePosterFile}
+                                        setLoading={setLoading}
+                                        accept={".doc, .docx, .ppt, .pdf, .pptx"}
+                                        inputText={"Faylni yuklash uchun ushbu hududga bosing."}
+                                        loadingText={"Fayl tayyorlanmoqda..."}
+                                        content_type={"file"}
+                                        setCustomeFile={setCustomeFile}
+                                    />
 
                                 </div>
+
                             </div>
 
-                            <div className="row ">
+
+                            <div className="row mb-3">
                                 <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
                                     <p>Mahsulot rasmi: *</p>
                                     <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
@@ -477,60 +403,103 @@ const Posts = () => {
                                             className="fa-regular fa-circle-question px-4 mt-2"></i>
                                     </Tooltip>
                                 </div>
-
                                 <div className='col-md-8 p-0'>
-                                    <label
-                                        className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
+                                    <div
+                                        className="add-product-user-image d-flex justify-content-between  form-control pt-2 rounded-3"
                                         style={{
-                                            backgroundColor: errors.file_image?.message ? " #fff" : '#F1F1F1',
-                                            border: errors.file_image?.message ? '1px solid red' : "1px dashed green",
-                                            width: '100%',
+                                            height: '100px',
+                                            backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',
+                                            border: errors.image?.message ? '1px solid red' : "1px dashed green",
                                         }}>
-                                        {watch('file_image[0]') ? (
-                                            <span
-                                                className="d-flex flex-column align-items-center"
-                                                style={{ cursor: 'pointer' }}>
-                                                <span>
-                                                    {' '}
-                                                    Siz mahsulot rasmini yukladingiz{' '}
-                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                </span>
-                                            </span>
-                                        ) : (
-                                            <span
-                                                className="d-flex flex-column align-items-center mx-5"
-                                                style={{ cursor: 'pointer' }}>
-                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                <span className="text-center">
-                                                    Rasmini yuklash uchun ushbu hududga bosing.
-                                                </span>
-                                            </span>
-                                        )}
-                                        <input
-                                            name='file_image'
-                                            type="file"
-                                            {...register('file_image', {
-                                                required: "Mahsulot rasmini qo'shish majburiy",
-                                                validate: value => !!value[0] || "Mahsulot rasmi tanlanishi majburiy"
-                                            })}
-                                            accept="image/*"
-                                        />
+                                        <label
+                                            style={{
+                                                width: '50px',
+                                                cursor: 'pointer',
+                                            }}>
+                                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
+                                            <input
+                                                name='image'
+                                                type="file"
+                                                onChange={(e) => LiveImage(e)}
+                                                style={{ width: '20px' }}
+                                                accept="image/*"
+                                            />
+                                        </label>
 
+                                        <div
+                                            className="overflow-x-scroll  d-flex  gap-1"
+                                            style={{ width: '430px' }}>
+                                            {
+                                                (livePosterFile?.images?.length < 1 || livePosterFile === '') ?
+                                                    <span
+                                                        className="d-flex flex-column align-items-center mt-4 mx-5"
+                                                        style={{ cursor: 'pointer' }}>
+                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
+                                                        <span className="text-center">
+                                                            Rasmini yuklash uchun ushbu hududga bosing.
+                                                        </span>
+                                                    </span>
+                                                    :
 
-                                    </label>
+                                                    (
+                                                        livePosterFile?.images?.length > 0 ?
+                                                            livePosterFile?.images?.map((item, i) =>
+                                                            (
+                                                                <img
+                                                                    className="mx-1 "
+                                                                    onClick={() => {
+                                                                        setCustomeFile(
+                                                                            item
+                                                                        );
+                                                                    }}
+                                                                    src={
+                                                                        item?.image_url
+                                                                    }
+                                                                    alt=" "
+                                                                    key={i}
+                                                                    style={{
+                                                                        display:
+                                                                            'block',
+                                                                        cursor: 'pointer',
+                                                                    }}
+                                                                />
+                                                            )
+                                                            )
+                                                            :
+                                                            customePoster?.map((item, i) =>
+                                                            (
+                                                                <img
+                                                                    className="mx-1 "
+                                                                    onClick={() => {
+                                                                        setCustomeFile(
+                                                                            item
+                                                                        );
+                                                                    }}
+                                                                    src={
+                                                                        item?.image_url
+                                                                    }
+                                                                    alt=" "
+                                                                    key={i}
+                                                                    style={{
+                                                                        display:
+                                                                            'block',
+                                                                        cursor: 'pointer',
+                                                                    }}
+                                                                />
+                                                            )
+                                                            )
+                                                    )
+                                            }
+                                        </div>
+                                    </div>
                                     <p className={"my-2  text-danger"}>
-                                        {errors?.file_image?.message}
+                                        {errors?.image?.message}
                                     </p>
-
                                 </div>
                             </div>
 
-
-
                             {
-
-                                (livePosterFile?.page_count || livePosterFile?.page_count === undefined) ?
-                                    <></> :
+                                (!livePosterFile?.page_count && livePosterFile?.page_count !== undefined) ?
                                     <div className="row   mt-3">
                                         <div className="col-md-4  d-flex justify-content-between p-0 ">
                                             <p>Mahsulot sahifalar soni: *</p>
@@ -559,7 +528,8 @@ const Posts = () => {
 
 
                                     </div>
-
+                                    :
+                                    <></>
 
                             }
 
@@ -665,29 +635,19 @@ const Posts = () => {
                                 </div>
                             </div>
 
-
                             <div
                                 className="d-flex justify-content-end mt-4 "
                                 style={{ transform: 'translateX(16px)' }}>
-                                {
-                                    <button
-                                        disabled={loading}
-                                        type="submit"
-                                        className="btn btn-success py-3 "
-                                        style={{ minWidth: '235px' }}>
-                                        {
-                                            !disabled ?  <span className='fs-4'>Mahsulot qo'shish</span> :
-                                                <div
-                                                    className="spinner-border"
-                                                    role="status">
-                                                    <span className="visually-hidden">
-                                                        Loading...
-                                                    </span>
-                                                </div>}
-                                    </button>
-                                }
+                                <button
+                                    disabled={disabled}
+                                    type="submit"
+                                    className="btn btn-success py-3 ">
+                                    <span className="fs-4 px-5">
+                                        Mahsulot qo'shish{' '}
+                                        <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
+                                    </span>
+                                </button>
                             </div>
-
                             <div className="mahsulotingiz">
                                 <span
                                     className="fixed-btn"
