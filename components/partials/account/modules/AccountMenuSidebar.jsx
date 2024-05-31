@@ -25,7 +25,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     const [copy, setCopy] = useState(false);
     const [socketApplication, setSocketApplication] = useState(null);
     const [applicationData, setApplicationData] = useState(null);
-    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCustomer, setIsModalOpenCustomer] = useState(false);
     const showModal = () => {

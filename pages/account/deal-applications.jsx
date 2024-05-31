@@ -1,8 +1,7 @@
 import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
-import DealListPage from '~/components/partials/account/DealListPage';
-import DealsList from '~/components/partials/account/DealsList';
+import MyDealCart from '~/components/partials/account/modules/DealAplication';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 
@@ -12,16 +11,17 @@ const DealList = () => {
             text: 'Bosh sahifa',
             url: '/',
         },
+    
         {
-            text: 'Qabul qilinadigan takliflar',
+            text: 'Men yuborgan arizlar',
         },
     ];
     return (
         <PageContainer footer={<FooterDefault />} title="Notifications">
             <div className="ps-page--my-account">
-                <Meta title={'Qabul qilinadigan takliflar'} />
+                <Meta title={'Men yuborgan arizlar'} />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <DealListPage />
+                <MyDealCart /> 
             </div>
         </PageContainer>
     );

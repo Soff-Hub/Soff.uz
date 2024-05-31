@@ -1,0 +1,93 @@
+import { DatePicker, Select, Slider } from 'antd';
+import Router, { useRouter } from 'next/router';
+import React from 'react';
+
+
+const DealsSidebar = () => {
+    const { asPath } = useRouter();
+
+
+    const sidebarMenu = [
+        {
+            url: '/account/all-orders',
+            label: 'Barcha buyurtmalar',
+        },
+        {
+            url: '/account/deal-applications',
+            label: 'Men yuborgan arizlar',
+        },
+        {
+            url: '/account/my-orders',
+            label: 'Mening buyurtmalarim',
+        }
+    ]
+
+    return (
+        <div className="w-100 mb-5">
+            <div className="p-3 bg-white mb-4">
+                <h4 className="d-block p-2 fw-bold">
+                    Buyurtmalar
+                </h4>
+                <div className='sidebar-menu d-flex flex-column ml-2'>
+                    {
+                        sidebarMenu.map(el => (
+                            <div
+                                key={el.url}
+                                className='py-3 px-3'
+                                onClick={() => Router.push(el.url)}
+                                style={{
+                                    borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
+                                    backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
+                                    cursor: 'pointer'
+                                }}>
+                                {el.label}
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+            {asPath === "/account/all-orders" && <div className="p-3 bg-white">
+                <span className="d-block p-2 mt-4 fw-bold ">
+                    Buyurtma turlari
+                </span>
+                <Select
+                    defaultValue="lucy"
+                    style={{
+                        width: '100%',
+                    }}
+                    size="large"
+                    className="w-100"
+                    // onChange={handleChange}
+                    options={[
+                        {
+                            value: 'jack',
+                            label: 'Fayl materiallar',
+                        },
+                        {
+                            value: 'lucy',
+                            label: ' Audio materiallar',
+                        },
+                        {
+                            value: 'Yiminghe',
+                            label: 'Shablon materiallar',
+                        },
+                        {
+                            value: 'Yiminghe',
+                            label: 'Video materiallar',
+                        },
+                    ]}
+                />
+                <span className="d-block p-2 mt-4 fw-bold ">
+                    Buyurtma muddati
+                </span>
+                <DatePicker className="w-100  p-2" placement="" />
+                <span className="d-block p-2 fw-bold mt-4">
+                    Buyurtma narxi
+                </span>
+                <Slider range defaultValue={[20, 50]} disabled={false} />
+            </div>}
+        </div>
+    )
+}
+
+export default DealsSidebar

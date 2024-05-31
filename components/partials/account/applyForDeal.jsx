@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DealCart from './modules/DealCart';
+import DealCart from './modules/AllOrders';
 import { Button, DatePicker, Form, Input } from 'antd';
 const { TextArea } = Input;
 
@@ -91,10 +91,10 @@ export default function ApplyForDeal() {
     // }
 
     return (
-        <div className="container-deal ">
+        <div className="container">
             <div className="my-5 row">
                 <h4 className='mt-3' > Buyurtma tavsifi </h4>
-                <DealCart type="apply_detail" />
+                <DealCart type="apply_detail" />  
             </div>
             <h4 className="mb-4">
                 {' '}
@@ -103,7 +103,7 @@ export default function ApplyForDeal() {
             <Form
                 form={form}
                 // onFinish={postOrder}
-                className="row  py-4 border border-3 rounded-3 px-4 mb-5 ">
+                className="row  py-4 border border-3 rounded-3 px-4 mb-5 bg-white ">
                     <div >
                         <h4> Интегрировать платежную систему на сайт ларавел </h4>
                         <p>1.сайт интернет магазин чтобы показавилось на фронте как платежный метнод , также показала статус платежа</p>
