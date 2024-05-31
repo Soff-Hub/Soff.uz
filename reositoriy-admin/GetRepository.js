@@ -363,7 +363,9 @@ class GetRepository {
         return reponse;
     }
     async getCategoryChaildItem(id, token, search) {
-        const endPoint = `admin/childen-list/${id ? id + '/' : ''}?search=${search}`;
+        const endPoint = `admin/childen-list/${
+            id ? id + '/' : ''
+        }?search=${search}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -419,7 +421,6 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
 
     async getAllCategoryLists(search) {
         const endPoint = `admin/category-children/file/?search=${search || ''}`;
@@ -538,6 +539,47 @@ class GetRepository {
         const endPoint = `admin/order-list/?page=${page}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getOrdersDealLists(page, search) {
+        const endPoint = `deals/deals-list/?page=${page}&search=${
+            search || ''
+        }`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getOrdersMYDealLists(page, search, id, token) {
+        const endPoint = `deals/my-deals/${
+            id ? id + '/' : ''
+        }?page=${page}&search=${search || ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -717,7 +759,7 @@ class GetRepository {
         return reponse;
     }
 
-    async getTagListsDeaktiv(token,search) {
+    async getTagListsDeaktiv(token, search) {
         const endPoint = `deactive-tags/?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -1069,7 +1111,6 @@ class GetRepository {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -1089,7 +1130,6 @@ class GetRepository {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            
         })
             .then((response) => {
                 if (response.status === 200) {

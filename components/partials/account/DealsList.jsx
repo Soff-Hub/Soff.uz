@@ -5,10 +5,13 @@ import { useState } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useEffect } from 'react';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
-import { Router } from 'next/router';
+import { useRouter } from 'next/router';
 const { TextArea } = Input;
 
-export default function DealsList() {
+
+export default function DealsList({ setOpen }) {
+    const router = useRouter()
+
     const [form] = Form.useForm();
     const { user } = useSelector((state) => state.auth);
     const [name, setName] = useState('');
@@ -34,7 +37,16 @@ export default function DealsList() {
         };
         const ItemsData = await PostsRepository.postDeal(data, user?.access);
         if (ItemsData?.status == 201) {
-         Router.push("/account/deal-list/published")
+            router.push("/account/my-orders")
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: ` ${ItemsData?.data?.msg
+                    ? ItemsData?.data?.msg
+                    : 'Sizning arizangiz yuborildi'
+                    } `,
+            });
+            modal.update;
         } else {
             const modal = Modal.error({
                 centered: true,
@@ -43,7 +55,7 @@ export default function DealsList() {
             });
             modal.update;
         }
-
+        setOpen(false)
         setLoading(false);
     }
 
