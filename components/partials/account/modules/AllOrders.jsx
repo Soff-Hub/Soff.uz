@@ -1,36 +1,33 @@
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import DealsSidebar from './DealsSidebar';
 import DealsList from '../DealsList';
-import { Modal } from 'antd';
-import { useSelector } from 'react-redux';
+import { Modal, Pagination } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CalculateTimeDifference from '../DateFormatter';
+import useDebounce from '~/hooks/useDebounce';
 
 export default function DealCart() {
-    const { accountLinks, user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
     const [currPage, setCurrPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
     const [open, setOpen] = useState(false)
     const { asPath } = useRouter();
+    const [keyword, setKeyword] = useState('');
+    const debouncedSearchTerm = useDebounce(keyword, 300);
+    const [lifetime, setLifetime] = useState('');
+    const [type, setType] = useState('');
+    const [type2, setType2] = useState('');
+
 
 
     async function GetItemsProducts() {
-        const ItemsData = await GetRepository.getOrdersDealLists(currPage);
+        const ItemsData = await GetRepository.getOrdersDealLists(currPage, debouncedSearchTerm, lifetime, type);
+        console.log(ItemsData);
         if (ItemsData?.results) {
             setPageCount(ItemsData.count);
             setData(ItemsData.results);
         }
-    }
-
-
-    let clearTextView,
-        loadingView
-    if (true) {
-        clearTextView = <span className="ps-form__action position-absolute" style={{ right: '15px' }}>
-            <i className='fa-solid fa-search button_search_icon text-success' ></i>
-        </span>
     }
 
     function addPeriodToThousands(number) {
@@ -52,64 +49,61 @@ export default function DealCart() {
     }
 
 
-
-
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
     };
 
     useEffect(() => {
         GetItemsProducts();
-    }, [currPage]);
+    }, [currPage, debouncedSearchTerm, lifetime, type]);
 
 
 
     return (
-        <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start ${asPath === "/account/all-orders" ? "mt-5 " : "mt-0 "}`}>
-            {
-                asPath === "/account/all-orders" ?
-                    <div className='col-md-3'>
-                        <DealsSidebar />
-                    </div> : <></>
-            }
+        <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
+            <div className='col-md-3'>
+                <DealsSidebar setType2={setType2} setType={setType} />
+            </div>
 
-            <div className={asPath === "/account/all-orders" ? 'col-md-9 mb-4' : "col-md-12 p-0"}>
-                <div className='w-full d-flex justify-content-between gap-4 mb-4 p-0'>
+            <div className={'col-md-9 mb-4'}>
+                <div className='w-full d-flex justify-content-between gap-4 mb-3 p-0'>
                     <div className={'ps-form__input d-flex align-items-center position-relative'} style={{ flex: 1 }}>
                         <input
-                            className={'form-control input2 bg-white rounded-3 '}
+                            className={"form-control input2 bg-white rounded-3 "}
                             type="text"
                             placeholder="Qidiruv..."
+                            onChange={(e) => (setKeyword(e.target.value))}
                         />
-                        {clearTextView}
-                        {loadingView}
+                        <span className="ps-form__action position-absolute" style={{ right: '15px' }}>
+                            <i className='fa-solid fa-search button_search_icon text-success' ></i>
+                        </span>
                     </div>
                     <button className='col-md-3  btn btn-success rounded-3 fs-4'
                         onClick={() => setOpen(true)} >
                         Buyurtma yaratish
                     </button>
                 </div>
+                <div className="progress mb-3" role="progressbar" aria-label="Example with label"
+                    aria-valuenow="75" aria-valuemin="0"
+                    aria-valuemax="100">
+                    <div className="progress-bar" style={{ width: "75%" }}>75%</div>
+                </div>
 
                 <div className='d-flex flex-column gap-3'>
                     {
                         data?.map(item => (
                             <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <div className="d-md-flex justify-content-between  ">
-                                    <h3 className="text-success">{item?.title}</h3>
-                                    <div>
-                                        {' '}
-                                        <span className="fw-medium">narxi:</span>{' '}
-                                        <span className="text-success fs-3 fw-bold">
-                                            {addPeriodToThousands(item?.price)} so'm
-                                        </span>
-                                    </div>
-                                </div>
-                                <p>
+                                <h3 className="text-success fw-medium ">{item?.title}</h3>
+
+
+                                <p
+                                    style={{ width: "100%" }}
+                                >
                                     {item?.description}
                                 </p>
                                 <div>
                                     <div className="d-md-flex justify-content-between gap-4  ">
-                                        <div className="d-flex align-items-start ">
+                                        <div className="d-flex align-items-center ">
                                             <img
                                                 className="d-block"
                                                 width={80}
@@ -117,40 +111,74 @@ export default function DealCart() {
                                                 alt="sca"
                                             />
                                             <div>
-                                                <div className="text-start">
-                                                    <span className="text-success fs-3 fw-medium">
-                                                    <i class="fa-solid fa-list fs-4"></i>
-                                                    </span>{' '}
-                                                    <span className="fw-medium ">
-                                                      {item?.type}
-                                                    </span>
-                                                </div>
-                                                <div className="text-start">
-                                                    <span className="text-success fs-3 fw-medium">
-                                                        <i class="fa-solid fa-clock text-info-emphasis fs-4"></i>
-                                                    </span>{' '}
-                                                    <span className="fw-medium ">
-                                                        <CalculateTimeDifference targetDate={item?.created_at} />
 
+                                                <div className="text-start" >
+                                                    {' '}
+                                                    <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
+                                                    <span className="text-success fs-4 fw-medium ">
+                                                        {addPeriodToThousands(item?.price)} so'm
                                                     </span>
                                                 </div>
 
                                                 <div className="text-start">
-                                                    <span className="text-success fs-3 fw-medium">
-                                                        <i class="fa-solid fa-calendar-days fs-4"></i>
+                                                    <span className="text-success fs-5 fw-medium">
+                                                        Kategriyasi:
                                                     </span>{' '}
                                                     <span className="fw-medium ">
-                                                        {item?.deadline}
+                                                        {item?.type?.name}
+                                                    </span>
+                                                </div>
+
+
+                                                <div className="text-start">
+                                                    <span className="text-success fs-5 fw-medium">
+                                                        Muddati:
+                                                    </span>{' '}
+                                                    <span className="fw-medium ">
+                                                        {item?.deadline_date}
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <div className='mt-3 
+                                    d-md-flex justify-content-between 
+                                    align-items-center'>
+                                        <div className="text-start mb-md-0 mb-3 d-md-flex gap-3 align-items-center">
+                                            <span className="text-success fs-5 fw-medium ">
+                                                Yaratilgan vaqti:
+                                            </span>{' '}
+                                            <span className="fw-medium d-flex gap-3 ">
+                                                <CalculateTimeDifference targetDate={item?.created_at} />
+                                                <span>Takliflar: {item?.application_count}</span>
+
+                                            </span>
+                                        </div>
+
+
+                                        <div className='d-flex justify-content-end'>
+                                            <button
+                                                onClick={() => Router.push(`/deal/${item?.id}`)}
+                                                className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
+                                        </div>
+
+                                    </div>
                                 </div>
+
                             </div>
                         ))
                     }
                 </div>
+
+                <div className='d-flex justify-content-center my-4 '>
+                    <Pagination
+                        className="mt-3"
+                        total={pageCount}
+                        defaultCurrent={currPage}
+                        onChange={handlePagination}
+                    />
+                </div>
+
             </div>
 
             <Modal

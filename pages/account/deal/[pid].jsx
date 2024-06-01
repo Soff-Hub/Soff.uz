@@ -232,7 +232,7 @@ export default function DealOrderEdit() {
                                             Muddati
                                         </span>
                                         <Select
-                                            defaultValue={dealItem?.deadline}
+                                            defaultValue={dealItem?.deadline_date}
                                             onChange={(e) => setLifetime(e)}
                                             style={{
                                                 width: '100%',

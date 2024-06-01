@@ -252,7 +252,7 @@ export default function DealOrderList() {
                                                         <div className="text-start">
                                                             <span className="fw-medium ">
                                                                 {
-                                                                    dealItem?.deadline
+                                                                    dealItem?.deadline_date
                                                                 }
                                                             </span>
                                                         </div>

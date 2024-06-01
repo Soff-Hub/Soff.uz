@@ -947,6 +947,7 @@ function MyProductsLists() {
                                                 defaultCurrent={currPage}
                                                 onChange={handlePagination}
                                             />
+                                            
                                         </>
                                     ) : (
                                         <>
