@@ -16,13 +16,13 @@ export default function DealCart() {
     const [keyword, setKeyword] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 300);
     const [lifetime, setLifetime] = useState('');
+    const [lifetime2, setLifetime2] = useState('');
     const [type, setType] = useState('');
-    const [type2, setType2] = useState('');
 
 
 
     async function GetItemsProducts() {
-        const ItemsData = await GetRepository.getOrdersDealLists(currPage, debouncedSearchTerm, lifetime, type);
+        const ItemsData = await GetRepository.getOrdersDealLists(currPage, debouncedSearchTerm, lifetime, lifetime2, type);
         console.log(ItemsData);
         if (ItemsData?.results) {
             setPageCount(ItemsData.count);
@@ -55,19 +55,19 @@ export default function DealCart() {
 
     useEffect(() => {
         GetItemsProducts();
-    }, [currPage, debouncedSearchTerm, lifetime, type]);
+    }, [currPage, debouncedSearchTerm, lifetime, lifetime2, type]);
 
 
 
     return (
         <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
             <div className='col-md-3'>
-                <DealsSidebar setType2={setType2} setType={setType} />
+                <DealsSidebar setLifetime={setLifetime} setLifetime2={setLifetime2} setType={setType} />
             </div>
 
             <div className={'col-md-9 mb-4'}>
-                <div className='w-full d-flex justify-content-between gap-4 mb-3 p-0'>
-                    <div className={'ps-form__input d-flex align-items-center position-relative'} style={{ flex: 1 }}>
+                <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
+                    <div className={'ps-form__input d-flex align-items-center position-relative p-0'} style={{ flex: 1 }}>
                         <input
                             className={"form-control input2 bg-white rounded-3 "}
                             type="text"

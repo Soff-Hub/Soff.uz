@@ -20,6 +20,7 @@ export default function MyOrders() {
     const [open, setOpen] = useState(false);
     const [keyword, setKeyword] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 300);
+    const [category, setCategory] = useState(null)
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -42,7 +43,7 @@ export default function MyOrders() {
 
     async function GetItemsProducts() {
         const token = user?.access
-        const ItemsData = await GetRepository.getOrdersMYDealLists(currPage, debouncedSearchTerm, productsId, token);
+        const ItemsData = await GetRepository.getOrdersMYDealLists(currPage, debouncedSearchTerm, productsId, category, token);
         if (ItemsData?.results) {
             setPageCount(ItemsData.count);
             setData(ItemsData.results);
@@ -74,7 +75,7 @@ export default function MyOrders() {
         if (user?.access) {
             GetItemsProducts();
         }
-    }, [currPage, debouncedSearchTerm, open, user?.access]);
+    }, [currPage, debouncedSearchTerm, open, category, user?.access]);
 
 
 
@@ -86,8 +87,8 @@ export default function MyOrders() {
             </div>
 
             <div className={"col-md-9 mb-4"}>
-                <div className='w-full d-flex justify-content-between gap-4 mb-4 p-0'>
-                    <div className={'ps-form__input d-flex align-items-center position-relative'} style={{ flex: 1 }}>
+                <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
+                    <div className={'ps-form__input d-flex align-items-center position-relative p-0'} style={{ flex: 1 }}>
                         <input
                             className={"form-control input2 bg-white rounded-3 "}
                             type="text"
@@ -98,6 +99,40 @@ export default function MyOrders() {
                             <i className='fa-solid fa-search button_search_icon text-success' ></i>
                         </span>
                     </div>
+
+                    <select
+                        className="form-select col-md-3 fs-3 py-3 rounded-3"
+                        onChange={(e) =>
+                            setCategory(
+                                e.target
+                                    .value
+                            )
+                        }>
+                        <option
+                            className="fs-3"
+                            selected
+                            value="">
+                            Barcha
+                            holatlar
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="new">
+                            Moderatsiya
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="active">
+                            Tasdiqlangan
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="cancelled">
+                            Bekor
+                            qilingan
+                        </option>
+                    </select>
+
                     <button className='col-md-3  btn btn-success rounded-3 fs-4'
                         onClick={() => setOpen(true)} >
                         Buyurtma yaratish

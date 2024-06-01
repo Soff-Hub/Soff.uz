@@ -47,7 +47,7 @@ export default function ApplyForDeal() {
 
     async function GetItemsProducts() {
 
-        const ItemsData = await GetRepository.getOrdersDealLists(1, '', '', '', id);
+        const ItemsData = await GetRepository.getOrdersDealLists(1, '', '', '','', id);
         if (ItemsData) {
             setData(ItemsData);
         }
