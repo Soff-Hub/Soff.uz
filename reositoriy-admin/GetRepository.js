@@ -555,10 +555,12 @@ class GetRepository {
         return reponse;
     }
 
-    async getOrdersDealLists(page, search, deadline, type, id) {
+    async getOrdersDealLists(page, search, start_date, end_date, type, id) {
         const endPoint = `deals/${id ? id + '/' : ''}?page=${page}&search=${
             search || ''
-        }&deadline=${deadline || ''}&type=${type || ''}`;
+        }&start_date=${start_date || ''}&end_date=${end_date || ''}&type=${
+            type || ''
+        }`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -574,10 +576,10 @@ class GetRepository {
         return reponse;
     }
 
-    async getOrdersApplicationsLists(page, search, id, token) {
+    async getOrdersApplicationsLists(page, search, id, status, token) {
         const endPoint = `deals/deal-applications/${
             id ? id + '/' : ''
-        }?page=${page}&search=${search || ''}`;
+        }?page=${page}&search=${search || ''}&status=${status || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -596,10 +598,10 @@ class GetRepository {
         return reponse;
     }
 
-    async getOrdersMYDealLists(page, search, id, token) {
+    async getOrdersMYDealLists(page, search, id, status, token) {
         const endPoint = `deals/my-deals/${
             id ? id + '/' : ''
-        }?page=${page}&search=${search || ''}`;
+        }?page=${page}&search=${search || ''}&status=${status || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',

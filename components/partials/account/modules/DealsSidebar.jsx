@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 
 
-const DealsSidebar = ({ setType, setType2 }) => {
+const DealsSidebar = ({ setType, setLifetime, setLifetime2 }) => {
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
     const [dealType, setDealType] = useState(null);
@@ -13,12 +13,12 @@ const DealsSidebar = ({ setType, setType2 }) => {
 
 
     const handleChange = (date) => {
-        if (date[0]) {
-            setType(date[0].format('YYYY-MM-DD'));
-            setType2(date[1].format('YYYY-MM-DD'));
+        if (date?.[0]) {
+            setLifetime(date[0].format('YYYY-MM-DD'));
+            setLifetime2(date[1].format('YYYY-MM-DD'));
         } else {
-            setType(null);
-            setType2(null);
+            setLifetime(null);
+            setLifetime2(null);
         }
     };
 
