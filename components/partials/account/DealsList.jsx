@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -12,6 +12,7 @@ const { TextArea } = Input;
 export default function DealsList({ setOpen }) {
     const router = useRouter()
 
+
     const [form] = Form.useForm();
     const { user } = useSelector((state) => state.auth);
     const [name, setName] = useState('');
@@ -20,9 +21,17 @@ export default function DealsList({ setOpen }) {
     const [lifetime, setLifetime] = useState('');
     const [type, setType] = useState('');
     const [loading, setLoading] = useState(false);
-
     const [dealType, setDealType] = useState(null);
-    const [dealDeadlines, setDeadlines] = useState(null);
+
+    const handleChange = (date) => {
+        if (date) {
+            setLifetime(date.format('YYYY-MM-DD'));
+        } else {
+            setLifetime(null);
+        }
+    };
+
+
 
     async function postOrder() {
         form.resetFields();
@@ -32,7 +41,7 @@ export default function DealsList({ setOpen }) {
             title: name,
             description: description,
             price: price,
-            deadline: lifetime,
+            deadline_date: lifetime,
             type: type,
         };
         const ItemsData = await PostsRepository.postDeal(data, user?.access);
@@ -65,16 +74,10 @@ export default function DealsList({ setOpen }) {
             setDealType(data?.results);
         }
     }
-    async function getDeadLines(token) {
-        const data = await GetRepository.getDeadline(token);
-        if (data?.results) {
-            setDeadlines(data?.results);
-        }
-    }
+
     useEffect(() => {
         if (user?.access) {
             getDealType(user?.access);
-            getDeadLines(user?.access);
         }
     }, []);
 
@@ -83,10 +86,8 @@ export default function DealsList({ setOpen }) {
         label: e?.name,
         value: e?.id,
     }));
-    const optiondeadline = dealDeadlines?.map((e) => ({
-        label: e?.name,
-        value: e?.id,
-    }));
+
+
 
 
     return (
@@ -105,10 +106,14 @@ export default function DealsList({ setOpen }) {
 
                             <div>
                                 <Form
+
                                     form={form}
                                     onFinish={postOrder}
-                                    className="row  pt-4 ">
+                                    className="row  pt-4 "
+                                    layout='vertical'
+                                >
                                     <Form.Item
+                                        label="Buyurtma nomi"
                                         className="col-md-12   mx-auto mb-3"
                                         name="title"
                                         rules={[
@@ -129,6 +134,7 @@ export default function DealsList({ setOpen }) {
                                     <Form.Item
                                         className="col-md-12 mb-3"
                                         name="price"
+                                        label="Narxi"
                                         rules={[
                                             {
                                                 required: true,
@@ -146,6 +152,7 @@ export default function DealsList({ setOpen }) {
                                     </Form.Item>
 
                                     <Form.Item
+                                        label="Tugash muddati"
                                         className="col-md-12 mb-3 "
                                         name="userRole"
                                         rules={[
@@ -155,22 +162,14 @@ export default function DealsList({ setOpen }) {
                                                     'Buyurtma muddatini kiritish majburiy',
                                             },
                                         ]}>
-                                        <Select
-                                            onChange={(e) =>
-                                                setLifetime(e)
-                                            }
-                                            style={{
-                                                width: '100%',
-                                                height: '45px',
-                                            }}
-                                            placeholder="Muddati"
-                                            options={
-                                                optiondeadline
-                                            }></Select>
+                                        <DatePicker
+                                            onChange={handleChange}
+                                            className='w-100 py-3' placeholder='Tugash muddati' />
                                     </Form.Item>
                                     <Form.Item
                                         className="col-md-12 mb-3"
                                         name="type"
+                                        label="Buyurtma turi"
                                         rules={[
                                             {
                                                 required: true,
@@ -194,6 +193,7 @@ export default function DealsList({ setOpen }) {
 
 
                                     <Form.Item
+                                        label="Buyurtma uchun tavsif"
                                         name="description"
                                         className='col-md-12 mb-3'
                                         rules={[

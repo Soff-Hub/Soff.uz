@@ -1,10 +1,48 @@
 import { DatePicker, Select, Slider } from 'antd';
 import Router, { useRouter } from 'next/router';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 
-const DealsSidebar = () => {
+const DealsSidebar = ({ setType, setType2 }) => {
     const { asPath } = useRouter();
+    const { user } = useSelector((state) => state.auth);
+    const [dealType, setDealType] = useState(null);
+    const { RangePicker } = DatePicker;
+
+
+    const handleChange = (date) => {
+        if (date[0]) {
+            setType(date[0].format('YYYY-MM-DD'));
+            setType2(date[1].format('YYYY-MM-DD'));
+        } else {
+            setType(null);
+            setType2(null);
+        }
+    };
+
+
+    async function getDealType(token) {
+        const data = await GetRepository.getDealType(token);
+        if (data?.results) {
+            setDealType(data?.results);
+        }
+    }
+
+    useEffect(() => {
+        if (user?.access) {
+            getDealType(user?.access);
+        }
+    }, []);
+
+    const optionType = dealType?.map((e) => ({
+        label: e?.name,
+        value: e?.id,
+    }));
+
+
+
 
 
     const sidebarMenu = [
@@ -51,36 +89,27 @@ const DealsSidebar = () => {
                     Buyurtma turlari
                 </span>
                 <Select
-                    defaultValue="lucy"
+                    onChange={(e) =>
+                        setType(e)
+                    }
                     style={{
                         width: '100%',
+                        height: '45px',
                     }}
-                    size="large"
-                    className="w-100"
-                    // onChange={handleChange}
-                    options={[
-                        {
-                            value: 'jack',
-                            label: 'Fayl materiallar',
-                        },
-                        {
-                            value: 'lucy',
-                            label: ' Audio materiallar',
-                        },
-                        {
-                            value: 'Yiminghe',
-                            label: 'Shablon materiallar',
-                        },
-                        {
-                            value: 'Yiminghe',
-                            label: 'Video materiallar',
-                        },
-                    ]}
-                />
+                    placeholder="Buyurtma turi"
+                    options={
+                        optionType
+                    }></Select>
+
                 <span className="d-block p-2 mt-4 fw-bold ">
                     Buyurtma muddati
                 </span>
-                <DatePicker className="w-100  p-2" placement="" />
+                <RangePicker
+                    className="w-100 py-3   rounded-3"
+                    onChange={handleChange}
+                />
+
+
                 <span className="d-block p-2 fw-bold mt-4">
                     Buyurtma narxi
                 </span>
