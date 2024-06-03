@@ -1,12 +1,13 @@
-import { DatePicker, Form, Input, Modal, Pagination } from 'antd';
-import React, { useEffect, useState }  from 'react';
+import { Button, DatePicker, Form, Input, Modal, Pagination } from 'antd';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
-import TextArea from 'antd/es/input/TextArea';
+import ModalDelete from './Modal';
+const { TextArea } = Input;
 
 
 
@@ -101,12 +102,20 @@ export default function MyDealCart() {
             productsId,
             user?.access
         );
-        GetItemsProducts(currPage, '', '', '', user?.access)
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni o'chirdingiz`,
-        });
+        if (ItemsData?.status === 204) {
+            GetItemsProducts(currPage, '', '', '', user?.access)
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz malumotlarni o'chirdingiz`,
+            });
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: ItemsData?.status === 404 ? "O'chirish imkoniyati mavjud emas!" : ItemsData?.status + ' ' + ItemsData?.statusText,
+            });
+        }
     }
 
     async function postOrder() {
@@ -336,7 +345,6 @@ export default function MyDealCart() {
                 centered
                 open={isModalOpen}
                 onOk={handleOk}
-                okText="Yopish"
                 cancelButtonProps={{
                     style: {
                         display: 'none',
@@ -401,7 +409,7 @@ export default function MyDealCart() {
                 centered
                 open={open}
                 onOk={() => setOpen(false)}
-            
+
                 cancelButtonProps={{
                     style: {
                         display: 'none',
@@ -456,7 +464,7 @@ export default function MyDealCart() {
                                 className="w-100 py-3  rounded-3"
                                 onChange={handleChange}
                                 placeholder='Bajarilish muddati'
-                                // defaultValue={dayjs(dataDetials?.deadline_date)}
+                            // defaultValue={dayjs(dataDetials?.deadline_date)}
                             />
                         </Form.Item>
                     </div>

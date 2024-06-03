@@ -177,13 +177,13 @@ class PatchRepository {
             },
         })
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 204) {
                     return response.data;
                 } else {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => error?.response);
         return reponse;
     }
     async getMyDealsDeleteApplicaiton(id, token) {
@@ -202,7 +202,7 @@ class PatchRepository {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => error?.response);
         return reponse;
     }
 
@@ -345,7 +345,6 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
-
 }
 
 export default new PatchRepository();
