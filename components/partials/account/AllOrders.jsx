@@ -1,26 +1,34 @@
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import DealsSidebar from './DealsSidebar';
-import DealsList from '../DealsList';
-import { Modal, Pagination, Tooltip } from 'antd';
-import { useSelector } from 'react-redux';
+import { Modal, Pagination } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import CalculateTimeDifference from '../DateFormatter';
 import useDebounce from '~/hooks/useDebounce';
-import ModalDelete from '../Modal';
-import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import DealsSidebar from './modules/DealsSidebar';
+import CalculateTimeDifference from './DateFormatter';
+import DealsList from './DealsList';
 
-export default function MyOrders() {
-    const { accountLinks, user } = useSelector((state) => state.auth);
+export default function DealCart() {
     const [data, setData] = useState([]);
-    const [dataDetails, setDataDtails] = useState({});
     const [currPage, setCurrPage] = useState(1);
-    const [productsId, setProductsId] = useState('');
     const [pageCount, setPageCount] = useState(0);
-    const [open, setOpen] = useState(false);
+    const [open, setOpen] = useState(false)
+    const { asPath } = useRouter();
     const [keyword, setKeyword] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 300);
-    const [category, setCategory] = useState(null)
+    const [lifetime, setLifetime] = useState('');
+    const [lifetime2, setLifetime2] = useState('');
+    const [type, setType] = useState('');
+
+
+
+    async function GetItemsProducts() {
+        const ItemsData = await GetRepository.getOrdersDealLists(currPage, debouncedSearchTerm, lifetime, lifetime2, type);
+        console.log(ItemsData);
+        if (ItemsData?.results) {
+            setPageCount(ItemsData.count);
+            setData(ItemsData.results);
+        }
+    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -41,52 +49,23 @@ export default function MyOrders() {
     }
 
 
-    async function GetItemsProducts() {
-        const token = user?.access
-        const ItemsData = await GetRepository.getOrdersMYDealLists(currPage, debouncedSearchTerm, productsId, category, token);
-        if (ItemsData?.results) {
-            setPageCount(ItemsData.count);
-            setData(ItemsData.results);
-        }
-        setDataDtails(ItemsData)
-    }
-
-
-
-    async function DeleteItemsProducts() {
-        const ItemsData = await PatchRepository.getMyDealsDelete(
-            productsId,
-            user?.access
-        );
-        GetItemsProducts(currPage, debouncedSearchTerm, productsId, user?.access)
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni o'chirdingiz`,
-        });
-    }
-
-
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
     };
 
     useEffect(() => {
-        if (user?.access) {
-            GetItemsProducts();
-        }
-    }, [currPage, debouncedSearchTerm, open, category, user?.access]);
+        GetItemsProducts();
+    }, [currPage, debouncedSearchTerm, lifetime, lifetime2, type]);
 
 
 
     return (
         <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
-
             <div className='col-md-3'>
-                <DealsSidebar />
+                <DealsSidebar setLifetime={setLifetime} setLifetime2={setLifetime2} setType={setType} />
             </div>
 
-            <div className={"col-md-9 mb-4"}>
+            <div className={'col-md-9 mb-4'}>
                 <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
                     <div className={'ps-form__input d-flex align-items-center position-relative p-0'} style={{ flex: 1 }}>
                         <input
@@ -99,77 +78,22 @@ export default function MyOrders() {
                             <i className='fa-solid fa-search button_search_icon text-success' ></i>
                         </span>
                     </div>
-
-                    <select
-                        className="form-select col-md-3 fs-3 py-3 rounded-3"
-                        onChange={(e) =>
-                            setCategory(
-                                e.target
-                                    .value
-                            )
-                        }>
-                        <option
-                            className="fs-3"
-                            selected
-                            value="">
-                            Barcha
-                            holatlar
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="new">
-                            Moderatsiya
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="active">
-                            Tasdiqlangan
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="cancelled">
-                            Bekor
-                            qilingan
-                        </option>
-                    </select>
-
                     <button className='col-md-3  btn btn-success rounded-3 fs-4'
                         onClick={() => setOpen(true)} >
                         Buyurtma yaratish
                     </button>
+                </div>
+                <div className="progress mb-3" role="progressbar" aria-label="Example with label"
+                    aria-valuenow="75" aria-valuemin="0"
+                    aria-valuemax="100">
+                    <div className="progress-bar" style={{ width: "75%" }}>75%</div>
                 </div>
 
                 <div className='d-flex flex-column gap-3'>
                     {
                         data?.map(item => (
                             <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <div className='d-md-flex justify-content-between gap-4 align-items-center'>
-                                    <h3 className="text-success fw-medium ">{item?.title}</h3>
-
-                                    <div className="d-flex align-items-center">
-                                        <div
-                                            style={{ cursor: 'pointer' }}
-                                            className=" h-25 fs-4 p-3 text-success fw-bold text-center"
-                                        >
-                                            <span style={{ cursor: "pointer" }}>
-                                                <i
-                                                    className="fa-solid fa-pen-to-square mx-3  text-success-emphasis"
-                                                ></i>
-                                            </span>
-                                            <a data-bs-target="#exampleModalToggle"
-                                                data-bs-toggle="modal">
-                                                <i
-                                                    className="fa-solid fa-trash-can text-danger mx-2"
-                                                    onClick={() =>
-                                                        setProductsId(item?.id)
-                                                    }
-                                                ></i>
-                                            </a>
-
-                                        </div>
-                                    </div>
-                                </div>
-
+                                <h3 className="text-success fw-medium ">{item?.title}</h3>
 
 
                                 <p
@@ -201,7 +125,7 @@ export default function MyOrders() {
                                                         Kategriyasi:
                                                     </span>{' '}
                                                     <span className="fw-medium ">
-                                                        {item?.type}
+                                                        {item?.type?.name}
                                                     </span>
                                                 </div>
 
@@ -217,38 +141,27 @@ export default function MyOrders() {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='mt-3 d-md-flex justify-content-between'>
-                                        <div className="text-start">
-                                            <span className="text-success fs-5 fw-medium">
+                                    <div className='mt-3 
+                                    d-md-flex justify-content-between 
+                                    align-items-center'>
+                                        <div className="text-start mb-md-0 mb-3 d-md-flex gap-3 align-items-center">
+                                            <span className="text-success fs-5 fw-medium ">
                                                 Yaratilgan vaqti:
                                             </span>{' '}
-                                            <span className="fw-medium ">
+                                            <span className="fw-medium d-flex gap-3 ">
                                                 <CalculateTimeDifference targetDate={item?.created_at} />
+                                                <span>Takliflar: {item?.application_count}</span>
 
                                             </span>
                                         </div>
 
 
-                                        {
-                                            item?.data_status?.status === 'new' ? (
-                                                <span>
-                                                    <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                    Moderatsiya
-                                                </span>
-                                            ) : item?.data_status?.status === 'active' ? (
-                                                <span>
-                                                    <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                                    Tasdiqlangan
-                                                </span>
-                                            ) : (
-                                                <Tooltip title={item?.data_status?.reason}>
-                                                    <span style={{ cursor: 'pointer' }}>
-                                                        <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                                        Bekor qilingan{' '}
-                                                    </span>
-                                                </Tooltip>
-                                            )
-                                        }
+                                        <div className='d-flex justify-content-end'>
+                                            <button
+                                                onClick={() => Router.push(`/deal/${item?.id}`)}
+                                                className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
+                                        </div>
+
                                     </div>
                                 </div>
 
@@ -290,8 +203,7 @@ export default function MyOrders() {
 
                 <DealsList setOpen={setOpen} />
             </Modal>
-            <ModalDelete onSuccess={DeleteItemsProducts} />
 
-        </div >
+        </div>
     );
 }

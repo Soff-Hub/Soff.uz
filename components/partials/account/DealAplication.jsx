@@ -1,28 +1,35 @@
-import { Modal, Pagination } from 'antd';
-import React, { useEffect, useState } from 'react';
-import DealsSidebar from './DealsSidebar';
-import DealsList from '../DealsList';
-import GetRepository from '~/reositoriy-admin/GetRepository';
+import { DatePicker, Form, Input, Modal, Pagination } from 'antd';
+import React, { useEffect, useState }  from 'react';
 import { useSelector } from 'react-redux';
-import Router from 'next/router';
-import CalculateTimeDifference from '../DateFormatter';
 import useDebounce from '~/hooks/useDebounce';
-import { Tooltip } from 'chart.js';
+import GetRepository from '~/reositoriy-admin/GetRepository';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import DealsSidebar from './modules/DealsSidebar';
+import DealsList from './DealsList';
+import TextArea from 'antd/es/input/TextArea';
+
 
 
 export default function MyDealCart() {
     const { user } = useSelector((state) => state.auth);
+    const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setloading] = useState(false);
     const [open, setOpen] = useState(false)
+    const [openUpdate, setOpenUpdate] = useState(false)
     const [data, setData] = useState([]);
     const [dataDetials, setDataDetials] = useState({});
     const [currPage, setCurrPage] = useState(1);
-    const [productsID, setProductsId] = useState(null);
+    const [productsID, setProductsID] = useState(null);
+    const [productsId, setProductsId] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [keyword, setKeyword] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 300);
-    const [category, setCategory] = useState('')
+    const [lifetime, setDLifetime] = useState('');
+    const [category, setCategory] = useState('');
+    const [description, setDescription] = useState('');
+    const [price, setPrice] = useState('');
+
 
     const handleOk = () => {
         setIsModalOpen(false);
@@ -30,10 +37,26 @@ export default function MyDealCart() {
     const handleCancel = () => {
         setIsModalOpen(false);
     };
+
     const showModal = (productsId) => {
         if (productsId) {
-            setProductsId(productsId)
+            setProductsID(productsId)
             setIsModalOpen(true);
+        }
+    };
+
+    const showModalUpdate = (productsId) => {
+        if (productsId) {
+            setProductsID(productsId)
+            setOpenUpdate(true);
+        }
+    };
+
+    const handleChange = (date) => {
+        if (date) {
+            setDLifetime(date.format('YYYY-MM-DD'));
+        } else {
+            setDLifetime(null);
         }
     };
 
@@ -71,6 +94,53 @@ export default function MyDealCart() {
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
     };
+
+
+    async function DeleteItemsProducts() {
+        const ItemsData = await PatchRepository.getMyDealsDeleteApplicaiton(
+            productsId,
+            user?.access
+        );
+        GetItemsProducts(currPage, '', '', '', user?.access)
+        const modal = Modal.error({
+            centered: true,
+            title: 'Muvaffaqqiyatli!',
+            content: `Siz malumotlarni o'chirdingiz`,
+        });
+    }
+
+    async function postOrder() {
+        form.resetFields();
+
+        const data = {
+            description: description ? description : dataDetials?.description,
+            price: price ? price : dataDetials?.price,
+            deadline_date: lifetime ? lifetime : dataDetials?.deadline_date,
+        };
+
+        const ItemsData = await PatchRepository.patchDealUpdateApplicaiton(dataDetials?.deal, data, user?.access);
+        if (ItemsData?.status == 200) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: ` ${ItemsData?.data?.msg
+                    ? ItemsData?.data?.msg
+                    : 'Sizning arizangiz yuborildi'
+                    } `,
+            });
+            modal.update;
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xato!',
+                content: `Nimadir xato ketdi `,
+            });
+            modal.update;
+        }
+        setOpenUpdate(false);
+        GetItemsProducts()
+    }
+
 
     useEffect(() => {
         if (user?.access) {
@@ -141,7 +211,39 @@ export default function MyDealCart() {
                     {
                         data?.map(item => (
                             <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <h3 className="text-success fw-medium ">{item?.title}</h3>
+                                <div className='d-md-flex justify-content-between gap-4 align-items-center'>
+                                    <h3 className="text-success fw-medium ">{item?.title}</h3>
+
+                                    <Dropdown
+                                        overlay={(
+                                            <Menu>
+                                                <Menu.Item key="0">
+                                                    <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>
+                                                        Tahrirlash
+                                                        <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                    </span>
+                                                </Menu.Item>
+                                                <Menu.Item key="1">
+                                                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                                                        O'chirish
+                                                        <i
+                                                            className="fa-solid fa-trash-can text-danger mx-2"
+                                                            onClick={() => setProductsId(item?.id)}
+                                                        ></i>
+                                                    </a>
+                                                </Menu.Item>
+                                            </Menu>
+                                        )}
+                                        trigger={['click']}
+                                    >
+                                        <a style={{ cursor: "pointer" }} onClick={(e) => e.preventDefault()}>
+                                            <Space>
+                                                <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
+                                            </Space>
+                                        </a>
+                                    </Dropdown>
+
+                                </div>
 
 
                                 <p
@@ -299,7 +401,7 @@ export default function MyDealCart() {
                 centered
                 open={open}
                 onOk={() => setOpen(false)}
-                okText="Yopish"
+            
                 cancelButtonProps={{
                     style: {
                         display: 'none',
@@ -315,6 +417,104 @@ export default function MyDealCart() {
 
                 <DealsList setOpen={setOpen} />
             </Modal>
+
+            <Modal
+                title="Ariza tahrirlash"
+                width={650}
+                centered
+                open={openUpdate}
+                onOk={() => setOpenUpdate(false)}
+                okText="Yopish"
+                cancelButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+                onCancel={() => setOpenUpdate(false)}>
+
+
+                <Form
+                    layout='vertical'
+                    form={form}
+                    onFinish={postOrder}
+                    className="row  py-4  border-top rounded-3 px-4  bg-white ">
+
+
+                    <div className="col-md-12 p-0 ">
+
+                        <Form.Item
+                            label={"Bajarilish muddati"}
+                            name={dataDetials?.deadline_date}
+                            className='mb-2'
+                        >
+                            <DatePicker
+                                className="w-100 py-3  rounded-3"
+                                onChange={handleChange}
+                                placeholder='Bajarilish muddati'
+                                // defaultValue={dayjs(dataDetials?.deadline_date)}
+                            />
+                        </Form.Item>
+                    </div>
+
+                    <div className="col-md-12 p-0 ">
+                        <Form.Item
+                            label="Narxi"
+                            className='m-0'
+                            name={dataDetials?.price}>
+                            <Input
+                                onChange={(e) => setPrice(e.target.value)}
+                                placeholder="Narxi"
+                                defaultValue={dataDetials?.price}
+                            />
+                        </Form.Item>
+                    </div>
+                    <div className="col-md-12 p-0  ">
+                        <Form.Item
+                            label="Taklif"
+                            name={dataDetials?.description}>
+                            <TextArea
+                                rows={6}
+                                placeholder="Taklif"
+                                onChange={(e) => setDescription(e.target.value)}
+                                defaultValue={dataDetials?.description}
+                            />
+                        </Form.Item>
+                    </div>
+
+
+                    <Form.Item className="col-md-12 d-flex justify-content-end m-0">
+                        <Button
+                            // loading={loading}
+                            htmlType="submit"
+
+                            style={{
+                                width: '100%',
+                                height: '40px',
+                                padding: "1px 30px"
+                            }}
+                            className="btn-success btn-send-email">
+                            <span
+                                style={{
+                                    color: '#fff',
+                                    fontSize: '16px',
+                                }}>
+                                Yuborish
+                            </span>
+                        </Button>
+                    </Form.Item>
+                </Form>
+
+
+
+            </Modal>
+
+
+            <ModalDelete onSuccess={DeleteItemsProducts} />
         </div >
     );
 }
