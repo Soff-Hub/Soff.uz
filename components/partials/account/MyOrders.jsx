@@ -1,4 +1,3 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
@@ -67,12 +66,20 @@ export default function MyOrders() {
             productsId,
             user?.access
         );
-        GetItemsProducts(currPage, '', '', '', user?.access)
-        const modal = Modal.error({
-            centered: true,
-            title: 'Muvaffaqqiyatli!',
-            content: `Siz malumotlarni o'chirdingiz`,
-        });
+        if (ItemsData?.status === 204) {
+            GetItemsProducts(currPage, '', '', '', user?.access)
+            const modal = Modal.error({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz malumotlarni o'chirdingiz`,
+            });
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: ItemsData?.status === 404 ? "O'chirish imkoniyati mavjud emas!" : ItemsData?.status + ' ' + ItemsData?.statusText,
+            });
+        }
     }
 
     function handleClickUpdate(id) {
@@ -337,7 +344,7 @@ export default function MyOrders() {
 
                 onCancel={() => setOpenUpdate(false)}>
 
-                <DealsListUpdate setOpenUpdate={setOpenUpdate} dataDetails={dataDetails}  setOpen={setOpen} />
+                <DealsListUpdate setOpenUpdate={setOpenUpdate} dataDetails={dataDetails} setOpen={setOpen} />
             </Modal>
 
 

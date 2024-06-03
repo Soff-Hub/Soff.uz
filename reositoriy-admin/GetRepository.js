@@ -616,7 +616,7 @@ class GetRepository {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => error?.response);
         return reponse;
     }
 
