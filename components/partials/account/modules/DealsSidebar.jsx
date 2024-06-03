@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 
 
-const DealsSidebar = ({ setType, setLifetime, setLifetime2 }) => {
+const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) => {
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
     const [dealType, setDealType] = useState(null);
@@ -113,7 +113,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2 }) => {
                 <span className="d-block p-2 fw-bold mt-4">
                     Buyurtma narxi
                 </span>
-                <Slider range defaultValue={[20, 50]} disabled={false} />
+                <Slider range defaultValue={[0, 100]} disabled={false} onChange={(e) => setProgressPrice(e)} />
             </div>}
         </div>
     )

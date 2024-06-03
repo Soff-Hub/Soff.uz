@@ -47,7 +47,7 @@ export default function ApplyForDeal() {
 
     async function GetItemsProducts() {
 
-        const ItemsData = await GetRepository.getOrdersDealLists(1, '', '', '','', id);
+        const ItemsData = await GetRepository.getOrdersDealLists(1, '', '', '', '', id);
         if (ItemsData) {
             setData(ItemsData);
         }
@@ -79,7 +79,7 @@ export default function ApplyForDeal() {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xato!',
-                content: `Nimadir xato ketdi `,
+                content: ItemsData?.status + ' ' + ItemsData?.statusText,
             });
             modal.update;
         }
@@ -172,7 +172,7 @@ export default function ApplyForDeal() {
                 {' '}
                 Buyurtma uchun taklif yuborish {' '}
             </h4>
-            
+
             <Form
                 layout='vertical'
                 form={form}

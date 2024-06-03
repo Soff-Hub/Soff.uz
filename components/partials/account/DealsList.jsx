@@ -50,17 +50,17 @@ export default function DealsList({ setOpen }) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: ` ${ItemsData?.data?.msg
+                content: `${ItemsData?.data?.msg
                     ? ItemsData?.data?.msg
                     : 'Sizning arizangiz yuborildi'
-                    } `,
+                    }  `,
             });
             modal.update;
         } else {
             const modal = Modal.error({
                 centered: true,
                 title: 'Xato!',
-                content: `Nimadir xato ketdi `,
+                content: ItemsData?.status + ' ' + ItemsData?.statusText,
             });
             modal.update;
         }

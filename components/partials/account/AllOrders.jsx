@@ -1,6 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Modal, Pagination } from 'antd';
+import { Modal, Pagination, Progress } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import useDebounce from '~/hooks/useDebounce';
 import DealsSidebar from './modules/DealsSidebar';
@@ -18,6 +18,7 @@ export default function DealCart() {
     const [lifetime, setLifetime] = useState('');
     const [lifetime2, setLifetime2] = useState('');
     const [type, setType] = useState('');
+    const [progressPrice, setProgressPrice] = useState(0);
 
 
 
@@ -57,16 +58,18 @@ export default function DealCart() {
         GetItemsProducts();
     }, [currPage, debouncedSearchTerm, lifetime, lifetime2, type]);
 
+    // console.log("first", progressPrice[0]);
+    // console.log("second", progressPrice[1]);
 
 
     return (
         <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
             <div className='col-md-3'>
-                <DealsSidebar setLifetime={setLifetime} setLifetime2={setLifetime2} setType={setType} />
+                <DealsSidebar setLifetime={setLifetime} setLifetime2={setLifetime2} setType={setType} setProgressPrice={setProgressPrice} />
             </div>
 
             <div className={'col-md-9 mb-4'}>
-                <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
+                <div className='d-flex justify-content-between gap-3 mb-2  row px-4'>
                     <div className={'ps-form__input d-flex align-items-center position-relative p-0'} style={{ flex: 1 }}>
                         <input
                             className={"form-control input2 bg-white rounded-3 "}
@@ -83,11 +86,10 @@ export default function DealCart() {
                         Buyurtma yaratish
                     </button>
                 </div>
-                <div className="progress mb-3" role="progressbar" aria-label="Example with label"
-                    aria-valuenow="75" aria-valuemin="0"
-                    aria-valuemax="100">
-                    <div className="progress-bar" style={{ width: "75%" }}>75%</div>
+                <div>
+                    <Progress percent={99.9}  strokeColor={"#28a745"} />
                 </div>
+
 
                 <div className='d-flex flex-column gap-3'>
                     {
