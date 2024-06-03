@@ -143,7 +143,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
                                         <DatePicker
                                             onChange={handleChange}
                                             className='w-100 py-3' placeholder='Tugash muddati'
-                                            defaultValue={dayjs('2000-01-01')}
+                                            // defaultValue={dayjs('2000-01-01')}
                                         />
                                     </Form.Item>
                                     <Form.Item
