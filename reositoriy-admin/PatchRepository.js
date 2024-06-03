@@ -1,5 +1,9 @@
 import { baseDomain } from '~/repositories/NewRepository';
-import Repository, { baseUrl, baseUrlCustomer, baseUrlProfie } from './Repository';
+import Repository, {
+    baseUrl,
+    baseUrlCustomer,
+    baseUrlProfie,
+} from './Repository';
 
 class PatchRepository {
     async PatchCategory(data, id, token) {
@@ -182,6 +186,25 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getMyDealsDeleteApplicaiton(id, token) {
+        const endPoint = `deals/deal-applications/${id}/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
 
     async getMyProductsDelete(id, token) {
         const endPoint = `product-delete/${id}`;
@@ -280,6 +303,49 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
+
+    async patchDealUpdate(id, data, token) {
+        const endPoint = `deals/my-deals/${id}/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return reponse;
+    }
+
+    async patchDealUpdateApplicaiton(id, data, token) {
+        const endPoint = `deals/deal-applications/${id}/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return reponse;
+    }
+
 }
 
 export default new PatchRepository();

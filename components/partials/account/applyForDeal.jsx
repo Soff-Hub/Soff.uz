@@ -172,6 +172,7 @@ export default function ApplyForDeal() {
                 {' '}
                 Buyurtma uchun taklif yuborish {' '}
             </h4>
+            
             <Form
                 layout='vertical'
                 form={form}

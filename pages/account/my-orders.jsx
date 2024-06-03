@@ -1,7 +1,7 @@
 import React from 'react';
 import BreadCrumb from '~/components/elements/BreadCrumb';
 import PageContainer from '~/components/layouts/PageContainer';
-import MyOrders from '~/components/partials/account/modules/MyOrders';
+import MyOrders from '~/components/partials/account/MyOrders';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import Meta from '~/components/shared/headers/Meta';
 
