@@ -191,16 +191,16 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount 
         <aside className="widget widget_shop">
             <figure>
                 <h4 className="widget-title">Narx </h4>
-                <Slider
-                    range
-                    draggableTrack={true}
-                    defaultValue={defVal}
-                    value={defVal}
-                    max={max}
-                    min={min}
-                    onAfterChange={(e) => handleChangeRange(e)}
-                // onChange={(e) => setDefVal(e)}
-                />
+                {
+                    defVal &&
+                    <Slider
+                        range
+                        defaultValue={defVal}
+                        max={max}
+                        min={min}
+                        onChange={(e) => handleChangeRange(e)}
+                    />
+                }
                 <p>
                     Narx:{' '}
                     {min === undefined || min === null

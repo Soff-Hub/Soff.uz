@@ -555,12 +555,21 @@ class GetRepository {
         return reponse;
     }
 
-    async getOrdersDealLists(page, search, start_date, end_date, type, id) {
+    async getOrdersDealLists(
+        page,
+        search,
+        start_date,
+        end_date,
+        type,
+        min_price,
+        max_price,
+        id
+    ) {
         const endPoint = `deals/${id ? id + '/' : ''}?page=${page}&search=${
             search || ''
         }&start_date=${start_date || ''}&end_date=${end_date || ''}&type=${
             type || ''
-        }`;
+        }&min_price=${min_price || ''}&max_price=${max_price || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -640,7 +649,25 @@ class GetRepository {
         return reponse;
     }
 
-
+    async getOrdersProgressBar(token) {
+        const endPoint = `deals/deal-coin/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
 
     async getUsersLists(page, status, search, token) {
         const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}&search=${
@@ -1168,6 +1195,24 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getDealTypePriceRange() {
+        const endPoint = `deals/price-range/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getDeadline(token) {
         const endPoint = `deals/deadlines/`;
         const reponse = await Repository({

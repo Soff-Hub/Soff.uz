@@ -57,7 +57,7 @@ export default function MyOrders() {
     async function GetItemsProductsUpdates() {
         const token = user?.access
         const ItemsData = await GetRepository.getOrdersMYDealListsUpdate(productsIdUpdate, token);
-        setDataDtails(ItemsData)
+        setDataDtails(ItemsData);
     }
 
 
@@ -178,12 +178,15 @@ export default function MyOrders() {
                                     <Dropdown
                                         overlay={(
                                             <Menu>
-                                                <Menu.Item key="0">
-                                                    <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                        Tahrirlash
-                                                        <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                    </span>
-                                                </Menu.Item>
+                                                {
+                                                    item?.status === 'active' ?
+                                                        <Menu.Item key="0">
+                                                            <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
+                                                                Tahrirlash
+                                                                <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                            </span>
+                                                        </Menu.Item> : <></>
+                                                }
                                                 <Menu.Item key="1">
                                                     <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
                                                         O'chirish
@@ -263,18 +266,18 @@ export default function MyOrders() {
 
 
                                         {
-                                            item?.data_status?.status === 'new' ? (
+                                            item?.status !== 'new' ? (
                                                 <span>
                                                     <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                                     Moderatsiya
                                                 </span>
-                                            ) : item?.data_status?.status === 'active' ? (
+                                            ) : item?.status === 'active' ? (
                                                 <span>
                                                     <i className="fa-solid text-success fa-circle-check"></i>{' '}
                                                     Tasdiqlangan
                                                 </span>
                                             ) : (
-                                                <Tooltip title={item?.data_status?.reason}>
+                                                <Tooltip title={item?.reason}>
                                                     <span style={{ cursor: 'pointer' }}>
                                                         <i className="fa-solid fa-circle-question text-danger"></i>{' '}
                                                         Bekor qilingan{' '}

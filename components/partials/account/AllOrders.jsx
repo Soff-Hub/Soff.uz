@@ -6,8 +6,10 @@ import useDebounce from '~/hooks/useDebounce';
 import DealsSidebar from './modules/DealsSidebar';
 import CalculateTimeDifference from './DateFormatter';
 import DealsList from './DealsList';
+import { useSelector } from 'react-redux';
 
 export default function DealCart() {
+    const { user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
     const [currPage, setCurrPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
@@ -19,17 +21,35 @@ export default function DealCart() {
     const [lifetime2, setLifetime2] = useState('');
     const [type, setType] = useState('');
     const [progressPrice, setProgressPrice] = useState(0);
+    const [progressData, setProgressData] = useState(0);
 
 
 
     async function GetItemsProducts() {
-        const ItemsData = await GetRepository.getOrdersDealLists(currPage, debouncedSearchTerm, lifetime, lifetime2, type);
-        console.log(ItemsData);
+        const ItemsData = await GetRepository.getOrdersDealLists(
+            currPage,
+            debouncedSearchTerm,
+            lifetime,
+            lifetime2,
+            type,
+            progressPrice[0],
+            progressPrice[1]
+        );
         if (ItemsData?.results) {
             setPageCount(ItemsData.count);
             setData(ItemsData.results);
         }
     }
+
+
+    async function GetItemsProductsProgress() {
+        const ItemsData = await GetRepository.getOrdersProgressBar(user?.access);
+        if (ItemsData?.results) {
+            setProgressData(ItemsData.results);
+        }
+    }
+
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -56,10 +76,14 @@ export default function DealCart() {
 
     useEffect(() => {
         GetItemsProducts();
-    }, [currPage, debouncedSearchTerm, lifetime, lifetime2, type]);
+    }, [currPage, debouncedSearchTerm, lifetime, lifetime2, type, progressPrice[0], progressPrice[1]]);
 
-    // console.log("first", progressPrice[0]);
-    // console.log("second", progressPrice[1]);
+    useEffect(() => {
+        if (user?.access) {
+            GetItemsProductsProgress()
+        }
+    }, [user?.access])
+
 
 
     return (
@@ -87,7 +111,7 @@ export default function DealCart() {
                     </button>
                 </div>
                 <div>
-                    <Progress percent={99.9}  strokeColor={"#28a745"} />
+                    <Progress percent={99.9} strokeColor={"#28a745"} />
                 </div>
 
 
