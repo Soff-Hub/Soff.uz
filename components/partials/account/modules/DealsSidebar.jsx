@@ -10,6 +10,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     const { user } = useSelector((state) => state.auth);
     const [dealType, setDealType] = useState(null);
     const { RangePicker } = DatePicker;
+    const [price, setPrice] = useState(null)
 
 
     const handleChange = (date) => {
@@ -23,6 +24,24 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     };
 
 
+    function addPeriodToThousands(number) {
+        const numStr = String(number);
+
+        const [integerPart, decimalPart] = numStr.split('.');
+
+        const formattedIntegerPart = integerPart.replace(
+            /\B(?=(\d{3})+(?!\d))/g,
+            ' '
+        );
+
+        const formattedNumber =
+            decimalPart !== undefined
+                ? `${formattedIntegerPart}`
+                : formattedIntegerPart;
+
+        return formattedNumber;
+    }
+
     async function getDealType(token) {
         const data = await GetRepository.getDealType(token);
         if (data?.results) {
@@ -30,7 +49,15 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         }
     }
 
+    async function getDealPrice() {
+        const data = await GetRepository.getDealTypePriceRange();
+        if (data) {
+            setPrice(data);
+        }
+    }
+
     useEffect(() => {
+        getDealPrice()
         if (user?.access) {
             getDealType(user?.access);
         }
@@ -40,10 +67,6 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         label: e?.name,
         value: e?.id,
     }));
-
-
-
-
 
     const sidebarMenu = [
         {
@@ -59,6 +82,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
             label: 'Mening buyurtmalarim',
         }
     ]
+
 
     return (
         <div className="w-100 mb-5">
@@ -113,7 +137,32 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                 <span className="d-block p-2 fw-bold mt-4">
                     Buyurtma narxi
                 </span>
-                <Slider range defaultValue={[0, 100]} disabled={false} onChange={(e) => setProgressPrice(e)} />
+                {
+                    (price?.min_price && price?.max_price) &&
+                    (
+                        <>
+                            <Slider
+                                range
+                                defaultValue={[price?.min_price, price?.max_price]}
+                                max={price?.max_price}
+                                min={price?.min_price}
+                                onChange={(e) => setProgressPrice(e)}
+                            />
+
+                            <p>
+                                Narx:{' '}
+                                {addPeriodToThousands(price?.min_price)}{' '}
+
+                                so'm -{' '}
+                                {addPeriodToThousands(price?.max_price)}{' '}
+                                so'm
+                            </p>
+
+
+                        </>
+                    )
+
+                }
             </div>}
         </div>
     )

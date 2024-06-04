@@ -1,10 +1,9 @@
-import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, Modal, Select } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useEffect } from 'react';
-import dayjs from 'dayjs';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 const { TextArea } = Input;
 
@@ -20,13 +19,6 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
     const [loading, setLoading] = useState(false);
     const [dealType, setDealType] = useState(null);
 
-    const handleChange = (date) => {
-        if (date) {
-            setLifetime(date.format('YYYY-MM-DD'));
-        } else {
-            setLifetime(null);
-        }
-    };
 
 
     async function postOrder() {
@@ -41,28 +33,25 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
             type: type ? type : dataDetails?.type,
         };
         const ItemsData = await PatchRepository.patchDealUpdate(dataDetails?.id, data, user?.access);
-        if (ItemsData?.status == 200) {
+        if (ItemsData?.status === 201) {
+            GetItemsProducts(currPage, '', '', '', user?.access)
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: ` ${ItemsData?.data?.msg
-                    ? ItemsData?.data?.msg
-                    : 'Sizning arizangiz yuborildi'
-                    } `,
+                content: `Siz malumotlarni o'zgartirdingiz`,
             });
-            modal.update;
         } else {
             const modal = Modal.error({
                 centered: true,
-                title: 'Xato!',
-                content: `Nimadir xato ketdi `,
+                title: 'Xatolik!',
+                content: ItemsData?.status + ' ' + ItemsData?.statusText,
             });
-            modal.update;
         }
         setOpenUpdate(false)
         setOpen(false)
         setLoading(false);
     }
+    
 
     async function getDealType(token) {
         const data = await GetRepository.getDealType(token);
@@ -140,11 +129,8 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
                                         className="col-md-12 mb-3 "
                                         name={dataDetails?.deadline_date}
                                     >
-                                        <DatePicker
-                                            onChange={handleChange}
-                                            className='w-100 py-3' placeholder='Tugash muddati'
-                                            // defaultValue={dayjs('2000-01-01')}
-                                        />
+                                        <Input type='date' onChange={(e) => setLifetime(e.target.value)}
+                                            defaultValue={dataDetails?.deadline_date} />
                                     </Form.Item>
                                     <Form.Item
                                         className="col-md-12 mb-3"

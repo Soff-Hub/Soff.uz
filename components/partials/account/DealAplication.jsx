@@ -1,4 +1,4 @@
-import { Button, DatePicker, Form, Input, Modal, Pagination } from 'antd';
+import { Button, Dropdown, Form, Input, Menu, Modal, Pagination, Space, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
@@ -7,6 +7,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import ModalDelete from './Modal';
+import CalculateTimeDifference from './DateFormatter';
 const { TextArea } = Input;
 
 
@@ -53,13 +54,6 @@ export default function MyDealCart() {
         }
     };
 
-    const handleChange = (date) => {
-        if (date) {
-            setDLifetime(date.format('YYYY-MM-DD'));
-        } else {
-            setDLifetime(null);
-        }
-    };
 
 
     async function GetItemsProducts() {
@@ -128,23 +122,18 @@ export default function MyDealCart() {
         };
 
         const ItemsData = await PatchRepository.patchDealUpdateApplicaiton(dataDetials?.deal, data, user?.access);
-        if (ItemsData?.status == 200) {
+        if (ItemsData?.status === 201) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: ` ${ItemsData?.data?.msg
-                    ? ItemsData?.data?.msg
-                    : 'Sizning arizangiz yuborildi'
-                    } `,
+                content: `Siz malumotlarni o'zgartirdingiz`,
             });
-            modal.update;
         } else {
             const modal = Modal.error({
                 centered: true,
-                title: 'Xato!',
-                content: `Nimadir xato ketdi `,
+                title: 'Xatolik!',
+                content: ItemsData?.status + ' ' + ItemsData?.statusText,
             });
-            modal.update;
         }
         setOpenUpdate(false);
         GetItemsProducts()
@@ -393,10 +382,12 @@ export default function MyDealCart() {
                                     Tasdiqlangan
                                 </span>
                             ) : (
-                                <span style={{ cursor: 'pointer' }}>
-                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                    Bekor qilingan{' '}
-                                </span>
+                                <Tooltip title={dataDetials?.reason}>
+                                    <span style={{ cursor: 'pointer' }}>
+                                        <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                        Bekor qilingan{' '}
+                                    </span>
+                                </Tooltip>
                             )
                         }
                     </div>
@@ -460,12 +451,8 @@ export default function MyDealCart() {
                             name={dataDetials?.deadline_date}
                             className='mb-2'
                         >
-                            <DatePicker
-                                className="w-100 py-3  rounded-3"
-                                onChange={handleChange}
-                                placeholder='Bajarilish muddati'
-                            // defaultValue={dayjs(dataDetials?.deadline_date)}
-                            />
+                            <Input type='date' onChange={(e) => setDLifetime(e.target.value)}
+                                defaultValue={dataDetials?.deadline_date} />
                         </Form.Item>
                     </div>
 

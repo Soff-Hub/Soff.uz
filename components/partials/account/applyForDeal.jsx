@@ -47,7 +47,7 @@ export default function ApplyForDeal() {
 
     async function GetItemsProducts() {
 
-        const ItemsData = await GetRepository.getOrdersDealLists(1, '', '', '', '', id);
+        const ItemsData = await GetRepository.getOrdersDealLists(1, '', '', '', '', '', '', id);
         if (ItemsData) {
             setData(ItemsData);
         }
@@ -64,25 +64,22 @@ export default function ApplyForDeal() {
 
         };
         const ItemsData = await PostsRepository.postDealAppliaction(data_form, user?.access);
-        if (ItemsData?.status == 201) {
+
+        if (ItemsData?.status === 201) {
             router.push("/account/deal-applications")
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: ` ${ItemsData?.data?.msg
-                    ? ItemsData?.data?.msg
-                    : 'Sizning arizangiz yuborildi'
-                    } `,
+                content: `Siz malumotlarni o'zgartirdingiz`,
             });
-            modal.update;
         } else {
             const modal = Modal.error({
                 centered: true,
-                title: 'Xato!',
+                title: 'Xatolik!',
                 content: ItemsData?.status + ' ' + ItemsData?.statusText,
             });
-            modal.update;
         }
+
     }
 
 
