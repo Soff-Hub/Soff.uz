@@ -59,7 +59,7 @@ export default function MyDealCart() {
     async function GetItemsProducts() {
         setloading(true)
         const token = user?.access
-        const ItemsData = await GetRepository.getOrdersApplicationsLists(currPage, debouncedSearchTerm, productsID, category, token);
+        const ItemsData = await GetRepository.getOrdersApplicationsLists(currPage, debouncedSearchTerm, '', category, token);
         if (ItemsData?.results) {
             setPageCount(ItemsData.count);
             setData(ItemsData.results);
@@ -67,6 +67,17 @@ export default function MyDealCart() {
         setDataDetials(ItemsData)
         setloading(false)
     }
+
+
+    async function GetItemsProductsUpdates() {
+        const token = user?.access
+        const ItemsData = await GetRepository.getOrdersApplicationsListsUpdates(productsID, token);
+        if (ItemsData) {
+            setDataDetials(ItemsData)
+        }
+    }
+
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -114,7 +125,6 @@ export default function MyDealCart() {
 
     async function postOrder() {
         form.resetFields();
-
         const data = {
             description: description ? description : dataDetials?.description,
             price: price ? price : dataDetials?.price,
@@ -122,7 +132,7 @@ export default function MyDealCart() {
         };
 
         const ItemsData = await PatchRepository.patchDealUpdateApplicaiton(dataDetials?.deal, data, user?.access);
-        if (ItemsData?.status === 201) {
+        if (ItemsData?.status === 200) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -136,7 +146,7 @@ export default function MyDealCart() {
             });
         }
         setOpenUpdate(false);
-        GetItemsProducts()
+        GetItemsProducts(currPage, '', '', '', user?.access)
     }
 
 
@@ -144,7 +154,13 @@ export default function MyDealCart() {
         if (user?.access) {
             GetItemsProducts();
         }
-    }, [currPage, debouncedSearchTerm, productsID, category, user?.access]);
+    }, [currPage, debouncedSearchTerm, category, user?.access]);
+
+    useEffect(() => {
+        if (productsID) {
+            GetItemsProductsUpdates()
+        }
+    }, [productsID])
 
 
     return (
@@ -270,10 +286,10 @@ export default function MyDealCart() {
 
                                                 <div className="text-start">
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Kategriyasi:
+                                                        Kategoriyasi:
                                                     </span>{' '}
                                                     <span className="fw-medium ">
-                                                        {item?.type}
+                                                        {item?.type?.name}
                                                     </span>
                                                 </div>
 
@@ -362,7 +378,7 @@ export default function MyDealCart() {
                     <p
                         style={{ width: "100%" }}
                     >
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestias dolor nam, beatae ut saepe facere corrupti eum animi, eligendi, deserunt odio? Quis quibusdam animi porro pariatur necessitatibus eligendi nihil, quaerat dolore atque tenetur cumque dolorem officiis voluptatibus sequi. Saepe facere, laudantium optio quidem et modi similique! Autem quisquam sit nostrum. Tenetur illum aspernatur porro laborum quisquam, corrupti fugit numquam dolores voluptate accusantium ipsum quas hic nobis necessitatibus molestiae, voluptatem deserunt earum ipsa veniam suscipit inventore sunt fugiat eum! Provident labore alias explicabo et ducimus sit est ipsa reiciendis, enim magnam? Eaque, minima aspernatur? Voluptatibus vel deserunt repellat facilis laudantium eius!
+                        {dataDetials?.description}
                     </p>
 
                     <div className='d-flex justify-content-between align-items-center '>
@@ -462,6 +478,7 @@ export default function MyDealCart() {
                             className='m-0'
                             name={dataDetials?.price}>
                             <Input
+                                type='number'
                                 onChange={(e) => setPrice(e.target.value)}
                                 placeholder="Narxi"
                                 defaultValue={dataDetials?.price}

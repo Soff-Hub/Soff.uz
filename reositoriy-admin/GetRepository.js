@@ -607,6 +607,26 @@ class GetRepository {
         return reponse;
     }
 
+    async getOrdersApplicationsListsUpdates(id, token) {
+        const endPoint = `deals/deal-applications/${id ? id + '/' : ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getOrdersMYDealLists(page, search, id, status, token) {
         const endPoint = `deals/my-deals/${
             id ? id + '/' : ''
@@ -646,6 +666,28 @@ class GetRepository {
                 }
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getApplicationsReceived(page, status, deal, token) {
+        const endPoint = `deals/my-deals-applications/?page=${page}&status=${
+            status || ''
+        }&deal=${deal || ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error?.response);
         return reponse;
     }
 

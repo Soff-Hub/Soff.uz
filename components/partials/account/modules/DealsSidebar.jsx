@@ -80,6 +80,10 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         {
             url: '/account/my-orders',
             label: 'Mening buyurtmalarim',
+        },
+        {
+            url: '/account/applications-received',
+            label: 'Kelib tushgan arizalar',
         }
     ]
 
@@ -134,13 +138,13 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                 />
 
 
-                <span className="d-block p-2 fw-bold mt-4">
-                    Buyurtma narxi
-                </span>
                 {
                     (price?.min_price && price?.max_price) &&
                     (
                         <>
+                            <span className="d-block p-2 fw-bold mt-4">
+                                Buyurtma narxi
+                            </span>
                             <Slider
                                 range
                                 defaultValue={[price?.min_price, price?.max_price]}

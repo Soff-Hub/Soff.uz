@@ -143,6 +143,7 @@ export default function DealsList({ setOpen }) {
                                             },
                                         ]}>
                                         <Input
+                                            type='number'
                                             onChange={(e) =>
                                                 setPrice(
                                                     e.target.value

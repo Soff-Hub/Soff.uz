@@ -126,7 +126,7 @@ export default function ApplyForDeal() {
 
                                     <div className="text-start">
                                         <span className="text-success fs-5 fw-medium">
-                                            Kategriyasi:
+                                            Kategoriyasi:
                                         </span>{' '}
                                         <span className="fw-medium ">
                                             {data?.type?.name ? data?.type?.name : "No Type"}
@@ -192,7 +192,7 @@ export default function ApplyForDeal() {
                         rules={[
                             {
                                 required: true,
-                                message: 'Buyurtma Muddatini kiritish majburiy',
+                                message: 'Buyurtma muddatini kiritish majburiy',
                             },
                         ]}
 
@@ -217,8 +217,9 @@ export default function ApplyForDeal() {
                             },
                         ]}>
                         <Input
+                            type='number'
                             onChange={(e) => setPrice(e.target.value)}
-                            placeholder="Narxi"></Input>
+                            placeholder="Narxi" />
                     </Form.Item>
                 </div>
                 <div className="col-md-12 p-0  ">
@@ -228,7 +229,7 @@ export default function ApplyForDeal() {
                         rules={[
                             {
                                 required: true,
-                                message: 'Buyurtma Muddatini kiritish majburiy',
+                                message: 'Buyurtma taklifini kiritish majburiy',
                             },
                         ]}
 

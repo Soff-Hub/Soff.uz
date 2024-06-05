@@ -20,6 +20,7 @@ export default function MyOrders() {
     const [productsIdUpdate, setProductsIdUpdate] = useState('');
     const [pageCount, setPageCount] = useState(0);
     const [open, setOpen] = useState(false);
+    const [open2, setOpen2] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
     const [keyword, setKeyword] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 300);
@@ -98,7 +99,7 @@ export default function MyOrders() {
         if (user?.access) {
             GetItemsProducts();
         }
-    }, [currPage, debouncedSearchTerm, open, category, user?.access]);
+    }, [currPage, debouncedSearchTerm, open,open2, category, user?.access]);
 
 
     useEffect(() => {
@@ -179,7 +180,7 @@ export default function MyOrders() {
                                         overlay={(
                                             <Menu>
                                                 {
-                                                    item?.status === 'active' ?
+                                                    item?.status !== 'active' ?
                                                         <Menu.Item key="0">
                                                             <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
                                                                 Tahrirlash
@@ -234,10 +235,10 @@ export default function MyOrders() {
 
                                                 <div className="text-start">
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Kategriyasi:
+                                                        Kategoriyasi:
                                                     </span>{' '}
                                                     <span className="fw-medium ">
-                                                        {item?.type}
+                                                        {item?.type?.name}
                                                     </span>
                                                 </div>
 
@@ -266,7 +267,7 @@ export default function MyOrders() {
 
 
                                         {
-                                            item?.status !== 'new' ? (
+                                            item?.status === 'new' ? (
                                                 <span>
                                                     <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                                     Moderatsiya
@@ -347,7 +348,7 @@ export default function MyOrders() {
 
                 onCancel={() => setOpenUpdate(false)}>
 
-                <DealsListUpdate setOpenUpdate={setOpenUpdate} dataDetails={dataDetails} setOpen={setOpen} />
+                <DealsListUpdate setOpenUpdate={setOpenUpdate} dataDetails={dataDetails} setOpen2={setOpen2} />
             </Modal>
 
 
