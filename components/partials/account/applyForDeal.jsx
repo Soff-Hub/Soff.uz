@@ -70,7 +70,7 @@ export default function ApplyForDeal() {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: `Siz malumotlarni o'zgartirdingiz`,
+                content: `Arizangiz muvaffaqiyatli yuborildi!`,
             });
         } else {
             const modal = Modal.error({

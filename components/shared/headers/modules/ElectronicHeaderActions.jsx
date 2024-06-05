@@ -53,7 +53,7 @@ const ElectronicHeaderActions = ({ auth }) => {
             );
 
             // Yangi WebSocket ulanishini yaratish
-            newSocket.onopen = function () {};
+            newSocket.onopen = function () { };
 
             // Xabarlarni qabul qilish uchun funksiya
             if (newSocket) {
@@ -82,6 +82,12 @@ const ElectronicHeaderActions = ({ auth }) => {
     return (
         <div className="header__actions">
             {contextHolder}
+            <Link href="/account/all-orders" className='mx-2'>
+                <a className="header__extra">
+                <i class="fa-solid fa-handshake fa-fade" ></i>
+                </a>
+            </Link>
+
             <Link href="/page/about-us">
                 <a className="header__extra">
                     <i className="fa-regular fa-circle-question"></i>

@@ -1180,8 +1180,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getDealList(token) {
-        const endPoint = `deals/owner-admin/`;
+    async getDealList(page, token) {
+        const endPoint = `deals/owner-admin/?page=${page}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -1218,14 +1218,12 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getDealType(token) {
+    async getDealType() {
         const endPoint = `deals/deal-types/`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+       
         })
             .then((response) => {
                 if (response.status === 200) {

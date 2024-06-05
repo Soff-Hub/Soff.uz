@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
-import { Modal, Table, Tooltip } from 'antd';
+import { Modal, Pagination, Table, Tooltip } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -11,6 +11,8 @@ export default function DealOrderList() {
     const [dealList, setDealList] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dealItem, setDealItem] = useState(null);
+    const [pageCount, setPageCount] = useState(0);
+    const [currPage, setCurrPage] = useState(1);
 
     const showModal = async (id) => {
         setIsModalOpen(true);
@@ -24,10 +26,12 @@ export default function DealOrderList() {
     };
 
     async function getDealList(token) {
-        const data = await GetRepository.getDealList(token);
+        const data = await GetRepository.getDealList(currPage, token);
         if (data?.results) {
+            setPageCount(data.count);
             setDealList(data?.results);
         }
+
     }
 
     const columns = [
@@ -139,11 +143,17 @@ export default function DealOrderList() {
         },
     ];
 
+
+    const handlePagination = (pageNum) => {
+        setCurrPage(pageNum);
+    };
+
+
     useEffect(() => {
         if (user?.access) {
             getDealList(user?.access);
         }
-    }, []);
+    }, [currPage]);
 
     return (
         <section className="ps-my-account ps-page--account">
@@ -164,14 +174,16 @@ export default function DealOrderList() {
                                         columns={columns}
                                         pagination={false}
                                     />
-                                    {/* <Pagination
-                                        className="mt-3"
-                                        defaultCurrent={1}
-                                        total={pageCount}
-                                        onChange={handlePagination}
-                                        showSizeChanger={false}
-                                        current={+router.query.page}
-                                    /> */}
+                                    <div className='d-flex justify-content-center my-4 '>
+                                        <Pagination
+                                            className="mt-3"
+                                            total={pageCount}
+                                            defaultCurrent={currPage}
+                                            onChange={handlePagination}
+                                        />
+                                    </div>
+
+
                                 </div>
                                 <Modal
                                     title="Buyurtmani foydalanuvchi tarafda ko'rinishi"
@@ -205,8 +217,8 @@ export default function DealOrderList() {
                                                 <span className="text-success fs-3 fw-bold">
                                                     {dealItem?.price
                                                         ? JSON.parse(
-                                                              dealItem?.price
-                                                          ) + " so'm"
+                                                            dealItem?.price
+                                                        ) + " so'm"
                                                         : "23 000 so'm"}
                                                 </span>
                                             </div>
@@ -257,7 +269,7 @@ export default function DealOrderList() {
                                                             </span>
                                                         </div>
                                                         {dealItem?.status ===
-                                                        'active' ? (
+                                                            'active' ? (
                                                             <div className="bg-success rounded-3 d-flex justify-content-center align-items-center gap-2 p-1  mt-3 ">
                                                                 {' '}
                                                                 <span className="text-white fs-3 fw-medium d-block">
@@ -268,7 +280,7 @@ export default function DealOrderList() {
                                                                 </span>
                                                             </div>
                                                         ) : dealItem?.status ===
-                                                          'new' ? (
+                                                            'new' ? (
                                                             <div className="bg-warning rounded-3 d-flex justify-content-center align-items-center gap-2 p-1 mt-3 ">
                                                                 {' '}
                                                                 <span className="text-success fs-3 fw-medium d-block">
