@@ -48,8 +48,8 @@ export default function DealOrderEdit() {
         }
     }
 
-    async function getDealType(token) {
-        const data = await GetRepository.getDealType(token);
+    async function getDealType() {
+        const data = await GetRepository.getDealType();
         if (data?.results) {
             setDealType(data?.results);
         }
@@ -104,8 +104,8 @@ export default function DealOrderEdit() {
     }
 
     useEffect(() => {
+        getDealType();
         if (user?.access && pid) {
-            getDealType(user?.access);
             getDeadLines(user?.access);
             getDealList(pid, user?.access);
         }

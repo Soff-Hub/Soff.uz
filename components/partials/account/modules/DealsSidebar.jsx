@@ -42,8 +42,8 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         return formattedNumber;
     }
 
-    async function getDealType(token) {
-        const data = await GetRepository.getDealType(token);
+    async function getDealType() {
+        const data = await GetRepository.getDealType();
         if (data?.results) {
             setDealType(data?.results);
         }
@@ -58,9 +58,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
 
     useEffect(() => {
         getDealPrice()
-        if (user?.access) {
-            getDealType(user?.access);
-        }
+        getDealType(user?.access);
     }, []);
 
     const optionType = dealType?.map((e) => ({
@@ -86,6 +84,12 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
             label: 'Kelib tushgan arizalar',
         }
     ]
+    const sidebarMenuToken = [
+        {
+            url: '/account/all-orders',
+            label: 'Barcha buyurtmalar',
+        }
+    ]
 
 
     return (
@@ -95,20 +99,36 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                     Buyurtmalar
                 </h4>
                 <div className='sidebar-menu d-flex flex-column ml-2'>
+
                     {
-                        sidebarMenu.map(el => (
-                            <div
-                                key={el.url}
-                                className='py-3 px-3'
-                                onClick={() => Router.push(el.url)}
-                                style={{
-                                    borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
-                                    backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
-                                    cursor: 'pointer'
-                                }}>
-                                {el.label}
-                            </div>
-                        ))
+                        user?.access ?
+                            sidebarMenu.map(el => (
+                                <div
+                                    key={el.url}
+                                    className='py-3 px-3'
+                                    onClick={() => Router.push(el.url)}
+                                    style={{
+                                        borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
+                                        backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
+                                        cursor: 'pointer'
+                                    }}>
+                                    {el.label}
+                                </div>
+                            )) :
+                            sidebarMenuToken.map(el => (
+                                <div
+                                    key={el.url}
+                                    className='py-3 px-3'
+                                    onClick={() => Router.push(el.url)}
+                                    style={{
+                                        borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
+                                        backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
+                                        cursor: 'pointer'
+                                    }}>
+                                    {el.label}
+                                </div>
+                            ))
+
                     }
                 </div>
             </div>
@@ -125,9 +145,12 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                         height: '45px',
                     }}
                     placeholder="Buyurtma turi"
+                    
                     options={
                         optionType
-                    }></Select>
+                    }>
+        
+                    </Select>
 
                 <span className="d-block p-2 mt-4 fw-bold ">
                     Buyurtma muddati

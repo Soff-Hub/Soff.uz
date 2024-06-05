@@ -178,7 +178,7 @@ class PatchRepository {
         })
             .then((response) => {
                 if (response.status === 204) {
-                    return response.data;
+                    return response;
                 } else {
                     return null;
                 }
@@ -196,8 +196,8 @@ class PatchRepository {
             },
         })
             .then((response) => {
-                if (response.status === 200) {
-                    return response.data;
+                if (response.status === 204) {
+                    return response;
                 } else {
                     return null;
                 }

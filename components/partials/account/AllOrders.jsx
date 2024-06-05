@@ -106,12 +106,17 @@ export default function DealCart() {
                         </span>
                     </div>
                     <button className='col-md-3  btn btn-success rounded-3 fs-4'
-                        onClick={() => setOpen(true)} >
-                        Buyurtma yaratish
+                        onClick={() =>
+                            user?.access ?
+                                setOpen(true) : Router.push("/account/selection")} >
+                        <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
-                <div>
+                <div> {
+
+                    progressData?.remain_deal_coin &&
                     <Progress percent={Math.floor((progressData?.remain_deal_coin / progressData?.full_deal_coin) * 100)} strokeColor={"#28a745"} />
+                }
                 </div>
 
 
@@ -141,7 +146,7 @@ export default function DealCart() {
                                                 <div className="text-start" >
                                                     {' '}
                                                     <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="text-success fs-4 fw-medium ">
+                                                    <span className="text-secondary fs-4 fw-medium ">
                                                         {addPeriodToThousands(item?.price)} so'm
                                                     </span>
                                                 </div>
@@ -150,7 +155,7 @@ export default function DealCart() {
                                                     <span className="text-success fs-5 fw-medium">
                                                         Kategoriyasi:
                                                     </span>{' '}
-                                                    <span className="fw-medium ">
+                                                    <span className="fw-medium  text-secondary ">
                                                         {item?.type?.name}
                                                     </span>
                                                 </div>
@@ -160,7 +165,7 @@ export default function DealCart() {
                                                     <span className="text-success fs-5 fw-medium">
                                                         Muddati:
                                                     </span>{' '}
-                                                    <span className="fw-medium ">
+                                                    <span className="fw-medium text-secondary  ">
                                                         {item?.deadline_date}
                                                     </span>
                                                 </div>
@@ -170,22 +175,32 @@ export default function DealCart() {
                                     <div className='mt-3 
                                     d-md-flex justify-content-between 
                                     align-items-center'>
-                                        <div className="text-start mb-md-0 mb-3 d-md-flex gap-3 align-items-center">
-                                            <span className="text-success fs-5 fw-medium ">
-                                                Yaratilgan vaqti:
-                                            </span>{' '}
-                                            <span className="fw-medium d-flex gap-3 ">
-                                                <CalculateTimeDifference targetDate={item?.created_at} />
-                                                <span>Takliflar: {item?.application_count}</span>
+                                        {item?.application_count !== 0 ?
+                                            <div className="text-start mb-md-0 mb-3 d-md-flex gap-3 align-items-center">
 
-                                            </span>
-                                        </div>
+                                                <span className="fw-medium d-flex gap-3 ">
+
+                                                    <span className='text-secondary'>
+                                                        <span className='text-success'>Takliflar:</span> {item?.application_count}</span>
+
+                                                </span>
+                                            </div> : <span></span>
+                                        }
 
 
                                         <div className='d-flex justify-content-end'>
-                                            <button
-                                                onClick={() => Router.push(`/deal/${item?.id}`)}
-                                                className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
+                                            {
+                                                user?.access ?
+                                                    <button
+                                                        onClick={() => Router.push(`/deal/${item?.id}`)}
+                                                        className='btn btn-success px-4 fs-5'>Ariza topshirsh</button> :
+
+                                                    <button
+                                                        onClick={() => Router.push(`/account/selection`)}
+                                                        className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
+
+                                            }
+
                                         </div>
 
                                     </div>

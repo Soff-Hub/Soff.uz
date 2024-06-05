@@ -99,7 +99,7 @@ export default function MyOrders() {
         if (user?.access) {
             GetItemsProducts();
         }
-    }, [currPage, debouncedSearchTerm, open,open2, category, user?.access]);
+    }, [currPage, debouncedSearchTerm, open, open2, category, user?.access]);
 
 
     useEffect(() => {
@@ -165,7 +165,7 @@ export default function MyOrders() {
 
                     <button className='col-md-3  btn btn-success rounded-3 fs-4'
                         onClick={() => setOpen(true)} >
-                        Buyurtma yaratish
+                        <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
 
@@ -228,16 +228,16 @@ export default function MyOrders() {
                                                 <div className="text-start" >
                                                     {' '}
                                                     <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="text-success fs-4 fw-medium ">
+                                                    <span className="text-secondary fs-4 fw-medium ">
                                                         {addPeriodToThousands(item?.price)} so'm
                                                     </span>
                                                 </div>
 
                                                 <div className="text-start">
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Kategoriyasi:
+                                                        Buyurtma turi:
                                                     </span>{' '}
-                                                    <span className="fw-medium ">
+                                                    <span className="fw-medium text-secondary ">
                                                         {item?.type?.name}
                                                     </span>
                                                 </div>
@@ -247,24 +247,15 @@ export default function MyOrders() {
                                                     <span className="text-success fs-5 fw-medium">
                                                         Muddati:
                                                     </span>{' '}
-                                                    <span className="fw-medium ">
+                                                    <span className="fw-medium text-secondary">
                                                         {item?.deadline_date}
                                                     </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='mt-3 d-md-flex justify-content-between'>
-                                        <div className="text-start">
-                                            <span className="text-success fs-5 fw-medium">
-                                                Yaratilgan vaqti:
-                                            </span>{' '}
-                                            <span className="fw-medium ">
-                                                <CalculateTimeDifference targetDate={item?.created_at} />
-
-                                            </span>
-                                        </div>
-
+                                    <div className='mt-3 d-md-flex justify-content-end'>
+                                      
 
                                         {
                                             item?.status === 'new' ? (

@@ -6,7 +6,6 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import CalculateTimeDifference from './DateFormatter';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import Link from 'next/link';
-import useDebounce from '~/hooks/useDebounce';
 const { Option } = Select;
 
 
@@ -216,7 +215,7 @@ export default function ApplicationsReceiveds() {
 
                     <button className='col-md-3  btn btn-success rounded-3 fs-4'
                         onClick={() => setOpen(true)} >
-                        Buyurtma yaratish
+                     <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
 
