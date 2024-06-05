@@ -44,8 +44,8 @@ export default function DealCart() {
 
     async function GetItemsProductsProgress() {
         const ItemsData = await GetRepository.getOrdersProgressBar(user?.access);
-        if (ItemsData?.results) {
-            setProgressData(ItemsData.results);
+        if (ItemsData) {
+            setProgressData(ItemsData);
         }
     }
 
@@ -111,7 +111,7 @@ export default function DealCart() {
                     </button>
                 </div>
                 <div>
-                    <Progress percent={99.9} strokeColor={"#28a745"} />
+                    <Progress percent={Math.floor((progressData?.remain_deal_coin / progressData?.full_deal_coin) * 100)} strokeColor={"#28a745"} />
                 </div>
 
 
@@ -148,7 +148,7 @@ export default function DealCart() {
 
                                                 <div className="text-start">
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Kategriyasi:
+                                                        Kategoriyasi:
                                                     </span>{' '}
                                                     <span className="fw-medium ">
                                                         {item?.type?.name}

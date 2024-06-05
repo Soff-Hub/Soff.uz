@@ -8,7 +8,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 const { TextArea } = Input;
 
 
-export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen }) {
+export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }) {
     const [form] = Form.useForm();
     const { user } = useSelector((state) => state.auth);
     const [name, setName] = useState('');
@@ -24,17 +24,15 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
     async function postOrder() {
         form.resetFields();
         setLoading(true);
-
         const data = {
             title: name ? name : dataDetails?.title,
             description: description ? description : dataDetails?.description,
-            price: price ? price : dataDetails?.price,
+            price: price ? price : Number(dataDetails?.price),
             deadline_date: lifetime ? lifetime : dataDetails?.deadline_date,
-            type: type ? type : dataDetails?.type,
+            type: type ? type : dataDetails?.type?.id,
         };
         const ItemsData = await PatchRepository.patchDealUpdate(dataDetails?.id, data, user?.access);
-        if (ItemsData?.status === 201) {
-            GetItemsProducts(currPage, '', '', '', user?.access)
+        if (ItemsData?.status === 200) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
@@ -48,10 +46,10 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
             });
         }
         setOpenUpdate(false)
-        setOpen(false)
+        setOpen2(true)
         setLoading(false);
     }
-    
+
 
     async function getDealType(token) {
         const data = await GetRepository.getDealType(token);
@@ -115,6 +113,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
                                         label="Narxi"
                                     >
                                         <Input
+                                            type='number'
                                             onChange={(e) =>
                                                 setPrice(
                                                     e.target.value
@@ -138,7 +137,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
                                         label="Buyurtma turi"
                                     >
                                         <Select
-                                            defaultValue={dataDetails?.type}
+                                            defaultValue={dataDetails?.type?.name}
                                             onChange={(e) =>
                                                 setType(e)
                                             }
@@ -150,6 +149,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen })
                                             options={
                                                 optionType
                                             }></Select>
+
                                     </Form.Item>
 
 
