@@ -159,11 +159,12 @@ export default function MyDealCart() {
         }
     }, [currPage, debouncedSearchTerm, category, user?.access]);
 
+
     useEffect(() => {
         if (productsID) {
             GetItemsProductsUpdates()
         }
-    }, [productsID])
+    }, [productsID, openUpdate, isModalOpen])
 
 
     return (
@@ -317,7 +318,7 @@ export default function MyDealCart() {
 
                                                             <div>
                                                                 <span className="text-success fs-5 fw-medium">
-                                                                    Kategoriyasi:
+                                                                    Buyurtma turi:
                                                                 </span>{' '}
                                                                 <span className="fw-medium text-secondary fs-5">
                                                                     {item?.type?.name}

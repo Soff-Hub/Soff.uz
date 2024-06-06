@@ -61,10 +61,13 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         getDealType(user?.access);
     }, []);
 
-    const optionType = dealType?.map((e) => ({
-        label: e?.name,
-        value: e?.id,
-    }));
+    const optionType = [
+        { label: 'Barchasi', value: '' },
+        ...(dealType?.map((e) => ({
+            label: e?.name,
+            value: e?.id,
+        })) || [])
+    ];
 
     const sidebarMenu = [
         {
@@ -145,12 +148,12 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                         height: '45px',
                     }}
                     placeholder="Buyurtma turi"
-                    
+
                     options={
                         optionType
                     }>
-        
-                    </Select>
+
+                </Select>
 
                 <span className="d-block p-2 mt-4 fw-bold ">
                     Buyurtma muddati

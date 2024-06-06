@@ -147,7 +147,7 @@ export default function ApplicationsReceiveds() {
         if (user?.access) {
             GetItemsProductsUpdates()
         }
-    }, [productsIdUpdate]);
+    }, [productsIdUpdate, openUpdate, open]);
 
 
     useEffect(() => {
