@@ -17,6 +17,7 @@ export default function MyDealCart() {
     const [form] = Form.useForm();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setloading] = useState(false);
+    const [loadingUpdate, setloadingUpdate] = useState(false);
     const [open, setOpen] = useState(false)
     const [openUpdate, setOpenUpdate] = useState(false)
     const [data, setData] = useState([]);
@@ -26,7 +27,7 @@ export default function MyDealCart() {
     const [productsId, setProductsId] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [keyword, setKeyword] = useState('');
-    const debouncedSearchTerm = useDebounce(keyword, 300);
+    const debouncedSearchTerm = useDebounce(keyword, 800);
     const [lifetime, setDLifetime] = useState('');
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
@@ -70,11 +71,13 @@ export default function MyDealCart() {
 
 
     async function GetItemsProductsUpdates() {
+        setloadingUpdate(true)
         const token = user?.access
         const ItemsData = await GetRepository.getOrdersApplicationsListsUpdates(productsID, token);
         if (ItemsData) {
             setDataDetials(ItemsData)
         }
+        setloadingUpdate(false)
     }
 
 
@@ -224,132 +227,160 @@ export default function MyDealCart() {
 
                 <div className='d-flex flex-column gap-3'>
                     {
-                        data?.map(item => (
-                            <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <div className='d-flex justify-content-between gap-4 align-items-start'>
-                                    <h3 className="text-success fw-medium ">{item?.title}</h3>
+                        loading ?
 
-                                    <Dropdown
-                                        overlay={(
-                                            <Menu>
-                                                <Menu.Item key="0">
-                                                    <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>
-                                                        Tahrirlash
-                                                        <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                    </span>
-                                                </Menu.Item>
-                                                <Menu.Item key="1">
-                                                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                                                        O'chirish
-                                                        <i
-                                                            className="fa-solid fa-trash-can text-danger mx-2"
-                                                            onClick={() => setProductsId(item?.id)}
-                                                        ></i>
-                                                    </a>
-                                                </Menu.Item>
-                                            </Menu>
-                                        )}
-                                        trigger={['click']}
-                                    >
-                                        <a className='d-flex justify-content-center' style={{
-                                            cursor: "pointer",
-                                            minWidth: "20px"
-
-                                        }} onClick={(e) => e.preventDefault()}>
-                                            <Space>
-                                                <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
-                                            </Space>
-                                        </a>
-                                    </Dropdown>
-
+                            <div
+                                style={{
+                                    height: '80vh',
+                                    display: 'grid',
+                                    placeContent: 'center',
+                                }}>
+                                <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{ width: '150px', height: '150px' }}>
+                                    <span className="visually-hidden">
+                                        Loading...
+                                    </span>
                                 </div>
+                            </div>
+
+                            :
+
+                            <>
+
+                                {
+                                    data?.map(item => (
+                                        <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
+                                            <div className='d-flex justify-content-between gap-4 align-items-start'>
+                                                <h3 className="text-success fw-medium ">{item?.title}</h3>
+
+                                                <Dropdown
+                                                    overlay={(
+                                                        <Menu>
+                                                            <Menu.Item key="0">
+                                                                <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>
+                                                                    Tahrirlash
+                                                                    <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                                </span>
+                                                            </Menu.Item>
+                                                            <Menu.Item key="1">
+                                                                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                                                                    O'chirish
+                                                                    <i
+                                                                        className="fa-solid fa-trash-can text-danger mx-2"
+                                                                        onClick={() => setProductsId(item?.id)}
+                                                                    ></i>
+                                                                </a>
+                                                            </Menu.Item>
+                                                        </Menu>
+                                                    )}
+                                                    trigger={['click']}
+                                                >
+                                                    <a className='d-flex justify-content-center' style={{
+                                                        cursor: "pointer",
+                                                        minWidth: "20px"
+
+                                                    }} onClick={(e) => e.preventDefault()}>
+                                                        <Space>
+                                                            <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
+                                                        </Space>
+                                                    </a>
+                                                </Dropdown>
+
+                                            </div>
 
 
-                                <p
-                                    style={{ width: "100%" }}
-                                >
-                                    {item?.description}
-                                </p>
-                                <div>
-                                    <div className="d-md-flex justify-content-between gap-4  ">
-                                        <div className="d-flex align-items-center ">
-                                            <img
-                                                className="d-block"
-                                                width={60}
-                                                src="/static/img/docCopy.jpg"
-                                                alt="sca"
-                                            />
+                                            <p
+                                                style={{ width: "100%" }}
+                                            >
+                                                {item?.description}
+                                            </p>
                                             <div>
+                                                <div className="d-md-flex justify-content-between gap-4  ">
+                                                    <div className="d-flex align-items-center ">
+                                                        <img
+                                                            className="d-block"
+                                                            width={60}
+                                                            src="/static/img/docCopy.jpg"
+                                                            alt="sca"
+                                                        />
+                                                        <div>
 
-                                                <div >
-                                                    {' '}
-                                                    <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="fs-5 fw-medium text-secondary ">
-                                                        {addPeriodToThousands(item?.price)} so'm
-                                                    </span>
+                                                            <div >
+                                                                {' '}
+                                                                <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
+                                                                <span className="fs-5 fw-medium text-secondary ">
+                                                                    {addPeriodToThousands(item?.price)} so'm
+                                                                </span>
+                                                            </div>
+
+                                                            <div>
+                                                                <span className="text-success fs-5 fw-medium">
+                                                                    Kategoriyasi:
+                                                                </span>{' '}
+                                                                <span className="fw-medium text-secondary fs-5">
+                                                                    {item?.type?.name}
+                                                                </span>
+                                                            </div>
+
+
+                                                            <div>
+                                                                <span className="text-success fs-5 fw-medium">
+                                                                    Muddati:
+                                                                </span>{' '}
+                                                                <span className="fw-medium text-secondary fs-5">
+                                                                    {item?.deadline_date}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+                                                <div className='mt-3 
+                                        d-flex justify-content-between 
+                                        align-items-center'>
+                                                    {item?.application_count !== 0 ?
+                                                        <div className="text-start mb-md-0   d-md-flex gap-3 align-items-center">
 
-                                                <div>
-                                                    <span className="text-success fs-5 fw-medium">
-                                                        Kategoriyasi:
-                                                    </span>{' '}
-                                                    <span className="fw-medium text-secondary fs-5">
-                                                        {item?.type?.name}
-                                                    </span>
-                                                </div>
+                                                            <span className="fw-medium d-flex gap-3 ">
+
+                                                                <span className='text-secondary fs-5'>
+                                                                    <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
+
+                                                            </span>
+                                                        </div> : <span></span>
+                                                    }
 
 
-                                                <div>
-                                                    <span className="text-success fs-5 fw-medium">
-                                                        Muddati:
-                                                    </span>{' '}
-                                                    <span className="fw-medium text-secondary fs-5">
-                                                        {item?.deadline_date}
-                                                    </span>
+                                                    <div className='d-flex justify-content-end'>
+                                                        <button
+                                                            onClick={() => showModal(item?.id)}
+                                                            className='btn btn-outline-success px-4 fs-5'>Arizani ko'rish</button>
+                                                    </div>
+
                                                 </div>
                                             </div>
+
                                         </div>
-                                    </div>
-                                    <div className='mt-3 
-                                    d-flex justify-content-between 
-                                    align-items-center'>
-                                        {item?.application_count !== 0 ?
-                                            <div className="text-start mb-md-0   d-md-flex gap-3 align-items-center">
+                                    ))
 
-                                                <span className="fw-medium d-flex gap-3 ">
-
-                                                    <span className='text-secondary fs-5'>
-                                                        <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
-
-                                                </span>
-                                            </div> : <span></span>
-                                        }
-
-
-                                        <div className='d-flex justify-content-end'>
-                                            <button
-                                                onClick={() => showModal(item?.id)}
-                                                className='btn btn-outline-success px-4 fs-5'>Arizani ko'rish</button>
-                                        </div>
-
-                                    </div>
+                                }
+                                <div className='d-flex justify-content-center my-4 '>
+                                    <Pagination
+                                        className="mt-3"
+                                        total={pageCount}
+                                        defaultCurrent={currPage}
+                                        onChange={handlePagination}
+                                    />
                                 </div>
-
-                            </div>
-                        ))
+                            </>
                     }
                 </div>
 
-                <div className='d-flex justify-content-center my-4 '>
-                    <Pagination
-                        className="mt-3"
-                        total={pageCount}
-                        defaultCurrent={currPage}
-                        onChange={handlePagination}
-                    />
-                </div>
 
             </div >
+
+
             <Modal
                 title="Yuborilgan Ariza"
                 width={800}
@@ -368,52 +399,74 @@ export default function MyDealCart() {
                 }}
 
                 onCancel={handleCancel}>
-                <div className="border-top rounded-3 pt-3 bg-white">
-                    <h3 className="text-secondary fs-3 fw-medium mb-2 ">Taklif summasi:   <span className='text-success fw-medium'>{addPeriodToThousands(dataDetials?.price)} so'm</span></h3>
-                    <div className="mb-2 d-md-flex gap-3 align-items-center">
-                        <span className="fs-3 fw-medium  text-secondary">
-                            Tugatish muddati:
-                        </span>{' '}
-                        <span className="fw-medium d-flex gap-3 text-success ">
-                            {dataDetials?.deadline_date}
-                        </span>
-                    </div>
-                    <span className="fs-3 fw-medium  text-secondary">
-                        Ariza tavsifi
-                    </span>{' '}
-                    <p
-                        style={{ width: "100%" }}
-                    >
-                        {dataDetials?.description}
-                    </p>
 
-                    <div className='d-flex justify-content-between align-items-center '>
-                        <strong className='d-flex gap-2 align-items-center'>
-                            <i className='fa-solid fa-eye'></i>
-                            Ko'rildi
-                        </strong>
-                        {
-                            dataDetials?.status === 'new' ? (
-                                <span>
-                                    <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                    Moderatsiya
+                {
+                    loadingUpdate ?
+
+                        <div
+                            className=" "
+                            style={{
+                                height: '50vh',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{ width: '150px', height: '150px' }}>
+                                <span className="visually-hidden">
+                                    Loading...
                                 </span>
-                            ) : dataDetials?.status === 'active' ? (
-                                <span>
-                                    <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                    Tasdiqlangan
+                            </div>
+                        </div>
+                        :
+                        <div className="border-top rounded-3 pt-3 bg-white">
+                            <h3 className="text-secondary fs-3 fw-medium mb-2 ">Taklif summasi:   <span className='text-success fw-medium'>{addPeriodToThousands(dataDetials?.price)} so'm</span></h3>
+                            <div className="mb-2 d-md-flex gap-3 align-items-center">
+                                <span className="fs-3 fw-medium  text-secondary">
+                                    Tugatish muddati:
+                                </span>{' '}
+                                <span className="fw-medium d-flex gap-3 text-success ">
+                                    {dataDetials?.deadline_date}
                                 </span>
-                            ) : (
-                                <Tooltip title={dataDetials?.reason}>
-                                    <span style={{ cursor: 'pointer' }}>
-                                        <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                        Bekor qilingan{' '}
-                                    </span>
-                                </Tooltip>
-                            )
-                        }
-                    </div>
-                </div>
+                            </div>
+                            <span className="fs-3 fw-medium  text-secondary">
+                                Ariza tavsifi
+                            </span>{' '}
+                            <p
+                                style={{ width: "100%" }}
+                            >
+                                {dataDetials?.description}
+                            </p>
+
+                            <div className='d-flex justify-content-between align-items-center '>
+                                <strong className='d-flex gap-2 align-items-center'>
+                                    <i className='fa-solid fa-eye'></i>
+                                    Ko'rildi
+                                </strong>
+                                {
+                                    dataDetials?.status === 'new' ? (
+                                        <span>
+                                            <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                            Moderatsiya
+                                        </span>
+                                    ) : dataDetials?.status === 'active' ? (
+                                        <span>
+                                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                            Tasdiqlangan
+                                        </span>
+                                    ) : (
+                                        <Tooltip title={dataDetials?.reason}>
+                                            <span style={{ cursor: 'pointer' }}>
+                                                <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                                Bekor qilingan{' '}
+                                            </span>
+                                        </Tooltip>
+                                    )
+                                }
+                            </div>
+                        </div>
+                }
             </Modal>
 
             <Modal
@@ -457,75 +510,94 @@ export default function MyDealCart() {
                     },
                 }}
                 onCancel={() => setOpenUpdate(false)}>
-
-
-                <Form
-                    layout='vertical'
-                    form={form}
-                    onFinish={postOrder}
-                    className="row  py-4  border-top rounded-3 px-4  bg-white ">
-
-
-                    <div className="col-md-12 p-0 ">
-
-                        <Form.Item
-                            label={"Bajarilish muddati"}
-                            name={dataDetials?.deadline_date}
-                            className='mb-2'
-                        >
-                            <Input type='date' onChange={(e) => setDLifetime(e.target.value)}
-                                defaultValue={dataDetials?.deadline_date} />
-                        </Form.Item>
-                    </div>
-
-                    <div className="col-md-12 p-0 ">
-                        <Form.Item
-                            label="Narxi"
-                            className='m-0'
-                            name={dataDetials?.price}>
-                            <Input
-                                type='number'
-                                onChange={(e) => setPrice(e.target.value)}
-                                placeholder="Narxi"
-                                defaultValue={dataDetials?.price}
-                            />
-                        </Form.Item>
-                    </div>
-                    <div className="col-md-12 p-0  ">
-                        <Form.Item
-                            label="Taklif"
-                            name={dataDetials?.description}>
-                            <TextArea
-                                rows={6}
-                                placeholder="Taklif"
-                                onChange={(e) => setDescription(e.target.value)}
-                                defaultValue={dataDetials?.description}
-                            />
-                        </Form.Item>
-                    </div>
-
-
-                    <Form.Item className="col-md-12 d-flex justify-content-end m-0">
-                        <Button
-                            // loading={loading}
-                            htmlType="submit"
-
+                {
+                    loadingUpdate ?
+                        <div
+                            className=" "
                             style={{
-                                width: '100%',
-                                height: '40px',
-                                padding: "1px 30px"
-                            }}
-                            className="btn-success btn-send-email">
-                            <span
-                                style={{
-                                    color: '#fff',
-                                    fontSize: '16px',
-                                }}>
-                                Yuborish
-                            </span>
-                        </Button>
-                    </Form.Item>
-                </Form>
+                                height: '70vh',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{ width: '150px', height: '150px' }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div>
+                        :
+                        <Form
+                            layout='vertical'
+                            form={form}
+                            onFinish={postOrder}
+                            className="row  py-4  border-top rounded-3 px-4  bg-white ">
+
+
+                            <div className="col-md-12 p-0 ">
+
+                                <Form.Item
+                                    label={"Bajarilish muddati"}
+                                    name={dataDetials?.deadline_date}
+                                    className='mb-2'
+                                >
+                                    <Input type='date' onChange={(e) => setDLifetime(e.target.value)}
+                                        defaultValue={dataDetials?.deadline_date} />
+                                </Form.Item>
+                            </div>
+
+                            <div className="col-md-12 p-0 ">
+                                <Form.Item
+                                    label="Narxi"
+                                    className='m-0'
+                                    name={dataDetials?.price}>
+                                    <Input
+                                        type='number'
+                                        onChange={(e) => setPrice(e.target.value)}
+                                        placeholder="Narxi"
+                                        defaultValue={dataDetials?.price}
+                                    />
+                                </Form.Item>
+                            </div>
+                            <div className="col-md-12 p-0  ">
+                                <Form.Item
+                                    label="Taklif"
+                                    name={dataDetials?.description}>
+                                    <TextArea
+                                        rows={6}
+                                        placeholder="Taklif"
+                                        onChange={(e) => setDescription(e.target.value)}
+                                        defaultValue={dataDetials?.description}
+                                    />
+                                </Form.Item>
+                            </div>
+
+
+                            <Form.Item className="col-md-12 d-flex justify-content-end m-0">
+                                <Button
+                                    // loading={loading}
+                                    htmlType="submit"
+
+                                    style={{
+                                        width: '100%',
+                                        height: '40px',
+                                        padding: "1px 30px"
+                                    }}
+                                    className="btn-success btn-send-email">
+                                    <span
+                                        style={{
+                                            color: '#fff',
+                                            fontSize: '16px',
+                                        }}>
+                                        Yuborish
+                                    </span>
+                                </Button>
+                            </Form.Item>
+                        </Form>
+                }
+
 
 
 

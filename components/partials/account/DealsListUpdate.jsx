@@ -36,7 +36,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: `Siz malumotlarni o'zgartirdingiz`,
+                content: `Buyurtma ma'lumotlari o'zgartirildi`,
             });
         } else {
             const modal = Modal.error({

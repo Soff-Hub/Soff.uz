@@ -25,6 +25,8 @@ export default function MyOrders() {
     const [keyword, setKeyword] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 300);
     const [category, setCategory] = useState(null)
+    const [loading, setloading] = useState(false);
+    const [loadingUpdate, setloadingUpdate] = useState(false);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -46,6 +48,7 @@ export default function MyOrders() {
 
 
     async function GetItemsProducts() {
+        setloading(true)
         const token = user?.access
         const ItemsData = await GetRepository.getOrdersMYDealLists(currPage, debouncedSearchTerm, '', category, token);
         if (ItemsData?.results) {
@@ -53,12 +56,15 @@ export default function MyOrders() {
             setData(ItemsData.results);
         }
         setDataDtails(ItemsData)
+        setloading(false)
     }
 
     async function GetItemsProductsUpdates() {
+        setloadingUpdate(true)
         const token = user?.access
         const ItemsData = await GetRepository.getOrdersMYDealListsUpdate(productsIdUpdate, token);
         setDataDtails(ItemsData);
+        setloadingUpdate(false)
     }
 
 
@@ -171,131 +177,156 @@ export default function MyOrders() {
 
                 <div className='d-flex flex-column gap-3'>
                     {
-                        data?.map(item => (
-                            <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <div className='d-flex justify-content-between gap-4 align-items-start'>
-                                    <h3 className="text-success fw-medium ">{item?.title}</h3>
+                        loading ?
 
-                                    <Dropdown
-                                        overlay={(
-                                            <Menu>
-                                                {
-                                                    item?.status !== 'active' ?
-                                                        <Menu.Item key="0">
-                                                            <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                                Tahrirlash
-                                                                <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                            </span>
-                                                        </Menu.Item> : <></>
-                                                }
-                                                <Menu.Item key="1">
-                                                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                                                        O'chirish
-                                                        <i
-                                                            className="fa-solid fa-trash-can text-danger mx-2"
-                                                            onClick={() => setProductsId(item?.id)}
-                                                        ></i>
-                                                    </a>
-                                                </Menu.Item>
-                                            </Menu>
-                                        )}
-                                        trigger={['click']}
-                                    >
-                                        <a className='d-flex justify-content-center' style={{
-                                            cursor: "pointer",
-                                            minWidth: "20px"
-
-                                        }} onClick={(e) => e.preventDefault()}>
-                                            <Space>
-                                                <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
-                                            </Space>
-                                        </a>
-
-                                    </Dropdown>
-
+                            <div
+                                className=" "
+                                style={{
+                                    height: '70vh',
+                                    display: 'grid',
+                                    placeContent: 'center',
+                                }}>
+                                <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{ width: '150px', height: '150px' }}>
+                                    <span className="visually-hidden">
+                                        Loading...
+                                    </span>
                                 </div>
-                                <p
-                                    style={{ width: "100%" }}
-                                >
-                                    {item?.description}
-                                </p>
-                                <div>
-                                    <div className="d-flex justify-content-between gap-4 align-items-center ">
-                                        <div className="d-flex align-items-center ">
-                                            <img
-                                                className="d-block"
-                                                width={50}
-                                                src="/static/img/docCopy.jpg"
-                                                alt="sca"
-                                            />
-                                            <div>
+                            </div>
+                            :
 
-                                                <div>
-                                                    {' '}
-                                                    <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="text-secondary fs-5 fw-medium ">
-                                                        {addPeriodToThousands(item?.price)} so'm
-                                                    </span>
-                                                </div>
+                            <>
+                                {
+                                    data?.map(item => (
+                                        <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
+                                            <div className='d-flex justify-content-between gap-4 align-items-start'>
+                                                <h3 className="text-success fw-medium ">{item?.title}</h3>
 
-                                                <div>
-                                                    <span className="text-success fs-5 fw-medium">
-                                                        Buyurtma turi:
-                                                    </span>{' '}
-                                                    <span className="fw-medium text-secondary fs-5">
-                                                        {item?.type?.name}
-                                                    </span>
-                                                </div>
+                                                <Dropdown
+                                                    overlay={(
+                                                        <Menu>
+                                                            {
+                                                                item?.status !== 'active' ?
+                                                                    <Menu.Item key="0">
+                                                                        <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
+                                                                            Tahrirlash
+                                                                            <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                                        </span>
+                                                                    </Menu.Item> : <></>
+                                                            }
+                                                            <Menu.Item key="1">
+                                                                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                                                                    O'chirish
+                                                                    <i
+                                                                        className="fa-solid fa-trash-can text-danger mx-2"
+                                                                        onClick={() => setProductsId(item?.id)}
+                                                                    ></i>
+                                                                </a>
+                                                            </Menu.Item>
+                                                        </Menu>
+                                                    )}
+                                                    trigger={['click']}
+                                                >
+                                                    <a className='d-flex justify-content-center' style={{
+                                                        cursor: "pointer",
+                                                        minWidth: "20px"
+
+                                                    }} onClick={(e) => e.preventDefault()}>
+                                                        <Space>
+                                                            <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
+                                                        </Space>
+                                                    </a>
+
+                                                </Dropdown>
 
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div className='mt-3 d-flex justify-content-between'>
-                                        <div>
-                                            <span className="text-success fs-5 fw-medium">
-                                                Muddati:
-                                            </span>{' '}
-                                            <span className="fw-medium fs-5">
-                                                {item?.deadline_date}
-                                            </span>
-                                        </div>
+                                            <p
+                                                style={{ width: "100%" }}
+                                            >
+                                                {item?.description}
+                                            </p>
+                                            <div>
+                                                <div className="d-flex justify-content-between gap-4 align-items-center ">
+                                                    <div className="d-flex align-items-center ">
+                                                        <img
+                                                            className="d-block"
+                                                            width={50}
+                                                            src="/static/img/docCopy.jpg"
+                                                            alt="sca"
+                                                        />
+                                                        <div>
 
-                                        {
-                                            item?.status === 'new' ? (
-                                                <span>
-                                                    <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                    Moderatsiya
-                                                </span>
-                                            ) : item?.status === 'active' ? (
-                                                <span>
-                                                    <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                                    Tasdiqlangan
-                                                </span>
-                                            ) : (
-                                                <Tooltip title={item?.reason}>
-                                                    <span style={{ cursor: 'pointer' }}>
-                                                        <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                                        Bekor qilingan{' '}
-                                                    </span>
-                                                </Tooltip>
-                                            )
-                                        }
-                                    </div>
+                                                            <div>
+                                                                {' '}
+                                                                <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
+                                                                <span className="text-secondary fs-5 fw-medium ">
+                                                                    {addPeriodToThousands(item?.price)} so'm
+                                                                </span>
+                                                            </div>
+
+                                                            <div>
+                                                                <span className="text-success fs-5 fw-medium">
+                                                                    Buyurtma turi:
+                                                                </span>{' '}
+                                                                <span className="fw-medium text-secondary fs-5">
+                                                                    {item?.type?.name}
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className='mt-3 d-flex justify-content-between'>
+                                                    <div>
+                                                        <span className="text-success fs-5 fw-medium">
+                                                            Muddati:
+                                                        </span>{' '}
+                                                        <span className="fw-medium fs-5">
+                                                            {item?.deadline_date}
+                                                        </span>
+                                                    </div>
+
+                                                    {
+                                                        item?.status === 'new' ? (
+                                                            <span>
+                                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                                Moderatsiya
+                                                            </span>
+                                                        ) : item?.status === 'active' ? (
+                                                            <span>
+                                                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                                                Tasdiqlangan
+                                                            </span>
+                                                        ) : (
+                                                            <Tooltip title={item?.reason}>
+                                                                <span style={{ cursor: 'pointer' }}>
+                                                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                                                    Bekor qilingan{' '}
+                                                                </span>
+                                                            </Tooltip>
+                                                        )
+                                                    }
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    ))
+
+                                }
+                                <div className='d-flex justify-content-center my-4 '>
+                                    <Pagination
+                                        className="mt-3"
+                                        total={pageCount}
+                                        defaultCurrent={currPage}
+                                        onChange={handlePagination}
+                                    />
                                 </div>
-
-                            </div>
-                        ))
+                            </>
                     }
                 </div>
 
-                <div className='d-flex justify-content-center my-4 '>
-                    <Pagination
-                        className="mt-3"
-                        total={pageCount}
-                        defaultCurrent={currPage}
-                        onChange={handlePagination}
-                    />
-                </div>
 
             </div>
 
@@ -342,7 +373,29 @@ export default function MyOrders() {
 
                 onCancel={() => setOpenUpdate(false)}>
 
-                <DealsListUpdate setOpenUpdate={setOpenUpdate} dataDetails={dataDetails} setOpen2={setOpen2} />
+                {
+                    loadingUpdate ?
+
+                        <div
+                            className=" "
+                            style={{
+                                height: '100vh',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{ width: '150px', height: '150px' }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div>
+                        :
+                        <DealsListUpdate setOpenUpdate={setOpenUpdate} dataDetails={dataDetails} setOpen2={setOpen2} />
+                }
+
             </Modal>
 
 

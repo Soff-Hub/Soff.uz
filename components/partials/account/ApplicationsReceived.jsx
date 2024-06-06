@@ -3,7 +3,6 @@ import DealsSidebar from './modules/DealsSidebar';
 import { Dropdown, Menu, Modal, Pagination, Select, Space, Tooltip } from 'antd';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import CalculateTimeDifference from './DateFormatter';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import Link from 'next/link';
 const { Option } = Select;
@@ -26,6 +25,7 @@ export default function ApplicationsReceiveds() {
     const [appliactionId, setAppliactionId] = useState(null);
     const [keyword, setKeyword] = useState('');
     const [loadingDetails, setLoadingDetails] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -46,6 +46,7 @@ export default function ApplicationsReceiveds() {
     }
 
     async function GetItemsProducts() {
+        setLoading(true)
         const token = user?.access
         const ItemsData = await GetRepository.getApplicationsReceived(currPage, category, filter, token);
         if (ItemsData?.results) {
@@ -53,6 +54,7 @@ export default function ApplicationsReceiveds() {
             setData(ItemsData.results);
         }
         setDataDtails(ItemsData)
+        setLoading(false)
     }
 
     async function GetItemsProductsUpdates() {
@@ -221,154 +223,181 @@ export default function ApplicationsReceiveds() {
 
                 <div className='d-flex flex-column gap-3'>
                     {
-                        data?.map(item => (
-                            <div key={item?.id} className="border border-2 rounded-3 bg-white">
-                                <div className='d-md-flex justify-content-between gap-2 align-items-center  mb-3 px-4 py-3 ' style={{ backgroundColor: "rgba(40, 167, 69, 0.1)" }}>
-                                    <div>
-                                        <h5 className="text-success fw-medium mb-2">
-                                            {item?.deal?.title}
-                                        </h5>
-                                    </div>
 
-                                    <div className='d-md-flex align-items-start gap-md-3 flex-wrap '>
-                                        <h5 className='text-success fw-medium mb-1  fs-5'>Muddati: {item?.deal?.deadline_date}</h5>
-                                        <div className='d-flex justify-content-between align-items-start gap-3'>
-                                            <h5 className='text-success fw-medium mb-1 fs-5'>
-                                                {addPeriodToThousands(item?.deal?.price)} so'm
+                        loading ?
 
-                                            </h5>
-
-                                            <Dropdown
-                                                overlay={(
-                                                    <Menu>
-                                                        <Menu.Item key="1">
-                                                            <span onClick={() =>
-                                                                handleChangeID(item?.deal?.id)
-
-                                                            } className='text-secondary' style={{ cursor: "pointer" }}>
-                                                                Buyurtmani ko'rish   <i className='fa-solid fa-eye'></i>
-                                                            </span>
-                                                        </Menu.Item>
-
-                                                        {
-                                                            item?.status !== 'active' ?
-                                                                <Menu.Item key="0">
-                                                                    <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                                        Tahrirlash
-                                                                        <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                                    </span>
-                                                                </Menu.Item> : <></>
-                                                        }
-
-                                                    </Menu>
-                                                )}
-                                                trigger={['click']}
-                                            >
-                                                <a className='d-flex justify-content-center' style={{ cursor: "pointer",
-                                                minWidth:"20px"
-
-                                                 }}>
-                                                    <Space>
-                                                        <i className="fa-solid fa-ellipsis-vertical"></i>
-                                                    </Space>
-                                                </a>
-                                            </Dropdown>
-                                        </div>
-                                    </div>
-
+                            <div
+                                className=" "
+                                style={{
+                                    height: '70vh',
+                                    display: 'grid',
+                                    placeContent: 'center',
+                                }}>
+                                <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{ width: '150px', height: '150px' }}>
+                                    <span className="visually-hidden">
+                                        Loading...
+                                    </span>
                                 </div>
+                            </div>
 
-                                <div className='px-4 pb-4'>
-                                    <p
-                                        className='mb-2'
-                                        style={{ width: "100%" }}
-                                    >
-                                        {item?.description}
-                                    </p>
-
-                                    <div className="d-md-flex justify-content-between gap-4  ">
-                                        <div className="d-flex gap-3 align-items-center my-2">
-                                            <Link href={`/seller/${item?.user?.id}`}
-
-                                            >
-                                                <a style={{
-                                                    width: "40px",
-                                                    height: "40px",
-                                                    borderRadius: "50%",
-                                                    cursor: "pointer"
-                                                }}>
-                                                    <img
-                                                        src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
-                                                        alt="sca"
-                                                    />
-                                                </a>
-                                            </Link>
-                                            <div>
-
-                                                <Link href={`/seller/${item?.user?.id}`} style={{ cursor: "pointer" }} className="text-start">
-                                                    <a className="fw-medium fs-5">
-                                                        {item?.user?.full_name}
-                                                    </a>
-                                                </Link>
-
-
+                            :
+                            <>
+                                {
+                                    data?.map(item => (
+                                        <div key={item?.id} className="border border-2 rounded-3 bg-white">
+                                            <div className='d-md-flex justify-content-between gap-2 align-items-center  mb-3 px-4 py-3 ' style={{ backgroundColor: "rgba(40, 167, 69, 0.1)" }}>
                                                 <div>
+                                                    <h5 className="text-success fw-medium mb-2">
+                                                        {item?.deal?.title}
+                                                    </h5>
+                                                </div>
 
-                                                    <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
-                                                    <span className="text-secondary fs-5 fw-medium ">
-                                                        {addPeriodToThousands(item?.price)} so'm
-                                                    </span>
+                                                <div className='d-md-flex align-items-start gap-md-3 flex-wrap '>
+                                                    <h5 className='text-success fw-medium mb-1  fs-5'>Muddati: {item?.deal?.deadline_date}</h5>
+                                                    <div className='d-flex justify-content-between align-items-start gap-3'>
+                                                        <h5 className='text-success fw-medium mb-1 fs-5'>
+                                                            {addPeriodToThousands(item?.deal?.price)} so'm
+
+                                                        </h5>
+
+                                                        <Dropdown
+                                                            overlay={(
+                                                                <Menu>
+                                                                    <Menu.Item key="1">
+                                                                        <span onClick={() =>
+                                                                            handleChangeID(item?.deal?.id)
+
+                                                                        } className='text-secondary' style={{ cursor: "pointer" }}>
+                                                                            Buyurtmani ko'rish   <i className='fa-solid fa-eye'></i>
+                                                                        </span>
+                                                                    </Menu.Item>
+
+                                                                    {
+                                                                        item?.status !== 'active' ?
+                                                                            <Menu.Item key="0">
+                                                                                <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
+                                                                                    Tahrirlash
+                                                                                    <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                                                </span>
+                                                                            </Menu.Item> : <></>
+                                                                    }
+
+                                                                </Menu>
+                                                            )}
+                                                            trigger={['click']}
+                                                        >
+                                                            <a className='d-flex justify-content-center' style={{
+                                                                cursor: "pointer",
+                                                                minWidth: "20px"
+
+                                                            }}>
+                                                                <Space>
+                                                                    <i className="fa-solid fa-ellipsis-vertical"></i>
+                                                                </Space>
+                                                            </a>
+                                                        </Dropdown>
+                                                    </div>
                                                 </div>
 
                                             </div>
+
+                                            <div className='px-4 pb-4'>
+                                                <p
+                                                    className='mb-2'
+                                                    style={{ width: "100%" }}
+                                                >
+                                                    {item?.description}
+                                                </p>
+
+                                                <div className="d-md-flex justify-content-between gap-4  ">
+                                                    <div className="d-flex gap-3 align-items-center my-2">
+                                                        <Link href={`/seller/${item?.user?.id}`}
+
+                                                        >
+                                                            <a style={{
+                                                                width: "40px",
+                                                                height: "40px",
+                                                                borderRadius: "50%",
+                                                                cursor: "pointer"
+                                                            }}>
+                                                                <img
+                                                                    src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
+                                                                    alt="sca"
+                                                                />
+                                                            </a>
+                                                        </Link>
+                                                        <div>
+
+                                                            <Link href={`/seller/${item?.user?.id}`} style={{ cursor: "pointer" }} className="text-start">
+                                                                <a className="fw-medium fs-5">
+                                                                    {item?.user?.full_name}
+                                                                </a>
+                                                            </Link>
+
+
+                                                            <div>
+
+                                                                <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
+                                                                <span className="text-secondary fs-5 fw-medium ">
+                                                                    {addPeriodToThousands(item?.price)} so'm
+                                                                </span>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+
+                                                <div className='d-flex justify-content-between'>
+                                                    <div>
+                                                        <span className="text-success fs-5 fw-medium">
+                                                            Muddati:
+                                                        </span>{' '}
+                                                        <span className="fw-medium fs-5 ">
+                                                            {item?.deadline_date}
+                                                        </span>
+                                                    </div>
+
+                                                    {
+                                                        item?.status === 'new' ? (
+                                                            <span>
+                                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                                Moderatsiya
+                                                            </span>
+                                                        ) : item?.status === 'in_progress' ? (
+                                                            <span>
+                                                                <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
+                                                            </span>
+                                                        ) : (
+                                                            <span style={{ cursor: 'pointer' }}>
+                                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                                Tugallangan
+                                                            </span>
+                                                        )
+                                                    }
+                                                </div>
+                                            </div>
+
                                         </div>
+                                    ))
 
-                                    </div>
-
-
-                                    <div className='d-flex justify-content-between'>
-                                        <div>
-                                            <span className="text-success fs-5 fw-medium">
-                                                Muddati:
-                                            </span>{' '}
-                                            <span className="fw-medium fs-5 ">
-                                                {item?.deadline_date}
-                                            </span>
-                                        </div>
-
-                                        {
-                                            item?.status === 'new' ? (
-                                                <span>
-                                                    <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                    Moderatsiya
-                                                </span>
-                                            ) : item?.status === 'in_progress' ? (
-                                                <span>
-                                                    <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
-                                                </span>
-                                            ) : (
-                                                <span style={{ cursor: 'pointer' }}>
-                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                    Tugallangan
-                                                </span>
-                                            )
-                                        }
-                                    </div>
+                                }
+                                <div className='d-flex justify-content-center my-4 '>
+                                    <Pagination
+                                        className="mt-3"
+                                        total={pageCount}
+                                        defaultCurrent={currPage}
+                                        onChange={handlePagination}
+                                    />
                                 </div>
-
-                            </div>
-                        ))
+                            </>
                     }
                 </div>
 
-                <div className='d-flex justify-content-center my-4 '>
-                    <Pagination
-                        className="mt-3"
-                        total={pageCount}
-                        defaultCurrent={currPage}
-                        onChange={handlePagination}
-                    />
-                </div>
 
             </div>
 
@@ -397,7 +426,7 @@ export default function ApplicationsReceiveds() {
                         <div
                             className=" "
                             style={{
-                                height: '220px',
+                                height: '50vh',
                                 display: 'grid',
                                 placeContent: 'center',
                             }}>

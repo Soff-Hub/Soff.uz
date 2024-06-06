@@ -4,7 +4,6 @@ import { Modal, Pagination, Progress } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import useDebounce from '~/hooks/useDebounce';
 import DealsSidebar from './modules/DealsSidebar';
-import CalculateTimeDifference from './DateFormatter';
 import DealsList from './DealsList';
 import { useSelector } from 'react-redux';
 
@@ -14,9 +13,9 @@ export default function DealCart() {
     const [currPage, setCurrPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
     const [open, setOpen] = useState(false)
-    const { asPath } = useRouter();
+    const [loading, setLoading] = useState(false)
     const [keyword, setKeyword] = useState('');
-    const debouncedSearchTerm = useDebounce(keyword, 300);
+    const debouncedSearchTerm = useDebounce(keyword, 800);
     const [lifetime, setLifetime] = useState('');
     const [lifetime2, setLifetime2] = useState('');
     const [type, setType] = useState('');
@@ -26,6 +25,7 @@ export default function DealCart() {
 
 
     async function GetItemsProducts() {
+        setLoading(true)
         const ItemsData = await GetRepository.getOrdersDealLists(
             currPage,
             debouncedSearchTerm,
@@ -39,6 +39,7 @@ export default function DealCart() {
             setPageCount(ItemsData.count);
             setData(ItemsData.results);
         }
+        setLoading(false)
     }
 
 
@@ -121,104 +122,125 @@ export default function DealCart() {
 
 
                 <div className='d-flex flex-column gap-3'>
-                    {
-                        data?.map(item => (
-                            <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <h3 className="text-success fw-medium ">{item?.title}</h3>
+                    {loading ?
+
+                        <div
+                            className=" "
+                            style={{
+                                height: '70vh',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{ width: '150px', height: '150px' }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div>
+                        :
+                        <>
+                            {data?.map(item => (
+                                <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
+                                    <h3 className="text-success fw-medium ">{item?.title}</h3>
 
 
-                                <p
-                                    style={{ width: "100%" }}
-                                >
-                                    {item?.description}
-                                </p>
-                                <div>
-                                    <div className="d-md-flex justify-content-between gap-4  ">
-                                        <div className="d-flex align-items-center ">
-                                            <img
-                                                className="d-block"
-                                                width={60}
-                                                src="/static/img/docCopy.jpg"
-                                                alt="sca"
-                                            />
-                                            <div>
+                                    <p
+                                        style={{ width: "100%" }}
+                                    >
+                                        {item?.description}
+                                    </p>
+                                    <div>
+                                        <div className="d-md-flex justify-content-between gap-4  ">
+                                            <div className="d-flex align-items-center ">
+                                                <img
+                                                    className="d-block"
+                                                    width={60}
+                                                    src="/static/img/docCopy.jpg"
+                                                    alt="sca"
+                                                />
+                                                <div>
 
-                                                <div  >
-                                                    {' '}
-                                                    <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="text-secondary fs-5 fw-medium ">
-                                                        {addPeriodToThousands(item?.price)} so'm
-                                                    </span>
-                                                </div>
+                                                    <div  >
+                                                        {' '}
+                                                        <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
+                                                        <span className="text-secondary fs-5 fw-medium ">
+                                                            {addPeriodToThousands(item?.price)} so'm
+                                                        </span>
+                                                    </div>
 
-                                                <div >
-                                                    <span className="text-success fs-5 fw-medium">
-                                                        Buyurtma turi:
-                                                    </span>{' '}
-                                                    <span className="fw-medium fs-5 text-secondary ">
-                                                        {item?.type?.name}
-                                                    </span>
-                                                </div>
+                                                    <div >
+                                                        <span className="text-success fs-5 fw-medium">
+                                                            Buyurtma turi:
+                                                        </span>{' '}
+                                                        <span className="fw-medium fs-5 text-secondary ">
+                                                            {item?.type?.name}
+                                                        </span>
+                                                    </div>
 
 
-                                                <div >
-                                                    <span className="text-success fs-5 fw-medium">
-                                                        Muddati:
-                                                    </span>{' '}
-                                                    <span className="fw-medium text-secondary fs-5 ">
-                                                        {item?.deadline_date}
-                                                    </span>
+                                                    <div >
+                                                        <span className="text-success fs-5 fw-medium">
+                                                            Muddati:
+                                                        </span>{' '}
+                                                        <span className="fw-medium text-secondary fs-5 ">
+                                                            {item?.deadline_date}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className='mt-3 
+                                        <div className='mt-3 
                                     d-flex justify-content-between 
                                     align-items-center'>
-                                        {item?.application_count !== 0 ?
-                                            <div className="text-start mb-md-0  d-md-flex gap-3 align-items-center">
+                                            {item?.application_count !== 0 ?
+                                                <div className="text-start mb-md-0  d-md-flex gap-3 align-items-center">
 
-                                                <span className="fw-medium d-flex gap-3 ">
+                                                    <span className="fw-medium d-flex gap-3 ">
 
-                                                    <span className='text-secondary fs-5'>
-                                                        <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
+                                                        <span className='text-secondary fs-5'>
+                                                            <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
 
-                                                </span>
-                                            </div> : <span></span>
-                                        }
-
-
-                                        <div className='d-flex justify-content-end'>
-                                            {
-                                                user?.access ?
-                                                    <button
-                                                        onClick={() => Router.push(`/deal/${item?.id}`)}
-                                                        className='btn btn-success px-4 fs-5'>Ariza topshirsh</button> :
-
-                                                    <button
-                                                        onClick={() => Router.push(`/account/selection`)}
-                                                        className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
-
+                                                    </span>
+                                                </div> : <span></span>
                                             }
 
+
+                                            <div className='d-flex justify-content-end'>
+                                                {
+                                                    user?.access ?
+                                                        <button
+                                                            onClick={() => Router.push(`/deal/${item?.id}`)}
+                                                            className='btn btn-success px-4 fs-5'>Ariza topshirsh</button> :
+
+                                                        <button
+                                                            onClick={() => Router.push(`/account/selection`)}
+                                                            className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
+
+                                                }
+
+                                            </div>
+
                                         </div>
-
                                     </div>
-                                </div>
 
+                                </div>
+                            ))}
+
+                            <div className='d-flex justify-content-center my-4 '>
+                                <Pagination
+                                    className="mt-3"
+                                    total={pageCount}
+                                    defaultCurrent={currPage}
+                                    onChange={handlePagination}
+                                />
                             </div>
-                        ))
+                        </>
                     }
                 </div>
 
-                <div className='d-flex justify-content-center my-4 '>
-                    <Pagination
-                        className="mt-3"
-                        total={pageCount}
-                        defaultCurrent={currPage}
-                        onChange={handlePagination}
-                    />
-                </div>
 
             </div>
 
