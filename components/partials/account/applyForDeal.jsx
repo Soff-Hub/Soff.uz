@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Button, DatePicker, Form, Input, Modal } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useRouter } from 'next/router';
-import CalculateTimeDifference from './DateFormatter';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { useSelector } from 'react-redux';
 const { TextArea } = Input;
@@ -116,50 +115,46 @@ export default function ApplyForDeal() {
                                 />
                                 <div>
 
-                                    <div className="text-start" >
+                                    <div  >
                                         {' '}
                                         <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                        <span className="text-success fs-4 fw-medium ">
+                                        <span className="text-secondary fs-5 fw-medium ">
                                             {data?.price ? addPeriodToThousands(data?.price) : 0} so'm
                                         </span>
                                     </div>
 
-                                    <div className="text-start">
+                                    <div >
                                         <span className="text-success fs-5 fw-medium">
-                                            Kategoriyasi:
+                                            Buyurtma turi:
                                         </span>{' '}
-                                        <span className="fw-medium ">
+                                        <span className="fw-medium text-secondary fs-5">
                                             {data?.type?.name ? data?.type?.name : "No Type"}
                                         </span>
                                     </div>
 
 
-                                    <div className="text-start">
+                                    <div >
                                         <span className="text-success fs-5 fw-medium">
                                             Muddati:
                                         </span>{' '}
-                                        <span className="fw-medium ">
+                                        <span className="fw-medium text-secondary fs-5">
                                             {data?.deadline ? data?.deadline : "0"}
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className='mt-3 
-                                    d-md-flex justify-content-between 
-                                    align-items-center'>
-                            <div className="text-start mb-md-0 mb-3 d-md-flex gap-3 align-items-center">
-                                <span className="text-success fs-5 fw-medium ">
-                                    Yaratilgan vaqti:
-                                </span>{' '}
+                        {data?.application_count !== 0 ?
+                            <div className="text-start mb-md-0  d-md-flex gap-3 align-items-center">
+
                                 <span className="fw-medium d-flex gap-3 ">
-                                    <CalculateTimeDifference targetDate={data?.created_at} />
-                                    <span>Takliflar: {data?.application_count}</span>
+
+                                    <span className='text-secondary fs-5'>
+                                        <span className='text-success'>Takliflar:</span> {data?.application_count}</span>
 
                                 </span>
-                            </div>
-
-                        </div>
+                            </div> : <></>
+                        }
                     </div>
 
                 </div>
@@ -184,11 +179,12 @@ export default function ApplyForDeal() {
                 </div>
 
 
-                <div className="col-md-6  pl-0">
+                <div className="col-md-6  p-0 pr-md-3">
 
                     <Form.Item
                         label={"Bajarilish muddati"}
                         name="orders"
+                        className='mb-2'
                         rules={[
                             {
                                 required: true,
@@ -205,10 +201,10 @@ export default function ApplyForDeal() {
                     </Form.Item>
                 </div>
 
-                <div className="col-md-6   pr-0 ">
+                <div className="col-md-6  p-0  pl-md-3">
                     <Form.Item
                         label="Narxi"
-                        className='m-0'
+                        className='m-0 mb-2'
                         name="title"
                         rules={[
                             {

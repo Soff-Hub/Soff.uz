@@ -12,6 +12,10 @@ const DealList = () => {
             url: '/',
         },
         {
+            text: 'Barcha buyurtmalar',
+            url: '/account/all-orders',
+        },
+        {
             text: 'Buyurtma bajarish uchun taklif yuborish',
         },
     ];
@@ -20,7 +24,7 @@ const DealList = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Buyurtma bajarish uchun taklif yuborish'} />
                 <BreadCrumb breacrumb={breadCrumb} />
-               <ApplyForDeal/>
+                <ApplyForDeal />
             </div>
         </PageContainer>
     );

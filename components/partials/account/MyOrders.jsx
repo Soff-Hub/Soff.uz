@@ -173,7 +173,7 @@ export default function MyOrders() {
                     {
                         data?.map(item => (
                             <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <div className='d-md-flex justify-content-between gap-4 align-items-center'>
+                                <div className='d-flex justify-content-between gap-4 align-items-start'>
                                     <h3 className="text-success fw-medium ">{item?.title}</h3>
 
                                     <Dropdown
@@ -201,11 +201,16 @@ export default function MyOrders() {
                                         )}
                                         trigger={['click']}
                                     >
-                                        <a style={{ cursor: "pointer" }} onClick={(e) => e.preventDefault()}>
+                                        <a className='d-flex justify-content-center' style={{
+                                            cursor: "pointer",
+                                            minWidth: "20px"
+
+                                        }} onClick={(e) => e.preventDefault()}>
                                             <Space>
                                                 <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
                                             </Space>
                                         </a>
+
                                     </Dropdown>
 
                                 </div>
@@ -215,47 +220,45 @@ export default function MyOrders() {
                                     {item?.description}
                                 </p>
                                 <div>
-                                    <div className="d-md-flex justify-content-between gap-4  ">
+                                    <div className="d-flex justify-content-between gap-4 align-items-center ">
                                         <div className="d-flex align-items-center ">
                                             <img
                                                 className="d-block"
-                                                width={80}
+                                                width={50}
                                                 src="/static/img/docCopy.jpg"
                                                 alt="sca"
                                             />
                                             <div>
 
-                                                <div className="text-start" >
+                                                <div>
                                                     {' '}
                                                     <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="text-secondary fs-4 fw-medium ">
+                                                    <span className="text-secondary fs-5 fw-medium ">
                                                         {addPeriodToThousands(item?.price)} so'm
                                                     </span>
                                                 </div>
 
-                                                <div className="text-start">
+                                                <div>
                                                     <span className="text-success fs-5 fw-medium">
                                                         Buyurtma turi:
                                                     </span>{' '}
-                                                    <span className="fw-medium text-secondary ">
+                                                    <span className="fw-medium text-secondary fs-5">
                                                         {item?.type?.name}
                                                     </span>
                                                 </div>
 
-
-                                                <div className="text-start">
-                                                    <span className="text-success fs-5 fw-medium">
-                                                        Muddati:
-                                                    </span>{' '}
-                                                    <span className="fw-medium text-secondary">
-                                                        {item?.deadline_date}
-                                                    </span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className='mt-3 d-md-flex justify-content-end'>
-                                      
+                                    <div className='mt-3 d-flex justify-content-between'>
+                                        <div>
+                                            <span className="text-success fs-5 fw-medium">
+                                                Muddati:
+                                            </span>{' '}
+                                            <span className="fw-medium fs-5">
+                                                {item?.deadline_date}
+                                            </span>
+                                        </div>
 
                                         {
                                             item?.status === 'new' ? (

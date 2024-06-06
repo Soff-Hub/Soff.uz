@@ -215,7 +215,7 @@ export default function ApplicationsReceiveds() {
 
                     <button className='col-md-3  btn btn-success rounded-3 fs-4'
                         onClick={() => setOpen(true)} >
-                     <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
+                        <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
 
@@ -264,7 +264,10 @@ export default function ApplicationsReceiveds() {
                                                 )}
                                                 trigger={['click']}
                                             >
-                                                <a style={{ cursor: "pointer" }}>
+                                                <a className='d-flex justify-content-center' style={{ cursor: "pointer",
+                                                minWidth:"20px"
+
+                                                 }}>
                                                     <Space>
                                                         <i className="fa-solid fa-ellipsis-vertical"></i>
                                                     </Space>
@@ -284,16 +287,16 @@ export default function ApplicationsReceiveds() {
                                     </p>
 
                                     <div className="d-md-flex justify-content-between gap-4  ">
-                                        <div className="d-flex align-items-center my-2">
+                                        <div className="d-flex gap-3 align-items-center my-2">
                                             <Link href={`/seller/${item?.user?.id}`}
-                                                style={{
+
+                                            >
+                                                <a style={{
                                                     width: "40px",
                                                     height: "40px",
                                                     borderRadius: "50%",
                                                     cursor: "pointer"
-                                                }}
-                                            >
-                                                <a>
+                                                }}>
                                                     <img
                                                         src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
                                                         alt="sca"
@@ -303,22 +306,18 @@ export default function ApplicationsReceiveds() {
                                             <div>
 
                                                 <Link href={`/seller/${item?.user?.id}`} style={{ cursor: "pointer" }} className="text-start">
-                                                    <a className="fw-medium ">
+                                                    <a className="fw-medium fs-5">
                                                         {item?.user?.full_name}
                                                     </a>
                                                 </Link>
 
 
-                                                <div className="text-start" >
+                                                <div>
 
-                                                    <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="text-success fs-4 fw-medium ">
+                                                    <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
+                                                    <span className="text-secondary fs-5 fw-medium ">
                                                         {addPeriodToThousands(item?.price)} so'm
                                                     </span>
-                                                    <span className="fw-medium ">
-                                                        {item?.type?.name}
-                                                    </span>
-
                                                 </div>
 
                                             </div>
@@ -327,12 +326,12 @@ export default function ApplicationsReceiveds() {
                                     </div>
 
 
-                                    <div className='d-md-flex justify-content-between'>
+                                    <div className='d-flex justify-content-between'>
                                         <div>
                                             <span className="text-success fs-5 fw-medium">
                                                 Muddati:
                                             </span>{' '}
-                                            <span className="fw-medium ">
+                                            <span className="fw-medium fs-5 ">
                                                 {item?.deadline_date}
                                             </span>
                                         </div>
@@ -349,7 +348,7 @@ export default function ApplicationsReceiveds() {
                                                 </span>
                                             ) : (
                                                 <span style={{ cursor: 'pointer' }}>
-                                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
                                                     Tugallangan
                                                 </span>
                                             )
@@ -374,7 +373,7 @@ export default function ApplicationsReceiveds() {
             </div>
 
             <Modal
-                title="Buyurtma yaratish"
+                title="Buyurtmangiz"
                 width={1024}
                 centered
                 open={open}
@@ -426,51 +425,53 @@ export default function ApplicationsReceiveds() {
                                     <div className="d-flex align-items-center ">
                                         <img
                                             className="d-block"
-                                            width={80}
+                                            width={60}
                                             src="/static/img/docCopy.jpg"
                                             alt="sca"
                                         />
                                         <div>
 
-                                            <div className="text-start" >
+                                            <div >
                                                 {' '}
                                                 <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                <span className="text-success fs-4 fw-medium ">
+                                                <span className="text-secondary fs-5 fw-medium ">
                                                     {addPeriodToThousands(dataDetails?.price)} so'm
                                                 </span>
                                             </div>
 
-                                            <div className="text-start">
+                                            <div>
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Kategoriyasi:
+                                                    Buyurtma turi:
                                                 </span>{' '}
-                                                <span className="fw-medium ">
+                                                <span className="fw-medium text-secondary fs-5">
                                                     {dataDetails?.type?.name}
                                                 </span>
                                             </div>
 
 
-                                            <div className="text-start">
+                                            <div>
                                                 <span className="text-success fs-5 fw-medium">
                                                     Muddati:
                                                 </span>{' '}
-                                                <span className="fw-medium ">
+                                                <span className="fw-medium fs-5 ">
                                                     {dataDetails?.deadline_date}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className='mt-3 d-md-flex justify-content-between'>
-                                    <div className="text-start">
-                                        <span className="text-success fs-5 fw-medium">
-                                            Yaratilgan vaqti:
-                                        </span>{' '}
-                                        <span className="fw-medium ">
-                                            <CalculateTimeDifference targetDate={dataDetails?.created_at} />
+                                <div className='mt-3 d-flex justify-content-between'>
+                                    {dataDetails?.application_count !== 0 ?
+                                        <div className="text-start mb-md-0  d-md-flex gap-3 align-items-center">
 
-                                        </span>
-                                    </div>
+                                            <span className="fw-medium d-flex gap-3 ">
+
+                                                <span className='text-secondary fs-5'>
+                                                    <span className='text-success'>Takliflar:</span> {dataDetails?.application_count}</span>
+
+                                            </span>
+                                        </div> : <span></span>
+                                    }
 
 
                                     {

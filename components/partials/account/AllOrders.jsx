@@ -137,35 +137,35 @@ export default function DealCart() {
                                         <div className="d-flex align-items-center ">
                                             <img
                                                 className="d-block"
-                                                width={80}
+                                                width={60}
                                                 src="/static/img/docCopy.jpg"
                                                 alt="sca"
                                             />
                                             <div>
 
-                                                <div className="text-start" >
+                                                <div  >
                                                     {' '}
                                                     <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="text-secondary fs-4 fw-medium ">
+                                                    <span className="text-secondary fs-5 fw-medium ">
                                                         {addPeriodToThousands(item?.price)} so'm
                                                     </span>
                                                 </div>
 
-                                                <div className="text-start">
+                                                <div >
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Kategoriyasi:
+                                                        Buyurtma turi:
                                                     </span>{' '}
-                                                    <span className="fw-medium  text-secondary ">
+                                                    <span className="fw-medium fs-5 text-secondary ">
                                                         {item?.type?.name}
                                                     </span>
                                                 </div>
 
 
-                                                <div className="text-start">
+                                                <div >
                                                     <span className="text-success fs-5 fw-medium">
                                                         Muddati:
                                                     </span>{' '}
-                                                    <span className="fw-medium text-secondary  ">
+                                                    <span className="fw-medium text-secondary fs-5 ">
                                                         {item?.deadline_date}
                                                     </span>
                                                 </div>
@@ -173,15 +173,15 @@ export default function DealCart() {
                                         </div>
                                     </div>
                                     <div className='mt-3 
-                                    d-md-flex justify-content-between 
+                                    d-flex justify-content-between 
                                     align-items-center'>
                                         {item?.application_count !== 0 ?
-                                            <div className="text-start mb-md-0 mb-3 d-md-flex gap-3 align-items-center">
+                                            <div className="text-start mb-md-0  d-md-flex gap-3 align-items-center">
 
                                                 <span className="fw-medium d-flex gap-3 ">
 
-                                                    <span className='text-secondary'>
-                                                        <span className='text-success'>Takliflar:</span> {item?.application_count}</span>
+                                                    <span className='text-secondary fs-5'>
+                                                        <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
 
                                                 </span>
                                             </div> : <span></span>

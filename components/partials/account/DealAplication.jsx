@@ -226,7 +226,7 @@ export default function MyDealCart() {
                     {
                         data?.map(item => (
                             <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                <div className='d-md-flex justify-content-between gap-4 align-items-center'>
+                                <div className='d-flex justify-content-between gap-4 align-items-start'>
                                     <h3 className="text-success fw-medium ">{item?.title}</h3>
 
                                     <Dropdown
@@ -251,7 +251,11 @@ export default function MyDealCart() {
                                         )}
                                         trigger={['click']}
                                     >
-                                        <a style={{ cursor: "pointer" }} onClick={(e) => e.preventDefault()}>
+                                        <a className='d-flex justify-content-center' style={{
+                                            cursor: "pointer",
+                                            minWidth: "20px"
+
+                                        }} onClick={(e) => e.preventDefault()}>
                                             <Space>
                                                 <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
                                             </Space>
@@ -271,35 +275,35 @@ export default function MyDealCart() {
                                         <div className="d-flex align-items-center ">
                                             <img
                                                 className="d-block"
-                                                width={80}
+                                                width={60}
                                                 src="/static/img/docCopy.jpg"
                                                 alt="sca"
                                             />
                                             <div>
 
-                                                <div className="text-start" >
+                                                <div >
                                                     {' '}
                                                     <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                    <span className="fs-4 fw-medium text-secondary ">
+                                                    <span className="fs-5 fw-medium text-secondary ">
                                                         {addPeriodToThousands(item?.price)} so'm
                                                     </span>
                                                 </div>
 
-                                                <div className="text-start">
+                                                <div>
                                                     <span className="text-success fs-5 fw-medium">
                                                         Kategoriyasi:
                                                     </span>{' '}
-                                                    <span className="fw-medium text-secondary ">
+                                                    <span className="fw-medium text-secondary fs-5">
                                                         {item?.type?.name}
                                                     </span>
                                                 </div>
 
 
-                                                <div className="text-start">
+                                                <div>
                                                     <span className="text-success fs-5 fw-medium">
                                                         Muddati:
                                                     </span>{' '}
-                                                    <span className="fw-medium text-secondary">
+                                                    <span className="fw-medium text-secondary fs-5">
                                                         {item?.deadline_date}
                                                     </span>
                                                 </div>
@@ -307,15 +311,15 @@ export default function MyDealCart() {
                                         </div>
                                     </div>
                                     <div className='mt-3 
-                                    d-md-flex justify-content-between 
+                                    d-flex justify-content-between 
                                     align-items-center'>
                                         {item?.application_count !== 0 ?
-                                            <div className="text-start mb-md-0 mb-3 d-md-flex gap-3 align-items-center">
+                                            <div className="text-start mb-md-0   d-md-flex gap-3 align-items-center">
 
                                                 <span className="fw-medium d-flex gap-3 ">
 
-                                                    <span className='text-secondary'>
-                                                        <span className='text-success'>Takliflar:</span> {item?.application_count}</span>
+                                                    <span className='text-secondary fs-5'>
+                                                        <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
 
                                                 </span>
                                             </div> : <span></span>
