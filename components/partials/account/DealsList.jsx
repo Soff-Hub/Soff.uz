@@ -52,7 +52,7 @@ export default function DealsList({ setOpen }) {
                 title: 'Muvaffaqqiyatli!',
                 content: `${ItemsData?.data?.msg
                     ? ItemsData?.data?.msg
-                    : 'Sizning arizangiz yuborildi'
+                    : "Sizning buyurtmangiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  buyurtmangiz 'Tasdiqlangan' dan so'ng Barcha buyurtmalarda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin"
                     }  `,
             });
             modal.update;
