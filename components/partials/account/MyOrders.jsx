@@ -112,7 +112,7 @@ export default function MyOrders() {
         if (user?.access && productsIdUpdate) {
             GetItemsProductsUpdates()
         }
-    }, [productsIdUpdate])
+    }, [productsIdUpdate, openUpdate])
 
 
     return (
