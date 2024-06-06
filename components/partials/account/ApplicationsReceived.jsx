@@ -65,6 +65,7 @@ export default function ApplicationsReceiveds() {
         setLoadingDetails(false)
     }
 
+
     function handleClickUpdate(id) {
         if (id) {
             setAppliactionId(id)
@@ -104,12 +105,16 @@ export default function ApplicationsReceiveds() {
         }
     }
 
+
+
     async function postOrder() {
+
         if (categoryStatus) {
+
             const data = {
                 status: categoryStatus
             };
-            const ItemsData = await PatchRepository.patchDealUpdateApplicaiton(appliactionId, data, user?.access);
+            const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, data, user?.access);
             if (ItemsData?.status === 200) {
                 GetItemsProducts()
                 const modal = Modal.success({
