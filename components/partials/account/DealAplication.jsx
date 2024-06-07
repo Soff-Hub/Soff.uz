@@ -320,7 +320,7 @@ export default function MyDealCart() {
                                             <p
                                                 className='m-0 description_more'
 
-                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2" }}
+                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2",whiteSpace: 'pre-wrap' }}
                                             >
                                                 {item?.description}
                                             </p>
@@ -631,7 +631,7 @@ export default function MyDealCart() {
                                     label="Taklif"
                                     name={dataDetials?.description}>
                                     <TextArea
-                                        rows={6}
+                                        rows={8}
                                         placeholder="Taklif"
                                         onChange={(e) => setDescription(e.target.value)}
                                         defaultValue={dataDetials?.description}

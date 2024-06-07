@@ -564,7 +564,8 @@ class GetRepository {
         type,
         min_price,
         max_price,
-        id
+        id,
+        token
     ) {
         const endPoint = `deals/${id ? id + '/' : ''}?page=${page}&search=${
             search || ''
@@ -574,6 +575,9 @@ class GetRepository {
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
+            headers: {
+                Authorization: token ? `Bearer ${token} ` : '',
+            },
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -1224,7 +1228,6 @@ class GetRepository {
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
-       
         })
             .then((response) => {
                 if (response.status === 200) {

@@ -269,7 +269,7 @@ export default function MyOrders() {
                                             <p
                                                 className='m-0 description_more'
 
-                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2" }}
+                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2", whiteSpace: 'pre-wrap' }}
                                             >
                                                 {item?.description}
                                             </p>

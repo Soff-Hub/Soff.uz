@@ -6,37 +6,23 @@ import Meta from '~/components/shared/headers/Meta';
 import { Modal } from 'antd';
 import { useState } from 'react';
 import { Image } from 'antd';
-import { useRouter } from 'next/router';
+import Router, { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 
-const SellerPage = ({ seller,sellerr }) => {
+const SellerPage = ({ seller, sellerr }) => {
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
     const { pid } = router.query;
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
     const [tab, setTab] = useState('tab-1');
     const [typeSelect, setTypeSelect] = useState('file');
     const [search, setSearch] = useState('');
     const [productType, setProductType] = useState(null);
 
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
 
-    const handleOk = () => {
-        setIsModalOpen(false);
-    };
-    const handleOkDonate = () => {
-        setIsModalOpenDonate(false);
-    };
-    const handleCancel = () => {
-        setIsModalOpen(false);
-    };
     const handleCancelDonate = () => {
         setIsModalOpenDonate(false);
     };
@@ -128,20 +114,6 @@ const SellerPage = ({ seller,sellerr }) => {
                 description={`Soff.uz sayti sotuvchisi - ${sellerr?.seller?.full_name} ning barcha mahsulotlarini shu yerda ko'rishingiz mumkin`}
             />
             <Modal
-                title="Buyurtma berish "
-                open={isModalOpen}
-                onOk={handleOk}
-                onCancel={handleCancel}
-                cancelButtonProps={{ style: { display: 'none' } }}
-                okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
-                <p>Tez kunda!</p>
-                <p>
-                    Xurmatli Soff.uz foyalanuvchisi, siz bu yerda Sotuvchiga
-                    mahsulot yoki xizmat buyurtmasini berishingiz mumkin
-                    bo'ladi.
-                </p>
-            </Modal>
-            <Modal
                 title="Qo'llab quvvatlash"
                 open={isModalOpenDonate}
                 onOk={handleOkDonate}
@@ -166,21 +138,19 @@ const SellerPage = ({ seller,sellerr }) => {
                             <div
                                 className="user_profile_card"
                                 style={{
-                                    backgroundImage: `url(${
-                                        sellerr?.seller?.background_image
+                                    backgroundImage: `url(${sellerr?.seller?.background_image
                                             ? sellerr?.seller?.background_image
                                             : '/static/img/orqafon1.avif'
-                                    })`,
+                                        })`,
                                 }}>
                                 <div className="profile_images_card">
                                     <Image.PreviewGroup>
                                         <Image
                                             width={200}
-                                            src={`${
-                                                sellerr?.seller?.image
+                                            src={`${sellerr?.seller?.image
                                                     ? sellerr?.seller?.image
                                                     : '/static/img/ozodbek.png'
-                                            }`}
+                                                }`}
                                         />
                                     </Image.PreviewGroup>
                                 </div>
@@ -255,11 +225,10 @@ const SellerPage = ({ seller,sellerr }) => {
                                             <div className="d-xl-flex d-lg-flex d-md-flex d-sm-flex justify-content-center align-items-center gap-5 py-4 ">
                                                 <a
                                                     href="#products"
-                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${
-                                                        tab === 'tab-1'
+                                                    className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1'
                                                             ? 'donate-color-btn'
                                                             : ''
-                                                    }`}
+                                                        }`}
                                                     style={{
                                                         textDecoration: 'none',
                                                     }}
@@ -271,22 +240,21 @@ const SellerPage = ({ seller,sellerr }) => {
                                                     Mahsulotlari
                                                 </a>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
-                                                        tab === 'tab-2'
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2'
                                                             ? 'donate-color-btn'
                                                             : ''
-                                                    }`}
-                                                    onClick={showModal}>
+                                                        }`}
+                                                    onClick={() => Router.push("/account/all-orders")}
+                                                >
                                                     {' '}
                                                     <i className="fa-regular fa-pen-to-square"></i>{' '}
                                                     Buyurtma berish
                                                 </button>
                                                 <button
-                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${
-                                                        tab === 'tab-3'
+                                                    className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3'
                                                             ? 'donate-color-btn'
                                                             : ''
-                                                    }`}
+                                                        }`}
                                                     // onClick={showModalDonate}
                                                     onClick={() =>
                                                         setTab('tab-3')
@@ -303,22 +271,22 @@ const SellerPage = ({ seller,sellerr }) => {
 
                             <div className="seller_contaoner2">
                                 <select
-                                
+
                                     onChange={(e) =>
                                         setTypeSelect(e.target.value)
                                     }
                                     className="form-control seller_filter rounded-3">
                                     {productType?.map((e) => {
                                         return (
-                                            <option value={e.type} selected={e?.type===typeSelect} >
+                                            <option value={e.type} selected={e?.type === typeSelect} >
                                                 {
-                                                
-                                                e?.type==='audio' ? "Audio materiallar" :
-                                                e?.type==='video' ? "Video materiallar" :
-                                                e?.type==='template' ? "Shablon materiallar" :"Hujjat materiallar"
 
-                                                    
-                                                    }
+                                                    e?.type === 'audio' ? "Audio materiallar" :
+                                                        e?.type === 'video' ? "Video materiallar" :
+                                                            e?.type === 'template' ? "Shablon materiallar" : "Hujjat materiallar"
+
+
+                                                }
                                                 {e?.count !== 0
                                                     ? `- ${e?.count} ta`
                                                     : ''}
