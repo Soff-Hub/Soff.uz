@@ -159,8 +159,8 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                         className='col-md-12 mb-3'
                                     >
                                         <TextArea
-
-                                            rows={4}
+                             
+                                            rows={8} 
                                             placeholder="Buyurtma uchun tavsif"
                                             onChange={(e) =>
                                                 setDescription(

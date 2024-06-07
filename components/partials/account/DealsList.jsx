@@ -206,7 +206,7 @@ export default function DealsList({ setOpen }) {
                                         ]}>
                                         <TextArea
 
-                                            rows={4}
+                                            rows={8}
                                             placeholder="Buyurtma uchun tavsif"
                                             onChange={(e) =>
                                                 setDescription(
