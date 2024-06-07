@@ -96,7 +96,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
 
 
     return (
-        <div className="w-100 mb-5">
+        <div className="w-100 ">
             <div className="p-3 bg-white mb-4">
                 <h4 className="d-block p-2 fw-bold">
                     Buyurtmalar

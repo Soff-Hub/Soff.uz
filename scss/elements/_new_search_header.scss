@@ -400,6 +400,7 @@
                 }
             }
         }
+
         .global_navbar_bottom {
             .navbar-container {
                 ul {
@@ -427,6 +428,11 @@
 }
 
 
-
-
-
+.description_more {
+    width: 100%;
+    text-align: justify;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+}
