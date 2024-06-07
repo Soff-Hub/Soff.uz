@@ -82,10 +82,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
         label: e?.name,
         value: e?.id,
     }));
-    const optiondeadline = dealDeadlines?.map((e) => ({
-        label: e?.title,
-        value: e?.id,
-    }));
+
 
 
     return (
@@ -176,15 +173,9 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                     <span className="fw-bold py-3 px-2 ">
                         Muddati
                     </span>
-                    <Select
-                        defaultValue={dealItem?.deadline_date}
-                        onChange={(e) => setLifetime(e)}
-                        style={{
-                            width: '100%',
-                            height: '45px',
-                        }}
-                        placeholder="Muddati"
-                        options={optiondeadline}></Select>
+                    <Input type='date' onChange={(e) => setLifetime(e.target.value)}
+                        defaultValue={dealItem?.deadline_date} />
+
                 </Form.Item>
                 <Form.Item
                     className="col-md-6 mb-3 "
@@ -197,7 +188,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                         onChange={(e) => setType(e)}
                         style={{
                             width: '100%',
-                            height: '45px',
+                            height: '42px',
                         }}
                         placeholder="Buyurtma turi"
                         options={optionType}></Select>
@@ -257,7 +248,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                     </span>
                     <TextArea
                         defaultValue={dealItem?.description}
-                        rows={4}
+                        rows={10}
                         placeholder="Buyurtma uchun tavsif"
                         onChange={(e) =>
                             setDescription(e.target.value)
