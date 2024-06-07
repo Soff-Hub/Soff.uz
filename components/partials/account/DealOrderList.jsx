@@ -184,7 +184,7 @@ export default function DealOrderList() {
         if (user?.access) {
             getDealList(user?.access);
         }
-    }, [currPage]);
+    }, [currPage, isModalOpenUpdate]);
 
 
     return (
@@ -219,7 +219,7 @@ export default function DealOrderList() {
                                 </div>
 
                                 <Modal
-                                    title="Buyurtmani foydalanuvchi tarafda ko'rinishi"
+                                    title="Buyurtma tavsifi"
                                     open={isModalOpen}
                                     maskClosable={false}
                                     width={900}

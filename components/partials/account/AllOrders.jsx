@@ -24,6 +24,7 @@ export default function DealCart() {
     const [isExpanded, setIsExpanded] = useState(2);
     const [needsToggle, setNeedsToggle] = useState(false);
     const [needsId, setNeedsId] = useState(null);
+    const [innerWidth, setInnerWidth] = useState(null);
 
 
     function handleDescriptionMore(id) {
@@ -102,6 +103,11 @@ export default function DealCart() {
     }, [user?.access])
 
 
+    useEffect(() => {
+        setInnerWidth(window.innerWidth);
+    }, [])
+
+
 
     return (
         <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
@@ -126,7 +132,7 @@ export default function DealCart() {
                     <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() =>
                             user?.access ?
-                                setOpen(true) : Router.push("/account/selection")} >
+                                setOpen(true) : Router.push("/account/selection?select=deal")} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
@@ -167,25 +173,45 @@ export default function DealCart() {
                                     <p
                                         className='m-0 description_more'
 
-                                        style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2",
-                                         }}
+                                        style={{
+                                            WebkitLineClamp: item?.id === needsId ? isExpanded : "2",
+                                        }}
                                     >
                                         {item?.description}
                                     </p>
 
-                                    <div className='d-flex justify-content-end'>
-                                        {
-                                            (needsToggle && (item?.id === needsId)) ?
-                                                <span onClick={() => handleDescription(item?.id)}
-                                                    className='text-success' style={{ cursor: "pointer" }}>
-                                                    <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                </span> :
-                                                <span onClick={() => handleDescriptionMore(item?.id)}
-                                                    className='text-success' style={{ cursor: "pointer" }}>
-                                                    <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                </span>
-                                        }
-                                    </div>
+                                    {
+                                        innerWidth < 414 ?
+                                            <div className='d-flex justify-content-end'>
+                                                {
+                                                    (needsToggle && (item?.id === needsId)) ?
+                                                        <span onClick={() => handleDescription(item?.id)}
+                                                            className='text-success' style={{ cursor: "pointer" }}>
+                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                        </span> :
+                                                        <span onClick={() => handleDescriptionMore(item?.id)}
+                                                            className='text-success' style={{ cursor: "pointer" }}>
+                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                        </span>
+                                                }
+                                            </div> :
+                                            item?.description?.length > 252 ?
+                                                <div className='d-flex justify-content-end'>
+                                                    {
+                                                        (needsToggle && (item?.id === needsId)) ?
+                                                            <span onClick={() => handleDescription(item?.id)}
+                                                                className='text-success' style={{ cursor: "pointer" }}>
+                                                                <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                            </span> :
+                                                            <span onClick={() => handleDescriptionMore(item?.id)}
+                                                                className='text-success' style={{ cursor: "pointer" }}>
+                                                                <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                            </span>
+                                                    }
+                                                </div> : <></>
+
+                                    }
+
                                     <div>
                                         <div className="d-md-flex justify-content-between gap-4  ">
                                             <div className="d-flex align-items-center ">
@@ -250,7 +276,7 @@ export default function DealCart() {
                                                             className='btn btn-success px-4 fs-5'>Ariza topshirsh</button> :
 
                                                         <button
-                                                            onClick={() => Router.push(`/account/selection`)}
+                                                            onClick={() => Router.push(`/account/selection?select=deal`)}
                                                             className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
 
                                                 }

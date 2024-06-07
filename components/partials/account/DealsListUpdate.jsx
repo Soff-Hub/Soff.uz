@@ -119,7 +119,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                                     e.target.value
                                                 )
                                             }
-                                            defaultValue={dataDetails?.price}
+                                            defaultValue={Number(dataDetails?.price)}
                                             placeholder="Narxi" />
                                     </Form.Item>
 
