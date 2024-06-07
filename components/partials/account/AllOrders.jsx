@@ -25,6 +25,7 @@ export default function DealCart() {
     const [needsToggle, setNeedsToggle] = useState(false);
     const [needsId, setNeedsId] = useState(null);
     const [innerWidth, setInnerWidth] = useState(null);
+    const tokens = user?.access
 
 
     function handleDescriptionMore(id) {
@@ -39,9 +40,8 @@ export default function DealCart() {
         setNeedsToggle(false)
     }
 
-
-
     async function GetItemsProducts() {
+        const token = user?.access
         setLoading(true)
         const ItemsData = await GetRepository.getOrdersDealLists(
             currPage,
@@ -50,7 +50,9 @@ export default function DealCart() {
             lifetime2,
             type,
             progressPrice[0],
-            progressPrice[1]
+            progressPrice[1],
+            '',
+            token
         );
         if (ItemsData?.results) {
             setPageCount(ItemsData.count);
@@ -66,7 +68,6 @@ export default function DealCart() {
             setProgressData(ItemsData);
         }
     }
-
 
 
     function addPeriodToThousands(number) {
@@ -92,9 +93,11 @@ export default function DealCart() {
         setCurrPage(pageNum);
     };
 
+
     useEffect(() => {
         GetItemsProducts();
-    }, [currPage, debouncedSearchTerm, lifetime, lifetime2, type, progressPrice[0], progressPrice[1]]);
+    }, [currPage, debouncedSearchTerm, lifetime, lifetime2, type, progressPrice[0], progressPrice[1], tokens]);
+
 
     useEffect(() => {
         if (user?.access) {
@@ -175,6 +178,7 @@ export default function DealCart() {
 
                                         style={{
                                             WebkitLineClamp: item?.id === needsId ? isExpanded : "2",
+                                            whiteSpace: 'pre-wrap'
                                         }}
                                     >
                                         {item?.description}
@@ -269,17 +273,25 @@ export default function DealCart() {
 
 
                                             <div className='d-flex justify-content-end'>
-                                                {
-                                                    user?.access ?
-                                                        <button
-                                                            onClick={() => Router.push(`/deal/${item?.id}`)}
-                                                            className='btn btn-success px-4 fs-5'>Ariza topshirsh</button> :
 
+                                                {!item?.is_owner ?
+                                                    (!item?.can_apply ? (
                                                         <button
-                                                            onClick={() => Router.push(`/account/selection?select=deal`)}
-                                                            className='btn btn-success px-4 fs-5'>Ariza topshirsh</button>
-
+                                                            onClick={() => Router.push(`/account/deal-applications`)}
+                                                            className='btn btn-outline-success px-4 fs-5'
+                                                        >
+                                                            Ariza topshirgansiz
+                                                        </button>
+                                                    ) : (
+                                                        <button
+                                                            onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/selection?select=deal`)}
+                                                            className='btn btn-success px-4 fs-5'
+                                                        >
+                                                            Ariza topshirsh
+                                                        </button>
+                                                    )) : <></>
                                                 }
+
 
                                             </div>
 
