@@ -43,9 +43,14 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-layer-group',
     },
     {
-        text: 'Buyurtmalar',
+        text: 'Sotilgan mahsulotlar',
         url: '/account/orders',
         icon: 'fa-solid fa-truck',
+    },
+    {
+        text: 'Buyurtmalar',
+        url: '/account/dealOrder',
+        icon: 'fa-solid fa-sliders',
     },
     {
         text: 'Xaridorlar',
@@ -72,16 +77,12 @@ export let accountAdminLinks = [
         url: '/account/pemium-sellers',
         icon: 'fa-solid fa-star',
     },
-    // {
-    //     text: 'Context',
-    //     url: '/account/context',
-    //     icon: 'fa-solid fa-sliders',
-    // },
-    // {
-    //     text: 'Sozlamalar',
-    //     url: '/account/settings',
-    //     icon: 'fa-solid fa-gear',
-    // },
+    {
+        text: 'Context',
+        url: '/account/context',
+        icon: 'fa-solid fa-sliders',
+    },
+
 ];
 export let accountSellerLink = [
     {
@@ -103,11 +104,6 @@ export let accountSellerLink = [
         text: 'Yangi mahsulot',
         url: '/account/myproducts/product-selection',
         icon: 'fa-solid fa-circle-plus',
-    },
-    {
-        text: 'Olingan buyurtmalar',
-        url: '#',
-        icon: 'fa-solid fa-folder-open',
     },
     {
         text: 'Buyurtmalar',
@@ -186,7 +182,7 @@ const PageContainer = ({
                 <meta property="og:title" content={title} />
             </Head>
             {header}
-            <div >
+            <div className='bg-soff' >
                 <div
                     className={`${query === '/page/form'
                         ? 'container faq-page-container'

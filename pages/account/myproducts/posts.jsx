@@ -131,11 +131,13 @@ const Posts = () => {
 
     const children = [];
     const options = [];
+
     for (let i = 0; i < tagItems?.length; i++) {
         children.push(
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
+    
     for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
             <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
@@ -155,6 +157,7 @@ const Posts = () => {
 
     async function handleChange(value) {
         setTagSearchResult(value);
+        
 
         let arr = [];
         if (value?.length > 0) {

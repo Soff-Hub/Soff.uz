@@ -14,57 +14,64 @@ import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
 import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
-
+import Router from 'next/router';
 
 const HomeElectronicsPage = () => {
+    // debuger();
     const { cartDataItems, wishlist } = useSelector((state) => state.ecomerce);
-    const [category, setCategory] = useState([])
-    const [freeProducts, setFreeProducts] = useState({})
-    const [topSellers, setTopSellers] = useState({})
+    const [category, setCategory] = useState([]);
+    const [freeProducts, setFreeProducts] = useState({});
+    const [topSellers, setTopSellers] = useState({});
 
     const { setAllCartItem } = useCart();
     const { setAllSaved } = useWishlist();
 
-
     async function getProducts() {
-        const responseData = await axios.get(baseUrl + 'customer/category-list/')
+        const responseData = await axios.get(
+            baseUrl + 'customer/category-list/'
+        );
         setCategory(responseData?.data?.results);
     }
 
     async function getFreeDocuments() {
-        const responseData = await axios.get(baseUrl + 'customer/free-document/')
+        const responseData = await axios.get(
+            baseUrl + 'customer/free-document/'
+        );
 
         setFreeProducts({
             id: 999999999999999,
-            name: "Bepul mahsulotlar",
+            name: 'Bepul mahsulotlar',
             icon: null,
             image: null,
-            slug: "bepul-mahsulotlar",
-            promotional_sliders: [...responseData.data]
+            slug: 'bepul-mahsulotlar',
+            promotional_sliders: [...responseData.data],
         });
     }
     async function getTopSellers() {
-        const responseData = await axios.get(baseUrl + 'customer/free-document/')
+        const responseData = await axios.get(
+            baseUrl + 'customer/free-document/'
+        );
         setTopSellers({
             id: 999999999999999,
-            name: "Top sotuvchilar",
+            name: 'Top sotuvchilar',
             icon: null,
             image: null,
-            slug: "top-sellers",
-            promotional_sliders: [...responseData.data]
+            slug: 'top-sellers',
+            promotional_sliders: [...responseData.data],
         });
     }
 
     useEffect(() => {
-        getProducts()
-        getFreeDocuments()
-        getTopSellers()
-    }, [])
-
+        getProducts();
+        getFreeDocuments();
+        getTopSellers();
+    }, []);
 
     useEffect(() => {
         // localStoragedagi ma'lumotlar va redux store o'rtasidagi ma'lumotlar solishtiriladi
-        if (cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))) {
+        if (
+            cartDataItems?.length !== JSON.parse(localStorage.getItem('cart'))
+        ) {
             setAllCartItem();
         }
 
@@ -87,11 +94,69 @@ const HomeElectronicsPage = () => {
         );
     }, []);
 
+    
+
+    // useEffect(() => {
+    //     if (window) {
+    //         window.onblur = function (e) {
+    //             //    alert(`Brauzer oynasi yoki Developer Tools ochildi => ${JSON.stringify(e.isTrusted)}`);
+    //             Router.push("/")
+    //                debuger()
+    //             // debugger;
+    //         };
+    //     }
+    // }, []);
+
+    // function debuger() {
+    //     var devtoolsOpen = false;
+
+    //     function detectDevTools() {
+    //         const start = Date.now();
+    //         debugger; // Bu yerda to'xtatiladi agar DevTools ochilgan bo'lsa
+
+
+    //         const duration = Date.now() - start;
+
+    //         if (duration > 100) {
+    //             if (!devtoolsOpen) {
+    //                 devtoolsOpen = true;
+    //                 console.log('Developer Tools ochildi');
+    //             }
+    //         } else {
+    //             if (devtoolsOpen) {
+    //                 devtoolsOpen = false;
+    //                 console.log('Developer Tools yopildi');
+    //             }
+    //         }
+    //     }
+
+    //     setInterval(detectDevTools, 5);
+
+    //     if (typeof window !== 'undefined') {
+    //         window.addEventListener('devtoolschange', (event) => {
+    //             if (event.detail.open) {
+    //                 console.log(
+    //                     'Developer Tools ochildi:',
+    //                     event.detail.orientation
+    //                 );
+    //                 alert("network ochildi")
+    //                 if (event.detail.orientation === 'vertical') {
+    //                     // Network tab ochilganda bajariladigan kod
+    //                     alert("network ochildi")
+    //                 }
+    //             }
+    //         });
+    //     }
+    // }
+
 
 
     return (
         <main id="homepage-7">
-            <Meta title="Soff | Barcha ma'lumotlar bazasi" image="/static/img/soff/soff_green_white.png" />
+            <Meta
+                title="Soff | Barcha ma'lumotlar bazasi"
+                image="/static/img/soff/soff_green_white.png"
+            />
 
             {memoizedBanner}
             <VedioPage />
@@ -103,7 +168,7 @@ const HomeElectronicsPage = () => {
                 id={topSellers.id}
                 slug={topSellers.slug}
             />
-            
+
             <ElectronicProductGroupWithCarousel
                 collectionSlug="electronics-best-sellers"
                 title={freeProducts.name}
@@ -114,17 +179,18 @@ const HomeElectronicsPage = () => {
             />
 
             {category?.length > 0 ? (
-                category.map((item, index) =>
-                    item?.promotional_sliders?.length > 0 && (
-                        <ElectronicProductGroupWithCarousel
-                            collectionSlug="electronics-best-sellers"
-                            title={item.name}
-                            data={item}
-                            id={item.id}
-                            key={index}
-                            slug={item.slug}
-                        />
-                    )
+                category.map(
+                    (item, index) =>
+                        item?.promotional_sliders?.length > 0 && (
+                            <ElectronicProductGroupWithCarousel
+                                collectionSlug="electronics-best-sellers"
+                                title={item.name}
+                                data={item}
+                                id={item.id}
+                                key={index}
+                                slug={item.slug}
+                            />
+                        )
                 )
             ) : (
                 // Kategoriya yuklanishi kutilayotgan payt Progress bar ko'rsatiladi

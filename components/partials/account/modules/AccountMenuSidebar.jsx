@@ -9,10 +9,7 @@ import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 
-const AccountMenuSidebar = ({
-    data,
-    renderProfile
-}) => {
+const AccountMenuSidebar = ({ data, renderProfile }) => {
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const { asPath } = useRouter();
@@ -28,7 +25,6 @@ const AccountMenuSidebar = ({
     const [copy, setCopy] = useState(false);
     const [socketApplication, setSocketApplication] = useState(null);
     const [applicationData, setApplicationData] = useState(null);
-    const router = useRouter();
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCustomer, setIsModalOpenCustomer] = useState(false);
     const showModal = () => {
@@ -63,16 +59,16 @@ const AccountMenuSidebar = ({
         }
     };
 
-    async function ProfileUsersToken() {
-        const ItemsData = await GetRepository.getProfileToken(user?.access);
+    async function ProfileUsersToken(token) {
+        const ItemsData = await GetRepository.getProfileToken(token);
         if (Number(ItemsData?.status) == 403) {
             handleLogoutToken();
         }
     }
 
-    async function ProfileUsers() {
+    async function ProfileUsers(token) {
         setLoading(true);
-        const ItemsData = await GetRepository.getProfile(user?.access);
+        const ItemsData = await GetRepository.getProfile(token);
         setProfile(ItemsData);
         setLoading(false);
     }
@@ -86,7 +82,7 @@ const AccountMenuSidebar = ({
     }, [socket]);
 
     useEffect(() => {
-        if (user.role === 'admin') {
+        if (user?.role === 'admin') {
             setSocket(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-offer/?token=${user?.access}`
@@ -95,7 +91,8 @@ const AccountMenuSidebar = ({
         } else {
             setSocket(
                 new WebSocket(
-                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-offer/?token=` + user?.access
+                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-offer/?token=` +
+                        user?.access
                 )
             );
         }
@@ -110,7 +107,7 @@ const AccountMenuSidebar = ({
     }, [socket1]);
 
     useEffect(() => {
-        if (user.role === 'admin') {
+        if (user?.role === 'admin') {
             setSocket1(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-document/?token=${user?.access}`
@@ -128,11 +125,11 @@ const AccountMenuSidebar = ({
     }, [socket2]);
 
     useEffect(() => {
-        if (user.role) {
+        if (user?.role) {
             setSocket2(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-document/?token=` +
-                    user?.access
+                        user?.access
                 )
             );
         }
@@ -147,7 +144,7 @@ const AccountMenuSidebar = ({
     }, [socketApplication]);
 
     useEffect(() => {
-        if (user.role === 'admin') {
+        if (user?.role === 'admin') {
             setSocketApplication(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-application/?token=${user?.access}`
@@ -157,19 +154,21 @@ const AccountMenuSidebar = ({
             setSocketApplication(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-application/?token=` +
-                    user?.access
+                        user?.access
                 )
             );
         }
     }, []);
 
     useEffect(() => {
-        ProfileUsers();
+            ProfileUsers(user?.access);
     }, [renderProfile]);
 
     useEffect(() => {
-        ProfileUsersToken();
-    }, []);
+        if (user?.access) {
+            ProfileUsersToken(user?.access);
+        }
+    }, [user?.access]);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -205,7 +204,6 @@ const AccountMenuSidebar = ({
         }
     }
 
-
     return (
         <aside className="ps-widget--account-dashboard">
             <div className="ps-widget__header  p-2 pb-4 step-2">
@@ -230,13 +228,13 @@ const AccountMenuSidebar = ({
                                             ? 'Sotuvchi'
                                             : "ma'lumot yo'q"}
                                     </span>
-                                ) : user.role === 'admin' ? (
+                                ) : user?.role === 'admin' ? (
                                     <span>
                                         {profile?.role
                                             ? 'Admin'
                                             : "malumot yo'q"}
                                     </span>
-                                ) : user.role === 'customer' ? (
+                                ) : user?.role === 'customer' ? (
                                     <span>
                                         {profile?.role
                                             ? 'Foydalanuvchi'
@@ -261,20 +259,18 @@ const AccountMenuSidebar = ({
             </div>
             {user?.role === 'seller' ? (
                 <div className="pb-3 step-3">
-                    <h4
-                        className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
+                    <h4 className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
                         <strong
-                            className={`fs-3 text-${profile?.is_payment === false
-                                ? 'danger'
-                                : 'success'
-                                }`}>
+                            className={`fs-3 text-${
+                                profile?.is_payment === false
+                                    ? 'danger'
+                                    : 'success'
+                            }`}>
                             <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
                             {addPeriodToThousands(profile?.wallet)} so'm
                         </strong>
                     </h4>
-                    <h5
-
-                        className="w-100  border m-0 p-3 rounded-3  text-truncate">
+                    <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
                         <p
                             className="m-0"
                             style={{ fontWeight: 600, color: 'black' }}>
@@ -369,58 +365,75 @@ const AccountMenuSidebar = ({
                         bo'ladi.
                     </p>
                 </Modal>
-                <ul  >
+                <ul>
                     {data.map((link, index) => (
                         <>
-                            {link?.url === '#' || link?.url === '/account/donate-page' ? (
+                            {link?.url === '/account/donate-page' ? (
                                 <>
                                     <Badge.Ribbon
                                         key={link?.url}
-                                        text={link.url === '#' ? "Tez kunda" : "Yangi funksiya"}
-                                        color={link.url === '#' ? "volcano" : "blue"}>
+                                        text={
+                                            link.url === '/account/deals'
+                                                ? 'Tez kunda'
+                                                : 'Yangi funksiya'
+                                        }
+                                        color={
+                                            link.url === '/account/deals'
+                                                ? 'volcano'
+                                                : 'blue'
+                                        }>
                                         <Card size="small">
-                                            {
-                                                link?.url === "#" ? (
-                                                    <li
-                                                        className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}
-                                                        onClick={showModal}
-                                                    >
-                                                        <span
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            <a className="d-flex align-items-center">
-                                                                <i className={'fa-regular fa-handshake'}></i>
-                                                                Mening bitimlarim
-                                                            </a>
-                                                        </span>
-                                                    </li>
-                                                ) : (
-                                                    <li
-                                                        className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}
-                                                    >
-                                                        <Link
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}
-                                                            href={link.url}
-                                                        >
-                                                            <a className="d-flex align-items-center">
-                                                                <i className={link.icon}></i>
-                                                                {link.text}
-                                                            </a>
-                                                        </Link>
-                                                    </li>
-                                                )
-                                            }
+                                            {link?.url === '/account/deals' ? (
+                                                <li
+                                                    className={`${
+                                                        link.url === asPath
+                                                            ? 'active'
+                                                            : ''
+                                                    } step-${index + 4}`}
+                                                    onClick={showModal}>
+                                                    <span
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}>
+                                                        <a className="d-flex align-items-center">
+                                                            <i
+                                                                className={
+                                                                    'fa-regular fa-handshake'
+                                                                }></i>
+                                                            Mening bitimlarim
+                                                        </a>
+                                                    </span>
+                                                </li>
+                                            ) : (
+                                                <li
+                                                    className={`${
+                                                        link.url === asPath
+                                                            ? 'active'
+                                                            : ''
+                                                    } step-${index + 4}`}>
+                                                    <Link
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        href={link.url}>
+                                                        <a className="d-flex align-items-center">
+                                                            <i
+                                                                className={
+                                                                    link.icon
+                                                                }></i>
+                                                            {link.text}
+                                                        </a>
+                                                    </Link>
+                                                </li>
+                                            )}
                                         </Card>
                                     </Badge.Ribbon>
                                 </>
                             ) : link?.url === 'b' ? (
                                 <Badge.Ribbon
                                     key={link?.url}
-                                    text="Tez kunda"
-                                    color="volcano">
+                                    text="Yangi funksiya"
+                                    color="blue">
                                     <Card size="small">
                                         <li onClick={showModalCustomer}>
                                             <span
@@ -435,18 +448,60 @@ const AccountMenuSidebar = ({
                                         </li>
                                     </Card>
                                 </Badge.Ribbon>
+                            ) : link?.url === '/account/deals' ? (
+                                <Badge.Ribbon
+                                    key={link?.url}
+                                    text={
+                                        link.url === '/account/deals'
+                                            ? 'Yangi funksiya '
+                                            : 'Tez kunda'
+                                    }
+                                    color={
+                                        link.url === '/account/deals'
+                                            ? 'blue'
+                                            : 'volcano'
+                                    }>
+                                    <Card size="small">
+                                        {
+                                            <li
+                                                className={`${
+                                                    link.url === asPath
+                                                        ? 'active'
+                                                        : ''
+                                                } step-${index + 4}`}>
+                                                <Link
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                    }}
+                                                    href={link.url}>
+                                                    <a className="d-flex align-items-center">
+                                                        <i
+                                                            className={
+                                                                link.icon
+                                                            }></i>
+                                                        {link.text}
+                                                    </a>
+                                                </Link>
+                                            </li>
+                                        }
+                                    </Card>
+                                </Badge.Ribbon>
                             ) : (
-                                <li key={link.text}
-                                    className={`${link.url === asPath ? 'active' : ''} step-${index + 4}`}>
+                                <li
+                                    key={link.text}
+                                    className={`${
+                                        link.url === asPath ? 'active' : ''
+                                    } step-${index + 4}`}>
                                     <Link href={link.url}>
-                                        <a className={`d-flex align-items-center`}>
+                                        <a
+                                            className={`d-flex align-items-center`}>
                                             <i className={link.icon}></i>
                                             {link.text}{' '}
                                             {user?.role === 'admin' ? (
                                                 link?.url ===
                                                     '/account/application' &&
-                                                    (applicationData?.count > 0 ||
-                                                        webdata?.count > 0) ? (
+                                                (applicationData?.count > 0 ||
+                                                    webdata?.count > 0) ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{
@@ -468,7 +523,7 @@ const AccountMenuSidebar = ({
                                             {user?.role === 'admin' ? (
                                                 link?.url ===
                                                     '/account/products' &&
-                                                    webdata1?.count > 0 ? (
+                                                webdata1?.count > 0 ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{
@@ -485,7 +540,7 @@ const AccountMenuSidebar = ({
                                             {user?.role === 'seller' ? (
                                                 link?.url ===
                                                     '/account/myproducts' &&
-                                                    webdata2?.count > 0 ? (
+                                                webdata2?.count > 0 ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{
@@ -502,8 +557,8 @@ const AccountMenuSidebar = ({
                                             {user?.role === 'seller' ? (
                                                 link?.url ===
                                                     '/account/application' &&
-                                                    (applicationData?.count > 0 ||
-                                                        webdata?.count > 0) ? (
+                                                (applicationData?.count > 0 ||
+                                                    webdata?.count > 0) ? (
                                                     <strong
                                                         className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
                                                         style={{

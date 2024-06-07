@@ -42,9 +42,9 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
         setIsModalOpen(false);
     };
 
-    async function ProfileUsers() {
+    async function ProfileUsers(token) {
         setLoading(true);
-        const ItemsData = await GetRepository.getProfile(user?.access);
+        const ItemsData = await GetRepository.getProfile(token);
 
         setProfile(ItemsData);
         setLoading(false);
@@ -86,7 +86,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
         setSocket2(new WebSocket('wss://api.soff.uz/ws/seller-document/'));
     }, []);
 
-    useEffect(() => ProfileUsers(), []);
+    useEffect(() => ProfileUsers(user?.access), [user?.access]);
 
     function addPeriodToThousands(number) {
         const numStr = String(number);

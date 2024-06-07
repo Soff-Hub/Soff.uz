@@ -27,8 +27,6 @@ function DashbordList({ setOpen }) {
 
     const { accountLinks, user } = useSelector((state) => state.auth);
 
-
-
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -89,30 +87,30 @@ function DashbordList({ setOpen }) {
     };
 
     async function GetItemsSeller_Yearch() {
-        const ItemsData = await GetRepository.getSellerDashbordYearch(user?.access);
+        const ItemsData = await GetRepository.getSellerDashbordYearch(
+            user?.access
+        );
         if (ItemsData) {
             setYearGet(ItemsData);
         }
     }
 
     async function getSellerDashbordDonatSS() {
-        const ItemsData = await GetRepository.getSellerDashbordDonat(user?.access);
+        const ItemsData = await GetRepository.getSellerDashbordDonat(
+            user?.access
+        );
         if (ItemsData?.results) {
             setDonats(ItemsData);
         }
     }
 
-
-
     useEffect(() => {
         GetItemsProducts();
         GetItemsProductsOrders(1);
         GetItemsProductsPopular();
-        GetItemsSeller_Yearch()
-        getSellerDashbordDonatSS()
+        GetItemsSeller_Yearch();
+        getSellerDashbordDonatSS();
     }, []);
-
-
 
     const columns = [
         {
@@ -222,7 +220,6 @@ function DashbordList({ setOpen }) {
             key: 'age',
             width: 350,
         },
-
     ];
 
     const columnsOrders = [
@@ -236,7 +233,10 @@ function DashbordList({ setOpen }) {
                         {' '}
                         {customer_info.name}
                     </span>
-                    <span className="truncate whitespace-nowrap"> {customer_info.email_or_phone}</span>
+                    <span className="truncate whitespace-nowrap">
+                        {' '}
+                        {customer_info.email_or_phone}
+                    </span>
                 </div>
             ),
         },
@@ -246,7 +246,9 @@ function DashbordList({ setOpen }) {
                 dataIndex: 'seller_info',
                 key: 'age',
                 render: (seller_info) => (
-                    <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
+                    <a
+                        href={`/sellerAccount/${seller_info?.id}`}
+                        className="d-flex flex-column">
                         <span className="truncate whitespace-nowrap">
                             {' '}
                             {seller_info.name}
@@ -290,7 +292,7 @@ function DashbordList({ setOpen }) {
         ),
         user.role === 'admin' ? (
             {
-                title: "To\'lov turi ",
+                title: "To'lov turi ",
                 dataIndex: 'provider',
                 key: 'address',
                 render: (provider) => (
@@ -300,15 +302,19 @@ function DashbordList({ setOpen }) {
                                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
                                 karta orqali
                             </span>
-                        ) : provider === 'click' ? (<span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            click orqali
-                        </span>) : provider === 'payme' ? (
+                        ) : provider === 'click' ? (
+                            <span>
+                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                click orqali
+                            </span>
+                        ) : provider === 'payme' ? (
                             <span>
                                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
                                 payme orqali
                             </span>
-                        ) : " "}
+                        ) : (
+                            ' '
+                        )}
                     </span>
                 ),
             }
@@ -422,44 +428,76 @@ function DashbordList({ setOpen }) {
     const items = [
         {
             key: '1',
-            label: <span style={{ marginRight: "30px", fontSize: "16px", fontWeight:"600" }} >Ommabop Mahsulotlar</span>,
-            children: <div>
-                <Table
-                    scroll={{ x: 1250 }}
-                    dataSource={dataProducts}
-                    columns={columns}
-                    className="pb-5"
-                    pagination={false}
-                />
-            </div>,
-
-
+            label: (
+                <span
+                    style={{
+                        marginRight: '30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Ommabop Mahsulotlar
+                </span>
+            ),
+            children: (
+                <div>
+                    <Table
+                        scroll={{ x: 1250 }}
+                        dataSource={dataProducts}
+                        columns={columns}
+                        className="pb-5"
+                        pagination={false}
+                    />
+                </div>
+            ),
         },
         {
             key: '2',
-            label: <span style={{ marginLeft: "30px", fontSize: "16px", fontWeight:"600" }}>Donatlar ro'yxati  <strong className='mx-2'>({donats?.total_amount ? (addPeriodToThousands(donats?.total_amount)) : 0} so'm)</strong></span>,
-            children: <div>
-             
-                <Table
-                    scroll={{ x: 1250 }}
-                    dataSource={donats?.results}
-                    columns={columnsDonat}
-                    className="pb-5"
-                    pagination={false}
-                />
-            </div>,
-
+            label: (
+                <span
+                    style={{
+                        marginLeft: '30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Donatlar ro'yxati{' '}
+                    <strong className="mx-2">
+                        (
+                        {donats?.total_amount
+                            ? addPeriodToThousands(donats?.total_amount)
+                            : 0}{' '}
+                        so'm)
+                    </strong>
+                </span>
+            ),
+            children: (
+                <div>
+                    <Table
+                        scroll={{ x: 1250 }}
+                        dataSource={donats?.results}
+                        columns={columnsDonat}
+                        className="pb-5"
+                        pagination={false}
+                    />
+                </div>
+            ),
         },
-    ]
-
+    ];
 
     return (
-        <section className="ps-my-account ps-page--account p-0">
-            <p className='step-0 m-0'></p>
+        <section className="ps-my-account ps-page--account ">
+            <p className="step-0 m-0"></p>
             <div className="container">
-                {user?.role != 'admin' && window.innerWidth > 1000 && <div style={{ textAlign: 'end', marginBottom: '6px' }}>
-                    <p className='m-0 d-inline' style={{ cursor: 'pointer' }} onClick={() => setOpen(true)}><i className='fa-regular fa-circle-question'></i> Saytdan foydalanish bo'yicha savolingiz bormi?</p>
-                </div>}
+                {user?.role != 'admin' && window.innerWidth > 1000 && (
+                    <div style={{ textAlign: 'end', marginBottom: '6px' }}>
+                        <p
+                            className="m-0 d-inline"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => setOpen(true)}>
+                            <i className="fa-regular fa-circle-question"></i>{' '}
+                            Saytdan foydalanish bo'yicha savolingiz bormi?
+                        </p>
+                    </div>
+                )}
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">
                         <div>
@@ -521,7 +559,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_revenue ||
-                                    data?.total_revenue == 0 ? (
+                                data?.total_revenue == 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -561,7 +599,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.today_revenue ||
-                                    data?.today_revenue === 0 ? (
+                                data?.today_revenue === 0 ? (
                                     <h4 className="mt-5">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -601,7 +639,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_order ||
-                                    data?.total_order === 0 ? (
+                                data?.total_order === 0 ? (
                                     <h4 className="mt-5">
                                         {addPeriodToThousands(
                                             data?.total_order
@@ -639,7 +677,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_shops ||
-                                    data?.total_shops === 0 ? (
+                                data?.total_shops === 0 ? (
                                     <h4 className="mt-5 pt-4 ">
                                         {addPeriodToThousands(
                                             data?.total_shops
@@ -659,8 +697,7 @@ function DashbordList({ setOpen }) {
                         </div>
                     </div>
                 ) : (
-                    <div
-                        className="pb-4  d-flex gap-3 overflow-x-scroll step-1">
+                    <div className="pb-4  d-flex gap-3 overflow-x-scroll step-1">
                         <div>
                             <div
                                 className=" bg-white py-5 px-4"
@@ -681,7 +718,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.all_revenue ||
-                                    data?.all_revenue === 0 ? (
+                                data?.all_revenue === 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -721,7 +758,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.last_month_revenue ||
-                                    data?.last_month_revenue === 0 ? (
+                                data?.last_month_revenue === 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -761,7 +798,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.today_revenue ||
-                                    data?.today_revenue === 0 ? (
+                                data?.today_revenue === 0 ? (
                                     <h4 className="mt-5">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -801,7 +838,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_order ||
-                                    data?.total_order === 0 ? (
+                                data?.total_order === 0 ? (
                                     <h4 className="mt-5">
                                         {addPeriodToThousands(
                                             data?.total_order
@@ -824,16 +861,15 @@ function DashbordList({ setOpen }) {
                 <div
                     className="row pb-5 mt-5"
                     style={{ alignItems: 'flex-start' }}>
-                    <div className="col-lg-4" id='panel' >
-                        <div className="ps-page__left" >
-                            <AccountMenuSidebar
-                                data={accountLinks}
-                            />
+                    <div className="col-lg-4" id="panel">
+                        <div className="ps-page__left">
+                            <AccountMenuSidebar data={accountLinks} />
                         </div>
                     </div>
 
                     <div className="col-lg-8 pb-5">
-                        {(user?.role === 'admin' || user?.role === 'seller') && (
+                        {(user?.role === 'admin' ||
+                            user?.role === 'seller') && (
                             <div className="dashboard-div mb-2">
                                 <Select
                                     defaultValue={{
@@ -864,25 +900,29 @@ function DashbordList({ setOpen }) {
                                             label: `Barcha oy ma'lumotlari`,
                                             value: null,
                                         },
-                                        ...yearGet
-                                            ?.filter(item => item?.year === year)
-                                            .map(item => item?.months?.map((el) => ({
-                                                label: `${el.name} oyi ma'lumotlari`,
-                                                value: el.value,
-                                            })))[0] || []
+                                        ...(yearGet
+                                            ?.filter(
+                                                (item) => item?.year === year
+                                            )
+                                            .map((item) =>
+                                                item?.months?.map((el) => ({
+                                                    label: `${el.name} oyi ma'lumotlari`,
+                                                    value: el.value,
+                                                }))
+                                            )[0] || []),
                                     ]}
                                 />
                             </div>
                         )}
 
-                        {(user?.role === 'admin' || user?.role === 'seller') && (
+                        {(user?.role === 'admin' ||
+                            user?.role === 'seller') && (
                             <div className="dashboard-div">
                                 <Example year={year} month={month} />
                             </div>
                         )}
                         <div className="pb-5">
-                            <h4
-                                className="bg-white m-0 text-center py-4">
+                            <h4 className="bg-white m-0 text-center py-4">
                                 So'nggi buyurtmalar
                             </h4>
                             {user?.role == 'admin' ? (
@@ -910,12 +950,13 @@ function DashbordList({ setOpen }) {
                     </div>
                 </div>
                 {user?.role === 'admin' ? (
-                    <div className='tabs_select'>
-
-                        <Tabs defaultActiveKey="1" items={items} className='bg-white ' />
-
+                    <div className="tabs_select">
+                        <Tabs
+                            defaultActiveKey="1"
+                            items={items}
+                            className="bg-white "
+                        />
                     </div>
-
                 ) : (
                     <></>
                 )}
@@ -939,7 +980,10 @@ function DashbordList({ setOpen }) {
                                 {!loading ? (
                                     <div className="ps-product--detail ps-product--fullwidth">
                                         <div className="ps-product__header ">
-                                            <ThumbnailDefault product={View} views={View?.view_count} />
+                                            <ThumbnailDefault
+                                                product={View}
+                                                views={View?.view_count}
+                                            />
                                             <div className="ps-product__info">
                                                 <header>
                                                     <h1>{View?.title}</h1>
@@ -1049,7 +1093,9 @@ function DashbordList({ setOpen }) {
                                         </div>
                                         <div className="ps-product__content ps-tab-root">
                                             <Tabs defaultActiveKey="1">
-                                                <TabPane tab="Mahsulot to’liq tavsifi" key="1">
+                                                <TabPane
+                                                    tab="Mahsulot to’liq tavsifi"
+                                                    key="1">
                                                     <PartialDescription
                                                         product={View}
                                                     />
