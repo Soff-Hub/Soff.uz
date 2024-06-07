@@ -233,14 +233,13 @@ export default function MyDealCart() {
                         </option>
                         <option
                             className="fs-3"
-                            value="active">
-                            Tasdiqlangan
+                            value="in_progress">
+                            Jarayonda
                         </option>
                         <option
                             className="fs-3"
-                            value="cancelled">
-                            Bekor
-                            qilingan
+                            value="completed">
+                           Tugallangan
                         </option>
                     </select>
 
@@ -514,7 +513,7 @@ export default function MyDealCart() {
                                             <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                             Moderatsiya
                                         </span>
-                                    ) : dataDetials?.status === 'active' ? (
+                                    ) : dataDetials?.status === 'in_progress' ? (
                                         <span>
                                             <i className="fa-solid text-success fa-circle-check"></i>{' '}
                                             Tasdiqlangan

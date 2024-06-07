@@ -18,6 +18,7 @@ export default function DealOrderList() {
     const [currPage, setCurrPage] = useState(1);
 
 
+
     const showModal = async (id) => {
         setLoadingDetails(true)
         const data = await GetRepository.getDealItems(id?.id, user?.access);
@@ -117,31 +118,36 @@ export default function DealOrderList() {
 
         {
             title: 'Holat',
-            dataIndex: 'status',
+            dataIndex: 'data_status',
             key: 'address',
-            render: (status) =>
-                status === 'new' ? (
+            render: (datastatus) =>
+                datastatus?.status === 'new' ? (
                     <span>
                         <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                         Moderatsiya
                     </span>
-                ) : status === 'active' ? (
+                ) : datastatus?.status === 'active' ? (
                     <span>
                         <i className="fa-solid text-success fa-circle-check"></i>{' '}
                         Tasdiqlangan
                     </span>
-                ) : status === 'archived' ? (
-                    <Tooltip title={''}>
+                ) : datastatus?.status === 'cancelled' ? (
+                    <Tooltip title={datastatus?.reason}>
                         <span style={{ cursor: 'pointer' }}>
                             <i className="fa-solid fa-circle-question text-danger"></i>{' '}
                             Bekor qilingan{' '}
                         </span>
                     </Tooltip>
+                ) : datastatus?.status === 'archived' ? (
+                    <span>
+                        <i className="fa-solid fa-inbox text-danger"></i>{' '}
+                        Arxivlangan
+                    </span>
                 ) : (
                     <></>
                 ),
-        },
 
+        },
         {
             title: 'Harakatlar',
             dataIndex: 'id',
@@ -324,7 +330,7 @@ export default function DealOrderList() {
                                                                     <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                                                     Moderatsiya
                                                                 </span>
-                                                            ) : dealItem?.status === 'archived' ? (
+                                                            ) : dealItem?.status === 'cancelled' ? (
                                                                 <span>
                                                                     <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
                                                                 </span>
