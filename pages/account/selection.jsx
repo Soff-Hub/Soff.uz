@@ -9,6 +9,8 @@ const Selection = () => {
     const { user } = useSelector((state) => state.auth);
     const router = useRouter()
     const {select} = router.query
+    console.log(select);
+
     return user?.access ? (
         <Page404 />
     ) : (
@@ -20,7 +22,7 @@ const Selection = () => {
                             <Link
                                 // className="ps-btn ps-btn--fullwidth "
                                 // /account/login?role=customer
-                                href={`${select ?  `/account/login?role=customer` : `/account/register-user`}`}>
+                                href={`${select ?  `/account/login?role=customer&deal=deal` : `/account/register-user`}`}>
                                 <a className="register-choose-button">
                                     <div>
                                     <i className="fa-solid fa-user-tie fa-2xl"></i>
@@ -32,7 +34,7 @@ const Selection = () => {
                         <div className='register-choose-button-parent_div' >
                             <Link
                                 // className="ps-btn ps-btn--fullwidth "
-                                href={`${select ? `/account/login?role=seller` : '/account/register'}`}>
+                                href={`${select ? `/account/login?role=seller&deal=deal` : '/account/register'}`}>
                                 <a className="register-choose-button">
                                     <div>
                                     <i className="fa-solid fa-user-pen fa-2xl"></i>

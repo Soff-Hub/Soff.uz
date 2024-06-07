@@ -35,6 +35,7 @@ export default function MyDealCart() {
     const [isExpanded, setIsExpanded] = useState(2);
     const [needsToggle, setNeedsToggle] = useState(false);
     const [needsId, setNeedsId] = useState(null);
+    const [innerWidth, setInnerWidth] = useState(null);
 
 
 
@@ -148,7 +149,7 @@ export default function MyDealCart() {
         form.resetFields();
         const data = {
             description: description ? description : dataDetials?.description,
-            price: price ? price : dataDetials?.price,
+            price: price ? price : Number(dataDetials?.price),
             deadline_date: lifetime ? lifetime : dataDetials?.deadline_date,
         };
 
@@ -183,6 +184,11 @@ export default function MyDealCart() {
             GetItemsProductsUpdates()
         }
     }, [productsID, openUpdate, isModalOpen])
+
+    useEffect(() => {
+        setInnerWidth(window.innerWidth);
+    }, [])
+
 
 
     return (
@@ -319,19 +325,38 @@ export default function MyDealCart() {
                                                 {item?.description}
                                             </p>
 
-                                            <div className='d-flex justify-content-end'>
-                                                {
-                                                    (needsToggle && (item?.id === needsId)) ?
-                                                        <span onClick={() => handleDescription(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                        </span> :
-                                                        <span onClick={() => handleDescriptionMore(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                        </span>
-                                                }
-                                            </div>
+                                            {
+                                                innerWidth < 414 ?
+                                                    <div className='d-flex justify-content-end'>
+                                                        {
+                                                            (needsToggle && (item?.id === needsId)) ?
+                                                                <span onClick={() => handleDescription(item?.id)}
+                                                                    className='text-success' style={{ cursor: "pointer" }}>
+                                                                    <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                                </span> :
+                                                                <span onClick={() => handleDescriptionMore(item?.id)}
+                                                                    className='text-success' style={{ cursor: "pointer" }}>
+                                                                    <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                                </span>
+                                                        }
+                                                    </div> :
+                                                    item?.description?.length > 252 ?
+                                                        <div className='d-flex justify-content-end'>
+                                                            {
+                                                                (needsToggle && (item?.id === needsId)) ?
+                                                                    <span onClick={() => handleDescription(item?.id)}
+                                                                        className='text-success' style={{ cursor: "pointer" }}>
+                                                                        <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                                    </span> :
+                                                                    <span onClick={() => handleDescriptionMore(item?.id)}
+                                                                        className='text-success' style={{ cursor: "pointer" }}>
+                                                                        <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                                    </span>
+                                                            }
+                                                        </div> : <></>
+
+                                            }
+                                            
                                             <div>
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex align-items-center ">
@@ -476,10 +501,13 @@ export default function MyDealCart() {
                             </p>
 
                             <div className='d-flex justify-content-between align-items-center '>
-                                <strong className='d-flex gap-2 align-items-center'>
-                                    <i className='fa-solid fa-eye'></i>
-                                    Ko'rildi
-                                </strong>
+                                {
+                                    dataDetials?.has_seen ?
+                                        <strong className='d-flex gap-2 align-items-center'>
+                                            <i className='fa-solid fa-eye'></i>
+                                            Ko'rildi
+                                        </strong> : <span></span>
+                                }
                                 {
                                     dataDetials?.status === 'new' ? (
                                         <span>
@@ -593,7 +621,8 @@ export default function MyDealCart() {
                                         type='number'
                                         onChange={(e) => setPrice(e.target.value)}
                                         placeholder="Narxi"
-                                        defaultValue={dataDetials?.price}
+                                        defaultValue={Number(dataDetials?.price)}
+
                                     />
                                 </Form.Item>
                             </div>

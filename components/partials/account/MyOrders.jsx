@@ -4,7 +4,6 @@ import DealsList from './DealsList';
 import { Dropdown, Menu, Modal, Pagination, Space, Tooltip } from 'antd';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import CalculateTimeDifference from './DateFormatter';
 import useDebounce from '~/hooks/useDebounce';
 import ModalDelete from './Modal';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -30,6 +29,7 @@ export default function MyOrders() {
     const [isExpanded, setIsExpanded] = useState(2);
     const [needsToggle, setNeedsToggle] = useState(false);
     const [needsId, setNeedsId] = useState(null);
+    const [innerWidth, setInnerWidth] = useState(null);
 
 
 
@@ -131,6 +131,11 @@ export default function MyOrders() {
             GetItemsProductsUpdates()
         }
     }, [productsIdUpdate, openUpdate])
+
+    useEffect(() => {
+        setInnerWidth(window.innerWidth);
+    }, [])
+
 
 
     return (
@@ -269,19 +274,38 @@ export default function MyOrders() {
                                                 {item?.description}
                                             </p>
 
-                                            <div className='d-flex justify-content-end'>
-                                                {
-                                                    (needsToggle && (item?.id === needsId)) ?
-                                                        <span onClick={() => handleDescription(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                        </span> :
-                                                        <span onClick={() => handleDescriptionMore(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                        </span>
-                                                }
-                                            </div>
+                                            {
+                                                innerWidth < 414 ?
+                                                    <div className='d-flex justify-content-end'>
+                                                        {
+                                                            (needsToggle && (item?.id === needsId)) ?
+                                                                <span onClick={() => handleDescription(item?.id)}
+                                                                    className='text-success' style={{ cursor: "pointer" }}>
+                                                                    <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                                </span> :
+                                                                <span onClick={() => handleDescriptionMore(item?.id)}
+                                                                    className='text-success' style={{ cursor: "pointer" }}>
+                                                                    <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                                </span>
+                                                        }
+                                                    </div> :
+                                                    item?.description?.length > 252 ?
+                                                        <div className='d-flex justify-content-end'>
+                                                            {
+                                                                (needsToggle && (item?.id === needsId)) ?
+                                                                    <span onClick={() => handleDescription(item?.id)}
+                                                                        className='text-success' style={{ cursor: "pointer" }}>
+                                                                        <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                                    </span> :
+                                                                    <span onClick={() => handleDescriptionMore(item?.id)}
+                                                                        className='text-success' style={{ cursor: "pointer" }}>
+                                                                        <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                                    </span>
+                                                            }
+                                                        </div> : <></>
+
+                                            }
+
 
                                             <div>
                                                 <div className="d-flex justify-content-between gap-4 align-items-center ">

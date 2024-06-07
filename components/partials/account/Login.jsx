@@ -24,6 +24,7 @@ class Login extends Component {
         });
     };
 
+
     static getDerivedStateFromProps(props) {
         if (props.isLoggedIn === true) {
         }
@@ -43,6 +44,7 @@ class Login extends Component {
         await this.props.dispatch(isLoginning());
     };
 
+
     handleLoginSubmit = async (e) => {
         this.setState({ report: false });
         const { loginUser } = useAuth();
@@ -57,7 +59,7 @@ class Login extends Component {
                 });
             } else {
                 this.props.dispatch(login({ user: user.data, data: e }));
-                this.props.dispatch(begin({ id : user.data.first }));
+                this.props.dispatch(begin({ id: user.data.first }));
                 this.setState({ report: true });
                 notification.open({
                     message: `${user?.data?.msg}`,
@@ -65,11 +67,17 @@ class Login extends Component {
                     type: 'success',
                 });
 
+
                 if (this.props.router.query.id) {
                     Router.push(
                         `/account/checkout-one?id=${this.props.router.query.id}`
                     );
-                } else {
+                } else if (this.props.router.query.deal) {
+                    Router.push(
+                        `/account/all-orders`
+                    );
+                }
+                else {
                     if (
                         user?.data?.role === 'seller' ||
                         user?.data?.role === 'admin'
@@ -120,7 +128,6 @@ class Login extends Component {
     };
 
     render() {
-        const { router } = this.props;
         return (
             <div className=" pb-5 " style={{ backgroundColor: '#f1f1f1' }}>
                 <div className="container">
@@ -185,7 +192,7 @@ class Login extends Component {
                                         {this.state.report ? (
                                             <button
                                                 type="submit"
-                                                style={{color:'#fff'}}
+                                                style={{ color: '#fff' }}
                                                 className="ps-btn ps-btn--fullwidth">
                                                 Kirish
                                             </button>
