@@ -27,6 +27,24 @@ export default function MyOrders() {
     const [category, setCategory] = useState(null)
     const [loading, setloading] = useState(false);
     const [loadingUpdate, setloadingUpdate] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(2);
+    const [needsToggle, setNeedsToggle] = useState(false);
+    const [needsId, setNeedsId] = useState(null);
+
+
+
+    function handleDescriptionMore(id) {
+        setNeedsId(id)
+        setIsExpanded(50);
+        setNeedsToggle(true)
+    }
+
+    function handleDescription(id) {
+        setNeedsId(id)
+        setIsExpanded(2);
+        setNeedsToggle(false)
+    }
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -116,7 +134,7 @@ export default function MyOrders() {
 
 
     return (
-        <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
+        <div className={`container row mx-auto p-0  d-flex align-items-start mt-5`}>
 
             <div className='col-md-3'>
                 <DealsSidebar />
@@ -126,10 +144,11 @@ export default function MyOrders() {
                 <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
                     <div className={'ps-form__input d-flex align-items-center position-relative p-0'} style={{ flex: 1 }}>
                         <input
-                            className={"form-control input2 bg-white rounded-3 "}
+                            className={"form-control input2 bg-white rounded-3  "}
                             type="text"
                             placeholder="Qidiruv..."
                             onChange={(e) => (setKeyword(e.target.value))}
+                            style={{ minHeight: "42px" }}
                         />
                         <span className="ps-form__action position-absolute" style={{ right: '15px' }}>
                             <i className='fa-solid fa-search button_search_icon text-success' ></i>
@@ -169,7 +188,7 @@ export default function MyOrders() {
                         </option>
                     </select>
 
-                    <button className='col-md-3  btn btn-success rounded-3 fs-4'
+                    <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() => setOpen(true)} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
@@ -243,10 +262,27 @@ export default function MyOrders() {
 
                                             </div>
                                             <p
-                                                style={{ width: "100%" }}
+                                                className='m-0 description_more'
+
+                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2" }}
                                             >
                                                 {item?.description}
                                             </p>
+
+                                            <div className='d-flex justify-content-end'>
+                                                {
+                                                    (needsToggle && (item?.id === needsId)) ?
+                                                        <span onClick={() => handleDescription(item?.id)}
+                                                            className='text-success' style={{ cursor: "pointer" }}>
+                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                        </span> :
+                                                        <span onClick={() => handleDescriptionMore(item?.id)}
+                                                            className='text-success' style={{ cursor: "pointer" }}>
+                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                        </span>
+                                                }
+                                            </div>
+
                                             <div>
                                                 <div className="d-flex justify-content-between gap-4 align-items-center ">
                                                     <div className="d-flex align-items-center ">

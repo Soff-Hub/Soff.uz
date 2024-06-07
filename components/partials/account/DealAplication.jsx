@@ -32,6 +32,24 @@ export default function MyDealCart() {
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [isExpanded, setIsExpanded] = useState(2);
+    const [needsToggle, setNeedsToggle] = useState(false);
+    const [needsId, setNeedsId] = useState(null);
+
+
+
+    function handleDescriptionMore(id) {
+        setNeedsId(id)
+        setIsExpanded(50);
+        setNeedsToggle(true)
+    }
+
+    function handleDescription(id) {
+        setNeedsId(id)
+        setIsExpanded(2);
+        setNeedsToggle(false)
+    }
+
 
 
     const handleOk = () => {
@@ -168,8 +186,8 @@ export default function MyDealCart() {
 
 
     return (
-        <div className='container mx-auto row mt-5 mb-4 p-0 gy-4 d-flex align-items-start'>
-            <div className='col-md-3'>
+        <div className='container mx-auto row mt-5 mb-4 p-0  d-flex align-items-start'>
+            <div className='col-md-3 '>
                 <DealsSidebar />
             </div>
             <div className='col-md-9'>
@@ -181,6 +199,7 @@ export default function MyDealCart() {
                             type="text"
                             placeholder="Qidiruv..."
                             onChange={(e) => (setKeyword(e.target.value))}
+                            style={{ minHeight: "42px" }}
                         />
                         <span className="ps-form__action position-absolute" style={{ right: '15px' }}>
                             <i className='fa-solid fa-search button_search_icon text-success' ></i>
@@ -219,7 +238,7 @@ export default function MyDealCart() {
                         </option>
                     </select>
 
-                    <button className='col-md-3  btn btn-success rounded-3 fs-4'
+                    <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() => setOpen(true)} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
@@ -293,10 +312,26 @@ export default function MyDealCart() {
 
 
                                             <p
-                                                style={{ width: "100%" }}
+                                                className='m-0 description_more'
+
+                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2" }}
                                             >
                                                 {item?.description}
                                             </p>
+
+                                            <div className='d-flex justify-content-end'>
+                                                {
+                                                    (needsToggle && (item?.id === needsId)) ?
+                                                        <span onClick={() => handleDescription(item?.id)}
+                                                            className='text-success' style={{ cursor: "pointer" }}>
+                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                        </span> :
+                                                        <span onClick={() => handleDescriptionMore(item?.id)}
+                                                            className='text-success' style={{ cursor: "pointer" }}>
+                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                        </span>
+                                                }
+                                            </div>
                                             <div>
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex align-items-center ">

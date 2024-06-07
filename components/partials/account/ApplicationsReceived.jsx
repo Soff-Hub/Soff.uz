@@ -26,6 +26,24 @@ export default function ApplicationsReceiveds() {
     const [keyword, setKeyword] = useState('');
     const [loadingDetails, setLoadingDetails] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [isExpanded, setIsExpanded] = useState(2);
+    const [needsToggle, setNeedsToggle] = useState(false);
+    const [needsId, setNeedsId] = useState(null);
+
+
+
+    function handleDescriptionMore(id) {
+        setNeedsId(id)
+        setIsExpanded(50);
+        setNeedsToggle(true)
+    }
+
+    function handleDescription(id) {
+        setNeedsId(id)
+        setIsExpanded(2);
+        setNeedsToggle(false)
+    }
+
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -105,8 +123,6 @@ export default function ApplicationsReceiveds() {
         }
     }
 
-
-
     async function postOrder() {
 
         if (categoryStatus) {
@@ -157,11 +173,14 @@ export default function ApplicationsReceiveds() {
 
     useEffect(() => {
         GetItemsProductsFilter()
-    }, [keyword])
+    }, [keyword]);
+
+
+
 
 
     return (
-        <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
+        <div className={`container row mx-auto p-0  d-flex align-items-start mt-5`}>
 
             <div className='col-md-3'>
                 <DealsSidebar />
@@ -169,12 +188,12 @@ export default function ApplicationsReceiveds() {
 
             <div className={"col-md-9 mb-4"}>
 
-                <div className='d-flex gap-3 mb-4  row px-4'>
+                <div className='d-md-flex gap-3 mb-4  justify-content-between '>
 
                     <Select
                         mode="single"
                         showSearch
-                        className='col-md-5 p-0'
+                        className='p-0 w-100'
                         allowClear
                         style={{ height: "45px" }}
                         placeholder="Barcha Buyurtmalar"
@@ -189,7 +208,7 @@ export default function ApplicationsReceiveds() {
 
 
                     <select
-                        className="form-select col-md-3 fs-3 py-3 rounded-3"
+                        className="form-select col-md-3 fs-3 py-3 my-3 my-md-0 rounded-3"
                         onChange={(e) =>
                             setCategory(
                                 e.target
@@ -220,7 +239,7 @@ export default function ApplicationsReceiveds() {
                         </option>
                     </select>
 
-                    <button className='col-md-3  btn btn-success rounded-3 fs-4'
+                    <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() => setOpen(true)} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
@@ -308,14 +327,31 @@ export default function ApplicationsReceiveds() {
                                                 </div>
 
                                             </div>
-
                                             <div className='px-4 pb-4'>
+
                                                 <p
-                                                    className='mb-2'
-                                                    style={{ width: "100%" }}
+                                                    className='m-0 description_more'
+
+                                                    style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2" }}
                                                 >
                                                     {item?.description}
                                                 </p>
+
+                                                <div className='d-flex justify-content-end'>
+                                                    {
+                                                        (needsToggle && (item?.id === needsId)) ?
+                                                            <span onClick={() => handleDescription(item?.id)}
+                                                                className='text-success' style={{ cursor: "pointer" }}>
+                                                                <i className='fa-solid fa-eye-slash'></i> Yashirish
+                                                            </span> :
+                                                            <span onClick={() => handleDescriptionMore(item?.id)}
+                                                                className='text-success' style={{ cursor: "pointer" }}>
+                                                                <i className='fa-solid fa-eye'></i> Batafsil ko'rish
+                                                            </span>
+                                                    }
+                                                </div>
+
+
 
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex gap-3 align-items-center my-2">
@@ -355,8 +391,6 @@ export default function ApplicationsReceiveds() {
                                                     </div>
 
                                                 </div>
-
-
                                                 <div className='d-flex justify-content-between'>
                                                     <div>
                                                         <span className="text-success fs-5 fw-medium">
