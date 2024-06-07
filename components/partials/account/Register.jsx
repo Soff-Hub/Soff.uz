@@ -81,6 +81,7 @@ class Register extends Component {
             }
         }
     };
+
     handleSubmit = async (e) => {
         this.setState({ report: false });
         const url = this.props.url;
@@ -135,7 +136,10 @@ class Register extends Component {
                         Router.push(
                             `/account/Message?id=${this.props.router.query.id}`
                         );
-                    } else {
+                    } else if (this.props.router.query.deal) {
+                        `/account/Message?deal=${this.props.router.query.deal}`
+                    }
+                    else {
                         Router.push(`/account/Message?via=${user.data.via_}`);
                     }
                     this.setState({ report: true });
@@ -209,6 +213,7 @@ class Register extends Component {
         const { id } = router.query;
         // referal
         const { pid } = router.query;
+
 
 
         return (

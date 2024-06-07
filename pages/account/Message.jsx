@@ -15,9 +15,8 @@ const Xabar = (e) => {
     const [firstSendCode, setFirstSendCode] = useState(true);
     const [countdown, setCoutdown] = useState(120);
     const [kod, setKod] = useState(null);
-    const [kodLength, setkodLength] = useState(null);
     const Router = useRouter();
-    const { id } = Router.query;
+    const { id, deal } = Router.query;
     const dispatch = useDispatch();
     const { user } = useSelector((state) => state.auth);
 
@@ -32,12 +31,17 @@ const Xabar = (e) => {
                 };
                 const { verifyCode } = useAuth();
                 const user = await verifyCode(data);
-    
+
                 if (user.status === 200 || user.status === 201) {
                     setLoader(false);
                     if (id) {
                         Router.push(`/account/checkout-one?id=${id}`);
-                    } else {
+                    } else if (deal) {
+                        Router.push(
+                            `/account/all-orders`
+                        );
+                    }
+                    else {
                         if (user.roli === 'seller' || user.roli === 'admin') {
                             Router.push('/account/dashbord');
                         } else {
@@ -57,8 +61,8 @@ const Xabar = (e) => {
             }
         }
 
-        
-     
+
+
 
         setKod('');
     };
@@ -146,11 +150,10 @@ const Xabar = (e) => {
                                         placeholder="Kodni kiriting..."
                                         onChange={(e) => setKod(e.target.value)}
                                     />
-                                    <h4>{` 0 ${Math.floor(countdown / 60)} : ${
-                                        countdown >= 10
-                                            ? countdown % 60
-                                            : '0 ' + countdown
-                                    }`}</h4>
+                                    <h4>{` 0 ${Math.floor(countdown / 60)} : ${countdown >= 10
+                                        ? countdown % 60
+                                        : '0 ' + countdown
+                                        }`}</h4>
                                 </div>
                                 <div className="form-group submit">
                                     {firstSendCode ? (
