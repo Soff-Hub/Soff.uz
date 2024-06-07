@@ -35,6 +35,7 @@ function App({ Component, pageProps }) {
         // };
     });
 
+
     return (
         <>
             <Head>
