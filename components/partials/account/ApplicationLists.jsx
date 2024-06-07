@@ -46,8 +46,8 @@ function ApplicationLists() {
     const [alertMess, setAlertMess] = useState("")
 
 
-    async function ProfileUsers() {
-        const ItemsData = await GetRepository.getProfile(user?.access);
+    async function ProfileUsers(token) {
+        const ItemsData = await GetRepository.getProfile(token);
         if (ItemsData) {
             setProfile(ItemsData)
         }
@@ -478,8 +478,11 @@ function ApplicationLists() {
     }, [dataCat, sellerSearch])
 
     useEffect(() => {
+        if (user?.access) {
+            ProfileUsers(user?.access);
+            
+        }
         getItemsSeller(currPage);
-        ProfileUsers();
         getItemsSellerCardList()
         getItemsSellerTaklif(currPage)
     }, [])
@@ -490,7 +493,7 @@ function ApplicationLists() {
 
 
     return (
-        <section className="ps-my-account ps-page--account pb-5 p-0">
+        <section className="ps-my-account ps-page--account pb-5">
             <div className="container">
                 <div className="row" style={{ alignItems: "flex-start" }}>
                     <div className="col-lg-4">

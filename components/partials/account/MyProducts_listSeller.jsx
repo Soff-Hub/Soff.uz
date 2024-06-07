@@ -251,7 +251,7 @@ function MyProductsListsSeller() {
 
 
     return (
-        <section className="ps-my-account ps-page--account p-0">
+        <section className="ps-my-account ps-page--account ">
             <div className="container">
                 <div className="row " style={{ alignItems: 'flex-start' }}>
                     <div className="col-lg-4">

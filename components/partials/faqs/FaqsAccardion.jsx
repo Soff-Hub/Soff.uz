@@ -54,6 +54,7 @@ export default function FaqsAccardion({data}) {
                 data?.map((item) => {
                     return (
                         <Accordion
+                        style={{backgroundColor:'fff'}}
                         key={item.id}
                             expanded={expanded === `panel2 ${item.title}`}
                             onChange={handleChange(`panel2 ${item.title}`)}>

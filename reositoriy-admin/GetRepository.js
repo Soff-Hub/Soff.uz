@@ -556,6 +556,162 @@ class GetRepository {
         return reponse;
     }
 
+    async getOrdersDealLists(
+        page,
+        search,
+        start_date,
+        end_date,
+        type,
+        min_price,
+        max_price,
+        id
+    ) {
+        const endPoint = `deals/${id ? id + '/' : ''}?page=${page}&search=${
+            search || ''
+        }&start_date=${start_date || ''}&end_date=${end_date || ''}&type=${
+            type || ''
+        }&min_price=${min_price || ''}&max_price=${max_price || ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getOrdersApplicationsLists(page, search, id, status, token) {
+        const endPoint = `deals/deal-applications/${
+            id ? id + '/' : ''
+        }?page=${page}&search=${search || ''}&status=${status || ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getOrdersApplicationsListsUpdates(id, token) {
+        const endPoint = `deals/deal-applications/${id ? id + '/' : ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getOrdersMYDealLists(page, search, id, status, token) {
+        const endPoint = `deals/my-deals/${
+            id ? id + '/' : ''
+        }?page=${page}&search=${search || ''}&status=${status || ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error?.response);
+        return reponse;
+    }
+
+    async getOrdersMYDealListsUpdate(id, token) {
+        const endPoint = `deals/my-deals/${id ? id + '/' : ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getApplicationsReceived(page, status, deal, token) {
+        const endPoint = `deals/my-deals-applications/?page=${page}&status=${
+            status || ''
+        }&deal=${deal || ''}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error?.response);
+        return reponse;
+    }
+
+    async getOrdersProgressBar(token) {
+        const endPoint = `deals/deal-coin/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getUsersLists(page, status, search, token) {
         const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}&search=${
             search || ''
@@ -1010,6 +1166,98 @@ class GetRepository {
         const endPoint = `donates/`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getDealList(page, token) {
+        const endPoint = `deals/owner-admin/?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getDealItems(id, token) {
+        const endPoint = `deals/admin/deals/${id}/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+    async getDealType() {
+        const endPoint = `deals/deal-types/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+       
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getDealTypePriceRange() {
+        const endPoint = `deals/price-range/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getDeadline(token) {
+        const endPoint = `deals/deadlines/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,

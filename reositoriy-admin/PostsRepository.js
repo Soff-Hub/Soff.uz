@@ -283,6 +283,48 @@ class PostRepository {
             .catch((error) => error.response);
         return response;
     }
+    async postDeal(data, token) {
+        const endPoint = 'deals/';
+        const response = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'POST',
+            data: data,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return response;
+    }
+
+    async postDealAppliaction(data, token) {
+        const endPoint = 'deals/deal-applications/create/';
+        const response = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'POST',
+            data: data,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return response;
+    }
+
 }
 
 export default new PostRepository();

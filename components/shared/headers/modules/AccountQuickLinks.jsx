@@ -96,19 +96,23 @@ const AccountQuickLinks = (props) => {
                         </li >
                     </Card>
                 </Badge.Ribbon>
-            ) : item?.url == '#' ? (
-                <Badge.Ribbon key={item?.url} text="Tez kunda" color="volcano">
+            ) : item?.url == '/account/deals' ? (
+                <Badge.Ribbon key={item?.url} text="Yangi funksiya" color="primary">
                     <Card size="small">
                         <li>
-                            <span
+                        <Link href={item.url}>
+
+                            <a
                                 style={{
                                     cursor: 'pointer',
                                 }}>
                                 <a className="d-flex align-items-center">
-                                    <i className="fa-regular fa-handshake  text-dark fs-4 me-2"></i>
+                                    <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>
                                     Mening bitimlarim
                                 </a>
-                            </span>
+                            </a>
+
+                        </Link>
                         </li>
                     </Card>
                 </Badge.Ribbon>

@@ -190,7 +190,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                         )}
                     </div>
 
-                    <div className="p-3 rounded-3 " style={{ backgroundColor: "#F1F1F1", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
+                    <div className="p-3 rounded-3 " style={{ backgroundColor: "#fff", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
                         {copy ? (
                             <div className='text-center'>
                                 <i className="fa-solid fa-check "></i> nusxalandi
