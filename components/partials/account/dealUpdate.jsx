@@ -16,10 +16,10 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
     const [lifetime, setLifetime] = useState('');
     const [type, setType] = useState('');
     const [status, setStatus] = useState('');
+    const [reason, setReason] = useState('');
     const [loading, setLoading] = useState(false);
     const { user } = useSelector((state) => state.auth);
     const [dealType, setDealType] = useState(null);
-    const [dealDeadlines, setDeadlines] = useState(null);
     const router = useRouter();
     const pid = router.query.pid;
 
@@ -29,12 +29,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
             setDealType(data?.results);
         }
     }
-    async function getDeadLines(token) {
-        const data = await GetRepository.getDeadline(token);
-        if (data?.results) {
-            setDeadlines(data?.results);
-        }
-    }
+
 
     async function patchOrder() {
         setLoading(true);
@@ -45,7 +40,8 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
             price: price ? price : Number(dealItem?.price),
             deadline_date: lifetime ? lifetime : dealItem?.deadline_date,
             type: type ? type : dealItem?.type,
-            status: status ? status : dealItem?.status
+            status: status ? status : dealItem?.status,
+            reason: reason ? reason : dealItem?.reason,
         };
 
         const ItemsData = await PatchRepository.patchDealadmin(
@@ -232,13 +228,32 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                                     label: 'Tasdiqlash',
                                 },
                                 {
-                                    value: 'archived',
+                                    value: 'cancelled',
                                     label: 'Bekor qilish',
                                 },
                             ]}
                         />
                     </div>
                 </Form.Item>
+                {
+                    status === "cancelled" ?
+                        <Form.Item
+                            className="col-md-12 mb-3"
+                            name="description">
+                            <span className="fw-bold py-3 px-2 ">
+                                Bekor qilinganligi haqida sabab
+                            </span>
+                            <TextArea
+                                defaultValue={dealItem?.reason}
+                                rows={4}
+                                placeholder="Bekor qilinganligi haqida sabab..."
+                                onChange={(e) =>
+                                    setReason(e.target.value)
+                                }
+                            />
+                        </Form.Item>
+                        : <></>
+                }
 
                 <Form.Item
                     className="col-md-12 mb-3"
