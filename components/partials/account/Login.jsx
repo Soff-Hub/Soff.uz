@@ -128,6 +128,9 @@ class Login extends Component {
     };
 
     render() {
+        const { deal, role, id } = this.props?.router?.query;
+
+
         return (
             <div className=" pb-5 " style={{ backgroundColor: '#f1f1f1' }}>
                 <div className="container">
@@ -135,12 +138,21 @@ class Login extends Component {
                         <Form onFinish={this.handleLoginSubmit.bind(this)}>
                             <ul className="ps-tab-list">
                                 <li className="active">
-                                    <Link href="/account/login">
+                                    <Link href={
+                                        (role && id) ? `/account/login?role=${role}&id=${id}` :
+                                            (role && deal) ? `/account/login?role=${role}&deal=${deal}` :
+                                                "/account/login"
+                                    }>
                                         <a>Kirish</a>
                                     </Link>
                                 </li>
                                 <li>
-                                    <Link href="/account/selection">
+                                    <Link href={
+                                        (role && id) ? `/account/register?role=${role}&id=${id}` :
+                                            (role && deal) ? `/account/register?role=${role}&deal=${deal}` :
+                                                "/account/register"
+                                    }
+                                    >
                                         <a>Ro'yxatdan o'tish</a>
                                     </Link>
                                 </li>

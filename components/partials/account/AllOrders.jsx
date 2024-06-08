@@ -1,6 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
-import { Modal, Pagination, Progress } from 'antd';
+import { Modal, Pagination, Progress, Tooltip } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import useDebounce from '~/hooks/useDebounce';
 import DealsSidebar from './modules/DealsSidebar';
@@ -13,6 +13,7 @@ export default function DealCart() {
     const [currPage, setCurrPage] = useState(1);
     const [pageCount, setPageCount] = useState(0);
     const [open, setOpen] = useState(false)
+    const [openPayment, setOpenPayment] = useState(false)
     const [loading, setLoading] = useState(false)
     const [keyword, setKeyword] = useState('');
     const debouncedSearchTerm = useDebounce(keyword, 800);
@@ -111,7 +112,6 @@ export default function DealCart() {
     }, [])
 
 
-
     return (
         <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
             <div className='col-md-3'>
@@ -135,16 +135,23 @@ export default function DealCart() {
                     <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() =>
                             user?.access ?
-                                setOpen(true) : Router.push("/account/selection?select=deal")} >
+                                setOpen(true) : Router.push("/account/selection?deal=deal")} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
-                <div> {
+                {user?.access && <div>
+                    <Tooltip title={"urishinlar soni haqida malumot"}>
+                        <span style={{ cursor: 'pointer' }} >
+                            <i className="fa-solid fa-circle-question text-danger"></i>
+                        </span>
+                        <span className='mx-2'>{progressData?.full_deal_coin} ta urishinishlar sonidan {progressData?.remain_deal_coin} ta qoldi</span>
+                    </Tooltip>
 
-                    progressData?.remain_deal_coin &&
-                    <Progress percent={Math.floor((progressData?.remain_deal_coin / progressData?.full_deal_coin) * 100)} strokeColor={"#28a745"} />
-                }
-                </div>
+                    <Progress
+                        className='p-0 w-100'
+                        format={() => ''}
+                        percent={Math.floor((progressData?.remain_deal_coin / progressData?.full_deal_coin) * 100)} strokeColor={"#28a745"} />
+                </div>}
 
 
                 <div className='d-flex flex-column gap-3'>
@@ -283,12 +290,23 @@ export default function DealCart() {
                                                             Ariza topshirgansiz
                                                         </button>
                                                     ) : (
-                                                        <button
-                                                            onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/selection?select=deal`)}
-                                                            className='btn btn-success px-4 fs-5'
-                                                        >
-                                                            Ariza topshirsh
-                                                        </button>
+                                                        progressData?.remain_deal_coin ?
+                                                            <button
+                                                                onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/selection?deal=deal`)}
+                                                                className='btn btn-success px-4 fs-5'
+                                                            >
+                                                                Ariza topshirsh
+                                                            </button> :
+                                                            <button
+                                                                onClick={() =>
+                                                                    user?.access ?
+                                                                        setOpenPayment(true) :
+                                                                        Router.push(`/account/selection?deal=deal`)
+                                                                }
+                                                                className='btn btn-success px-4 fs-5'
+                                                            >
+                                                                Ariza topshirsh
+                                                            </button>
                                                     )) : <></>
                                                 }
 
@@ -339,6 +357,28 @@ export default function DealCart() {
                 <DealsList setOpen={setOpen} />
             </Modal>
 
-        </div>
+            <Modal
+                title="Buyurtma yaratish"
+                width={550}
+                centered
+                open={openPayment}
+                onOk={() => Router?.push('/account/deal-payment')}
+                okText="Sotib olish"
+                cancelText="Bekor qilish"
+                cancelButtonProps={{
+                    className: 'cancel-button',
+                }}
+                okButtonProps={{
+                    style: {
+                        backgroundColor: '#28a745'
+                    },
+                }}
+                onCancel={() => setOpenPayment(false)}>
+
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore praesentium vero deserunt quidem voluptate deleniti animi excepturi, nemo in consequatur sed odio ipsam repudiandae iste repellat id rerum quae modi, dolores dolor ipsum illum quasi? Consequuntur quidem saepe expedita optio molestiae est, eligendi cupiditate ipsum reprehenderit, officiis magni, sit esse.</p>
+            </Modal>
+
+
+        </div >
     );
 }
