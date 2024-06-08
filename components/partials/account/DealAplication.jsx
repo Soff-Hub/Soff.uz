@@ -655,7 +655,7 @@ export default function MyDealCart() {
                                             color: '#fff',
                                             fontSize: '16px',
                                         }}>
-                                        Yuborish
+                                        Tahrirlash
                                     </span>
                                 </Button>
                             </Form.Item>

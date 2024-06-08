@@ -144,8 +144,8 @@ export default function DealCart() {
                         <span style={{ cursor: 'pointer' }} >
                             <i className="fa-solid fa-circle-question text-warning"></i>
                         </span>
-                        <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
                     </Tooltip>
+                        <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
 
                     <Progress
                         className='p-0 w-100'

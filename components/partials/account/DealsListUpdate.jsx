@@ -30,6 +30,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
             price: price ? price : Number(dataDetails?.price),
             deadline_date: lifetime ? lifetime : dataDetails?.deadline_date,
             type: type ? type : dataDetails?.type?.id,
+           
         };
         const ItemsData = await PatchRepository.patchDealUpdate(dataDetails?.id, data, user?.access);
         if (ItemsData?.status === 200) {

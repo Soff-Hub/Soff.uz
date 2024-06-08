@@ -506,7 +506,7 @@ export default function ApplicationsReceiveds() {
 
                             </div>
                             <p
-                                style={{ width: "100%" }}
+                                style={{ width: "100%", whiteSpace: 'pre-wrap' }}
                             >
                                 {dataDetails?.description}
                             </p>
