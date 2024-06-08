@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Modal, Tabs } from 'antd';
-import PostRepository from '~/repositories/PostRepository';
 import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
-import { Api } from '@mui/icons-material';
 import axios from 'axios';
-import { baseDomain } from '~/repositories/NewRepository';
 import { baseUrlCustomer } from '~/reositoriy-admin/Repository';
 
-const BuyTrafficCard = ({ traffic, quantity }) => {
+const DealOrderPayment = ({ quantity }) => {
     const { user } = useSelector((state) => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
@@ -43,10 +40,9 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
-        const ItemsData = await axios.post(`${baseUrlCustomer}purchase-storage/`, {
+        const ItemsData = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/`, {
             provider: 'click',
-            quantity,
-            traffic
+            deal_coin: quantity,
         }, {
             headers: {
                 Authorization: `Bearer ${user?.access}`
@@ -66,13 +62,13 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
         }
 
     }
+
     async function handleClickCardPostsPayme(e) {
         e.preventDefault();
         setMessage(false);
-        const ItemsData = await axios.post(`${baseUrlCustomer}purchase-storage/`, {
+        const ItemsData = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/`, {
             provider: 'payme',
-            quantity,
-            traffic
+            deal_coin: quantity,
         }, {
             headers: {
                 Authorization: `Bearer ${user?.access}`
@@ -86,22 +82,20 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
             const modal = Modal.error({
                 centered: true,
                 title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.msg,
+                content:ItemsData?.statusText || ItemsData?.data?.msg,
             });
             modal.update;
         }
 
     }
-
 
     async function handleClickCardPosts(e) {
         e.preventDefault();
         setMessage(false);
         try {
-            const ItemsData = await axios.post(`${baseUrlCustomer}purchase-storage/`, {
+            const ItemsData = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/`, {
                 provider: 'by_card',
-                quantity,
-                traffic,
+                deal_coin: quantity,
                 expire_date: cardDate,
                 card_number: Number(numberCardVal),
             }, {
@@ -131,9 +125,9 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
     async function handleSubmitCode() {
         setButtonOk(true);
         try {
-            const dataNews = await axios.post(`${baseUrlCustomer}purchase-verify/`, {
+            const dataNews = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/verify/`, {
                 code,
-                order_storage: cart,
+                order: cart,
             }, {
                 headers: {
                     Authorization: `Bearer ${user?.access}`
@@ -167,7 +161,7 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
                 });
 
                 if (user?.role === 'seller' || user?.role === 'customer') {
-                    Router.push('/account/myproducts/upload-video');
+                    Router.push('/account/all-orders');
                 } else {
                     Router.push('/');
                 }
@@ -186,7 +180,6 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
             }
         }
     }
-
     useEffect(() => {
         if (resData?.status === 201) {
             setTime(120);
@@ -364,71 +357,71 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
                 </div>
             ),
         },
-        // {
-        //     key: '2',
-        //     label: (
-        //         <div className="click">
-        //             <img src="/static/img/click.png" alt="" />
-        //         </div>
-        //     ),
-        //     children: (
-        //         <div className="row   mx-auto m-0">
-        //             <div className=" px-4 rounded click-b">
-        //                 <form
-        //                     onSubmit={handleClickCardPostsclick}
-        //                     className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-        //                     <div className="col-12 p-0 px-4 my-3">
-        //                         {message ? (
-        //                             <button
-        //                                 type="submit"
-        //                                 className="ps-btn w-100 text-center btn_color">
-        //                                 Davom etish
-        //                             </button>
-        //                         ) : (
-        //                             <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-        //                                 <BeatLoader color="#fff" />
-        //                             </button>
-        //                         )}
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     ),
-        // },
+        {
+            key: '2',
+            label: (
+                <div className="click">
+                    <img src="/static/img/click.png" alt="" />
+                </div>
+            ),
+            children: (
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsclick}
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
+                                {message ? (
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 text-center btn_color">
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            ),
+        },
 
-        // {
-        //     key: '3',
-        //     label: (
-        //         <div className="click">
-        //             <img src="/static/img/soff/paymee-r.png" alt="" />
-        //         </div>
-        //     ),
-        //     children: (
-        //         <div className="row   mx-auto m-0">
-        //             <div className=" px-4 rounded click-b">
-        //                 <form
-        //                     onSubmit={handleClickCardPostsPayme}
-        //                     className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-        //                     <div className="col-12 p-0 px-4 my-3">
-        //                         {message ? (
-        //                             <button
-        //                                 type="submit"
-        //                                 className="ps-btn w-100 text-center btn_color">
-        //                                 Davom etish
-        //                             </button>
-        //                         ) : (
-        //                             <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-        //                                 <BeatLoader color="#fff" />
-        //                             </button>
-        //                         )}
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     ),
-        // },
+        {
+            key: '3',
+            label: (
+                <div className="click">
+                    <img src="/static/img/soff/paymee-r.png" alt="" />
+                </div>
+            ),
+            children: (
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsPayme}
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
+                                {message ? (
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 text-center btn_color">
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            ),
+        },
     ];
 
     return <Tabs className='checkoutstep-1' defaultActiveKey="1" items={items} onChange={onChange} />;
 };
-export default BuyTrafficCard;
+export default DealOrderPayment;
