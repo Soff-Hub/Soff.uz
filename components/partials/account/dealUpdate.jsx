@@ -236,7 +236,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                     </div>
                 </Form.Item>
                 {
-                    status === "cancelled" ?
+                    (status === "cancelled" || dealItem?.status==="cancelled") ?
                         <Form.Item
                             className="col-md-12 mb-3"
                             name="description">

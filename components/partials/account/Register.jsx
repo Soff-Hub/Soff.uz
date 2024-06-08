@@ -210,7 +210,7 @@ class Register extends Component {
 
     render() {
         const { router } = this.props;
-        const { id } = router.query;
+        const { deal, role, id } = this.props?.router?.query;
         // referal
         const { pid } = router.query;
 
@@ -223,19 +223,21 @@ class Register extends Component {
                         <Form onFinish={this.handleSubmit}>
                             <ul className="ps-tab-list">
                                 <li>
-                                    {id ? (
-                                        <Link href={`/account/login?id=${id}`}>
-                                            <a>Kirish</a>
-                                        </Link>
-                                    ) : (
-                                        <Link
-                                            href={`/account/login?role=${this.state.role}`}>
-                                            <a>Kirish</a>
-                                        </Link>
-                                    )}
+                                    <Link href={
+                                        (role && id) ? `/account/login?role=${role}&id=${id}` :
+                                            (role && deal) ? `/account/login?role=${role}&deal=${deal}` :
+                                                "/account/login"
+                                    }>
+                                        <a>Kirish</a>
+                                    </Link>
                                 </li>
                                 <li className="active">
-                                    <Link href="/account/register">
+                                    <Link href={
+                                        (role && id) ? `/account/register?role=${role}&id=${id}` :
+                                            (role && deal) ? `/account/register?role=${role}&deal=${deal}` :
+                                                "/account/register"
+                                    }
+                                    >
                                         <a>Ro'yxatdan o'tish</a>
                                     </Link>
                                 </li>

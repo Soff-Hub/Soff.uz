@@ -648,3 +648,12 @@
     display: -webkit-box;
     -webkit-box-orient: vertical;
 }
+
+.ant-progress-outer {
+    padding: 0 !important;
+}
+
+.cancel-button:hover {
+    border: 1px solid #00a44f !important;
+    color: #00a44f !important;
+}

@@ -319,6 +319,27 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getDealListData(token) {
+        const endPoint = `deals/deal-coins/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getCategory(page, search, id, token) {
         const endPoint = `admin/category-list/${
             id ? id + '/' : ''
