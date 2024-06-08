@@ -239,7 +239,7 @@ export default function MyDealCart() {
                         <option
                             className="fs-3"
                             value="completed">
-                           Tugallangan
+                            Tugallangan
                         </option>
                     </select>
 
@@ -319,7 +319,7 @@ export default function MyDealCart() {
                                             <p
                                                 className='m-0 description_more'
 
-                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2",whiteSpace: 'pre-wrap' }}
+                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2", whiteSpace: 'pre-wrap' }}
                                             >
                                                 {item?.description}
                                             </p>
@@ -355,7 +355,7 @@ export default function MyDealCart() {
                                                         </div> : <></>
 
                                             }
-                                            
+
                                             <div>
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex align-items-center ">
@@ -494,7 +494,7 @@ export default function MyDealCart() {
                                 Ariza tavsifi
                             </span>{' '}
                             <p
-                                style={{ width: "100%" }}
+                                style={{ width: "100%", whiteSpace: 'pre-wrap' }}
                             >
                                 {dataDetials?.description}
                             </p>
@@ -505,7 +505,7 @@ export default function MyDealCart() {
                                         <strong className='d-flex gap-2 align-items-center'>
                                             <i className='fa-solid fa-eye'></i>
                                             Ko'rildi
-                                        </strong> : <span></span>
+                                        </strong> : <span>Ko'rilmadi</span>
                                 }
                                 {
                                     dataDetials?.status === 'new' ? (
