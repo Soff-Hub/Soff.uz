@@ -6,7 +6,7 @@ import Meta from '~/components/shared/headers/Meta';
 import { Modal } from 'antd';
 import { useState } from 'react';
 import { Image } from 'antd';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
@@ -16,13 +16,27 @@ const SellerPage = ({ seller, sellerr }) => {
     const [page, setPage] = useState(1);
     const router = useRouter();
     const { pid } = router.query;
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
     const [tab, setTab] = useState('tab-1');
     const [typeSelect, setTypeSelect] = useState('file');
     const [search, setSearch] = useState('');
     const [productType, setProductType] = useState(null);
 
+    const showModal = () => {
+        setIsModalOpen(true);
+    };
 
+    const handleOk = () => {
+        setIsModalOpen(false);
+    };
+    const handleOkDonate = () => {
+        setIsModalOpenDonate(false);
+    };
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
     const handleCancelDonate = () => {
         setIsModalOpenDonate(false);
     };
@@ -113,6 +127,20 @@ const SellerPage = ({ seller, sellerr }) => {
                 title={`${sellerr?.seller?.full_name}  `}
                 description={`Soff.uz sayti sotuvchisi - ${sellerr?.seller?.full_name} ning barcha mahsulotlarini shu yerda ko'rishingiz mumkin`}
             />
+            <Modal
+                title="Buyurtma berish "
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
+                <p>Tez kunda!</p>
+                <p>
+                    Xurmatli Soff.uz foyalanuvchisi, siz bu yerda Sotuvchiga
+                    mahsulot yoki xizmat buyurtmasini berishingiz mumkin
+                    bo'ladi.
+                </p>
+            </Modal>
             <Modal
                 title="Qo'llab quvvatlash"
                 open={isModalOpenDonate}
@@ -244,8 +272,7 @@ const SellerPage = ({ seller, sellerr }) => {
                                                             ? 'donate-color-btn'
                                                             : ''
                                                         }`}
-                                                    onClick={() => Router.push("/account/all-orders")}
-                                                >
+                                                    onClick={showModal}>
                                                     {' '}
                                                     <i className="fa-regular fa-pen-to-square"></i>{' '}
                                                     Buyurtma berish

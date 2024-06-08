@@ -128,7 +128,7 @@ class Login extends Component {
     };
 
     render() {
-        const { deal, role, id } = this.props?.router?.query;
+        const { deal, id } = this.props?.router?.query;
 
 
         return (
@@ -139,8 +139,8 @@ class Login extends Component {
                             <ul className="ps-tab-list">
                                 <li className="active">
                                     <Link href={
-                                        (role && id) ? `/account/login?role=${role}&id=${id}` :
-                                            (role && deal) ? `/account/login?role=${role}&deal=${deal}` :
+                                        (id) ? `/account/login?id=${id}` :
+                                            (deal) ? `/account/login?deal=${deal}` :
                                                 "/account/login"
                                     }>
                                         <a>Kirish</a>
@@ -148,11 +148,12 @@ class Login extends Component {
                                 </li>
                                 <li>
                                     <Link href={
-                                        (role && id) ? `/account/register?role=${role}&id=${id}` :
-                                            (role && deal) ? `/account/register?role=${role}&deal=${deal}` :
+                                        (id) ? `/account/register?id=${id}` :
+                                            (deal) ? `/account/register?deal=${deal}` :
                                                 "/account/register"
                                     }
                                     >
+
                                         <a>Ro'yxatdan o'tish</a>
                                     </Link>
                                 </li>

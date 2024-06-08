@@ -135,16 +135,16 @@ export default function DealCart() {
                     <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() =>
                             user?.access ?
-                                setOpen(true) : Router.push("/account/selection?deal=deal")} >
+                                setOpen(true) : Router.push("/account/register?deal=deal")} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
                 {user?.access && <div>
                     <Tooltip title={"urishinlar soni haqida malumot"}>
                         <span style={{ cursor: 'pointer' }} >
-                            <i className="fa-solid fa-circle-question text-danger"></i>
+                            <i className="fa-solid fa-circle-question text-warning"></i>
                         </span>
-                        <span className='mx-2'>{progressData?.full_deal_coin} ta urishinishlar sonidan {progressData?.remain_deal_coin} ta qoldi</span>
+                        <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
                     </Tooltip>
 
                     <Progress
@@ -292,7 +292,7 @@ export default function DealCart() {
                                                     ) : (
                                                         progressData?.remain_deal_coin ?
                                                             <button
-                                                                onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/selection?deal=deal`)}
+                                                                onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/register?deal=deal`)}
                                                                 className='btn btn-success px-4 fs-5'
                                                             >
                                                                 Ariza topshirsh
@@ -301,7 +301,7 @@ export default function DealCart() {
                                                                 onClick={() =>
                                                                     user?.access ?
                                                                         setOpenPayment(true) :
-                                                                        Router.push(`/account/selection?deal=deal`)
+                                                                        Router.push(`/account/register?deal=deal`)
                                                                 }
                                                                 className='btn btn-success px-4 fs-5'
                                                             >
