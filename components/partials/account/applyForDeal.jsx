@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, DatePicker, Form, Input, Modal } from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Modal } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useRouter } from 'next/router';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
@@ -237,10 +237,13 @@ export default function ApplyForDeal() {
                                             message: 'Buyurtma narxini kiritish majburiy',
                                         },
                                     ]}>
-                                    <Input
-                                        type='number'
-                                        onChange={(e) => setPrice(e.target.value)}
-                                        placeholder="Narxi" />
+                                    <InputNumber
+                                        placeholder="Narxi"
+                                        className='w-100 py-2'
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                        onChange={(e) => setPrice(e)}
+                                    />
                                 </Form.Item>
                             </div>
                             <div className="col-md-12 p-0  ">

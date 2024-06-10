@@ -26,7 +26,9 @@ export default function DealCart() {
     const [needsToggle, setNeedsToggle] = useState(false);
     const [needsId, setNeedsId] = useState(null);
     const [innerWidth, setInnerWidth] = useState(null);
-    const tokens = user?.access
+    const tokens = user?.access;
+    const { query } = useRouter();
+    const { show } = query
 
 
     function handleDescriptionMore(id) {
@@ -111,6 +113,13 @@ export default function DealCart() {
         setInnerWidth(window.innerWidth);
     }, [])
 
+    useEffect(() => {
+        if (show === "modal") {
+            setOpen(true)
+        }
+    }, [])
+
+
 
     return (
         <div className={`container row mx-auto p-0 gy-4 d-flex align-items-start mt-5`}>
@@ -145,7 +154,7 @@ export default function DealCart() {
                             <i className="fa-solid fa-circle-question text-warning"></i>
                         </span>
                     </Tooltip>
-                        <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
+                    <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
 
                     <Progress
                         className='p-0 w-100'

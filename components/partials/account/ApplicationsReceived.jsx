@@ -307,7 +307,7 @@ export default function ApplicationsReceiveds() {
                                                                         item?.status !== 'active' ?
                                                                             <Menu.Item key="0">
                                                                                 <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                                                    Tahrirlash
+                                                                                Arizani tasdiqlash
                                                                                     <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
                                                                                 </span>
                                                                             </Menu.Item> : <></>

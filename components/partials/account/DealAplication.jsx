@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form, Input, Menu, Modal, Pagination, Space, Tooltip } from 'antd';
+import { Button, Dropdown, Form, Input, InputNumber, Menu, Modal, Pagination, Space, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
@@ -7,7 +7,6 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import ModalDelete from './Modal';
-import CalculateTimeDifference from './DateFormatter';
 const { TextArea } = Input;
 
 
@@ -481,16 +480,16 @@ export default function MyDealCart() {
                         </div>
                         :
                         <div className="border-top rounded-3 pt-3 bg-white">
-                            <h3 className="text-secondary fs-3 fw-medium mb-2 ">Taklif summasi:   <span className='text-success fw-medium'>{addPeriodToThousands(dataDetials?.price)} so'm</span></h3>
+                            <h3 className="text-secondary fs-5 fw-medium mb-1 ">Taklif summasi:   <span className='text-success fw-medium fs-5'>{addPeriodToThousands(dataDetials?.price)} so'm</span></h3>
                             <div className="mb-2 d-md-flex gap-3 align-items-center">
-                                <span className="fs-3 fw-medium  text-secondary">
+                                <span className="fs-5 fw-medium  text-secondary">
                                     Tugatish muddati:
                                 </span>{' '}
-                                <span className="fw-medium d-flex gap-3 text-success ">
+                                <span className="fw-medium d-flex gap-3 fs-5 text-success ">
                                     {dataDetials?.deadline_date}
                                 </span>
                             </div>
-                            <span className="fs-3 fw-medium  text-secondary">
+                            <span className="fs-5 fw-bold  text-secondary">
                                 Ariza tavsifi
                             </span>{' '}
                             <p
@@ -502,10 +501,10 @@ export default function MyDealCart() {
                             <div className='d-flex justify-content-between align-items-center '>
                                 {
                                     dataDetials?.has_seen ?
-                                        <strong className='d-flex gap-2 align-items-center'>
+                                        <span className='d-flex gap-2 align-items-center text-success '>
                                             <i className='fa-solid fa-eye'></i>
                                             Ko'rildi
-                                        </strong> : <span>Ko'rilmadi</span>
+                                        </span> : <span className='text-danger'> <i className='fa-solid fa-eye-slash'></i> Ko'rilmadi</span>
                                 }
                                 {
                                     dataDetials?.status === 'new' ? (
@@ -616,13 +615,15 @@ export default function MyDealCart() {
                                     label="Narxi"
                                     className='m-0'
                                     name={dataDetials?.price}>
-                                    <Input
-                                        type='number'
-                                        onChange={(e) => setPrice(e.target.value)}
-                                        placeholder="Narxi"
+                                    <InputNumber
                                         defaultValue={Number(dataDetials?.price)}
-
+                                        placeholder="Narxi"
+                                        className='w-100 py-2'
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                        onChange={(e) => setPrice(e)}
                                     />
+
                                 </Form.Item>
                             </div>
                             <div className="col-md-12 p-0  ">
