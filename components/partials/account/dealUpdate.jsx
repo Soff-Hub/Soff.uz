@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, InputNumber, Modal, Select } from 'antd';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -195,14 +195,13 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                     <span className="fw-bold py-3 px-2 ">
                         Narxi
                     </span>
-                    <Input
-                        defaultValue={JSON.parse(
-                            dealItem?.price
-                        )}
-                        onChange={(e) =>
-                            setPrice(e.target.value)
-                        }
-                        placeholder="Narxi"></Input>
+                    <InputNumber
+                        placeholder="Narxi"
+                        className='w-100 py-2'
+                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                        parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                        onChange={(e) => setPrice(e)}
+                    />
                 </Form.Item>
                 <Form.Item className="col-md-6 mb-3">
                     <span className="fw-bold  px-2 ">
@@ -236,7 +235,7 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                     </div>
                 </Form.Item>
                 {
-                    (status === "cancelled" || dealItem?.status==="cancelled") ?
+                    (status === "cancelled" || dealItem?.status === "cancelled") ?
                         <Form.Item
                             className="col-md-12 mb-3"
                             name="description">

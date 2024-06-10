@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, Select } from 'antd';
+import { Button, Form, Input, InputNumber, Modal, Select } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -30,7 +30,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
             price: price ? price : Number(dataDetails?.price),
             deadline_date: lifetime ? lifetime : dataDetails?.deadline_date,
             type: type ? type : dataDetails?.type?.id,
-           
+
         };
         const ItemsData = await PatchRepository.patchDealUpdate(dataDetails?.id, data, user?.access);
         if (ItemsData?.status === 200) {
@@ -113,15 +113,14 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                         name={dataDetails?.price}
                                         label="Narxi"
                                     >
-                                        <Input
-                                            type='number'
-                                            onChange={(e) =>
-                                                setPrice(
-                                                    e.target.value
-                                                )
-                                            }
+                                        <InputNumber
                                             defaultValue={Number(dataDetails?.price)}
-                                            placeholder="Narxi" />
+                                            placeholder="Narxi"
+                                            className='w-100 py-2'
+                                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                            onChange={(e) => setPrice(e)}
+                                        />
                                     </Form.Item>
 
                                     <Form.Item
@@ -160,8 +159,8 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                         className='col-md-12 mb-3'
                                     >
                                         <TextArea
-                             
-                                            rows={8} 
+
+                                            rows={8}
                                             placeholder="Buyurtma uchun tavsif"
                                             onChange={(e) =>
                                                 setDescription(

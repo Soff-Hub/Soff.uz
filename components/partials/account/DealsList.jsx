@@ -1,4 +1,4 @@
-import { Button, DatePicker, Form, Input, Modal, Select } from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Modal, Select } from 'antd';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { useState } from 'react';
@@ -87,12 +87,10 @@ export default function DealsList({ setOpen }) {
         value: e?.id,
     }));
 
-
-
-
     return (
         <div className="row " style={{ alignItems: 'flex-start' }}>
             <div className="col-lg-12  mx-auto">
+
                 <div className="ps-page__content">
                     <div className=" bg-white">
                         <div>
@@ -142,14 +140,15 @@ export default function DealsList({ setOpen }) {
                                                     'Buyurtma narxini kiritish majburiy',
                                             },
                                         ]}>
-                                        <Input
-                                            type='number'
-                                            onChange={(e) =>
-                                                setPrice(
-                                                    e.target.value
-                                                )
-                                            }
-                                            placeholder="Narxi"></Input>
+
+                                        <InputNumber
+                                            placeholder="Narxi"
+                                            className='w-100 py-2'
+                                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                            parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                            onChange={(e) => setPrice(e)}
+                                        />
+
                                     </Form.Item>
 
                                     <Form.Item
