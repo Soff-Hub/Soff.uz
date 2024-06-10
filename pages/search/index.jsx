@@ -51,6 +51,7 @@ const SearchPage = () => {
         },
     ];
 
+ console.log(query?.keyword);
 
     return (
         <PageContainer title={`Search results for: "${keyword}" `}>

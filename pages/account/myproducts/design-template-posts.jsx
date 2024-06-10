@@ -41,6 +41,7 @@ const Posts = () => {
     const [document, setDocument] = useState(null)
     const [customePoster, setCustomePoster] = useState([]);
     const [customeFile, setCustomeFile] = useState(null);
+    const [customeFile2, setCustomeFile2] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const breadCrumb = [
@@ -376,6 +377,7 @@ const Posts = () => {
                                         inputText={"Shablon faylini yuklash uchun ushbu hududga bosing (.zip)."}
                                         loadingText={"Fayl tayyorlanmoqda..."}
                                         content_type={"template"}
+                                        setCustomeFile={setCustomeFile2}
                                     />
 
                                 </div>
