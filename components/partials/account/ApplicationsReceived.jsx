@@ -284,7 +284,7 @@ export default function ApplicationsReceiveds() {
                                                 </div>
 
                                                 <div className='d-md-flex align-items-start gap-md-3 flex-wrap '>
-                                                    <h5 className='text-success fw-medium mb-1  fs-5'>Muddati: {item?.deal?.deadline_date}</h5>
+                                                    <h5 className='text-success fw-medium mb-1  fs-5'>Tugash muddati: {item?.deal?.deadline_date}</h5>
                                                     <div className='d-flex justify-content-between align-items-start gap-3'>
                                                         <h5 className='text-success fw-medium mb-1 fs-5'>
                                                             {addPeriodToThousands(item?.deal?.price)} so'm
@@ -416,7 +416,7 @@ export default function ApplicationsReceiveds() {
                                                 <div className='d-flex justify-content-between'>
                                                     <div>
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Muddati:
+                                                            Tugatish muddati:
                                                         </span>{' '}
                                                         <span className="fw-medium fs-5 ">
                                                             {item?.deadline_date}
@@ -531,7 +531,7 @@ export default function ApplicationsReceiveds() {
 
                                             <div>
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Buyurtma turi:
+                                                    Kategoriyasi:
                                                 </span>{' '}
                                                 <span className="fw-medium text-secondary fs-5">
                                                     {dataDetails?.type?.name}
@@ -541,7 +541,7 @@ export default function ApplicationsReceiveds() {
 
                                             <div>
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Muddati:
+                                                    Tugash muddati:
                                                 </span>{' '}
                                                 <span className="fw-medium fs-5 ">
                                                     {dataDetails?.deadline_date}

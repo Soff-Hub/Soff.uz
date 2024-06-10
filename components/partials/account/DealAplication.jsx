@@ -601,7 +601,7 @@ export default function MyDealCart() {
                             <div className="col-md-12 p-0 ">
 
                                 <Form.Item
-                                    label={"Bajarilish muddati"}
+                                    label={"Tugatish muddati"}
                                     name={dataDetials?.deadline_date}
                                     className='mb-2'
                                 >

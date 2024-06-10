@@ -77,124 +77,117 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
             <div className="col-lg-12  mx-auto">
                 <div className="ps-page__content">
                     <div className=" bg-white">
+
+
                         <div>
-                            <p>
-                                Lorem ipsum dolor sit amet
-                                consectetur, adipisicing elit.
-                                Itaque nisi, qui optio eum quo
-                                perferendis ipsa debitis quod
-                                veritatis reiciendis?
-                            </p>
+                            <Form
 
-                            <div>
-                                <Form
-
-                                    form={form}
-                                    onFinish={postOrder}
-                                    className="row  pt-4 "
-                                    layout='vertical'
+                                form={form}
+                                onFinish={postOrder}
+                                className="row  pt-4 "
+                                layout='vertical'
+                            >
+                                <Form.Item
+                                    label="Buyurtma nomi"
+                                    className="col-md-12   mx-auto mb-3"
+                                    name={dataDetails?.title}
                                 >
-                                    <Form.Item
-                                        label="Buyurtma nomi"
-                                        className="col-md-12   mx-auto mb-3"
-                                        name={dataDetails?.title}
-                                    >
-                                        <Input
-                                            defaultValue={dataDetails?.title}
-                                            onChange={(e) =>
-                                                setName(
-                                                    e.target.value
-                                                )
-                                            }
-                                            placeholder="Buyurtma nomi" />
-                                    </Form.Item>
-                                    <Form.Item
-                                        className="col-md-12 mb-3"
-                                        name={dataDetails?.price}
-                                        label="Narxi"
-                                    >
-                                        <InputNumber
-                                            defaultValue={Number(dataDetails?.price)}
-                                            placeholder="Narxi"
-                                            className='w-100 py-2'
-                                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                                            parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
-                                            onChange={(e) => setPrice(e)}
-                                        />
-                                    </Form.Item>
+                                    <Input
+                                        defaultValue={dataDetails?.title}
+                                        onChange={(e) =>
+                                            setName(
+                                                e.target.value
+                                            )
+                                        }
+                                        placeholder="Buyurtma nomi" />
+                                </Form.Item>
+                                <Form.Item
+                                    className="col-md-12 mb-3"
+                                    name={dataDetails?.price}
+                                    label="Narxi"
+                                >
+                                    <InputNumber
+                                        defaultValue={Number(dataDetails?.price)}
+                                        placeholder="Narxi"
+                                        className='w-100 py-2'
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                        onChange={(e) => setPrice(e)}
+                                    />
+                                </Form.Item>
 
-                                    <Form.Item
-                                        label="Tugash muddati"
-                                        className="col-md-12 mb-3 "
-                                        name={dataDetails?.deadline_date}
-                                    >
-                                        <Input type='date' onChange={(e) => setLifetime(e.target.value)}
-                                            defaultValue={dataDetails?.deadline_date} />
-                                    </Form.Item>
-                                    <Form.Item
-                                        className="col-md-12 mb-3"
-                                        name={dataDetails?.type}
-                                        label="Buyurtma turi"
-                                    >
-                                        <Select
-                                            defaultValue={dataDetails?.type?.name}
-                                            onChange={(e) =>
-                                                setType(e)
-                                            }
+                                <Form.Item
+                                    label="Tugash muddati"
+                                    className="col-md-12 mb-3 "
+                                    name={dataDetails?.deadline_date}
+                                >
+                                    <Input type='date' onChange={(e) => setLifetime(e.target.value)}
+                                        defaultValue={dataDetails?.deadline_date} />
+                                </Form.Item>
+                                <Form.Item
+                                    className="col-md-12 mb-3"
+                                    name={dataDetails?.type}
+                                    label="Kategoriyasi"
+                                >
+                                    <Select
+                                        defaultValue={dataDetails?.type?.name}
+                                        onChange={(e) =>
+                                            setType(e)
+                                        }
+                                        style={{
+                                            width: '100%',
+                                            height: '45px',
+                                        }}
+                                        placeholder="Kategoriyasi"
+                                        options={
+                                            optionType
+                                        }></Select>
+
+                                </Form.Item>
+
+
+                                <Form.Item
+                                    label="Buyurtma uchun tavsif"
+                                    name={dataDetails?.description}
+                                    className='col-md-12 mb-3'
+                                >
+                                    <TextArea
+
+                                        rows={8}
+                                        placeholder="Buyurtma uchun tavsif"
+                                        onChange={(e) =>
+                                            setDescription(
+                                                e.target.value
+                                            )
+                                        }
+                                        defaultValue={dataDetails?.description}
+                                    />
+                                </Form.Item>
+
+                                <Form.Item className="col-md-12 d-flex justify-content-end m-0  mt-3">
+                                    <Button
+                                        loading={loading}
+                                        htmlType="submit"
+                                        style={{
+                                            width: '100%',
+                                            height: '37px',
+                                            padding: "1px 30px"
+                                        }}
+                                        className="btn-primary btn-send-email">
+                                        <span
                                             style={{
-                                                width: '100%',
-                                                height: '45px',
-                                            }}
-                                            placeholder="Buyurtma turi"
-                                            options={
-                                                optionType
-                                            }></Select>
+                                                color: '#fff',
+                                                fontSize:
+                                                    '16px',
+                                            }}>
+                                            Saqlash
+                                        </span>
+                                    </Button>
+                                </Form.Item>
 
-                                    </Form.Item>
-
-
-                                    <Form.Item
-                                        label="Buyurtma uchun tavsif"
-                                        name={dataDetails?.description}
-                                        className='col-md-12 mb-3'
-                                    >
-                                        <TextArea
-
-                                            rows={8}
-                                            placeholder="Buyurtma uchun tavsif"
-                                            onChange={(e) =>
-                                                setDescription(
-                                                    e.target.value
-                                                )
-                                            }
-                                            defaultValue={dataDetails?.description}
-                                        />
-                                    </Form.Item>
-
-                                    <Form.Item className="col-md-12 d-flex justify-content-end m-0  mt-3">
-                                        <Button
-                                            loading={loading}
-                                            htmlType="submit"
-                                            style={{
-                                                width: '100%',
-                                                height: '37px',
-                                                padding: "1px 30px"
-                                            }}
-                                            className="btn-primary btn-send-email">
-                                            <span
-                                                style={{
-                                                    color: '#fff',
-                                                    fontSize:
-                                                        '16px',
-                                                }}>
-                                                Saqlash
-                                            </span>
-                                        </Button>
-                                    </Form.Item>
-
-                                </Form>
-                            </div>
+                            </Form>
                         </div>
+
                     </div>
                 </div>
             </div>
