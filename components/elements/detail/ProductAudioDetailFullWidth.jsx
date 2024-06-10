@@ -15,9 +15,7 @@ const ProductAudioDetailFullWidth = ({
     ActiveTag,
 }) => {
 
-    const searchTag = (e) => {
-        Router.push(`/search?keyword=${e}`);
-    };
+
 
 
 
@@ -52,13 +50,9 @@ const ProductAudioDetailFullWidth = ({
                                             <div
                                                 key={i}
                                                 className="m-2 tag-product">
-                                                <Link href="#" as="#">
+                                                <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`}>
                                                     <a
-                                                        onClick={() =>
-                                                            searchTag(
-                                                                item?.name
-                                                            )
-                                                        }>
+                                                    >
                                                         {' '}
                                                         {item.name}{' '}
                                                     </a>

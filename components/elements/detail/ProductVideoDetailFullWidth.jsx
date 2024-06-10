@@ -14,15 +14,6 @@ const ProductVideoDetailFullWidth = ({
     ActiveTag,
     isPlay, setIsPlay
 }) => {
-    const [tag, setTag] = useState([]);
-
-    const searchTag = (e) => {
-        Router.push(`/search?keyword=${e}`);
-    };
-
-    useEffect(() => {
-        setTag(product?.tag);
-    }, []);
 
 
     return (
@@ -61,13 +52,8 @@ const ProductVideoDetailFullWidth = ({
                                     <div
                                         key={i}
                                         className="m-2 tag-product">
-                                        <Link href="#" as="#">
-                                            <a
-                                                onClick={() =>
-                                                    searchTag(
-                                                        item?.name
-                                                    )
-                                                }>
+                                        <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`} >
+                                            <a>
                                                 {' '}
                                                 {item.name}{' '}
                                             </a>
