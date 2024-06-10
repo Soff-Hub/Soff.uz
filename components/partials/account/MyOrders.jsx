@@ -269,7 +269,7 @@ export default function MyOrders() {
                                             <p
                                                 className='m-0 description_more'
 
-                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2",  }}
+                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2", }}
                                             >
                                                 {item?.description}
                                             </p>
@@ -328,7 +328,7 @@ export default function MyOrders() {
 
                                                             <div>
                                                                 <span className="text-success fs-5 fw-medium">
-                                                                    Buyurtma turi:
+                                                                    Kategoriyasi:
                                                                 </span>{' '}
                                                                 <span className="fw-medium text-secondary fs-5">
                                                                     {item?.type?.name}
@@ -341,7 +341,7 @@ export default function MyOrders() {
                                                 <div className='mt-3 d-flex justify-content-between'>
                                                     <div>
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Muddati:
+                                                            Tugash muddati:
                                                         </span>{' '}
                                                         <span className="fw-medium fs-5">
                                                             {item?.deadline_date}
@@ -414,7 +414,7 @@ export default function MyOrders() {
             </Modal>
 
             <Modal
-                title="Buyurtma tahrirlash"
+                title="Buyurtmani tahrirlash"
                 width={550}
                 centered
                 open={openUpdate}

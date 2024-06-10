@@ -253,7 +253,7 @@ export default function DealCart() {
 
                                                     <div >
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Buyurtma turi:
+                                                            Kategoriya:
                                                         </span>{' '}
                                                         <span className="fw-medium fs-5 text-secondary ">
                                                             {item?.type?.name}
@@ -263,7 +263,7 @@ export default function DealCart() {
 
                                                     <div >
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Muddati:
+                                                            Tugash muddati:
                                                         </span>{' '}
                                                         <span className="fw-medium text-secondary fs-5 ">
                                                             {item?.deadline_date}

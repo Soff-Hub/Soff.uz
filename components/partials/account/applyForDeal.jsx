@@ -150,7 +150,7 @@ export default function ApplyForDeal() {
 
                                                 <div >
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Buyurtma turi:
+                                                        Kategoriyasi:
                                                     </span>{' '}
                                                     <span className="fw-medium text-secondary fs-5">
                                                         {data?.type?.name ? data?.type?.name : "No Type"}
@@ -160,7 +160,7 @@ export default function ApplyForDeal() {
 
                                                 <div >
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Muddati:
+                                                        Tugash muddati:
                                                     </span>{' '}
                                                     <span className="fw-medium text-secondary fs-5">
                                                         {data?.deadline ? data?.deadline : "0"}
@@ -207,13 +207,13 @@ export default function ApplyForDeal() {
                             <div className="col-md-6  p-0 pr-md-3">
 
                                 <Form.Item
-                                    label={"Bajarilish muddati"}
+                                    label={"Tugatish muddati"}
                                     name="orders"
                                     className='mb-2'
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Buyurtma muddatini kiritish majburiy',
+                                            message: 'Tugatish muddatini kiritish majburiy',
                                         },
                                     ]}
 
@@ -221,7 +221,7 @@ export default function ApplyForDeal() {
                                     <DatePicker
                                         className="w-100 py-3  rounded-3"
                                         onChange={handleChange}
-                                        placeholder='Bajarilish muddati'
+                                        placeholder='Tugatish muddati'
                                     />
                                 </Form.Item>
                             </div>
