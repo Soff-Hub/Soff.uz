@@ -9,6 +9,7 @@ import { useRouter } from 'next/router';
 const { TextArea } = Input;
 
 
+
 export default function DealsList({ setOpen }) {
     const router = useRouter()
 
@@ -18,6 +19,7 @@ export default function DealsList({ setOpen }) {
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
+    const [contacInfo, setContacInfo] = useState('');
     const [lifetime, setLifetime] = useState('');
     const [type, setType] = useState('');
     const [loading, setLoading] = useState(false);
@@ -43,6 +45,7 @@ export default function DealsList({ setOpen }) {
             price: price,
             deadline_date: lifetime,
             type: type,
+            contact_info:contacInfo,
         };
         const ItemsData = await PostsRepository.postDeal(data, user?.access);
         if (ItemsData?.status == 201) {
@@ -181,6 +184,26 @@ export default function DealsList({ setOpen }) {
                                         options={
                                             optionType
                                         }></Select>
+                                </Form.Item>
+
+                                <Form.Item
+                                    label="Aloqa uchun malumot kiriting"
+                                    className="col-md-12   mx-auto mb-3"
+                                    name="contac_info"
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                'Aloqa uchun malumot kiriting kirtish majburiy',
+                                        },
+                                    ]}>
+                                    <Input
+                                        onChange={(e) =>
+                                            setContacInfo(
+                                                e.target.value
+                                            )
+                                        }
+                                        placeholder="Telefon, Elektron pochta, telegram username"></Input>
                                 </Form.Item>
 
 

@@ -8,6 +8,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 const { TextArea } = Input;
 
 
+
 export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }) {
     const [form] = Form.useForm();
     const { user } = useSelector((state) => state.auth);
@@ -18,6 +19,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
     const [type, setType] = useState('');
     const [loading, setLoading] = useState(false);
     const [dealType, setDealType] = useState(null);
+    const [contacInfo, setContacInfo] = useState('');
 
 
 
@@ -30,6 +32,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
             price: price ? price : Number(dataDetails?.price),
             deadline_date: lifetime ? lifetime : dataDetails?.deadline_date,
             type: type ? type : dataDetails?.type?.id,
+            contact_info: contacInfo ? contacInfo : dataDetails?.contact_info,
 
         };
         const ItemsData = await PatchRepository.patchDealUpdate(dataDetails?.id, data, user?.access);
@@ -144,6 +147,21 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                         }></Select>
 
                                 </Form.Item>
+                                <Form.Item
+                                    label="Aloqa uchun malumot kiriting"
+                                    className="col-md-12   mx-auto mb-3"
+                                    name={dataDetails?.contact_info}
+                                  >
+                                    <Input
+                                    defaultValue={dataDetails?.contact_info}
+                                        onChange={(e) =>
+                                            setContacInfo(
+                                                e.target.value
+                                            )
+                                        }
+                                        placeholder="Telefon, Elektron pochta, telegram username"></Input>
+                                </Form.Item>
+
 
 
                                 <Form.Item

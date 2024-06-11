@@ -6,6 +6,7 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { useSelector } from 'react-redux';
 const { TextArea } = Input;
 
+
 export default function ApplyForDeal() {
     const [form] = Form.useForm();
     const { user } = useSelector((state) => state.auth);
@@ -17,6 +18,7 @@ export default function ApplyForDeal() {
     const [loading, setLoading] = useState(false);
     const id = query?.pid;
     const router = useRouter();
+    const [contacInfo, setContacInfo] = useState('');
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -61,7 +63,8 @@ export default function ApplyForDeal() {
             description: description,
             price: price,
             deadline_date: lifetime,
-            deal: data?.id
+            deal: data?.id,
+            contact_info: contacInfo
 
         };
         const ItemsData = await PostsRepository.postDealAppliaction(data_form, user?.access);
@@ -163,7 +166,7 @@ export default function ApplyForDeal() {
                                                         Tugash muddati:
                                                     </span>{' '}
                                                     <span className="fw-medium text-secondary fs-5">
-                                                        {data?.deadline ? data?.deadline : "0"}
+                                                        {data?.deadline_date ? data?.deadline_date : "0"}
                                                     </span>
                                                 </div>
                                             </div>
@@ -246,6 +249,26 @@ export default function ApplyForDeal() {
                                     />
                                 </Form.Item>
                             </div>
+                            <Form.Item
+                                label="Aloqa uchun malumot kiriting"
+                                className="col-md-12 p-0  mx-auto mb-3"
+                                name="contac_info"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            'Aloqa uchun malumot kiriting kirtish majburiy',
+                                    },
+                                ]}>
+                                <Input
+                                    onChange={(e) =>
+                                        setContacInfo(
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="Telefon, Elektron pochta, telegram username"></Input>
+                            </Form.Item>
+
                             <div className="col-md-12 p-0  ">
                                 <Form.Item
                                     label="Taklif"

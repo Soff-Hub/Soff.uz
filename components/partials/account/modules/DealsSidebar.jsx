@@ -76,7 +76,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         },
         {
             url: '/account/deal-applications',
-            label: 'Men yuborgan arizlar',
+            label: 'Men yuborgan arizalar',
         },
         {
             url: '/account/my-orders',

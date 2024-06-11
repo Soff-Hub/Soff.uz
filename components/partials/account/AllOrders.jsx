@@ -22,26 +22,11 @@ export default function DealCart() {
     const [type, setType] = useState('');
     const [progressPrice, setProgressPrice] = useState(0);
     const [progressData, setProgressData] = useState(0);
-    const [isExpanded, setIsExpanded] = useState(2);
-    const [needsToggle, setNeedsToggle] = useState(false);
-    const [needsId, setNeedsId] = useState(null);
-    const [innerWidth, setInnerWidth] = useState(null);
     const tokens = user?.access;
     const { query } = useRouter();
     const { show } = query
 
 
-    function handleDescriptionMore(id) {
-        setNeedsId(id)
-        setIsExpanded(50);
-        setNeedsToggle(true)
-    }
-
-    function handleDescription(id) {
-        setNeedsId(id)
-        setIsExpanded(2);
-        setNeedsToggle(false)
-    }
 
     async function GetItemsProducts() {
         const token = user?.access
@@ -109,9 +94,6 @@ export default function DealCart() {
     }, [user?.access])
 
 
-    useEffect(() => {
-        setInnerWidth(window.innerWidth);
-    }, [])
 
     useEffect(() => {
         if (show === "modal") {
@@ -192,45 +174,10 @@ export default function DealCart() {
                                     <p
                                         className='m-0 description_more'
 
-                                        style={{
-                                            WebkitLineClamp: item?.id === needsId ? isExpanded : "2",
-                                            whiteSpace: 'pre-wrap'
-                                        }}
+                                        style={{whiteSpace: 'pre-wrap'}}
                                     >
                                         {item?.description}
                                     </p>
-
-                                    {
-                                        innerWidth < 414 ?
-                                            <div className='d-flex justify-content-end'>
-                                                {
-                                                    (needsToggle && (item?.id === needsId)) ?
-                                                        <span onClick={() => handleDescription(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                        </span> :
-                                                        <span onClick={() => handleDescriptionMore(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                        </span>
-                                                }
-                                            </div> :
-                                            item?.description?.length > 252 ?
-                                                <div className='d-flex justify-content-end'>
-                                                    {
-                                                        (needsToggle && (item?.id === needsId)) ?
-                                                            <span onClick={() => handleDescription(item?.id)}
-                                                                className='text-success' style={{ cursor: "pointer" }}>
-                                                                <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                            </span> :
-                                                            <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                className='text-success' style={{ cursor: "pointer" }}>
-                                                                <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                            </span>
-                                                    }
-                                                </div> : <></>
-
-                                    }
 
                                     <div>
                                         <div className="d-md-flex justify-content-between gap-4  ">
