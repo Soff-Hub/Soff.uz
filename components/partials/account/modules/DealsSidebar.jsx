@@ -128,7 +128,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         const token = user?.access;
         if (token) {
             const ws = new WebSocket(
-                `ws://192.168.1.14:8000/ws/deals?token=${token}`
+                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/deals?token=${token}`
             );
             setSocket(ws);
         }
