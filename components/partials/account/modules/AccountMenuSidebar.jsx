@@ -59,6 +59,8 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     };
 
+    
+
     async function ProfileUsersToken(token) {
         const ItemsData = await GetRepository.getProfileToken(token);
         if (Number(ItemsData?.status) == 403) {

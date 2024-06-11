@@ -10,7 +10,10 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     const { user } = useSelector((state) => state.auth);
     const [dealType, setDealType] = useState(null);
     const { RangePicker } = DatePicker;
-    const [price, setPrice] = useState(null)
+    const [price, setPrice] = useState(null);
+    const [webdata, setWebData] = useState(null);
+    const [socket, setSocket] = useState(null);
+
 
 
     const handleChange = (date) => {
@@ -95,6 +98,47 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     ]
 
 
+    useEffect(() => {
+        if (socket) {
+            socket.onmessage = (event) => {
+                setWebData(JSON.parse(event?.data));
+            };
+
+            socket.onopen = () => {
+                console.log('WebSocket connection established');
+            };
+
+            socket.onclose = () => {
+                console.log('WebSocket connection closed');
+            };
+
+            socket.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+            return () => {
+                socket.close();
+            };
+        }
+    }, [socket]);
+
+
+
+
+    useEffect(() => {
+        const token = user?.access;
+        if (token) {
+            const ws = new WebSocket(
+                `ws://192.168.1.14:8000/ws/deals?token=${token}`
+            );
+            setSocket(ws);
+        }
+    }, [user?.access]);
+
+
+
+    console.log(webdata);
+
+
     return (
         <div className="w-100 ">
             <div className="p-3 bg-white mb-4">
@@ -108,7 +152,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                             sidebarMenu.map(el => (
                                 <div
                                     key={el.url}
-                                    className='py-3 px-3'
+                                    className='py-3 px-3 d-flex justify-content-between'
                                     onClick={() => Router.push(el.url)}
                                     style={{
                                         borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
@@ -116,6 +160,39 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                         cursor: 'pointer'
                                     }}>
                                     {el.label}
+                                    {
+                                        (el.url === "/account/deal-applications" && webdata?.sent_applications > 0) ?
+                                            <strong
+                                                className="text-white bg-warning fs-5"
+                                                style={{
+                                                    width: "22px",
+                                                    height: "22px",
+                                                    borderRadius: "50%",
+                                                    display: "grid",
+                                                    placeContent: "center"
+                                                }}
+                                            >
+                                                {webdata?.sent_applications}
+                                            </strong> : <></>
+                                    }
+
+                                    {
+                                        (el.url === "/account/applications-received" && webdata?.received_applications > 0) ?
+                                            <strong
+                                                className="text-white bg-warning fs-5"
+                                                style={{
+                                                    width: "22px",
+                                                    height: "22px",
+                                                    borderRadius: "50%",
+                                                    display: "grid",
+                                                    placeContent: "center"
+                                                }}
+                                            >
+                                                {webdata?.received_applications}
+                                            </strong> : <></>
+                                    }
+
+
                                 </div>
                             )) :
                             sidebarMenuToken.map(el => (
@@ -137,7 +214,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
             </div>
             {asPath === "/account/all-orders" && <div className="p-3 bg-white">
                 <span className="d-block px-2 text-success fw-bold ">
-                <i class="fa-solid fa-sliders"></i> Filterlash
+                    <i class="fa-solid fa-sliders"></i> Filterlash
                 </span>
 
                 <span className="d-block p-2  fw-bold ">
