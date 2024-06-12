@@ -367,7 +367,7 @@ export default function ApplicationsReceiveds() {
                                                             )
                                                         }
                                                         {
-                                                            item?.status !== 'active' ?
+                                                            item?.status === 'new' ?
 
                                                                 <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
                                                                     <i className="fa-solid fa-pen-to-square ml-3 text-success-emphasis"></i>

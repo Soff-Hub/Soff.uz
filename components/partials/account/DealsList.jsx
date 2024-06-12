@@ -45,7 +45,7 @@ export default function DealsList({ setOpen }) {
             price: price,
             deadline_date: lifetime,
             type: type,
-            contact_info:contacInfo,
+            contact_info: contacInfo,
         };
         const ItemsData = await PostsRepository.postDeal(data, user?.access);
         if (ItemsData?.status == 201) {
@@ -142,6 +142,11 @@ export default function DealsList({ setOpen }) {
                                         formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
                                         onChange={(e) => setPrice(e)}
+                                        onKeyPress={(e) => {
+                                            if (!/[0-9]/.test(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
 
                                 </Form.Item>

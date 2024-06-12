@@ -23,7 +23,9 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
 
 
 
+
     async function postOrder() {
+        setOpen2(false)
         form.resetFields();
         setLoading(true);
         const data = {
@@ -116,7 +118,13 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                         formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
                                         onChange={(e) => setPrice(e)}
+                                        onKeyPress={(e) => {
+                                            if (!/[0-9]/.test(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
+
                                 </Form.Item>
 
                                 <Form.Item
@@ -151,9 +159,9 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                     label="Aloqa uchun malumot kiriting"
                                     className="col-md-12   mx-auto mb-3"
                                     name={dataDetails?.contact_info}
-                                  >
+                                >
                                     <Input
-                                    defaultValue={dataDetails?.contact_info}
+                                        defaultValue={dataDetails?.contact_info}
                                         onChange={(e) =>
                                             setContacInfo(
                                                 e.target.value

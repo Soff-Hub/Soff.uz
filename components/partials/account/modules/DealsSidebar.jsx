@@ -146,10 +146,6 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
 
 
 
-
-    console.log(webdata);
-
-
     return (
         <div className="w-100 ">
             <div className="p-3 bg-white mb-4">
