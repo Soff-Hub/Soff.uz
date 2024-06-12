@@ -241,11 +241,17 @@ export default function ApplyForDeal() {
                                         },
                                     ]}>
                                     <InputNumber
+
                                         placeholder="Narxi"
                                         className='w-100 py-2'
                                         formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                         parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
                                         onChange={(e) => setPrice(e)}
+                                        onKeyPress={(e) => {
+                                            if (!/[0-9]/.test(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
                                 </Form.Item>
                             </div>
