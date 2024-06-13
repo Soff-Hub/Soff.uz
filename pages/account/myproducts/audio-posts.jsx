@@ -355,8 +355,8 @@ const AudioPosts = () => {
                                     <Input
                                         name="title"
                                         type="text"
-                                        className={"col-md-8 mb-2"}
-                                        InputClassName={"form-control  rounded-3 "}
+                                        className={"col-md-8 mb-2 "}
+                                        InputClassName={"form-control  rounded-3  bg-white "}
                                         {...register('title', {
                                             required: 'Maydon toldirish majburiy',
                                             validate: value => value.trim() !== "" || "Nomi bo'sh bo'lishi mumkin emas"
@@ -402,7 +402,7 @@ const AudioPosts = () => {
                                     </div>
                                     <div className='col-md-8 p-0'>
                                         <label
-                                            className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
+                                            className="add-product-user-image bg-white d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
                                             style={{
                                                 height: '61px',
                                                 backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',

@@ -159,8 +159,9 @@ const HomeElectronicsPage = () => {
             />
 
             {memoizedBanner}
-            <VedioPage />
+            <VedioPage /> 
             {memoizedCard}
+
             <ElectronicTopSellersGroupWithCarousel
                 collectionSlug="electronics-top-sellers"
                 title={topSellers.name}

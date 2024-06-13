@@ -41,7 +41,7 @@ const WidgetShopCategories = ({ data }) => {
     };
     const renderAccordionItems = () => {
         return category?.map((item, i) => (
-            <li key={item.id} className={item.slug === slug ? 'active' : ''}>
+            <li key={item.id} className={item.slug === slug ? 'active px-0' : ' px-0'}>
                 {item.is_childe ? (
                     <div className="accordion accordion-flush" id={`accordion-${i}`}>
                         <div
@@ -50,9 +50,9 @@ const WidgetShopCategories = ({ data }) => {
                         >
                           <Link href={`/category/${item.slug}`}>
                           <a>
-                          <h2 className="accordion-header active" id={`heading-${i}`}>
+                          <h2 className="accordion-header active " id={`heading-${i}`}>
                                 <button
-                                    className={`accordion-button ${activeAccordionIndex === i ? '' : 'collapsed'
+                                    className={`accordion-button border ${activeAccordionIndex === i ? '' : 'collapsed'
                                         }`}
                                     type="button"
                                     onClick={() => handleAccordionClick(i, item.slug)}

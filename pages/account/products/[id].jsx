@@ -332,7 +332,7 @@ const PostsProductsEdit = () => {
 
                                     <input
                                         type="text"
-                                        className="form-control  rounded-3 col-md-8 mb-3 "
+                                        className="form-control  rounded-3 col-md-8 mb-3 bg-white "
                                         placeholder="Mahsulot nomi"
                                         name="title"
                                         onChange={(e) => setTitle(e.target.value)}
@@ -500,7 +500,7 @@ const PostsProductsEdit = () => {
 
                                     <input
                                         type="number"
-                                        className="form-control  rounded-3 col-md-8 mb-3 "
+                                        className="form-control bg-white  rounded-3 col-md-8 mb-3 "
                                         placeholder="Sahifa soni"
                                         name="title"
                                         onChange={(e) => setPageCount(e.target.value)}

@@ -133,7 +133,7 @@ export default function ProductCategoryScreen({ category2 }) {
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories data={category} />
+                            <WidgetShopCategories data={category} /> 
                             <WidgetShopFilterByPriceRange
                                 setFilteredData={setFilteredData}
                                 chaildId={chaildId}

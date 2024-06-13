@@ -285,7 +285,7 @@ const Posts = () => {
                                                 name="title"
                                                 type="text"
                                                 className={"col-md-12 mb-2"}
-                                                InputClassName={"form-control  rounded-3 "}
+                                                InputClassName={"form-control  rounded-3 bg-white "}
                                                 {...register('title', {
                                                     required: "Video nomini to'ldirish majburiy",
                                                     validate: value => value.trim() !== "" || "Video nomi bo'sh bo'lishi mumkin emas"
@@ -374,7 +374,7 @@ const Posts = () => {
                                             <div className='w-full'>
 
                                                 <label
-                                                    className="add-product-user-image d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
+                                                    className="add-product-user-image  bg-white d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
                                                     style={{
                                                         backgroundColor: '#F1F1F1',
                                                         border: "1px dashed green",
@@ -439,7 +439,7 @@ const Posts = () => {
                                             <div className='w-full'>
 
                                                 <div
-                                                    className="add-product-user-image d-flex justify-content-between gap-3  form-control p-2 pt-2 rounded-3"
+                                                    className="add-product-user-image bg-white  d-flex justify-content-between gap-3  form-control p-2 pt-2 rounded-3"
                                                     style={{
                                                         backgroundColor: '#F1F1F1',
                                                         border: "1px dashed green",
@@ -581,7 +581,7 @@ const Posts = () => {
                                 </div>
                                 {/* <div className="row"> */}
                                 <label
-                                    className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
+                                    className="add-product-user-image d-flex flex-column bg-white justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
                                     style={{
                                         backgroundColor: '#F1F1F1',
                                         border: '1px dashed green',

@@ -14,7 +14,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
     let productItemsView;
     if (data && data?.promotional_sliders?.length > 0) {
         productItemsView = (
-            <div className="d-flex align-content-center row">
+            <div className="d-flex align-content-center row px-3">
                 {data?.promotional_sliders?.slice(0, 6).map((item, index) => (
                     item?.document?.content_type === 'audio' ?
                         <div
@@ -32,7 +32,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
 
                             <div
                                 key={index}
-                                className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6">
+                                className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 px-2">
                                 <Product product={item} />
                             </div>
                 ))}
@@ -46,7 +46,7 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
 
 
     return (
-        <div className="ps-product-list">
+        <div className="ps-product-list mb-5">
             <div className="container">
                 <div className="ps-section__header">
                     <h3 className="titleeeeeeee">{title}</h3>
@@ -62,17 +62,17 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                     </ul>
                 </div>
                 {title === 'Audio materiallar' ? (
-                    <div className="ps-section__content">
+                    <div className="ps-section__content pt-5">
                         {productItemsView}
                     </div>
                 ) :
                     title === 'Video materiallar' ? (
-                        <div className="ps-section__content">
+                        <div className="ps-section__content pt-5">
                             {productItemsView}
                         </div>
                     )
                         : (
-                            <div className="ps-section__content">
+                            <div className="ps-section__content pt-5">
                                 {productItemsView}
                             </div>
                         )}

@@ -304,7 +304,7 @@ const Posts = () => {
                                                 name="title"
                                                 type="text"
                                                 className={"col-md-12 mb-2"}
-                                                InputClassName={"form-control  rounded-3 "}
+                                                InputClassName={"form-control  rounded-3 bg-white "}
                                                 {...register('title', {
                                                     required: "Video nomini to'ldirish majburiy",
                                                     validate: value => value.trim() !== "" || "Video nomi bo'sh bo'lishi mumkin emas"
