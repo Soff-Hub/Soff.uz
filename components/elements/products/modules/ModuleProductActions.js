@@ -7,6 +7,7 @@ import useWishlist from '~/hooks/useWishlist';
 import Router from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
+import Axios from 'axios';
 
 const ModuleProductActions = ({ product, audio }) => {
     const [isQuickView, setIsQuickView] = useState(false);
@@ -90,6 +91,10 @@ const ModuleProductActions = ({ product, audio }) => {
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
+            const apiResponse = await Axios.post(
+                baseUrl + `seller/upload-count/${product.id}`
+            );
+
         } catch (error) {
             console.error('Error downloading file: ', error);
         } finally {

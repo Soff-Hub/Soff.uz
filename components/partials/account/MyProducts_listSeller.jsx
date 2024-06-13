@@ -10,6 +10,7 @@ import axios from 'axios';
 import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
 import Link from "next/link"
+import { baseUrl } from '~/repositories/Repository';
 
 function MyProductsListsSeller() {
     const [data, setData] = useState([]);
@@ -124,6 +125,11 @@ function MyProductsListsSeller() {
             document.body.appendChild(a);
             a.click();
             window.URL.revokeObjectURL(url);
+
+            const apiResponse = await axios.post(
+                baseUrl + `seller/upload-count/${fileContent?.id}`
+            );
+
             setLoading2(null);
         } catch (error) {
             console.error('Error downloading file: ', error);
