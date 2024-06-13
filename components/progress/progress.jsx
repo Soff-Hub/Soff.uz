@@ -94,6 +94,8 @@ const Progress = ({
         xhr.send(formData);
     }
 
+    console.log((total == totalLoad) && (status === 201) && !loading);
+
     return (
         <div className="wrapper bg-white">
 
