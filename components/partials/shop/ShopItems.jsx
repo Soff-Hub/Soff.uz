@@ -353,7 +353,7 @@ const ShopItems = ({
                             ) : (
 
                                 <div
-                                    className={classes + ' home-card-category'}
+                                    className={classes + ' home-card-category mb-3'}
                                     key={item.id}
                                     style={{
                                         display: 'flex',
