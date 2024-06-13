@@ -109,7 +109,12 @@ export default function DealOrderEdit({ dealItem, setIsModalOpenUpdate }) {
                                     }
                                 </a>
                             </Link>
+
                         </div>
+                            <span className="fw-medium  text-start text-success fs-5  ">Aloqa: <span className="text-secondary fs-5 fw-medium ">
+                                {dealItem?.user_info?.contact_info ? dealItem?.user_info?.contact_info : '+998 (91) 008 67 89'}
+                            </span> </span>{' '}
+
                         {dealItem?.status === 'active' ? (
                             <div className="rounded-3 d-flex justify-content-start align-items-center gap-2 p-1 ">
                                 {' '}
