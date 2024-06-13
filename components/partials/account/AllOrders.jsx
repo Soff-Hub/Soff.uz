@@ -174,7 +174,7 @@ export default function DealCart() {
                                     <p
                                         className='m-0 description_more'
 
-                                        style={{whiteSpace: 'pre-wrap'}}
+                                        style={{ whiteSpace: 'pre-wrap' }}
                                     >
                                         {item?.description}
                                     </p>
@@ -314,16 +314,19 @@ export default function DealCart() {
             </Modal>
 
             <Modal
-                title="Buyurtma yaratish"
+                title="Urinish sotib oling !"
                 width={550}
                 centered
                 open={openPayment}
                 onOk={() => Router?.push('/account/deal-payment')}
                 okText="Sotib olish"
-                cancelText="Bekor qilish"
+
                 cancelButtonProps={{
-                    className: 'cancel-button',
+                    style: {
+                        display: 'none',
+                    },
                 }}
+
                 okButtonProps={{
                     style: {
                         backgroundColor: '#28a745'
@@ -331,7 +334,10 @@ export default function DealCart() {
                 }}
                 onCancel={() => setOpenPayment(false)}>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore praesentium vero deserunt quidem voluptate deleniti animi excepturi, nemo in consequatur sed odio ipsam repudiandae iste repellat id rerum quae modi, dolores dolor ipsum illum quasi? Consequuntur quidem saepe expedita optio molestiae est, eligendi cupiditate ipsum reprehenderit, officiis magni, sit esse.</p>
+                <p
+                className='fw-medium fs-4'
+                
+                >Sizda urinishlar soni tugagan. Iltimos ariza yuborish uchun urinishlar sonini sotib oling !!!</p>
             </Modal>
 
 
