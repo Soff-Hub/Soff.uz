@@ -5,20 +5,10 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import ModuleDetailShoppingActions from '~/components/elements/detail/modules/ModuleDetailShoppingActions';
 import ModuleDetailTopInformation from '~/components/elements/detail/modules/ModuleDetailTopInformation';
 import Link from 'next/link';
-import Router from 'next/router';
 
 const ProductDetailFullwidth = ({ product, views }) => {
-    const [tag, setTag] = useState([]);
+   
 
-    const searchTag = (e) => {
-        Router.push(`/search?keyword=${e}`);
-    };
-
-    useEffect(() => {
-        setTag(product?.tag);
-    }, []);
-
-    
 
     return (
         <>
@@ -26,7 +16,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                 <div className="ps-product__header ">
                     <ThumbnailDefault product={product} views={views?.view_count} />
                     <div className="ps-product__info">
-                        <ModuleDetailTopInformation product={product} /> 
+                        <ModuleDetailTopInformation product={product} />
 
                         <ModuleProductDetailDescription
                             product={product}
@@ -37,14 +27,12 @@ const ProductDetailFullwidth = ({ product, views }) => {
                         />
                         <p>Tezkor teglar</p>
                         <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                            {tag?.length > 0 &&
-                                tag.slice(0, 15).map((item, i) => (
+                            {product?.tag?.length > 0 &&
+                                product?.tag.slice(0, 15).map((item, i) => (
                                     <div key={i} className="m-2 tag-product">
-                                        <Link href="#" as="#">
+                                        <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`}>
                                             <a
-                                                onClick={() =>
-                                                    searchTag(item?.name)
-                                                }>
+                                               >
                                                 {' '}
                                                 {item.name}{' '}
                                             </a>
@@ -59,7 +47,7 @@ const ProductDetailFullwidth = ({ product, views }) => {
                 ) : (
                     ''
                 )}
-            </div>
+            </div >
         </>
     );
 };
