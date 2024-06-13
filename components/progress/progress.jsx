@@ -95,7 +95,7 @@ const Progress = ({
     }
 
     return (
-        <div className="wrapper">
+        <div className="wrapper bg-white">
 
 
             <form ref={formRef} action="#" onClick={handleProgress}

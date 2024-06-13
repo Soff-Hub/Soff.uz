@@ -342,7 +342,7 @@ const PostsMyProducts = () => {
                                     name="title"
                                     type="text"
                                     className={"col-md-8 mb-2"}
-                                    InputClassName={"form-control  rounded-3 "}
+                                    InputClassName={"form-control  rounded-3 bg-white "}
                                     {...register('title', {
                                         required: 'Maydon toldirish majburiy',
                                         validate: value => value.trim() !== "" || "Nomi bo'sh bo'lishi mumkin emas"
@@ -405,7 +405,7 @@ const PostsMyProducts = () => {
 
                             {products?.document?.content_type !== 'audio' ? (
                                 <div className="row mb-3">
-                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
+                                    <div className="col-md-4 mt-2 d-flex justify-content-between p-0 ">
                                         <p>Mahsulot rasmi: *</p>
                                         <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin: .jpeg yoki .jpg, .png, .psd, .svg">
                                             <i
@@ -414,7 +414,7 @@ const PostsMyProducts = () => {
                                         </Tooltip>
                                     </div>
                                     <div
-                                        className="add-product-user-image d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
+                                        className="add-product-user-image bg-white d-flex justify-content-between col-md-8  form-control pt-2 rounded-3"
                                         style={{
                                             backgroundColor: '#F1F1F1',
                                             border: `1px dashed green`,
@@ -562,7 +562,7 @@ const PostsMyProducts = () => {
 
                                 <input
                                     type="number"
-                                    className="form-control  rounded-3 col-md-8 mb-3 "
+                                    className="form-control  rounded-3 col-md-8 mb-3 bg-white "
                                     placeholder="Sahifa soni"
                                     name="title"
                                     onChange={(e) => setPageCount(e.target.value)}
