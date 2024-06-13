@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import ModuleProductActions from '~/components/elements/products/modules/ModuleProductActions';
 import useProduct from '~/hooks/useProduct';
@@ -6,6 +6,7 @@ import useProduct from '~/hooks/useProduct';
 
 const Product = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
+    const [countShow, setCountShow] = useState(false);
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -22,15 +23,36 @@ const Product = ({ product }) => {
                 : formattedIntegerPart;
 
         return formattedNumber;
-        
+
     }
+
+
     return (
-        <div className="ps-product">
+        <div className="ps-product"
+            onMouseEnter={() => setCountShow(true)}
+            onMouseLeave={() => setCountShow(false)}
+
+        >
             <div
                 className="ps-product__thumbnail"
                 style={{
                     margin: '0 auto',
                 }}>
+                {
+                    (product?.views_count || product?.views_count === 0) &&
+                    <p className='text-end mb-0 mt-1'
+                        style={{
+                            fontSize: "12px",
+                            opacity: countShow ? "1" : "0",
+                            transition: "opacity 0.3s linear"
+                        }}
+                    ><i className='fa-solid fa-eye '
+                        style={{
+                            fontSize: "10px",
+                        }}></i> {product?.views_count}</p>
+
+                }
+
                 <Link href="/product/[pid]" as={`/product/${product.slug}`}>
                     <a
                         style={{
