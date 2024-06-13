@@ -18,7 +18,7 @@ export default function ApplicationsReceiveds() {
     const [productsIdUpdate, setProductsIdUpdate] = useState('');
     const [pageCount, setPageCount] = useState(0);
     const [open, setOpen] = useState(false);
-    const [openPosts,setOpenPosts] = useState(false);
+    const [openPosts, setOpenPosts] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
     const [category, setCategory] = useState(null);
     const [filterData, setFilterData] = useState([]);
@@ -158,7 +158,9 @@ export default function ApplicationsReceiveds() {
 
 
     useEffect(() => {
-        GetItemsProductsFilter()
+        if (user?.access) {
+            GetItemsProductsFilter()
+        }
     }, [keyword]);
 
 
