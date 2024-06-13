@@ -1,5 +1,6 @@
 import Axios from 'axios';
 import axios from 'axios';
+import { baseUrl } from '~/repositories/Repository';
 
 export const stickyHeader = () => {
     let number =
@@ -26,10 +27,10 @@ export const generateTempArray = (maxItems) => {
     return result;
 };
 
-
-
 export const audioDownloaderSale = async (file, product) => {
-    const filee = file?.document?.file_url.includes('?AWSAccessKeyId=') ? file?.document?.file_url.split('?')[0] : file?.document?.file_url
+    const filee = file?.document?.file_url.includes('?AWSAccessKeyId=')
+        ? file?.document?.file_url.split('?')[0]
+        : file?.document?.file_url;
     try {
         const response = await Axios.get(filee, {
             responseType: 'blob',
@@ -39,17 +40,22 @@ export const audioDownloaderSale = async (file, product) => {
         const a = document.createElement('a');
         a.href = url;
         a.download =
-            'soff.uz -' + product?.title  +
+            'soff.uz -' +
+            product?.title +
             '.' +
-            filee?.split('.')[
-                filee?.split('.').length - 1
-            ];
+            filee?.split('.')[filee?.split('.').length - 1];
         document.body.appendChild(a);
         a.click();
         window.URL.revokeObjectURL(url);
-        return true
+
+        const apiResponse = await Axios.post(
+            baseUrl + `seller/upload-count/${product.id}`
+        );
+
+        return true;
     } catch (error) {
+    
         console.error('Error downloading file: ', error);
-        return Promise.reject(error)
+        return Promise.reject(error);
     }
 };
