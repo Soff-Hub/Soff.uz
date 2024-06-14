@@ -349,8 +349,8 @@ const Posts = () => {
                                 <Input
                                     name="title"
                                     type="text"
-                                    className={"col-md-8 mb-2"}
-                                    InputClassName={"form-control  rounded-3 "}
+                                    className={"col-md-8 mb-2 "}
+                                    InputClassName={"form-control  rounded-3  bg-white"}
                                     {...register('title', {
                                         required: "Shablon nomini to'ldirish majburiy",
                                         validate: value => value.trim() !== "" || "Shablon nomi bo'sh bo'lishi mumkin emas"
@@ -396,7 +396,7 @@ const Posts = () => {
 
                                 <div className='col-md-8 p-0'>
                                     <div
-                                        className="add-product-user-image d-flex justify-content-between  form-control pt-2 rounded-3"
+                                        className="add-product-user-image bg-white d-flex justify-content-between  form-control pt-2 rounded-3"
                                         style={{
                                             height: '100px',
                                             backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',

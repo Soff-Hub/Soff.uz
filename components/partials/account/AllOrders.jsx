@@ -22,24 +22,11 @@ export default function DealCart() {
     const [type, setType] = useState('');
     const [progressPrice, setProgressPrice] = useState(0);
     const [progressData, setProgressData] = useState(0);
-    const [isExpanded, setIsExpanded] = useState(2);
-    const [needsToggle, setNeedsToggle] = useState(false);
-    const [needsId, setNeedsId] = useState(null);
-    const [innerWidth, setInnerWidth] = useState(null);
-    const tokens = user?.access
+    const tokens = user?.access;
+    const { query } = useRouter();
+    const { show } = query
 
 
-    function handleDescriptionMore(id) {
-        setNeedsId(id)
-        setIsExpanded(50);
-        setNeedsToggle(true)
-    }
-
-    function handleDescription(id) {
-        setNeedsId(id)
-        setIsExpanded(2);
-        setNeedsToggle(false)
-    }
 
     async function GetItemsProducts() {
         const token = user?.access
@@ -107,9 +94,13 @@ export default function DealCart() {
     }, [user?.access])
 
 
+
     useEffect(() => {
-        setInnerWidth(window.innerWidth);
+        if (show === "modal") {
+            setOpen(true)
+        }
     }, [])
+
 
 
     return (
@@ -144,8 +135,8 @@ export default function DealCart() {
                         <span style={{ cursor: 'pointer' }} >
                             <i className="fa-solid fa-circle-question text-warning"></i>
                         </span>
-                        <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
                     </Tooltip>
+                    <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
 
                     <Progress
                         className='p-0 w-100'
@@ -183,45 +174,10 @@ export default function DealCart() {
                                     <p
                                         className='m-0 description_more'
 
-                                        style={{
-                                            WebkitLineClamp: item?.id === needsId ? isExpanded : "2",
-                                            whiteSpace: 'pre-wrap'
-                                        }}
+                                        style={{ whiteSpace: 'pre-wrap' }}
                                     >
                                         {item?.description}
                                     </p>
-
-                                    {
-                                        innerWidth < 414 ?
-                                            <div className='d-flex justify-content-end'>
-                                                {
-                                                    (needsToggle && (item?.id === needsId)) ?
-                                                        <span onClick={() => handleDescription(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                        </span> :
-                                                        <span onClick={() => handleDescriptionMore(item?.id)}
-                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                        </span>
-                                                }
-                                            </div> :
-                                            item?.description?.length > 252 ?
-                                                <div className='d-flex justify-content-end'>
-                                                    {
-                                                        (needsToggle && (item?.id === needsId)) ?
-                                                            <span onClick={() => handleDescription(item?.id)}
-                                                                className='text-success' style={{ cursor: "pointer" }}>
-                                                                <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                            </span> :
-                                                            <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                className='text-success' style={{ cursor: "pointer" }}>
-                                                                <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                            </span>
-                                                    }
-                                                </div> : <></>
-
-                                    }
 
                                     <div>
                                         <div className="d-md-flex justify-content-between gap-4  ">
@@ -244,7 +200,7 @@ export default function DealCart() {
 
                                                     <div >
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Buyurtma turi:
+                                                            Kategoriya:
                                                         </span>{' '}
                                                         <span className="fw-medium fs-5 text-secondary ">
                                                             {item?.type?.name}
@@ -254,7 +210,7 @@ export default function DealCart() {
 
                                                     <div >
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Muddati:
+                                                            Tugash muddati:
                                                         </span>{' '}
                                                         <span className="fw-medium text-secondary fs-5 ">
                                                             {item?.deadline_date}
@@ -358,16 +314,19 @@ export default function DealCart() {
             </Modal>
 
             <Modal
-                title="Buyurtma yaratish"
+                title="Urinish sotib oling !"
                 width={550}
                 centered
                 open={openPayment}
                 onOk={() => Router?.push('/account/deal-payment')}
                 okText="Sotib olish"
-                cancelText="Bekor qilish"
+
                 cancelButtonProps={{
-                    className: 'cancel-button',
+                    style: {
+                        display: 'none',
+                    },
                 }}
+
                 okButtonProps={{
                     style: {
                         backgroundColor: '#28a745'
@@ -375,7 +334,10 @@ export default function DealCart() {
                 }}
                 onCancel={() => setOpenPayment(false)}>
 
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore praesentium vero deserunt quidem voluptate deleniti animi excepturi, nemo in consequatur sed odio ipsam repudiandae iste repellat id rerum quae modi, dolores dolor ipsum illum quasi? Consequuntur quidem saepe expedita optio molestiae est, eligendi cupiditate ipsum reprehenderit, officiis magni, sit esse.</p>
+                <p
+                className='fw-medium fs-4'
+                
+                >Sizda urinishlar soni tugagan. Iltimos ariza yuborish uchun urinishlar sonini sotib oling !!!</p>
             </Modal>
 
 

@@ -64,11 +64,11 @@ const ShopItems = ({
     function handleSetColumns() {
         switch (columns) {
             case 2:
-                setClasses('col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6');
+                setClasses('col-xl-6 col-lg-6 col-md-6 col-sm-6 col-6 px-2');
                 return 3;
                 break;
             case 4:
-                setClasses('col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6');
+                setClasses('col-xl-3 col-lg-4 col-md-4 col-sm-6 col-6 px-2');
                 return 4;
                 break;
             case 6:
@@ -341,19 +341,19 @@ const ShopItems = ({
                 newData?.map((item) => (
                     <>
                         {item?.document?.content_type === 'audio' ? (
-                            <div className="col-12 my-3">
+                            <div className="col-12 my-2">
                                 <AudioWaveform product={item} inCategory={true} />
                             </div>
                         ) :
 
                             item?.document?.content_type === 'video' ? (
-                                <div  className="col-md-4 mobile_category_lists_cards  my-3 ">
+                                <div  className="col-md-4 px-2  my-2 ">
                                     <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
                                 </div>
                             ) : (
 
                                 <div
-                                    className={classes + ' home-card-category'}
+                                    className={classes + ' home-card-category mb-3'}
                                     key={item.id}
                                     style={{
                                         display: 'flex',

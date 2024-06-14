@@ -300,12 +300,16 @@ export default function DealOrderList() {
                                                                 </Link>
 
 
-                                                                <div>
+                                                                <div className='d-flex flex-column'>
 
-                                                                    <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
-                                                                    <span className="text-secondary fs-5 fw-medium ">
+                                                                    <span className="fw-medium text-success fs-5  ">Aloqa: <span className="text-secondary fs-5 fw-medium ">
+                                                                        {dealItem?.user_info?.contact_info ? dealItem?.user_info?.contact_info : '+998 (91) 008 67 89'}
+                                                                    </span> </span>{' '}
+                                                                    <span className="fw-medium text-success fs-5  ">Narxi: <span className="text-secondary fs-5 fw-medium ">
                                                                         {addPeriodToThousands(dealItem?.price)} so'm
-                                                                    </span>
+                                                                    </span> </span>{' '}
+
+
                                                                 </div>
 
                                                             </div>

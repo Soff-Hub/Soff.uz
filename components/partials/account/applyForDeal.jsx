@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Button, DatePicker, Form, Input, Modal } from 'antd';
+import { Button, DatePicker, Form, Input, InputNumber, Modal } from 'antd';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useRouter } from 'next/router';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { useSelector } from 'react-redux';
 const { TextArea } = Input;
+
 
 export default function ApplyForDeal() {
     const [form] = Form.useForm();
@@ -17,6 +18,7 @@ export default function ApplyForDeal() {
     const [loading, setLoading] = useState(false);
     const id = query?.pid;
     const router = useRouter();
+    const [contacInfo, setContacInfo] = useState('');
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -61,7 +63,8 @@ export default function ApplyForDeal() {
             description: description,
             price: price,
             deadline_date: lifetime,
-            deal: data?.id
+            deal: data?.id,
+            contact_info: contacInfo
 
         };
         const ItemsData = await PostsRepository.postDealAppliaction(data_form, user?.access);
@@ -150,7 +153,7 @@ export default function ApplyForDeal() {
 
                                                 <div >
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Buyurtma turi:
+                                                        Kategoriyasi:
                                                     </span>{' '}
                                                     <span className="fw-medium text-secondary fs-5">
                                                         {data?.type?.name ? data?.type?.name : "No Type"}
@@ -160,10 +163,10 @@ export default function ApplyForDeal() {
 
                                                 <div >
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Muddati:
+                                                        Tugash muddati:
                                                     </span>{' '}
                                                     <span className="fw-medium text-secondary fs-5">
-                                                        {data?.deadline ? data?.deadline : "0"}
+                                                        {data?.deadline_date ? data?.deadline_date : "0"}
                                                     </span>
                                                 </div>
                                             </div>
@@ -195,25 +198,25 @@ export default function ApplyForDeal() {
                             form={form}
                             onFinish={postOrder}
                             className="row  py-4 border border-3 rounded-3 px-4 mb-5 bg-white ">
-                            <div >
+                            {/* <div >
                                 <h4> Интегрировать платежную систему на сайт ларавел </h4>
                                 <p>1.сайт интернет магазин чтобы показавилось на фронте как платежный метнод , также показала статус платежа</p>
                                 <p>2.сайт интернет магазин чтобы показавилось на фронте как айт интернет магазин чтобы показавилось на фронте  платежный метнод , также показала статус платежа</p>
                                 <p>3.сайт интернет магазин чтобы показавилось на фронте как платежный метнод , также показала статус платежа</p>
                                 <p>4.сайт интернет магазин чтобы показавилось на фронте как айт интернет магазин чтобы показавилось на фронте  платежный метнод , также показала статус платежа</p>
-                            </div>
+                            </div> */}
 
 
                             <div className="col-md-6  p-0 pr-md-3">
 
                                 <Form.Item
-                                    label={"Bajarilish muddati"}
+                                    label={"Tugatish muddati"}
                                     name="orders"
                                     className='mb-2'
                                     rules={[
                                         {
                                             required: true,
-                                            message: 'Buyurtma muddatini kiritish majburiy',
+                                            message: 'Tugatish muddatini kiritish majburiy',
                                         },
                                     ]}
 
@@ -221,7 +224,7 @@ export default function ApplyForDeal() {
                                     <DatePicker
                                         className="w-100 py-3  rounded-3"
                                         onChange={handleChange}
-                                        placeholder='Bajarilish muddati'
+                                        placeholder='Tugatish muddati'
                                     />
                                 </Form.Item>
                             </div>
@@ -237,12 +240,41 @@ export default function ApplyForDeal() {
                                             message: 'Buyurtma narxini kiritish majburiy',
                                         },
                                     ]}>
-                                    <Input
-                                        type='number'
-                                        onChange={(e) => setPrice(e.target.value)}
-                                        placeholder="Narxi" />
+                                    <InputNumber
+
+                                        placeholder="Narxi"
+                                        className='w-100 py-2'
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                        onChange={(e) => setPrice(e)}
+                                        onKeyPress={(e) => {
+                                            if (!/[0-9]/.test(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
                                 </Form.Item>
                             </div>
+                            <Form.Item
+                                label="Aloqa uchun malumot kiriting"
+                                className="col-md-12 p-0  mx-auto mb-3"
+                                name="contac_info"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message:
+                                            'Aloqa uchun malumot kiriting kirtish majburiy',
+                                    },
+                                ]}>
+                                <Input
+                                    onChange={(e) =>
+                                        setContacInfo(
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="Telefon, Elektron pochta, telegram username"></Input>
+                            </Form.Item>
+
                             <div className="col-md-12 p-0  ">
                                 <Form.Item
                                     label="Taklif"

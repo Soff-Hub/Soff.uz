@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form, Input, Menu, Modal, Pagination, Space, Tooltip } from 'antd';
+import { Button, Dropdown, Form, Input, InputNumber, Menu, Modal, Pagination, Space } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
@@ -7,7 +7,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import ModalDelete from './Modal';
-import CalculateTimeDifference from './DateFormatter';
+import Link from 'next/link';
 const { TextArea } = Input;
 
 
@@ -32,24 +32,9 @@ export default function MyDealCart() {
     const [category, setCategory] = useState('');
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
-    const [isExpanded, setIsExpanded] = useState(2);
-    const [needsToggle, setNeedsToggle] = useState(false);
-    const [needsId, setNeedsId] = useState(null);
-    const [innerWidth, setInnerWidth] = useState(null);
+    const [contacInfo, setContacInfo] = useState('');
 
 
-
-    function handleDescriptionMore(id) {
-        setNeedsId(id)
-        setIsExpanded(50);
-        setNeedsToggle(true)
-    }
-
-    function handleDescription(id) {
-        setNeedsId(id)
-        setIsExpanded(2);
-        setNeedsToggle(false)
-    }
 
 
 
@@ -151,6 +136,7 @@ export default function MyDealCart() {
             description: description ? description : dataDetials?.description,
             price: price ? price : Number(dataDetials?.price),
             deadline_date: lifetime ? lifetime : dataDetials?.deadline_date,
+            contact_info: contacInfo ? contacInfo : dataDetials?.contact_info,
         };
 
         const ItemsData = await PatchRepository.patchDealUpdateApplicaiton(dataDetials?.deal, data, user?.access);
@@ -184,11 +170,6 @@ export default function MyDealCart() {
             GetItemsProductsUpdates()
         }
     }, [productsID, openUpdate, isModalOpen])
-
-    useEffect(() => {
-        setInnerWidth(window.innerWidth);
-    }, [])
-
 
 
     return (
@@ -279,39 +260,42 @@ export default function MyDealCart() {
                                         <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
                                             <div className='d-flex justify-content-between gap-4 align-items-start'>
                                                 <h3 className="text-success fw-medium ">{item?.title}</h3>
+                                                {
+                                                    item?.application_owner?.image ? <></> :
+                                                        <Dropdown
+                                                            overlay={(
+                                                                <Menu>
+                                                                    <Menu.Item key="0">
+                                                                        <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>
+                                                                            Tahrirlash
+                                                                            <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                                        </span>
+                                                                    </Menu.Item>
+                                                                    <Menu.Item key="1">
+                                                                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                                                                            O'chirish
+                                                                            <i
+                                                                                className="fa-solid fa-trash-can text-danger mx-2"
+                                                                                onClick={() => setProductsId(item?.id)}
+                                                                            ></i>
+                                                                        </a>
+                                                                    </Menu.Item>
+                                                                </Menu>
+                                                            )}
+                                                            trigger={['click']}
+                                                        >
+                                                            <a className='d-flex justify-content-center' style={{
+                                                                cursor: "pointer",
+                                                                minWidth: "20px"
 
-                                                <Dropdown
-                                                    overlay={(
-                                                        <Menu>
-                                                            <Menu.Item key="0">
-                                                                <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>
-                                                                    Tahrirlash
-                                                                    <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                                </span>
-                                                            </Menu.Item>
-                                                            <Menu.Item key="1">
-                                                                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                                                                    O'chirish
-                                                                    <i
-                                                                        className="fa-solid fa-trash-can text-danger mx-2"
-                                                                        onClick={() => setProductsId(item?.id)}
-                                                                    ></i>
-                                                                </a>
-                                                            </Menu.Item>
-                                                        </Menu>
-                                                    )}
-                                                    trigger={['click']}
-                                                >
-                                                    <a className='d-flex justify-content-center' style={{
-                                                        cursor: "pointer",
-                                                        minWidth: "20px"
+                                                            }} onClick={(e) => e.preventDefault()}>
+                                                                <Space>
+                                                                    <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
+                                                                </Space>
+                                                            </a>
+                                                        </Dropdown>
+                                                }
 
-                                                    }} onClick={(e) => e.preventDefault()}>
-                                                        <Space>
-                                                            <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
-                                                        </Space>
-                                                    </a>
-                                                </Dropdown>
 
                                             </div>
 
@@ -319,94 +303,78 @@ export default function MyDealCart() {
                                             <p
                                                 className='m-0 description_more'
 
-                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2", whiteSpace: 'pre-wrap' }}
+                                                style={{ whiteSpace: 'pre-wrap' }}
                                             >
                                                 {item?.description}
                                             </p>
 
-                                            {
-                                                innerWidth < 414 ?
-                                                    <div className='d-flex justify-content-end'>
-                                                        {
-                                                            (needsToggle && (item?.id === needsId)) ?
-                                                                <span onClick={() => handleDescription(item?.id)}
-                                                                    className='text-success' style={{ cursor: "pointer" }}>
-                                                                    <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                                </span> :
-                                                                <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                    className='text-success' style={{ cursor: "pointer" }}>
-                                                                    <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                                </span>
-                                                        }
-                                                    </div> :
-                                                    item?.description?.length > 252 ?
-                                                        <div className='d-flex justify-content-end'>
-                                                            {
-                                                                (needsToggle && (item?.id === needsId)) ?
-                                                                    <span onClick={() => handleDescription(item?.id)}
-                                                                        className='text-success' style={{ cursor: "pointer" }}>
-                                                                        <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                                    </span> :
-                                                                    <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                        className='text-success' style={{ cursor: "pointer" }}>
-                                                                        <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                                    </span>
-                                                            }
-                                                        </div> : <></>
 
-                                            }
 
                                             <div>
                                                 <div className="d-md-flex justify-content-between gap-4  ">
-                                                    <div className="d-flex align-items-center ">
-                                                        <img
-                                                            className="d-block"
-                                                            width={60}
-                                                            src="/static/img/docCopy.jpg"
-                                                            alt="sca"
-                                                        />
+                                                    <div className="d-flex gap-3 align-items-center my-2">
+                                                        <Link href={`/seller/${item?.application_owner?.id}`}
+
+                                                        >
+                                                            <a style={{
+                                                                width: "40px",
+                                                                height: "40px",
+                                                                borderRadius: "50%",
+                                                                cursor: "pointer"
+                                                            }}>
+                                                                <img
+                                                                    src={item?.application_owner?.image ? item?.application_owner?.image : "/static/img/ozodbek.png"}
+                                                                    alt="sca"
+                                                                />
+                                                            </a>
+                                                        </Link>
+
                                                         <div>
 
-                                                            <div >
-                                                                {' '}
-                                                                <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                                <span className="fs-5 fw-medium text-secondary ">
-                                                                    {addPeriodToThousands(item?.price)} so'm
-                                                                </span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span className="text-success fs-5 fw-medium">
-                                                                    Buyurtma turi:
-                                                                </span>{' '}
-                                                                <span className="fw-medium text-secondary fs-5">
-                                                                    {item?.type?.name}
-                                                                </span>
-                                                            </div>
+                                                            <Link href={`/seller/${item?.application_owner?.id}`} style={{ cursor: "pointer" }} className="text-start">
+                                                                <a className="fw-medium fs-5">
+                                                                    {item?.application_owner?.full_name}
+                                                                </a>
+                                                            </Link>
 
 
-                                                            <div>
-                                                                <span className="text-success fs-5 fw-medium">
-                                                                    Muddati:
-                                                                </span>{' '}
-                                                                <span className="fw-medium text-secondary fs-5">
-                                                                    {item?.deadline_date}
+                                                            <div className='d-flex flex-column'>
+                                                                {
+                                                                    item?.application_owner?.contact_info &&
+                                                                    <span className='text-secondary fs-5'>
+                                                                        <span className='text-success '>Aloqa:</span> {item?.application_owner?.contact_info}
+                                                                    </span>
+                                                                }
+
+                                                                <span className='text-secondary fs-5'>
+                                                                    <span className='text-success '>Kategoriyasi:</span> {item?.type?.name}
                                                                 </span>
+                                                                <span className='text-secondary fs-5'>
+                                                                    <span className='text-success '>Narxi:</span>  {addPeriodToThousands(item?.price)} so'm
+                                                                </span>
+
+
+
+
                                                             </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
+
                                                 <div className='mt-3 
                                         d-flex justify-content-between 
-                                        align-items-center'>
+                                        align-items-center flex-wrap gap-2'>
                                                     {item?.application_count !== 0 ?
-                                                        <div className="text-start mb-md-0   d-md-flex gap-3 align-items-center">
+                                                        <div className="mb-md-0   d-md-flex gap-3 align-items-center">
 
                                                             <span className="fw-medium d-flex gap-3 ">
 
                                                                 <span className='text-secondary fs-5'>
-                                                                    <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
+                                                                    <span className='text-success '>Tugash muddati:</span> {item?.deadline_date}</span>
+                                                                <span className='text-secondary fs-5'>
 
+                                                                    <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
                                                             </span>
                                                         </div> : <span></span>
                                                     }
@@ -481,16 +449,27 @@ export default function MyDealCart() {
                         </div>
                         :
                         <div className="border-top rounded-3 pt-3 bg-white">
-                            <h3 className="text-secondary fs-3 fw-medium mb-2 ">Taklif summasi:   <span className='text-success fw-medium'>{addPeriodToThousands(dataDetials?.price)} so'm</span></h3>
-                            <div className="mb-2 d-md-flex gap-3 align-items-center">
-                                <span className="fs-3 fw-medium  text-secondary">
+                            <h3 className="text-secondary fs-5 fw-medium mb-1 ">Taklif summasi:   <span className='text-success fw-medium fs-5'>{addPeriodToThousands(dataDetials?.price)} so'm</span></h3>
+                            <div className="d-md-flex gap-3 align-items-center">
+                                <span className="fs-5 fw-medium  text-secondary">
                                     Tugatish muddati:
                                 </span>{' '}
-                                <span className="fw-medium d-flex gap-3 text-success ">
+                                <span className="fw-medium d-flex gap-3 fs-5 text-success ">
                                     {dataDetials?.deadline_date}
                                 </span>
                             </div>
-                            <span className="fs-3 fw-medium  text-secondary">
+                            <div className="mb-2 d-md-flex gap-3 align-items-center">
+                                <span className="fs-5 fw-medium  text-secondary">
+                                    Aloqa:
+                                </span>{' '}
+                                <span className="fw-medium d-flex gap-3 fs-5 text-success ">
+                                    {dataDetials?.contact_info}
+                                </span>
+                            </div>
+
+
+
+                            <span className="fs-5 fw-bold  text-secondary">
                                 Ariza tavsifi
                             </span>{' '}
                             <p
@@ -502,10 +481,10 @@ export default function MyDealCart() {
                             <div className='d-flex justify-content-between align-items-center '>
                                 {
                                     dataDetials?.has_seen ?
-                                        <strong className='d-flex gap-2 align-items-center'>
+                                        <span className='d-flex gap-2 align-items-center text-success '>
                                             <i className='fa-solid fa-eye'></i>
                                             Ko'rildi
-                                        </strong> : <span>Ko'rilmadi</span>
+                                        </span> : <span className='text-danger'> <i className='fa-solid fa-eye-slash'></i> Ko'rilmadi</span>
                                 }
                                 {
                                     dataDetials?.status === 'new' ? (
@@ -515,16 +494,13 @@ export default function MyDealCart() {
                                         </span>
                                     ) : dataDetials?.status === 'in_progress' ? (
                                         <span>
-                                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                            Tasdiqlangan
+                                            <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
                                         </span>
                                     ) : (
-                                        <Tooltip title={dataDetials?.reason}>
-                                            <span style={{ cursor: 'pointer' }}>
-                                                <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                                Bekor qilingan{' '}
-                                            </span>
-                                        </Tooltip>
+                                        <span style={{ cursor: 'pointer' }}>
+                                            <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                            Tugallangan
+                                        </span>
                                     )
                                 }
                             </div>
@@ -602,7 +578,7 @@ export default function MyDealCart() {
                             <div className="col-md-12 p-0 ">
 
                                 <Form.Item
-                                    label={"Bajarilish muddati"}
+                                    label={"Tugatish muddati"}
                                     name={dataDetials?.deadline_date}
                                     className='mb-2'
                                 >
@@ -616,15 +592,38 @@ export default function MyDealCart() {
                                     label="Narxi"
                                     className='m-0'
                                     name={dataDetials?.price}>
-                                    <Input
-                                        type='number'
-                                        onChange={(e) => setPrice(e.target.value)}
-                                        placeholder="Narxi"
+                                    <InputNumber
                                         defaultValue={Number(dataDetials?.price)}
-
+                                        placeholder="Narxi"
+                                        className='w-100 py-2'
+                                        formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                        parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                        onChange={(e) => setPrice(e)}
+                                        onKeyPress={(e) => {
+                                            if (!/[0-9]/.test(e.key)) {
+                                                e.preventDefault();
+                                            }
+                                        }}
                                     />
+
+
                                 </Form.Item>
                             </div>
+                            <Form.Item
+                                label="Aloqa uchun malumot kiriting"
+                                className="col-md-12 mt-2 p-0  mx-auto mb-3"
+                                name={dataDetials?.contact_info}
+                            >
+                                <Input
+                                    defaultValue={dataDetials?.contact_info}
+                                    onChange={(e) =>
+                                        setContacInfo(
+                                            e.target.value
+                                        )
+                                    }
+                                    placeholder="Telefon, Elektron pochta, telegram username"></Input>
+                            </Form.Item>
+
                             <div className="col-md-12 p-0  ">
                                 <Form.Item
                                     label="Taklif"
@@ -655,7 +654,7 @@ export default function MyDealCart() {
                                             color: '#fff',
                                             fontSize: '16px',
                                         }}>
-                                        Yuborish
+                                        Tahrirlash
                                     </span>
                                 </Button>
                             </Form.Item>

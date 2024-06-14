@@ -82,11 +82,11 @@ const ElectronicHeaderActions = ({ auth }) => {
     return (
         <div className="header__actions">
             {contextHolder}
-            {/* <Link href="/account/all-orders" className='mx-2'>
+            <Link href="/account/all-orders" className='mx-2'>
                 <a className="header__extra">
                 <i class="fa-solid fa-handshake fa-fade" ></i>
                 </a>
-            </Link> */}
+            </Link>
 
             <Link href="/page/about-us">
                 <a className="header__extra">

@@ -1,4 +1,4 @@
-import React  from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
@@ -7,6 +7,7 @@ import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 
 const ProductVideo = ({ product, isPlay, setIsPlay }) => {
     const { title } = useProduct();
+    const [countShow, setCountShow] = useState(false);
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -28,7 +29,11 @@ const ProductVideo = ({ product, isPlay, setIsPlay }) => {
 
 
     return (
-        <div className="borderVideeo" style={{ boxShadow: "rgba(149, 157, 165, 0.2) 0px 5px 14px" }}>
+        <div className="borderVideeo" style={{ boxShadow: "rgba(149, 157, 165, 0.2) 0px 5px 14px" }}
+
+            onMouseEnter={() => setCountShow(true)}
+            onMouseLeave={() => setCountShow(false)}>
+
             <div
                 style={{
                     margin: '0 auto',
@@ -49,6 +54,21 @@ const ProductVideo = ({ product, isPlay, setIsPlay }) => {
             <div className=" py-3">
                 <div className="" style={{ display: 'flex', padding: '0 10px', justifyContent: 'space-between', gap: '10px' }}>
                     <h4 className='text-truncate fw-bold'>{title(product)}</h4>
+                    {
+                        (product?.views_count || product?.views_count === 0) &&
+                        <p className='text-end mb-0 mt-1'
+                            style={{
+                                fontSize: "12px",
+                                opacity: countShow ? "1" : "0",
+                                transition: "opacity 0.3s linear"
+                            }}
+                        ><i
+                            style={{
+                                fontSize: "10px",
+                            }}
+                            className='fa-solid fa-eye '></i> {product?.views_count}</p>
+                    }
+
                 </div>
                 <div className="ps-product__content card-narx-box" style={{ padding: '0 10px' }}>
                     {

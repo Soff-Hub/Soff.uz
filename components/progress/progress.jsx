@@ -97,7 +97,7 @@ const Progress = ({
     console.log((total == totalLoad) && (status === 201) && !loading);
 
     return (
-        <div className="wrapper">
+        <div className="wrapper bg-white">
 
 
             <form ref={formRef} action="#" onClick={handleProgress}
