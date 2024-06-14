@@ -90,7 +90,7 @@ const AudioWaveform = ({ product, inCategory }) => {
 
     return (
         <>
-            <div className="audio-cart-container">
+            <div className="audio-cart-container" >
                 <div className="audio-cart-content">
                     <div className="row">
                         <div

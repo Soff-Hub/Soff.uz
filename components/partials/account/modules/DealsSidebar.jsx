@@ -10,7 +10,10 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     const { user } = useSelector((state) => state.auth);
     const [dealType, setDealType] = useState(null);
     const { RangePicker } = DatePicker;
-    const [price, setPrice] = useState(null)
+    const [price, setPrice] = useState(null);
+    const [webdata, setWebData] = useState(null);
+    const [socket, setSocket] = useState(null);
+
 
 
     const handleChange = (date) => {
@@ -76,7 +79,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         },
         {
             url: '/account/deal-applications',
-            label: 'Men yuborgan arizlar',
+            label: 'Men yuborgan arizalar',
         },
         {
             url: '/account/my-orders',
@@ -95,6 +98,54 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     ]
 
 
+
+
+
+    useEffect(() => {
+        const token = user?.access;
+        if (token) {
+            const ws = new WebSocket(
+                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/deals?token=${token}`
+            );
+            setSocket(ws);
+
+            ws.onopen = () => {
+                console.log('WebSocket connection established');
+            };
+
+            ws.onmessage = (event) => {
+                setWebData(JSON.parse(event?.data));
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket connection closed');
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+
+            // Clean up on unmount
+            return () => {
+                if (ws.readyState === WebSocket.OPEN) {
+                    ws.close();
+                }
+            };
+        }
+    }, [user?.access]);
+
+
+    useEffect(() => {
+        if (socket) {
+            socket.onmessage = (event) => {
+                setWebData(JSON.parse(event?.data));
+            };
+        }
+    }, [socket]);
+
+
+
+
     return (
         <div className="w-100 ">
             <div className="p-3 bg-white mb-4">
@@ -108,7 +159,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                             sidebarMenu.map(el => (
                                 <div
                                     key={el.url}
-                                    className='py-3 px-3'
+                                    className='py-3 px-3 d-flex justify-content-between'
                                     onClick={() => Router.push(el.url)}
                                     style={{
                                         borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
@@ -116,6 +167,39 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                         cursor: 'pointer'
                                     }}>
                                     {el.label}
+                                    {
+                                        (el.url === "/account/deal-applications" && webdata?.sent_applications > 0) ?
+                                            <strong
+                                                className="text-white bg-warning fs-5"
+                                                style={{
+                                                    width: "22px",
+                                                    height: "22px",
+                                                    borderRadius: "50%",
+                                                    display: "grid",
+                                                    placeContent: "center"
+                                                }}
+                                            >
+                                                {webdata?.sent_applications}
+                                            </strong> : <></>
+                                    }
+
+                                    {
+                                        (el.url === "/account/applications-received" && webdata?.received_applications > 0) ?
+                                            <strong
+                                                className="text-white bg-warning fs-5"
+                                                style={{
+                                                    width: "22px",
+                                                    height: "22px",
+                                                    borderRadius: "50%",
+                                                    display: "grid",
+                                                    placeContent: "center"
+                                                }}
+                                            >
+                                                {webdata?.received_applications}
+                                            </strong> : <></>
+                                    }
+
+
                                 </div>
                             )) :
                             sidebarMenuToken.map(el => (
@@ -136,7 +220,11 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                 </div>
             </div>
             {asPath === "/account/all-orders" && <div className="p-3 bg-white">
-                <span className="d-block p-2 mt-4 fw-bold ">
+                <span className="d-block px-2 text-success fw-bold ">
+                    <i class="fa-solid fa-sliders"></i> Filterlash
+                </span>
+
+                <span className="d-block p-2  fw-bold ">
                     Buyurtma turlari
                 </span>
                 <Select

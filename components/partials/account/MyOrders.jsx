@@ -10,6 +10,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsListUpdate from './DealsListUpdate';
 
 
+
 export default function MyOrders() {
     const { user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
@@ -26,24 +27,6 @@ export default function MyOrders() {
     const [category, setCategory] = useState(null)
     const [loading, setloading] = useState(false);
     const [loadingUpdate, setloadingUpdate] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(2);
-    const [needsToggle, setNeedsToggle] = useState(false);
-    const [needsId, setNeedsId] = useState(null);
-    const [innerWidth, setInnerWidth] = useState(null);
-
-
-
-    function handleDescriptionMore(id) {
-        setNeedsId(id)
-        setIsExpanded(50);
-        setNeedsToggle(true)
-    }
-
-    function handleDescription(id) {
-        setNeedsId(id)
-        setIsExpanded(2);
-        setNeedsToggle(false)
-    }
 
 
     function addPeriodToThousands(number) {
@@ -83,6 +66,7 @@ export default function MyOrders() {
         const ItemsData = await GetRepository.getOrdersMYDealListsUpdate(productsIdUpdate, token);
         setDataDtails(ItemsData);
         setloadingUpdate(false)
+
     }
 
 
@@ -127,14 +111,10 @@ export default function MyOrders() {
 
 
     useEffect(() => {
-        if (user?.access && productsIdUpdate) {
+        if (user?.access) {
             GetItemsProductsUpdates()
         }
     }, [productsIdUpdate, openUpdate])
-
-    useEffect(() => {
-        setInnerWidth(window.innerWidth);
-    }, [])
 
 
 
@@ -228,83 +208,54 @@ export default function MyOrders() {
                                             <div className='d-flex justify-content-between gap-4 align-items-start'>
                                                 <h3 className="text-success fw-medium ">{item?.title}</h3>
 
-                                                <Dropdown
-                                                    overlay={(
-                                                        <Menu>
-                                                            {
-                                                                item?.status !== 'active' ?
+                                                {
+                                                    item?.status !== 'active' ?
+                                                        <Dropdown
+                                                            overlay={(
+                                                                <Menu>
                                                                     <Menu.Item key="0">
                                                                         <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
                                                                             Tahrirlash
                                                                             <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
                                                                         </span>
-                                                                    </Menu.Item> : <></>
-                                                            }
-                                                            <Menu.Item key="1">
-                                                                <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                                                                    O'chirish
-                                                                    <i
-                                                                        className="fa-solid fa-trash-can text-danger mx-2"
-                                                                        onClick={() => setProductsId(item?.id)}
-                                                                    ></i>
-                                                                </a>
-                                                            </Menu.Item>
-                                                        </Menu>
-                                                    )}
-                                                    trigger={['click']}
-                                                >
-                                                    <a className='d-flex justify-content-center' style={{
-                                                        cursor: "pointer",
-                                                        minWidth: "20px"
+                                                                    </Menu.Item>
+                                                                    <Menu.Item key="1">
+                                                                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                                                                            O'chirish
+                                                                            <i
+                                                                                className="fa-solid fa-trash-can text-danger mx-2"
+                                                                                onClick={() => setProductsId(item?.id)}
+                                                                            ></i>
+                                                                        </a>
+                                                                    </Menu.Item>
+                                                                </Menu>
+                                                            )}
+                                                            trigger={['click']}
+                                                        >
+                                                            <a className='d-flex justify-content-center' style={{
+                                                                cursor: "pointer",
+                                                                minWidth: "20px"
 
-                                                    }} onClick={(e) => e.preventDefault()}>
-                                                        <Space>
-                                                            <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
-                                                        </Space>
-                                                    </a>
+                                                            }} onClick={(e) => e.preventDefault()}>
+                                                                <Space>
+                                                                    <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
+                                                                </Space>
+                                                            </a>
 
-                                                </Dropdown>
+                                                        </Dropdown>
+                                                        : <></>
+                                                }
 
                                             </div>
                                             <p
                                                 className='m-0 description_more'
 
-                                                style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2", whiteSpace: 'pre-wrap' }}
+                                                style={{ whiteSpace: 'pre-wrap' }}
                                             >
                                                 {item?.description}
                                             </p>
 
-                                            {
-                                                innerWidth < 414 ?
-                                                    <div className='d-flex justify-content-end'>
-                                                        {
-                                                            (needsToggle && (item?.id === needsId)) ?
-                                                                <span onClick={() => handleDescription(item?.id)}
-                                                                    className='text-success' style={{ cursor: "pointer" }}>
-                                                                    <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                                </span> :
-                                                                <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                    className='text-success' style={{ cursor: "pointer" }}>
-                                                                    <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                                </span>
-                                                        }
-                                                    </div> :
-                                                    item?.description?.length > 252 ?
-                                                        <div className='d-flex justify-content-end'>
-                                                            {
-                                                                (needsToggle && (item?.id === needsId)) ?
-                                                                    <span onClick={() => handleDescription(item?.id)}
-                                                                        className='text-success' style={{ cursor: "pointer" }}>
-                                                                        <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                                    </span> :
-                                                                    <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                        className='text-success' style={{ cursor: "pointer" }}>
-                                                                        <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                                    </span>
-                                                            }
-                                                        </div> : <></>
 
-                                            }
 
 
                                             <div>
@@ -328,12 +279,21 @@ export default function MyOrders() {
 
                                                             <div>
                                                                 <span className="text-success fs-5 fw-medium">
-                                                                    Buyurtma turi:
+                                                                    Kategoriyasi:
                                                                 </span>{' '}
                                                                 <span className="fw-medium text-secondary fs-5">
                                                                     {item?.type?.name}
                                                                 </span>
                                                             </div>
+                                                            <div>
+                                                                <span className="text-success fs-5 fw-medium">
+                                                                    Aloqa:
+                                                                </span>{' '}
+                                                                <span className="fw-medium text-secondary fs-5">
+                                                                    {item?.contact_info}
+                                                                </span>
+                                                            </div>
+
 
                                                         </div>
                                                     </div>
@@ -341,7 +301,7 @@ export default function MyOrders() {
                                                 <div className='mt-3 d-flex justify-content-between'>
                                                     <div>
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Muddati:
+                                                            Tugash muddati:
                                                         </span>{' '}
                                                         <span className="fw-medium fs-5">
                                                             {item?.deadline_date}
@@ -390,6 +350,7 @@ export default function MyOrders() {
 
             </div>
 
+
             <Modal
                 title="Buyurtma yaratish"
                 width={550}
@@ -414,7 +375,7 @@ export default function MyOrders() {
             </Modal>
 
             <Modal
-                title="Buyurtma tahrirlash"
+                title="Buyurtmani tahrirlash"
                 width={550}
                 centered
                 open={openUpdate}

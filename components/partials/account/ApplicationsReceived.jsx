@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import DealsSidebar from './modules/DealsSidebar';
-import { Dropdown, Menu, Modal, Pagination, Select, Space, Tooltip } from 'antd';
+import { Modal, Pagination, Select } from 'antd';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import Link from 'next/link';
+import DealsList from './DealsList';
 const { Option } = Select;
 
 
@@ -17,6 +18,7 @@ export default function ApplicationsReceiveds() {
     const [productsIdUpdate, setProductsIdUpdate] = useState('');
     const [pageCount, setPageCount] = useState(0);
     const [open, setOpen] = useState(false);
+    const [openPosts, setOpenPosts] = useState(false);
     const [openUpdate, setOpenUpdate] = useState(false);
     const [category, setCategory] = useState(null);
     const [filterData, setFilterData] = useState([]);
@@ -26,24 +28,7 @@ export default function ApplicationsReceiveds() {
     const [keyword, setKeyword] = useState('');
     const [loadingDetails, setLoadingDetails] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [isExpanded, setIsExpanded] = useState(2);
-    const [needsToggle, setNeedsToggle] = useState(false);
-    const [needsId, setNeedsId] = useState(null);
-    const [innerWidth, setInnerWidth] = useState(null);
 
-
-
-    function handleDescriptionMore(id) {
-        setNeedsId(id)
-        setIsExpanded(50);
-        setNeedsToggle(true)
-    }
-
-    function handleDescription(id) {
-        setNeedsId(id)
-        setIsExpanded(2);
-        setNeedsToggle(false)
-    }
 
 
     function addPeriodToThousands(number) {
@@ -173,12 +158,12 @@ export default function ApplicationsReceiveds() {
 
 
     useEffect(() => {
-        GetItemsProductsFilter()
+        if (user?.access) {
+            GetItemsProductsFilter()
+        }
     }, [keyword]);
 
-    useEffect(() => {
-        setInnerWidth(window.innerWidth);
-    }, [])
+
 
 
 
@@ -244,7 +229,7 @@ export default function ApplicationsReceiveds() {
                     </select>
 
                     <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
-                        onClick={() => setOpen(true)} >
+                        onClick={() => setOpenPosts(true)} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
@@ -276,102 +261,41 @@ export default function ApplicationsReceiveds() {
                                 {
                                     data?.map(item => (
                                         <div key={item?.id} className="border border-2 rounded-3 bg-white">
-                                            <div className='d-md-flex justify-content-between gap-2 align-items-center  mb-3 px-4 py-3 ' style={{ backgroundColor: "rgba(40, 167, 69, 0.1)" }}>
+                                            <div onClick={() =>
+                                                handleChangeID(item?.deal?.id)}
+                                                className='text-secondary fs-5 fw-medium pt-3 px-4' style={{ backgroundColor: "rgba(40, 167, 69, 0.1)", cursor: "pointer" }} >
+                                                <i className='fa-solid fa-eye'></i>  Buyurtma</div>
+                                            <div onClick={() =>
+                                                handleChangeID(item?.deal?.id)}
+                                                className='d-md-flex justify-content-between gap-2 align-items-center  mb-2 px-4 pb-3 pt-1 '
+                                                style={{ backgroundColor: "rgba(40, 167, 69, 0.1)", cursor: "pointer" }}>
+
                                                 <div>
                                                     <h5 className="text-success fw-medium mb-2">
                                                         {item?.deal?.title}
                                                     </h5>
                                                 </div>
 
-                                                <div className='d-md-flex align-items-start gap-md-3 flex-wrap '>
-                                                    <h5 className='text-success fw-medium mb-1  fs-5'>Muddati: {item?.deal?.deadline_date}</h5>
-                                                    <div className='d-flex justify-content-between align-items-start gap-3'>
+                                                <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-end'>
+                                                    <h5 className='text-success fw-medium mb-1  fs-5'>Tugash muddati: {item?.deal?.deadline_date}</h5>
+                                                    <div className='d-flex justify-content-between align-items-start gap-2'>
                                                         <h5 className='text-success fw-medium mb-1 fs-5'>
-                                                            {addPeriodToThousands(item?.deal?.price)} so'm
+                                                            Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
 
                                                         </h5>
-
-                                                        <Dropdown
-                                                            overlay={(
-                                                                <Menu>
-                                                                    <Menu.Item key="1">
-                                                                        <span onClick={() =>
-                                                                            handleChangeID(item?.deal?.id)
-
-                                                                        } className='text-secondary' style={{ cursor: "pointer" }}>
-                                                                            Buyurtmani ko'rish   <i className='fa-solid fa-eye'></i>
-                                                                        </span>
-                                                                    </Menu.Item>
-
-                                                                    {
-                                                                        item?.status !== 'active' ?
-                                                                            <Menu.Item key="0">
-                                                                                <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                                                    Tahrirlash
-                                                                                    <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                                                </span>
-                                                                            </Menu.Item> : <></>
-                                                                    }
-
-                                                                </Menu>
-                                                            )}
-                                                            trigger={['click']}
-                                                        >
-                                                            <a className='d-flex justify-content-center' style={{
-                                                                cursor: "pointer",
-                                                                minWidth: "20px"
-
-                                                            }}>
-                                                                <Space>
-                                                                    <i className="fa-solid fa-ellipsis-vertical"></i>
-                                                                </Space>
-                                                            </a>
-                                                        </Dropdown>
                                                     </div>
                                                 </div>
 
                                             </div>
                                             <div className='px-4 pb-4'>
-
+                                                <span className=' fs-5 fw-medium'>Kelib tushgan ariza</span>
                                                 <p
                                                     className='m-0 description_more'
 
-                                                    style={{ WebkitLineClamp: item?.id === needsId ? isExpanded : "2",whiteSpace: 'pre-wrap' }}
+                                                    style={{ whiteSpace: 'pre-wrap' }}
                                                 >
                                                     {item?.description}
                                                 </p>
-
-                                                {
-                                                    innerWidth < 414 ?
-                                                        <div className='d-flex justify-content-end'>
-                                                            {
-                                                                (needsToggle && (item?.id === needsId)) ?
-                                                                    <span onClick={() => handleDescription(item?.id)}
-                                                                        className='text-success' style={{ cursor: "pointer" }}>
-                                                                        <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                                    </span> :
-                                                                    <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                        className='text-success' style={{ cursor: "pointer" }}>
-                                                                        <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                                    </span>
-                                                            }
-                                                        </div> :
-                                                        item?.description?.length > 252 ?
-                                                            <div className='d-flex justify-content-end'>
-                                                                {
-                                                                    (needsToggle && (item?.id === needsId)) ?
-                                                                        <span onClick={() => handleDescription(item?.id)}
-                                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                                            <i className='fa-solid fa-eye-slash'></i> Yashirish
-                                                                        </span> :
-                                                                        <span onClick={() => handleDescriptionMore(item?.id)}
-                                                                            className='text-success' style={{ cursor: "pointer" }}>
-                                                                            <i className='fa-solid fa-eye'></i> Batafsil ko'rish
-                                                                        </span>
-                                                                }
-                                                            </div> : <></>
-
-                                                }
 
 
 
@@ -402,7 +326,10 @@ export default function ApplicationsReceiveds() {
 
 
                                                             <div>
+                                                                <h5 className='text-success fw-medium mb-1 fs-5'>
+                                                                    Aloqa:   <span className='text-secondary fs-5 fw-medium '>{item?.contact_info}</span>
 
+                                                                </h5>
                                                                 <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
                                                                 <span className="text-secondary fs-5 fw-medium ">
                                                                     {addPeriodToThousands(item?.price)} so'm
@@ -413,33 +340,44 @@ export default function ApplicationsReceiveds() {
                                                     </div>
 
                                                 </div>
-                                                <div className='d-flex justify-content-between'>
+                                                <div className='d-flex justify-content-between flex-wrap gap-1'>
                                                     <div>
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Muddati:
+                                                            Tugatish muddati:
                                                         </span>{' '}
                                                         <span className="fw-medium fs-5 ">
                                                             {item?.deadline_date}
                                                         </span>
                                                     </div>
 
-                                                    {
-                                                        item?.status === 'new' ? (
-                                                            <span>
-                                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                                Moderatsiya
-                                                            </span>
-                                                        ) : item?.status === 'in_progress' ? (
-                                                            <span>
-                                                                <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
-                                                            </span>
-                                                        ) : (
-                                                            <span style={{ cursor: 'pointer' }}>
-                                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                                Tugallangan
-                                                            </span>
-                                                        )
-                                                    }
+                                                    <div>
+                                                        {
+                                                            item?.status === 'new' ? (
+                                                                <span>
+                                                                    <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                                    Moderatsiya
+                                                                </span>
+                                                            ) : item?.status === 'in_progress' ? (
+                                                                <span>
+                                                                    <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
+                                                                </span>
+                                                            ) : (
+                                                                <span style={{ cursor: 'pointer' }}>
+                                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                                    Tugallangan
+                                                                </span>
+                                                            )
+                                                        }
+                                                        {
+                                                            item?.status === 'new' ?
+
+                                                                <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
+                                                                    <i className="fa-solid fa-pen-to-square ml-3 text-success-emphasis"></i>
+                                                                </span>
+                                                                : <></>
+                                                        }
+                                                    </div>
+
                                                 </div>
                                             </div>
 
@@ -506,7 +444,7 @@ export default function ApplicationsReceiveds() {
 
                             </div>
                             <p
-                                style={{ width: "100%" }}
+                                style={{ width: "100%", whiteSpace: 'pre-wrap' }}
                             >
                                 {dataDetails?.description}
                             </p>
@@ -531,7 +469,7 @@ export default function ApplicationsReceiveds() {
 
                                             <div>
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Buyurtma turi:
+                                                    Kategoriyasi:
                                                 </span>{' '}
                                                 <span className="fw-medium text-secondary fs-5">
                                                     {dataDetails?.type?.name}
@@ -540,12 +478,10 @@ export default function ApplicationsReceiveds() {
 
 
                                             <div>
-                                                <span className="text-success fs-5 fw-medium">
-                                                    Muddati:
-                                                </span>{' '}
-                                                <span className="fw-medium fs-5 ">
-                                                    {dataDetails?.deadline_date}
-                                                </span>
+                                                <h5 className='text-success fw-medium mb-1 fs-5'>
+                                                    Aloqa:   <span className='text-secondary fs-5 fw-medium '>{dataDetails?.contact_info}</span>
+
+                                                </h5>
                                             </div>
                                         </div>
                                     </div>
@@ -556,33 +492,17 @@ export default function ApplicationsReceiveds() {
 
                                             <span className="fw-medium d-flex gap-3 ">
 
+                                                <span className="text-success fs-5 fw-medium">
+                                                    Tugash muddati: <span className="fw-medium text-secondary  fs-5 ">
+                                                        {dataDetails?.deadline_date}
+                                                    </span>
+                                                </span>{' '}
+
                                                 <span className='text-secondary fs-5'>
                                                     <span className='text-success'>Takliflar:</span> {dataDetails?.application_count}</span>
 
                                             </span>
                                         </div> : <span></span>
-                                    }
-
-
-                                    {
-                                        dataDetails?.status === 'new' ? (
-                                            <span>
-                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                Moderatsiya
-                                            </span>
-                                        ) : dataDetails?.status === 'active' ? (
-                                            <span>
-                                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                                Tasdiqlangan
-                                            </span>
-                                        ) : (
-                                            <Tooltip title={dataDetails?.reason}>
-                                                <span style={{ cursor: 'pointer' }}>
-                                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                                    Bekor qilingan{' '}
-                                                </span>
-                                            </Tooltip>
-                                        )
                                     }
                                 </div>
                             </div>
@@ -644,6 +564,29 @@ export default function ApplicationsReceiveds() {
                         Tugallangan
                     </option>
                 </select>
+            </Modal>
+
+            <Modal
+                title="Buyurtma yaratish"
+                width={550}
+                centered
+                open={openPosts}
+                onOk={() => setOpenPosts(false)}
+                okText="Yopish"
+                cancelButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+
+                onCancel={() => setOpenPosts(false)}>
+
+                <DealsList setOpen={setOpenPosts} />
             </Modal>
 
 
