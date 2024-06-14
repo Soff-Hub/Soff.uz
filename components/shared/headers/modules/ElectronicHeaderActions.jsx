@@ -13,8 +13,10 @@ import { useEffect } from 'react';
 const ElectronicHeaderActions = ({ auth }) => {
     const { wishlist } = useWishlist();
     const [socket, setSocket] = useState(null);
+    const [socketCount, setSocketCount] = useState(null);
     const [api, contextHolder] = notification.useNotification();
     const { user } = useSelector((state) => state.auth);
+    const [webdata, setWebData] = useState(null);
     const data = useSelector((state) => state.ecomerce.cartDataItems);
 
     const openNotification = () => {
@@ -79,12 +81,71 @@ const ElectronicHeaderActions = ({ auth }) => {
         socket?.count > 0 && openNotification();
     }, [socket?.count]);
 
+
+    useEffect(() => {
+        const token = user?.access;
+        if (token) {
+            const ws = new WebSocket(
+                `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/deals?token=${token}`
+            );
+            setSocketCount(ws);
+
+            ws.onopen = () => {
+                console.log('WebSocket connection established');
+            };
+
+            ws.onmessage = (event) => {
+                setWebData(JSON.parse(event?.data));
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket connection closed');
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket error:', error);
+            };
+
+            // Clean up on unmount
+            return () => {
+                if (ws.readyState === WebSocket.OPEN) {
+                    ws.close();
+                }
+            };
+        }
+    }, [user?.access]);
+
+
+    useEffect(() => {
+        if (socketCount) {
+            socketCount.onmessage = (event) => {
+                setWebData(JSON.parse(event?.data));
+            };
+        }
+    }, [socketCount]);
+
+
+
+
+console.log(webdata?.sent_applications);
+console.log(webdata?.sent_applications + webdata?.received_applications);
+console.log( webdata?.received_applications);
+
+
+
     return (
         <div className="header__actions">
             {contextHolder}
             <Link href="/account/all-orders" className='mx-2'>
                 <a className="header__extra">
-                <i class="fa-solid fa-handshake fa-fade" ></i>
+                    <i class="fa-solid fa-handshake fa-fade" ></i>
+                    {(webdata?.sent_applications || webdata?.received_applications) ? (
+                        <span className="socket_navbar">
+                            {webdata?.sent_applications + webdata?.received_applications}
+                        </span>
+                    ) : (
+                        ''
+                    )}
                 </a>
             </Link>
 

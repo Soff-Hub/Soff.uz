@@ -276,7 +276,7 @@ export default function DealOrderList() {
 
                                                     <div className="d-md-flex justify-content-between gap-4  ">
                                                         <div className="d-flex gap-3 align-items-center my-2">
-                                                            <Link href={`/seller/${dealItem?.user_info?.id}`}
+                                                            <Link href={dealItem?.user_info?.role==="seller" ? `/seller/${dealItem?.user_info?.id}` : "#"}
 
                                                             >
                                                                 <a style={{
@@ -293,7 +293,7 @@ export default function DealOrderList() {
                                                             </Link>
                                                             <div>
 
-                                                                <Link href={`/seller/${dealItem?.user_info?.id}`} style={{ cursor: "pointer" }} className="text-start">
+                                                                <Link href={dealItem?.user_info?.role==="seller" ? `/seller/${dealItem?.user_info?.id}` : "#"}style={{ cursor: "pointer" }} className="text-start">
                                                                     <a className="fw-medium fs-5">
                                                                         {dealItem?.user_info?.full_name}
                                                                     </a>

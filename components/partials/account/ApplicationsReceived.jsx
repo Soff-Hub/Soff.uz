@@ -76,6 +76,7 @@ export default function ApplicationsReceiveds() {
             setOpenUpdate(true);
         }
     }
+    const dataUpdatwes = data?.find((item) => item?.id === appliactionId);
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
@@ -114,7 +115,7 @@ export default function ApplicationsReceiveds() {
         if (categoryStatus) {
 
             const data = {
-                status: categoryStatus
+                status: categoryStatus ? categoryStatus : dataUpdatwes?.status
             };
             const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, data, user?.access);
             if (ItemsData?.status === 200) {
@@ -124,12 +125,24 @@ export default function ApplicationsReceiveds() {
                     title: 'Muvaffaqqiyatli!',
                     content: `Siz malumotlarni o'zgartirdingiz`,
                 });
+
+
             } else {
-                const modal = Modal.error({
-                    centered: true,
-                    title: 'Xatolik!',
-                    content: ItemsData?.status + ' ' + ItemsData?.statusText,
-                });
+                if (ItemsData?.data?.msg) {
+                    const modal = Modal.warning({
+                        centered: true,
+                        title: 'Boshqa ariza ustida !',
+                        content: ItemsData?.data?.msg,
+                    });
+
+                } else {
+
+                    const modal = Modal.warning({
+                        centered: true,
+                        title: 'Xatolik!',
+                        content: ItemsData?.status + ' ' + ItemsData?.statusText,
+                    });
+                }
             }
         } else {
             const modal = Modal.warning({
@@ -166,8 +179,6 @@ export default function ApplicationsReceiveds() {
 
 
 
-
-
     return (
         <div className={`container row mx-auto p-0  d-flex align-items-start mt-5`}>
 
@@ -182,9 +193,9 @@ export default function ApplicationsReceiveds() {
                     <Select
                         mode="single"
                         showSearch
-                        className='p-0 w-100'
+                        className='p-0 '
                         allowClear
-                        style={{ height: "45px" }}
+                        style={{ height: "45px", maxWidth:"400px", width:"100%"}}
                         placeholder="Barcha Buyurtmalar"
                         onSearch={onSearch}
                         onChange={handleChange}
@@ -301,7 +312,8 @@ export default function ApplicationsReceiveds() {
 
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex gap-3 align-items-center my-2">
-                                                        <Link href={`/seller/${item?.user?.id}`}
+                                                        <Link
+                                                         href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"}
 
                                                         >
                                                             <a style={{
@@ -318,7 +330,7 @@ export default function ApplicationsReceiveds() {
                                                         </Link>
                                                         <div>
 
-                                                            <Link href={`/seller/${item?.user?.id}`} style={{ cursor: "pointer" }} className="text-start">
+                                                            <Link  href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"} style={{ cursor: "pointer" }} className="text-start">
                                                                 <a className="fw-medium fs-5">
                                                                     {item?.user?.full_name}
                                                                 </a>
@@ -369,12 +381,13 @@ export default function ApplicationsReceiveds() {
                                                             )
                                                         }
                                                         {
-                                                            item?.status === 'new' ?
+                                                            item?.status === 'completed' ?
 
+                                                            <></>
+                                                                :
                                                                 <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
                                                                     <i className="fa-solid fa-pen-to-square ml-3 text-success-emphasis"></i>
                                                                 </span>
-                                                                : <></>
                                                         }
                                                     </div>
 
@@ -542,23 +555,21 @@ export default function ApplicationsReceiveds() {
                         )
                     }>
                     <option
-                        className="fs-3"
-                        selected
-                        value="">
-                        Barcha
-                        holatlar
-                    </option>
-                    <option
+                        selected={dataUpdatwes?.status === "new"}
+
                         className="fs-3"
                         value="new">
                         Moderatsiya
                     </option>
                     <option
+                        selected={dataUpdatwes?.status === "in_progress"}
                         className="fs-3"
                         value="in_progress">
                         Jarayonda
                     </option>
                     <option
+
+                        selected={dataUpdatwes?.status === "completed"}
                         className="fs-3"
                         value="completed">
                         Tugallangan
