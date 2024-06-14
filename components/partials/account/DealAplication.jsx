@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form, Input, InputNumber, Menu, Modal, Pagination, Space } from 'antd';
+import { Button, Dropdown, Form, Input, InputNumber, Menu, Modal, Pagination, Space, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
@@ -258,6 +258,30 @@ export default function MyDealCart() {
                                 {
                                     data?.map(item => (
                                         <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
+                                            {
+                                                item?.deal_status_for_applicant === "in_progress" ?
+                                                    <div className='d-flex gap-2'>
+                                                        <Tooltip title={""}>
+                                                            <span style={{ cursor: 'pointer' }} >
+                                                                <i className="fa-solid fa-circle-question text-warning"></i>
+                                                            </span>
+                                                        </Tooltip>
+                                                        <span className="text-warning">
+                                                            Buyurtmachi boshqa arizachi bilan ishlamoqda
+                                                        </span>
+                                                    </div> :
+                                                    item?.deal_status_for_applicant === "completed" ? <div className='d-flex gap-2'>
+                                                        <Tooltip title={""}>
+                                                            <span style={{ cursor: 'pointer' }} >
+                                                                <i className="fa-solid fa-circle-question text-danger"></i>
+                                                            </span>
+                                                        </Tooltip>
+                                                        <span className="text-danger">
+                                                            Buyurtma boshqa arizachi tomonidan bajarildi!
+                                                        </span>
+                                                    </div>
+                                                        : <></>
+                                            }
                                             <div className='d-flex justify-content-between gap-4 align-items-start'>
                                                 <h3 className="text-success fw-medium ">{item?.title}</h3>
                                                 {
@@ -313,7 +337,8 @@ export default function MyDealCart() {
                                             <div>
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex gap-3 align-items-center my-2">
-                                                        <Link href={`/seller/${item?.application_owner?.id}`}
+                                                        <Link
+                                                          href={item?.application_owner?.role === "seller" ? `/seller/${item?.application_owner?.id}` : "#"}
 
                                                         >
                                                             <a style={{
@@ -331,7 +356,9 @@ export default function MyDealCart() {
 
                                                         <div>
 
-                                                            <Link href={`/seller/${item?.application_owner?.id}`} style={{ cursor: "pointer" }} className="text-start">
+                                                            <Link
+                                                                href={item?.application_owner?.role === "seller" ? `/seller/${item?.application_owner?.id}` : "#"}
+                                                                style={{ cursor: "pointer" }} className="text-start">
                                                                 <a className="fw-medium fs-5">
                                                                     {item?.application_owner?.full_name}
                                                                 </a>

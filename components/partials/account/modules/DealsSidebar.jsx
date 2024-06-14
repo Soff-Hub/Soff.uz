@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 
 
+
 const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) => {
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
@@ -162,7 +163,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                     className='py-3 px-3 d-flex justify-content-between'
                                     onClick={() => Router.push(el.url)}
                                     style={{
-                                        borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
+                                        borderLeft: (el.url === asPath || asPath==="/account/all-orders?show=modal") ? '3px solid #28a745' : '0',
                                         backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
                                         cursor: 'pointer'
                                     }}>
