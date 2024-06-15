@@ -28,7 +28,7 @@ const Checkout = () => {
                         <div className="ps-form__content">
                             <div className="row">
                                 <div className="col-xl-6 col-lg-6  col-md-6  col-12  ">
-                                     <ModulePaymentOrderSummary ecomerce={ecomerce} />
+                                     <ModulePaymentOrderSummary ecomerce={ecomerce} /> 
                                 </div>
                                 <div className="col-xl-6 col-lg-6  col-md-6 col-12">
                                     <FormCheckoutInformation />

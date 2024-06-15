@@ -1244,8 +1244,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getDealType() {
-        const endPoint = `deals/deal-types/`;
+    async getDealType(search) {
+        const endPoint = `deals/deal-types/search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',

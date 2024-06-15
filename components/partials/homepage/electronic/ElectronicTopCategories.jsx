@@ -27,7 +27,7 @@ function ElectronicTopCategories() {
     const memoizedCategory = useMemo(() => {
         return category?.map((category) => (
             <div
-                className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 p-2"
+                className="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-xs-3 col-6 p-2"
                 key={category?.id}
             >
                 {/* <Meta
@@ -100,7 +100,7 @@ function ElectronicTopCategories() {
                         </div>
                     )}
                 </div>
-                <div className="text-center">
+                <div className="text-center mt-4">
                     <div className=" more-parent">
                         <div className="more">
                             <Link href="/topCategory/categories">
@@ -110,7 +110,7 @@ function ElectronicTopCategories() {
                                         className="fa-solid fa-angles-right fa-beat-fade"
                                         style={{
                                             fontSize: '13px',
-                                            paddingTop: '1px',
+                                            paddingTop: '5px',
                                             paddingLeft: '5px',
                                         }}
                                     ></i>

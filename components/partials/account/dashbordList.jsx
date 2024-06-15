@@ -373,7 +373,7 @@ function DashbordList({ setOpen }) {
             title: 'Buyurtma nomi',
             dataIndex: 'document',
             key: 'age',
-            width: 300,
+            width: 400,
             render: (document) => (
                 <Link href={`/product/${document.slug}`}>
                     <a>{document.title}</a>
@@ -403,26 +403,7 @@ function DashbordList({ setOpen }) {
                 </span>
             ),
         },
-        {
-            title: 'Holat',
-            dataIndex: 'status',
-            key: 'address',
-            render: (status) => (
-                <span>
-                    {status === 'approved' ? (
-                        <span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            tasdiqlangan
-                        </span>
-                    ) : (
-                        <span>
-                            <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                            tasdiqlanganmagan
-                        </span>
-                    )}
-                </span>
-            ),
-        },
+      
     ];
 
     const items = [
@@ -937,7 +918,7 @@ function DashbordList({ setOpen }) {
                             ) : (
                                 <>
                                     <Table
-                                        scroll={{ x: 1150 }}
+                                        scroll={{ x: 1000 }}
                                         dataSource={dataOrders}
                                         columns={columnsOrdersSeller}
                                         pagination={false}
