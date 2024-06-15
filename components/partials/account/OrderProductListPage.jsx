@@ -65,7 +65,7 @@ export default function OrderProductListPage() {
         },
         {
             key: '2',
-            label: <span className="pr-4 fw-bolder fs-3 px-3">Jarayonda</span>,
+            label: <span className="pr-4 fw-bolder fs-3 px-3">Kelishildi va Ish boshlandi</span>,
             children: 'Content of Tab Pane 2',
         },
         {

@@ -195,7 +195,7 @@ export default function ApplicationsReceiveds() {
                         showSearch
                         className='p-0 '
                         allowClear
-                        style={{ height: "45px", maxWidth:"400px", width:"100%"}}
+                        style={{ height: "45px", maxWidth: "400px", width: "100%" }}
                         placeholder="Barcha Buyurtmalar"
                         onSearch={onSearch}
                         onChange={handleChange}
@@ -230,7 +230,7 @@ export default function ApplicationsReceiveds() {
                         <option
                             className="fs-3"
                             value="in_progress">
-                            Jarayonda
+                            Kelishildi va Ish boshlandi
                         </option>
                         <option
                             className="fs-3"
@@ -274,23 +274,41 @@ export default function ApplicationsReceiveds() {
                                         <div key={item?.id} className="border border-2 rounded-3 bg-white">
                                             <div onClick={() =>
                                                 handleChangeID(item?.deal?.id)}
-                                                className='text-secondary fs-5 fw-medium pt-3 px-4' style={{ backgroundColor: "rgba(40, 167, 69, 0.1)", cursor: "pointer" }} >
+                                                className={`text-secondary fs-5 fw-medium pt-3 px-4
+                                                    ${item?.status === 'new' ? " bg-secondary-subtle" :
+                                                        item?.status === 'in_progress' ? "bg-warning-subtle" :
+                                                            item?.status === 'cancelled' ? "bg-danger-subtle " :
+                                                                "bg-success-subtle"} 
+                                                   `
+                                                }
+
+
+                                                style={{ cursor: "pointer" }} >
                                                 <i className='fa-solid fa-eye'></i>  Buyurtma</div>
                                             <div onClick={() =>
                                                 handleChangeID(item?.deal?.id)}
-                                                className='d-md-flex justify-content-between gap-2 align-items-center  mb-2 px-4 pb-3 pt-1 '
-                                                style={{ backgroundColor: "rgba(40, 167, 69, 0.1)", cursor: "pointer" }}>
+
+
+                                                className={`d-md-flex justify-content-between gap-2 align-items-center  mb-2 px-4 pb-3 pt-1 
+                                                    ${item?.status === 'new' ? " bg-secondary-subtle" :
+                                                        item?.status === 'in_progress' ? "bg-warning-subtle" :
+                                                            item?.status === 'cancelled' ? "bg-danger-subtle " :
+                                                                "bg-success-subtle"} 
+                                                   `
+                                                }
+
+                                                style={{ cursor: "pointer" }}>
 
                                                 <div>
-                                                    <h5 className="text-success fw-medium mb-2">
+                                                    <h5 className="text-secondary fw-medium mb-2">
                                                         {item?.deal?.title}
                                                     </h5>
                                                 </div>
 
                                                 <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-end'>
-                                                    <h5 className='text-success fw-medium mb-1  fs-5'>Tugash muddati: {item?.deal?.deadline_date}</h5>
+                                                    <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirish sanasi: {item?.deal?.deadline_date}</h5>
                                                     <div className='d-flex justify-content-between align-items-start gap-2'>
-                                                        <h5 className='text-success fw-medium mb-1 fs-5'>
+                                                        <h5 className='text-secondary fw-medium mb-1 fs-5'>
                                                             Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
 
                                                         </h5>
@@ -313,7 +331,7 @@ export default function ApplicationsReceiveds() {
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex gap-3 align-items-center my-2">
                                                         <Link
-                                                         href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"}
+                                                            href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"}
 
                                                         >
                                                             <a style={{
@@ -330,7 +348,7 @@ export default function ApplicationsReceiveds() {
                                                         </Link>
                                                         <div>
 
-                                                            <Link  href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"} style={{ cursor: "pointer" }} className="text-start">
+                                                            <Link href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"} style={{ cursor: "pointer" }} className="text-start">
                                                                 <a className="fw-medium fs-5">
                                                                     {item?.user?.full_name}
                                                                 </a>
@@ -371,7 +389,7 @@ export default function ApplicationsReceiveds() {
                                                                 </span>
                                                             ) : item?.status === 'in_progress' ? (
                                                                 <span>
-                                                                    <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
+                                                                    <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
                                                                 </span>
                                                             ) : (
                                                                 <span style={{ cursor: 'pointer' }}>
@@ -383,7 +401,7 @@ export default function ApplicationsReceiveds() {
                                                         {
                                                             item?.status === 'completed' ?
 
-                                                            <></>
+                                                                <></>
                                                                 :
                                                                 <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
                                                                     <i className="fa-solid fa-pen-to-square ml-3 text-success-emphasis"></i>
@@ -482,7 +500,7 @@ export default function ApplicationsReceiveds() {
 
                                             <div>
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Kategoriyasi:
+                                                    Buyurtma sohasi:
                                                 </span>{' '}
                                                 <span className="fw-medium text-secondary fs-5">
                                                     {dataDetails?.type?.name}
@@ -506,7 +524,7 @@ export default function ApplicationsReceiveds() {
                                             <span className="fw-medium d-flex gap-3 ">
 
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Tugash muddati: <span className="fw-medium text-secondary  fs-5 ">
+                                                    Topshirish sanasi: <span className="fw-medium text-secondary  fs-5 ">
                                                         {dataDetails?.deadline_date}
                                                     </span>
                                                 </span>{' '}
@@ -527,7 +545,7 @@ export default function ApplicationsReceiveds() {
             </Modal>
 
             <Modal
-                title="Arizani tasdiqlash"
+                title="Ariza holati"
                 width={416}
                 centered
                 open={openUpdate}
@@ -565,7 +583,7 @@ export default function ApplicationsReceiveds() {
                         selected={dataUpdatwes?.status === "in_progress"}
                         className="fs-3"
                         value="in_progress">
-                        Jarayonda
+                        Kelishildi va Ish boshlandi
                     </option>
                     <option
 

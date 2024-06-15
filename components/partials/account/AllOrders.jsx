@@ -210,7 +210,7 @@ export default function DealCart() {
 
                                                     <div >
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Tugash muddati:
+                                                            Topshirish sanasi:
                                                         </span>{' '}
                                                         <span className="fw-medium text-secondary fs-5 ">
                                                             {item?.deadline_date}

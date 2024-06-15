@@ -1245,7 +1245,7 @@ class GetRepository {
         return reponse;
     }
     async getDealType(search) {
-        const endPoint = `deals/deal-types/search=${search || ''}`;
+        const endPoint = `deals/deal-types/?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
