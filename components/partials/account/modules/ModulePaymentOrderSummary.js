@@ -84,7 +84,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
         <div className="ps-block--checkout-order">
             <h3>Buyurtma mahsulotlari</h3>
             <div className="shot">
-                <div className="ps-block__content">
+                <div className="ps-block__content " style={{backgroundColor:"#f1f1f1"}}>
                     {ecomerce.cartDataItems &&
                     ecomerce.cartDataItems.length > 0 ? (
                         ecomerce.cartDataItems?.map((el, i) => (
@@ -119,6 +119,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
                         </figure>
                     )}
                 </div>
+
                 <div className="checkout_footer">
                     {ecomerce.cartDataItems &&
                         ecomerce.cartDataItems.length > 0 && (

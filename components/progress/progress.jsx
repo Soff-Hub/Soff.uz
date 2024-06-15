@@ -54,7 +54,7 @@ const Progress = ({
             "POST",
             baseUrl + "seller/product-create-first/"
         );
-        xhr.setRequestHeader("Authorization", `Bearer ${user.access}`);
+        xhr.setRequestHeader("Authorization", `Bearer ${user.access}`); 
         xhr.upload.addEventListener("progress", ({ loaded, total }) => {
             setTotal(total);
             setTotaLoad(loaded)
@@ -82,7 +82,8 @@ const Progress = ({
                 setStatus(xhr.status)
             } else {
                 let error = xhr.responseText;
-                setError(error)
+                setError(error);
+                setStatus(xhr?.status);
                 setLoading(false);
                 setLoading2(false);
             }
@@ -92,9 +93,12 @@ const Progress = ({
         formData.append('file', file);
         formData.append("content_type", content_type);
         xhr.send(formData);
+        console.log(xhr);
     }
 
-    console.log((total == totalLoad) && (status === 201) && !loading);
+    console.log(status);
+    console.log(error);
+
 
     return (
         <div className="wrapper bg-white">

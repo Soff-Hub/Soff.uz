@@ -24,6 +24,7 @@ export default function DealsList({ setOpen }) {
     const [type, setType] = useState('');
     const [loading, setLoading] = useState(false);
     const [dealType, setDealType] = useState(null);
+    const [keyword, setKeyword] = useState('');
 
     const handleChange = (date) => {
         if (date) {
@@ -32,6 +33,20 @@ export default function DealsList({ setOpen }) {
             setLifetime(null);
         }
     };
+
+
+
+    const onSearch = async (value) => {
+        setKeyword(value)
+    };
+
+    function handleChangeCategory(value) {
+        for (let i = 0; i < dealType.length; i++) {
+            if (dealType[i].name === value) {
+                setType(dealType[i].id);
+            }
+        }
+    }
 
 
 
@@ -71,24 +86,20 @@ export default function DealsList({ setOpen }) {
         setLoading(false);
     }
 
-    async function getDealType(token) {
-        const data = await GetRepository.getDealType(token);
+    async function getDealType() {
+        const data = await GetRepository.getDealType(keyword);
         if (data?.results) {
             setDealType(data?.results);
         }
     }
 
     useEffect(() => {
-        if (user?.access) {
-            getDealType(user?.access);
-        }
-    }, []);
+
+        getDealType();
+
+    }, [keyword]);
 
 
-    const optionType = dealType?.map((e) => ({
-        label: e?.name,
-        value: e?.id,
-    }));
 
     return (
         <div className="row " style={{ alignItems: 'flex-start' }}>
@@ -166,6 +177,7 @@ export default function DealsList({ setOpen }) {
                                         onChange={handleChange}
                                         className='w-100 py-3' placeholder='Tugash muddati' />
                                 </Form.Item>
+
                                 <Form.Item
                                     className="col-md-12 mb-3"
                                     name="type"
@@ -177,19 +189,25 @@ export default function DealsList({ setOpen }) {
                                                 'Kategoriyasi kiritish majburiy',
                                         },
                                     ]}>
+
                                     <Select
-                                        onChange={(e) =>
-                                            setType(e)
-                                        }
-                                        style={{
-                                            width: '100%',
-                                            height: '45px',
-                                        }}
-                                        placeholder="Kategoriyasi"
-                                        options={
-                                            optionType
-                                        }></Select>
+                                        mode="single"
+                                        showSearch
+                                        className='p-0 '
+                                        allowClear
+                                        style={{ height: "45px" }}
+                                        placeholder="Barcha Buyurtmalar"
+                                        onSearch={onSearch}
+                                        onChange={handleChangeCategory}
+                                    >
+                                        <Option key={""} value={""}>Barcha Buyurtmalar</Option>
+                                        {dealType?.map(item => (
+                                            <Option key={item.id} value={item.name} >{item.name}</Option>
+                                        ))}
+                                    </Select>
                                 </Form.Item>
+
+
 
                                 <Form.Item
                                     label="Aloqa uchun malumot kiriting"
