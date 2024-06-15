@@ -336,7 +336,7 @@ export default function DealOrderList() {
                                                                 </span>
                                                             ) : dealItem?.status === 'cancelled' ? (
                                                                 <span>
-                                                                    <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
+                                                                    <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
                                                                 </span>
                                                             ) : (
                                                                 <span style={{ cursor: 'pointer' }}>

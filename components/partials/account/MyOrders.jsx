@@ -279,7 +279,7 @@ export default function MyOrders() {
 
                                                             <div>
                                                                 <span className="text-success fs-5 fw-medium">
-                                                                    Kategoriyasi:
+                                                                    Buyurtma sohasi:
                                                                 </span>{' '}
                                                                 <span className="fw-medium text-secondary fs-5">
                                                                     {item?.type?.name}
@@ -301,7 +301,7 @@ export default function MyOrders() {
                                                 <div className='mt-3 d-flex justify-content-between'>
                                                     <div>
                                                         <span className="text-success fs-5 fw-medium">
-                                                            Tugash muddati:
+                                                            Topshirish sanasi:
                                                         </span>{' '}
                                                         <span className="fw-medium fs-5">
                                                             {item?.deadline_date}

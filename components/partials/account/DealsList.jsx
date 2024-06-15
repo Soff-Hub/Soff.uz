@@ -163,7 +163,7 @@ export default function DealsList({ setOpen }) {
                                 </Form.Item>
 
                                 <Form.Item
-                                    label="Tugash muddati"
+                                    label="Topshirish sanasi"
                                     className="col-md-12 mb-3 "
                                     name="userRole"
                                     rules={[
@@ -175,18 +175,18 @@ export default function DealsList({ setOpen }) {
                                     ]}>
                                     <DatePicker
                                         onChange={handleChange}
-                                        className='w-100 py-3' placeholder='Tugash muddati' />
+                                        className='w-100 py-3' placeholder='Topshirish sanasi' />
                                 </Form.Item>
 
                                 <Form.Item
                                     className="col-md-12 mb-3"
                                     name="type"
-                                    label="Kategoriyasi"
+                                    label="Buyurtma sohasi"
                                     rules={[
                                         {
                                             required: true,
                                             message:
-                                                'Kategoriyasi kiritish majburiy',
+                                                'Buyurtma sohasi kiritish majburiy',
                                         },
                                     ]}>
 
@@ -210,14 +210,14 @@ export default function DealsList({ setOpen }) {
 
 
                                 <Form.Item
-                                    label="Aloqa uchun malumot kiriting"
+                                    label="Bog'lanish uchun ma'lumot"
                                     className="col-md-12   mx-auto mb-3"
                                     name="contac_info"
                                     rules={[
                                         {
                                             required: true,
                                             message:
-                                                'Aloqa uchun malumot kiriting kirtish majburiy',
+                                                "Bog'lanish uchun ma'lumot kirtish majburiy",
                                         },
                                     ]}>
                                     <Input
@@ -231,7 +231,7 @@ export default function DealsList({ setOpen }) {
 
 
                                 <Form.Item
-                                    label="Buyurtma uchun tavsif"
+                                    label="Buyurtmaning to'liq tavsifi"
                                     name="description"
                                     className='col-md-12 mb-3'
                                     rules={[
@@ -244,7 +244,7 @@ export default function DealsList({ setOpen }) {
                                     <TextArea
 
                                         rows={8}
-                                        placeholder="Buyurtma uchun tavsif"
+                                        placeholder="Buyurtmaning to'liq tavsifi"
                                         onChange={(e) =>
                                             setDescription(
                                                 e.target.value

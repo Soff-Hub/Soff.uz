@@ -128,7 +128,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                 </Form.Item>
 
                                 <Form.Item
-                                    label="Tugash muddati"
+                                    label="Topshirish sanasi"
                                     className="col-md-12 mb-3 "
                                     name={dataDetails?.deadline_date}
                                 >
@@ -138,7 +138,7 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                 <Form.Item
                                     className="col-md-12 mb-3"
                                     name={dataDetails?.type}
-                                    label="Kategoriyasi"
+                                    label="Buyurtma sohasi"
                                 >
                                     <Select
                                         defaultValue={dataDetails?.type?.name}
@@ -149,14 +149,14 @@ export default function DealsListUpdate({ setOpenUpdate, dataDetails, setOpen2 }
                                             width: '100%',
                                             height: '45px',
                                         }}
-                                        placeholder="Kategoriyasi"
+                                        placeholder="Buyurtma sohasi"
                                         options={
                                             optionType
                                         }></Select>
 
                                 </Form.Item>
                                 <Form.Item
-                                    label="Aloqa uchun malumot kiriting"
+                                    label="Bog'lanish uchun ma'lumot kiriting"
                                     className="col-md-12   mx-auto mb-3"
                                     name={dataDetails?.contact_info}
                                 >
