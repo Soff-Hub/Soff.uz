@@ -3,6 +3,7 @@ import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+const { Option } = Select;
 
 
 
