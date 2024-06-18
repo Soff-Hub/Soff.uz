@@ -383,12 +383,18 @@ export default function ApplicationsReceiveds() {
                                                                 <span>
                                                                     <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
                                                                 </span>
-                                                            ) : (
-                                                                <span style={{ cursor: 'pointer' }}>
-                                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                                    Tugallangan
+                                                            ) : item?.status ? (
+                                                                <span>
+                                                                    <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
                                                                 </span>
-                                                            )
+                                                            ) :
+
+                                                                (
+                                                                    <span style={{ cursor: 'pointer' }}>
+                                                                        <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                                        Tugallangan
+                                                                    </span>
+                                                                )
                                                         }
                                                         {
 
