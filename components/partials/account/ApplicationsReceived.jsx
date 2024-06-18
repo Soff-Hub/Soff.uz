@@ -72,7 +72,6 @@ export default function ApplicationsReceiveds() {
 
 
     function handleClickUpdate(item) {
-        console.log(item);
         setAppliactionId(item?.id)
         if (item?.status === "new") {
             setCategoryStatus('in_progress')

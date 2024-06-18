@@ -36,6 +36,8 @@ export default function MyDealCart() {
     const [price, setPrice] = useState('');
     const [contacInfo, setContacInfo] = useState('');
     const [categoryStatus, setCategoryStatus] = useState(null);
+    const [appliactionId, setAppliactionId] = useState(null);
+    const [countdown, setCountdown] = useState(null);
 
 
 
@@ -154,53 +156,77 @@ export default function MyDealCart() {
     }
 
 
+    async function postOrderStatus() {
+        const data = {
+            status: categoryStatus
+        };
+        const ItemsData = await PatchRepository.patchDealUpdateApplicaitonStatus(appliactionId, data, user?.access);
+        if (ItemsData?.status === 200) {
+            GetItemsProducts(currPage, '', '', '', user?.access);
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz malumotlarni o'zgartirdingiz`,
+            });
+
+
+        } else {
+            if (ItemsData?.data?.msg) {
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Boshqa ariza ustida !',
+                    content: ItemsData?.data?.msg,
+                });
+
+            } else {
+
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: ItemsData?.status + ' ' + ItemsData?.statusText,
+                });
+            }
+        }
+
+    }
+
+
+    const updateDate = data?.find((item) => item?.remain_datetime !== null);
+
     useEffect(() => {
         if (user?.access) {
             GetItemsProducts();
         }
-    }, [currPage, debouncedSearchTerm, category, user?.access]);
+    }, [currPage, debouncedSearchTerm, category, appliactionId, user?.access]);
 
 
     useEffect(() => {
         if (productsID) {
             GetItemsProductsUpdates()
         }
-    }, [productsID, openUpdate, isModalOpen])
-
-    const initialCountdown = parseInt(Cookies.get('countdown')) || 86400; // 86400 soniya (24 soat)
-    const [countdown, setCountdown] = useState(initialCountdown);
+    }, [productsID, openUpdate, isModalOpen]);
 
     useEffect(() => {
-        if (true) {
-            const saveCountdown = () => {
-                Cookies.set('countdown', countdown);
-            };
+        setCountdown(Math.floor(updateDate?.remain_datetime))
+    }, [updateDate?.remain_datetime]);
 
-            const interval = setInterval(() => {
-                setCountdown((prevCountdown) => {
-                    if (prevCountdown === 0) {
-                        clearInterval(interval);
-                        return 0;
-                    } else {
-                        return prevCountdown - 1;
-                    }
-                });
-            }, 1000);
-
-            // Sahifani yangilash yoki yopishdan oldin countdown qiymatini saqlash
-            window.addEventListener('beforeunload', saveCountdown);
-
-            return () => {
-                clearInterval(interval);
-                window.removeEventListener('beforeunload', saveCountdown);
-            };
-        }
-    }, []);
 
     useEffect(() => {
-        Cookies.set('countdown', countdown);
+        const interval = setInterval(() => {
+            setCountdown((prevCountdown) => {
+                if (prevCountdown === 0) {
+                    clearInterval(interval);
+                    return 0;
+                } else {
+                    return prevCountdown - 1;
+                }
+            });
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
     }, [countdown]);
-
 
 
 
@@ -480,8 +506,11 @@ export default function MyDealCart() {
                                                             </div> : <span></span>
                                                         }
                                                         {
-                                                            countdown !== 0 ?
-                                                                <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal" className='btn btn-danger align-items-center fs-5 d-flex flex-column'>
+                                                            (item?.remain_datetime && item?.deal_status_for_applicant !== "new") ?
+                                                                <button
+                                                                    onClick={() => (setAppliactionId(item?.application_id), setCategoryStatus("cancelled"))}
+                                                                    data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                    className='btn btn-danger align-items-center fs-5 d-flex flex-column'>
 
                                                                     <span className='border-bottom'>
                                                                         {` ${Math.floor(countdown / 3600) < 10 ? '0' : ''}${Math.floor(countdown / 3600)} : ${Math.floor((countdown % 3600) / 60) < 10 ? '0' : ''}${Math.floor((countdown % 3600) / 60)} : ${countdown % 60 < 10 ? '0' : ''}${countdown % 60}`}
@@ -780,7 +809,7 @@ export default function MyDealCart() {
 
 
             <ModalDelete onSuccess={DeleteItemsProducts} />
-            <ModalDelas categoryStatus={categoryStatus} setCategoryStatus={setCategoryStatus} />
+            <ModalDelas onSuccess={postOrderStatus} categoryStatus={categoryStatus} setCategoryStatus={setCategoryStatus} />
         </div >
     );
 }
