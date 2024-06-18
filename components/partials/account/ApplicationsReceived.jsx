@@ -6,6 +6,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import Link from 'next/link';
 import DealsList from './DealsList';
+import ModalDelas from './ModalDeals';
 const { Option } = Select;
 
 
@@ -70,13 +71,16 @@ export default function ApplicationsReceiveds() {
     }
 
 
-    function handleClickUpdate(id) {
-        if (id) {
-            setAppliactionId(id)
-            setOpenUpdate(true);
+    function handleClickUpdate(item) {
+        console.log(item);
+        setAppliactionId(item?.id)
+        if (item?.status === "new") {
+            setCategoryStatus('in_progress')
+        } else {
+            setCategoryStatus('completed')
         }
     }
-    const dataUpdatwes = data?.find((item) => item?.id === appliactionId);
+
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
@@ -111,48 +115,37 @@ export default function ApplicationsReceiveds() {
     }
 
     async function postOrder() {
+        const data = {
+            status: categoryStatus
+        };
+        const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, data, user?.access);
+        if (ItemsData?.status === 200) {
+            GetItemsProducts()
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz malumotlarni o'zgartirdingiz`,
+            });
 
-        if (categoryStatus) {
 
-            const data = {
-                status: categoryStatus ? categoryStatus : dataUpdatwes?.status
-            };
-            const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, data, user?.access);
-            if (ItemsData?.status === 200) {
-                GetItemsProducts()
-                const modal = Modal.success({
+        } else {
+            if (ItemsData?.data?.msg) {
+                const modal = Modal.warning({
                     centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: `Siz malumotlarni o'zgartirdingiz`,
+                    title: 'Boshqa ariza ustida !',
+                    content: ItemsData?.data?.msg,
                 });
 
-
             } else {
-                if (ItemsData?.data?.msg) {
-                    const modal = Modal.warning({
-                        centered: true,
-                        title: 'Boshqa ariza ustida !',
-                        content: ItemsData?.data?.msg,
-                    });
 
-                } else {
-
-                    const modal = Modal.warning({
-                        centered: true,
-                        title: 'Xatolik!',
-                        content: ItemsData?.status + ' ' + ItemsData?.statusText,
-                    });
-                }
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: ItemsData?.status + ' ' + ItemsData?.statusText,
+                });
             }
-        } else {
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Xatolik!',
-                content: 'Holatni tanlashingiz kerak',
-            });
         }
-        setOpenUpdate(false)
-        setCategory(null)
+
     }
 
 
@@ -380,7 +373,7 @@ export default function ApplicationsReceiveds() {
                                                         </span>
                                                     </div>
 
-                                                    <div>
+                                                    <div className='d-flex gap-3 align-items-center justify-content-between '>
                                                         {
                                                             item?.status === 'new' ? (
                                                                 <span>
@@ -399,15 +392,22 @@ export default function ApplicationsReceiveds() {
                                                             )
                                                         }
                                                         {
-                                                            item?.status === 'completed' ?
 
-                                                                <></>
-                                                                :
-                                                                <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                                    <i className="fa-solid fa-pen-to-square ml-3 text-success-emphasis"></i>
-                                                                </span>
+                                                            item?.status === 'new' ?
+                                                                <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                    className='btn btn-success fs-5'
+                                                                    onClick={() => handleClickUpdate(item)}>
+                                                                    Qabul qilish
+                                                                </button>
+                                                                : item?.status === 'in_progress' ?
+                                                                    <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                        className='btn btn-outline-success fs-5'
+                                                                        onClick={() => handleClickUpdate(item)}>Tugatish</button> :
+                                                                    <></>
+
                                                         }
                                                     </div>
+
 
                                                 </div>
                                             </div>
@@ -545,57 +545,6 @@ export default function ApplicationsReceiveds() {
             </Modal>
 
             <Modal
-                title="Ariza holati"
-                width={416}
-                centered
-                open={openUpdate}
-                onOk={postOrder}
-                okText="Tasdiqlash"
-                cancelButtonProps={{
-                    style: {
-                        display: 'none',
-                    },
-                }}
-                okButtonProps={{
-                    style: {
-                        backgroundColor: "#28a745"
-                    },
-                }}
-
-                onCancel={() => setOpenUpdate(false)}>
-
-                <select
-                    className="form-select   fs-3 py-3 rounded-3"
-                    onChange={(e) =>
-                        setCategoryStatus(
-                            e.target
-                                .value
-                        )
-                    }>
-                    <option
-                        selected={dataUpdatwes?.status === "new"}
-
-                        className="fs-3"
-                        value="new">
-                        Moderatsiya
-                    </option>
-                    <option
-                        selected={dataUpdatwes?.status === "in_progress"}
-                        className="fs-3"
-                        value="in_progress">
-                        Kelishildi va Ish boshlandi
-                    </option>
-                    <option
-
-                        selected={dataUpdatwes?.status === "completed"}
-                        className="fs-3"
-                        value="completed">
-                        Tugallangan
-                    </option>
-                </select>
-            </Modal>
-
-            <Modal
                 title="Buyurtma yaratish"
                 width={550}
                 centered
@@ -618,6 +567,7 @@ export default function ApplicationsReceiveds() {
                 <DealsList setOpen={setOpenPosts} />
             </Modal>
 
+            <ModalDelas onSuccess={postOrder} categoryStatus={categoryStatus} setCategoryStatus={setCategoryStatus} />
 
         </div >
     );

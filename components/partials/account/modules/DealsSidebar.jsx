@@ -14,6 +14,8 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     const [price, setPrice] = useState(null);
     const [webdata, setWebData] = useState(null);
     const [socket, setSocket] = useState(null);
+    const [keyword, setKeyword] = useState('');
+
 
 
 
@@ -46,12 +48,31 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         return formattedNumber;
     }
 
+
     async function getDealType() {
-        const data = await GetRepository.getDealType();
+        const data = await GetRepository.getDealType(keyword);
         if (data?.results) {
             setDealType(data?.results);
         }
     }
+
+    const onSearch = async (value) => {
+        setKeyword(value)
+    };
+
+    function handleChangeCategory(value) {
+        for (let i = 0; i < dealType.length; i++) {
+            if (dealType[i].name === value) {
+                setType(dealType[i].id);
+            }
+        }
+    }
+
+
+
+    useEffect(() => {
+        getDealType();
+    }, [keyword]);
 
     async function getDealPrice() {
         const data = await GetRepository.getDealTypePriceRange();
@@ -62,16 +83,8 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
 
     useEffect(() => {
         getDealPrice()
-        getDealType(user?.access);
     }, []);
 
-    const optionType = [
-        { label: 'Barchasi', value: '' },
-        ...(dealType?.map((e) => ({
-            label: e?.name,
-            value: e?.id,
-        })) || [])
-    ];
 
     const sidebarMenu = [
         {
@@ -97,8 +110,6 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
             label: 'Barcha buyurtmalar',
         }
     ]
-
-
 
 
 
@@ -163,7 +174,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                     className='py-3 px-3 d-flex justify-content-between'
                                     onClick={() => Router.push(el.url)}
                                     style={{
-                                        borderLeft: (el.url === asPath || asPath==="/account/all-orders?show=modal") ? '3px solid #28a745' : '0',
+                                        borderLeft: (el.url === asPath || asPath === "/account/all-orders?show=modal") ? '3px solid #28a745' : '0',
                                         backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
                                         cursor: 'pointer'
                                     }}>
@@ -229,19 +240,19 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                     Buyurtma turlari
                 </span>
                 <Select
-                    onChange={(e) =>
-                        setType(e)
-                    }
-                    style={{
-                        width: '100%',
-                        height: '45px',
-                    }}
-                    placeholder="Buyurtma turi"
-
-                    options={
-                        optionType
-                    }>
-
+                    mode="single"
+                    showSearch
+                    className='p-0 w-100 '
+                    allowClear
+                    style={{ height: "43px" }}
+                    placeholder="Barcha turlar"
+                    onSearch={onSearch}
+                    onChange={handleChangeCategory}
+                >
+                    <Option key={""} value={""}>Barcha turlar</Option>
+                    {dealType?.map(item => (
+                        <Option key={item.id} value={item.name} >{item.name}</Option>
+                    ))}
                 </Select>
 
                 <span className="d-block p-2 mt-4 fw-bold ">

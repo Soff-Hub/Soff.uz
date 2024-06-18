@@ -94,9 +94,7 @@ export default function DealsList({ setOpen }) {
     }
 
     useEffect(() => {
-
         getDealType();
-
     }, [keyword]);
 
 
@@ -196,11 +194,11 @@ export default function DealsList({ setOpen }) {
                                         className='p-0 '
                                         allowClear
                                         style={{ height: "45px" }}
-                                        placeholder="Barcha Buyurtmalar"
+                                        placeholder="Barcha turlar"
                                         onSearch={onSearch}
                                         onChange={handleChangeCategory}
                                     >
-                                        <Option key={""} value={""}>Barcha Buyurtmalar</Option>
+                                        <Option key={""} value={""}>Barcha turlar</Option>
                                         {dealType?.map(item => (
                                             <Option key={item.id} value={item.name} >{item.name}</Option>
                                         ))}
