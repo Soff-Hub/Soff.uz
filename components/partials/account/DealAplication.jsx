@@ -8,6 +8,8 @@ import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import ModalDelete from './Modal';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+import ModalDelas from './ModalDeals';
 const { TextArea } = Input;
 
 
@@ -33,8 +35,7 @@ export default function MyDealCart() {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [contacInfo, setContacInfo] = useState('');
-
-
+    const [categoryStatus, setCategoryStatus] = useState(null);
 
 
 
@@ -59,8 +60,6 @@ export default function MyDealCart() {
         }
     };
 
-
-
     async function GetItemsProducts() {
         setloading(true)
         const token = user?.access
@@ -84,8 +83,6 @@ export default function MyDealCart() {
         setloadingUpdate(false)
     }
 
-
-
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -107,7 +104,6 @@ export default function MyDealCart() {
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
     };
-
 
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyDealsDeleteApplicaiton(
@@ -170,6 +166,41 @@ export default function MyDealCart() {
             GetItemsProductsUpdates()
         }
     }, [productsID, openUpdate, isModalOpen])
+
+    const initialCountdown = parseInt(Cookies.get('countdown')) || 86400; // 86400 soniya (24 soat)
+    const [countdown, setCountdown] = useState(initialCountdown);
+
+    useEffect(() => {
+        if (true) {
+            const saveCountdown = () => {
+                Cookies.set('countdown', countdown);
+            };
+
+            const interval = setInterval(() => {
+                setCountdown((prevCountdown) => {
+                    if (prevCountdown === 0) {
+                        clearInterval(interval);
+                        return 0;
+                    } else {
+                        return prevCountdown - 1;
+                    }
+                });
+            }, 1000);
+
+            // Sahifani yangilash yoki yopishdan oldin countdown qiymatini saqlash
+            window.addEventListener('beforeunload', saveCountdown);
+
+            return () => {
+                clearInterval(interval);
+                window.removeEventListener('beforeunload', saveCountdown);
+            };
+        }
+    }, []);
+
+    useEffect(() => {
+        Cookies.set('countdown', countdown);
+    }, [countdown]);
+
 
 
 
@@ -328,7 +359,7 @@ export default function MyDealCart() {
                                                 <div className='d-flex justify-content-between gap-4 align-items-start'>
                                                     <h3 className="text-success fw-medium ">{item?.title}</h3>
                                                     {
-                                                        item?.application_owner?.image ? <></> :
+                                                        item?.deal_status_for_applicant !== "new" ? <></> :
                                                             <Dropdown
                                                                 overlay={(
                                                                     <Menu>
@@ -448,6 +479,17 @@ export default function MyDealCart() {
                                                                 </span>
                                                             </div> : <span></span>
                                                         }
+                                                        {
+                                                            countdown !== 0 ?
+                                                                <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal" className='btn btn-danger align-items-center fs-5 d-flex flex-column'>
+
+                                                                    <span className='border-bottom'>
+                                                                        {` ${Math.floor(countdown / 3600) < 10 ? '0' : ''}${Math.floor(countdown / 3600)} : ${Math.floor((countdown % 3600) / 60) < 10 ? '0' : ''}${Math.floor((countdown % 3600) / 60)} : ${countdown % 60 < 10 ? '0' : ''}${countdown % 60}`}
+                                                                    </span>
+                                                                    <span>Bekor qilish</span>
+
+                                                                </button> : <></>
+                                                        }
 
 
 
@@ -548,13 +590,7 @@ export default function MyDealCart() {
                             </p>
 
                             <div className='d-flex justify-content-between align-items-center '>
-                                {
-                                    dataDetials?.has_seen ?
-                                        <span className='d-flex gap-2 align-items-center text-success '>
-                                            <i className='fa-solid fa-eye'></i>
-                                            Ko'rildi
-                                        </span> : <span className='text-danger'> <i className='fa-solid fa-eye-slash'></i> Ko'rilmadi</span>
-                                }
+
                                 {
                                     dataDetials?.status === 'new' ? (
                                         <span>
@@ -744,6 +780,7 @@ export default function MyDealCart() {
 
 
             <ModalDelete onSuccess={DeleteItemsProducts} />
+            <ModalDelas categoryStatus={categoryStatus} setCategoryStatus={setCategoryStatus} />
         </div >
     );
 }
