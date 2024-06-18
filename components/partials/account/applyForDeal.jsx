@@ -263,7 +263,7 @@ export default function ApplyForDeal() {
                                     {
                                         required: true,
                                         message:
-                                            'Bog'lanish uchun ma'lumot kiriting kirtish majburiy',
+                                            "Bog'lanish uchun ma'lumot kiriting kirtish majburiy",
                                     },
                                 ]}>
                                 <Input

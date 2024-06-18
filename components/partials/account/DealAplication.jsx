@@ -315,7 +315,7 @@ export default function MyDealCart() {
 
                                 {
                                     data?.map(item => (
-                                        <div>
+                                        <div onClick={() => showModal(item?.id)} style={{ cursor: "pointer" }} >
                                             <div
                                                 className={`rounded py-3 px-4 d-flex justify-content-between align-items-center
                                                  ${item?.deal_application_status === 'new' ? " bg-secondary-subtle" :
@@ -327,12 +327,12 @@ export default function MyDealCart() {
 
                                             >
 
-                                                <h5 className='m-0 text-secondary'>
-                                                    <i className='fa-solid fa-eye mx-2' style={{ cursor: "pointer" }} onClick={() => showModal(item?.id)}></i>
+                                                <span className='m-0 '>
+                                                    <i className='fa-solid fa-eye mx-2' ></i>
                                                     Ariza holati:
 
 
-                                                </h5>
+                                                </span>
                                                 {
                                                     item?.deal_application_status === 'new' ? (
                                                         <span>
