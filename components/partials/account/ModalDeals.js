@@ -66,7 +66,7 @@ function ModalDelas({ onSuccess, categoryStatus, setCategoryStatus }) {
                                     ? 'Haqiqatan ham  qabul qilmoqchimisiz? Bu jarayonni ortga qaytarib bo‘lmaydi.'
                                     : categoryStatus === 'completed'
                                     ? 'Haqiqatan ham tugatmoqchimisiz? Bu jarayonni ortga qaytarib bo‘lmaydi.'
-                                    : 'Haqiqatan ham  Bekor  qilmoqchimisiz'}
+                                    : 'Haqiqatan ham  bekor  qilmoqchimisiz? Bu jarayonni ortga qaytarib bo‘lmaydi.'}
                             </p>
                         </div>
                         <div className="d-flex justify-content-center gap-5 pb-5 pt-3">
