@@ -337,7 +337,7 @@ export default function DealCart() {
                 <p
                 className='fw-medium fs-4'
                 
-                >Sizda urinishlar soni tugagan. Iltimos ariza yuborish uchun urinishlar sonini sotib oling !!!</p>
+                > Sizda urinishlar soni tugagan. Iltimos ariza yuborish uchun urinishlar sonini sotib oling !!!</p>
             </Modal>
 
 
