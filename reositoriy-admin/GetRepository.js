@@ -695,8 +695,8 @@ class GetRepository {
         return reponse;
     }
 
-    async getOrdersMYDealListsUpdateUserDataDeals(id) {
-        const endPoint = `deals/deal-applicant-applications/${id}`;
+    async getOrdersMYDealListsUpdateUserDataDeals(id, page) {
+        const endPoint = `deals/deal-applicant-applications/${id}?page=${page}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -728,7 +728,6 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-
 
     async getApplicationsReceived(page, status, deal, token) {
         const endPoint = `deals/my-deals-applications/?page=${page}&status=${

@@ -1,4 +1,4 @@
-import React, { useEffect, useId, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DealsSidebar from './modules/DealsSidebar';
 import { Modal, Pagination, Select } from 'antd';
 import { useSelector } from 'react-redux';
@@ -30,11 +30,14 @@ export default function ApplicationsReceiveds() {
     const [keyword, setKeyword] = useState('');
     const [loadingDetails, setLoadingDetails] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
     const [valueRate, setValueRate] = useState(null);
     const [rateDes, setRateDes] = useState(null);
     const [userData, setUserData] = useState([]);
     const [userDataDeals, setUserDataDeals] = useState([]);
     const [userId, setUserId] = useState(null);
+    const [pageMore, setPageMore] = useState(1);
+    const [countToggle, setCountToggle] = useState(true)
 
 
 
@@ -154,16 +157,22 @@ export default function ApplicationsReceiveds() {
 
     async function GetItemsProductsUpdatesProfile() {
         const ItemsData = await GetRepository.getOrdersMYDealListsUpdateUserData(userId);
-        const ItemsDataDeals = await GetRepository.getOrdersMYDealListsUpdateUserDataDeals(userId);
         setUserData(ItemsData);
-        setUserDataDeals(ItemsDataDeals?.results)
 
     }
 
-    console.log(userData);
-    console.log(userDataDeals);
+    async function GetItemsProductsUpdatesData() {
+        setLoadingUpdate(true)
+        const ItemsDataDeals = await GetRepository.getOrdersMYDealListsUpdateUserDataDeals(userId, pageMore);
+        const newData = ItemsDataDeals.results;
+        setUserDataDeals([...userDataDeals, ...newData]);
+        if ([...userDataDeals, ...newData]?.length == ItemsDataDeals.count) {
+            setCountToggle(false);
+        }
+        setLoadingUpdate(false)
 
 
+    }
 
 
     useEffect(() => {
@@ -186,13 +195,18 @@ export default function ApplicationsReceiveds() {
         }
     }, [keyword]);
 
-
     useEffect(() => {
         if (userId) {
             GetItemsProductsUpdatesProfile()
         }
     }, [userId, openUpdate])
 
+
+    useEffect(() => {
+        if (userId) {
+            GetItemsProductsUpdatesData()
+        }
+    }, [userId, openUpdate, pageMore])
 
 
     return (
@@ -472,87 +486,141 @@ export default function ApplicationsReceiveds() {
                 }}
 
                 onCancel={() => setOpenUpdate(false)}>
-
-                <div className='bg-light p-3 mb-3 mt-5 d-flex justify-content-between'>
-                    <div className='d-flex gap-3 align-items-center'>
-                        <img
-                            style={{ objectFit: "cover", borderRadius: "50%" }}
-                            height={50} width={50} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYPcbkP_unwSjPz808crGcqQhGjGoNC4GNyg&s"} alt={"user"} srcset="" />
-                        <div className='d-flex flex-column '>
-                            <span className='fs-4'>{userData?.full_name}</span>
-                            <span className='text-secondary' fs-4>Qilgan ishlari: <span className='text-success'>
-                                {userData?.total_applications} ta </span></span>
-                        </div>
-                    </div>
-                    {
-                        userData?.average_rating &&
-                        <Flex gap="middle" vertical>
-                            <Rate
-                                disabled
-                                className="fs-4"
-                                value={userData?.average_rating}
-                            />
-                        </Flex>
-                    }
-
-                </div>
-
-
-                <span className='fs-5 '>Qilgan ishlari ro'yxati</span>
                 {
-                    userDataDeals?.map(item => (
-                        <>
-                            {
-                                (item?.review || item?.rating) &&
-                                <div className='bg-success-subtle px-3 py-2'>
-                                    <div className='d-flex justify-content-between align-items-center'>
-                                        {
-                                            item?.review &&
-                                            <span>Fikrlar</span>
-                                        }
-                                        {
-                                            item?.rating &&
-                                            <Flex gap="middle" vertical >
-                                                <Rate
-                                                    disabled
-                                                    className="fs-4"
-                                                    value={item?.rating}
-                                                />
-                                            </Flex>
-                                        }
-                                    </div>
-                                    {
-                                        item?.review &&
-                                        <span>{item?.review} </span>
-                                    }
-                                </div>
-                            }
-
+                    loadingUpdate ?
+                        <div
+                            className=" "
+                            style={{
+                                height: '50vh',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
                             <div
-                                className={`d-flex flex-column justify-content-between gap-2 align-items-start 
-                                 mb-3  p-3 pb-4 `
+                                className="spinner-border "
+                                role="status"
+                                style={{ width: '150px', height: '150px' }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div> :
+                        <>
+
+                            <div className='bg-body-tertiary py-4 px-4 mb-5 mt-5 d-flex justify-content-between'>
+                                <div className='d-flex gap-3 align-items-center'>
+                                    <img
+                                        style={{ objectFit: "cover", borderRadius: "50%" }}
+                                        height={60} width={60} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYPcbkP_unwSjPz808crGcqQhGjGoNC4GNyg&s"} alt={"user"} srcset="" />
+                                    <div className='d-flex flex-column '>
+                                        <span className='fs-4'>{userData?.full_name}</span>
+                                        <span className='text-secondary' fs-4>Qilgan ishlari: <span className='text-success'>
+                                            {userData?.total_applications} ta </span></span>
+                                    </div>
+                                </div>
+                                {
+                                    userData?.average_rating &&
+                                    <Flex gap="middle" vertical>
+                                        <Rate
+                                            disabled
+                                            className="fs-4"
+                                            value={userData?.average_rating}
+                                        />
+                                    </Flex>
                                 }
 
-                                style={{ cursor: "pointer", backgroundColor: "rgb(245 246 247 / 1)" }}>
-                                <div>
-                                    <h5 className="text-secondary fw-medium mb-2">
-                                        {item?.deal?.title}
-                                    </h5>
-                                </div>
-                                <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-between w-100'>
-                                    <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirilgan sanasi: {item?.deal?.deadline_date}</h5>
-
-                                    <h5 className='text-secondary fw-medium mb-1 fs-5'>
-                                        Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
-
-                                    </h5>
-
-                                </div>
-
                             </div>
+                            {
+                                userDataDeals?.length > 0 &&
+                                <span className='fs-5 '>Qilgan ishlari ro'yxati</span>
+                            }
+                            <div className='overflow-y-auto ' style={{ maxHeight: "60vh" }}>
+
+
+                                {
+
+
+                                    userDataDeals?.length > 0 ?
+                                        <>
+                                            {
+                                                userDataDeals?.map(item => (
+                                                    <div className=' mb-3' style={{ boxShadow: " 1px 2px 15px hsla(210, 8%, 62%, .2)" }}>
+                                                        {
+                                                            (item?.review || item?.rating) &&
+                                                            <div className='bg-body-tertiary px-3 py-2  border-bottom'>
+                                                                <div className='d-flex justify-content-between align-items-center'>
+                                                                    {
+                                                                        item?.review &&
+                                                                        <span className='text-body-tertiary fs-5'>Buyurtmachi fikri</span>
+                                                                    }
+                                                                    {
+                                                                        item?.rating &&
+                                                                        <Flex gap="middle" vertical >
+                                                                            <Rate
+                                                                                disabled
+                                                                                className="fs-4"
+                                                                                value={item?.rating}
+                                                                            />
+                                                                        </Flex>
+                                                                    }
+                                                                </div>
+                                                                {
+                                                                    item?.review &&
+                                                                    <span className='text-secondary' >{item?.review} </span>
+                                                                }
+                                                            </div>
+                                                        }
+
+                                                        <div
+                                                            className={`d-flex flex-column justify-content-between gap-2 align-items-start 
+                                         mb-3  p-3 pb-4 `
+                                                            }
+
+                                                            style={{ cursor: "pointer", }}>
+                                                            <div>
+                                                                <span className='text-body-tertiary fs-5'>Buyurtma nomi</span>
+                                                                <h5 className="text-secondary fw-medium mb-2">
+                                                                    {item?.deal?.title}
+                                                                </h5>
+                                                            </div>
+                                                            <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-between w-100'>
+
+                                                                <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirilgan sanasi: {item?.deal?.deadline_date}</h5>
+
+                                                                <h5 className='text-secondary fw-medium mb-1 fs-5'>
+                                                                    Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
+
+                                                                </h5>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                ))
+                                            }
+                                            {
+                                                countToggle &&
+                                                <div className='d-flex justify-content-center'>
+                                                    <button
+                                                        onClick={() => setPageMore(pageMore + 1)}
+                                                        className="btn btn-primary fs-5 px-4">Yana</button>
+                                                </div>
+                                            }
+
+                                        </>
+
+                                        :
+
+                                        <div style={{ height: '20vh' }} className='d-flex justify-content-center align-items-center' >
+                                            <h4 className='text-secondary'>Qilingan ishlar yo'q</h4>
+                                        </div>
+                                }
+                            </div>
+
                         </>
-                    ))
+
                 }
+
 
 
             </Modal>
