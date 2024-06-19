@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useId, useState } from 'react';
 import DealsSidebar from './modules/DealsSidebar';
 import { Modal, Pagination, Select } from 'antd';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import Link from 'next/link';
 import DealsList from './DealsList';
 import ModalDelas from './ModalDeals';
 const { Option } = Select;
+import { Flex, Rate } from 'antd';
 
 
 
@@ -29,6 +29,11 @@ export default function ApplicationsReceiveds() {
     const [keyword, setKeyword] = useState('');
     const [loadingDetails, setLoadingDetails] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [valueRate, setValueRate] = useState(null);
+    const [rateDes, setRateDes] = useState(null);
+    const [userData, setUserData] = useState([]);
+    const [userDataDeals, setUserDataDeals] = useState([]);
+    const [userId, setUserId] = useState(null);
 
 
 
@@ -70,7 +75,6 @@ export default function ApplicationsReceiveds() {
         setLoadingDetails(false)
     }
 
-
     function handleClickUpdate(item) {
         setAppliactionId(item?.id)
         if (item?.status === "new") {
@@ -79,7 +83,6 @@ export default function ApplicationsReceiveds() {
             setCategoryStatus('completed')
         }
     }
-
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
@@ -92,7 +95,6 @@ export default function ApplicationsReceiveds() {
             setFilterData(ItemsData.results);
         }
     }
-
 
     const onSearch = async (value) => {
         setKeyword(value)
@@ -115,7 +117,9 @@ export default function ApplicationsReceiveds() {
 
     async function postOrder() {
         const data = {
-            status: categoryStatus
+            status: categoryStatus,
+            rating: valueRate ? valueRate : "",
+            review: rateDes ? rateDes : ""
         };
         const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, data, user?.access);
         if (ItemsData?.status === 200) {
@@ -144,8 +148,21 @@ export default function ApplicationsReceiveds() {
                 });
             }
         }
+        setValueRate(null)
+    }
+
+    async function GetItemsProductsUpdatesProfile() {
+        const ItemsData = await GetRepository.getOrdersMYDealListsUpdateUserData(userId);
+        const ItemsDataDeals = await GetRepository.getOrdersMYDealListsUpdateUserDataDeals(userId);
+        setUserData(ItemsData);
+        setUserDataDeals(ItemsDataDeals?.results)
 
     }
+
+    console.log(userData);
+    console.log(userDataDeals);
+
+
 
 
     useEffect(() => {
@@ -159,7 +176,7 @@ export default function ApplicationsReceiveds() {
         if (user?.access) {
             GetItemsProductsUpdates()
         }
-    }, [productsIdUpdate, openUpdate, open]);
+    }, [productsIdUpdate, open]);
 
 
     useEffect(() => {
@@ -168,6 +185,12 @@ export default function ApplicationsReceiveds() {
         }
     }, [keyword]);
 
+
+    useEffect(() => {
+        if (userId) {
+            GetItemsProductsUpdatesProfile()
+        }
+    }, [userId, openUpdate])
 
 
 
@@ -322,8 +345,8 @@ export default function ApplicationsReceiveds() {
 
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex gap-3 align-items-center my-2">
-                                                        <Link
-                                                            href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"}
+                                                        <span
+                                                            onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id))}
 
                                                         >
                                                             <a style={{
@@ -337,14 +360,14 @@ export default function ApplicationsReceiveds() {
                                                                     alt="sca"
                                                                 />
                                                             </a>
-                                                        </Link>
+                                                        </span>
                                                         <div>
 
-                                                            <Link href={(item?.user?.role === "seller") ? `/seller/${item?.user?.id}` : "#"} style={{ cursor: "pointer" }} className="text-start">
+                                                            <span onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id))} style={{ cursor: "pointer" }} >
                                                                 <a className="fw-medium fs-5">
                                                                     {item?.user?.full_name}
                                                                 </a>
-                                                            </Link>
+                                                            </span>
 
 
                                                             <div>
@@ -383,7 +406,7 @@ export default function ApplicationsReceiveds() {
                                                                 <span>
                                                                     <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
                                                                 </span>
-                                                            ) : item?.status ? (
+                                                            ) : item?.status === "cancelled" ? (
                                                                 <span>
                                                                     <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
                                                                 </span>
@@ -435,6 +458,111 @@ export default function ApplicationsReceiveds() {
 
 
             </div>
+
+            <Modal
+                title=" "
+                width={568}
+                centered
+                open={openUpdate}
+                onOk={() => setOpenUpdate(false)}
+                okText="Yopish"
+                cancelButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+
+                onCancel={() => setOpenUpdate(false)}>
+
+                <div className='bg-light p-3 mb-3 mt-5 d-flex justify-content-between'>
+                    <div className='d-flex gap-3 align-items-center'>
+                        <img
+                            style={{ objectFit: "cover", borderRadius: "50%" }}
+                            height={50} width={50} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYPcbkP_unwSjPz808crGcqQhGjGoNC4GNyg&s"} alt={"user"} srcset="" />
+                        <div className='d-flex flex-column '>
+                            <span className='fs-4'>{userData?.full_name}</span>
+                            <span className='text-secondary' fs-4>Qilgan ishlari: <span className='text-success'>
+                                {userData?.total_applications} ta </span></span>
+                        </div>
+                    </div>
+                    {
+                        userData?.average_rating &&
+                        <Flex gap="middle" vertical>
+                            <Rate
+                                disabled
+                                className="fs-4"
+                                value={userData?.average_rating}
+                            />
+                        </Flex>
+                    }
+
+                </div>
+
+
+                <span className='fs-5 '>Qilgan ishlari ro'yxati</span>
+                {
+                    userDataDeals?.map(item => (
+                        <>
+                            {
+                                (item?.review || item?.rating) &&
+                                <div className='bg-success-subtle px-3 py-2'>
+                                    <div className='d-flex justify-content-between align-items-center'>
+                                        {
+                                            item?.review &&
+                                            <span>Fikrlar</span>
+                                        }
+                                        {
+                                            item?.rating &&
+                                            <Flex gap="middle" vertical >
+                                                <Rate
+                                                    disabled
+                                                    className="fs-4"
+                                                    value={item?.rating}
+                                                />
+                                            </Flex>
+                                        }
+                                    </div>
+                                    {
+                                        item?.review &&
+                                        <span>{item?.review} </span>
+                                    }
+                                </div>
+                            }
+
+                            <div
+                                className={`d-flex flex-column justify-content-between gap-2 align-items-start 
+                                 mb-3  p-3 pb-4 `
+                                }
+
+                                style={{ cursor: "pointer", backgroundColor: "rgb(245 246 247 / 1)" }}>
+                                <div>
+                                    <h5 className="text-secondary fw-medium mb-2">
+                                        {item?.deal?.title}
+                                    </h5>
+                                </div>
+                                <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-between w-100'>
+                                    <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirilgan sanasi: {item?.deal?.deadline_date}</h5>
+
+                                    <h5 className='text-secondary fw-medium mb-1 fs-5'>
+                                        Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
+
+                                    </h5>
+
+                                </div>
+
+                            </div>
+                        </>
+                    ))
+                }
+
+
+            </Modal>
+
 
             <Modal
                 title="Buyurtmangiz"
@@ -572,7 +700,12 @@ export default function ApplicationsReceiveds() {
                 <DealsList setOpen={setOpenPosts} />
             </Modal>
 
-            <ModalDelas onSuccess={postOrder} categoryStatus={categoryStatus} setCategoryStatus={setCategoryStatus} />
+            <ModalDelas onSuccess={postOrder}
+                categoryStatus={categoryStatus}
+                setValueRate={setValueRate}
+                setRateDes={setRateDes}
+                valueRate={valueRate}
+            />
 
         </div >
     );

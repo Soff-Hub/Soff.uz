@@ -695,6 +695,41 @@ class GetRepository {
         return reponse;
     }
 
+    async getOrdersMYDealListsUpdateUserDataDeals(id) {
+        const endPoint = `deals/deal-applicant-applications/${id}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getOrdersMYDealListsUpdateUserData(id) {
+        const endPoint = `deals/deal-applicant-profile/${id}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+
     async getApplicationsReceived(page, status, deal, token) {
         const endPoint = `deals/my-deals-applications/?page=${page}&status=${
             status || ''
