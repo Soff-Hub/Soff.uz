@@ -8,6 +8,7 @@ import DealsList from './DealsList';
 import ModalDelas from './ModalDeals';
 const { Option } = Select;
 import { Flex, Rate } from 'antd';
+import TextDescription from '~/components/progress/textDescription';
 
 
 
@@ -333,14 +334,7 @@ export default function ApplicationsReceiveds() {
                                             </div>
                                             <div className='px-4 pb-4'>
                                                 <span className=' fs-5 fw-medium'>Kelib tushgan ariza</span>
-                                                <p
-                                                    className='m-0 description_more'
-
-                                                    style={{ whiteSpace: 'pre-wrap' }}
-                                                >
-                                                    {item?.description}
-                                                </p>
-
+                                                <TextDescription text={item?.description} />
 
 
                                                 <div className="d-md-flex justify-content-between gap-4  ">

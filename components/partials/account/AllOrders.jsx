@@ -6,6 +6,7 @@ import useDebounce from '~/hooks/useDebounce';
 import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import { useSelector } from 'react-redux';
+import TextDescription from '~/components/progress/textDescription';
 
 export default function DealCart() {
     const { user } = useSelector((state) => state.auth);
@@ -171,13 +172,7 @@ export default function DealCart() {
                                     <h3 className="text-success fw-medium ">{item?.title}</h3>
 
 
-                                    <p
-                                        className='m-0 description_more'
-
-                                        style={{ whiteSpace: 'pre-wrap' }}
-                                    >
-                                        {item?.description}
-                                    </p>
+                                    <TextDescription text={item?.description} />
 
                                     <div>
                                         <div className="d-md-flex justify-content-between gap-4  ">
@@ -335,8 +330,8 @@ export default function DealCart() {
                 onCancel={() => setOpenPayment(false)}>
 
                 <p
-                className='fw-medium fs-4'
-                
+                    className='fw-medium fs-4'
+
                 > Sizda urinishlar soni tugagan. Iltimos ariza yuborish uchun urinishlar sonini sotib oling !!!</p>
             </Modal>
 
