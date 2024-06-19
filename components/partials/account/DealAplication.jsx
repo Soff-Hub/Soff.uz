@@ -615,6 +615,7 @@ export default function MyDealCart() {
                             </p>
 
                             <div className='d-flex justify-content-between align-items-center '>
+                                <span></span>
 
                                 {
                                     dataDetials?.status === 'new' ? (
