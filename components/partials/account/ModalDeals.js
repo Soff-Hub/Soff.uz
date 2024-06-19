@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Flex, Rate } from 'antd';
+import { Rate } from 'antd';
 const desc = ['1 ball', '2 ball', '3 ball', '4 ball', ' 5 ball'];
 
 function ModalDelas({
@@ -107,14 +107,13 @@ function ModalDelas({
                             </p>
                             {categoryStatus === 'completed' ? (
                                 <>
-                                    <Flex gap="middle" vertical>
-                                        <Rate
-                                            className="fs-1"
-                                            tooltips={desc}
-                                            onChange={(setValue, setValueRate)}
-                                            value={value || valueRate}
-                                        />
-                                    </Flex>
+                                    <Rate
+                                        className="fs-1"
+                                        tooltips={desc}
+                                        onChange={(setValue, setValueRate)}
+                                        value={value || valueRate}
+                                    />
+
                                     <div className="d-flex flex-column align-items-center my-4">
                                         <span>
                                             Ish sifati haqida fikringiz?
