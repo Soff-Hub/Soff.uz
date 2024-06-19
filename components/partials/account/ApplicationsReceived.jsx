@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import DealsSidebar from './modules/DealsSidebar';
-import { Modal, Pagination, Select } from 'antd';
+import { Modal, Pagination, Select, Rate } from 'antd';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsList from './DealsList';
 import ModalDelas from './ModalDeals';
 const { Option } = Select;
-import { Flex, Rate } from 'antd';
 import TextDescription from '~/components/progress/textDescription';
 
 
@@ -354,7 +353,7 @@ export default function ApplicationsReceiveds() {
                                                 <div className="d-md-flex justify-content-between gap-4  ">
                                                     <div className="d-flex gap-3 align-items-center my-2">
                                                         <span
-                                                            onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id))}
+                                                            onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))}
 
                                                         >
                                                             <a style={{
@@ -371,7 +370,7 @@ export default function ApplicationsReceiveds() {
                                                         </span>
                                                         <div>
 
-                                                            <span onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id))} style={{ cursor: "pointer" }} >
+                                                            <span onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))} style={{ cursor: "pointer" }} >
                                                                 <a className="fw-medium fs-5">
                                                                     {item?.user?.full_name}
                                                                 </a>
@@ -472,7 +471,7 @@ export default function ApplicationsReceiveds() {
                 width={568}
                 centered
                 open={openUpdate}
-                onOk={() => setOpenUpdate(false)}
+                onOk={() => (setOpenUpdate(false))}
                 okText="Yopish"
                 cancelButtonProps={{
                     style: {
@@ -485,7 +484,7 @@ export default function ApplicationsReceiveds() {
                     },
                 }}
 
-                onCancel={() => setOpenUpdate(false)}>
+                onCancel={() => (setOpenUpdate(false))}>
                 {
                     loadingUpdate ?
                         <div
@@ -510,7 +509,7 @@ export default function ApplicationsReceiveds() {
                                 <div className='d-flex gap-3 align-items-center'>
                                     <img
                                         style={{ objectFit: "cover", borderRadius: "50%" }}
-                                        height={60} width={60} src={"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYPcbkP_unwSjPz808crGcqQhGjGoNC4GNyg&s"} alt={"user"} srcset="" />
+                                        height={60} width={60} src={userData?.image_url} alt={"user"} />
                                     <div className='d-flex flex-column '>
                                         <span className='fs-4'>{userData?.full_name}</span>
                                         <span className='text-secondary' fs-4>Qilgan ishlari: <span className='text-success'>
@@ -518,14 +517,14 @@ export default function ApplicationsReceiveds() {
                                     </div>
                                 </div>
                                 {
-                                    userData?.average_rating &&
-                                    <Flex gap="middle" vertical>
-                                        <Rate
-                                            disabled
-                                            className="fs-4"
-                                            value={userData?.average_rating}
-                                        />
-                                    </Flex>
+                                    Number(userData?.average_rating) &&
+
+                                    <Rate
+                                        disabled
+                                        className="fs-4"
+                                        value={Number(userData?.average_rating)}
+                                    />
+
                                 }
 
                             </div>
@@ -543,7 +542,7 @@ export default function ApplicationsReceiveds() {
                                         <>
                                             {
                                                 userDataDeals?.map(item => (
-                                                    <div className=' mb-3' style={{ boxShadow: " 1px 2px 15px hsla(210, 8%, 62%, .2)" }}>
+                                                    <div key={item?.id} className=' mb-3' style={{ boxShadow: " 1px 2px 15px hsla(210, 8%, 62%, .2)" }}>
                                                         {
                                                             (item?.review || item?.rating) &&
                                                             <div className='bg-body-tertiary px-3 py-2  border-bottom'>
@@ -554,13 +553,13 @@ export default function ApplicationsReceiveds() {
                                                                     }
                                                                     {
                                                                         item?.rating &&
-                                                                        <Flex gap="middle" vertical >
-                                                                            <Rate
-                                                                                disabled
-                                                                                className="fs-4"
-                                                                                value={item?.rating}
-                                                                            />
-                                                                        </Flex>
+
+                                                                        <Rate
+                                                                            disabled
+                                                                            className="fs-4"
+                                                                            value={Number(item?.rating)}
+                                                                        />
+
                                                                     }
                                                                 </div>
                                                                 {
