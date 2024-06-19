@@ -119,12 +119,15 @@ export default function ApplicationsReceiveds() {
     }
 
     async function postOrder() {
-        const data = {
-            status: categoryStatus,
-            rating: valueRate ? valueRate : "",
-            review: rateDes ? rateDes : ""
-        };
-        const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, data, user?.access);
+        const formData = new FormData();
+        formData.append('status', categoryStatus);
+        if (valueRate) {
+            formData.append('rating', valueRate);
+        } if (rateDes) {
+            formData.append('review', rateDes);
+        }
+
+        const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, formData, user?.access);
         if (ItemsData?.status === 200) {
             GetItemsProducts()
             const modal = Modal.success({
@@ -363,7 +366,7 @@ export default function ApplicationsReceiveds() {
                                                                 cursor: "pointer"
                                                             }}>
                                                                 <img
-                                                                width={50} height={50}
+                                                                    width={50} height={50}
                                                                     src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
                                                                     alt="sca"
                                                                 />
