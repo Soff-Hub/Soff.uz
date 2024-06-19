@@ -40,7 +40,6 @@ export default function MyDealCart() {
     const [countdown, setCountdown] = useState(null);
 
 
-
     const handleOk = () => {
         setIsModalOpen(false);
     };
@@ -158,7 +157,7 @@ export default function MyDealCart() {
 
     async function postOrderStatus() {
         const data = {
-            status: categoryStatus
+            status: categoryStatus,
         };
         const ItemsData = await PatchRepository.patchDealUpdateApplicaitonStatus(appliactionId, data, user?.access);
         if (ItemsData?.status === 200) {
@@ -809,7 +808,10 @@ export default function MyDealCart() {
 
 
             <ModalDelete onSuccess={DeleteItemsProducts} />
-            <ModalDelas onSuccess={postOrderStatus} categoryStatus={categoryStatus} setCategoryStatus={setCategoryStatus} />
+            <ModalDelas onSuccess={postOrderStatus}
+             categoryStatus={categoryStatus}
+     
+             />
         </div >
     );
 }

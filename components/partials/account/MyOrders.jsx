@@ -114,8 +114,11 @@ export default function MyOrders() {
         if (user?.access) {
             GetItemsProductsUpdates()
         }
-    }, [productsIdUpdate, openUpdate])
+    }, [productsIdUpdate, openUpdate]);
 
+    const [sliceShow, setSliceShow] = useState({ show: true, id: 32 })
+
+    console.log(sliceShow?.id === 32 && sliceShow?.show);
 
 
     return (
@@ -247,12 +250,10 @@ export default function MyOrders() {
                                                 }
 
                                             </div>
-                                            <p
-                                                className='m-0 description_more'
 
-                                                style={{ whiteSpace: 'pre-wrap' }}
-                                            >
-                                                {item?.description}
+
+                                            <p> {item?.description}
+
                                             </p>
 
 
