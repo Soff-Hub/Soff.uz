@@ -315,8 +315,9 @@ export default function MyDealCart() {
 
                                 {
                                     data?.map(item => (
-                                        <div onClick={() => showModal(item?.id)} style={{ cursor: "pointer" }} >
+                                        <div >
                                             <div
+                                                onClick={() => showModal(item?.id)} style={{ cursor: "pointer" }}
                                                 className={`rounded py-3 px-4 d-flex justify-content-between align-items-center
                                                  ${item?.deal_application_status === 'new' ? " bg-secondary-subtle" :
                                                         item?.deal_application_status === 'in_progress' ? "bg-warning-subtle" :
@@ -357,6 +358,7 @@ export default function MyDealCart() {
                                                         )
                                                 }
                                             </div>
+
                                             <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
                                                 {
                                                     item?.deal_status_for_applicant === "in_progress" ?
