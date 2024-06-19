@@ -364,7 +364,7 @@ export default function ApplicationsReceiveds() {
                                                             }}>
                                                                 <img
                                                                 width={50} height={50}
-                                                                    src={!item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
+                                                                    src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
                                                                     alt="sca"
                                                                 />
                                                             </a>
