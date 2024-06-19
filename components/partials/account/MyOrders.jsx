@@ -8,6 +8,7 @@ import useDebounce from '~/hooks/useDebounce';
 import ModalDelete from './Modal';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsListUpdate from './DealsListUpdate';
+import TextDescription from '~/components/progress/textDescription';
 
 
 
@@ -116,9 +117,6 @@ export default function MyOrders() {
         }
     }, [productsIdUpdate, openUpdate]);
 
-    const [sliceShow, setSliceShow] = useState({ show: true, id: 32 })
-
-    console.log(sliceShow?.id === 32 && sliceShow?.show);
 
 
     return (
@@ -250,14 +248,7 @@ export default function MyOrders() {
                                                 }
 
                                             </div>
-
-
-                                            <p> {item?.description}
-
-                                            </p>
-
-
-
+                                            <TextDescription text={item?.description} />
 
                                             <div>
                                                 <div className="d-flex justify-content-between gap-4 align-items-center ">

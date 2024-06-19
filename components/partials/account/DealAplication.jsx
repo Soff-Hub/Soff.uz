@@ -10,6 +10,7 @@ import ModalDelete from './Modal';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import ModalDelas from './ModalDeals';
+import TextDescription from '~/components/progress/textDescription';
 const { TextArea } = Input;
 
 
@@ -423,13 +424,7 @@ export default function MyDealCart() {
                                                 </div>
 
 
-                                                <p
-                                                    className='m-0 description_more'
-
-                                                    style={{ whiteSpace: 'pre-wrap' }}
-                                                >
-                                                    {item?.description}
-                                                </p>
+                                                <TextDescription text={item?.description} />
 
 
 
@@ -809,9 +804,9 @@ export default function MyDealCart() {
 
             <ModalDelete onSuccess={DeleteItemsProducts} />
             <ModalDelas onSuccess={postOrderStatus}
-             categoryStatus={categoryStatus}
-     
-             />
+                categoryStatus={categoryStatus}
+
+            />
         </div >
     );
 }
