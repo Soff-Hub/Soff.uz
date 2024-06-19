@@ -363,7 +363,8 @@ export default function ApplicationsReceiveds() {
                                                                 cursor: "pointer"
                                                             }}>
                                                                 <img
-                                                                    src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
+                                                                width={50} height={50}
+                                                                    src={!item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
                                                                     alt="sca"
                                                                 />
                                                             </a>
