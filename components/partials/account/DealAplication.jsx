@@ -237,7 +237,7 @@ export default function MyDealCart() {
             </div>
             <div className='col-md-9'>
 
-                <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
+                <div className='d-flex justify-content-between gap-3 mb-2  row px-4'>
                     <div className={'ps-form__input d-flex align-items-center position-relative col-md-6 p-0'} style={{ flex: 1 }}>
                         <input
                             className={"form-control input2 bg-white rounded-3 "}
@@ -288,6 +288,11 @@ export default function MyDealCart() {
                     </button>
 
                 </div>
+              
+              <div className='mb-2'>
+              <span className='text-secondary'>Yuborilgan arizalar soni soni {data?.length} ta </span>
+              </div>
+             
 
                 <div className='d-flex flex-column gap-3'>
                     {

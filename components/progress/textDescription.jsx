@@ -16,7 +16,9 @@ const TextDescription = ({ text }) => {
 
 
     return (
-        <p> {
+        <p style={{
+            transition:"maxHeight 3s linear",
+        }}> {
             (text?.length > sliceShow?.count) ?
                 (text?.slice(0, sliceShow?.count) + '...')
                 : text

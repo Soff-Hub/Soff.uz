@@ -132,12 +132,19 @@ export default function DealCart() {
                     </button>
                 </div>
                 {user?.access && <div>
-                    <Tooltip title={"urishinlar soni haqida malumot"}>
-                        <span style={{ cursor: 'pointer' }} >
-                            <i className="fa-solid fa-circle-question text-warning"></i>
-                        </span>
-                    </Tooltip>
-                    <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
+
+                    <div className='d-md-flex justify-content-between align-items-center'>
+                        <div>
+                            <Tooltip title={"Bu sizning urunishlar soni haqidagi ma'lumotingiz, siz har safar buyurtmalarga ariza topshirgan paytingiz urunishlar soni bittaga kamayadi va qachonki urunishlar soni tugaganda urunishlar soni sotib olishingiz kerak bo'ladi"}>
+                                <span style={{ cursor: 'pointer' }} >
+                                    <i className="fa-solid fa-circle-question text-warning"></i>
+                                </span>
+                            </Tooltip>
+
+                            <span className='mx-2 text-secondary '>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urunishlar sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
+                        </div>
+                        <span className='text-secondary'>Buyurtmalar soni {data?.length} ta </span>
+                    </div>
 
                     <Progress
                         className='p-0 w-100'

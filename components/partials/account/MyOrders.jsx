@@ -127,7 +127,7 @@ export default function MyOrders() {
             </div>
 
             <div className={"col-md-9 mb-4"}>
-                <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
+                <div className='d-flex justify-content-between gap-3 mb-2  row px-4'>
                     <div className={'ps-form__input d-flex align-items-center position-relative p-0'} style={{ flex: 1 }}>
                         <input
                             className={"form-control input2 bg-white rounded-3  "}
@@ -178,6 +178,9 @@ export default function MyOrders() {
                         onClick={() => setOpen(true)} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
+                </div>
+                <div className='mb-2'>
+                    <span className='text-secondary'>Mening  buyurtmalarim soni {data?.length} ta </span>
                 </div>
 
                 <div className='d-flex flex-column gap-3'>
