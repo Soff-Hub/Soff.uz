@@ -220,7 +220,7 @@ export default function ApplicationsReceiveds() {
 
             <div className={"col-md-9 mb-4"}>
 
-                <div className='d-md-flex gap-3 mb-4  justify-content-between '>
+                <div className='d-md-flex gap-3 mb-2  justify-content-between '>
 
                     <Select
                         mode="single"
@@ -276,6 +276,10 @@ export default function ApplicationsReceiveds() {
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
+                <div className='mb-2'>
+                    <span className='text-secondary'>Kelib tushgan arizalar soni {data?.length} ta </span>
+                </div>
+
 
                 <div className='d-flex flex-column gap-3'>
                     {
@@ -509,11 +513,11 @@ export default function ApplicationsReceiveds() {
                         </div> :
                         <>
 
-                            <div className='bg-body-tertiary py-4 px-4 mb-5 mt-5 d-flex justify-content-between'>
+                            <div style={{ boxShadow: " 1px 2px 15px hsla(210, 8%, 62%, .2)" }} className='bg-body-tertiary py-4 px-4 mb-5 mt-5 d-flex justify-content-between'>
                                 <div className='d-flex gap-3 align-items-center'>
                                     <img
                                         style={{ objectFit: "cover", borderRadius: "50%" }}
-                                        height={60} width={60} src={userData?.image_url} alt={"user"} />
+                                        height={60} width={60} src={userData?.image_url ? userData?.image_url : "/static/img/ozodbek.png"} alt={"user"} />
                                     <div className='d-flex flex-column '>
                                         <span className='fs-4'>{userData?.full_name}</span>
                                         <span className='text-secondary' fs-4>Qilgan ishlari: <span className='text-success'>
@@ -521,9 +525,10 @@ export default function ApplicationsReceiveds() {
                                     </div>
                                 </div>
                                 {
-                                    Number(userData?.average_rating) &&
+                                    userData?.average_rating &&
 
                                     <Rate
+                                        allowHalf
                                         disabled
                                         className="fs-4"
                                         value={Number(userData?.average_rating)}
@@ -534,7 +539,9 @@ export default function ApplicationsReceiveds() {
                             </div>
                             {
                                 userDataDeals?.length > 0 &&
-                                <span className='fs-5 '>Qilgan ishlari ro'yxati</span>
+                                <div className='mb-2'>
+                                    <span className='fs-4 '>Qilgan ishlari ro'yxati</span>
+                                </div>
                             }
                             <div className='overflow-y-auto ' style={{ maxHeight: "60vh" }}>
 

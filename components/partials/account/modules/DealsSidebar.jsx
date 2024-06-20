@@ -1,4 +1,4 @@
-import { DatePicker, Select, Slider } from 'antd';
+import { DatePicker, Rate, Select, Slider } from 'antd';
 import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
@@ -16,8 +16,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     const [webdata, setWebData] = useState(null);
     const [socket, setSocket] = useState(null);
     const [keyword, setKeyword] = useState('');
-
-
+    const [dealProfil, setDealProfil] = useState(null);
 
 
     const handleChange = (date) => {
@@ -29,7 +28,6 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
             setLifetime2(null);
         }
     };
-
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -49,13 +47,20 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         return formattedNumber;
     }
 
-
     async function getDealType() {
         const data = await GetRepository.getDealType(keyword);
         if (data?.results) {
             setDealType(data?.results);
         }
     }
+
+    async function getDealProfile() {
+        const data = await GetRepository.getDeadProfle(user?.access);
+        if (data) {
+            setDealProfil(data);
+        }
+    }
+
 
     const onSearch = async (value) => {
         setKeyword(value)
@@ -117,6 +122,8 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     useEffect(() => {
         const token = user?.access;
         if (token) {
+            getDealProfile()
+
             const ws = new WebSocket(
                 `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/deals?token=${token}`
             );
@@ -145,6 +152,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                 }
             };
         }
+
     }, [user?.access]);
 
 
@@ -156,11 +164,39 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         }
     }, [socket]);
 
-
+    console.log(dealProfil);
 
 
     return (
         <div className="w-100 ">
+            {dealProfil?.total_applications > 0 ?
+                <>
+
+                    <div className="px-3 pt-3 bg-white d-flex align-items-center justify-content-between">
+                        <span></span>
+                        <Rate
+                            allowHalf
+                            disabled
+                            className="fs-4"
+                            value={Number(dealProfil?.average_rating)}
+                        />
+                    </div>
+                    <div className="p-3 bg-white d-flex align-items-center gap-3">
+                        <img style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "50%"
+                        }} src={dealProfil?.image_url ? dealProfil?.image_url : "/static/img/ozodbek.png"} alt="user" />
+                        <div className='d-flex flex-column'>
+                            <span className='text-truncate' style={{ maxWidth: "210px" }}>{dealProfil?.full_name} edstgsdgsdg  </span>
+                            <span>Qilgan ishlar soni: {dealProfil?.total_applications}</span>
+
+                        </div>
+
+                    </div>
+                </> : <></>}
+
+
             <div className="p-3 bg-white mb-4">
                 <h4 className="d-block p-2 fw-bold">
                     Buyurtmalar
