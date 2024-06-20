@@ -189,7 +189,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                         }} src={dealProfil?.image_url ? dealProfil?.image_url : "/static/img/ozodbek.png"} alt="user" />
                         <div className='d-flex flex-column'>
                             <span className='text-truncate' style={{ maxWidth: "210px" }}>{dealProfil?.full_name} edstgsdgsdg  </span>
-                            <span>Qilgan ishlar soni: {dealProfil?.total_applications}</span>
+                            <span>Qilgan ishlar soni: {dealProfil?.total_applications} ta</span>
 
                         </div>
 
