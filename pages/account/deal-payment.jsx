@@ -89,7 +89,7 @@ function BuyingTraffic() {
                                         flex: 0.25,
                                         textAlign: 'center'
                                     }}>
-                                    <span className='text-secondary' style={{ fontSize: 16, fontWeight: 600 }}>Bir umrga</span>
+                                    {/* <span className='text-secondary' style={{ fontSize: 16, fontWeight: 600 }}>Bir umrga</span>    */}
                                     <h3 className='m-0' style={{ fontWeight: 600, color: '#00A44F' }}>{el.amount ? `${formatCurrency(el.amount)} so'm` : "Tekin"}</h3>
                                     <p style={{ color: 'orange', fontSize: 18, fontWeight: 600 }}>{addPeriodToThousands(el.count)} ta</p>
 
