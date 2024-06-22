@@ -8,7 +8,6 @@ import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import ModalDelete from './Modal';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
 import ModalDelas from './ModalDeals';
 import TextDescription from '~/components/progress/textDescription';
 const { TextArea } = Input;
@@ -288,11 +287,11 @@ export default function MyDealCart() {
                     </button>
 
                 </div>
-              
-              <div className='mb-2'>
-              <span className='text-secondary'>Yuborilgan arizalar soni soni {data?.length} ta </span>
-              </div>
-             
+
+                <div className='mb-2'>
+                    <span className='text-secondary'>Yuborilgan arizalar soni soni {data?.length} ta </span>
+                </div>
+
 
                 <div className='d-flex flex-column gap-3'>
                     {
@@ -324,9 +323,10 @@ export default function MyDealCart() {
                                             <div
                                                 onClick={() => showModal(item?.id)} style={{ cursor: "pointer" }}
                                                 className={`rounded py-3 px-4 d-flex justify-content-between align-items-center
-                                                 ${item?.deal_application_status === 'new' ? " bg-secondary-subtle" :
+                                                 ${(item?.deal_application_status === 'new' && item?.deal_status_for_applicant !== 'completed') ? " bg-secondary-subtle" :
                                                         item?.deal_application_status === 'in_progress' ? "bg-warning-subtle" :
-                                                            item?.deal_application_status === 'cancelled' ? "bg-danger-subtle " :
+                                                            (item?.deal_application_status === 'cancelled' || item?.deal_status_for_applicant === 'completed') ?
+                                                                "bg-danger-subtle " :
                                                                 "bg-success-subtle"} 
                                                 `
                                                 }
@@ -340,7 +340,7 @@ export default function MyDealCart() {
 
                                                 </span>
                                                 {
-                                                    item?.deal_application_status === 'new' ? (
+                                                    (item?.deal_application_status === 'new' && item?.deal_status_for_applicant !== 'completed') ? (
                                                         <span>
                                                             <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
                                                             Moderatsiya
@@ -349,7 +349,7 @@ export default function MyDealCart() {
                                                         <span>
                                                             <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
                                                         </span>
-                                                    ) : item?.deal_application_status === 'cancelled' ? (
+                                                    ) : (item?.deal_application_status === 'cancelled' || item?.deal_status_for_applicant === 'completed') ? (
                                                         <span>
                                                             <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
                                                         </span>
