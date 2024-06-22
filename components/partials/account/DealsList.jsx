@@ -198,7 +198,6 @@ export default function DealsList({ setOpen }) {
                                         onSearch={onSearch}
                                         onChange={handleChangeCategory}
                                     >
-                                        <Option key={""} value={""}>Barcha turlar</Option>
                                         {dealType?.map(item => (
                                             <Option key={item.id} value={item.name} >{item.name}</Option>
                                         ))}

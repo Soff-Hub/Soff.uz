@@ -96,24 +96,30 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         {
             url: '/account/all-orders',
             label: 'Barcha buyurtmalar',
+            icon: "fa-solid fa-file-circle-check "
+
         },
         {
             url: '/account/deal-applications',
             label: 'Men yuborgan arizalar',
+            icon: " fa-solid fa-file-arrow-up"
         },
         {
             url: '/account/my-orders',
             label: 'Mening buyurtmalarim',
+            icon: "fa-solid fa-file-signature"
         },
         {
             url: '/account/applications-received',
             label: 'Kelib tushgan arizalar',
+            icon: "fa-solid fa-file-arrow-down"
         }
     ]
     const sidebarMenuToken = [
         {
             url: '/account/all-orders',
             label: 'Barcha buyurtmalar',
+            icon: "fa-solid fa-file-circle-check"
         }
     ]
 
@@ -164,7 +170,6 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         }
     }, [socket]);
 
-    console.log(dealProfil);
 
 
     return (
@@ -188,7 +193,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                             borderRadius: "50%"
                         }} src={dealProfil?.image_url ? dealProfil?.image_url : "/static/img/ozodbek.png"} alt="user" />
                         <div className='d-flex flex-column'>
-                            <span className='text-truncate' style={{ maxWidth: "210px" }}>{dealProfil?.full_name} edstgsdgsdg  </span>
+                            <span className='text-truncate' style={{ maxWidth: "210px" }}>{dealProfil?.full_name}   </span>
                             <span>Qilgan ishlar soni: {dealProfil?.total_applications} ta</span>
 
                         </div>
@@ -215,7 +220,11 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                         backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
                                         cursor: 'pointer'
                                     }}>
-                                    {el.label}
+
+                                    <span className='d-flex align-items-center
+                                   
+                                   gap-3 '><i className={`${el.icon} fs-3 text-success`}></i>  <span>{el.label}</span></span>
+
                                     {
                                         (el.url === "/account/deal-applications" && webdata?.sent_applications > 0) ?
                                             <strong
@@ -261,7 +270,9 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                         backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
                                         cursor: 'pointer'
                                     }}>
-                                    {el.label}
+                                    <span className='d-flex align-items-center
+                                   
+                                   gap-3'><i className={`${el.icon} fs-3`}></i>  <span>{el.label}</span></span>
                                 </div>
                             ))
 
