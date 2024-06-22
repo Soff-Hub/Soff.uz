@@ -93,7 +93,6 @@ const MobileHeaderActions = ({ auth }) => {
         }
     }, []);
 
-    console.log(socket);
 
     return (
         <div className="navigation__right">

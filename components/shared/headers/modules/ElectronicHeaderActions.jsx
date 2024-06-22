@@ -127,10 +127,6 @@ const ElectronicHeaderActions = ({ auth }) => {
 
 
 
-console.log(webdata?.sent_applications);
-console.log(webdata?.sent_applications + webdata?.received_applications);
-console.log( webdata?.received_applications);
-
 
 
     return (

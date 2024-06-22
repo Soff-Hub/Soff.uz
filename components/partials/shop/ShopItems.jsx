@@ -324,7 +324,8 @@ const ShopItems = ({
     useEffect(() => {
         detailSearch(search);
     }, [searchDebounce]);
-    console.log('data', data);
+ 
+    
     // Views
     let productItemsView;
     if (success) {
