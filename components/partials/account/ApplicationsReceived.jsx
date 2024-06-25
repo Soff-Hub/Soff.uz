@@ -172,8 +172,6 @@ export default function ApplicationsReceiveds() {
             setCountToggle(false);
         }
         setLoadingUpdate(false)
-
-
     }
 
 
@@ -476,7 +474,7 @@ export default function ApplicationsReceiveds() {
 
             <Modal
                 title=" "
-                width={568}
+                width={900}
                 centered
                 open={openUpdate}
                 onOk={() => (setOpenUpdate(false))}
@@ -591,6 +589,7 @@ export default function ApplicationsReceiveds() {
                                                                 <h5 className="text-secondary fw-medium mb-2">
                                                                     {item?.deal?.title}
                                                                 </h5>
+                                                                <TextDescription text={item?.deal?.description} />
                                                             </div>
                                                             <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-between w-100'>
 

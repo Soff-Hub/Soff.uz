@@ -13,7 +13,6 @@ import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
@@ -37,13 +36,10 @@ const Posts = () => {
     const [narx, setNarx] = useState('');
     const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
-
     const [free, setFree] = useState(false);
-    const [customePoster, setCustomePoster] = useState([]);
-    const [customeFile, setCustomeFile] = useState(null);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-
+    console.log(livePosterFile);
 
 
     const breadCrumb = [
@@ -137,7 +133,7 @@ const Posts = () => {
             <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
         );
     }
-    
+
     for (let i = 0; i < dataCategory?.length; i++) {
         options.push(
             <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
@@ -157,7 +153,7 @@ const Posts = () => {
 
     async function handleChange(value) {
         setTagSearchResult(value);
-        
+
 
         let arr = [];
         if (value?.length > 0) {
@@ -194,19 +190,6 @@ const Posts = () => {
         }
     }
 
-    function LiveImage(e) {
-        const img = window?.URL?.createObjectURL(e.target.files[0]);
-        setCustomeFile({ image_url: img, file: e.target.files[0], })
-        setCustomePoster([
-            {
-                id: new Date().getTime(),
-                image_url: img,
-                file: e.target.files[0],
-                custome: true,
-            },
-            ...customePoster,
-        ]);
-    }
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -251,28 +234,7 @@ const Posts = () => {
             }
             formData.append('description', Fulldata);
             formData.append('tags', tagSearchResult);
-
-            livePosterFile?.images?.[0]?.id
-                ? formData.append('poster_id', livePosterFile?.images?.[0]?.id)
-                : 'None';
-
-            const customePosters = customePoster
-                .filter((el) => el.custome)
-                .map((el) => el.file);
-
-            if (customePosters.length > 0) {
-                for (const file of customePosters) {
-                    formData.append('images', file);
-                }
-            }
-            if (customeFile.file) {
-                formData.append('poster', customeFile.file);
-            }
-            if (!livePosterFile?.page_count || livePosterFile?.page_count === undefined) {
-                formData.append('page_count', livePosterFile?.page_count || watch('page_count'));
-            }
             formData.append('category', category_id[0]);
-
             formData.append('document', livePosterFile?.id);
 
             const patchItems = await PatchRepository.getPatchPoster(
@@ -310,7 +272,8 @@ const Posts = () => {
 
 
 
-    return user?.role === 'seller' || user?.role === 'customer' ? (
+
+    return user?.role === 'seller'  ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
@@ -400,155 +363,11 @@ const Posts = () => {
                                         inputText={"Faylni yuklash uchun ushbu hududga bosing."}
                                         loadingText={"Fayl tayyorlanmoqda..."}
                                         content_type={"file"}
-                                        setCustomeFile={setCustomeFile}
                                     />
 
                                 </div>
 
                             </div>
-
-
-                            <div className="row mb-3">
-                                <div className="col-md-4 mt-2 d-flex justify-content-between p-0">
-                                    <p>Mahsulot rasmi: *</p>
-                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, yuklab olishlari mumkin bo’lgan fayl. Mahsulotingiz rasmi quyidagi turdagi fayl bo’lishi mumkin:  .jpeg yoki .jpg, .png, .svg">
-                                        <i
-                                            style={{ cursor: 'pointer' }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
-                                <div className='col-md-8 p-0'>
-                                    <div
-                                        className="add-product-user-image  bg-white d-flex justify-content-between  form-control pt-2 rounded-3"
-                                        style={{
-                                            height: '100px',
-                                            backgroundColor: errors.image?.message ? " #fff" : '#F1F1F1',
-                                            border: errors.image?.message ? '1px solid red' : "1px dashed green",
-                                        }}>
-                                        <label
-                                            style={{
-                                                width: '50px',
-                                                cursor: 'pointer',
-                                            }}>
-                                            <i className="fa-solid fa-plus fs-1 mt-5 pt-1 mx-3"></i>
-                                            <input
-                                                name='image'
-                                                type="file"
-                                                onChange={(e) => LiveImage(e)}
-                                                style={{ width: '20px' }}
-                                                accept="image/*"
-                                            />
-                                        </label>
-
-                                        <div
-                                            className="overflow-x-scroll  d-flex  gap-1"
-                                            style={{ width: '430px' }}>
-                                            {
-                                                (livePosterFile?.images?.length < 1 || livePosterFile === '') ?
-                                                    <span
-                                                        className="d-flex flex-column align-items-center mt-4 mx-5"
-                                                        style={{ cursor: 'pointer' }}>
-                                                        <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                        <span className="text-center">
-                                                            Rasmini yuklash uchun ushbu hududga bosing.
-                                                        </span>
-                                                    </span>
-                                                    :
-
-                                                    (
-                                                        livePosterFile?.images?.length > 0 ?
-                                                            livePosterFile?.images?.map((item, i) =>
-                                                            (
-                                                                <img
-                                                                    className="mx-1 "
-                                                                    onClick={() => {
-                                                                        setCustomeFile(
-                                                                            item
-                                                                        );
-                                                                    }}
-                                                                    src={
-                                                                        item?.image_url
-                                                                    }
-                                                                    alt=" "
-                                                                    key={i}
-                                                                    style={{
-                                                                        display:
-                                                                            'block',
-                                                                        cursor: 'pointer',
-                                                                    }}
-                                                                />
-                                                            )
-                                                            )
-                                                            :
-                                                            customePoster?.map((item, i) =>
-                                                            (
-                                                                <img
-                                                                    className="mx-1 "
-                                                                    onClick={() => {
-                                                                        setCustomeFile(
-                                                                            item
-                                                                        );
-                                                                    }}
-                                                                    src={
-                                                                        item?.image_url
-                                                                    }
-                                                                    alt=" "
-                                                                    key={i}
-                                                                    style={{
-                                                                        display:
-                                                                            'block',
-                                                                        cursor: 'pointer',
-                                                                    }}
-                                                                />
-                                                            )
-                                                            )
-                                                    )
-                                            }
-                                        </div>
-                                    </div>
-                                    <p className={"my-2  text-danger"}>
-                                        {errors?.image?.message}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {
-                                (livePosterFile?.page_count || livePosterFile?.page_count === undefined) ?
-                                    <></> :
-                                    <div className="row   mt-3">
-                                        <div className="col-md-4  d-flex justify-content-between p-0 ">
-                                            <p>Mahsulot sahifalar soni: *</p>
-                                            <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz sahifa sonini kiritishingiz kerak.">
-                                                <i
-                                                    style={{ cursor: 'pointer' }}
-                                                    className="fa-regular fa-circle-question px-4 mt-2 "></i>
-                                            </Tooltip>
-                                        </div>
-
-                                        <Input
-                                            name="count"
-                                            type="text"
-                                            className={"col-md-8 mb-2"}
-                                            InputClassName={"form-control rounded-3"}
-                                            {...register('page_count', {
-                                                required: "Mahsulot sahifalar sonini to'ldirish majburiy",
-                                                pattern: {
-                                                    value: /^[0-9]+$/,
-                                                    message: "Mahsulot sahifalar sonida faqat sonlar bo'lishi kerak"
-                                                },
-                                                validate: value => value.trim() !== "" || "Mahsulot sahifalar soni bo'sh bo'lishi mumkin emas"
-                                            })}
-                                            error={errors.page_count?.message}
-                                        />
-
-
-                                    </div>
-
-                            }
-
-
-
-
 
                             <div className=" row ">
                                 <div className="col-md-4 m-0 pt-2 d-flex justify-content-between p-0">
@@ -700,10 +519,7 @@ const Posts = () => {
                                 }}
                             >
                                 <img
-                                    src={
-                                        customeFile?.image_url ? customeFile?.image_url :
-                                            '/static/img/docCopy.png'
-                                    }
+                                    src={'/static/img/docCopy.png'}
                                     alt="doc"
                                     className="mb-4"
                                     style={{
@@ -826,10 +642,7 @@ const Posts = () => {
                             <div className="card  rounded-3 ">
                                 <div className="image rounded mb-3 ">
                                     <img
-                                        src={
-                                            customeFile?.image_url ? customeFile?.image_url :
-                                                '/static/img/docCopy.png'
-                                        }
+                                        src={'/static/img/docCopy.png'}
                                         alt="doc"
                                         className=" mb-4"
                                         style={{
@@ -957,52 +770,10 @@ const Posts = () => {
                                         <div className="ps-product__thumbnail">
                                             <figure>
                                                 <div className="ps-wrapper">
-                                                    {(livePosterFile?.images?.length < 1 || livePosterFile === '') ? <img
+                                                    <img
                                                         src="/static/img/docCopy.png"
                                                         alt="doc"
                                                     />
-                                                        :
-                                                        (livePosterFile?.images?.length > 0 ? (
-                                                            livePosterFile?.images?.map(
-                                                                (item) => (
-                                                                    <img
-                                                                        src={
-                                                                            item.image_url
-                                                                        }
-                                                                        alt="doc"
-                                                                        key={
-                                                                            item.id
-                                                                        }
-                                                                        className="border mb-3 "
-                                                                        style={{
-                                                                            objectFit:
-                                                                                'contain',
-                                                                        }}
-                                                                    />
-                                                                )
-                                                            )
-                                                        ) : (
-                                                            customePoster?.map(
-                                                                (item) => (
-                                                                    <img
-                                                                        src={
-                                                                            item.image_url
-                                                                        }
-                                                                        alt="doc"
-                                                                        key={
-                                                                            item.id
-                                                                        }
-                                                                        className="border mb-3 "
-                                                                        style={{
-                                                                            objectFit:
-                                                                                'contain',
-                                                                        }}
-                                                                    />
-                                                                )
-                                                            )
-                                                        ))
-
-                                                    }
 
                                                 </div>
                                             </figure>

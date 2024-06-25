@@ -178,6 +178,7 @@ const HomeElectronicsPage = () => {
                 key={234}
                 slug={freeProducts.slug}
             />
+            
 
             {category?.length > 0 ? (
                 category.map(
