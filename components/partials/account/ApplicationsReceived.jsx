@@ -304,168 +304,182 @@ export default function ApplicationsReceiveds() {
                             :
                             <>
                                 {
-                                    data?.map(item => (
-                                        <div key={item?.id} className="border border-2 rounded-3 bg-white">
-                                            <div onClick={() =>
-                                                handleChangeID(item?.deal?.id)}
-                                                className={`text-secondary fs-5 fw-medium pt-3 px-4
+                                    data?.length > 0 ?
+                                        <>
+                                            {
+                                                data?.map(item => (
+                                                    <div key={item?.id} className="border border-2 rounded-3 bg-white">
+                                                        <div onClick={() =>
+                                                            handleChangeID(item?.deal?.id)}
+                                                            className={`text-secondary fs-5 fw-medium pt-3 px-4
                                                     ${item?.status === 'new' ? " bg-secondary-subtle" :
-                                                        item?.status === 'in_progress' ? "bg-warning-subtle" :
-                                                            item?.status === 'cancelled' ? "bg-danger-subtle " :
-                                                                "bg-success-subtle"} 
+                                                                    item?.status === 'in_progress' ? "bg-warning-subtle" :
+                                                                        item?.status === 'cancelled' ? "bg-danger-subtle " :
+                                                                            "bg-success-subtle"} 
                                                    `
-                                                }
+                                                            }
 
 
-                                                style={{ cursor: "pointer" }} >
-                                                <i className='fa-solid fa-eye'></i>  Buyurtma</div>
-                                            <div onClick={() =>
-                                                handleChangeID(item?.deal?.id)}
+                                                            style={{ cursor: "pointer" }} >
+                                                            <i className='fa-solid fa-eye'></i>  Buyurtma</div>
+                                                        <div onClick={() =>
+                                                            handleChangeID(item?.deal?.id)}
 
 
-                                                className={`d-md-flex justify-content-between gap-2 align-items-center  mb-2 px-4 pb-3 pt-1 
+                                                            className={`d-md-flex justify-content-between gap-2 align-items-center  mb-2 px-4 pb-3 pt-1 
                                                     ${item?.status === 'new' ? " bg-secondary-subtle" :
-                                                        item?.status === 'in_progress' ? "bg-warning-subtle" :
-                                                            item?.status === 'cancelled' ? "bg-danger-subtle " :
-                                                                "bg-success-subtle"} 
+                                                                    item?.status === 'in_progress' ? "bg-warning-subtle" :
+                                                                        item?.status === 'cancelled' ? "bg-danger-subtle " :
+                                                                            "bg-success-subtle"} 
                                                    `
-                                                }
+                                                            }
 
-                                                style={{ cursor: "pointer" }}>
-
-                                                <div>
-                                                    <h5 className="text-secondary fw-medium mb-2">
-                                                        {item?.deal?.title}
-                                                    </h5>
-                                                </div>
-
-                                                <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-end'>
-                                                    <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirish sanasi: {item?.deal?.deadline_date}</h5>
-                                                    <div className='d-flex justify-content-between align-items-start gap-2'>
-                                                        <h5 className='text-secondary fw-medium mb-1 fs-5'>
-                                                            Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
-
-                                                        </h5>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div className='px-4 pb-4'>
-                                                <span className=' fs-5 fw-medium'>Kelib tushgan ariza</span>
-                                                <TextDescription text={item?.description} />
-
-
-                                                <div className="d-md-flex justify-content-between gap-4  ">
-                                                    <div className="d-flex gap-3 align-items-center my-2">
-                                                        <span
-                                                            onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))}
-
-                                                        >
-                                                            <a style={{
-                                                                width: "40px",
-                                                                height: "40px",
-                                                                borderRadius: "50%",
-                                                                cursor: "pointer"
-                                                            }}>
-                                                                <img
-                                                                    width={50} height={50}
-                                                                    src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
-                                                                    alt="sca"
-                                                                />
-                                                            </a>
-                                                        </span>
-                                                        <div>
-
-                                                            <span onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))} style={{ cursor: "pointer" }} >
-                                                                <a className="fw-medium fs-5">
-                                                                    {item?.user?.full_name}
-                                                                </a>
-                                                            </span>
-
+                                                            style={{ cursor: "pointer" }}>
 
                                                             <div>
-                                                                <h5 className='text-success fw-medium mb-1 fs-5'>
-                                                                    Aloqa:   <span className='text-secondary fs-5 fw-medium '>{item?.contact_info}</span>
-
+                                                                <h5 className="text-secondary fw-medium mb-2">
+                                                                    {item?.deal?.title}
                                                                 </h5>
-                                                                <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
-                                                                <span className="text-secondary fs-5 fw-medium ">
-                                                                    {addPeriodToThousands(item?.price)} so'm
-                                                                </span>
+                                                            </div>
+
+                                                            <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-end'>
+                                                                <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirish sanasi: {item?.deal?.deadline_date}</h5>
+                                                                <div className='d-flex justify-content-between align-items-start gap-2'>
+                                                                    <h5 className='text-secondary fw-medium mb-1 fs-5'>
+                                                                        Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
+
+                                                                    </h5>
+                                                                </div>
                                                             </div>
 
                                                         </div>
-                                                    </div>
+                                                        <div className='px-4 pb-4'>
+                                                            <span className=' fs-5 fw-medium'>Kelib tushgan ariza</span>
+                                                            <TextDescription text={item?.description} />
 
-                                                </div>
-                                                <div className='d-flex justify-content-between flex-wrap gap-1'>
-                                                    <div>
-                                                        <span className="text-success fs-5 fw-medium">
-                                                            Tugatish muddati:
-                                                        </span>{' '}
-                                                        <span className="fw-medium fs-5 ">
-                                                            {item?.deadline_date}
-                                                        </span>
-                                                    </div>
 
-                                                    <div className='d-flex gap-3 align-items-center justify-content-between '>
-                                                        {
-                                                            item?.status === 'new' ? (
-                                                                <span>
-                                                                    <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                                    Moderatsiya
-                                                                </span>
-                                                            ) : item?.status === 'in_progress' ? (
-                                                                <span>
-                                                                    <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
-                                                                </span>
-                                                            ) : item?.status === "cancelled" ? (
-                                                                <span>
-                                                                    <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
-                                                                </span>
-                                                            ) :
+                                                            <div className="d-md-flex justify-content-between gap-4  ">
+                                                                <div className="d-flex gap-3 align-items-center my-2">
+                                                                    <span
+                                                                        onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))}
 
-                                                                (
-                                                                    <span style={{ cursor: 'pointer' }}>
-                                                                        <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                                        Tugallangan
+                                                                    >
+                                                                        <a style={{
+                                                                            width: "40px",
+                                                                            height: "40px",
+                                                                            borderRadius: "50%",
+                                                                            cursor: "pointer"
+                                                                        }}>
+                                                                            <img
+                                                                                width={50} height={50}
+                                                                                src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
+                                                                                alt="sca"
+                                                                            />
+                                                                        </a>
                                                                     </span>
-                                                                )
-                                                        }
-                                                        {
+                                                                    <div>
 
-                                                            item?.status === 'new' ?
-                                                                <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
-                                                                    className='btn btn-success fs-5'
-                                                                    onClick={() => handleClickUpdate(item)}>
-                                                                    Qabul qilish
-                                                                </button>
-                                                                : item?.status === 'in_progress' ?
-                                                                    <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
-                                                                        className='btn btn-outline-success fs-5'
-                                                                        onClick={() => handleClickUpdate(item)}>Tugatish</button> :
-                                                                    <></>
+                                                                        <span onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))} style={{ cursor: "pointer" }} >
+                                                                            <a className="fw-medium fs-5">
+                                                                                {item?.user?.full_name}
+                                                                            </a>
+                                                                        </span>
 
-                                                        }
+
+                                                                        <div>
+                                                                            <h5 className='text-success fw-medium mb-1 fs-5'>
+                                                                                Aloqa:   <span className='text-secondary fs-5 fw-medium '>{item?.contact_info}</span>
+
+                                                                            </h5>
+                                                                            <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
+                                                                            <span className="text-secondary fs-5 fw-medium ">
+                                                                                {addPeriodToThousands(item?.price)} so'm
+                                                                            </span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div className='d-flex justify-content-between flex-wrap gap-1'>
+                                                                <div>
+                                                                    <span className="text-success fs-5 fw-medium">
+                                                                        Tugatish muddati:
+                                                                    </span>{' '}
+                                                                    <span className="fw-medium fs-5 ">
+                                                                        {item?.deadline_date}
+                                                                    </span>
+                                                                </div>
+
+                                                                <div className='d-flex gap-3 align-items-center justify-content-between '>
+                                                                    {
+                                                                        item?.status === 'new' ? (
+                                                                            <span>
+                                                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                                                Moderatsiya
+                                                                            </span>
+                                                                        ) : item?.status === 'in_progress' ? (
+                                                                            <span>
+                                                                                <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
+                                                                            </span>
+                                                                        ) : item?.status === "cancelled" ? (
+                                                                            <span>
+                                                                                <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
+                                                                            </span>
+                                                                        ) :
+
+                                                                            (
+                                                                                <span style={{ cursor: 'pointer' }}>
+                                                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                                                    Tugallangan
+                                                                                </span>
+                                                                            )
+                                                                    }
+                                                                    {
+
+                                                                        item?.status === 'new' ?
+                                                                            <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                                className='btn btn-success fs-5'
+                                                                                onClick={() => handleClickUpdate(item)}>
+                                                                                Qabul qilish
+                                                                            </button>
+                                                                            : item?.status === 'in_progress' ?
+                                                                                <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                                    className='btn btn-outline-success fs-5'
+                                                                                    onClick={() => handleClickUpdate(item)}>Tugatish</button> :
+                                                                                <></>
+
+                                                                    }
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+
                                                     </div>
+                                                ))
 
-
-                                                </div>
+                                            }
+                                            <div className='d-flex justify-content-center my-4 '>
+                                                <Pagination
+                                                    className="mt-3"
+                                                    total={pageCount}
+                                                    defaultCurrent={currPage}
+                                                    onChange={handlePagination}
+                                                />
                                             </div>
-
+                                        </> :
+                                        <div className='d-flex justify-content-center align-items-center' style={{ height: "50vh" }} >
+                                            <span className='d-flex flex-column align-items-center gap-3'>
+                                                <i class="fa-brands fa-dropbox fa-4x text-secondary"></i>
+                                                Ma'luot topilmadi
+                                            </span>
                                         </div>
-                                    ))
 
                                 }
-                                <div className='d-flex justify-content-center my-4 '>
-                                    <Pagination
-                                        className="mt-3"
-                                        total={pageCount}
-                                        defaultCurrent={currPage}
-                                        onChange={handlePagination}
-                                    />
-                                </div>
+
                             </>
+
                     }
                 </div>
 

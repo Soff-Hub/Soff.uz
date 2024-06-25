@@ -178,6 +178,38 @@ function DashbordList({ setOpen }) {
         },
     ];
 
+    const columnsSeller = [
+        {
+            title: 'Nomi',
+            dataIndex: 'title',
+            key: 'age',
+            width: 600,
+        },
+        {
+            title: 'Buyurtmalar ',
+            dataIndex: 'total_approved',
+            key: 'address',
+            render: (total_approved) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-box"></i> {total_approved}
+                </span>
+            ),
+        },
+        {
+            title: 'Narx',
+            dataIndex: 'discount_price',
+            key: 'age',
+            render: (discount_price) => (
+                <span>
+                    <i className="fa-solid fa-coins text-warning"></i>{' '}
+                    {addPeriodToThousands(discount_price)}
+                </span>
+            ),
+        },
+     
+    ];
+
     const columnsDonat = [
         {
             title: 'id',
@@ -480,9 +512,9 @@ function DashbordList({ setOpen }) {
             children: (
                 <div>
                     <Table
-                        scroll={{ x: 1250 }}
+                        scroll={{ x: 800 }}
                         dataSource={dataProducts}
-                        columns={columns}
+                        columns={columnsSeller}
                         className="pb-5"
                         pagination={false}
                     />

@@ -204,141 +204,155 @@ export default function MyOrders() {
                                 </div>
                             </div>
                             :
-
                             <>
+
                                 {
-                                    data?.map(item => (
-                                        <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                            <div className='d-flex justify-content-between gap-4 align-items-start'>
-                                                <h3 className="text-success fw-medium ">{item?.title}</h3>
+                                    data?.length > 0 ?
+                                        <>
+                                            {
+                                                data?.map(item => (
+                                                    <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
+                                                        <div className='d-flex justify-content-between gap-4 align-items-start'>
+                                                            <h3 className="text-success fw-medium ">{item?.title}</h3>
 
-                                                {
-                                                    item?.status !== 'active' ?
-                                                        <Dropdown
-                                                            overlay={(
-                                                                <Menu>
-                                                                    <Menu.Item key="0">
-                                                                        <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                                            Tahrirlash
-                                                                            <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                                        </span>
-                                                                    </Menu.Item>
-                                                                    <Menu.Item key="1">
-                                                                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                                                                            O'chirish
-                                                                            <i
-                                                                                className="fa-solid fa-trash-can text-danger mx-2"
-                                                                                onClick={() => setProductsId(item?.id)}
-                                                                            ></i>
+                                                            {
+                                                                item?.status !== 'active' ?
+                                                                    <Dropdown
+                                                                        overlay={(
+                                                                            <Menu>
+                                                                                <Menu.Item key="0">
+                                                                                    <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
+                                                                                        Tahrirlash
+                                                                                        <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                                                    </span>
+                                                                                </Menu.Item>
+                                                                                <Menu.Item key="1">
+                                                                                    <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                                                                                        O'chirish
+                                                                                        <i
+                                                                                            className="fa-solid fa-trash-can text-danger mx-2"
+                                                                                            onClick={() => setProductsId(item?.id)}
+                                                                                        ></i>
+                                                                                    </a>
+                                                                                </Menu.Item>
+                                                                            </Menu>
+                                                                        )}
+                                                                        trigger={['click']}
+                                                                    >
+                                                                        <a className='d-flex justify-content-center' style={{
+                                                                            cursor: "pointer",
+                                                                            minWidth: "20px"
+
+                                                                        }} onClick={(e) => e.preventDefault()}>
+                                                                            <Space>
+                                                                                <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
+                                                                            </Space>
                                                                         </a>
-                                                                    </Menu.Item>
-                                                                </Menu>
-                                                            )}
-                                                            trigger={['click']}
-                                                        >
-                                                            <a className='d-flex justify-content-center' style={{
-                                                                cursor: "pointer",
-                                                                minWidth: "20px"
 
-                                                            }} onClick={(e) => e.preventDefault()}>
-                                                                <Space>
-                                                                    <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
-                                                                </Space>
-                                                            </a>
-
-                                                        </Dropdown>
-                                                        : <></>
-                                                }
-
-                                            </div>
-                                            <TextDescription text={item?.description} />
-
-                                            <div>
-                                                <div className="d-flex justify-content-between gap-4 align-items-center ">
-                                                    <div className="d-flex align-items-center ">
-                                                        <img
-                                                            className="d-block"
-                                                            width={50}
-                                                            src="/static/img/docCopy.jpg"
-                                                            alt="sca"
-                                                        />
-                                                        <div>
-
-                                                            <div>
-                                                                {' '}
-                                                                <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                                <span className="text-secondary fs-5 fw-medium ">
-                                                                    {addPeriodToThousands(item?.price)} so'm
-                                                                </span>
-                                                            </div>
-
-                                                            <div>
-                                                                <span className="text-success fs-5 fw-medium">
-                                                                    Buyurtma sohasi:
-                                                                </span>{' '}
-                                                                <span className="fw-medium text-secondary fs-5">
-                                                                    {item?.type?.name}
-                                                                </span>
-                                                            </div>
-                                                            <div>
-                                                                <span className="text-success fs-5 fw-medium">
-                                                                    Aloqa:
-                                                                </span>{' '}
-                                                                <span className="fw-medium text-secondary fs-5">
-                                                                    {item?.contact_info}
-                                                                </span>
-                                                            </div>
-
+                                                                    </Dropdown>
+                                                                    : <></>
+                                                            }
 
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div className='mt-3 d-flex justify-content-between'>
-                                                    <div>
-                                                        <span className="text-success fs-5 fw-medium">
-                                                            Topshirish sanasi:
-                                                        </span>{' '}
-                                                        <span className="fw-medium fs-5">
-                                                            {item?.deadline_date}
-                                                        </span>
-                                                    </div>
+                                                        <TextDescription text={item?.description} />
 
-                                                    {
-                                                        item?.status === 'new' ? (
-                                                            <span>
-                                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                                Moderatsiya
-                                                            </span>
-                                                        ) : item?.status === 'active' ? (
-                                                            <span>
-                                                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                                                Tasdiqlangan
-                                                            </span>
-                                                        ) : (
-                                                            <Tooltip title={item?.reason}>
-                                                                <span style={{ cursor: 'pointer' }}>
-                                                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                                                    Bekor qilingan{' '}
-                                                                </span>
-                                                            </Tooltip>
-                                                        )
-                                                    }
-                                                </div>
+                                                        <div>
+                                                            <div className="d-flex justify-content-between gap-4 align-items-center ">
+                                                                <div className="d-flex align-items-center ">
+                                                                    <img
+                                                                        className="d-block"
+                                                                        width={50}
+                                                                        src="/static/img/docCopy.jpg"
+                                                                        alt="sca"
+                                                                    />
+                                                                    <div>
+
+                                                                        <div>
+                                                                            {' '}
+                                                                            <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
+                                                                            <span className="text-secondary fs-5 fw-medium ">
+                                                                                {addPeriodToThousands(item?.price)} so'm
+                                                                            </span>
+                                                                        </div>
+
+                                                                        <div>
+                                                                            <span className="text-success fs-5 fw-medium">
+                                                                                Buyurtma sohasi:
+                                                                            </span>{' '}
+                                                                            <span className="fw-medium text-secondary fs-5">
+                                                                                {item?.type?.name}
+                                                                            </span>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span className="text-success fs-5 fw-medium">
+                                                                                Aloqa:
+                                                                            </span>{' '}
+                                                                            <span className="fw-medium text-secondary fs-5">
+                                                                                {item?.contact_info}
+                                                                            </span>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div className='mt-3 d-flex justify-content-between'>
+                                                                <div>
+                                                                    <span className="text-success fs-5 fw-medium">
+                                                                        Topshirish sanasi:
+                                                                    </span>{' '}
+                                                                    <span className="fw-medium fs-5">
+                                                                        {item?.deadline_date}
+                                                                    </span>
+                                                                </div>
+
+                                                                {
+                                                                    item?.status === 'new' ? (
+                                                                        <span>
+                                                                            <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                                            Moderatsiya
+                                                                        </span>
+                                                                    ) : item?.status === 'active' ? (
+                                                                        <span>
+                                                                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                                                            Tasdiqlangan
+                                                                        </span>
+                                                                    ) : (
+                                                                        <Tooltip title={item?.reason}>
+                                                                            <span style={{ cursor: 'pointer' }}>
+                                                                                <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                                                                Bekor qilingan{' '}
+                                                                            </span>
+                                                                        </Tooltip>
+                                                                    )
+                                                                }
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                ))
+
+                                            }
+                                            <div className='d-flex justify-content-center my-4 '>
+                                                <Pagination
+                                                    className="mt-3"
+                                                    total={pageCount}
+                                                    defaultCurrent={currPage}
+                                                    onChange={handlePagination}
+                                                />
                                             </div>
-
+                                        </>
+                                        :
+                                        <div className='d-flex justify-content-center align-items-center' style={{ height: "50vh" }} >
+                                            <span className='d-flex flex-column align-items-center gap-3'>
+                                                <i class="fa-brands fa-dropbox fa-4x text-secondary"></i>
+                                                Ma'luot topilmadi
+                                            </span>
                                         </div>
-                                    ))
 
                                 }
-                                <div className='d-flex justify-content-center my-4 '>
-                                    <Pagination
-                                        className="mt-3"
-                                        total={pageCount}
-                                        defaultCurrent={currPage}
-                                        onChange={handlePagination}
-                                    />
-                                </div>
                             </>
+
                     }
                 </div>
 
