@@ -242,7 +242,6 @@ const DealOrderPayment = ({ quantity }) => {
     };
 
 
-
     const onChange = (key) => {
         setTab(key);
     };
@@ -335,8 +334,7 @@ const DealOrderPayment = ({ quantity }) => {
                         cancelText="Orqaga">
                         <>
                             <p>
-                                Kod quyidagi raqamga yuborildi:
-                                {resData?.data?.phone_number}
+                                {resData?.data?.msg}
                             </p>
                             <input
                                 onChange={(e) => setCode(e.target.value)}

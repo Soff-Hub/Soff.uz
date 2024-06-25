@@ -9,7 +9,6 @@ const Progress = ({
     inputText,
     loadingText,
     content_type,
-    setCustomeFile
 }) => {
 
 
@@ -54,7 +53,7 @@ const Progress = ({
             "POST",
             baseUrl + "seller/product-create-first/"
         );
-        xhr.setRequestHeader("Authorization", `Bearer ${user.access}`); 
+        xhr.setRequestHeader("Authorization", `Bearer ${user.access}`);
         xhr.upload.addEventListener("progress", ({ loaded, total }) => {
             setTotal(total);
             setTotaLoad(loaded)
@@ -70,15 +69,7 @@ const Progress = ({
 
             if (xhr.status === 201) {
                 let response = JSON.parse(xhr.responseText);
-                if (response?.content_type === "audio" || response?.content_type === "template") {
-                    setDocument(response);
-                }
-                if (!response?.images) {
-                    setDocument({ ...response, images: [] });
-                } else {
-                    setDocument(response);
-                    setCustomeFile({ image_url: response.images[0]?.image_url })
-                }
+                setDocument(response);
                 setStatus(xhr.status)
             } else {
                 let error = xhr.responseText;

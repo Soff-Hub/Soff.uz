@@ -771,6 +771,23 @@ class GetRepository {
         return reponse;
     }
 
+    async getSellerCommitLists(id, page) {
+        const endPoint = `seller/document-reviews/${id}?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getUsersLists(page, status, search, token) {
         const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}&search=${
             search || ''

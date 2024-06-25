@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React  from 'react';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
@@ -42,11 +42,9 @@ const ProductDetailFullwidth = ({ product, views }) => {
                         </div>
                     </div>
                 </div>
-                {product?.description ? (
+         
                     <DefaultDescription product={product} />
-                ) : (
-                    ''
-                )}
+             
             </div >
         </>
     );

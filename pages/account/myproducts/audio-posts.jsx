@@ -47,7 +47,6 @@ const AudioPosts = () => {
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
-    const [customeFile, setCustomeFile] = useState(null);
 
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -383,7 +382,6 @@ const AudioPosts = () => {
                                             inputText={"Mahsulot (audio) yuklash uchun ushbu hududga bosing (.mp3)"}
                                             loadingText={"Audio tayyorlanmoqda..."}
                                             content_type={"audio"}
-                                            setCustomeFile={setCustomeFile}
                                         />
 
                                     </div>

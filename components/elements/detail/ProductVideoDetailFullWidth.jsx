@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
 import Link from 'next/link';
-import Router from 'next/router';
 import DefaultVideo from './thumbnail/DefaultVideo';
 import ModuleVideoDetailTopInformation from './modules/ModuleVideoDetailTopInformation';
 import VideoDetailsDescription from './modules/VideoDetails';
@@ -64,12 +63,8 @@ const ProductVideoDetailFullWidth = ({
                     </div>
                 )}
 
-
-                {product?.description ? (
                     <DefaultDescription product={product} />
-                ) : (
-                    ''
-                )}
+             
             </div>
         </>
     );
