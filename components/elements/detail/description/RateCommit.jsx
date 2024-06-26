@@ -4,7 +4,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 const desc = ['1 ball', '2 ball', '3 ball', '4 ball', ' 5 ball'];
 
-const RateCommit = ({ product, setDataCount, setData }) => {
+const RateCommit = ({ product, setDataCount }) => {
     const [value, setValue] = useState(0);
     const [text, setRateDes] = useState('');
     const { user } = useSelector((state) => state.auth);
@@ -12,7 +12,6 @@ const RateCommit = ({ product, setDataCount, setData }) => {
     async function postOrder() {
         const formData = new FormData();
         setDataCount(true);
-        setData([]);
 
         if (value) {
             formData.append('rating', value);
@@ -36,7 +35,6 @@ const RateCommit = ({ product, setDataCount, setData }) => {
             });
         }
         setDataCount(false);
-        setData([]);
     }
 
     useEffect(() => {
@@ -84,7 +82,7 @@ const RateCommit = ({ product, setDataCount, setData }) => {
 
         </div>
     )
-    
+
 }
 
 export default RateCommit
