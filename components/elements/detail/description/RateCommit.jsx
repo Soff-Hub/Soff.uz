@@ -19,12 +19,12 @@ const RateCommit = ({ product, setDataCount }) => {
             formData.append('review', text);
         }
         const ItemsData = await PatchRepository.patchDealUpdateApplicaitonCommit(product?.id, formData, user?.access);
-
-        if (ItemsData?.status === 201 || ItemsData?.status === 200) {
+   
+        if (ItemsData?.status === 201) {
             const modal = Modal.success({
                 centered: true,
                 title: 'Muvaffaqqiyatli!',
-                content: `Mahsulotga sharh qoldirdingiz`,
+                content: ItemsData?.data?.msg,
             });
 
         } else {
