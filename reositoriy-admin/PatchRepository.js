@@ -378,7 +378,7 @@ class PatchRepository {
             data: data,
         })
             .then((response) => {
-                if (response.status === 200) {
+                if (response.status === 201) {
                     return response;
                 } else {
                     return null;
