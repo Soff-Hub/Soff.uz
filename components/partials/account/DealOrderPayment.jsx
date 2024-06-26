@@ -37,57 +37,57 @@ const DealOrderPayment = ({ quantity }) => {
 
     };
 
-    async function handleClickCardPostsclick(e) {
-        e.preventDefault();
-        setMessage(false);
-        const ItemsData = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/`, {
-            provider: 'click',
-            deal_coin: quantity,
-        }, {
-            headers: {
-                Authorization: `Bearer ${user?.access}`
-            }
-        });
-        if (ItemsData?.status === 201) {
-            setMessage(true);
-            Router.push(ItemsData?.data?.url);
-        } else {
-            setMessage(true);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli emas',
-                content: ItemsData?.data?.msg,
-            });
-            modal.update;
-        }
+    // async function handleClickCardPostsclick(e) {
+    //     e.preventDefault();
+    //     setMessage(false);
+    //     const ItemsData = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/`, {
+    //         provider: 'click',
+    //         deal_coin: quantity,
+    //     }, {
+    //         headers: {
+    //             Authorization: `Bearer ${user?.access}`
+    //         }
+    //     });
+    //     if (ItemsData?.status === 201) {
+    //         setMessage(true);
+    //         Router.push(ItemsData?.data?.url);
+    //     } else {
+    //         setMessage(true);
+    //         const modal = Modal.error({
+    //             centered: true,
+    //             title: 'Muvaffaqqiyatli emas',
+    //             content: ItemsData?.data?.msg,
+    //         });
+    //         modal.update;
+    //     }
 
-    }
+    // }
 
-    async function handleClickCardPostsPayme(e) {
-        e.preventDefault();
-        setMessage(false);
-        const ItemsData = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/`, {
-            provider: 'payme',
-            deal_coin: quantity,
-        }, {
-            headers: {
-                Authorization: `Bearer ${user?.access}`
-            }
-        });
-        if (ItemsData?.status === 201) {
-            setMessage(true);
-            Router.push(ItemsData?.data?.url);
-        } else {
-            setMessage(true);
-            const modal = Modal.error({
-                centered: true,
-                title: 'Muvaffaqqiyatli emas',
-                content:ItemsData?.statusText || ItemsData?.data?.msg,
-            });
-            modal.update;
-        }
+    // async function handleClickCardPostsPayme(e) {
+    //     e.preventDefault();
+    //     setMessage(false);
+    //     const ItemsData = await axios.post(`${baseUrlCustomer}deals/order-deal-coins/`, {
+    //         provider: 'payme',
+    //         deal_coin: quantity,
+    //     }, {
+    //         headers: {
+    //             Authorization: `Bearer ${user?.access}`
+    //         }
+    //     });
+    //     if (ItemsData?.status === 201) {
+    //         setMessage(true);
+    //         Router.push(ItemsData?.data?.url);
+    //     } else {
+    //         setMessage(true);
+    //         const modal = Modal.error({
+    //             centered: true,
+    //             title: 'Muvaffaqqiyatli emas',
+    //             content:ItemsData?.statusText || ItemsData?.data?.msg,
+    //         });
+    //         modal.update;
+    //     }
 
-    }
+    // }
 
     async function handleClickCardPosts(e) {
         e.preventDefault();
@@ -242,7 +242,6 @@ const DealOrderPayment = ({ quantity }) => {
     };
 
 
-
     const onChange = (key) => {
         setTab(key);
     };
@@ -335,8 +334,7 @@ const DealOrderPayment = ({ quantity }) => {
                         cancelText="Orqaga">
                         <>
                             <p>
-                                Kod quyidagi raqamga yuborildi:
-                                {resData?.data?.phone_number}
+                                {resData?.data?.msg}
                             </p>
                             <input
                                 onChange={(e) => setCode(e.target.value)}
@@ -357,69 +355,69 @@ const DealOrderPayment = ({ quantity }) => {
                 </div>
             ),
         },
-        {
-            key: '2',
-            label: (
-                <div className="click">
-                    <img src="/static/img/click.png" alt="" />
-                </div>
-            ),
-            children: (
-                <div className="row   mx-auto m-0">
-                    <div className=" px-4 rounded click-b">
-                        <form
-                            onSubmit={handleClickCardPostsclick}
-                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                            <div className="col-12 p-0 px-4 my-3">
-                                {message ? (
-                                    <button
-                                        type="submit"
-                                        className="ps-btn w-100 text-center btn_color">
-                                        Davom etish
-                                    </button>
-                                ) : (
-                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                                        <BeatLoader color="#fff" />
-                                    </button>
-                                )}
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            ),
-        },
+        // {
+        //     key: '2',
+        //     label: (
+        //         <div className="click">
+        //             <img src="/static/img/click.png" alt="" />
+        //         </div>
+        //     ),
+        //     children: (
+        //         <div className="row   mx-auto m-0">
+        //             <div className=" px-4 rounded click-b">
+        //                 <form
+        //                     onSubmit={handleClickCardPostsclick}
+        //                     className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+        //                     <div className="col-12 p-0 px-4 my-3">
+        //                         {message ? (
+        //                             <button
+        //                                 type="submit"
+        //                                 className="ps-btn w-100 text-center btn_color">
+        //                                 Davom etish
+        //                             </button>
+        //                         ) : (
+        //                             <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+        //                                 <BeatLoader color="#fff" />
+        //                             </button>
+        //                         )}
+        //                     </div>
+        //                 </form>
+        //             </div>
+        //         </div>
+        //     ),
+        // },
 
-        {
-            key: '3',
-            label: (
-                <div className="click">
-                    <img src="/static/img/soff/paymee-r.png" alt="" />
-                </div>
-            ),
-            children: (
-                <div className="row   mx-auto m-0">
-                    <div className=" px-4 rounded click-b">
-                        <form
-                            onSubmit={handleClickCardPostsPayme}
-                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-                            <div className="col-12 p-0 px-4 my-3">
-                                {message ? (
-                                    <button
-                                        type="submit"
-                                        className="ps-btn w-100 text-center btn_color">
-                                        Davom etish
-                                    </button>
-                                ) : (
-                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-                                        <BeatLoader color="#fff" />
-                                    </button>
-                                )}
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            ),
-        },
+        // {
+        //     key: '3',
+        //     label: (
+        //         <div className="click">
+        //             <img src="/static/img/soff/paymee-r.png" alt="" />
+        //         </div>
+        //     ),
+        //     children: (
+        //         <div className="row   mx-auto m-0">
+        //             <div className=" px-4 rounded click-b">
+        //                 <form
+        //                     onSubmit={handleClickCardPostsPayme}
+        //                     className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+        //                     <div className="col-12 p-0 px-4 my-3">
+        //                         {message ? (
+        //                             <button
+        //                                 type="submit"
+        //                                 className="ps-btn w-100 text-center btn_color">
+        //                                 Davom etish
+        //                             </button>
+        //                         ) : (
+        //                             <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+        //                                 <BeatLoader color="#fff" />
+        //                             </button>
+        //                         )}
+        //                     </div>
+        //                 </form>
+        //             </div>
+        //         </div>
+        //     ),
+        // },
     ];
 
     return <Tabs className='checkoutstep-1' defaultActiveKey="1" items={items} onChange={onChange} />;

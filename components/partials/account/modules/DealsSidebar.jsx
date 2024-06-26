@@ -1,8 +1,10 @@
-import { DatePicker, Select, Slider } from 'antd';
+import { DatePicker, Rate, Select, Slider } from 'antd';
 import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+const { Option } = Select;
+
 
 
 const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) => {
@@ -13,7 +15,8 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     const [price, setPrice] = useState(null);
     const [webdata, setWebData] = useState(null);
     const [socket, setSocket] = useState(null);
-
+    const [keyword, setKeyword] = useState('');
+    const [dealProfil, setDealProfil] = useState(null);
 
 
     const handleChange = (date) => {
@@ -25,7 +28,6 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
             setLifetime2(null);
         }
     };
-
 
     function addPeriodToThousands(number) {
         const numStr = String(number);
@@ -46,11 +48,37 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
     }
 
     async function getDealType() {
-        const data = await GetRepository.getDealType();
+        const data = await GetRepository.getDealType(keyword);
         if (data?.results) {
             setDealType(data?.results);
         }
     }
+
+    async function getDealProfile() {
+        const data = await GetRepository.getDeadProfle(user?.access);
+        if (data) {
+            setDealProfil(data);
+        }
+    }
+
+
+    const onSearch = async (value) => {
+        setKeyword(value)
+    };
+
+    function handleChangeCategory(value) {
+        for (let i = 0; i < dealType.length; i++) {
+            if (dealType[i].name === value) {
+                setType(dealType[i].id);
+            }
+        }
+    }
+
+
+
+    useEffect(() => {
+        getDealType();
+    }, [keyword]);
 
     async function getDealPrice() {
         const data = await GetRepository.getDealTypePriceRange();
@@ -61,49 +89,47 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
 
     useEffect(() => {
         getDealPrice()
-        getDealType(user?.access);
     }, []);
 
-    const optionType = [
-        { label: 'Barchasi', value: '' },
-        ...(dealType?.map((e) => ({
-            label: e?.name,
-            value: e?.id,
-        })) || [])
-    ];
 
     const sidebarMenu = [
         {
             url: '/account/all-orders',
             label: 'Barcha buyurtmalar',
+            icon: "fa-solid fa-file-circle-check "
+
         },
         {
             url: '/account/deal-applications',
             label: 'Men yuborgan arizalar',
+            icon: " fa-solid fa-file-arrow-up"
         },
         {
             url: '/account/my-orders',
             label: 'Mening buyurtmalarim',
+            icon: "fa-solid fa-file-signature"
         },
         {
             url: '/account/applications-received',
             label: 'Kelib tushgan arizalar',
+            icon: "fa-solid fa-file-arrow-down"
         }
     ]
     const sidebarMenuToken = [
         {
             url: '/account/all-orders',
             label: 'Barcha buyurtmalar',
+            icon: "fa-solid fa-file-circle-check"
         }
     ]
-
-
 
 
 
     useEffect(() => {
         const token = user?.access;
         if (token) {
+            getDealProfile()
+
             const ws = new WebSocket(
                 `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/deals?token=${token}`
             );
@@ -132,6 +158,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                 }
             };
         }
+
     }, [user?.access]);
 
 
@@ -145,9 +172,36 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
 
 
 
-
     return (
         <div className="w-100 ">
+            {dealProfil?.total_applications > 0 ?
+                <>
+
+                    <div className="px-3 pt-3 bg-white d-flex align-items-center justify-content-between">
+                        <span></span>
+                        <Rate
+                            allowHalf
+                            disabled
+                            className="fs-4"
+                            value={Number(dealProfil?.average_rating)}
+                        />
+                    </div>
+                    <div className="p-3 bg-white d-flex align-items-center gap-3">
+                        <img style={{
+                            width: "40px",
+                            height: "40px",
+                            borderRadius: "50%"
+                        }} src={dealProfil?.image_url ? dealProfil?.image_url : "/static/img/ozodbek.png"} alt="user" />
+                        <div className='d-flex flex-column'>
+                            <span className='text-truncate' style={{ maxWidth: "210px" }}>{dealProfil?.full_name}   </span>
+                            <span>Qilgan ishlar soni: {dealProfil?.total_applications} ta</span>
+
+                        </div>
+
+                    </div>
+                </> : <></>}
+
+
             <div className="p-3 bg-white mb-4">
                 <h4 className="d-block p-2 fw-bold">
                     Buyurtmalar
@@ -162,11 +216,15 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                     className='py-3 px-3 d-flex justify-content-between'
                                     onClick={() => Router.push(el.url)}
                                     style={{
-                                        borderLeft: el.url === asPath ? '3px solid #28a745' : '0',
+                                        borderLeft: (el.url === asPath || asPath === "/account/all-orders?show=modal") ? '3px solid #28a745' : '0',
                                         backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
                                         cursor: 'pointer'
                                     }}>
-                                    {el.label}
+
+                                    <span className='d-flex align-items-center
+                                   
+                                   gap-3 '><i className={`${el.icon} fs-3 text-success`}></i>  <span>{el.label}</span></span>
+
                                     {
                                         (el.url === "/account/deal-applications" && webdata?.sent_applications > 0) ?
                                             <strong
@@ -212,7 +270,9 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                                         backgroundColor: el.url === asPath ? 'rgba(40, 167, 69, 0.2)' : 'transparent',
                                         cursor: 'pointer'
                                     }}>
-                                    {el.label}
+                                    <span className='d-flex align-items-center
+                                   
+                                   gap-3'><i className={`${el.icon} fs-3`}></i>  <span>{el.label}</span></span>
                                 </div>
                             ))
 
@@ -228,19 +288,19 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
                     Buyurtma turlari
                 </span>
                 <Select
-                    onChange={(e) =>
-                        setType(e)
-                    }
-                    style={{
-                        width: '100%',
-                        height: '45px',
-                    }}
-                    placeholder="Buyurtma turi"
-
-                    options={
-                        optionType
-                    }>
-
+                    mode="single"
+                    showSearch
+                    className='p-0 w-100 '
+                    allowClear
+                    style={{ height: "43px" }}
+                    placeholder="Barcha turlar"
+                    onSearch={onSearch}
+                    onChange={handleChangeCategory}
+                >
+                    <Option key={""} value={""}>Barcha turlar</Option>
+                    {dealType?.map(item => (
+                        <Option key={item.id} value={item.name} >{item.name}</Option>
+                    ))}
                 </Select>
 
                 <span className="d-block p-2 mt-4 fw-bold ">

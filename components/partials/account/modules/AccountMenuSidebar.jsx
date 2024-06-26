@@ -11,7 +11,9 @@ import { formatCurrency } from '~/utilities/product-helper';
 
 const AccountMenuSidebar = ({ data, renderProfile }) => {
     const dispatch = useDispatch();
+
     const refresh = useSelector((state) => state.auth?.user?.refresh);
+
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
     const [profile, setProfile] = useState(null);

@@ -178,6 +178,38 @@ function DashbordList({ setOpen }) {
         },
     ];
 
+    const columnsSeller = [
+        {
+            title: 'Nomi',
+            dataIndex: 'title',
+            key: 'age',
+            width: 600,
+        },
+        {
+            title: 'Buyurtmalar ',
+            dataIndex: 'total_approved',
+            key: 'address',
+            render: (total_approved) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-box"></i> {total_approved}
+                </span>
+            ),
+        },
+        {
+            title: 'Narx',
+            dataIndex: 'discount_price',
+            key: 'age',
+            render: (discount_price) => (
+                <span>
+                    <i className="fa-solid fa-coins text-warning"></i>{' '}
+                    {addPeriodToThousands(discount_price)}
+                </span>
+            ),
+        },
+     
+    ];
+
     const columnsDonat = [
         {
             title: 'id',
@@ -373,7 +405,7 @@ function DashbordList({ setOpen }) {
             title: 'Buyurtma nomi',
             dataIndex: 'document',
             key: 'age',
-            width: 300,
+            width: 400,
             render: (document) => (
                 <Link href={`/product/${document.slug}`}>
                     <a>{document.title}</a>
@@ -403,26 +435,7 @@ function DashbordList({ setOpen }) {
                 </span>
             ),
         },
-        {
-            title: 'Holat',
-            dataIndex: 'status',
-            key: 'address',
-            render: (status) => (
-                <span>
-                    {status === 'approved' ? (
-                        <span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            tasdiqlangan
-                        </span>
-                    ) : (
-                        <span>
-                            <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                            tasdiqlanganmagan
-                        </span>
-                    )}
-                </span>
-            ),
-        },
+
     ];
 
     const items = [
@@ -482,6 +495,34 @@ function DashbordList({ setOpen }) {
             ),
         },
     ];
+
+    const itemsSeller = [
+        {
+            key: '1',
+            label: (
+                <span
+                    style={{
+                        marginRight: '30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Ommabop Mahsulotlar
+                </span>
+            ),
+            children: (
+                <div>
+                    <Table
+                        scroll={{ x: 800 }}
+                        dataSource={dataProducts}
+                        columns={columnsSeller}
+                        className="pb-5"
+                        pagination={false}
+                    />
+                </div>
+            ),
+        },
+    ];
+
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -559,7 +600,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_revenue ||
-                                data?.total_revenue == 0 ? (
+                                    data?.total_revenue == 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -599,7 +640,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.today_revenue ||
-                                data?.today_revenue === 0 ? (
+                                    data?.today_revenue === 0 ? (
                                     <h4 className="mt-5">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -639,7 +680,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_order ||
-                                data?.total_order === 0 ? (
+                                    data?.total_order === 0 ? (
                                     <h4 className="mt-5">
                                         {addPeriodToThousands(
                                             data?.total_order
@@ -677,7 +718,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_shops ||
-                                data?.total_shops === 0 ? (
+                                    data?.total_shops === 0 ? (
                                     <h4 className="mt-5 pt-4 ">
                                         {addPeriodToThousands(
                                             data?.total_shops
@@ -718,7 +759,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.all_revenue ||
-                                data?.all_revenue === 0 ? (
+                                    data?.all_revenue === 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -758,7 +799,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.last_month_revenue ||
-                                data?.last_month_revenue === 0 ? (
+                                    data?.last_month_revenue === 0 ? (
                                     <h4 className="mt-5 ">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -798,7 +839,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.today_revenue ||
-                                data?.today_revenue === 0 ? (
+                                    data?.today_revenue === 0 ? (
                                     <h4 className="mt-5">
                                         {' '}
                                         <i className="fa-solid fa-coins text-warning"></i>{' '}
@@ -838,7 +879,7 @@ function DashbordList({ setOpen }) {
                                     </div>
                                 </div>
                                 {data?.total_order ||
-                                data?.total_order === 0 ? (
+                                    data?.total_order === 0 ? (
                                     <h4 className="mt-5">
                                         {addPeriodToThousands(
                                             data?.total_order
@@ -870,57 +911,57 @@ function DashbordList({ setOpen }) {
                     <div className="col-lg-8 pb-5">
                         {(user?.role === 'admin' ||
                             user?.role === 'seller') && (
-                            <div className="dashboard-div mb-2">
-                                <Select
-                                    defaultValue={{
-                                        value: +year,
-                                        label: `${+year}-yil bo'yicha hisobotlar`,
-                                    }}
-                                    style={{
-                                        width: 300,
-                                    }}
-                                    onChange={handleChangeYear}
-                                    options={yearGet?.map((el) => ({
-                                        value: +el?.year,
-                                        label: `${+el?.year}-yil bo'yicha hisobotlar`,
-                                    }))}
-                                    className="me-2"
-                                />
-                                <Select
-                                    defaultValue={{
-                                        label: `Barcha oy ma'lumotlari`,
-                                        value: null,
-                                    }}
-                                    style={{
-                                        width: 300,
-                                    }}
-                                    onChange={handleChangeMonth}
-                                    options={[
-                                        {
+                                <div className="dashboard-div mb-2">
+                                    <Select
+                                        defaultValue={{
+                                            value: +year,
+                                            label: `${+year}-yil bo'yicha hisobotlar`,
+                                        }}
+                                        style={{
+                                            width: 300,
+                                        }}
+                                        onChange={handleChangeYear}
+                                        options={yearGet?.map((el) => ({
+                                            value: +el?.year,
+                                            label: `${+el?.year}-yil bo'yicha hisobotlar`,
+                                        }))}
+                                        className="me-2"
+                                    />
+                                    <Select
+                                        defaultValue={{
                                             label: `Barcha oy ma'lumotlari`,
                                             value: null,
-                                        },
-                                        ...(yearGet
-                                            ?.filter(
-                                                (item) => item?.year === year
-                                            )
-                                            .map((item) =>
-                                                item?.months?.map((el) => ({
-                                                    label: `${el.name} oyi ma'lumotlari`,
-                                                    value: el.value,
-                                                }))
-                                            )[0] || []),
-                                    ]}
-                                />
-                            </div>
-                        )}
+                                        }}
+                                        style={{
+                                            width: 300,
+                                        }}
+                                        onChange={handleChangeMonth}
+                                        options={[
+                                            {
+                                                label: `Barcha oy ma'lumotlari`,
+                                                value: null,
+                                            },
+                                            ...(yearGet
+                                                ?.filter(
+                                                    (item) => item?.year === year
+                                                )
+                                                .map((item) =>
+                                                    item?.months?.map((el) => ({
+                                                        label: `${el.name} oyi ma'lumotlari`,
+                                                        value: el.value,
+                                                    }))
+                                                )[0] || []),
+                                        ]}
+                                    />
+                                </div>
+                            )}
 
                         {(user?.role === 'admin' ||
                             user?.role === 'seller') && (
-                            <div className="dashboard-div">
-                                <Example year={year} month={month} />
-                            </div>
-                        )}
+                                <div className="dashboard-div">
+                                    <Example year={year} month={month} />
+                                </div>
+                            )}
                         <div className="pb-5">
                             <h4 className="bg-white m-0 text-center py-4">
                                 So'nggi buyurtmalar
@@ -937,7 +978,7 @@ function DashbordList({ setOpen }) {
                             ) : (
                                 <>
                                     <Table
-                                        scroll={{ x: 1150 }}
+                                        scroll={{ x: 1000 }}
                                         dataSource={dataOrders}
                                         columns={columnsOrdersSeller}
                                         pagination={false}
@@ -949,7 +990,7 @@ function DashbordList({ setOpen }) {
                         </div>
                     </div>
                 </div>
-                {user?.role === 'admin' ? (
+                {(user?.role === 'admin') ? (
                     <div className="tabs_select">
                         <Tabs
                             defaultActiveKey="1"
@@ -957,9 +998,15 @@ function DashbordList({ setOpen }) {
                             className="bg-white "
                         />
                     </div>
-                ) : (
-                    <></>
-                )}
+                ) : (user?.role === 'seller') ? (
+                    <div className="tabs_select">
+                        <Tabs
+                            defaultActiveKey="1"
+                            items={itemsSeller}
+                            className="bg-white "
+                        />
+                    </div>
+                ) : < ></>}
                 <div
                     className="modal fade "
                     id="staticBackdropViewPopular"

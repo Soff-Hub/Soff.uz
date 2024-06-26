@@ -1,4 +1,4 @@
-import { Button, Dropdown, Form, Input, InputNumber, Menu, Modal, Pagination, Space } from 'antd';
+import { Button, Dropdown, Form, Input, InputNumber, Menu, Modal, Pagination, Space, Tooltip } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
@@ -8,6 +8,8 @@ import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import ModalDelete from './Modal';
 import Link from 'next/link';
+import ModalDelas from './ModalDeals';
+import TextDescription from '~/components/progress/textDescription';
 const { TextArea } = Input;
 
 
@@ -33,9 +35,9 @@ export default function MyDealCart() {
     const [description, setDescription] = useState('');
     const [price, setPrice] = useState('');
     const [contacInfo, setContacInfo] = useState('');
-
-
-
+    const [categoryStatus, setCategoryStatus] = useState(null);
+    const [appliactionId, setAppliactionId] = useState(null);
+    const [countdown, setCountdown] = useState(null);
 
 
     const handleOk = () => {
@@ -58,8 +60,6 @@ export default function MyDealCart() {
             setOpenUpdate(true);
         }
     };
-
-
 
     async function GetItemsProducts() {
         setloading(true)
@@ -84,8 +84,6 @@ export default function MyDealCart() {
         setloadingUpdate(false)
     }
 
-
-
     function addPeriodToThousands(number) {
         const numStr = String(number);
 
@@ -107,7 +105,6 @@ export default function MyDealCart() {
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
     };
-
 
     async function DeleteItemsProducts() {
         const ItemsData = await PatchRepository.getMyDealsDeleteApplicaiton(
@@ -158,18 +155,78 @@ export default function MyDealCart() {
     }
 
 
+    async function postOrderStatus() {
+        const data = {
+            status: categoryStatus,
+        };
+        const ItemsData = await PatchRepository.patchDealUpdateApplicaitonStatus(appliactionId, data, user?.access);
+        if (ItemsData?.status === 200) {
+            GetItemsProducts(currPage, '', '', '', user?.access);
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz malumotlarni o'zgartirdingiz`,
+            });
+
+
+        } else {
+            if (ItemsData?.data?.msg) {
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Boshqa ariza ustida !',
+                    content: ItemsData?.data?.msg,
+                });
+
+            } else {
+
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: ItemsData?.status + ' ' + ItemsData?.statusText,
+                });
+            }
+        }
+
+    }
+
+
+    const updateDate = data?.find((item) => item?.remain_datetime !== null);
+
     useEffect(() => {
         if (user?.access) {
             GetItemsProducts();
         }
-    }, [currPage, debouncedSearchTerm, category, user?.access]);
+    }, [currPage, debouncedSearchTerm, category, appliactionId, user?.access]);
 
 
     useEffect(() => {
         if (productsID) {
             GetItemsProductsUpdates()
         }
-    }, [productsID, openUpdate, isModalOpen])
+    }, [productsID, openUpdate, isModalOpen]);
+
+    useEffect(() => {
+        setCountdown(Math.floor(updateDate?.remain_datetime))
+    }, [updateDate?.remain_datetime]);
+
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCountdown((prevCountdown) => {
+                if (prevCountdown === 0) {
+                    clearInterval(interval);
+                    return 0;
+                } else {
+                    return prevCountdown - 1;
+                }
+            });
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+        };
+    }, [countdown]);
+
 
 
     return (
@@ -179,7 +236,7 @@ export default function MyDealCart() {
             </div>
             <div className='col-md-9'>
 
-                <div className='d-flex justify-content-between gap-3 mb-4  row px-4'>
+                <div className='d-flex justify-content-between gap-3 mb-2  row px-4'>
                     <div className={'ps-form__input d-flex align-items-center position-relative col-md-6 p-0'} style={{ flex: 1 }}>
                         <input
                             className={"form-control input2 bg-white rounded-3 "}
@@ -215,7 +272,7 @@ export default function MyDealCart() {
                         <option
                             className="fs-3"
                             value="in_progress">
-                            Jarayonda
+                            Kelishildi va Ish boshlandi
                         </option>
                         <option
                             className="fs-3"
@@ -230,6 +287,11 @@ export default function MyDealCart() {
                     </button>
 
                 </div>
+
+                <div className='mb-2'>
+                    <span className='text-secondary'>Yuborilgan arizalar soni soni {data?.length} ta </span>
+                </div>
+
 
                 <div className='d-flex flex-column gap-3'>
                     {
@@ -252,156 +314,248 @@ export default function MyDealCart() {
                             </div>
 
                             :
-
                             <>
-
                                 {
-                                    data?.map(item => (
-                                        <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                            <div className='d-flex justify-content-between gap-4 align-items-start'>
-                                                <h3 className="text-success fw-medium ">{item?.title}</h3>
-                                                {
-                                                    item?.application_owner?.image ? <></> :
-                                                        <Dropdown
-                                                            overlay={(
-                                                                <Menu>
-                                                                    <Menu.Item key="0">
-                                                                        <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>
-                                                                            Tahrirlash
-                                                                            <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
-                                                                        </span>
-                                                                    </Menu.Item>
-                                                                    <Menu.Item key="1">
-                                                                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
-                                                                            O'chirish
-                                                                            <i
-                                                                                className="fa-solid fa-trash-can text-danger mx-2"
-                                                                                onClick={() => setProductsId(item?.id)}
-                                                                            ></i>
-                                                                        </a>
-                                                                    </Menu.Item>
-                                                                </Menu>
-                                                            )}
-                                                            trigger={['click']}
-                                                        >
-                                                            <a className='d-flex justify-content-center' style={{
-                                                                cursor: "pointer",
-                                                                minWidth: "20px"
+                                    data?.length > 0 ?
+                                        <>
 
-                                                            }} onClick={(e) => e.preventDefault()}>
-                                                                <Space>
-                                                                    <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
-                                                                </Space>
-                                                            </a>
-                                                        </Dropdown>
-                                                }
-
-
-                                            </div>
-
-
-                                            <p
-                                                className='m-0 description_more'
-
-                                                style={{ whiteSpace: 'pre-wrap' }}
-                                            >
-                                                {item?.description}
-                                            </p>
-
-
-
-                                            <div>
-                                                <div className="d-md-flex justify-content-between gap-4  ">
-                                                    <div className="d-flex gap-3 align-items-center my-2">
-                                                        <Link href={`/seller/${item?.application_owner?.id}`}
+                                            {
+                                                data?.map(item => (
+                                                    <div >
+                                                        <div
+                                                            onClick={() => showModal(item?.id)} style={{ cursor: "pointer" }}
+                                                            className={`rounded py-3 px-4 d-flex justify-content-between align-items-center
+                                                 ${(item?.deal_application_status === 'new' && item?.deal_status_for_applicant !== 'completed') ? " bg-secondary-subtle" :
+                                                                    item?.deal_application_status === 'in_progress' ? "bg-warning-subtle" :
+                                                                        (item?.deal_application_status === 'cancelled' || item?.deal_status_for_applicant === 'completed') ?
+                                                                            "bg-danger-subtle " :
+                                                                            "bg-success-subtle"} 
+                                                `
+                                                            }
 
                                                         >
-                                                            <a style={{
-                                                                width: "40px",
-                                                                height: "40px",
-                                                                borderRadius: "50%",
-                                                                cursor: "pointer"
-                                                            }}>
-                                                                <img
-                                                                    src={item?.application_owner?.image ? item?.application_owner?.image : "/static/img/ozodbek.png"}
-                                                                    alt="sca"
-                                                                />
-                                                            </a>
-                                                        </Link>
 
-                                                        <div>
-
-                                                            <Link href={`/seller/${item?.application_owner?.id}`} style={{ cursor: "pointer" }} className="text-start">
-                                                                <a className="fw-medium fs-5">
-                                                                    {item?.application_owner?.full_name}
-                                                                </a>
-                                                            </Link>
+                                                            <span className='m-0 '>
+                                                                <i className='fa-solid fa-eye mx-2' ></i>
+                                                                Ariza holati:
 
 
-                                                            <div className='d-flex flex-column'>
-                                                                {
-                                                                    item?.application_owner?.contact_info &&
-                                                                    <span className='text-secondary fs-5'>
-                                                                        <span className='text-success '>Aloqa:</span> {item?.application_owner?.contact_info}
+                                                            </span>
+                                                            {
+                                                                (item?.deal_application_status === 'new' && item?.deal_status_for_applicant !== 'completed') ? (
+                                                                    <span>
+                                                                        <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                                        Moderatsiya
                                                                     </span>
+                                                                ) : item?.deal_application_status === 'in_progress' ? (
+                                                                    <span>
+                                                                        <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
+                                                                    </span>
+                                                                ) : (item?.deal_application_status === 'cancelled' || item?.deal_status_for_applicant === 'completed') ? (
+                                                                    <span>
+                                                                        <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
+                                                                    </span>
+                                                                )
+
+                                                                    : (
+                                                                        <span style={{ cursor: 'pointer' }}>
+                                                                            <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                                            Tugallangan
+                                                                        </span>
+                                                                    )
+                                                            }
+                                                        </div>
+
+                                                        <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
+                                                            {
+                                                                item?.deal_status_for_applicant === "in_progress" ?
+                                                                    <div className='d-flex gap-2'>
+                                                                        <Tooltip title={""}>
+                                                                            <span style={{ cursor: 'pointer' }} >
+                                                                                <i className="fa-solid fa-circle-question text-warning"></i>
+                                                                            </span>
+                                                                        </Tooltip>
+                                                                        <span className="text-warning">
+                                                                            Buyurtmachi boshqa arizachi bilan ishlamoqda
+                                                                        </span>
+                                                                    </div> :
+                                                                    item?.deal_status_for_applicant === "completed" ? <div className='d-flex gap-2'>
+                                                                        <Tooltip title={""}>
+                                                                            <span style={{ cursor: 'pointer' }} >
+                                                                                <i className="fa-solid fa-circle-question text-danger"></i>
+                                                                            </span>
+                                                                        </Tooltip>
+                                                                        <span className="text-danger">
+                                                                            Buyurtma boshqa arizachi tomonidan bajarildi!
+                                                                        </span>
+                                                                    </div>
+                                                                        : <></>
+                                                            }
+                                                            <div className='d-flex justify-content-between gap-4 align-items-start'>
+                                                                <h3 className="text-success fw-medium ">{item?.title}</h3>
+                                                                {
+                                                                    item?.deal_status_for_applicant !== "new" ? <></> :
+                                                                        <Dropdown
+                                                                            overlay={(
+                                                                                <Menu>
+                                                                                    <Menu.Item key="0">
+                                                                                        <span style={{ cursor: "pointer" }} onClick={() => showModalUpdate(item?.id)}>
+                                                                                            Tahrirlash
+                                                                                            <i className="fa-solid fa-pen-to-square mx-3 text-success-emphasis"></i>
+                                                                                        </span>
+                                                                                    </Menu.Item>
+                                                                                    <Menu.Item key="1">
+                                                                                        <a data-bs-target="#exampleModalToggle" data-bs-toggle="modal">
+                                                                                            O'chirish
+                                                                                            <i
+                                                                                                className="fa-solid fa-trash-can text-danger mx-2"
+                                                                                                onClick={() => setProductsId(item?.id)}
+                                                                                            ></i>
+                                                                                        </a>
+                                                                                    </Menu.Item>
+                                                                                </Menu>
+                                                                            )}
+                                                                            trigger={['click']}
+                                                                        >
+                                                                            <a className='d-flex justify-content-center' style={{
+                                                                                cursor: "pointer",
+                                                                                minWidth: "20px"
+
+                                                                            }} onClick={(e) => e.preventDefault()}>
+                                                                                <Space>
+                                                                                    <i onClick={() => setProductsId(item?.id)} className="fa-solid fa-ellipsis-vertical"></i>
+                                                                                </Space>
+                                                                            </a>
+                                                                        </Dropdown>
                                                                 }
-
-                                                                <span className='text-secondary fs-5'>
-                                                                    <span className='text-success '>Kategoriyasi:</span> {item?.type?.name}
-                                                                </span>
-                                                                <span className='text-secondary fs-5'>
-                                                                    <span className='text-success '>Narxi:</span>  {addPeriodToThousands(item?.price)} so'm
-                                                                </span>
-
-
 
 
                                                             </div>
 
-                                                        </div>
-                                                    </div>
-                                                </div>
 
-                                                <div className='mt-3 
+                                                            <TextDescription text={item?.description} />
+
+
+
+                                                            <div>
+                                                                <div className="d-md-flex justify-content-between gap-4  ">
+                                                                    <div className="d-flex gap-3 align-items-center my-2">
+                                                                        <Link
+                                                                            href={item?.application_owner?.role === "seller" ? `/seller/${item?.application_owner?.id}` : "#"}
+
+                                                                        >
+                                                                            <a style={{
+                                                                                width: "40px",
+                                                                                height: "40px",
+                                                                                borderRadius: "50%",
+                                                                                cursor: "pointer"
+                                                                            }}>
+                                                                                <img
+                                                                                    src={item?.application_owner?.image ? item?.application_owner?.image : "/static/img/ozodbek.png"}
+                                                                                    alt="sca"
+                                                                                />
+                                                                            </a>
+                                                                        </Link>
+
+                                                                        <div>
+
+                                                                            <Link
+                                                                                href={item?.application_owner?.role === "seller" ? `/seller/${item?.application_owner?.id}` : "#"}
+                                                                                style={{ cursor: "pointer" }} className="text-start">
+                                                                                <a className="fw-medium fs-5">
+                                                                                    {item?.application_owner?.full_name}
+                                                                                </a>
+                                                                            </Link>
+
+
+                                                                            <div className='d-flex flex-column'>
+                                                                                {
+                                                                                    item?.application_owner?.contact_info &&
+                                                                                    <span className='text-secondary fs-5'>
+                                                                                        <span className='text-success '>Aloqa:</span> {item?.application_owner?.contact_info}
+                                                                                    </span>
+                                                                                }
+
+                                                                                <span className='text-secondary fs-5'>
+                                                                                    <span className='text-success '>Buyurtma sohasi:</span> {item?.type?.name}
+                                                                                </span>
+                                                                                <span className='text-secondary fs-5'>
+                                                                                    <span className='text-success '>Narxi:</span>  {addPeriodToThousands(item?.price)} so'm
+                                                                                </span>
+
+
+
+
+                                                                            </div>
+
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className='mt-3 
                                         d-flex justify-content-between 
                                         align-items-center flex-wrap gap-2'>
-                                                    {item?.application_count !== 0 ?
-                                                        <div className="mb-md-0   d-md-flex gap-3 align-items-center">
+                                                                    {item?.application_count !== 0 ?
+                                                                        <div className="mb-md-0   d-md-flex gap-3 align-items-center">
 
-                                                            <span className="fw-medium d-flex gap-3 ">
+                                                                            <span className="fw-medium d-flex gap-3 ">
 
-                                                                <span className='text-secondary fs-5'>
-                                                                    <span className='text-success '>Tugash muddati:</span> {item?.deadline_date}</span>
-                                                                <span className='text-secondary fs-5'>
+                                                                                <span className='text-secondary fs-5'>
+                                                                                    <span className='text-success '>Topshirish sanasi:</span> {item?.deadline_date}</span>
+                                                                                <span className='text-secondary fs-5'>
 
-                                                                    <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
-                                                            </span>
-                                                        </div> : <span></span>
-                                                    }
+                                                                                    <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
+                                                                            </span>
+                                                                        </div> : <span></span>
+                                                                    }
+                                                                    {
+                                                                        (item?.remain_datetime && item?.deal_status_for_applicant !== "new") ?
+                                                                            <button
+                                                                                onClick={() => (setAppliactionId(item?.application_id), setCategoryStatus("cancelled"))}
+                                                                                data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                                className='btn btn-danger align-items-center fs-5 d-flex flex-column'>
+
+                                                                                <span className='border-bottom'>
+                                                                                    {` ${Math.floor(countdown / 3600) < 10 ? '0' : ''}${Math.floor(countdown / 3600)} : ${Math.floor((countdown % 3600) / 60) < 10 ? '0' : ''}${Math.floor((countdown % 3600) / 60)} : ${countdown % 60 < 10 ? '0' : ''}${countdown % 60}`}
+                                                                                </span>
+                                                                                <span>Bekor qilish</span>
+
+                                                                            </button> : <></>
+                                                                    }
 
 
-                                                    <div className='d-flex justify-content-end'>
-                                                        <button
-                                                            onClick={() => showModal(item?.id)}
-                                                            className='btn btn-outline-success px-4 fs-5'>Arizani ko'rish</button>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                     </div>
+                                                ))
 
-                                                </div>
+                                            }
+
+
+                                            <div className='d-flex justify-content-center my-4 '>
+                                                <Pagination
+                                                    className="mt-3"
+                                                    total={pageCount}
+                                                    defaultCurrent={currPage}
+                                                    onChange={handlePagination}
+                                                />
                                             </div>
 
+                                        </>
+                                        :
+                                        <div className='d-flex justify-content-center align-items-center' style={{ height: "50vh" }} >
+                                            <span className='d-flex flex-column align-items-center gap-3'>
+                                                <i class="fa-brands fa-dropbox fa-4x text-secondary"></i>
+                                                Ma'luot topilmadi
+                                            </span>
                                         </div>
-                                    ))
-
                                 }
-                                <div className='d-flex justify-content-center my-4 '>
-                                    <Pagination
-                                        className="mt-3"
-                                        total={pageCount}
-                                        defaultCurrent={currPage}
-                                        onChange={handlePagination}
-                                    />
-                                </div>
                             </>
+
+
                     }
                 </div>
 
@@ -479,13 +633,8 @@ export default function MyDealCart() {
                             </p>
 
                             <div className='d-flex justify-content-between align-items-center '>
-                                {
-                                    dataDetials?.has_seen ?
-                                        <span className='d-flex gap-2 align-items-center text-success '>
-                                            <i className='fa-solid fa-eye'></i>
-                                            Ko'rildi
-                                        </span> : <span className='text-danger'> <i className='fa-solid fa-eye-slash'></i> Ko'rilmadi</span>
-                                }
+                                <span></span>
+
                                 {
                                     dataDetials?.status === 'new' ? (
                                         <span>
@@ -494,15 +643,22 @@ export default function MyDealCart() {
                                         </span>
                                     ) : dataDetials?.status === 'in_progress' ? (
                                         <span>
-                                            <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
+                                            <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
                                         </span>
-                                    ) : (
-                                        <span style={{ cursor: 'pointer' }}>
-                                            <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                            Tugallangan
-                                        </span>
-                                    )
+                                    ) :
+                                        dataDetials?.status === 'cancelled' ? (
+                                            <span>
+                                                <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
+                                            </span>
+                                        ) : (
+                                            <span style={{ cursor: 'pointer' }}>
+                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                Tugallangan
+                                            </span>
+                                        )
                                 }
+
+
                             </div>
                         </div>
                 }
@@ -610,7 +766,7 @@ export default function MyDealCart() {
                                 </Form.Item>
                             </div>
                             <Form.Item
-                                label="Aloqa uchun malumot kiriting"
+                                label="Bog'lanish uchun ma'lumot kiriting"
                                 className="col-md-12 mt-2 p-0  mx-auto mb-3"
                                 name={dataDetials?.contact_info}
                             >
@@ -668,6 +824,10 @@ export default function MyDealCart() {
 
 
             <ModalDelete onSuccess={DeleteItemsProducts} />
+            <ModalDelas onSuccess={postOrderStatus}
+                categoryStatus={categoryStatus}
+
+            />
         </div >
     );
 }

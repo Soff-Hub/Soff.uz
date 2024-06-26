@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import DealsSidebar from './modules/DealsSidebar';
-import { Modal, Pagination, Select } from 'antd';
+import { Modal, Pagination, Select, Rate } from 'antd';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
-import Link from 'next/link';
 import DealsList from './DealsList';
+import ModalDelas from './ModalDeals';
 const { Option } = Select;
+import TextDescription from '~/components/progress/textDescription';
 
 
 
@@ -28,6 +29,14 @@ export default function ApplicationsReceiveds() {
     const [keyword, setKeyword] = useState('');
     const [loadingDetails, setLoadingDetails] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [loadingUpdate, setLoadingUpdate] = useState(false);
+    const [valueRate, setValueRate] = useState(null);
+    const [rateDes, setRateDes] = useState(null);
+    const [userData, setUserData] = useState([]);
+    const [userDataDeals, setUserDataDeals] = useState([]);
+    const [userId, setUserId] = useState(null);
+    const [pageMore, setPageMore] = useState(1);
+    const [countToggle, setCountToggle] = useState(true)
 
 
 
@@ -69,11 +78,12 @@ export default function ApplicationsReceiveds() {
         setLoadingDetails(false)
     }
 
-
-    function handleClickUpdate(id) {
-        if (id) {
-            setAppliactionId(id)
-            setOpenUpdate(true);
+    function handleClickUpdate(item) {
+        setAppliactionId(item?.id)
+        if (item?.status === "new") {
+            setCategoryStatus('in_progress')
+        } else {
+            setCategoryStatus('completed')
         }
     }
 
@@ -88,7 +98,6 @@ export default function ApplicationsReceiveds() {
             setFilterData(ItemsData.results);
         }
     }
-
 
     const onSearch = async (value) => {
         setKeyword(value)
@@ -110,36 +119,59 @@ export default function ApplicationsReceiveds() {
     }
 
     async function postOrder() {
+        const formData = new FormData();
+        formData.append('status', categoryStatus);
+        if (valueRate) {
+            formData.append('rating', valueRate);
+        } if (rateDes) {
+            formData.append('review', rateDes);
+        }
 
-        if (categoryStatus) {
+        const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, formData, user?.access);
+        if (ItemsData?.status === 200) {
+            GetItemsProducts()
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `Siz malumotlarni o'zgartirdingiz`,
+            });
 
-            const data = {
-                status: categoryStatus
-            };
-            const ItemsData = await PatchRepository.patchDealUpdateApplicaitonUpdates(appliactionId, data, user?.access);
-            if (ItemsData?.status === 200) {
-                GetItemsProducts()
-                const modal = Modal.success({
+
+        } else {
+            if (ItemsData?.data?.msg) {
+                const modal = Modal.warning({
                     centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: `Siz malumotlarni o'zgartirdingiz`,
+                    title: 'Boshqa ariza ustida !',
+                    content: ItemsData?.data?.msg,
                 });
+
             } else {
-                const modal = Modal.error({
+
+                const modal = Modal.warning({
                     centered: true,
                     title: 'Xatolik!',
                     content: ItemsData?.status + ' ' + ItemsData?.statusText,
                 });
             }
-        } else {
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Xatolik!',
-                content: 'Holatni tanlashingiz kerak',
-            });
         }
-        setOpenUpdate(false)
-        setCategory(null)
+        setValueRate(null)
+    }
+
+    async function GetItemsProductsUpdatesProfile() {
+        const ItemsData = await GetRepository.getOrdersMYDealListsUpdateUserData(userId);
+        setUserData(ItemsData);
+
+    }
+
+    async function GetItemsProductsUpdatesData() {
+        setLoadingUpdate(true)
+        const ItemsDataDeals = await GetRepository.getOrdersMYDealListsUpdateUserDataDeals(userId, pageMore);
+        const newData = ItemsDataDeals.results;
+        setUserDataDeals([...userDataDeals, ...newData]);
+        if ([...userDataDeals, ...newData]?.length == ItemsDataDeals.count) {
+            setCountToggle(false);
+        }
+        setLoadingUpdate(false)
     }
 
 
@@ -154,7 +186,7 @@ export default function ApplicationsReceiveds() {
         if (user?.access) {
             GetItemsProductsUpdates()
         }
-    }, [productsIdUpdate, openUpdate, open]);
+    }, [productsIdUpdate, open]);
 
 
     useEffect(() => {
@@ -163,9 +195,18 @@ export default function ApplicationsReceiveds() {
         }
     }, [keyword]);
 
+    useEffect(() => {
+        if (userId) {
+            GetItemsProductsUpdatesProfile()
+        }
+    }, [userId, openUpdate])
 
 
-
+    useEffect(() => {
+        if (userId) {
+            GetItemsProductsUpdatesData()
+        }
+    }, [userId, openUpdate, pageMore])
 
 
     return (
@@ -177,14 +218,14 @@ export default function ApplicationsReceiveds() {
 
             <div className={"col-md-9 mb-4"}>
 
-                <div className='d-md-flex gap-3 mb-4  justify-content-between '>
+                <div className='d-md-flex gap-3 mb-2  justify-content-between '>
 
                     <Select
                         mode="single"
                         showSearch
-                        className='p-0 w-100'
+                        className='p-0 '
                         allowClear
-                        style={{ height: "45px" }}
+                        style={{ height: "45px", maxWidth: "400px", width: "100%" }}
                         placeholder="Barcha Buyurtmalar"
                         onSearch={onSearch}
                         onChange={handleChange}
@@ -219,7 +260,7 @@ export default function ApplicationsReceiveds() {
                         <option
                             className="fs-3"
                             value="in_progress">
-                            Jarayonda
+                            Kelishildi va Ish boshlandi
                         </option>
                         <option
                             className="fs-3"
@@ -233,6 +274,10 @@ export default function ApplicationsReceiveds() {
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
+                <div className='mb-2'>
+                    <span className='text-secondary'>Kelib tushgan arizalar soni {data?.length} ta </span>
+                </div>
+
 
                 <div className='d-flex flex-column gap-3'>
                     {
@@ -259,146 +304,350 @@ export default function ApplicationsReceiveds() {
                             :
                             <>
                                 {
-                                    data?.map(item => (
-                                        <div key={item?.id} className="border border-2 rounded-3 bg-white">
-                                            <div onClick={() =>
-                                                handleChangeID(item?.deal?.id)}
-                                                className='text-secondary fs-5 fw-medium pt-3 px-4' style={{ backgroundColor: "rgba(40, 167, 69, 0.1)", cursor: "pointer" }} >
-                                                <i className='fa-solid fa-eye'></i>  Buyurtma</div>
-                                            <div onClick={() =>
-                                                handleChangeID(item?.deal?.id)}
-                                                className='d-md-flex justify-content-between gap-2 align-items-center  mb-2 px-4 pb-3 pt-1 '
-                                                style={{ backgroundColor: "rgba(40, 167, 69, 0.1)", cursor: "pointer" }}>
-
-                                                <div>
-                                                    <h5 className="text-success fw-medium mb-2">
-                                                        {item?.deal?.title}
-                                                    </h5>
-                                                </div>
-
-                                                <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-end'>
-                                                    <h5 className='text-success fw-medium mb-1  fs-5'>Tugash muddati: {item?.deal?.deadline_date}</h5>
-                                                    <div className='d-flex justify-content-between align-items-start gap-2'>
-                                                        <h5 className='text-success fw-medium mb-1 fs-5'>
-                                                            Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
-
-                                                        </h5>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                            <div className='px-4 pb-4'>
-                                                <span className=' fs-5 fw-medium'>Kelib tushgan ariza</span>
-                                                <p
-                                                    className='m-0 description_more'
-
-                                                    style={{ whiteSpace: 'pre-wrap' }}
-                                                >
-                                                    {item?.description}
-                                                </p>
+                                    data?.length > 0 ?
+                                        <>
+                                            {
+                                                data?.map(item => (
+                                                    <div key={item?.id} className="border border-2 rounded-3 bg-white">
+                                                        <div onClick={() =>
+                                                            handleChangeID(item?.deal?.id)}
+                                                            className={`text-secondary fs-5 fw-medium pt-3 px-4
+                                                    ${item?.status === 'new' ? " bg-secondary-subtle" :
+                                                                    item?.status === 'in_progress' ? "bg-warning-subtle" :
+                                                                        item?.status === 'cancelled' ? "bg-danger-subtle " :
+                                                                            "bg-success-subtle"} 
+                                                   `
+                                                            }
 
 
+                                                            style={{ cursor: "pointer" }} >
+                                                            <i className='fa-solid fa-eye'></i>  Buyurtma</div>
+                                                        <div onClick={() =>
+                                                            handleChangeID(item?.deal?.id)}
 
-                                                <div className="d-md-flex justify-content-between gap-4  ">
-                                                    <div className="d-flex gap-3 align-items-center my-2">
-                                                        <Link href={`/seller/${item?.user?.id}`}
 
-                                                        >
-                                                            <a style={{
-                                                                width: "40px",
-                                                                height: "40px",
-                                                                borderRadius: "50%",
-                                                                cursor: "pointer"
-                                                            }}>
-                                                                <img
-                                                                    src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
-                                                                    alt="sca"
-                                                                />
-                                                            </a>
-                                                        </Link>
-                                                        <div>
+                                                            className={`d-md-flex justify-content-between gap-2 align-items-center  mb-2 px-4 pb-3 pt-1 
+                                                    ${item?.status === 'new' ? " bg-secondary-subtle" :
+                                                                    item?.status === 'in_progress' ? "bg-warning-subtle" :
+                                                                        item?.status === 'cancelled' ? "bg-danger-subtle " :
+                                                                            "bg-success-subtle"} 
+                                                   `
+                                                            }
 
-                                                            <Link href={`/seller/${item?.user?.id}`} style={{ cursor: "pointer" }} className="text-start">
-                                                                <a className="fw-medium fs-5">
-                                                                    {item?.user?.full_name}
-                                                                </a>
-                                                            </Link>
-
+                                                            style={{ cursor: "pointer" }}>
 
                                                             <div>
-                                                                <h5 className='text-success fw-medium mb-1 fs-5'>
-                                                                    Aloqa:   <span className='text-secondary fs-5 fw-medium '>{item?.contact_info}</span>
-
+                                                                <h5 className="text-secondary fw-medium mb-2">
+                                                                    {item?.deal?.title}
                                                                 </h5>
-                                                                <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
-                                                                <span className="text-secondary fs-5 fw-medium ">
-                                                                    {addPeriodToThousands(item?.price)} so'm
-                                                                </span>
+                                                            </div>
+
+                                                            <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-end'>
+                                                                <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirish sanasi: {item?.deal?.deadline_date}</h5>
+                                                                <div className='d-flex justify-content-between align-items-start gap-2'>
+                                                                    <h5 className='text-secondary fw-medium mb-1 fs-5'>
+                                                                        Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
+
+                                                                    </h5>
+                                                                </div>
                                                             </div>
 
                                                         </div>
+                                                        <div className='px-4 pb-4'>
+                                                            <span className=' fs-5 fw-medium'>Kelib tushgan ariza</span>
+                                                            <TextDescription text={item?.description} />
+
+
+                                                            <div className="d-md-flex justify-content-between gap-4  ">
+                                                                <div className="d-flex gap-3 align-items-center my-2">
+                                                                    <span
+                                                                        onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))}
+
+                                                                    >
+                                                                        <a style={{
+                                                                            width: "40px",
+                                                                            height: "40px",
+                                                                            borderRadius: "50%",
+                                                                            cursor: "pointer"
+                                                                        }}>
+                                                                            <img
+                                                                                width={50} height={50}
+                                                                                src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
+                                                                                alt="sca"
+                                                                            />
+                                                                        </a>
+                                                                    </span>
+                                                                    <div>
+
+                                                                        <span onClick={() => (setOpenUpdate(true), setUserId(item?.user?.id), setUserDataDeals([]))} style={{ cursor: "pointer" }} >
+                                                                            <a className="fw-medium fs-5">
+                                                                                {item?.user?.full_name}
+                                                                            </a>
+                                                                        </span>
+
+
+                                                                        <div>
+                                                                            <h5 className='text-success fw-medium mb-1 fs-5'>
+                                                                                Aloqa:   <span className='text-secondary fs-5 fw-medium '>{item?.contact_info}</span>
+
+                                                                            </h5>
+                                                                            <span className="fw-medium text-success fs-5  ">Narxi:</span>{' '}
+                                                                            <span className="text-secondary fs-5 fw-medium ">
+                                                                                {addPeriodToThousands(item?.price)} so'm
+                                                                            </span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            </div>
+                                                            <div className='d-flex justify-content-between flex-wrap gap-1'>
+                                                                <div>
+                                                                    <span className="text-success fs-5 fw-medium">
+                                                                        Tugatish muddati:
+                                                                    </span>{' '}
+                                                                    <span className="fw-medium fs-5 ">
+                                                                        {item?.deadline_date}
+                                                                    </span>
+                                                                </div>
+
+                                                                <div className='d-flex gap-3 align-items-center justify-content-between '>
+                                                                    {
+                                                                        item?.status === 'new' ? (
+                                                                            <span>
+                                                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                                                Moderatsiya
+                                                                            </span>
+                                                                        ) : item?.status === 'in_progress' ? (
+                                                                            <span>
+                                                                                <i className="fa-regular fa-clock text-warning"></i>  Kelishildi va Ish boshlandi
+                                                                            </span>
+                                                                        ) : item?.status === "cancelled" ? (
+                                                                            <span>
+                                                                                <i className="fa-solid fa-circle-xmark text-danger"></i> Bekor qilingan
+                                                                            </span>
+                                                                        ) :
+
+                                                                            (
+                                                                                <span style={{ cursor: 'pointer' }}>
+                                                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
+                                                                                    Tugallangan
+                                                                                </span>
+                                                                            )
+                                                                    }
+                                                                    {
+
+                                                                        item?.status === 'new' ?
+                                                                            <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                                className='btn btn-success fs-5'
+                                                                                onClick={() => handleClickUpdate(item)}>
+                                                                                Qabul qilish
+                                                                            </button>
+                                                                            : item?.status === 'in_progress' ?
+                                                                                <button data-bs-target="#exampleModalToggleDeals" data-bs-toggle="modal"
+                                                                                    className='btn btn-outline-success fs-5'
+                                                                                    onClick={() => handleClickUpdate(item)}>Tugatish</button> :
+                                                                                <></>
+
+                                                                    }
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+
                                                     </div>
+                                                ))
 
-                                                </div>
-                                                <div className='d-flex justify-content-between flex-wrap gap-1'>
-                                                    <div>
-                                                        <span className="text-success fs-5 fw-medium">
-                                                            Tugatish muddati:
-                                                        </span>{' '}
-                                                        <span className="fw-medium fs-5 ">
-                                                            {item?.deadline_date}
-                                                        </span>
-                                                    </div>
-
-                                                    <div>
-                                                        {
-                                                            item?.status === 'new' ? (
-                                                                <span>
-                                                                    <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                                    Moderatsiya
-                                                                </span>
-                                                            ) : item?.status === 'in_progress' ? (
-                                                                <span>
-                                                                    <i className="fa-regular fa-clock text-warning"></i>  Jarayonda
-                                                                </span>
-                                                            ) : (
-                                                                <span style={{ cursor: 'pointer' }}>
-                                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                                    Tugallangan
-                                                                </span>
-                                                            )
-                                                        }
-                                                        {
-                                                            item?.status === 'new' ?
-
-                                                                <span style={{ cursor: "pointer" }} onClick={() => handleClickUpdate(item?.id)} >
-                                                                    <i className="fa-solid fa-pen-to-square ml-3 text-success-emphasis"></i>
-                                                                </span>
-                                                                : <></>
-                                                        }
-                                                    </div>
-
-                                                </div>
+                                            }
+                                            <div className='d-flex justify-content-center my-4 '>
+                                                <Pagination
+                                                    className="mt-3"
+                                                    total={pageCount}
+                                                    defaultCurrent={currPage}
+                                                    onChange={handlePagination}
+                                                />
                                             </div>
-
+                                        </> :
+                                        <div className='d-flex justify-content-center align-items-center' style={{ height: "50vh" }} >
+                                            <span className='d-flex flex-column align-items-center gap-3'>
+                                                <i class="fa-brands fa-dropbox fa-4x text-secondary"></i>
+                                                Ma'luot topilmadi
+                                            </span>
                                         </div>
-                                    ))
 
                                 }
-                                <div className='d-flex justify-content-center my-4 '>
-                                    <Pagination
-                                        className="mt-3"
-                                        total={pageCount}
-                                        defaultCurrent={currPage}
-                                        onChange={handlePagination}
-                                    />
-                                </div>
+
                             </>
+
                     }
                 </div>
 
 
             </div>
+
+            <Modal
+                title=" "
+                width={900}
+                centered
+                open={openUpdate}
+                onOk={() => (setOpenUpdate(false))}
+                okText="Yopish"
+                cancelButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+                okButtonProps={{
+                    style: {
+                        display: 'none',
+                    },
+                }}
+
+                onCancel={() => (setOpenUpdate(false))}>
+                {
+                    loadingUpdate ?
+                        <div
+                            className=" "
+                            style={{
+                                height: '50vh',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border "
+                                role="status"
+                                style={{ width: '150px', height: '150px' }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div> :
+                        <>
+
+                            <div style={{ boxShadow: " 1px 2px 15px hsla(210, 8%, 62%, .2)" }} className='bg-body-tertiary py-4 px-4 mb-5 mt-5 d-flex justify-content-between'>
+                                <div className='d-flex gap-3 align-items-center'>
+                                    <img
+                                        style={{ objectFit: "cover", borderRadius: "50%" }}
+                                        height={60} width={60} src={userData?.image_url ? userData?.image_url : "/static/img/ozodbek.png"} alt={"user"} />
+                                    <div className='d-flex flex-column '>
+                                        <span className='fs-4'>{userData?.full_name}</span>
+                                        <span className='text-secondary' fs-4>Qilgan ishlari: <span className='text-success'>
+                                            {userData?.total_applications} ta </span></span>
+                                    </div>
+                                </div>
+                                {
+                                    userData?.average_rating &&
+
+                                    <Rate
+                                        allowHalf
+                                        disabled
+                                        className="fs-4"
+                                        value={Number(userData?.average_rating)}
+                                    />
+
+                                }
+
+                            </div>
+                            {
+                                userDataDeals?.length > 0 &&
+                                <div className='mb-2'>
+                                    <span className='fs-4 '>Qilgan ishlari ro'yxati</span>
+                                </div>
+                            }
+                            <div className='overflow-y-auto ' style={{ maxHeight: "60vh" }}>
+
+
+                                {
+
+
+                                    userDataDeals?.length > 0 ?
+                                        <>
+                                            {
+                                                userDataDeals?.map(item => (
+                                                    <div key={item?.id} className=' mb-3' style={{ boxShadow: " 1px 2px 15px hsla(210, 8%, 62%, .2)" }}>
+                                                        {
+                                                            (item?.review || item?.rating) &&
+                                                            <div className='bg-body-tertiary px-3 py-2  border-bottom'>
+                                                                <div className='d-flex justify-content-between align-items-center'>
+                                                                    {
+                                                                        item?.review &&
+                                                                        <span className='text-body-tertiary fs-5'>Buyurtmachi fikri</span>
+                                                                    }
+                                                                    {
+                                                                        item?.rating &&
+
+                                                                        <Rate
+                                                                            disabled
+                                                                            className="fs-4"
+                                                                            value={Number(item?.rating)}
+                                                                        />
+
+                                                                    }
+                                                                </div>
+                                                                {
+                                                                    item?.review &&
+                                                                    <span className='text-secondary' >{item?.review} </span>
+                                                                }
+                                                            </div>
+                                                        }
+
+                                                        <div
+                                                            className={`d-flex flex-column justify-content-between gap-2 align-items-start 
+                                         mb-3  p-3 pb-4 `
+                                                            }
+
+                                                            style={{ cursor: "pointer", }}>
+                                                            <div>
+                                                                <span className='text-body-tertiary fs-5'>Buyurtma nomi</span>
+                                                                <h5 className="text-secondary fw-medium mb-2">
+                                                                    {item?.deal?.title}
+                                                                </h5>
+                                                                <TextDescription text={item?.deal?.description} />
+                                                            </div>
+                                                            <div className='d-md-flex align-items-start gap-md-2 flex-wrap justify-content-between w-100'>
+
+                                                                <h5 className='text-secondary fw-medium mb-1  fs-5'>Topshirilgan sanasi: {item?.deal?.deadline_date}</h5>
+
+                                                                <h5 className='text-secondary fw-medium mb-1 fs-5'>
+                                                                    Narxi:  {addPeriodToThousands(item?.deal?.price)} so'm
+
+                                                                </h5>
+
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+
+                                                ))
+                                            }
+                                            {
+                                                countToggle &&
+                                                <div className='d-flex justify-content-center'>
+                                                    <button
+                                                        onClick={() => setPageMore(pageMore + 1)}
+                                                        className="btn btn-primary fs-5 px-4">Yana</button>
+                                                </div>
+                                            }
+
+                                        </>
+
+                                        :
+
+                                        <div style={{ height: '20vh' }} className='d-flex justify-content-center align-items-center' >
+                                            <h4 className='text-secondary'>Qilingan ishlar yo'q</h4>
+                                        </div>
+                                }
+                            </div>
+
+                        </>
+
+                }
+
+
+
+            </Modal>
+
 
             <Modal
                 title="Buyurtmangiz"
@@ -469,7 +718,7 @@ export default function ApplicationsReceiveds() {
 
                                             <div>
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Kategoriyasi:
+                                                    Buyurtma sohasi:
                                                 </span>{' '}
                                                 <span className="fw-medium text-secondary fs-5">
                                                     {dataDetails?.type?.name}
@@ -493,7 +742,7 @@ export default function ApplicationsReceiveds() {
                                             <span className="fw-medium d-flex gap-3 ">
 
                                                 <span className="text-success fs-5 fw-medium">
-                                                    Tugash muddati: <span className="fw-medium text-secondary  fs-5 ">
+                                                    Topshirish sanasi: <span className="fw-medium text-secondary  fs-5 ">
                                                         {dataDetails?.deadline_date}
                                                     </span>
                                                 </span>{' '}
@@ -511,59 +760,6 @@ export default function ApplicationsReceiveds() {
                 }
 
 
-            </Modal>
-
-            <Modal
-                title="Arizani tasdiqlash"
-                width={416}
-                centered
-                open={openUpdate}
-                onOk={postOrder}
-                okText="Tasdiqlash"
-                cancelButtonProps={{
-                    style: {
-                        display: 'none',
-                    },
-                }}
-                okButtonProps={{
-                    style: {
-                        backgroundColor: "#28a745"
-                    },
-                }}
-
-                onCancel={() => setOpenUpdate(false)}>
-
-                <select
-                    className="form-select   fs-3 py-3 rounded-3"
-                    onChange={(e) =>
-                        setCategoryStatus(
-                            e.target
-                                .value
-                        )
-                    }>
-                    <option
-                        className="fs-3"
-                        selected
-                        value="">
-                        Barcha
-                        holatlar
-                    </option>
-                    <option
-                        className="fs-3"
-                        value="new">
-                        Moderatsiya
-                    </option>
-                    <option
-                        className="fs-3"
-                        value="in_progress">
-                        Jarayonda
-                    </option>
-                    <option
-                        className="fs-3"
-                        value="completed">
-                        Tugallangan
-                    </option>
-                </select>
             </Modal>
 
             <Modal
@@ -589,6 +785,12 @@ export default function ApplicationsReceiveds() {
                 <DealsList setOpen={setOpenPosts} />
             </Modal>
 
+            <ModalDelas onSuccess={postOrder}
+                categoryStatus={categoryStatus}
+                setValueRate={setValueRate}
+                setRateDes={setRateDes}
+                valueRate={valueRate}
+            />
 
         </div >
     );

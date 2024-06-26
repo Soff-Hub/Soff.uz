@@ -695,6 +695,40 @@ class GetRepository {
         return reponse;
     }
 
+    async getOrdersMYDealListsUpdateUserDataDeals(id, page) {
+        const endPoint = `deals/deal-applicant-applications/${id}?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getOrdersMYDealListsUpdateUserData(id) {
+        const endPoint = `deals/deal-applicant-profile/${id}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getApplicationsReceived(page, status, deal, token) {
         const endPoint = `deals/my-deals-applications/?page=${page}&status=${
             status || ''
@@ -725,6 +759,23 @@ class GetRepository {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getSellerCommitLists(id, page) {
+        const endPoint = `seller/document-reviews/${id}?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -1244,8 +1295,8 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getDealType() {
-        const endPoint = `deals/deal-types/`;
+    async getDealType(search) {
+        const endPoint = `deals/deal-types/?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -1280,6 +1331,26 @@ class GetRepository {
 
     async getDeadline(token) {
         const endPoint = `deals/deadlines/`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getDeadProfle(token) {
+        const endPoint = `deals/deal-profile/`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',

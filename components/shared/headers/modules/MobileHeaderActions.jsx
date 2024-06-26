@@ -39,7 +39,7 @@ const MobileHeaderActions = ({ auth }) => {
                     ))}
                     <Link href={`/account/notification`}>
                         <a className="yashil">
-                            Yangiliklarni batafsil ko'rish{' '}
+                            Batafsil{' '}
                             <i className="fa-regular fa-hand-point-right"></i>
                         </a>
                     </Link>
@@ -93,7 +93,6 @@ const MobileHeaderActions = ({ auth }) => {
         }
     }, []);
 
-    console.log(socket);
 
     return (
         <div className="navigation__right">

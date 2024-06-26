@@ -142,6 +142,7 @@
 .ps-product--search-result {
     .ps-product__content {
         margin: auto 0;
+
     }
 }
 
@@ -2241,6 +2242,9 @@
         height: 200px;
         position: relative;
 
+
+
+
         .loading_h2 {
             position: absolute;
             top: 50%;
@@ -2450,4 +2454,26 @@
 
 .ant-tabs-nav {
     padding: 20px !important;
+}
+
+.ps-product__content {
+    .marginAntd {
+        .ant-tabs-nav {
+            padding: 0 !important;
+        }
+
+        .ant-tabs-nav-wrap {
+
+            .ant-tabs-tab {
+                margin-right: 30px !important;
+            }
+
+        }
+
+        .ant-tabs-tab-btn {
+            font-weight: 400 !important;
+            font-size: 16px !important;
+        }
+    }
+
 }

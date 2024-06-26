@@ -285,6 +285,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     );
 };
 
+
 export async function getServerSideProps({ query }) {
     const resquest = await fetch(baseUrl + `customer/documents/${query.pid}/`);
     const defaultProducts = await resquest.json();
