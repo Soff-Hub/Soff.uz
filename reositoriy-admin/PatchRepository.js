@@ -283,6 +283,7 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
+    
     async patchDealadmin(id, data, token) {
         const endPoint = `deals/admin/deals/${id}/`;
         const reponse = await Repository({
