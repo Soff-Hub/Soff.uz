@@ -35,7 +35,7 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data, isPlay, setI
                             :
                             <div
                                 key={index}
-                                className="col-md-2 my-2">
+                                className="col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 px-2 my-2">
                                 <Product product={item} />
                             </div>
                 ))}
