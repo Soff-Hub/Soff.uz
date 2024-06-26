@@ -9,7 +9,6 @@ const Progress = ({
     inputText,
     loadingText,
     content_type,
-    setCustomeFile
 }) => {
 
 
@@ -70,19 +69,12 @@ const Progress = ({
 
             if (xhr.status === 201) {
                 let response = JSON.parse(xhr.responseText);
-                if (response?.content_type === "audio" || response?.content_type === "template") {
-                    setDocument(response);
-                }
-                if (!response?.images) {
-                    setDocument({ ...response, images: [] });
-                } else {
-                    setDocument(response);
-                    setCustomeFile({ image_url: response.images[0]?.image_url })
-                }
+                setDocument(response);
                 setStatus(xhr.status)
             } else {
                 let error = xhr.responseText;
-                setError(error)
+                setError(error);
+                setStatus(xhr?.status);
                 setLoading(false);
                 setLoading2(false);
             }
@@ -92,9 +84,12 @@ const Progress = ({
         formData.append('file', file);
         formData.append("content_type", content_type);
         xhr.send(formData);
+        console.log(xhr);
     }
 
-    console.log((total == totalLoad) && (status === 201) && !loading);
+    console.log(status);
+    console.log(error);
+
 
     return (
         <div className="wrapper bg-white">

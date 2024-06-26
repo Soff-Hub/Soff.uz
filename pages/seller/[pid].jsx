@@ -181,6 +181,7 @@ const SellerPage = ({ seller, sellerr }) => {
                                                 }`}
                                         />
                                     </Image.PreviewGroup>
+
                                 </div>
                             </div>
                             <div className="user_profile_body usr_bodyy">

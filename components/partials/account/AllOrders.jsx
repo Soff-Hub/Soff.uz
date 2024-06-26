@@ -6,6 +6,7 @@ import useDebounce from '~/hooks/useDebounce';
 import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import { useSelector } from 'react-redux';
+import TextDescription from '~/components/progress/textDescription';
 
 export default function DealCart() {
     const { user } = useSelector((state) => state.auth);
@@ -131,12 +132,19 @@ export default function DealCart() {
                     </button>
                 </div>
                 {user?.access && <div>
-                    <Tooltip title={"urishinlar soni haqida malumot"}>
-                        <span style={{ cursor: 'pointer' }} >
-                            <i className="fa-solid fa-circle-question text-warning"></i>
-                        </span>
-                    </Tooltip>
-                    <span className='mx-2'>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urishinishdan sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
+
+                    <div className='d-md-flex justify-content-between align-items-center'>
+                        <div>
+                            <Tooltip title={"Bu sizning urunishlar soni haqidagi ma'lumotingiz, siz har safar buyurtmalarga ariza topshirgan paytingiz urunishlar soni bittaga kamayadi va qachonki urunishlar soni tugaganda urunishlar soni sotib olishingiz kerak bo'ladi"}>
+                                <span style={{ cursor: 'pointer' }} >
+                                    <i className="fa-solid fa-circle-question text-warning"></i>
+                                </span>
+                            </Tooltip>
+
+                            <span className='mx-2 text-secondary '>{progressData?.full_deal_coin ? progressData?.full_deal_coin : 0} ta urunishlar sonidan {progressData?.remain_deal_coin ? progressData?.remain_deal_coin : 0} ta qoldi</span>
+                        </div>
+                        <span className='text-secondary'>Buyurtmalar soni {data?.length} ta </span>
+                    </div>
 
                     <Progress
                         className='p-0 w-100'
@@ -165,124 +173,132 @@ export default function DealCart() {
                             </div>
                         </div>
                         :
+
                         <>
-                            {data?.map(item => (
-                                <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
-                                    <h3 className="text-success fw-medium ">{item?.title}</h3>
+                            {data?.length > 0 ?
+                                <>
+                                    {
+                                        data?.map(item => (
+                                            <div key={item?.id} className="border border-2 rounded-3 p-4 bg-white">
+                                                <h3 className="text-success fw-medium ">{item?.title}</h3>
 
 
-                                    <p
-                                        className='m-0 description_more'
+                                                <TextDescription text={item?.description} />
 
-                                        style={{ whiteSpace: 'pre-wrap' }}
-                                    >
-                                        {item?.description}
-                                    </p>
-
-                                    <div>
-                                        <div className="d-md-flex justify-content-between gap-4  ">
-                                            <div className="d-flex align-items-center ">
-                                                <img
-                                                    className="d-block"
-                                                    width={60}
-                                                    src="/static/img/docCopy.jpg"
-                                                    alt="sca"
-                                                />
                                                 <div>
+                                                    <div className="d-md-flex justify-content-between gap-4  ">
+                                                        <div className="d-flex align-items-center ">
+                                                            <img
+                                                                className="d-block"
+                                                                width={60}
+                                                                src="/static/img/docCopy.jpg"
+                                                                alt="sca"
+                                                            />
+                                                            <div>
 
-                                                    <div  >
-                                                        {' '}
-                                                        <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
-                                                        <span className="text-secondary fs-5 fw-medium ">
-                                                            {addPeriodToThousands(item?.price)} so'm
-                                                        </span>
+                                                                <div  >
+                                                                    {' '}
+                                                                    <span className="fw-medium text-success fs-5 ">Narxi:</span>{' '}
+                                                                    <span className="text-secondary fs-5 fw-medium ">
+                                                                        {addPeriodToThousands(item?.price)} so'm
+                                                                    </span>
+                                                                </div>
+
+                                                                <div >
+                                                                    <span className="text-success fs-5 fw-medium">
+                                                                        Kategoriya:
+                                                                    </span>{' '}
+                                                                    <span className="fw-medium fs-5 text-secondary ">
+                                                                        {item?.type?.name}
+                                                                    </span>
+                                                                </div>
+
+
+                                                                <div >
+                                                                    <span className="text-success fs-5 fw-medium">
+                                                                        Topshirish sanasi:
+                                                                    </span>{' '}
+                                                                    <span className="fw-medium text-secondary fs-5 ">
+                                                                        {item?.deadline_date}
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
-
-                                                    <div >
-                                                        <span className="text-success fs-5 fw-medium">
-                                                            Kategoriya:
-                                                        </span>{' '}
-                                                        <span className="fw-medium fs-5 text-secondary ">
-                                                            {item?.type?.name}
-                                                        </span>
-                                                    </div>
-
-
-                                                    <div >
-                                                        <span className="text-success fs-5 fw-medium">
-                                                            Tugash muddati:
-                                                        </span>{' '}
-                                                        <span className="fw-medium text-secondary fs-5 ">
-                                                            {item?.deadline_date}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className='mt-3 
+                                                    <div className='mt-3 
                                     d-flex justify-content-between 
                                     align-items-center'>
-                                            {item?.application_count !== 0 ?
-                                                <div className="text-start mb-md-0  d-md-flex gap-3 align-items-center">
+                                                        {item?.application_count !== 0 ?
+                                                            <div className="text-start mb-md-0  d-md-flex gap-3 align-items-center">
 
-                                                    <span className="fw-medium d-flex gap-3 ">
+                                                                <span className="fw-medium d-flex gap-3 ">
 
-                                                        <span className='text-secondary fs-5'>
-                                                            <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
+                                                                    <span className='text-secondary fs-5'>
+                                                                        <span className='text-success '>Takliflar:</span> {item?.application_count}</span>
 
-                                                    </span>
-                                                </div> : <span></span>
-                                            }
+                                                                </span>
+                                                            </div> : <span></span>
+                                                        }
 
 
-                                            <div className='d-flex justify-content-end'>
+                                                        <div className='d-flex justify-content-end'>
 
-                                                {!item?.is_owner ?
-                                                    (!item?.can_apply ? (
-                                                        <button
-                                                            onClick={() => Router.push(`/account/deal-applications`)}
-                                                            className='btn btn-outline-success px-4 fs-5'
-                                                        >
-                                                            Ariza topshirgansiz
-                                                        </button>
-                                                    ) : (
-                                                        progressData?.remain_deal_coin ?
-                                                            <button
-                                                                onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/register?deal=deal`)}
-                                                                className='btn btn-success px-4 fs-5'
-                                                            >
-                                                                Ariza topshirsh
-                                                            </button> :
-                                                            <button
-                                                                onClick={() =>
-                                                                    user?.access ?
-                                                                        setOpenPayment(true) :
-                                                                        Router.push(`/account/register?deal=deal`)
-                                                                }
-                                                                className='btn btn-success px-4 fs-5'
-                                                            >
-                                                                Ariza topshirsh
-                                                            </button>
-                                                    )) : <></>
-                                                }
+                                                            {!item?.is_owner ?
+                                                                (!item?.can_apply ? (
+                                                                    <button
+                                                                        onClick={() => Router.push(`/account/deal-applications`)}
+                                                                        className='btn btn-outline-success px-4 fs-5'
+                                                                    >
+                                                                        Ariza topshirgansiz
+                                                                    </button>
+                                                                ) : (
+                                                                    progressData?.remain_deal_coin ?
+                                                                        <button
+                                                                            onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/register?deal=deal`)}
+                                                                            className='btn btn-success px-4 fs-5'
+                                                                        >
+                                                                            Ariza topshirsh
+                                                                        </button> :
+                                                                        <button
+                                                                            onClick={() =>
+                                                                                user?.access ?
+                                                                                    setOpenPayment(true) :
+                                                                                    Router.push(`/account/register?deal=deal`)
+                                                                            }
+                                                                            className='btn btn-success px-4 fs-5'
+                                                                        >
+                                                                            Ariza topshirsh
+                                                                        </button>
+                                                                )) : <></>
+                                                            }
 
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
 
                                             </div>
+                                        ))}
 
-                                        </div>
+                                    <div className='d-flex justify-content-center my-4 '>
+                                        <Pagination
+                                            className="mt-3"
+                                            total={pageCount}
+                                            defaultCurrent={currPage}
+                                            onChange={handlePagination}
+                                        />
                                     </div>
-
-                                </div>
-                            ))}
-
-                            <div className='d-flex justify-content-center my-4 '>
-                                <Pagination
-                                    className="mt-3"
-                                    total={pageCount}
-                                    defaultCurrent={currPage}
-                                    onChange={handlePagination}
-                                />
-                            </div>
+                                </> :
+                                <>
+                                    <div className='d-flex justify-content-center align-items-center' style={{ height: "50vh" }} >
+                                        <span className='d-flex flex-column align-items-center gap-3'>
+                                            <i class="fa-brands fa-dropbox fa-4x text-secondary"></i>
+                                            Ma'luot topilmadi
+                                        </span>
+                                    </div>
+                                </>
+                            }
                         </>
                     }
                 </div>
@@ -335,9 +351,9 @@ export default function DealCart() {
                 onCancel={() => setOpenPayment(false)}>
 
                 <p
-                className='fw-medium fs-4'
-                
-                >Sizda urinishlar soni tugagan. Iltimos ariza yuborish uchun urinishlar sonini sotib oling !!!</p>
+                    className='fw-medium fs-4'
+
+                > Sizda urinishlar soni tugagan. Iltimos ariza yuborish uchun urinishlar sonini sotib oling !!!</p>
             </Modal>
 
 

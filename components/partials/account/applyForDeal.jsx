@@ -153,7 +153,7 @@ export default function ApplyForDeal() {
 
                                                 <div >
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Kategoriyasi:
+                                                        Buyurtma sohasi:
                                                     </span>{' '}
                                                     <span className="fw-medium text-secondary fs-5">
                                                         {data?.type?.name ? data?.type?.name : "No Type"}
@@ -163,7 +163,7 @@ export default function ApplyForDeal() {
 
                                                 <div >
                                                     <span className="text-success fs-5 fw-medium">
-                                                        Tugash muddati:
+                                                        Topshirish sanasi:
                                                     </span>{' '}
                                                     <span className="fw-medium text-secondary fs-5">
                                                         {data?.deadline_date ? data?.deadline_date : "0"}
@@ -256,14 +256,14 @@ export default function ApplyForDeal() {
                                 </Form.Item>
                             </div>
                             <Form.Item
-                                label="Aloqa uchun malumot kiriting"
+                                label="Bog'lanish uchun ma'lumot kiriting"
                                 className="col-md-12 p-0  mx-auto mb-3"
                                 name="contac_info"
                                 rules={[
                                     {
                                         required: true,
                                         message:
-                                            'Aloqa uchun malumot kiriting kirtish majburiy',
+                                            "Bog'lanish uchun ma'lumot kiriting kirtish majburiy",
                                     },
                                 ]}>
                                 <Input

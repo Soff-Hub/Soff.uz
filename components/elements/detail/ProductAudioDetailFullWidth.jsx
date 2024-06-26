@@ -64,11 +64,9 @@ const ProductAudioDetailFullWidth = ({
                         )}
                     </>
                 </div>
-                {product?.description ? (
+        
                     <DefaultDescription product={product} />
-                ) : (
-                    ''
-                )}
+            
             </div>
         </>
     );

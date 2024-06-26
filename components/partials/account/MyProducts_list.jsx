@@ -75,6 +75,7 @@ function MyProductsLists() {
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
         : '';
     const { accountLinks, user, products } = useSelector((state) => state.auth);
+    
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
     const [short, setShort] = useState(true)
@@ -485,6 +486,9 @@ function MyProductsLists() {
                 </span>
             ),
         },
+
+
+
         user?.role === 'seller' ? (
             {
                 title: 'Holat',
@@ -676,6 +680,7 @@ function MyProductsLists() {
                     <div className="col-lg-4">
                         <div className="ps-page__left">
                             <AccountMenuSidebar data={accountLinks} />
+
                         </div>
                     </div>
                     <div className="col-lg-8 pb-5">

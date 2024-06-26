@@ -131,6 +131,8 @@ function Notifications() {
 
     }
 
+    console.log(profile?.background_image);
+
 
     return (
         <section className="ps-my-account ps-page--account ">
