@@ -101,14 +101,18 @@ const DefaultDescription = ({ product }) => {
                                         <Commits data={data}
                                             countToggle={countToggle}
                                             setPageMore={setPageMore}
-                                            pageMore={pageMore} />
+                                            pageMore={pageMore}
+                                            setDataCount={setDataCount}
+
+                                             />
                                     </div>
                                 }
+                                
                                 {
                                     (user?.access && reviews) &&
                                     <div className='col-md-12'>
 
-                                        <RateCommit product={product} setDataCount={setDataCount} setData={setData} data={data} />
+                                        <RateCommit product={product} setDataCount={setDataCount} />
                                     </div>
                                 }
                             </div>
