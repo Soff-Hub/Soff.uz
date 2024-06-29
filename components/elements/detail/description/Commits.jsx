@@ -1,38 +1,33 @@
-import { Modal, Rate } from 'antd';
-import React, { useState } from 'react';
-import PatchRepository from '~/reositoriy-admin/PatchRepository';
+import { Rate } from 'antd';
+import React, { useState, useEffect } from 'react';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
-const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount }) => {
+import Replied from './Replied';
+import { useRouter } from 'next/router';
 
-    const [toggle, setToggle] = useState(false)
-    const [toggleUser, setToggleUser] = useState(false)
-    const [inputValue, setInputValue] = useState(null);
+const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount, product }) => {
+    const [userID, setUserID] = useState(null);
+    const [dataProdcts, setData] = useState([]);
+    const [loading, setLoading] = useState(false)
+    const { query } = useRouter();
 
-    async function handleChange() {
-        const formData = new FormData();
-        setDataCount(true);
-
-        if (inputValue) {
-            formData.append('rating', inputValue);
-        } 
-        const ItemsData = await PatchRepository.patchDealUpdateApplicaitonCommit(product?.id, formData, user?.access);
-
-        if (ItemsData?.status === 201) {
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: ItemsData?.data?.msg,
-            });
-
-        } else {
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Xatolik!',
-                content: ItemsData?.data?.msg + ' ' + ItemsData?.status + ' ' + ItemsData?.statusText,
-            });
-        }
-        setDataCount(false);
+    function handleChange(params) {
+        setUserID(params);
     }
+
+    async function getProducts() {
+        setLoading(true)
+        const ItemsData = await GetRepository.getSellerCommitListsFilter(query?.pid, 1, userID);
+        if (ItemsData?.results) {
+            setData(ItemsData?.results);
+        }
+        setLoading(false)
+
+    }
+
+    useEffect(() => (
+        getProducts()
+    ), [query?.pid, userID]);
 
 
     return (
@@ -70,72 +65,19 @@ const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount }) => 
                         </div>
                     )}
 
-                    {item?.review && (
-                        <p className='m-0'>{item?.review}</p>
+                    {item?.text && (
+                        <p className='m-0'>{item?.text}</p>
                     )}
-                    <div className='d-flex gap-5 align-items-center  mt-2 '>
-                        <span
-                            onClick={() => setToggleUser(!toggleUser)}
-                            className='text-primary fw-medium d-flex align-items-center gap-3' style={{ cursor: "pointer" }}>
 
-                            <i className="fa-solid fa-angle-down"></i>
-                            <span className='fw-medium'> 5 JavobLar</span>
-
-                        </span>
-
-                        <span
-                            onClick={() => setToggle(!toggle)}
-                            className='text-primary fw-medium' style={{ cursor: "pointer" }}> <i
-                                style={{ transform: "rotate(-90deg)" }}
-                                className="fa-solid fa-arrow-turn-up mx-2"></i>  Javob</span>
-                    </div>
-
-
-                    {toggle && <div className='mt-2 pl-5'>
-                        <input onChange={(e) => setInputValue(e.target.value)} type="text" className='form-control p-0 '
-                            placeholder='Javob'
-                            style={{
-                                border: "none",
-                                borderBottom: "2px solid #007bff",
-                                backgroundColor: "transparent",
-                                height: "30px"
-                            }}
-                        />
-                        <div className='d-flex justify-content-end mt-3'>
-                            <div className='d-flex gap-3'>
-                                <button
-                                    onClick={() => setToggle(!toggle)} className="btn btn-outline-secondary px-4 py-2 rounded-5 fs-5 fw-medium">Bekor qilish</button>
-                                <button
-                                    onClick={handleChange}
-                                    className="btn btn-outline-primary px-4 py-2 rounded-5 fs-5 fw-medium ">Yuborish</button>
-
-                            </div>
-                        </div>
-                    </div>}
-                    {
-                        toggleUser &&
-                        <div className='pl-5 mt-3'  >
-                            <div className="d-flex align-items-start gap-3 mb-2">
-                                <img
-                                    src={item?.user?.image_url}
-                                    width={25}
-                                    height={25}
-                                    style={{ borderRadius: '50%' }}
-                                />
-                                <div>
-                                    <h5 className="fw-normal mb-0 fs-5 d-flex flex-wrap ">
-                                        <span className='mr-3'> {item?.user?.first_name} {item?.user?.last_name}</span>
-                                        <span className="text-secondary fs-5">
-                                            {item?.reviewed_at}
-                                        </span>
-                                    </h5>
-
-                                    <p className='m-0 mt-1'>{item?.review} </p>
-                                </div>
-                            </div>
-                        </div>
-                    }
-
+                    <Replied
+                        setDataCount={setDataCount}
+                        product={product}
+                        onsSuccess={() => handleChange(item?.id)}
+                        userID={userID}
+                        dataProducts={dataProdcts}
+                        count={item?.replied_count}
+                        loading={loading}
+                    />
 
                 </div>
             ))}

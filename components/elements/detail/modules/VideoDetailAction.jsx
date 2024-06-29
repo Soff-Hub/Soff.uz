@@ -146,14 +146,23 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 {product?.document?.images?.map((e) => (
                                     <span
                                         className="pl-2"
+
                                         onClick={async (e) => {
                                             e.preventDefault();
                                             setLoading(true);
-                                            await audioDownloaderSale(
-                                                e?.image_url
-                                            );
-                                            setLoading(false);
-                                        }}>
+                                            console.log('Loading state set to true');
+                                            try {
+                                                await audioDownloaderSale(e?.image_url);
+                                            } catch (error) {
+                                                console.error('Error in audioDownloaderSale:', error);
+                                            } finally {
+                                                setLoading(false);
+                                                console.log('Loading state set to false');
+                                            }
+                                        }}
+
+                                        
+                                        >
                                         {!loading ? (
                                             <i class="fa-solid fa-download"></i>
                                         ) : (
