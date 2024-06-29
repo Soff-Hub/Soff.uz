@@ -141,9 +141,16 @@ const Wishlist = ({ ecomerce }) => {
                                                     href=""
                                                     onClick={async (e) => {
                                                         e.preventDefault();
-                                                        setLoading(true)
-                                                        await audioDownloaderSale(product, product);
-                                                        setLoading(false)
+                                                        setLoading(true);
+                                                        console.log('Loading state set to true');
+                                                        try {
+                                                            await audioDownloaderSale(product, product);
+                                                        } catch (error) {
+                                                            console.error('Error in audioDownloaderSale:', error);
+                                                        } finally {
+                                                            setLoading(false);
+                                                            console.log('Loading state set to false');
+                                                        }
                                                     }}>
                                                     {!loading ? "Bepul yuklab olish" :
                                                         <div >

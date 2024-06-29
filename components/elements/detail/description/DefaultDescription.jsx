@@ -16,7 +16,7 @@ const DefaultDescription = ({ product }) => {
     const [pageMore, setPageMore] = useState(1);
     const [data, setData] = useState([]);
     const [dataCount, setDataCount] = useState(true);
-    const { query } = useRouter();
+    const { query } = useRouter();      
     const [reviews, setReviews] = useState(false)
 
 
@@ -25,7 +25,6 @@ const DefaultDescription = ({ product }) => {
         const ItemsData = await GetRepository.getSellerCommitLists(query?.pid, pageMore);
         if (ItemsData?.results) {
             const newData = ItemsData.results;
-
             // Takroriy ma'lumotlarni filtr qilish
             const uniqueNewData = newData.filter(
                 newItem => !data.some(existingItem => existingItem.id === newItem.id)
@@ -103,16 +102,17 @@ const DefaultDescription = ({ product }) => {
                                             setPageMore={setPageMore}
                                             pageMore={pageMore}
                                             setDataCount={setDataCount}
+                                            product={product}
 
                                              />
                                     </div>
                                 }
                                 
                                 {
-                                    (user?.access && reviews) &&
+                                    (user?.access) &&
                                     <div className='col-md-12'>
 
-                                        <RateCommit product={product} setDataCount={setDataCount} />
+                                        <RateCommit  product={product} setDataCount={setDataCount} reviews={reviews} />
                                     </div>
                                 }
                             </div>

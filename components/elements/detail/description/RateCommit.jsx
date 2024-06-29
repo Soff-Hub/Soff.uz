@@ -4,7 +4,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
 const desc = ['1 ball', '2 ball', '3 ball', '4 ball', ' 5 ball'];
 
-const RateCommit = ({ product, setDataCount }) => {
+const RateCommit = ({ product, setDataCount, reviews }) => {
     const [value, setValue] = useState(0);
     const [text, setRateDes] = useState('');
     const { user } = useSelector((state) => state.auth);
@@ -16,10 +16,10 @@ const RateCommit = ({ product, setDataCount }) => {
         if (value) {
             formData.append('rating', value);
         } if (text) {
-            formData.append('review', text);
+            formData.append('text', text);
         }
         const ItemsData = await PatchRepository.patchDealUpdateApplicaitonCommit(product?.id, formData, user?.access);
-   
+
         if (ItemsData?.status === 201) {
             const modal = Modal.success({
                 centered: true,
@@ -59,7 +59,7 @@ const RateCommit = ({ product, setDataCount }) => {
     return (
         <div className='border p-4 rounded-3 border-success mt-5'>
 
-            <div className='d-flex justify-content-center mt-3 mb-4'>
+            {reviews && <div className='d-flex justify-content-center mt-3 mb-4'>
                 <Rate
 
                     style={{ fontSize: "30px" }}
@@ -67,7 +67,7 @@ const RateCommit = ({ product, setDataCount }) => {
                     onChange={setValue}
                     value={value}
                 />
-            </div>
+            </div>}
             <textarea
                 onChange={(e) =>
                     setRateDes(e.target.value)
