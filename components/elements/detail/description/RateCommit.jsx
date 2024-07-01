@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Modal, Rate } from 'antd';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import { useSelector } from 'react-redux';
@@ -8,11 +8,10 @@ const RateCommit = ({ product, setDataCount, reviews }) => {
     const [value, setValue] = useState(0);
     const [text, setRateDes] = useState('');
     const { user } = useSelector((state) => state.auth);
+    const ref = useRef(null)
 
     async function postOrder() {
         const formData = new FormData();
-        setDataCount(true);
-
         if (value) {
             formData.append('rating', value);
         } if (text) {
@@ -26,6 +25,10 @@ const RateCommit = ({ product, setDataCount, reviews }) => {
                 title: 'Muvaffaqqiyatli!',
                 content: ItemsData?.data?.msg,
             });
+            if (ref.current) {
+                ref.current.value = '';
+                setRateDes('');
+            }
 
         } else {
             const modal = Modal.warning({
@@ -34,8 +37,9 @@ const RateCommit = ({ product, setDataCount, reviews }) => {
                 content: ItemsData?.data?.msg + ' ' + ItemsData?.status + ' ' + ItemsData?.statusText,
             });
         }
-        setDataCount(false);
+        setDataCount();
     }
+
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -59,7 +63,7 @@ const RateCommit = ({ product, setDataCount, reviews }) => {
     return (
         <div className='border p-4 rounded-3 border-success mt-5'>
 
-            {reviews && <div className='d-flex justify-content-center mt-3 mb-4'>
+            {!reviews?.has_first_comment && <div className='d-flex justify-content-center mt-3 mb-4'>
                 <Rate
 
                     style={{ fontSize: "30px" }}
@@ -69,15 +73,23 @@ const RateCommit = ({ product, setDataCount, reviews }) => {
                 />
             </div>}
             <textarea
+                ref={ref}
                 onChange={(e) =>
                     setRateDes(e.target.value)
                 }
                 rows={4}
                 placeholder="Mahsulot haqida fikringiz?"
-                className="p-3 rounded-3 w-100 border my-2"></textarea>
+                className="p-3 rounded-3 w-100 border my-2"
+                value={text}
+            ></textarea>
 
             <div className="d-flex justify-content-end">
-                <button disabled={!value && !text} onClick={postOrder} className='btn btn-success fs-4 py-2 px-5'>Yuborish</button>
+                <button
+                    disabled={!value && !text}
+                    onClick={postOrder}
+                    className='btn btn-success fs-4 py-2 px-5'>
+                    Yuborish
+                </button>
             </div>
 
         </div>

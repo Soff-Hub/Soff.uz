@@ -9,8 +9,9 @@ const Replied = ({
     onsSuccess,
     userID,
     dataProducts,
-    count,
+    Item,
     loading }) => {
+
 
 
     const { user } = useSelector((state) => state.auth);
@@ -21,7 +22,6 @@ const Replied = ({
 
     async function handleChange() {
         const formData = new FormData();
-        setDataCount(true);
 
         if (inputValue) {
             formData.append('text', inputValue);
@@ -47,7 +47,7 @@ const Replied = ({
                 content: ItemsData?.data?.msg + ' ' + ItemsData?.status + ' ' + ItemsData?.statusText,
             });
         }
-        setDataCount(false);
+        setDataCount();
     }
 
     function productId(button) {
@@ -66,22 +66,22 @@ const Replied = ({
         <div>
             <div className='d-flex gap-5 align-items-center  mt-2 '>
                 {
-                    count !== 0 &&
+                    Item?.replied_count !== 0 &&
                     <span
                         onClick={() => productId('toggleUser')}
                         className='text-primary fw-medium d-flex align-items-center gap-3' style={{ cursor: "pointer" }}>
 
                         <i className="fa-solid fa-angle-down"></i>
-                        <span className='fw-medium'> {count} JavobLar</span>
+                        <span className='fw-medium'> {Item?.replied_count} JavobLar</span>
                     </span>
                 }
 
-                <span
+                {Item?.is_document_owner && <span
 
                     onClick={() => productId('toggle')}
                     className='text-primary fw-medium' style={{ cursor: "pointer" }}> <i
                         style={{ transform: "rotate(-90deg)" }}
-                        className="fa-solid fa-arrow-turn-up mx-2"></i>  Javob</span>
+                        className="fa-solid fa-arrow-turn-up mx-2"></i>  Javob</span>}
             </div>
 
 
@@ -97,7 +97,7 @@ const Replied = ({
                 />
                 <div className='d-flex justify-content-end mt-3'>
                     <div className='d-flex gap-3'>
-                        
+
                         <button
                             onClick={() => setToggle(false)} className="btn btn-outline-secondary px-4 py-2 rounded-5 fs-5 fw-medium">Bekor qilish</button>
                         <button
@@ -112,7 +112,7 @@ const Replied = ({
                 <>
 
                     {loading ?
-                        <div className='d-flex align-items-center ' style={{ height: "15vh" ,paddingLeft:"8rem" }}>
+                        <div className='d-flex align-items-center ' style={{ height: "15vh", paddingLeft: "8rem" }}>
                             <div
                                 className="spinner-border "
                                 role="status"

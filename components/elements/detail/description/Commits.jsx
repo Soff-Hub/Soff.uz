@@ -2,10 +2,11 @@ import { Rate } from 'antd';
 import React, { useState, useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 
+
 import Replied from './Replied';
 import { useRouter } from 'next/router';
 
-const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount, product }) => {
+const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount, product}) => {
     const [userID, setUserID] = useState(null);
     const [dataProdcts, setData] = useState([]);
     const [loading, setLoading] = useState(false)
@@ -75,7 +76,7 @@ const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount, produ
                         onsSuccess={() => handleChange(item?.id)}
                         userID={userID}
                         dataProducts={dataProdcts}
-                        count={item?.replied_count}
+                        Item={item}
                         loading={loading}
                     />
 

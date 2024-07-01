@@ -771,11 +771,14 @@ class GetRepository {
         return reponse;
     }
 
-    async getSellerCommitLists(id, page) {
+    async getSellerCommitLists(id, page, token) {
         const endPoint = `seller/document-reviews/${id}?page=${page}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
+            headers: {
+                Authorization: token ? `Bearer ${token}` : '',
+            },
         })
             .then((response) => {
                 if (response.status === 200) {
@@ -789,7 +792,9 @@ class GetRepository {
     }
 
     async getSellerCommitListsFilter(id, page, count) {
-        const endPoint = `seller/document-reviews/${id}?page=${page}&replied_to=${count || ''}`;
+        const endPoint = `seller/document-reviews/${id}?page=${page}&replied_to=${
+            count || ''
+        }`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',

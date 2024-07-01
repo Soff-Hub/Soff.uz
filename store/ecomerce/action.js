@@ -21,6 +21,7 @@ export const actionTypes = {
 
     SET_CARTDATA_ITEM: 'SET_CARTDATA_ITEM',
     SET_CARTDATA_SUCCESS_ITEM: 'SET_CARTDATA_SUCCESS_ITEM',
+    REPLIED_COUNT: 'REPLIED_COUNT',
 };
 
 // new
@@ -71,6 +72,10 @@ export function setCartItemDataItems(payload) {
 
 export function setCartItemDataItemsSuccess(payload) {
     return { type: actionTypes.SET_CARTDATA_SUCCESS_ITEM, payload };
+}
+
+export function setReploadCount(payload) {
+    return { type: actionTypes.REPLIED_COUNT, payload };
 }
 
 
