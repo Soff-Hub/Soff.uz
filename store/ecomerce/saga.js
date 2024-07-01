@@ -68,6 +68,7 @@ function* getSavedItem({ payload }) {
 
 
 
+
 export default function* rootSaga() {
     // new
     yield all([takeEvery(actionTypes.SET_WISHLIST_ITEMS, getWishlistItems)]);

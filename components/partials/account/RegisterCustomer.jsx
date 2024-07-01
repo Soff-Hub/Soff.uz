@@ -89,10 +89,9 @@ class RegisterCustomer extends Component {
 
         if (this.props.router.query.pid || localStorage.getItem('referal')) {
             const user = await registerUser(
-                `auth/seller-register/${
-                    this.props.router.query.pid
-                        ? this.props.router.query.pid
-                        : localStorage.getItem('referal')
+                `auth/seller-register/${this.props.router.query.pid
+                    ? this.props.router.query.pid
+                    : localStorage.getItem('referal')
                 }/`,
                 e
             );
@@ -219,7 +218,7 @@ class RegisterCustomer extends Component {
                         <Form onFinish={this.handleSubmit}>
                             <ul className="ps-tab-list mb-4">
                                 <li className="active">
-                                    <Link href={'/account/register-customer'}>
+                                    <Link href={'/account/register-user'}>
                                         <a>Ro'yxatdan o'tish</a>
                                     </Link>
                                 </li>
@@ -229,8 +228,12 @@ class RegisterCustomer extends Component {
                                     <h5 className='text-secondary'>
                                         Profilingiz bo'lsa kirish qismiga o'ting{' '}
                                         <Link
-                                        
-                                            href={'/account/register-customer'}>
+
+                                            href={
+                                                (id) ? `/account/login?id=${id}` :
+                                                    (deal) ? `/account/login?deal=${deal}` :
+                                                        "/account/login"
+                                            }>
                                             <a className='text-success mx-2'>Kirish</a>
                                         </Link>
                                     </h5>
@@ -301,8 +304,8 @@ class RegisterCustomer extends Component {
                                                 type="password"
                                                 placeholder="Parolni takrorlash"
                                                 ref={(input) =>
-                                                    (this.password2Input =
-                                                        input)
+                                                (this.password2Input =
+                                                    input)
                                                 }
                                             />
                                         </Form.Item>

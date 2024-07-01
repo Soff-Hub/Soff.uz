@@ -240,7 +240,6 @@ const Posts = () => {
                 formData,
                 user?.access
             );
-            console.log(patchItems);
 
             if (patchItems?.status === 201) {
                 Router.push('/account/myproducts');
