@@ -17,7 +17,7 @@ export default function SellerProducts({ data = [], page, handlePagination }) {
                         <div
                             className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6"
                             key={item.id}>
-                            <Product product={item} />{' '}
+                            <Product product={item} />{' '} 
                         </div> :
                         item?.document?.content_type === 'video' ?
                             <div className='col-md-4 my-3'>

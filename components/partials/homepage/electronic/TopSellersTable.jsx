@@ -1,9 +1,18 @@
-import {Table } from 'antd';
+import { Table } from 'antd';
 import Link from 'next/link';
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import PostRepository from '~/repositories/PostRepository';
+
+function checkIfUserIsOnline(lastVisit) {
+    const currentTime = new Date();
+    const lastVisitTime = new Date(lastVisit);
+    const fiveMinutesAgo = new Date(currentTime.getTime() - 5 * 60000); // 5 daqiqa oldingi vaqtni hisoblash
+
+    return lastVisitTime >= fiveMinutesAgo;
+}
+
 
 export default function TopSellersTable() {
     const [sellerData, setSellerData] = useState([]);
@@ -45,30 +54,32 @@ export default function TopSellersTable() {
         getTopSeller();
     }, []);
 
+
+
+
     const columns = [
         {
             title: 'Sotuvchi',
             dataIndex: 'seller',
             key: 'name',
-            // width: 400,
             render: (seller) => (
-                <div className="d-flex gap-5 ">
-                    <div className="text-center">
-                        <Link href={`seller/${seller?.id}`}>
-                            <a>
-                                {seller?.image ? (
-                                    <img
-                                        alt="soff"
-                                        src={seller?.image}
-                                        className="profile__image-client-top-seller"
-                                    />
-                                ) : (
-                                    <i
-                                        className=" fa-2x text-info fa-solid fa-circle-user"
-                                        style={{
-                                            fontSize: '33px',
-                                        }}></i>
-                                )}
+                <div className="d-flex gap-5 align-items-center">
+                    <div className="text-center" style={{ position: "relative" }}>
+                        <Link href={`seller/${seller?.id}`} >
+                            <a >
+
+                                <img
+                                    alt="soff"
+                                    src={seller?.image ? seller?.image : "/static/img/ozodbek.png"}
+                                    className="profile__image-client-top-seller"
+                                />
+
+                                <span>{checkIfUserIsOnline(seller?.last_login) ?
+                                    <i className="fa-solid fa-circle text-success fs-5" style={{ position: "absolute", bottom: "-42%", right: "3%" }}></i> :
+                                    <i className="fa-solid fa-circle text-secondary  fs-5" style={{ position: "absolute", bottom: "-42%", right: "3%" }}></i>
+
+                                }</span>
+
                             </a>
                         </Link>
                     </div>
@@ -150,7 +161,7 @@ export default function TopSellersTable() {
                 </label>
                 <select
                     className="ps-select form-control select2"
-                    style={{backgroundColor:'#fff'}}
+                    style={{ backgroundColor: '#fff' }}
                     data-placeholder="Sort Items"
                     onChange={(e) => handleSelect(e)}>
                     <option selected disabled>Saralash</option>
