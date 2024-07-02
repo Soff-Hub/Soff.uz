@@ -3,19 +3,15 @@ import { connect, useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { OneShopDoc } from '~/store/auth/action';
 import useCart from '~/hooks/useCart';
-import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
-import { message } from 'antd';
 import Axios from 'axios';
 
 const VideoDetailShoppingActions = ({ product }) => {
     const { setCartOneItem } = useCart();
-    const { addSavedItem, wishlist, removeSavedItem } = useWishlist();
     const dispatch = useDispatch();
     const Router = useRouter();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [copy, setCopy] = useState(false);
 
     const showModal = () => {
         setOpen(true);
@@ -46,26 +42,11 @@ const VideoDetailShoppingActions = ({ product }) => {
         }
     }
 
-    const handleAddItemToWishlist = async (e) => {
-        e.preventDefault();
-        addSavedItem(product.id);
-        if (wishlist?.find((item) => item.id === product?.id)) {
-            removeSavedItem(product.id);
-        }
-    };
 
-    const [messageApi, contextHolder] = message.useMessage();
 
-    const infoSuccess = (url) => {
-        messageApi.success(
-            `Soff | Audio mahsulot dan nusxa ko\'chirildi (${url})`
-        );
-    };
-    const infoError = (url) => {
-        messageApi.error(
-            `Soff | Audio mahsulot dan nusxa ko\'chirilmadi (${url})`
-        );
-    };
+
+
+
 
  
 
@@ -165,14 +146,23 @@ const VideoDetailShoppingActions = ({ product }) => {
                                 {product?.document?.images?.map((e) => (
                                     <span
                                         className="pl-2"
+
                                         onClick={async (e) => {
                                             e.preventDefault();
                                             setLoading(true);
-                                            await audioDownloaderSale(
-                                                e?.image_url
-                                            );
-                                            setLoading(false);
-                                        }}>
+                                            console.log('Loading state set to true');
+                                            try {
+                                                await audioDownloaderSale(e?.image_url);
+                                            } catch (error) {
+                                                console.error('Error in audioDownloaderSale:', error);
+                                            } finally {
+                                                setLoading(false);
+                                                console.log('Loading state set to false');
+                                            }
+                                        }}
+
+                                        
+                                        >
                                         {!loading ? (
                                             <i class="fa-solid fa-download"></i>
                                         ) : (

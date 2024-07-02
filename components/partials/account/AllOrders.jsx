@@ -127,7 +127,7 @@ export default function DealCart() {
                     <button className='col-md-3  btn btn-success rounded-3 fs-4 py-3'
                         onClick={() =>
                             user?.access ?
-                                setOpen(true) : Router.push("/account/register?deal=deal")} >
+                                setOpen(true) : Router.push("/account/register-user?deal=deal")} >
                         <i class="fa-solid fa-plus"></i>   Buyurtma yaratish
                     </button>
                 </div>
@@ -254,7 +254,7 @@ export default function DealCart() {
                                                                 ) : (
                                                                     progressData?.remain_deal_coin ?
                                                                         <button
-                                                                            onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/register?deal=deal`)}
+                                                                            onClick={() => Router.push(user?.access ? `/deal/${item?.id}` : `/account/register-user?deal=deal`)}
                                                                             className='btn btn-success px-4 fs-5'
                                                                         >
                                                                             Ariza topshirsh
@@ -263,7 +263,7 @@ export default function DealCart() {
                                                                             onClick={() =>
                                                                                 user?.access ?
                                                                                     setOpenPayment(true) :
-                                                                                    Router.push(`/account/register?deal=deal`)
+                                                                                    Router.push(`/account/register-user?deal=deal`)
                                                                             }
                                                                             className='btn btn-success px-4 fs-5'
                                                                         >

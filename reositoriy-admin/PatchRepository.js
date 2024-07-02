@@ -283,6 +283,7 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
+    
     async patchDealadmin(id, data, token) {
         const endPoint = `deals/admin/deals/${id}/`;
         const reponse = await Repository({
@@ -368,7 +369,7 @@ class PatchRepository {
     }
 
     async patchDealUpdateApplicaitonCommit(id, data, token) {
-        const endPoint = `seller/purchase-review/${id}`;
+        const endPoint = `seller/document-review/${id}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'POST',

@@ -39,7 +39,6 @@ const Posts = () => {
     const [free, setFree] = useState(false);
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
-    console.log(livePosterFile);
 
 
     const breadCrumb = [
@@ -241,6 +240,7 @@ const Posts = () => {
                 formData,
                 user?.access
             );
+
             if (patchItems?.status === 201) {
                 Router.push('/account/myproducts');
                 setDeisabled(false);
@@ -256,7 +256,7 @@ const Posts = () => {
                     centered: true,
                     title: 'Xatolik!',
                     content:
-                        patchItems?.data?.msg ||
+                        patchItems?.data?.msg || patchItems?.status + ' ' + patchItems.statusText + ' ' +
                         JSON.stringify(patchItems?.data.category),
                 });
             }

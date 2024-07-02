@@ -75,7 +75,7 @@ function MyProductsLists() {
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
         : '';
     const { accountLinks, user, products } = useSelector((state) => state.auth);
-    
+
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
     const [short, setShort] = useState(true)
@@ -394,6 +394,23 @@ function MyProductsLists() {
         viewsAll
     ]);
 
+
+    const statusMap = {
+        moderation: {
+            iconClass: "text-primary-emphasis fa-solid fa-circle-info",
+            text: "Moderatsiya"
+        },
+        approved: {
+            iconClass: "fa-solid text-success fa-circle-check",
+            text: "Tasdiqlangan"
+        },
+        cancelled: {
+            iconClass: "fa-solid fa-circle-question text-danger",
+            text: "Bekor qilingan",
+            tooltip: true
+        }
+    };
+
     const columns = [
         {
             title: 'Rasm',
@@ -490,31 +507,28 @@ function MyProductsLists() {
 
 
         user?.role === 'seller' ? (
+
             {
                 title: 'Holat',
                 dataIndex: 'data_status',
                 key: 'address',
-                render: (datastatus) =>
-                    datastatus?.status === 'moderation' ? (
-                        <span>
-                            <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                            Moderatsiya
-                        </span>
-                    ) : datastatus?.status === 'approved' ? (
-                        <span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            Tasdiqlangan
-                        </span>
-                    ) : datastatus?.status === 'cancelled' ? (
-                        <Tooltip title={datastatus?.reason}>
+                render: (datastatus) => {
+                    if (!datastatus || !statusMap[datastatus.status]) return null;
+
+                    const status = statusMap[datastatus.status];
+
+                    return status.tooltip ? (
+                        <Tooltip title={datastatus.reason}>
                             <span style={{ cursor: 'pointer' }}>
-                                <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                Bekor qilingan{' '}
+                                <i className={status.iconClass}></i> {status.text}{' '}
                             </span>
                         </Tooltip>
                     ) : (
-                        <></>
-                    ),
+                        <span>
+                            <i className={status.iconClass}></i> {status.text}
+                        </span>
+                    );
+                }
             }
         ) : (
             <></>
@@ -671,7 +685,6 @@ function MyProductsLists() {
         },
     ];
 
-    console.log(viewsAll);
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -974,7 +987,7 @@ function MyProductsLists() {
                                                 defaultCurrent={currPage}
                                                 onChange={handlePagination}
                                             />
-                                            
+
                                         </>
                                     ) : (
                                         <>

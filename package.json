@@ -5,9 +5,9 @@
     "author": "Soff Hub",
     "homepage": "https://soff.uz",
     "scripts": {
-        "dev": "next dev -p 3000",
+        "dev": "next dev",
         "build": "next build",
-        "start": "next start -p 3011",
+        "start": "next start -p 3001",
         "clean": "antd-tools run clean && rm -rf es lib coverage dist report.html",
         "compile": "npm run clean && antd-tools"
     },

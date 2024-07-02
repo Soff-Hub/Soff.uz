@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 import { useEffect } from 'react';
 import { useState } from 'react';
@@ -22,6 +23,7 @@ export default function NotificationList() {
         }
     }, [user?.access]);
 
+
     return (
         <div className="ps-section--shopping ps-whishlist">
             <div className="container">
@@ -32,11 +34,13 @@ export default function NotificationList() {
                     {notification?.length ? (
                         <div className="text-start">{
                             notification?.map((el, i) => <div key={el?.notification?.title} >
-                                <h3>{i+1}. {" "} {el?.notification?.title}  <span style={{fontSize:'16px', color:'#999'}} > | {el?.notification?.created_at}</span>  </h3>
-                                <p>{ el?.notification?.body && parse(el?.notification?.body)}</p>
-                                
+                                <h3>{i + 1}. {" "} {el?.notification?.title}  <span style={{ fontSize: '16px', color: '#999' }} > | {el?.notification?.created_at} |  {el?.link && <Link href={`${el?.link}`} ><a className='text-success'>Batafsil <i className="fa-solid fa-hand-point-right mx-2"></i></a></Link>}
+
+                                </span>   </h3>
+                                <p>{el?.notification?.body && parse(el?.notification?.body)}</p>
+
                                 <hr />
-                                </div>)
+                            </div>)
                         }</div>
                     ) : (
                         <div className="alert alert-danger" role="alert">

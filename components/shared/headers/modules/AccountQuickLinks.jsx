@@ -142,7 +142,7 @@ const AccountQuickLinks = (props) => {
                     href={
                         user?.role === 'admin' || user?.role === 'seller'
                             ? '/account/dashbord'
-                            : '/account/myproducts'
+                            : '/account/sellerproducts'
                     }>
                     <a>
                         {profile?.image ? (
