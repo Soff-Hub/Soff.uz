@@ -1,88 +1,37 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Router from 'next/router';
 import { Spin } from 'antd';
-import SearchHeadersPages from '~/components/shared/headers/SearchHeadersPages';
-
-// import PostRepository from '~/repositories/PostRepository';
-// import ProductSearchResult from '~/components/elements/products/ProductSearchResult';
-
-function useDebounce(value, delay) {
-    const [debouncedValue, setDebouncedValue] = useState(value);
-
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedValue(value);
-        }, delay);
-
-        return () => {
-            clearTimeout(handler);
-        };
-    }, [value, delay]);
-
-    return debouncedValue;
-}
+import useDebounce from '~/hooks/useDebounce';
 
 const SearchPage = () => {
     const inputEl = useRef(null);
     const [keyword, setKeyword] = useState('');
     const [loading, setLoading] = useState(false);
-
-    // const [isSearch, setIsSearch] = useState(false);
-    // const [resultItems, setResultItems] = useState(null);
     const debouncedSearchTerm = useDebounce(keyword, 1000);
-
     function handleClearKeyword() {
         setKeyword('');
-        // setIsSearch(false);
         setLoading(false);
     }
 
     function handleSubmit(e) {
         e.preventDefault();
-        if (keyword) {
+        if (keyword && keyword.trim()) {
             Router.push(`/search-page?keyword=${keyword}`);
         }
     }
 
-    // useEffect(() => {
-    //     if (debouncedSearchTerm) {
-    //         setLoading(true);
-    //         if (keyword) {
-    //             const products = PostRepository.postSearchFilterNews(keyword);
-    //             products.then((result) => {
-    //                 setLoading(false);
-    //                 setIsSearch(true);
-    //                 setResultItems(result);
-    //             });
-    //         } else {
-    //             setIsSearch(false);
-    //             setKeyword('');
-    //         }
-    //         if (loading) {
-    //             setIsSearch(false);
-    //         }
-    //     } else {
-    //         setLoading(false);
-    //         setIsSearch(false);
-    //     }
-    // }, [debouncedSearchTerm]);
 
     useEffect(() => {
-        if (keyword) {
+        if (keyword && keyword.trim()) {
             Router.push(`/search-page?keyword=${keyword}`);
         }
     }, [debouncedSearchTerm]);
 
-    let productItemsView, clearTextView, loadingView;
-    if (!loading) {
-        // (resultItems?.results?.length < 0)
-        //     ? (productItemsView = <div className='d-flex align-items-center justify-content-center pt-5'>
-        //         <p> Mahsulot topilmadi </p>
-        //     </div>) :
-        //     productItemsView = resultItems?.results?.map((product) => (
-        //         <ProductSearchResult product={product} key={product.id} />
-        //     ))
 
+
+
+    let clearTextView, loadingView;
+    if (!loading) {
         if (keyword !== '') {
             clearTextView = (
                 <span className="ps-form__action" onClick={handleClearKeyword}>
@@ -105,6 +54,7 @@ const SearchPage = () => {
         );
     }
 
+
     return (
         <div className='image_background'>
             <div className="search_home_pages">
@@ -123,36 +73,6 @@ const SearchPage = () => {
                             {' '}
                             O‘zbek tilida saralanib borilayotgan sifatli ma’lumotlar jamlanmasini, fayllar, tasvirlar, videolar, audiolar ko‘rinishida qidirib topish imkonini beradi.
                         </h1>
-                        {/* <form
-                            className="ps-form--quick-search"
-                            method="get"
-                            action="/"
-                            onSubmit={handleSubmit}
-                        >
-                            <div className={keyword === '' ? "ps-form__input" : "ps-form__input active_search_input"}>
-                                <input
-                                    ref={inputEl}
-                                    className={keyword === '' ? "form-control input2" : "input1 form-control active_search_input"}
-                                    type="text"
-                                    value={keyword}
-                                    placeholder="Qidiruv..."
-                                    onInput={(e) => {
-                                        const value = e.target.value.trim();
-                                        setKeyword(value);
-                                    }}
-                                />
-                                {clearTextView}
-                                {loadingView}
-                            </div>
-                            <button className={keyword === '' ? 'button_search shadow' : " button_search active_search_button"}>Qidiruv</button>
-                            <div
-                                className={`ps-panel--search-result ${isSearch ? ' active ' : ''
-                                    }`}>
-                                <div className="ps-panel__content">{productItemsView}</div>
-                            </div>
-
-                        </form> */}
-
                         <form
                             className="ps-form--quick-search mobile-none"
                             method="get"
@@ -165,10 +85,7 @@ const SearchPage = () => {
                                     type="text"
                                     value={keyword}
                                     placeholder="Qidiruv..."
-                                    onInput={(e) => {
-                                        const value = e.target.value.trim();
-                                        setKeyword(value);
-                                    }}
+                                    onInput={(e) => setKeyword(e.target.value)}
                                 />
                                 {clearTextView}
                                 {loadingView}
