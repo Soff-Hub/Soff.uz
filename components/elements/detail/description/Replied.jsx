@@ -22,6 +22,7 @@ const Replied = ({
 
     async function handleChange() {
         const formData = new FormData();
+        setDataCount(true);
 
         if (inputValue) {
             formData.append('text', inputValue);
@@ -37,7 +38,6 @@ const Replied = ({
                 title: 'Muvaffaqqiyatli!',
                 content: ItemsData?.data?.msg,
             });
-            setToggleUser(!toggleUser);
             setToggle(!toggle);
 
         } else {
@@ -47,7 +47,7 @@ const Replied = ({
                 content: ItemsData?.data?.msg + ' ' + ItemsData?.status + ' ' + ItemsData?.statusText,
             });
         }
-        setDataCount();
+        setDataCount(false);
     }
 
     function productId(button) {
@@ -61,6 +61,8 @@ const Replied = ({
         }
 
     }
+
+
 
     return (
         <div>

@@ -1,34 +1,35 @@
 import { Rate } from 'antd';
 import React, { useState, useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-
-
 import Replied from './Replied';
 import { useRouter } from 'next/router';
 
-const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount, product}) => {
+const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount, product }) => {
     const [userID, setUserID] = useState(null);
     const [dataProdcts, setData] = useState([]);
     const [loading, setLoading] = useState(false)
+    const [countTogle, setCountTogle] = useState(false)
     const { query } = useRouter();
 
     function handleChange(params) {
         setUserID(params);
+        setCountTogle(!countTogle)
     }
 
     async function getProducts() {
+        setDataCount(true)
         setLoading(true)
-        const ItemsData = await GetRepository.getSellerCommitListsFilter(query?.pid, 1, userID);
+        const ItemsData = await GetRepository.getSellerCommitListsFilter(query?.pid, 1000, userID);
         if (ItemsData?.results) {
             setData(ItemsData?.results);
         }
         setLoading(false)
-
+        setDataCount(false)
     }
 
     useEffect(() => (
         getProducts()
-    ), [query?.pid, userID]);
+    ), [query?.pid, userID, countTogle]);
 
 
     return (
@@ -85,7 +86,7 @@ const Commits = ({ data, countToggle, setPageMore, pageMore, setDataCount, produ
             {countToggle && (
                 <div className="d-flex justify-content-center">
                     <button
-                        onClick={() => setPageMore(pageMore + 1)}
+                        onClick={() => setPageMore(pageMore + 10)}
                         className="btn btn-success fs-5 px-4">
                         Yana
                     </button>

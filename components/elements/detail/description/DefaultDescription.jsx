@@ -13,34 +13,24 @@ const { TabPane } = Tabs;
 const DefaultDescription = ({ product }) => {
     const { user } = useSelector((state) => state.auth);
     const [countToggle, setCountToggle] = useState(true);
-    const [pageMore, setPageMore] = useState(1);
+    const [pageMore, setPageMore] = useState(10);
     const [data, setData] = useState([]);
     const [dataCount, setDataCount] = useState(true);
     const { query } = useRouter();
     const [reviews, setReviews] = useState(null);
-    const dispatch = useDispatch();
+
 
 
     async function GetItemsProductsProgress() {
         const ItemsData = await GetRepository.getSellerCommitLists(query?.pid, pageMore, user?.access);
         if (ItemsData?.results) {
-            const newData = ItemsData.results;
-            // Takroriy ma'lumotlarni filtr qilish
-            const uniqueNewData = newData.filter(
-                newItem => !data.some(existingItem => existingItem.id === newItem.id)
-            );
-
-            // Yangi ma'lumotlarni saqlash
-            setData([...data, ...uniqueNewData]);
-
-            // Agar barcha ma'lumotlar yuklab olingan bo'lsa
-            if ([...data, ...uniqueNewData].length === ItemsData.count) {
+            setData(ItemsData.results);
+            if (ItemsData.results.length === ItemsData.count) {
                 setCountToggle(false);
             }
         }
 
     }
-
 
     async function getProductTokenAdd() {
         try {
@@ -71,7 +61,6 @@ const DefaultDescription = ({ product }) => {
             GetItemsProductsProgress()
         }
     }, [query?.pid, pageMore, user?.access, dataCount]);
-
 
 
     return (
