@@ -207,7 +207,6 @@ class RegisterCustomer extends Component {
 
     render() {
         const { router } = this.props;
-        const { deal, id } = this.props?.router?.query;
         // referal
         const { pid } = router.query;
 
@@ -216,30 +215,18 @@ class RegisterCustomer extends Component {
                 <div className="container">
                     <div className="ps-form--account">
                         <Form onFinish={this.handleSubmit}>
-                            <ul className="ps-tab-list mb-4">
-                                <li className="active">
-                                    <Link href={'/account/register-user'}>
-                                        <a>Ro'yxatdan o'tish</a>
-                                    </Link>
-                                </li>
-                            </ul>
                             <div className="ps-tab active" id="register">
-                                <div className="ps-form__content pt-5">
-                                    <h5 className='text-secondary'>
-                                        Profilingiz bo'lsa kirish qismiga o'ting{' '}
-                                        <Link
+                                <div className="ps-form__content pt-4">
+                                    <ul className="ps-tab-list mb-4">
+                                        <li className="active ">
+                                            <Link href={'/account/register-user'}>
+                                                <a>Ro'yxatdan o'tish</a>
+                                            </Link>
+                                        </li>
+                                    </ul>
 
-                                            href={
-                                                (id) ? `/account/login?id=${id}` :
-                                                    (deal) ? `/account/login?deal=${deal}` :
-                                                        "/account/login"
-                                            }>
-                                            <a className='text-success mx-2'>Kirish</a>
-                                        </Link>
-                                    </h5>
 
                                     <div className="form-group">
-                                        <p>Telefon raqam yoki email</p>
                                         <Form.Item
                                             name="phone_or_email"
                                             rules={[
@@ -264,7 +251,6 @@ class RegisterCustomer extends Component {
                                         </Form.Item>
                                     </div>
                                     <div className="form-group form-forgot">
-                                        <p>Parol</p>
                                         <Form.Item
                                             name="password"
                                             rules={[
@@ -289,7 +275,6 @@ class RegisterCustomer extends Component {
                                     </div>
 
                                     <div className="form-group form-forgot">
-                                        <p>Parolni takrorlash</p>
                                         <Form.Item
                                             name="password2"
                                             rules={[
