@@ -772,7 +772,7 @@ class GetRepository {
     }
 
     async getSellerCommitLists(id, page, token) {
-        const endPoint = `seller/document-reviews/${id}?page=${page}`;
+        const endPoint = `seller/document-reviews/${id}?offset=0&limit=${page}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -792,7 +792,7 @@ class GetRepository {
     }
 
     async getSellerCommitListsFilter(id, page, count) {
-        const endPoint = `seller/document-reviews/${id}?page=${page}&replied_to=${
+        const endPoint = `seller/document-reviews/${id}?offset=0&limit=${page}&replied_to=${
             count || ''
         }`;
         const reponse = await Repository({
