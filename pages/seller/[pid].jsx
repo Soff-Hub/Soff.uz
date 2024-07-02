@@ -139,7 +139,6 @@ const SellerPage = ({ seller, sellerr }) => {
     }, [sellerr?.seller?.last_login])
 
 
-    console.log(sellerr);
 
     return (
         <PageContainer>
