@@ -364,69 +364,69 @@ const BuyTrafficCard = ({ traffic, quantity }) => {
                 </div>
             ),
         },
-        // {
-        //     key: '2',
-        //     label: (
-        //         <div className="click">
-        //             <img src="/static/img/click.png" alt="" />
-        //         </div>
-        //     ),
-        //     children: (
-        //         <div className="row   mx-auto m-0">
-        //             <div className=" px-4 rounded click-b">
-        //                 <form
-        //                     onSubmit={handleClickCardPostsclick}
-        //                     className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-        //                     <div className="col-12 p-0 px-4 my-3">
-        //                         {message ? (
-        //                             <button
-        //                                 type="submit"
-        //                                 className="ps-btn w-100 text-center btn_color">
-        //                                 Davom etish
-        //                             </button>
-        //                         ) : (
-        //                             <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-        //                                 <BeatLoader color="#fff" />
-        //                             </button>
-        //                         )}
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     ),
-        // },
+        {
+            key: '2',
+            label: (
+                <div className="click">
+                    <img src="/static/img/click.png" alt="" />
+                </div>
+            ),
+            children: (
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsclick}
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
+                                {message ? (
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 text-center btn_color">
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            ),
+        },
 
-        // {
-        //     key: '3',
-        //     label: (
-        //         <div className="click">
-        //             <img src="/static/img/soff/paymee-r.png" alt="" />
-        //         </div>
-        //     ),
-        //     children: (
-        //         <div className="row   mx-auto m-0">
-        //             <div className=" px-4 rounded click-b">
-        //                 <form
-        //                     onSubmit={handleClickCardPostsPayme}
-        //                     className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
-        //                     <div className="col-12 p-0 px-4 my-3">
-        //                         {message ? (
-        //                             <button
-        //                                 type="submit"
-        //                                 className="ps-btn w-100 text-center btn_color">
-        //                                 Davom etish
-        //                             </button>
-        //                         ) : (
-        //                             <button className="ps-btn ps-btn--fullwidth w-100 text-center">
-        //                                 <BeatLoader color="#fff" />
-        //                             </button>
-        //                         )}
-        //                     </div>
-        //                 </form>
-        //             </div>
-        //         </div>
-        //     ),
-        // },
+        {
+            key: '3',
+            label: (
+                <div className="click">
+                    <img src="/static/img/soff/paymee-r.png" alt="" />
+                </div>
+            ),
+            children: (
+                <div className="row   mx-auto m-0">
+                    <div className=" px-4 rounded click-b">
+                        <form
+                            onSubmit={handleClickCardPostsPayme}
+                            className=" pt-3 pb-3 d-flex align-items-end justify-content-between row gap-xxs-0 gap-xs-0 gap-lg-0 gap-md-0 gap-3">
+                            <div className="col-12 p-0 px-4 my-3">
+                                {message ? (
+                                    <button
+                                        type="submit"
+                                        className="ps-btn w-100 text-center btn_color">
+                                        Davom etish
+                                    </button>
+                                ) : (
+                                    <button className="ps-btn ps-btn--fullwidth w-100 text-center">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            ),
+        },
     ];
 
     return <Tabs className='checkoutstep-1' defaultActiveKey="1" items={items} onChange={onChange} />;

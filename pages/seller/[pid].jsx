@@ -10,6 +10,7 @@ import { useRouter } from 'next/router';
 import ProductRepository from '~/repositories/ProductRepository';
 import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
+import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
 const SellerPage = ({ seller, sellerr }) => {
     const [data, setData] = useState(seller);
@@ -23,6 +24,7 @@ const SellerPage = ({ seller, sellerr }) => {
     const [typeSelect, setTypeSelect] = useState('file');
     const [search, setSearch] = useState('');
     const [productType, setProductType] = useState(null);
+    const [dateTime, setDateTime] = useState(false);
 
     const showModal = () => {
         setIsModalOpen(true);
@@ -120,6 +122,24 @@ const SellerPage = ({ seller, sellerr }) => {
     }, [pid, typeSelect, search]);
 
 
+    function checkIfUserIsOnline(lastVisit) {
+        const currentTime = new Date();
+        const lastVisitTime = new Date(lastVisit);
+        const fiveMinutesAgo = new Date(currentTime.getTime() - lastVisitTime?.getTime());
+
+        if (300000 >= fiveMinutesAgo) {
+            return setDateTime(true);
+        } else {
+            return setDateTime(false);
+        }
+    }
+
+    useEffect(() => {
+        checkIfUserIsOnline(sellerr?.last_login)
+    }, [sellerr?.last_login])
+
+
+
     return (
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />
@@ -167,8 +187,8 @@ const SellerPage = ({ seller, sellerr }) => {
                                 className="user_profile_card"
                                 style={{
                                     backgroundImage: `url(${sellerr?.seller?.background_image
-                                            ? sellerr?.seller?.background_image
-                                            : '/static/img/orqafon1.avif'
+                                        ? sellerr?.seller?.background_image
+                                        : '/static/img/orqafon1.avif'
                                         })`,
                                 }}>
                                 <div className="profile_images_card">
@@ -176,17 +196,18 @@ const SellerPage = ({ seller, sellerr }) => {
                                         <Image
                                             width={200}
                                             src={`${sellerr?.seller?.image
-                                                    ? sellerr?.seller?.image
-                                                    : '/static/img/ozodbek.png'
+                                                ? sellerr?.seller?.image
+                                                : '/static/img/ozodbek.png'
                                                 }`}
                                         />
                                     </Image.PreviewGroup>
-
+                                    <i className={`fa-solid fa-circle iconOnlayn text-${dateTime ? "success" : "secondary"}`}></i>
                                 </div>
                             </div>
                             <div className="user_profile_body usr_bodyy">
                                 {sellerr?.seller && (
                                     <div className="d-flex justify-content-between user_titleCard ">
+
                                         <div>
                                             <h1>
                                                 {sellerr?.seller?.full_name}{' '}
@@ -196,7 +217,19 @@ const SellerPage = ({ seller, sellerr }) => {
                                                 Ro'yxatdan o'tgan sana:{' '}
                                                 {sellerr?.created_at}{' '}
                                             </p>
+                                            {dateTime ?
+                                                <p className='text-success fw-bold'>Onlayn</p> :
+                                                (
+                                                    sellerr?.last_login &&
+                                                    <p>
+                                                        Oxirgi  marta:{' '}
+                                                        <CalculateTimeDifference targetDate={sellerr?.last_login} />
+
+                                                    </p>
+                                                )
+                                            }
                                         </div>
+
                                         <div className="col-12 col-md-9 user_cardss">
                                             <div className="row justify-content-center">
                                                 <div className="col-10 col-sm-6 col-md-4 mt-3">
@@ -255,8 +288,8 @@ const SellerPage = ({ seller, sellerr }) => {
                                                 <a
                                                     href="#products"
                                                     className={`text-white ps-btn w-100 text-center pb-4 pt-4 ${tab === 'tab-1'
-                                                            ? 'donate-color-btn'
-                                                            : ''
+                                                        ? 'donate-color-btn'
+                                                        : ''
                                                         }`}
                                                     style={{
                                                         textDecoration: 'none',
@@ -270,8 +303,8 @@ const SellerPage = ({ seller, sellerr }) => {
                                                 </a>
                                                 <button
                                                     className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-2'
-                                                            ? 'donate-color-btn'
-                                                            : ''
+                                                        ? 'donate-color-btn'
+                                                        : ''
                                                         }`}
                                                     onClick={showModal}>
                                                     {' '}
@@ -280,8 +313,8 @@ const SellerPage = ({ seller, sellerr }) => {
                                                 </button>
                                                 <button
                                                     className={`text-white ps-btn w-100 mt-3 mt-xl-0 mt-lg-0 mt-md-0 mt-sm-0 ${tab === 'tab-3'
-                                                            ? 'donate-color-btn'
-                                                            : ''
+                                                        ? 'donate-color-btn'
+                                                        : ''
                                                         }`}
                                                     // onClick={showModalDonate}
                                                     onClick={() =>

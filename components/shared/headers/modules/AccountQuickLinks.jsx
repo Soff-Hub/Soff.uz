@@ -12,7 +12,9 @@ const AccountQuickLinks = (props) => {
     const dispatch = useDispatch();
     const refresh = useSelector((state) => state.auth?.user?.refresh);
     const [profile, setProfile] = useState(null);
-   const {asPath} = useRouter()
+    const { asPath } = useRouter();
+    const router = useRouter();
+    const { id, deal } = router?.query
 
     const handleLogout = () => {
         const data = {
@@ -27,25 +29,25 @@ const AccountQuickLinks = (props) => {
                 title: 'Muvaffaqqiyatli!',
                 content: `Siz muvaffaqqiyatli chiqdingiz`,
             });
-            if (asPath == '/account/dashbord' ) {
+            if (asPath == '/account/dashbord') {
                 Router.push('/account/selection')
-            }else if ('/account/myproducts') {
+            } else if ('/account/myproducts') {
                 Router.push('/account/selection')
             } else if ('/account/sellerproducts') {
                 Router.push('/account/selection')
-            }else if ('/account/myproducts/product-selection') {
+            } else if ('/account/myproducts/product-selection') {
                 Router.push('/account/selection')
-            }else if ('/account/orders') {
+            } else if ('/account/orders') {
                 Router.push('/account/selection')
-            }else if ('/account/settings') {
+            } else if ('/account/settings') {
                 Router.push('/account/selection')
-            }else if ('/account/application') {
+            } else if ('/account/application') {
                 Router.push('/account/selection')
             }
             dispatch(logOut());
         }
     };
-    
+
     const { isLoggedIn } = props;
 
     async function ProfileUsers(token) {
@@ -100,19 +102,19 @@ const AccountQuickLinks = (props) => {
                 <Badge.Ribbon key={item?.url} text="Yangi funksiya" color="primary">
                     <Card size="small">
                         <li>
-                        <Link href={item.url}>
+                            <Link href={item.url}>
 
-                            <a
-                                style={{
-                                    cursor: 'pointer',
-                                }}>
-                                <a className="d-flex align-items-center">
-                                    <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>
-                                    Mening bitimlarim
+                                <a
+                                    style={{
+                                        cursor: 'pointer',
+                                    }}>
+                                    <a className="d-flex align-items-center">
+                                        <i className={` text-dark fs-4 me-2  ${item.icon}`}></i>
+                                        Mening bitimlarim
+                                    </a>
                                 </a>
-                            </a>
 
-                        </Link>
+                            </Link>
                         </li>
                     </Card>
                 </Badge.Ribbon>
@@ -170,13 +172,18 @@ const AccountQuickLinks = (props) => {
             </div>
         );
     } else {
+
         return (
             <div className="ps-block--user-header">
                 <div className="ps-block__left">
                     <i className="icon-user"></i>
                 </div>
                 <div className="ps-block__right">
-                    <Link href="/account/selection">
+                    <Link href={
+                        (id) ? `/account/login?id=${id}` :
+                            (deal) ? `/account/login?deal=${deal}` :
+                                "/account/selection"
+                    }>
                         <a>Kirish</a>
                     </Link>
 
