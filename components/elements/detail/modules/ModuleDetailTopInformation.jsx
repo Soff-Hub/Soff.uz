@@ -1,5 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
+import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
 
 const ModuleDetailTopInformation = ({ product }) => {
     const router = useRouter();
@@ -29,6 +30,7 @@ const ModuleDetailTopInformation = ({ product }) => {
         return formattedNumber;
     }
 
+    console.log(product);
     // Views
     let priceView;
     if (product?.is_sale) {
@@ -81,20 +83,20 @@ const ModuleDetailTopInformation = ({ product }) => {
                         className="product__top-information-account"
                         style={{ cursor: 'pointer' }}
                         onClick={() => SellerPage(product?.seller?.id)}>
-                        <div>
-                            {product?.seller?.image_url ? (
-                                <img
-                                    alt="soff"
-                                    src={product?.seller?.image_url}
-                                    className="profile__image-client"
-                                />
-                            ) : (
-                                <i
-                                    className=" fa-2x text-info fa-solid fa-circle-user"
-                                    style={{
-                                        fontSize: '30px',
-                                    }}></i>
-                            )}
+
+                        <div style={{ position: "relative" }}>
+                            <img
+                                alt="soff"
+                                src={product?.seller?.image_url ? product?.seller?.image_url : "/static/img/ozodbek.png"}
+                                className="profile__image-client-top-seller"
+                            />
+                            {
+                                <span>{checkIfUserIsOnline(product?.seller?.last_login) ?
+                                    <i className="fa-solid fa-circle text-success fs-5" style={{ position: "absolute", bottom: "-12%", right: "3%" }}></i> :
+                                    <i className="fa-solid fa-circle text-secondary  fs-5" style={{ position: "absolute", bottom: "-12%", right: "3%" }}></i>
+
+                                }</span>
+                            }
                         </div>
 
                         {product?.seller?.first_name && (

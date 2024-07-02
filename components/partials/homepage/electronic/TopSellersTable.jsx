@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import PostRepository from '~/repositories/PostRepository';
 
-function checkIfUserIsOnline(lastVisit) {
+export function checkIfUserIsOnline(lastVisit) {
     const currentTime = new Date();
     const lastVisitTime = new Date(lastVisit);
     const fiveMinutesAgo = new Date(currentTime.getTime() - 5 * 60000); // 5 daqiqa oldingi vaqtni hisoblash
