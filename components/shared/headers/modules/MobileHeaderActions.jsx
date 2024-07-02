@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { connect, useSelector } from 'react-redux';
 import Link from 'next/link';
 import AccountQuickLinksMobile from './AccountQuickLinksMobile';
@@ -6,13 +6,23 @@ import { Dropdown, Menu, notification } from 'antd';
 import { SmileOutlined } from '@ant-design/icons';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useRouter } from 'next/router';
 
 const MobileHeaderActions = ({ auth }) => {
     const state = useSelector((state) => state.ecomerce.cartDataItems);
+    const router = useRouter();
+    const { id, deal } = router?.query
+
+
+
     const menu = (
         <Menu>
             <div className="d-flex flex-column p-2">
-                <Link href="/account/login">
+                <Link href={
+                    (id) ? `/account/login?id=${id}` :
+                        (deal) ? `/account/login?deal=${deal}` :
+                            "/account/selection"
+                }>
                     <a>Kirish</a>
                 </Link>
 
@@ -20,7 +30,7 @@ const MobileHeaderActions = ({ auth }) => {
                     <a>Ro'yxatdan o'tish</a>
                 </Link>
             </div>
-        </Menu>
+        </Menu >
     );
 
     const [socket, setSocket] = useState(null);
@@ -75,7 +85,7 @@ const MobileHeaderActions = ({ auth }) => {
 
             // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
-              
+
             };
 
             // useEffect funksiyasiga qaytariladigan cleanup funksiya
