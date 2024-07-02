@@ -135,10 +135,11 @@ const SellerPage = ({ seller, sellerr }) => {
     }
 
     useEffect(() => {
-        checkIfUserIsOnline(sellerr?.last_login)
-    }, [sellerr?.last_login])
+        checkIfUserIsOnline(sellerr?.seller?.last_login)
+    }, [sellerr?.seller?.last_login])
 
 
+    console.log(sellerr);
 
     return (
         <PageContainer>
@@ -220,10 +221,10 @@ const SellerPage = ({ seller, sellerr }) => {
                                             {dateTime ?
                                                 <p className='text-success fw-bold'>Onlayn</p> :
                                                 (
-                                                    sellerr?.last_login &&
+                                                    sellerr?.seller?.last_login &&
                                                     <p>
                                                         Oxirgi  marta:{' '}
-                                                        <CalculateTimeDifference targetDate={sellerr?.last_login} />
+                                                        <CalculateTimeDifference targetDate={sellerr?.seller?.last_login} />
 
                                                     </p>
                                                 )
