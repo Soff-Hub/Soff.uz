@@ -87,8 +87,6 @@ const Progress = ({
         console.log(xhr);
     }
 
-    console.log(status);
-    console.log(error);
 
 
     return (

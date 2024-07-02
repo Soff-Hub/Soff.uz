@@ -9,7 +9,7 @@ import ModalTanishuv from './modules/Modal-tanishuv';
 import { withRouter } from 'next/router';
 import { begin } from '~/store/auth/action';
 
-class Register extends Component {
+class RegisterCustomer extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -88,7 +88,13 @@ class Register extends Component {
         const { registerUser } = useAuth();
 
         if (this.props.router.query.pid || localStorage.getItem('referal')) {
-            const user = await registerUser(`auth/seller-register/${this.props.router.query.pid ? this.props.router.query.pid : localStorage.getItem('referal')}/`, e);
+            const user = await registerUser(
+                `auth/seller-register/${this.props.router.query.pid
+                    ? this.props.router.query.pid
+                    : localStorage.getItem('referal')
+                }/`,
+                e
+            );
             if (user) {
                 if (user.status >= 400 && user.status !== 500) {
                     this.setState({ report: true });
@@ -104,7 +110,7 @@ class Register extends Component {
                     localStorage.setItem('tour', true);
                     localStorage.setItem('via_', user?.data?.via_);
                     localStorage.setItem('data', JSON.stringify(e));
-                    localStorage.removeItem("referal")
+                    localStorage.removeItem('referal');
                     if (this.props.router.query.id) {
                         Router.push(
                             `/account/Message?id=${this.props.router.query.id}`
@@ -137,18 +143,14 @@ class Register extends Component {
                             `/account/Message?id=${this.props.router.query.id}`
                         );
                     } else if (this.props.router.query.deal) {
-                        `/account/Message?deal=${this.props.router.query.deal}`
-                    }
-                    else {
+                        `/account/Message?deal=${this.props.router.query.deal}`;
+                    } else {
                         Router.push(`/account/Message?via=${user.data.via_}`);
                     }
                     this.setState({ report: true });
                 }
             }
-
         }
-
-
     };
 
     handleChekked = () => {
@@ -186,9 +188,8 @@ class Register extends Component {
     };
 
     componentDidMount() {
-
         if (this.props.router.query.pid) {
-            localStorage.setItem('referal', this.props.router.query.pid)
+            localStorage.setItem('referal', this.props.router.query.pid);
         }
 
         if (this.props.url === 'auth/seller-register/') {
@@ -200,49 +201,43 @@ class Register extends Component {
 
     componentDidUpdate() {
         if (this.props.router.query.pid) {
-            localStorage.setItem('referal', this.props.router.query.pid)
+            localStorage.setItem('referal', this.props.router.query.pid);
         }
-
     }
-
 
     render() {
         const { router } = this.props;
-        const { deal,  id } = this.props?.router?.query;
+        const { deal, id } = this.props?.router?.query;
         // referal
         const { pid } = router.query;
-
-
 
         return (
             <div className="ps-my-account">
                 <div className="container">
                     <div className="ps-form--account">
                         <Form onFinish={this.handleSubmit}>
-                            <ul className="ps-tab-list">
-                                <li>
-                                    <Link href={
-                                        (id) ? `/account/login?id=${id}` :
-                                            (deal) ? `/account/login?deal=${deal}` :
-                                                "/account/login"
-                                    }>
-                                        <a>Kirish</a>
-                                    </Link>
-                                </li>
+                            <ul className="ps-tab-list mb-4">
                                 <li className="active">
-                                    <Link href={
-                                        (id) ? `/account/register?id=${id}` :
-                                            (deal) ? `/account/register?deal=${deal}` :
-                                                "/account/register"
-                                    }
-                                    >
+                                    <Link href={'/account/register-user'}>
                                         <a>Ro'yxatdan o'tish</a>
                                     </Link>
                                 </li>
                             </ul>
                             <div className="ps-tab active" id="register">
-                                <div className="ps-form__content">
-                                    <h5>Ro'yxatdan o'tish</h5>
+                                <div className="ps-form__content pt-5">
+                                    <h5 className='text-secondary'>
+                                        Profilingiz bo'lsa kirish qismiga o'ting{' '}
+                                        <Link
+
+                                            href={
+                                                (id) ? `/account/login?id=${id}` :
+                                                    (deal) ? `/account/login?deal=${deal}` :
+                                                        "/account/login"
+                                            }>
+                                            <a className='text-success mx-2'>Kirish</a>
+                                        </Link>
+                                    </h5>
+
                                     <div className="form-group">
                                         <p>Telefon raqam yoki email</p>
                                         <Form.Item
@@ -352,11 +347,9 @@ class Register extends Component {
                                                         disabled={true}
                                                         style={{
                                                             cursor: 'not-allowed',
-                                                            color: '#fff'
+                                                            color: '#fff',
                                                         }}
-                                                        className="ps-btn ps-btn--fullwidth"
-
-                                                    >
+                                                        className="ps-btn ps-btn--fullwidth">
                                                         Ro'yxatdan o'tish
                                                     </button>
                                                 </Tooltip>
@@ -764,4 +757,4 @@ class Register extends Component {
 const mapStateToProps = (state) => {
     return state.auth;
 };
-export default connect(mapStateToProps)(withRouter(Register));
+export default connect(mapStateToProps)(withRouter(RegisterCustomer));

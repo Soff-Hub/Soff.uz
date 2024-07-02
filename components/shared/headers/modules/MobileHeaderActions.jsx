@@ -75,7 +75,7 @@ const MobileHeaderActions = ({ auth }) => {
 
             // WebSocket ulanishida xatolik bo'lganida ishlaydigan funksiya
             newSocket.onerror = function (error) {
-                console.error('WebSocket xatosi:', error);
+              
             };
 
             // useEffect funksiyasiga qaytariladigan cleanup funksiya

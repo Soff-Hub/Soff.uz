@@ -43,7 +43,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
             dispatch(OneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
-            Router.push(`/account/login?id=${product?.id}`);
+            Router.push(`/account/register-user?id=${product?.id}`);
         }
     }
 
@@ -87,6 +87,8 @@ const ModuleDetailShoppingActions = ({ product }) => {
     };
 
 
+    console.log(loading);
+
 
     if (true) {
         return (
@@ -113,11 +115,11 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
                 <div className="ps-product__shopping">
-                {contextHolder}
+                    {contextHolder}
                     <div>
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.document?.file_url  ? (
+                                {product?.document?.file_url ? (
                                     <a
                                         style={{
                                             cursor: 'pointer',
@@ -129,11 +131,20 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                         href="#"
                                         onClick={async (e) => {
                                             e.preventDefault();
-                                            setLoading(true)
-                                            await audioDownloaderSale(product, product);
-                                            setLoading(false)
-                                        }}>
-                                        {!loading ? "Yuklab olish" :
+                                            setLoading(true);
+                                            console.log('Loading state set to true');
+                                            try {
+                                                await audioDownloaderSale(product, product);
+                                            } catch (error) {
+                                                console.error('Error in audioDownloaderSale:', error);
+                                            } finally {
+                                                setLoading(false);
+                                                console.log('Loading state set to false');
+                                            }
+                                        }}
+                                    >
+                                        {!loading ?
+                                            "Yuklab olish" :
                                             <div>
                                                 <div
                                                     className="spinner-border"
@@ -166,7 +177,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                             </>
                         ) : (
                             <a
-                                style={{ cursor:loading ? 'not-allowed' : 'pointer', minWidth: "212px" }}
+                                style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px" }}
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"
                                 onClick={async (e) => {

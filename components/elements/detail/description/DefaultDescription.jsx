@@ -3,7 +3,7 @@ import { Tabs } from 'antd';
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 import RateCommit from './RateCommit';
 import Commits from './Commits';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useRouter } from 'next/router';
 import Axios from 'axios';
@@ -17,15 +17,14 @@ const DefaultDescription = ({ product }) => {
     const [data, setData] = useState([]);
     const [dataCount, setDataCount] = useState(true);
     const { query } = useRouter();
-    const [reviews, setReviews] = useState(false)
-
+    const [reviews, setReviews] = useState(null);
+    const dispatch = useDispatch();
 
 
     async function GetItemsProductsProgress() {
-        const ItemsData = await GetRepository.getSellerCommitLists(query?.pid, pageMore);
+        const ItemsData = await GetRepository.getSellerCommitLists(query?.pid, pageMore, user?.access);
         if (ItemsData?.results) {
             const newData = ItemsData.results;
-
             // Takroriy ma'lumotlarni filtr qilish
             const uniqueNewData = newData.filter(
                 newItem => !data.some(existingItem => existingItem.id === newItem.id)
@@ -54,7 +53,7 @@ const DefaultDescription = ({ product }) => {
                     },
                 }
             );
-            setReviews(response?.data?.can_review)
+            setReviews(response?.data)
         } catch (error) {
             console.error('Error fetching document:', error);
         }
@@ -71,7 +70,7 @@ const DefaultDescription = ({ product }) => {
         if (query?.pid) {
             GetItemsProductsProgress()
         }
-    }, [query?.pid, pageMore, dataCount])
+    }, [query?.pid, pageMore, user?.access, dataCount]);
 
 
 
@@ -90,7 +89,7 @@ const DefaultDescription = ({ product }) => {
                             <PartialDescription product={product} />
                         </TabPane>
                     }
-                    {(reviews || data?.length > 0) &&
+                    {(reviews?.can_review || data?.length > 0) &&
 
                         <TabPane tab={`Sharhlar (${data?.length})`} key="2">
                             <div className='row '>
@@ -101,14 +100,20 @@ const DefaultDescription = ({ product }) => {
                                         <Commits data={data}
                                             countToggle={countToggle}
                                             setPageMore={setPageMore}
-                                            pageMore={pageMore} />
+                                            pageMore={pageMore}
+                                            setDataCount={setDataCount}
+                                            product={product}
+                                            reviews={reviews}
+
+                                        />
                                     </div>
                                 }
+
                                 {
-                                    (user?.access && reviews) &&
+                                    (user?.access && reviews?.can_review) &&
                                     <div className='col-md-12'>
 
-                                        <RateCommit product={product} setDataCount={setDataCount} setData={setData} data={data} />
+                                        <RateCommit product={product} setDataCount={setDataCount} reviews={reviews} />
                                     </div>
                                 }
                             </div>

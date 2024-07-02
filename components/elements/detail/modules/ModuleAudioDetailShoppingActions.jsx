@@ -43,7 +43,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
             dispatch(OneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
-            Router.push(`/account/login?id=${product?.id}`);
+            Router.push(`/account/register-user?id=${product?.id}`);
         }
     }
 
@@ -91,7 +91,7 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                             } `}>
                         {product?.discount_price > 0 ? (
                             <>
-                                {product?.document?.file_url  ? (
+                                {product?.document?.file_url ? (
                                     (
                                         <a
                                             style={{
@@ -99,15 +99,22 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                                     ? 'not-allowed'
                                                     : 'pointer'
                                                     }`,
-                                                    minWidth:"150px"
+                                                minWidth: "150px"
                                             }}
                                             className="ps-btn ps-btn--black max-class"
                                             href="#"
                                             onClick={async (e) => {
                                                 e.preventDefault();
-                                                setLoading(true)
-                                                await audioDownloaderSale(product, product);
-                                                setLoading(false)
+                                                setLoading(true);
+                                                console.log('Loading state set to true');
+                                                try {
+                                                    await audioDownloaderSale(product, product);
+                                                } catch (error) {
+                                                    console.error('Error in audioDownloaderSale:', error);
+                                                } finally {
+                                                    setLoading(false);
+                                                    console.log('Loading state set to false');
+                                                }
                                             }}>
                                             {!loading ? "Yuklab olish" :
                                                 <div>
@@ -160,15 +167,22 @@ const ModuleAudioDetailShoppingActions = ({ product, admin }) => {
                                         ? 'not-allowed'
                                         : 'pointer'
                                         }`,
-                                        minWidth:"172px"
+                                    minWidth: "172px"
                                 }}
                                 className="ps-btn ps-btn--black max-class"
                                 href="#"
                                 onClick={async (e) => {
                                     e.preventDefault();
-                                    setLoading(true)
-                                    await audioDownloaderSale(product, product);
-                                    setLoading(false)
+                                    setLoading(true);
+                                    console.log('Loading state set to true');
+                                    try {
+                                        await audioDownloaderSale(product, product);
+                                    } catch (error) {
+                                        console.error('Error in audioDownloaderSale:', error);
+                                    } finally {
+                                        setLoading(false);
+                                        console.log('Loading state set to false');
+                                    }
                                 }}>
                                 {!loading ? "Bepul yuklab olish" :
                                     <div>

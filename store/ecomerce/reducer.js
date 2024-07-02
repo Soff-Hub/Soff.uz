@@ -1,7 +1,4 @@
-import { useCookies } from 'react-cookie';
-import { ReactDOM } from 'react';
 import { actionTypes } from './action';
-
 
 // const loacl = localStorage.getItem('cart')
 
@@ -11,12 +8,11 @@ export const initalState = {
     compareItems: [],
     cartItems: [],
     cartDataItems: [],
-    wishlist: []
+    wishlist: [],
+    replied_count: 0,
 };
 
-
 function reducer(state = initalState, action) {
-
     switch (action.type) {
         case actionTypes.SET_WISHLIST_ITEMS_SUCCESS:
             for (let i = 0; i < action.payload.length; i++) {
@@ -41,6 +37,12 @@ function reducer(state = initalState, action) {
                 ...state,
                 cartDataItems: action.payload,
             };
+        case actionTypes.REPLIED_COUNT:
+            return {
+                ...state,
+                replied_count: action.payload,
+            };
+
         case actionTypes.SET_COMPARE_ITEMS_SUCCESS:
             return {
                 ...state,
