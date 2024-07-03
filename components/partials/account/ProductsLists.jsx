@@ -293,7 +293,7 @@ function ProductsLists() {
             key: 'name',
             render: (poster_data) => (
                 <div>
-                    {poster_data ? (
+                    {poster_data?.poster_url ? (
                         <NextImageCard
                             url={poster_data?.poster_url}
                             clasS="rounded-3 mb-2"
