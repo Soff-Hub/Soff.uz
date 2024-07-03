@@ -257,46 +257,55 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             {user?.role === 'seller' ? (
                 <div className="pb-3 step-3">
                     <div className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
-                        <div>
-                            <Tooltip
-                                color='red'
-                                overlayStyle={{
-                                    minWidth: '350px',
-                                }} title={
-                                    <div className='d-flex flex-column '>
-                                        <div className='d-flex gap-1'>
-                                            <span>Bloklab qo'yilgan vaqti:</span>
-                                            <CalculateTimeDifference targetDate={dataBlock?.created_at} />
-                                        </div>
-                                        <div className='d-flex gap-1'>
-                                            <span>Blokdan chiqish muddati:</span>
-                                            <CalculateTimeDifference targetDate={dataBlock?.created_at} />
-                                        </div>
+                        {
+                            dataBlock?.has_blocked &&
+                            <>
+
+                                <div>
+                                    <Tooltip
+                                        color='red'
+                                        overlayStyle={{
+                                            minWidth: '350px',
+                                        }} title={
+                                            <div className='d-flex flex-column '>
+                                                <div className='d-flex gap-1'>
+                                                    <span>Bloklab qo'yilgan vaqti:</span>
+                                                    <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                                </div>
+                                                <div className='d-flex gap-1'>
+                                                    <span>Blokdan chiqish muddati:</span>
+                                                    <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                                </div>
 
 
-                                        <span>{dataBlock?.reason}</span>
+                                                <span>{dataBlock?.reason}</span>
+                                            </div>
+
+                                        }>
+                                        <span style={{ cursor: 'pointer' }}>
+                                            <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                        </span>
+                                    </Tooltip>
+                                    <strong style={{ whiteSpace: 'wrap' }} className='text-danger'>Siz Bloklangansiz.
+                                        Bu davr mobaynida pul yechish uchun ariza yubora olmaysiz va yangi mahsulot qo'sha olmaysiz</strong>
+                                </div>
+
+                                <div className='d-flex flex-column '>
+                                    <div className='d-flex gap-1'>
+                                        <span className='fs-5'>Blok qilingan vaqt:</span>
+                                        <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.created_at} />
                                     </div>
 
-                                }>
-                                <span style={{ cursor: 'pointer' }}>
-                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
-                                </span>
-                            </Tooltip>
-                            <strong style={{ whiteSpace: 'wrap' }} className='text-danger'>Siz Bloklangansiz.
-                            Bu davr mobaynida pul yechish uchun ariza yubora olmaysiz va yangi mahsulot qo'sha olmaysiz</strong>
-                        </div>
-                        <div className='d-flex flex-column '>
-                        <div className='d-flex gap-1'>
-                                <span className='fs-5'>Blok qilingan vaqt:</span>
-                                <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.created_at} />
-                            </div>
+                                    <div className='d-flex gap-1'>
+                                        <span className='fs-5'>Blokdan chiqish muddati:</span>
+                                        <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.to_date} />
+                                    </div>
+                                    <span className='fs-5'>{dataBlock?.reason}</span>
+                                </div>
 
-                            <div className='d-flex gap-1'>
-                                <span className='fs-5'>Blokdan chiqish muddati:</span>
-                                <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.to_date} />
-                            </div>
-                            <span className='fs-5'>{dataBlock?.reason}</span>
-                        </div>
+
+                            </>
+                        }
 
 
                         <strong
