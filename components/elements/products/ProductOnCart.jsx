@@ -1,27 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ProductOnCart = ({ product, children }) => {
     const { thumbnailImage, title } = useProduct();
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+   
 
     return (
         <div className="ps-product--cart-mobile">

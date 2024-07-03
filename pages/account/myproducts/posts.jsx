@@ -18,6 +18,7 @@ import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
 import Progress from '~/components/progress/progress';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 const category_id = [];
 
 
@@ -190,23 +191,7 @@ const Posts = () => {
     }
 
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
 
     const handleFreeChange = (e) => {

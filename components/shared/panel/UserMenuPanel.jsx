@@ -1,31 +1,39 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import Router, { useRouter } from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { BeatLoader } from 'react-spinners';
+import useAuth from '~/hooks/useAuth';
+import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
-const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
+const AccountMenuSidebar = ({ data, renderProfile }) => {
+    const dispatch = useDispatch();
+    const { accountLinks } = useSelector((state) => state.auth);
+    const refresh = useSelector((state) => state.auth?.user?.refresh);
+
+    const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
     const [profile, setProfile] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [webdata, setWebData] = useState(null);
     const [socket, setSocket] = useState(null);
     const [webdata1, setWebData1] = useState(null);
     const [socket1, setSocket1] = useState(null);
     const [webdata2, setWebData2] = useState(null);
     const [socket2, setSocket2] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [dataBlock, setdataBlock] = useState(null);
     const [copy, setCopy] = useState(false);
-
-    const { accountLinks } = useSelector((state) => state.auth);
-
+    const [socketApplication, setSocketApplication] = useState(null);
+    const [applicationData, setApplicationData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCustomer, setIsModalOpenCustomer] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+
+
     const showModalCustomer = () => {
         setIsModalOpenCustomer(true);
     };
@@ -36,24 +44,46 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
         setIsModalOpenCustomer(false);
     };
     const handleOk = () => {
-        setIsModalOpen(false);
+        setIsModalOpen(true);
     };
+
     const handleCancel = () => {
         setIsModalOpen(false);
     };
 
+    const handleLogoutToken = () => {
+        const data = {
+            refresh: refresh,
+        };
+        const { logOutAuth } = useAuth();
+        const res = logOutAuth(data);
+
+        if (res) {
+            Router.push('/account/dashbord');
+            dispatch(logOut());
+        }
+    };
+
+    async function ProfileUsersToken(token) {
+        const ItemsData = await GetRepository.getProfileToken(token);
+        if (Number(ItemsData?.status) == 403) {
+            handleLogoutToken();
+        }
+    }
+
     async function ProfileUsers(token) {
         setLoading(true);
         const ItemsData = await GetRepository.getProfile(token);
-
         setProfile(ItemsData);
         setLoading(false);
     }
 
-    const handleDrawerClose = () => {
-        setMenuDrawer(false);
-        setCategoriesDrawer(false);
-    };
+    async function ProfileUsersBLock() {
+        const token = user?.access
+        const ItemsData = await GetRepository.getProfileBlock(token);
+        setdataBlock(ItemsData);
+    }
+
     useEffect(() => {
         if (socket) {
             socket.addEventListener('message', (event) => {
@@ -61,6 +91,23 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
             });
         }
     }, [socket]);
+
+    useEffect(() => {
+        if (user?.role === 'admin') {
+            setSocket(
+                new WebSocket(
+                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-offer/?token=${user?.access}`
+                )
+            );
+        } else {
+            setSocket(
+                new WebSocket(
+                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-offer/?token=` +
+                    user?.access
+                )
+            );
+        }
+    }, []);
 
     useEffect(() => {
         if (socket1) {
@@ -71,7 +118,13 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [socket1]);
 
     useEffect(() => {
-        setSocket1(new WebSocket('wss://api.soff.uz/ws/admin-document/'));
+        if (user?.role === 'admin') {
+            setSocket1(
+                new WebSocket(
+                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-document/?token=${user?.access}`
+                )
+            );
+        }
     }, []);
 
     useEffect(() => {
@@ -83,40 +136,51 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
     }, [socket2]);
 
     useEffect(() => {
-        setSocket2(new WebSocket('wss://api.soff.uz/ws/seller-document/'));
+        if (user?.role) {
+            setSocket2(
+                new WebSocket(
+                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-document/?token=` +
+                    user?.access
+                )
+            );
+        }
     }, []);
 
-    useEffect(() => ProfileUsers(user?.access), [user?.access]);
+    useEffect(() => {
+        if (socketApplication) {
+            socketApplication.onmessage = (event) => {
+                setApplicationData(JSON.parse(event.data));
+            };
+        }
+    }, [socketApplication]);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
+    useEffect(() => {
+        if (user?.role === 'admin') {
+            setSocketApplication(
+                new WebSocket(
+                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/admin-application/?token=${user?.access}`
+                )
+            );
+        } else {
+            setSocketApplication(
+                new WebSocket(
+                    `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-application/?token=` +
+                    user?.access
+                )
+            );
+        }
+    }, []);
 
-        const [integerPart, decimalPart] = numStr.split('.');
+    useEffect(() => {
+        ProfileUsers(user?.access);
+    }, [renderProfile]);
 
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
-
-    const { asPath } = useRouter();
-
-    const handleAboutReffer = () => {
-        handleDrawerClose();
-        const modal = Modal.info({
-            centered: true,
-            title: 'Taklif havlasi bu?',
-            content: `Sizning taklif havolangiz orqali ro'yxatdan o'tgan har bir sotuvchining daromadidan, ${+profile?.inviter_percentage} % qismi sizga tushadigan daromad`,
-        });
-        modal.update;
-    };
+    useEffect(() => {
+        if (user?.access) {
+            ProfileUsersToken(user?.access);
+            ProfileUsersBLock()
+        }
+    }, [user?.access]);
 
     function copyToClipboard() {
         const textToCopy = `https://soff.uz/account/register/${profile?.code}`;
@@ -134,10 +198,17 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
         }
     }
 
+
+
+
     return (
         <aside className="ps-widget--account-dashboard">
-            <div className="ps-widget__header  p-2 pb-4 py-4">
-                <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
+            <div className="ps-widget__header  p-2 pb-4 step-2">
+                {profile?.image ? (
+                    <img src={`${profile?.image}`} className="profile__image" />
+                ) : (
+                    <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
+                )}
                 <figure>
                     {!loading ? (
                         <>
@@ -152,19 +223,19 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                     <span>
                                         {profile?.role
                                             ? 'Sotuvchi'
-                                            : "malumt yo'q"}
+                                            : "ma'lumot yo'q"}
                                     </span>
-                                ) : user.role === 'admin' ? (
+                                ) : user?.role === 'admin' ? (
                                     <span>
                                         {profile?.role
                                             ? 'Admin'
-                                            : "malumt yo'q"}
+                                            : "malumot yo'q"}
                                     </span>
-                                ) : user.role === 'customer' ? (
+                                ) : user?.role === 'customer' ? (
                                     <span>
                                         {profile?.role
                                             ? 'Foydalanuvchi'
-                                            : "malumt yo'q"}
+                                            : "malumot yo'q"}
                                     </span>
                                 ) : (
                                     <></>
@@ -184,8 +255,50 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                 </figure>
             </div>
             {user?.role === 'seller' ? (
-                <div className="pb-3">
-                    <h4 className="w-100  border m-0 p-3 rounded-3  text-truncate ">
+                <div className="pb-3 step-3">
+                    <div className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
+                        <div>
+                            <Tooltip
+                                color='red'
+                                overlayStyle={{
+                                    minWidth: '350px',
+                                }} title={
+                                    <div className='d-flex flex-column '>
+                                        <div className='d-flex gap-1'>
+                                            <span>Bloklab qo'yilgan vaqti:</span>
+                                            <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                        </div>
+                                        <div className='d-flex gap-1'>
+                                            <span>Blokdan chiqish muddati:</span>
+                                            <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                        </div>
+
+
+                                        <span>{dataBlock?.reason}</span>
+                                    </div>
+
+                                }>
+                                <span style={{ cursor: 'pointer' }}>
+                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                </span>
+                            </Tooltip>
+                            <strong style={{ whiteSpace: 'wrap' }} className='text-danger'>Siz Bloklangansiz.
+                            Bu davr mobaynida pul yechish uchun ariza yubora olmaysiz va yangi mahsulot qo'sha olmaysiz</strong>
+                        </div>
+                        <div className='d-flex flex-column '>
+                        <div className='d-flex gap-1'>
+                                <span className='fs-5'>Blok qilingan vaqt:</span>
+                                <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.created_at} />
+                            </div>
+
+                            <div className='d-flex gap-1'>
+                                <span className='fs-5'>Blokdan chiqish muddati:</span>
+                                <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.to_date} />
+                            </div>
+                            <span className='fs-5'>{dataBlock?.reason}</span>
+                        </div>
+
+
                         <strong
                             className={`fs-3 text-${profile?.is_payment === false
                                 ? 'danger'
@@ -194,7 +307,7 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                             <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
                             {addPeriodToThousands(profile?.wallet)} so'm
                         </strong>
-                    </h4>
+                    </div>
                     <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
                         <p
                             className="m-0"
@@ -215,12 +328,18 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                             so'm
                         </p>
                         <p
-                            className="m-0 mb-3"
+                            className="m-0 mt-3"
                             style={{
                                 display: 'flex',
                                 alignItems: 'flex-start',
-                                gap: 20,
+                                gap: 10,
                             }}>
+                            <Tooltip
+                                title={`Sizning taklif havolangiz orqali ro'yxatdan o'tgan har bir sotuvchining daromadidan, ${+profile?.inviter_percentage} % qismi sizga tushadigan daromad`}>
+                                <i
+                                    style={{ cursor: 'pointer' }}
+                                    className="fa-regular fa-circle-question mt-2"></i>
+                            </Tooltip>
                             <span style={{ overflow: 'hidden' }}>
                                 Taklif havolani olish{' '}
                                 {profile?.code ? (
@@ -248,33 +367,34 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                                 )}
                             </span>
                         </p>
-                        <u
-                            onClick={() => handleAboutReffer()}
-                            className="m-0"
-                            style={{ cursor: 'pointer' }}>
-                            Taklif havola nima?
-                        </u>
                     </h5>
+                    <p></p>
                 </div>
             ) : (
                 <></>
             )}
-            <div className="ps-widget__content ">
+
+            <div className="ps-widget__content">
+
                 <Modal
-                    title=" Mening bitimlarim"
+                    footer={null}
                     open={isModalOpen}
                     onOk={handleOk}
                     onCancel={handleCancel}
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
-                    <p>Tez kunda!</p>
-                    <p>
-                        Bu yerda siz o'z xizmatlaringizni sotishingiz mumkin.
-                        Soff.uz platformasi siz uchun xizmatlaringizga mos
-                        bo'lgan, Buyurtmachilardan kelib tushgan buyurtmalarni
-                        taqdim qiladi.
+                    <h4 className='text-danger '>Siz Bloklangansiz </h4>
+                    <p className=' '>Hurmatli Sotuvchi quyidagi sababga ko'ra Bloklangansiz
+                        Bloklanish vaqtingiz tugagandan so'ng mahsulot yuklashingiz mumkin!
                     </p>
+                    <p className='m-0 fw-medium '>Blok qilingan muddat! : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
+                    <p className=' fw-medium'>Blokadan chiqish muddatingiz! : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
+                    <div>
+                        <p className='fw-bold m-0'>Bloklanganligi haqida sabab:</p>
+                        <p> {dataBlock?.reason}</p>
+                    </div>
                 </Modal>
+
                 <Modal
                     title="Buyurtma berish"
                     open={isModalOpenCustomer}
@@ -289,130 +409,146 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
                         bo'ladi.
                     </p>
                 </Modal>
+
+
                 <ul>
-                    {accountLinks?.map((link) => (
+                    {accountLinks.map((link, index) => (
                         <>
-                            {link?.url == 'b' ? (
-                                <Badge.Ribbon text="Tez kunda" color="volcano">
-                                    <Card size="small">
-                                        <li onClick={handleDrawerClose}>
-                                            <span
-                                                onClick={showModalCustomer}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                }}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa-regular fa-handshake"></i>
-                                                    Buyurtma berish
-                                                </a>
-                                            </span>
-                                        </li>
-                                    </Card>
-                                </Badge.Ribbon>
-                            ) : link?.url == '#' ? (
-                                <Badge.Ribbon text="Tez kunda" color="volcano">
-                                    <Card size="small">
-                                        <li onClick={handleDrawerClose}>
-                                            <span
-                                                onClick={showModal}
-                                                style={{
-                                                    cursor: 'pointer',
-                                                }}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa-regular fa-handshake"></i>
-                                                    Mening bitimlarim
-                                                </a>
-                                            </span>
-                                        </li>
-                                    </Card>
-                                </Badge.Ribbon>
-                            ) : link?.url == '/account/donate-page' ? (
-                                <Badge.Ribbon text="Yangi funksiya" color="orange">
-                                    <Card size="small">
+                            {
+                                link?.url === 'b' ? (
+                                    <Badge.Ribbon
+                                        key={link?.url}
+                                        text="Yangi funksiya"
+                                        color="blue">
+                                        <Card size="small">
+                                            <li onClick={showModalCustomer}>
+                                                <span
+                                                    style={{
+                                                        cursor: 'pointer',
+                                                    }}>
+                                                    <a className="d-flex align-items-center">
+                                                        <i className="fa-regular fa-handshake"></i>
+                                                        Buyurtma berish
+                                                    </a>
+                                                </span>
+                                            </li>
+                                        </Card>
+                                    </Badge.Ribbon>
+
+                                ) : (dataBlock?.has_blocked && link?.url === '/account/myproducts/product-selection') ? (
+
+                                    <li onClick={handleOk}>
+                                        <span
+                                            style={{
+                                                cursor: 'pointer',
+                                            }}>
+                                            <a className="d-flex align-items-center">
+                                                <i className="fa-solid fa-circle-plus"></i>
+                                                Yangi Mahsulot
+                                            </a>
+                                        </span>
+                                    </li>
+
+                                ) :
+                                    (
+
                                         <li
-                                            onClick={handleDrawerClose}
                                             key={link.text}
-                                            className={
-                                                link.url === asPath ? 'active' : ''
-                                            }>
+                                            className={`${link.url === asPath ? 'active' : ''
+                                                } step-${index + 4}`}>
                                             <Link href={link.url}>
-                                                <a>
+                                                <a
+                                                    className={`d-flex align-items-center`}>
                                                     <i className={link.icon}></i>
                                                     {link.text}{' '}
+
+                                                    {user?.role === 'admin' ? (
+                                                        link?.url ===
+                                                            '/account/application' &&
+                                                            (applicationData?.count > 0 ||
+                                                                webdata?.count > 0) ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '11rem',
+                                                                }}>
+                                                                {Number(
+                                                                    applicationData?.count
+                                                                ) +
+                                                                    Number(
+                                                                        webdata?.count
+                                                                    )}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
+
+                                                    {user?.role === 'admin' ? (
+                                                        link?.url ===
+                                                            '/account/products' &&
+                                                            webdata1?.count > 0 ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '12rem',
+                                                                }}>
+                                                                {webdata1?.count}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
+
+                                                    {user?.role === 'seller' ? (
+                                                        link?.url ===
+                                                            '/account/myproducts' &&
+                                                            webdata2?.count > 0 ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '4rem',
+                                                                }}>
+                                                                {webdata2?.count}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
+
+                                                    {user?.role === 'seller' ? (
+                                                        link?.url ===
+                                                            '/account/application' &&
+                                                            (applicationData?.count > 0 ||
+                                                                webdata?.count > 0) ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '11rem',
+                                                                }}>
+                                                                {Number(
+                                                                    applicationData?.count
+                                                                ) +
+                                                                    Number(
+                                                                        webdata?.count
+                                                                    )}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
                                                 </a>
                                             </Link>
                                         </li>
-                                    </Card>
-                                </Badge.Ribbon>
-                            ) : (
-                                <li
-                                    onClick={handleDrawerClose}
-                                    key={link.text}
-                                    className={
-                                        link.url === asPath ? 'active' : ''
-                                    }>
-                                    <Link href={link.url}>
-                                        <a>
-                                            <i className={link.icon}></i>
-                                            {link.text}{' '}
-                                            {user?.role === 'admin' ? (
-                                                link?.url ===
-                                                    '/account/application' &&
-                                                    webdata?.is_avaiable ===
-                                                    true ? (
-                                                    <strong
-                                                        className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                        style={{
-                                                            marginLeft: '15rem',
-                                                        }}>
-                                                        {webdata?.count}
-                                                    </strong>
-                                                ) : (
-                                                    ''
-                                                )
-                                            ) : (
-                                                ''
-                                            )}
-                                            {user?.role === 'admin' ? (
-                                                link?.url ===
-                                                    '/account/products' &&
-                                                    webdata1?.is_avaiable ===
-                                                    true ? (
-                                                    <strong
-                                                        className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                        style={{
-                                                            marginLeft: '15rem',
-                                                        }}>
-                                                        {webdata1?.count}
-                                                    </strong>
-                                                ) : (
-                                                    ''
-                                                )
-                                            ) : (
-                                                ''
-                                            )}
-                                            {user?.role === 'seller' ? (
-                                                link?.url ===
-                                                    '/account/myproducts' &&
-                                                    webdata2?.is_avaiable ===
-                                                    true ? (
-                                                    <strong
-                                                        className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                        style={{
-                                                            marginLeft: '5rem',
-                                                        }}>
-                                                        {webdata2?.count}
-                                                    </strong>
-                                                ) : (
-                                                    ''
-                                                )
-                                            ) : (
-                                                ''
-                                            )}
-                                        </a>
-                                    </Link>
-                                </li>
-                            )}
+                                    )}
                         </>
                     ))}
                 </ul>
@@ -421,4 +557,4 @@ const UserMenuPanel = ({ setMenuDrawer, setCategoriesDrawer }) => {
     );
 };
 
-export default UserMenuPanel;
+export default AccountMenuSidebar;

@@ -4,6 +4,7 @@ import { message } from 'antd';
 import { useState } from 'react';
 import useWishlist from '~/hooks/useWishlist';
 import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
     const router = useRouter();
@@ -25,23 +26,7 @@ const ModuleAudioDetailTopInformation = ({ product, views, admin }) => {
         }
     };
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
 
 

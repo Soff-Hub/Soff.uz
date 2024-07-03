@@ -10,6 +10,7 @@ import ModalDelete from './Modal';
 import Link from 'next/link';
 import ModalDelas from './ModalDeals';
 import TextDescription from '~/components/progress/textDescription';
+import { addPeriodToThousands } from './ProductsLists';
 const { TextArea } = Input;
 
 
@@ -84,23 +85,7 @@ export default function MyDealCart() {
         setloadingUpdate(false)
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+  
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);

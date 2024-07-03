@@ -24,6 +24,7 @@ import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudi
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
+import { addPeriodToThousands } from './ProductsLists';
 const { TabPane } = Tabs;
 var parse = require('html-react-parser');
 
@@ -54,7 +55,9 @@ function MyProductsLists() {
     const [currPage, setCurrPage] = useState(1);
     const [count, setCount] = useState('');
     const [videosize, setVideoSize] = useState(null);
-    const [viewsAll, setViewsAll] = useState('')
+    const [viewsAll, setViewsAll] = useState('');
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [dataBlock, setdataBlock] = useState(null);
 
 
     const [copy, setCopy] = useState(null);
@@ -74,7 +77,7 @@ function MyProductsLists() {
     const dataFormat = date
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
         : '';
-    const { accountLinks, user, products } = useSelector((state) => state.auth);
+    const { accountLinks, user } = useSelector((state) => state.auth);
 
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
@@ -112,6 +115,13 @@ function MyProductsLists() {
         const ItemsData = await GetRepository.getAllCategoryListsGlobal();
         setDataCategory(ItemsData);
     }
+
+    async function ProfileUsersBLock() {
+        const token = user?.access
+        const ItemsData = await GetRepository.getProfileBlock(token);
+        setdataBlock(ItemsData);
+    }
+
 
     const onChange = async (name) => {
         if (name !== 'all') {
@@ -292,23 +302,15 @@ function MyProductsLists() {
         }
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
+    const handleOk = () => {
+        setIsModalOpen(true);
+    };
 
-        const [integerPart, decimalPart] = numStr.split('.');
+    const handleCancel = () => {
+        setIsModalOpen(false);
+    };
 
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
 
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     const copyVideoUrl = (item) => {
         const videoUrl = `https://soff.uz/product/${item?.name?.slug}`;
@@ -394,6 +396,11 @@ function MyProductsLists() {
         viewsAll
     ]);
 
+    useEffect(() => {
+        if (user?.access) {
+            ProfileUsersBLock()
+        }
+    }, [user?.access]);
 
     const statusMap = {
         moderation: {
@@ -410,6 +417,7 @@ function MyProductsLists() {
             tooltip: true
         }
     };
+
 
     const columns = [
         {
@@ -803,17 +811,28 @@ function MyProductsLists() {
                                             </span>
                                         </label>
                                         {user?.role === 'seller' ? (
-                                            <Link
-                                                href={
-                                                    '/account/myproducts/product-selection'
-                                                }>
-                                                <button className="  btn btn-success col-md-3 py-3 ">
+                                            dataBlock?.has_blocked ?
+
+                                                <button onClick={handleOk} className="  btn btn-success col-md-3 py-3 ">
                                                     <span className="fs-4">
                                                         <i className="fa-solid fa-circle-plus"></i>{' '}
                                                         Yangi mahsulot
                                                     </span>
                                                 </button>
-                                            </Link>
+                                                :
+
+                                                <Link
+                                                    href={
+                                                        '/account/myproducts/product-selection'
+                                                    }>
+                                                    <button className="  btn btn-success col-md-3 py-3 ">
+                                                        <span className="fs-4">
+                                                            <i className="fa-solid fa-circle-plus"></i>{' '}
+                                                            Yangi mahsulot
+                                                        </span>
+                                                    </button>
+                                                </Link>
+
                                         ) : (
                                             <></>
                                         )}
@@ -1489,6 +1508,26 @@ function MyProductsLists() {
                     )}
                 </ModalDeletePostEdit>
             </div>
+
+            <Modal
+                footer={null}
+                open={isModalOpen}
+                onOk={handleOk}
+                onCancel={handleCancel}
+                cancelButtonProps={{ style: { display: 'none' } }}
+                okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
+                <h4 className='text-danger '><i className="fa-solid fa-lock"></i> Siz Bloklangansiz </h4>
+                <p className='text-warning '>Hurmatli Sotuvchi quyidagi sababga ko'ra Bloklangansiz
+                    Bloklanish vaqtingiz tugagandan so'ng mahsulot yuklashingiz mumkin!
+                </p>
+                <p className='m-0 fw-medium '>Blok qilingan muddat! : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
+                <p className=' fw-medium'>Blokadan chiqish muddatingiz! : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
+                <div>
+                    <p className='fw-bold m-0'>Bloklanganligi haqida sabab:</p>
+                    <p> {dataBlock?.reason}</p>
+                </div>
+            </Modal>
+
         </section>
     );
 }

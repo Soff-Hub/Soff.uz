@@ -4,6 +4,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useRouter } from 'next/router';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { useSelector } from 'react-redux';
+import { addPeriodToThousands } from './ProductsLists';
 const { TextArea } = Input;
 
 
@@ -20,23 +21,6 @@ export default function ApplyForDeal() {
     const router = useRouter();
     const [contacInfo, setContacInfo] = useState('');
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     const handleChange = (date) => {
         if (date) {

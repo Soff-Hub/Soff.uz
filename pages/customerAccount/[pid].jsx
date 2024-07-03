@@ -11,36 +11,12 @@ import Link from 'next/link';
 
 const SellerAccount = ({ seller }) => {
     const [data, setData] = useState([]);
-    const [dashboardData, setDashboardData] = useState([]);
     const [tableData, setTableData] = useState([]);
     const router = useRouter();
     const { pid } = router.query;
     const { user } = useSelector((state) => state.auth);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
-
-    const getDashboardData = async (id, token) => {
-        if (token) {
-            const ItemsData = await GetRepository.getSellerDashboard(id, token);
-            setDashboardData(ItemsData);
-        }
-    };
 
     const breadCrumb = [
         {

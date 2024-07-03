@@ -1,4 +1,5 @@
 import React from 'react';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ModuleAudioDetailTopInformationLive = ({
     product,
@@ -6,23 +7,7 @@ const ModuleAudioDetailTopInformationLive = ({
     admin,
     taxminiyNarx,
 }) => {
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
     // Views
     let priceView;
 
