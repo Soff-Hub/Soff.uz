@@ -128,11 +128,11 @@ function Notifications() {
                             }} title={
                                 <div className='d-flex flex-column '>
                                     <div className='d-flex gap-1'>
-                                        <span>Bloklab qo'yilgan vaqti:</span>
+                                        <span>Bloklab qo'yilgan sanasi:</span>
                                         <CalculateTimeDifference targetDate={data_spam?.created_at} />
                                     </div>
                                     <div className='d-flex gap-1'>
-                                        <span>Blokdan chiqish muddati:</span>
+                                        <span>Blokdan chiqish sanasi:</span>
                                         <CalculateTimeDifference targetDate={data_spam?.to_date} />
                                     </div>
 
@@ -369,34 +369,34 @@ function Notifications() {
 
 
                         <Form.Item
-                            label="Blokdan chiqish muddati"
+                            label="Blokdan chiqish sanasi"
                             className="col-md-12 mb-3 "
                             name="date"
                             rules={[
                                 {
                                     required: true,
                                     message:
-                                        'Blokdan chiqish muddatini kiritish majburiy',
+                                        'Blokdan chiqish sanasini kiritish majburiy',
                                 },
                             ]}>
                             <DatePicker
-                                className='w-100 py-3' placeholder='Blokdan chiqish muddati' />
+                                className='w-100 py-3' placeholder='Blokdan chiqish sanasi' />
                         </Form.Item>
 
                         <Form.Item
-                            label="Bloklash haqida sabab"
+                            label="Bloklash sababi"
                             name="description"
                             className='col-md-12 mb-3'
                             rules={[
                                 {
                                     required: true,
                                     message:
-                                        'Bloklash haqida sababini kiritish majburiy',
+                                        'Bloklash  sababini kiritish majburiy',
                                 },
                             ]}>
                             <TextArea
                                 rows={4}
-                                placeholder="Bloklash haqida sabab"
+                                placeholder="Bloklash  sabab"
 
                             />
                         </Form.Item>
