@@ -274,7 +274,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                                 </div>
                                                 <div className='d-flex gap-1'>
                                                     <span>Blokdan chiqish muddati:</span>
-                                                    <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                                    <CalculateTimeDifference targetDate={dataBlock?.to_date} />
                                                 </div>
 
 

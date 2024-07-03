@@ -133,7 +133,7 @@ function Notifications() {
                                     </div>
                                     <div className='d-flex gap-1'>
                                         <span>Blokdan chiqish muddati:</span>
-                                        <CalculateTimeDifference targetDate={data_spam?.created_at} />
+                                        <CalculateTimeDifference targetDate={data_spam?.to_date} />
                                     </div>
 
 
