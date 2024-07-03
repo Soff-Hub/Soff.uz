@@ -1,5 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
 
 const ModuleDetailTopInformation = ({ product }) => {
@@ -12,23 +13,7 @@ const ModuleDetailTopInformation = ({ product }) => {
         }
     };
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+ 
 
     console.log(product);
     // Views

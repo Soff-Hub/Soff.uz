@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CategorySlug } from '~/store/auth/action';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount }) => {
     const Router = useRouter();
@@ -169,23 +170,7 @@ const WidgetShopFilterByPriceRange = ({ setFilteredData, categoryData, setCount 
         }
     }, [min, max]);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+   
 
     return (
         <aside className="widget widget_shop">

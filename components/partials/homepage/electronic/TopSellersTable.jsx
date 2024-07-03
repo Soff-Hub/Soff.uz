@@ -4,6 +4,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import PostRepository from '~/repositories/PostRepository';
+import { addPeriodToThousands } from '../../account/ProductsLists';
 
 export function checkIfUserIsOnline(lastVisit) {
     const currentTime = new Date();
@@ -32,23 +33,7 @@ export default function TopSellersTable() {
         });
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     useEffect(() => {
         getTopSeller();

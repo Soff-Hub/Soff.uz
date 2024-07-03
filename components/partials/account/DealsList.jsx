@@ -279,3 +279,4 @@ export default function DealsList({ setOpen }) {
         </div>
     );
 }
+

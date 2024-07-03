@@ -16,6 +16,7 @@ import Meta from '~/components/shared/headers/Meta';
 import { InputNumber } from 'primereact/inputnumber';
 import { useForm } from 'react-hook-form';
 import Input from '~/components/form/Input';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 
 
@@ -209,23 +210,7 @@ const PostsMyProducts = () => {
         }
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     const onChange = async (e) => {
         setCategoryName(e);

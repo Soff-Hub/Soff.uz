@@ -9,6 +9,7 @@ import CalculateTimeDifference from '~/components/partials/account/DateFormatter
 import { useRouter } from 'next/router';
 import ChartSeller from '~/components/partials/account/ChartSeller';
 import NextImageCard from '~/components/nextImagecard';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const SellerAccount = ({ seller }) => {
     const [data, setData] = useState([]);
@@ -26,23 +27,7 @@ const SellerAccount = ({ seller }) => {
 
 
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     const handleChangeYear = (value) => {
         setYear(+value);

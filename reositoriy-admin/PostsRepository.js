@@ -304,6 +304,28 @@ class PostRepository {
         return response;
     }
 
+    async postSellerBlock(data, token) {
+        const endPoint = 'seller/admin/blocked-users/';
+        const response = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'POST',
+            data: data,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error.response);
+        return response;
+    }
+
+
     async postDealAppliaction(data, token) {
         const endPoint = 'deals/deal-applications/create/';
         const response = await Repository({

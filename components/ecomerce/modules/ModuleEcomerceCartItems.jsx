@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Result } from 'antd';
 import ProductCart from '~/components/elements/products/ProductCart';
 import useCart from '~/hooks/useCart';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ModuleEcomerceCartItems = ({ cartItems }) => {
     const { removeCartOneItem } = useCart()
@@ -12,23 +13,7 @@ const ModuleEcomerceCartItems = ({ cartItems }) => {
         removeCartOneItem(item.id)
     };
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     // View
     let cartItemsViews;

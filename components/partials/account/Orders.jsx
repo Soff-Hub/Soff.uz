@@ -9,6 +9,7 @@ import CalculateTimeDifference from './DateFormatter';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import useDebounce from '~/hooks/useDebounce';
+import { addPeriodToThousands } from './ProductsLists';
 
 function OrdersLists() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -52,23 +53,7 @@ function OrdersLists() {
         }
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+  
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);

@@ -26,6 +26,28 @@ class PatchRepository {
             .catch((error) => error?.response);
         return reponse;
     }
+
+    async PatchCategorySeller(id, data, token) {
+        const endPoint = `seller/admin/blocked-users/${id}`;
+        const reponse = await Repository({
+            url: baseUrlCustomer + endPoint,
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error?.response);
+        return reponse;
+    }
+
     async PatchUsers(data, id, token) {
         const endPoint = `admin/customer-list/${id}/`;
         const reponse = await Repository({
@@ -283,7 +305,7 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
-    
+
     async patchDealadmin(id, data, token) {
         const endPoint = `deals/admin/deals/${id}/`;
         const reponse = await Repository({

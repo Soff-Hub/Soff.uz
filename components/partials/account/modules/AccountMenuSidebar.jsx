@@ -8,6 +8,8 @@ import useAuth from '~/hooks/useAuth';
 import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
+import { addPeriodToThousands } from '../ProductsLists';
+import CalculateTimeDifference from '../DateFormatter';
 
 const AccountMenuSidebar = ({ data, renderProfile }) => {
     const dispatch = useDispatch();
@@ -24,14 +26,14 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     const [webdata2, setWebData2] = useState(null);
     const [socket2, setSocket2] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [dataBlock, setdataBlock] = useState(null);
     const [copy, setCopy] = useState(false);
     const [socketApplication, setSocketApplication] = useState(null);
     const [applicationData, setApplicationData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenCustomer, setIsModalOpenCustomer] = useState(false);
-    const showModal = () => {
-        setIsModalOpen(true);
-    };
+
+
     const showModalCustomer = () => {
         setIsModalOpenCustomer(true);
     };
@@ -42,8 +44,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         setIsModalOpenCustomer(false);
     };
     const handleOk = () => {
-        setIsModalOpen(false);
+        setIsModalOpen(true);
     };
+
     const handleCancel = () => {
         setIsModalOpen(false);
     };
@@ -61,8 +64,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     };
 
-    
-
     async function ProfileUsersToken(token) {
         const ItemsData = await GetRepository.getProfileToken(token);
         if (Number(ItemsData?.status) == 403) {
@@ -75,6 +76,12 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         const ItemsData = await GetRepository.getProfile(token);
         setProfile(ItemsData);
         setLoading(false);
+    }
+
+    async function ProfileUsersBLock() {
+        const token = user?.access
+        const ItemsData = await GetRepository.getProfileBlock(token);
+        setdataBlock(ItemsData);
     }
 
     useEffect(() => {
@@ -96,7 +103,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             setSocket(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-offer/?token=` +
-                        user?.access
+                    user?.access
                 )
             );
         }
@@ -133,7 +140,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             setSocket2(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-document/?token=` +
-                        user?.access
+                    user?.access
                 )
             );
         }
@@ -158,39 +165,22 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             setSocketApplication(
                 new WebSocket(
                     `${process.env.NEXT_PUBLIC_WS_BASE_URL}ws/seller-application/?token=` +
-                        user?.access
+                    user?.access
                 )
             );
         }
     }, []);
 
     useEffect(() => {
-            ProfileUsers(user?.access);
+        ProfileUsers(user?.access);
     }, [renderProfile]);
 
     useEffect(() => {
         if (user?.access) {
             ProfileUsersToken(user?.access);
+            ProfileUsersBLock()
         }
     }, [user?.access]);
-
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     function copyToClipboard() {
         const textToCopy = `https://soff.uz/account/register/${profile?.code}`;
@@ -207,6 +197,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             }, 2000);
         }
     }
+
+
+
 
     return (
         <aside className="ps-widget--account-dashboard">
@@ -263,17 +256,52 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             </div>
             {user?.role === 'seller' ? (
                 <div className="pb-3 step-3">
-                    <h4 className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
+                    <div className="w-100   border m-0 p-3 rounded-3  text-truncate mb-2">
+                        <div>
+                            <Tooltip
+                                color='red'
+                                overlayStyle={{
+                                    minWidth: '350px',
+                                }} title={
+                                    <div className='d-flex flex-column '>
+                                        <div className='d-flex gap-1'>
+                                            <span>Bloklab qo'yilgan vaqti:</span>
+                                            <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                        </div>
+                                        <div className='d-flex gap-1'>
+                                            <span>Blokdan chiqish muddati:</span>
+                                            <CalculateTimeDifference targetDate={dataBlock?.created_at} />
+                                        </div>
+
+
+                                        <span>{dataBlock?.reason}</span>
+                                    </div>
+
+                                }>
+                                <span style={{ cursor: 'pointer' }}>
+                                    <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                                </span>
+                            </Tooltip>
+                            <strong style={{ whiteSpace: 'wrap' }} className='text-danger'>Siz Bloklangansiz.
+                                Bu davr mobaynida pul yechish uchun ariza yubora olmaysiz va yangi mahsulot qo'sha olmaysiz</strong>
+                        </div>
+                        <div className='d-flex flex-column '>
+                            <div className='d-flex gap-1'>
+                                <span className='fs-5'>Blokdan chiqish muddati:</span>
+                                <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.to_date} />
+                            </div>
+                        </div>
+
+
                         <strong
-                            className={`fs-3 text-${
-                                profile?.is_payment === false
-                                    ? 'danger'
-                                    : 'success'
-                            }`}>
+                            className={`fs-3 text-${profile?.is_payment === false
+                                ? 'danger'
+                                : 'success'
+                                }`}>
                             <i className="fa-solid fa-wallet mx-2"></i> Balans:{' '}
                             {addPeriodToThousands(profile?.wallet)} so'm
                         </strong>
-                    </h4>
+                    </div>
                     <h5 className="w-100  border m-0 p-3 rounded-3  text-truncate">
                         <p
                             className="m-0"
@@ -339,22 +367,28 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
             ) : (
                 <></>
             )}
+
             <div className="ps-widget__content">
+
                 <Modal
-                    title="Mening bitimlarim"
+                    footer={null}
                     open={isModalOpen}
                     onOk={handleOk}
                     onCancel={handleCancel}
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
-                    <p>Tez kunda!</p>
-                    <p>
-                        Bu yerda siz o'z xizmatlaringizni sotishingiz mumkin.
-                        Soff.uz platformasi siz uchun xizmatlaringizga mos
-                        bo'lgan, Buyurtmachilardan kelib tushgan buyurtmalarni
-                        taqdim qiladi.
+                    <h4 className='text-danger '>Siz Bloklangansiz </h4>
+                    <p className='text-warning '>Hurmatli Sotuvchi quyidagi sababga ko'ra Bloklangansiz
+                        Bloklanish vaqtingiz tugagandan so'ng mahsulot yuklashingiz mumkin!
                     </p>
+                    <p className='m-0 fw-medium '>Blok qilingan muddat! : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
+                    <p className=' fw-medium'>Blokadan chiqish muddatingiz! : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
+                    <div>
+                        <p className='fw-bold m-0'>Bloklanganligi haqida sabab:</p>
+                        <p> {dataBlock?.reason}</p>
+                    </div>
                 </Modal>
+
                 <Modal
                     title="Buyurtma berish"
                     open={isModalOpenCustomer}
@@ -369,222 +403,146 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                         bo'ladi.
                     </p>
                 </Modal>
+
+
                 <ul>
                     {data.map((link, index) => (
                         <>
-                            {link?.url === '/account/donate-page' ? (
-                                <>
+                            {
+                                link?.url === 'b' ? (
                                     <Badge.Ribbon
                                         key={link?.url}
-                                        text={
-                                            link.url === '/account/deals'
-                                                ? 'Tez kunda'
-                                                : 'Yangi funksiya'
-                                        }
-                                        color={
-                                            link.url === '/account/deals'
-                                                ? 'volcano'
-                                                : 'blue'
-                                        }>
+                                        text="Yangi funksiya"
+                                        color="blue">
                                         <Card size="small">
-                                            {link?.url === '/account/deals' ? (
-                                                <li
-                                                    className={`${
-                                                        link.url === asPath
-                                                            ? 'active'
-                                                            : ''
-                                                    } step-${index + 4}`}
-                                                    onClick={showModal}>
-                                                    <span
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}>
-                                                        <a className="d-flex align-items-center">
-                                                            <i
-                                                                className={
-                                                                    'fa-regular fa-handshake'
-                                                                }></i>
-                                                            Mening bitimlarim
-                                                        </a>
-                                                    </span>
-                                                </li>
-                                            ) : (
-                                                <li
-                                                    className={`${
-                                                        link.url === asPath
-                                                            ? 'active'
-                                                            : ''
-                                                    } step-${index + 4}`}>
-                                                    <Link
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        href={link.url}>
-                                                        <a className="d-flex align-items-center">
-                                                            <i
-                                                                className={
-                                                                    link.icon
-                                                                }></i>
-                                                            {link.text}
-                                                        </a>
-                                                    </Link>
-                                                </li>
-                                            )}
-                                        </Card>
-                                    </Badge.Ribbon>
-                                </>
-                            ) : link?.url === 'b' ? (
-                                <Badge.Ribbon
-                                    key={link?.url}
-                                    text="Yangi funksiya"
-                                    color="blue">
-                                    <Card size="small">
-                                        <li onClick={showModalCustomer}>
-                                            <span
-                                                style={{
-                                                    cursor: 'pointer',
-                                                }}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa-regular fa-handshake"></i>
-                                                    Buyurtma berish
-                                                </a>
-                                            </span>
-                                        </li>
-                                    </Card>
-                                </Badge.Ribbon>
-                            ) : link?.url === '/account/deals' ? (
-                                <Badge.Ribbon
-                                    key={link?.url}
-                                    text={
-                                        link.url === '/account/deals'
-                                            ? 'Yangi funksiya '
-                                            : 'Tez kunda'
-                                    }
-                                    color={
-                                        link.url === '/account/deals'
-                                            ? 'blue'
-                                            : 'volcano'
-                                    }>
-                                    <Card size="small">
-                                        {
-                                            <li
-                                                className={`${
-                                                    link.url === asPath
-                                                        ? 'active'
-                                                        : ''
-                                                } step-${index + 4}`}>
-                                                <Link
+                                            <li onClick={showModalCustomer}>
+                                                <span
                                                     style={{
                                                         cursor: 'pointer',
-                                                    }}
-                                                    href={link.url}>
+                                                    }}>
                                                     <a className="d-flex align-items-center">
-                                                        <i
-                                                            className={
-                                                                link.icon
-                                                            }></i>
-                                                        {link.text}
+                                                        <i className="fa-regular fa-handshake"></i>
+                                                        Buyurtma berish
                                                     </a>
-                                                </Link>
+                                                </span>
                                             </li>
-                                        }
-                                    </Card>
-                                </Badge.Ribbon>
-                            ) : (
-                                <li
-                                    key={link.text}
-                                    className={`${
-                                        link.url === asPath ? 'active' : ''
-                                    } step-${index + 4}`}>
-                                    <Link href={link.url}>
-                                        <a
-                                            className={`d-flex align-items-center`}>
-                                            <i className={link.icon}></i>
-                                            {link.text}{' '}
-                                            {user?.role === 'admin' ? (
-                                                link?.url ===
-                                                    '/account/application' &&
-                                                (applicationData?.count > 0 ||
-                                                    webdata?.count > 0) ? (
-                                                    <strong
-                                                        className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                        style={{
-                                                            marginLeft: '11rem',
-                                                        }}>
-                                                        {Number(
-                                                            applicationData?.count
-                                                        ) +
-                                                            Number(
-                                                                webdata?.count
-                                                            )}
-                                                    </strong>
-                                                ) : (
-                                                    ''
-                                                )
-                                            ) : (
-                                                ''
-                                            )}
-                                            {user?.role === 'admin' ? (
-                                                link?.url ===
-                                                    '/account/products' &&
-                                                webdata1?.count > 0 ? (
-                                                    <strong
-                                                        className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                        style={{
-                                                            marginLeft: '12rem',
-                                                        }}>
-                                                        {webdata1?.count}
-                                                    </strong>
-                                                ) : (
-                                                    ''
-                                                )
-                                            ) : (
-                                                ''
-                                            )}
-                                            {user?.role === 'seller' ? (
-                                                link?.url ===
-                                                    '/account/myproducts' &&
-                                                webdata2?.count > 0 ? (
-                                                    <strong
-                                                        className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                        style={{
-                                                            marginLeft: '4rem',
-                                                        }}>
-                                                        {webdata2?.count}
-                                                    </strong>
-                                                ) : (
-                                                    ''
-                                                )
-                                            ) : (
-                                                ''
-                                            )}
-                                            {user?.role === 'seller' ? (
-                                                link?.url ===
-                                                    '/account/application' &&
-                                                (applicationData?.count > 0 ||
-                                                    webdata?.count > 0) ? (
-                                                    <strong
-                                                        className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                        style={{
-                                                            marginLeft: '11rem',
-                                                        }}>
-                                                        {Number(
-                                                            applicationData?.count
-                                                        ) +
-                                                            Number(
-                                                                webdata?.count
-                                                            )}
-                                                    </strong>
-                                                ) : (
-                                                    ''
-                                                )
-                                            ) : (
-                                                ''
-                                            )}
-                                        </a>
-                                    </Link>
-                                </li>
-                            )}
+                                        </Card>
+                                    </Badge.Ribbon>
+
+                                ) : (dataBlock?.has_blocked && link?.url === '/account/myproducts/product-selection') ? (
+
+                                    <li onClick={handleOk}>
+                                        <span
+                                            style={{
+                                                cursor: 'pointer',
+                                            }}>
+                                            <a className="d-flex align-items-center">
+                                                <i className="fa-solid fa-circle-plus"></i>
+                                                Yangi Mahsulot
+                                            </a>
+                                        </span>
+                                    </li>
+
+                                ) :
+                                    (
+
+                                        <li
+                                            key={link.text}
+                                            className={`${link.url === asPath ? 'active' : ''
+                                                } step-${index + 4}`}>
+                                            <Link href={link.url}>
+                                                <a
+                                                    className={`d-flex align-items-center`}>
+                                                    <i className={link.icon}></i>
+                                                    {link.text}{' '}
+
+                                                    {user?.role === 'admin' ? (
+                                                        link?.url ===
+                                                            '/account/application' &&
+                                                            (applicationData?.count > 0 ||
+                                                                webdata?.count > 0) ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '11rem',
+                                                                }}>
+                                                                {Number(
+                                                                    applicationData?.count
+                                                                ) +
+                                                                    Number(
+                                                                        webdata?.count
+                                                                    )}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
+
+                                                    {user?.role === 'admin' ? (
+                                                        link?.url ===
+                                                            '/account/products' &&
+                                                            webdata1?.count > 0 ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '12rem',
+                                                                }}>
+                                                                {webdata1?.count}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
+
+                                                    {user?.role === 'seller' ? (
+                                                        link?.url ===
+                                                            '/account/myproducts' &&
+                                                            webdata2?.count > 0 ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '4rem',
+                                                                }}>
+                                                                {webdata2?.count}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
+
+                                                    {user?.role === 'seller' ? (
+                                                        link?.url ===
+                                                            '/account/application' &&
+                                                            (applicationData?.count > 0 ||
+                                                                webdata?.count > 0) ? (
+                                                            <strong
+                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                                style={{
+                                                                    marginLeft: '11rem',
+                                                                }}>
+                                                                {Number(
+                                                                    applicationData?.count
+                                                                ) +
+                                                                    Number(
+                                                                        webdata?.count
+                                                                    )}
+                                                            </strong>
+                                                        ) : (
+                                                            ''
+                                                        )
+                                                    ) : (
+                                                        ''
+                                                    )}
+                                                </a>
+                                            </Link>
+                                        </li>
+                                    )}
                         </>
                     ))}
                 </ul>

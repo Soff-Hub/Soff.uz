@@ -4,6 +4,7 @@ import { message } from 'antd';
 import Meta from '~/components/shared/headers/Meta';
 import useWishlist from '~/hooks/useWishlist';
 import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
     const router = useRouter();
@@ -16,23 +17,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
         }
     };
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     // Views
     let priceView;

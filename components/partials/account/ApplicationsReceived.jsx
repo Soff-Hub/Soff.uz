@@ -8,6 +8,7 @@ import DealsList from './DealsList';
 import ModalDelas from './ModalDeals';
 const { Option } = Select;
 import TextDescription from '~/components/progress/textDescription';
+import { addPeriodToThousands } from './ProductsLists';
 
 
 
@@ -40,23 +41,7 @@ export default function ApplicationsReceiveds() {
 
 
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     async function GetItemsProducts() {
         setLoading(true)
