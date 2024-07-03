@@ -71,6 +71,7 @@ function Notifications() {
             });
             modal.update;
             GetItems(currPage, search);
+            form.resetFields();
         } else {
             const modal = Modal.error({
                 centered: true,
