@@ -220,7 +220,16 @@ function ProductsLists() {
         if (token) {
             setImageID(id)
             const ItemsData = await GetRepository.getImageGenaration(id, token);
-            setImageID(null)
+            setImageID(null);
+            GetItemsProductsLists(
+                router.query.page,
+                category_id,
+                router.query.status,
+                dataFormat,
+                null,
+                search,
+                filterType
+            );
         } else {
             const modal = Modal.info({
                 centered: true,
@@ -284,7 +293,6 @@ function ProductsLists() {
     }, []);
 
 
-    console.log(imageID);
 
     const columns = [
         {
