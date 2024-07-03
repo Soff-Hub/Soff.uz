@@ -11,6 +11,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useState } from 'react';
 import { formatCurrency } from '~/utilities/product-helper';
 import BuyTrafficCard from '~/components/partials/account/BuyTrafficCard';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 function BuyingTraffic() {
 
@@ -40,23 +41,7 @@ function BuyingTraffic() {
 
     const data = trafficList?.map(el => ({ id: el.id, price: el.price_storage, storage: el.size_storage_to_mb }))
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+  
 
     const add = (id) => {
         const element = data.find(el => el.id === id)

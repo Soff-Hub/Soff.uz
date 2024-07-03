@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useState } from 'react';
+import { addPeriodToThousands } from '../ProductsLists';
 
 const ModulePaymentOrderSummary = ({ ecomerce }) => {
     const [percentage, setPercentage] = useState(0);
@@ -16,23 +17,7 @@ const ModulePaymentOrderSummary = ({ ecomerce }) => {
         }
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+ 
     const hisob = addPeriodToThousands(amount + amount * percentage);
     const hisobb = addPeriodToThousands(amount * percentage);
 

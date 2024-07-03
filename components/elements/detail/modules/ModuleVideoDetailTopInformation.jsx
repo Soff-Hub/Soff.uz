@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { message } from 'antd';
 import Meta from '~/components/shared/headers/Meta';
 import useWishlist from '~/hooks/useWishlist';
+import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
     const router = useRouter();
@@ -15,23 +17,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
         }
     };
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     // Views
     let priceView;
@@ -114,6 +100,8 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
 
     };
 
+    console.log(product);
+
     return (
         <header>
             <Meta
@@ -145,26 +133,26 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                         className="product__top-information-account"
                         style={{ cursor: 'pointer' }}
                         onClick={() => SellerPage(product?.seller?.id)}>
-                        <div>
-                            {product?.seller?.image_url ? (
-                                <img
-                                    alt="soff"
-                                    src={product?.seller?.image_url}
-                                    className="profile__image-client"
-                                />
-                            ) : (
-                                <i
-                                    className=" fa-2x text-info fa-solid fa-circle-user"
-                                    style={{
-                                        fontSize: '30px',
-                                    }}></i>
-                            )}
+                        <div style={{ position: "relative" }}>
+                            <img
+                                alt="soff"
+                                src={product?.seller?.image_url ? product?.seller?.image_url : "/static/img/ozodbek.png"}
+                                className="profile__image-client-top-seller"
+                            />
+                            {
+                                <span>{checkIfUserIsOnline(product?.seller?.last_login) ?
+                                    <i className="fa-solid fa-circle text-success fs-5" style={{ position: "absolute", bottom: "-12%", right: "3%" }}></i> :
+                                    <i className="fa-solid fa-circle text-secondary  fs-5" style={{ position: "absolute", bottom: "-12%", right: "3%" }}></i>
+
+                                }</span>
+                            }
                         </div>
+
                         {product?.seller?.first_name && (
-                            <p>
-                                {product?.seller?.first_name}{' '}
-                                {product?.seller?.last_name}
-                            </p>
+                            <div>
+                                <p>{product?.seller?.first_name}{' '}</p>
+                                <p> {product?.seller?.last_name}</p>
+                            </div>
                         )}
                     </div>
                 </div>
@@ -204,9 +192,9 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                     <div className="video_send" onClick={() => copyVideoUrl()}>
                         {
                             copy ?
-                               <>
-                                <i class="fa-solid fa-check"></i> nusxalandi
-                               </>
+                                <>
+                                    <i class="fa-solid fa-check"></i> nusxalandi
+                                </>
                                 :
                                 <>
                                     <i class="fa-solid fa-share-nodes mr-2"></i>

@@ -6,6 +6,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import Link from 'next/link';
 import CalculateTimeDifference from './DateFormatter';
 import DealOrderEdit from './dealUpdate';
+import { addPeriodToThousands } from './ProductsLists';
 
 export default function DealOrderList() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -34,23 +35,6 @@ export default function DealOrderList() {
     };
 
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
 
     async function getDealList(token) {

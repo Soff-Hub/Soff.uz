@@ -1,17 +1,16 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Button, Pagination, Select, Table, Tooltip } from 'antd';
+import { Pagination, Select, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { DatePicker } from 'antd';
-import {useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Axios from 'axios';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 var parse = require('html-react-parser');
-
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 const { TabPane } = Tabs;
 import { Tabs } from 'antd';
@@ -24,6 +23,27 @@ import DefaultAudioLive from '~/components/elements/detail/thumbnail/DefaultAudi
 import ModuleAudioDetailTopInformationLive from '~/components/elements/detail/modules/ModuleAudioDetailTopInformationLive';
 import ModuleAudioDetailShoppingActionsLive from '~/components/elements/detail/modules/ModuleAudioDetailShoppingActionsLive';
 import DefaultVideoAdmin from '~/components/elements/detail/thumbnail/DefaultVideoAdmin';
+
+
+
+export function addPeriodToThousands(number) {
+    const numStr = String(number);
+
+    const [integerPart, decimalPart] = numStr.split('.');
+
+    const formattedIntegerPart = integerPart.replace(
+        /\B(?=(\d{3})+(?!\d))/g,
+        ' ',
+    );
+
+    const formattedNumber =
+        decimalPart !== undefined
+            ? `${formattedIntegerPart}.${decimalPart}`
+            : formattedIntegerPart;
+
+    return formattedNumber;
+}
+
 
 function ProductsLists() {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -49,23 +69,21 @@ function ProductsLists() {
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
-        ? `${date[0]?.$y}-${
-              `${date[0].$M + 1}`.length === 1
-                  ? `0${date[0].$M + 1}`
-                  : date[0].$M + 1
-          }-${date[0].$D}`
+        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
+            ? `0${date[0].$M + 1}`
+            : date[0].$M + 1
+        }-${date[0].$D}`
         : '';
     const dateFormat1 = date
-        ? `${date[1]?.$y}-${
-              `${date[1].$M + 1}`.length === 1
-                  ? `0${date[1].$M + 1}`
-                  : date[1].$M + 1
-          }-${date[1].$D}`
+        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
+            ? `0${date[1].$M + 1}`
+            : date[1].$M + 1
+        }-${date[1].$D}`
         : '';
     const dataFormat = date
         ? `${dateFormat0}&date_range_before=${dateFormat1}`
         : '';
-        const [short, setShort] = useState(true)
+    const [short, setShort] = useState(true)
 
     async function GetItemsProductsLists(
         page,
@@ -114,7 +132,7 @@ function ProductsLists() {
 
 
     const onSearchCategory = async (value) => {
-    
+
         const ItemsData = await GetRepository.getAllCategoryListsGlobal(value);
         setDataVal(ItemsData);
     }
@@ -146,24 +164,6 @@ function ProductsLists() {
         } else {
             Router.push(`/account/products/${productsItems?.id}`);
         }
-    }
-
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
     }
 
     const handleButtonClickViewProducts = async () => {
@@ -311,6 +311,7 @@ function ProductsLists() {
             title: 'Sotuvchi',
             dataIndex: 'seller',
             key: 'address',
+            width: 350,
             render: (seller) => (
                 <div className="d-flex flex-column">
                     <span>
@@ -418,7 +419,7 @@ function ProductsLists() {
                         margin: ' 0 20px',
                         fontSize: '16px',
                         fontWeight: '600',
-                      
+
                     }}>
                     Qisqa video ko'rish
                 </span>
@@ -437,9 +438,9 @@ function ProductsLists() {
                         margin: '0 30px',
                         fontSize: '16px',
                         fontWeight: '600',
-                      
+
                     }}>
-                   To'liq video
+                    To'liq video
                 </span>
             ),
             children: (
@@ -654,7 +655,7 @@ function ProductsLists() {
                                         </span>
                                     </div>
                                     <Table
-                                        scroll={{ x: 1700 }}
+                                        scroll={{ x: 1800 }}
                                         dataSource={data}
                                         columns={columns}
                                         pagination={false}
@@ -734,7 +735,7 @@ function ProductsLists() {
                                                     <div className="price_and_tag">
                                                         <ModuleAudioDetailShoppingActionsLive
                                                             admin={true}
-                                                            // free={free}
+                                                        // free={free}
                                                         />
 
                                                         <>
@@ -786,8 +787,8 @@ function ProductsLists() {
                                                             <div className="ps-document">
                                                                 {deleteIdView?.description
                                                                     ? parse(
-                                                                          deleteIdView?.description
-                                                                      )
+                                                                        deleteIdView?.description
+                                                                    )
                                                                     : "To'ldirilmadi"}
                                                             </div>
                                                         </TabPane>
@@ -818,7 +819,7 @@ function ProductsLists() {
                                                             className="btn btn-success p-2 px-5 fs-4 ">
                                                             <i className="fa-solid fa-download mx-1"></i>{' '}
                                                             <span className="fs-3">
-                                                                File ochish 
+                                                                File ochish
                                                             </span>
                                                         </button>
                                                     )}
@@ -827,9 +828,9 @@ function ProductsLists() {
                                         ) : deleteIdView?.document?.content_type === 'video' ? (
                                             <div className="row">
                                                 <div className="col-md-12">
-                                                   
+
                                                     <Tabs
-                                                  
+
                                                         defaultActiveKey="1"
                                                         items={items}
                                                         className="bg-white"
@@ -905,8 +906,8 @@ function ProductsLists() {
                                                             <div className="ps-document">
                                                                 {deleteIdView?.description
                                                                     ? parse(
-                                                                          deleteIdView?.description
-                                                                      )
+                                                                        deleteIdView?.description
+                                                                    )
                                                                     : "To'ldirilmadi"}
                                                             </div>
                                                         </TabPane>

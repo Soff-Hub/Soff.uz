@@ -9,6 +9,7 @@ import ModalDelete from './Modal';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import DealsListUpdate from './DealsListUpdate';
 import TextDescription from '~/components/progress/textDescription';
+import { addPeriodToThousands } from './ProductsLists';
 
 
 
@@ -29,24 +30,6 @@ export default function MyOrders() {
     const [loading, setloading] = useState(false);
     const [loadingUpdate, setloadingUpdate] = useState(false);
 
-
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
 
     async function GetItemsProducts() {

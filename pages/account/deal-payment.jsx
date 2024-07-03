@@ -11,6 +11,7 @@ import GetRepository from '~/reositoriy-admin/GetRepository';
 import { useState } from 'react';
 import { formatCurrency } from '~/utilities/product-helper';
 import DealOrderPayment from '~/components/partials/account/DealOrderPayment';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 function BuyingTraffic() {
 
@@ -43,23 +44,7 @@ function BuyingTraffic() {
         setLoading(true)
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
 
     useEffect(() => {

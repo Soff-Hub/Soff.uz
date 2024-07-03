@@ -13,6 +13,7 @@ import PatchRepository from '~/reositoriy-admin/PatchRepository';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 
 
@@ -187,23 +188,7 @@ const PostsProductsEdit = () => {
         GetItemsTagAktivmas();
     }, [user?.access]);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     async function handleClickPostsEdit(e) {
         e.preventDefault();

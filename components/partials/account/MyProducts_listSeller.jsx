@@ -11,6 +11,7 @@ import NextImageCard from '~/components/nextImagecard';
 import useDebounce from '~/hooks/useDebounce';
 import Link from "next/link"
 import { baseUrl } from '~/repositories/Repository';
+import { addPeriodToThousands } from './ProductsLists';
 
 function MyProductsListsSeller() {
     const [data, setData] = useState([]);
@@ -85,23 +86,7 @@ function MyProductsListsSeller() {
         );
     }
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+  
 
     const handleButtonClick = async (ID) => {
         try {

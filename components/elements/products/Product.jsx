@@ -2,29 +2,13 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import ModuleProductActions from '~/components/elements/products/modules/ModuleProductActions';
 import useProduct from '~/hooks/useProduct';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 
 const Product = ({ product }) => {
     const { thumbnailImage, title } = useProduct();
     const [countShow, setCountShow] = useState(false);
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-
-    }
 
 
     return (

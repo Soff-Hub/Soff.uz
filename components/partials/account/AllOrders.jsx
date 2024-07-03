@@ -7,6 +7,7 @@ import DealsSidebar from './modules/DealsSidebar';
 import DealsList from './DealsList';
 import { useSelector } from 'react-redux';
 import TextDescription from '~/components/progress/textDescription';
+import { addPeriodToThousands } from './ProductsLists';
 
 export default function DealCart() {
     const { user } = useSelector((state) => state.auth);
@@ -58,24 +59,6 @@ export default function DealCart() {
         }
     }
 
-
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
 
     const handlePagination = (pageNum) => {
