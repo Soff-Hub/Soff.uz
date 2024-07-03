@@ -1517,13 +1517,11 @@ function MyProductsLists() {
                 cancelButtonProps={{ style: { display: 'none' } }}
                 okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
                 <h4 className='text-danger '><i className="fa-solid fa-lock"></i> Siz Bloklangansiz </h4>
-                <p className='text-warning '>Hurmatli Sotuvchi quyidagi sababga ko'ra Bloklangansiz
-                    Bloklanish vaqtingiz tugagandan so'ng mahsulot yuklashingiz mumkin!
-                </p>
-                <p className='m-0 fw-medium '>Blok qilingan muddat! : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
-                <p className=' fw-medium'>Blokadan chiqish muddatingiz! : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
+
+                <p className='m-0 fw-medium '>Blok qilingan sana : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
+                <p className=' fw-medium'>Blokadan chiqish sanasi : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
                 <div>
-                    <p className='fw-bold m-0'>Bloklanganligi haqida sabab:</p>
+                    <p className='fw-bold m-0'>Sabab:</p>
                     <p> {dataBlock?.reason}</p>
                 </div>
             </Modal>

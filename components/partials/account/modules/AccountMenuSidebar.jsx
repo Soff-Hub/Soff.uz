@@ -269,11 +269,11 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                             }} title={
                                                 <div className='d-flex flex-column '>
                                                     <div className='d-flex gap-1'>
-                                                        <span>Bloklab qo'yilgan vaqti:</span>
+                                                        <span>Bloklab qo'yilgan sana:</span>
                                                         <CalculateTimeDifference targetDate={dataBlock?.created_at} />
                                                     </div>
                                                     <div className='d-flex gap-1'>
-                                                        <span>Blokdan chiqish muddati:</span>
+                                                        <span>Blokdan chiqish sanasi:</span>
                                                         <CalculateTimeDifference targetDate={dataBlock?.to_date} />
                                                     </div>
 
@@ -291,7 +291,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                                     </div>
                                     <div className='d-flex flex-column '>
                                         <div className='d-flex gap-1'>
-                                            <span className='fs-5'>Blokdan chiqish muddati:</span>
+                                            <span className='fs-5'>Blokdan chiqish sanasi:</span>
                                             <CalculateTimeDifference className={"fs-5"} targetDate={dataBlock?.to_date} />
                                         </div>
                                     </div>
@@ -385,13 +385,11 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
                     <h4 className='text-danger '>Siz Bloklangansiz </h4>
-                    <p className='text-warning '>Hurmatli Sotuvchi quyidagi sababga ko'ra Bloklangansiz
-                        Bloklanish vaqtingiz tugagandan so'ng mahsulot yuklashingiz mumkin!
-                    </p>
-                    <p className='m-0 fw-medium '>Blok qilingan muddat! : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
-                    <p className=' fw-medium'>Blokadan chiqish muddatingiz! : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
+
+                    <p className='m-0 fw-medium '>Blok qilingan sana : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
+                    <p className=' fw-medium'>Blokadan chiqish sanasi! : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
                     <div>
-                        <p className='fw-bold m-0'>Bloklanganligi haqida sabab:</p>
+                        <p className='fw-bold m-0'>Sabab:</p>
                         <p> {dataBlock?.reason}</p>
                     </div>
                 </Modal>
