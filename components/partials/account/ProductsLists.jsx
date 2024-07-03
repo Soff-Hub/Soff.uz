@@ -216,7 +216,6 @@ function ProductsLists() {
     }
 
     async function getImageGeneration(id) {
-    
         const token = user?.access
         if (token) {
             setImageID(id)
@@ -285,7 +284,7 @@ function ProductsLists() {
     }, []);
 
 
-
+    console.log(imageID);
 
     const columns = [
         {
@@ -305,7 +304,8 @@ function ProductsLists() {
                         <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(poster_data?.id)}>
                             {
                                 poster_data?.id == imageID ?
-                                    <i class="fa-solid fa-arrows-rotate fa-spin-pulse fs-1"></i> :
+                                    <i class="fa-solid fa-arrows-rotate fa-spin-pulse fs-1"></i>
+                                    :
                                     <i class="fa-solid fa-arrows-rotate fs-1"></i>
                             }
 
