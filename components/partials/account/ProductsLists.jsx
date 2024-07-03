@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Pagination, Select, Table, Tooltip } from 'antd';
+import { Modal, Pagination, Select, Table, Tooltip } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -66,6 +66,7 @@ function ProductsLists() {
     const [allProducts, setAllProducts] = useState(false);
     const router = useRouter();
     const pid = router.asPath;
+    const [imageID, setImageID] = useState(null)
 
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
@@ -214,6 +215,24 @@ function ProductsLists() {
         Router.push(`/account/products?page=${router.query.page}`);
     }
 
+    async function getImageGeneration(id) {
+    
+        const token = user?.access
+        if (token) {
+            setImageID(id)
+            const ItemsData = await GetRepository.getImageGenaration(id, token);
+            setImageID(null)
+        } else {
+            const modal = Modal.info({
+                centered: true,
+                title: "Qayta urinib ko'ring",
+                content: "Xatolik qaytdi Token yo'qligi uchun ",
+            });
+        }
+
+    }
+
+
     useEffect(() => {
         GetItemsCategory();
     }, []);
@@ -265,22 +284,34 @@ function ProductsLists() {
         }
     }, []);
 
+
+
+
     const columns = [
         {
             title: 'Rasm',
-            dataIndex: 'poster_url',
+            dataIndex: 'poster_data',
             key: 'name',
-            render: (poster_url) => (
+            render: (poster_data) => (
                 <div>
-                    {poster_url ? (
+                    {poster_data ? (
                         <NextImageCard
-                            url={poster_url}
+                            url={poster_data?.poster_url}
                             clasS="rounded-3 mb-2"
                             width="54px"
                             height="54px"
                         />
                     ) : (
-                        <i className="fa-solid fa-image fa-2x"></i>
+                        <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(poster_data?.id)}>
+                            {
+                                poster_data?.id == imageID ?
+                                    <i class="fa-solid fa-arrows-rotate fa-spin-pulse fs-1"></i> :
+                                    <i class="fa-solid fa-arrows-rotate fs-1"></i>
+                            }
+
+
+                        </span>
+
                     )}
                 </div>
             ),
