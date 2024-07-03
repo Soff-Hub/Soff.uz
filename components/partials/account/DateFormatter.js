@@ -1,6 +1,6 @@
 import React from 'react';
 
-function CalculateTimeDifference({ targetDate }) {
+function CalculateTimeDifference({ targetDate, className }) {
     const sanangiz = new Date(targetDate);
 
     const yil = sanangiz.getFullYear();
@@ -42,7 +42,7 @@ function CalculateTimeDifference({ targetDate }) {
 
     const yangiSanaFormati = `${yil} yil ${kun} ${getMonthOy()} ${soat}:${minut}`;
 
-    return <span>{yangiSanaFormati}</span>;
+    return <span className={className ? className : ""}>{yangiSanaFormati}</span>;
 }
 
 export default CalculateTimeDifference;

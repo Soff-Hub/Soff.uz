@@ -3,6 +3,7 @@ import Router, { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
+import { addPeriodToThousands } from '../ProductsLists';
 const { Option } = Select;
 
 
@@ -29,23 +30,7 @@ const DealsSidebar = ({ setType, setLifetime, setLifetime2, setProgressPrice }) 
         }
     };
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+  
 
     async function getDealType() {
         const data = await GetRepository.getDealType(keyword);

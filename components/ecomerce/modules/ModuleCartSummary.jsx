@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import ProductRepository from '~/repositories/ProductRepository';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ModuleCartSummary = ({ source }) => {
     const [percentage, setPercentage] = useState(0);
@@ -17,22 +18,7 @@ const ModuleCartSummary = ({ source }) => {
         getPercentage();
     }, []);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+ 
 
     const amount = calculateAmount(source);
     const hisob = addPeriodToThousands(amount);

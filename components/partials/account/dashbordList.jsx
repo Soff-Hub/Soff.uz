@@ -11,6 +11,7 @@ import { Tabs } from 'antd';
 import ModuleProductDetailDescription from '~/components/elements/detail/modules/ModuleProductDetailDescription';
 import Link from 'next/link';
 import Example from './Chart';
+import { addPeriodToThousands } from './ProductsLists';
 
 function DashbordList({ setOpen }) {
     const [data, setData] = useState([]);
@@ -27,23 +28,7 @@ function DashbordList({ setOpen }) {
 
     const { accountLinks, user } = useSelector((state) => state.auth);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
 
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     async function GetItemsProducts() {
         const ItemsData = await GetRepository.getSellerDashbord(user?.access);

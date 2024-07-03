@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import ProductRepository from '~/repositories/ProductRepository';
 import { useEffect } from 'react';
 import { useRouter } from 'next/router';
+import { addPeriodToThousands } from '../ProductsLists';
 
 const ModulePaymentOrderSummaryOne = () => {
     const Router = useRouter();
@@ -28,23 +29,7 @@ const ModulePaymentOrderSummaryOne = () => {
         getPercentage();
     }, [id]);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+  
     const hisob = addPeriodToThousands(data?.discount_price + data?.discount_price * percentage);
     const hisobb = addPeriodToThousands(data?.discount_price * percentage);
 

@@ -1,21 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Modal, Table } from 'antd';
+import { Button, DatePicker, Form, Modal, Table, Input, Tooltip } from 'antd';
 import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
 import useDebounce from '~/hooks/useDebounce';
 import Link from 'next/link';
+import PostsRepository from '~/reositoriy-admin/PostsRepository';
+import ModalSellerBlock from './ModalBlock';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
+const { TextArea } = Input;
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
-
+    const [form] = Form.useForm();
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const searchDebounce = useDebounce(search, 1000);
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [sellerID, setSellerID] = useState(null);
+    const date = new Date();
+
+    console.log(sellerID);
 
     async function GetItems(page) {
         const ItemsData = await GetRepository.getShops(
@@ -34,11 +44,131 @@ function Notifications() {
         GetItems(pageNum, search);
     };
 
+
     useEffect(() => {
         GetItems(currPage, search);
     }, [searchDebounce]);
 
+    async function postOrder(values) {
+        form.resetFields();
+        setLoading(true);
+
+        const data = {
+            reason: values?.description,
+            to_date: values?.date?.format('YYYY-MM-DD'),
+            user: sellerID
+        }
+
+        const ItemsData = await PostsRepository.postSellerBlock(data, user?.access);
+        if (ItemsData?.status == 201) {
+            const modal = Modal.warning({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `${ItemsData?.data?.msg
+                    ? ItemsData?.data?.msg
+                    : "Siz Sotuvchini vaqtincha bloklab qo'ydingiz"
+                    }  `,
+            });
+            modal.update;
+            GetItems(currPage, search);
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xato!',
+                content: ItemsData?.status + ' ' + ItemsData?.statusText,
+            });
+            modal.update;
+        }
+        setOpen(false)
+        setLoading(false);
+    }
+
+    async function handleClickView() {
+        const data = {
+            to_date: date,
+        }
+        const ItemsData = await PatchRepository.PatchCategorySeller(sellerID, data, user?.access);
+        if (ItemsData?.status == 200) {
+            const modal = Modal.warning({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: `${ItemsData?.data?.msg
+                    ? ItemsData?.data?.msg
+                    : "Siz Sotuvchini  blokdan chiqardingiz"
+                    }  `,
+            });
+            modal.update;
+            GetItems(currPage, search);
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xato!',
+                content: ItemsData?.status + ' ' + ItemsData?.statusText,
+            });
+            modal.update;
+        }
+    }
+
+
+
     const columns = [
+        {
+            title: 'Bloklash',
+            dataIndex: 'data_spam',
+            key: 'age',
+            width: 50,
+            render: (data_spam) => (
+                <div className='d-flex align-items-center gap-3'>
+                    {
+                        data_spam?.has_blocked &&
+                        <Tooltip
+                            color='red'
+                            overlayStyle={{
+                                minWidth: '350px',
+                            }} title={
+                                <div className='d-flex flex-column '>
+                                    <div className='d-flex gap-1'>
+                                        <span>Bloklab qo'yilgan vaqti:</span>
+                                        <CalculateTimeDifference targetDate={data_spam?.created_at} />
+                                    </div>
+                                    <div className='d-flex gap-1'>
+                                        <span>Blokdan chiqish muddati:</span>
+                                        <CalculateTimeDifference targetDate={data_spam?.created_at} />
+                                    </div>
+
+
+                                    <span>{data_spam?.reason}</span>
+                                </div>
+
+                            }>
+                            <span style={{ cursor: 'pointer' }}>
+                                <i className="fa-solid fa-circle-question text-danger"></i>{' '}
+                            </span>
+                        </Tooltip>
+                    }
+
+                    <span>
+                        {
+                            data_spam?.has_blocked ?
+
+                                <a
+                                    onClick={() => setSellerID(data_spam?.id)}
+                                    data-bs-target="#exampleModalToggleSellerBlock"
+                                    data-bs-toggle="modal">
+                                    <i className="fa-solid fa-lock"></i>
+
+                                </a>
+                                :
+                                <span style={{ cursor: "pointer" }} onClick={() => (setOpen(true), setSellerID(data_spam?.user_id))}>
+                                    <i className="fa-solid fa-lock-open"></i>
+                                </span>
+                        }
+
+                    </span>
+                </div>
+            ),
+        },
+
         {
             title: 'Batafsil',
             dataIndex: 'id',
@@ -47,7 +177,7 @@ function Notifications() {
             render: (id) => (
                 <Link href={`/sellerAccount/${id}`}>
                     <a className="truncate whitespace-nowrap">
-                    <i className="fa-solid fa-eye"></i>
+                        <i className="fa-solid fa-eye"></i>
                     </a>
                 </Link>
             ),
@@ -73,9 +203,9 @@ function Notifications() {
             dataIndex: 'full_name',
             key: 'age',
             render: (full_name) => (
-                    <span className="truncate whitespace-nowrap">
-                        {full_name}
-                    </span>
+                <span className="truncate whitespace-nowrap">
+                    {full_name}
+                </span>
             ),
         },
         {
@@ -85,10 +215,10 @@ function Notifications() {
             width: 300,
             render: (email_or_phone) => (
                 <div className="d-flex flex-column">
-                        <span className="truncate whitespace-nowrap">
-                            {' '}
-                            {email_or_phone}
-                        </span>
+                    <span className="truncate whitespace-nowrap">
+                        {' '}
+                        {email_or_phone}
+                    </span>
                 </div>
             ),
         },
@@ -154,6 +284,8 @@ function Notifications() {
             ),
         },
     ];
+
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -207,6 +339,95 @@ function Notifications() {
                         </div>
                     </div>
                 </div>
+                <Modal
+                    title="Bloklash"
+                    width={550}
+                    centered
+                    open={open}
+                    onOk={() => setOpen(false)}
+                    okText="Yopish"
+                    footer={null}
+                    cancelButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
+                    okButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
+
+                    onCancel={() => setOpen(false)}>
+
+                    <Form
+                        form={form}
+                        onFinish={postOrder}
+                        className="row  pt-4 "
+                        layout='vertical'
+                    >
+
+
+                        <Form.Item
+                            label="Blokdan chiqish muddati"
+                            className="col-md-12 mb-3 "
+                            name="date"
+                            rules={[
+                                {
+                                    required: true,
+                                    message:
+                                        'Blokdan chiqish muddatini kiritish majburiy',
+                                },
+                            ]}>
+                            <DatePicker
+                                className='w-100 py-3' placeholder='Blokdan chiqish muddati' />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Bloklash haqida sabab"
+                            name="description"
+                            className='col-md-12 mb-3'
+                            rules={[
+                                {
+                                    required: true,
+                                    message:
+                                        'Bloklash haqida sababini kiritish majburiy',
+                                },
+                            ]}>
+                            <TextArea
+                                rows={4}
+                                placeholder="Bloklash haqida sabab"
+
+                            />
+                        </Form.Item>
+
+                        <Form.Item className="col-md-12 d-flex justify-content-end m-0  mt-3">
+                            <Button
+                                htmlType="submit"
+                                loading={loading}
+                                style={{
+                                    width: '100%',
+                                    height: '37px',
+                                    padding: "1px 30px"
+                                }}
+                                className="btn-success btn-send-email">
+                                <span
+                                    style={{
+                                        color: '#fff',
+                                        fontSize:
+                                            '16px',
+                                    }}>
+                                    Bloklash
+                                </span>
+                            </Button>
+                        </Form.Item>
+
+                    </Form>
+
+
+                </Modal>
+
+                <ModalSellerBlock onSuccess={handleClickView} />
             </div>
         </section>
     );

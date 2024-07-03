@@ -10,6 +10,7 @@ import CalculateTimeDifference from './DateFormatter';
 import NextImageCard from '~/components/nextImagecard';
 import { DatePicker } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
+import { addPeriodToThousands } from './ProductsLists';
 
 
 
@@ -43,7 +44,8 @@ function ApplicationLists() {
     const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
     const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
-    const [alertMess, setAlertMess] = useState("")
+    const [alertMess, setAlertMess] = useState("");
+    const [dataBlock, setdataBlock] = useState(null);
 
 
     async function ProfileUsers(token) {
@@ -52,6 +54,13 @@ function ApplicationLists() {
             setProfile(ItemsData)
         }
     }
+
+    async function ProfileUsersBLock() {
+        const token = user?.access
+        const ItemsData = await GetRepository.getProfileBlock(token);
+        setdataBlock(ItemsData);
+    }
+
 
     async function ProfileUsersTextItems(page, dataFormat) {
         const ItemsData = await GetRepository.getTagTaklifLists(page, dataFormat, user?.access, user?.role === "admin");
@@ -195,24 +204,6 @@ function ApplicationLists() {
         }
     }
 
-
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
     async function getItemsTextItmes(e) {
         e.preventDefault()
         setLoading(false)
@@ -474,13 +465,20 @@ function ApplicationLists() {
     ]
 
     useEffect(() => {
+        if (user?.access) {
+            ProfileUsersBLock()
+        }
+    }, [user?.access]);
+
+
+    useEffect(() => {
         getItemsSellerAdmin(currPage, dataCat, sellerSearch);
     }, [dataCat, sellerSearch])
 
     useEffect(() => {
         if (user?.access) {
             ProfileUsers(user?.access);
-            
+
         }
         getItemsSeller(currPage);
         getItemsSellerCardList()
@@ -508,45 +506,53 @@ function ApplicationLists() {
                                     {
                                         user?.role === "seller" ?
                                             (<>
-                                                <div className='border py-4 rounded'>
-                                                    <form className='row row-gap-3 px-4 gap-4 mx-auto'>
-                                                        <label className='h4 p-0 ' style={{ color: "orange" }} >
-                                                            Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
-                                                            <strong>!Eslatma: Xisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
-                                                        </label>
-                                                        <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
-                                                        <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
-                                                            <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
 
+                                                <div className='border py-4 rounded'>
+                                                    {dataBlock?.has_blocked ? <div className=' px-4'>
+                                                        <span className='text-danger fw-bold '>
+                                                           <i className="fa-solid fa-lock"></i> Siz Bloklangansiz. Bu davr mobaynida Pul yechib olish uchun ariza yuborishni imkoni yo'q.</span>
+                                                    </div> :
+                                                        <form className='row row-gap-3 px-4 gap-4 mx-auto'>
+                                                            <label className='h4 p-0 ' style={{ color: "orange" }} >
+                                                                Balansdagi pulingizni yechib olishingiz uchun ariza yuboring. Sizga 24 soat ichida arizangizda ko’rsatilgan summa bo’yicha pul o’tkaziladi va bu bo’yicha xabar yuboriladi. <br />
+                                                                <strong>!Eslatma: Xisobingizda kamida {alertMess ? formatCurrency(alertMess) : '10 000'} so’m bo’lishi kerak.</strong>
+                                                            </label>
+                                                            <input required id='count' type="number" defaultValue={profile?.wallet} placeholder='Narx' className='form-control rounded-3 col-md-4' onChange={(e) => (setDataPrice(e.target.value))} />
+                                                            <select className='form-select rounded-3 col-md-5 fs-3  ' style={{ height: "50px" }} onChange={(e) => setDataCard(e.target.value)} >
+                                                                <option className='fs-3' value='' selected disabled >Kartalaringiz</option>
+
+                                                                {
+                                                                    profileCard?.length > 0 && (
+                                                                        profileCard?.map(item => (
+                                                                            <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
+                                                                        ))
+                                                                    )
+                                                                }
+
+                                                            </select>
                                                             {
-                                                                profileCard?.length > 0 && (
-                                                                    profileCard?.map(item => (
-                                                                        <option key={item.id} value={item.credit_card}>{item.credit_card} </option>
-                                                                    ))
-                                                                )
+                                                                profile?.is_application === true && profile?.is_payment === true ?
+                                                                    <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
+                                                                        height: "50px",
+                                                                    }}><span className='fs-4'>Yuborish</span></Button>
+                                                                    :
+                                                                    <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
+                                                                        height: "50px",
+                                                                    }}>
+
+                                                                        <span className='fs-4'>Yuborish</span>
+                                                                    </Button>
                                                             }
 
-                                                        </select>
-                                                        {
-                                                            profile?.is_application === true && profile?.is_payment === true ?
-                                                                <Button onClick={getItemsSellerPost} className='bg-success text-light col-md-2' style={{
-                                                                    height: "50px",
-                                                                }}><span className='fs-4'>Yuborish</span></Button>
-                                                                :
-                                                                <Button onClick={getItemsSellerPost} disabled className='bg-success text-light col-md-2' style={{
-                                                                    height: "50px",
-                                                                }}>
+                                                        </form>}
 
-                                                                    <span className='fs-4'>Yuborish</span>
-                                                                </Button>
-                                                        }
-
-                                                    </form>
                                                     <h4 className='py-4 px-4'>Yuborilgan Arizalar</h4>
                                                     <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} />
                                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                         onChange={handlePagination} />
                                                 </div>
+
+
 
                                                 <form className='border mt-5 rounded p-3' onSubmit={getItemsTextItmes} >
                                                     <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
@@ -689,7 +695,7 @@ function ApplicationLists() {
                                     className='w-100 p-3 border border-success rounded' rows={4}
                                     placeholder="Bu qismga takliflarga  yuboring"></textarea>
 
-                                    <input type="text" onChange={(e) => (setDataCardModalDesID(e.target.value))}
+                                <input type="text" onChange={(e) => (setDataCardModalDesID(e.target.value))}
                                     defaultValue={textItemsId} />
 
                                 <div className="d-flex justify-content-end  py-3">

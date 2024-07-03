@@ -4,6 +4,7 @@ import Link from 'next/link';
 import ProductOnCart from '~/components/elements/products/ProductOnCart';
 import { calculateAmount } from '~/utilities/ecomerce-helpers';
 import useCart from '~/hooks/useCart';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const MiniCart = () => {
     const state = useSelector((state) => state.auth.user);
@@ -17,23 +18,7 @@ const MiniCart = () => {
     }
 
     const amount = calculateAmount(data);
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
+ 
     const hisob = addPeriodToThousands(amount);
 
 

@@ -3,29 +3,13 @@ import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
 import DefaultVideo from '../detail/thumbnail/DefaultVideo';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 
 const ProductVideo = ({ product, isPlay, setIsPlay }) => {
     const { title } = useProduct();
     const [countShow, setCountShow] = useState(false);
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-
-    }
+    
 
 
     return (

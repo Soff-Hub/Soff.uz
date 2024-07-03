@@ -6,6 +6,7 @@ import { Modal } from 'antd';
 import useWishlist from '~/hooks/useWishlist';
 import useCart from '~/hooks/useCart';
 import { audioDownloaderSale } from '~/utilities/common-helpers';
+import { addPeriodToThousands } from './ProductsLists';
 
 const Wishlist = ({ ecomerce }) => {
     const { removeSavedItem } = useWishlist();
@@ -23,23 +24,6 @@ const Wishlist = ({ ecomerce }) => {
         }
     }, []);
 
-    function addPeriodToThousands(number) {
-        const numStr = String(number);
-
-        const [integerPart, decimalPart] = numStr.split('.');
-
-        const formattedIntegerPart = integerPart.replace(
-            /\B(?=(\d{3})+(?!\d))/g,
-            ' '
-        );
-
-        const formattedNumber =
-            decimalPart !== undefined
-                ? `${formattedIntegerPart}`
-                : formattedIntegerPart;
-
-        return formattedNumber;
-    }
 
     function handleAddItemToCart(e, product) {
         e.preventDefault();
