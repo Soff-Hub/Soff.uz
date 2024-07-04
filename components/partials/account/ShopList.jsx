@@ -25,7 +25,7 @@ function Notifications() {
     const [sellerID, setSellerID] = useState(null);
     const date = new Date();
 
-    console.log(sellerID);
+   
 
     async function GetItems(page) {
         const ItemsData = await GetRepository.getShops(
