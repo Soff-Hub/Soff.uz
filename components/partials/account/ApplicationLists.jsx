@@ -516,7 +516,7 @@ function ApplicationLists() {
 
 
     useEffect(() => {
-        if (openApplication && dataCardModal) {
+        if (openApplication && textItemsId) {
             form.setFieldsValue({
                 description: textItemsId?.description,
             });

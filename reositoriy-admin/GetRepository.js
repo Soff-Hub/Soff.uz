@@ -102,10 +102,13 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShops(page, search, token) {
+    async getShops(page, search,lock, token) {
         const endPoint = `admin/seller-list/?page=${page}&search=${
             search || ''
+        }&lock=${
+            lock || ''
         }`;
+        
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

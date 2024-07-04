@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Button, DatePicker, Form, Modal, Table, Input, Tooltip } from 'antd';
+import { Button, DatePicker, Form, Modal, Table, Input, Tooltip, Select } from 'antd';
 import { useSelector } from 'react-redux';
 import { Pagination } from 'antd';
 import CalculateTimeDifference from './DateFormatter';
@@ -11,6 +11,8 @@ import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import ModalSellerBlock from './ModalBlock';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 const { TextArea } = Input;
+const { Option } = Select;
+
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
@@ -23,14 +25,16 @@ function Notifications() {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const [sellerID, setSellerID] = useState(null);
+    const [filterLock, setFilterLock] = useState('')
     const date = new Date();
 
-   
+
 
     async function GetItems(page) {
         const ItemsData = await GetRepository.getShops(
             page,
             search,
+            filterLock,
             user?.access
         );
         if (ItemsData?.results) {
@@ -41,13 +45,13 @@ function Notifications() {
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
-        GetItems(pageNum, search);
+        GetItems(pageNum, search, filterLock);
     };
 
 
     useEffect(() => {
-        GetItems(currPage, search);
-    }, [searchDebounce]);
+        GetItems(currPage, search, filterLock);
+    }, [searchDebounce, filterLock]);
 
     async function postOrder(values) {
         form.resetFields();
@@ -70,7 +74,7 @@ function Notifications() {
                     }  `,
             });
             modal.update;
-            GetItems(currPage, search);
+            GetItems(currPage, search, filterLock);
             form.resetFields();
         } else {
             const modal = Modal.error({
@@ -99,7 +103,7 @@ function Notifications() {
                     }  `,
             });
             modal.update;
-            GetItems(currPage, search);
+            GetItems(currPage, search, filterLock);
         } else {
             const modal = Modal.error({
                 centered: true,
@@ -109,8 +113,6 @@ function Notifications() {
             modal.update;
         }
     }
-
-
 
     const columns = [
         {
@@ -287,6 +289,11 @@ function Notifications() {
     ];
 
 
+
+
+    console.log(filterLock);
+
+
     return (
         <section className="ps-my-account ps-page--account p-0">
             <div className="container">
@@ -307,22 +314,37 @@ function Notifications() {
                                         style={{ backgroundColor: 'GrayText' }}>
                                         Sotuvchilar soni: {pageCount} ta
                                     </span>
-                                    <label
-                                        className="form-label border w-100 d-flex justify-content-between align-items-center"
-                                        style={{ backgroundColor: '#F1F1F1' }}>
-                                        <input
-                                            type="search"
-                                            className="form-control"
-                                            style={{ border: 'none' }}
-                                            placeholder="Qidiruv"
-                                            onInput={(e) =>
-                                                setSerach(e.target.value)
-                                            }
-                                        />
-                                        <span className="px-4">
-                                            <i className="fa-solid fa-search "></i>
-                                        </span>
-                                    </label>
+                                    <div className='row px-4'>
+                                        <label
+                                            className="form-label border col-md-8  d-flex justify-content-between align-items-center"
+                                            style={{ backgroundColor: '#F1F1F1' }}>
+                                            <input
+
+                                                type="search"
+                                                className="form-control"
+                                                style={{ border: 'none' }}
+                                                placeholder="Qidiruv"
+                                                onInput={(e) =>
+                                                    setSerach(e.target.value)
+                                                }
+                                            />
+                                            <span className="px-4">
+                                                <i className="fa-solid fa-search "></i>
+                                            </span>
+                                        </label>
+                                        <Select
+                                            onChange={(e) => setFilterLock(e)}
+
+                                            defaultValue={""}
+                                            style={{
+                                                height: "50px"
+                                            }} className='col-md-4 pr-0'>
+                                            <Option value={""} style={{ paddingLeft: "40px" }} >    Barchasi</Option>
+                                            <Option value={'true'}><i className="fa-solid fa-lock mx-2 text-danger"></i> Bloklangan</Option>
+                                            <Option value={'false'}><i className="fa-solid fa-lock-open mx-2 text-success"></i> Bloklanmagan</Option>
+                                        </Select>
+                                    </div>
+
                                     <Table
                                         scroll={{ x: 1400 }}
                                         dataSource={data}
