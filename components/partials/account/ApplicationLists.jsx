@@ -2,15 +2,16 @@ import React, { useEffect, useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { Button, Modal, Pagination, Table } from 'antd';
+import { Button, Form, Modal, Pagination, Table, Input, Select } from 'antd';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
-import ModalDeletePostEdit from './ModalPostEdit';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CalculateTimeDifference from './DateFormatter';
 import NextImageCard from '~/components/nextImagecard';
 import { DatePicker } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from './ProductsLists';
+const { TextArea } = Input;
+const { Option } = Select;
 
 
 
@@ -24,10 +25,6 @@ function ApplicationLists() {
     const [dataPrice, setDataPrice] = useState(null);
     const [dataCard, setDataCard] = useState(null);
     const [dataCardModal, setDataCardModal] = useState(null);
-    const [dataCardModalStatus, setDataCardModalStatus] = useState(null);
-    const [dataCardModalImg, setDataCardModalImg] = useState(null);
-    const [dataCardModalDes, setDataCardModalDes] = useState(null);
-    const [dataCardModalDesID, setDataCardModalDesID] = useState(null);
     const [profile, setProfile] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
     const [pageCount, setPageCount] = useState(0)
@@ -37,7 +34,7 @@ function ApplicationLists() {
     const [textItems, setTextItems] = useState(null)
     const [textItemsId, setTextItemsId] = useState(null)
     const [sellerSearch, setSellerSearch] = useState('')
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState({ loadingButton: true })
     const [date, setDate] = useState(null);
     const [allPrice, setAllPrice] = useState(null);
     const { RangePicker } = DatePicker;
@@ -46,6 +43,10 @@ function ApplicationLists() {
     const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
     const [alertMess, setAlertMess] = useState("");
     const [dataBlock, setdataBlock] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [openApplication, setOpenAplication] = useState(false);
+    const [form] = Form.useForm();
+    const [valuesImage, setValuesImage] = useState(null)
 
 
     async function ProfileUsers(token) {
@@ -71,18 +72,29 @@ function ApplicationLists() {
         getItemsSellerTaklif(currPage)
     }
 
-    async function ProfileUsersTextItem(e) {
-        e.preventDefault();
-        if (dataCardModalDesID) {
-            const ItemsData = await PatchRepository.getTextItemsUpdate({ description: dataCardModalDesID }, textItemsId, user?.access);
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
-            getItemsSellerTaklif(currPage)
-            ProfileUsersTextItems(currPage)
-            setDataCardModalDesID(null)
+    async function ProfileUsersTextItem(values) {
+        form.resetFields();
+        if (values?.description) {
+            const ItemsData = await PatchRepository.getTextItemsUpdate({ description: values?.description }, textItemsId?.id, user?.access);
+            if (ItemsData?.status == 200) {
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqiyatli!',
+                    content: "Siz  kelib tushgan taklifga javob berdingiz ",
+                });
+                modal.update;
+                form.resetFields();
+                getItemsSellerTaklif(currPage)
+                ProfileUsersTextItems(currPage)
+
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xato!',
+                    content: ItemsData?.status + ' ' + ItemsData?.statusText,
+                });
+                modal.update;
+            }
         }
         else {
             const modal = Modal.info({
@@ -91,7 +103,8 @@ function ApplicationLists() {
                 content: "O'zgartirish uchun malumot kiritilmadi ",
             });
         }
-        e.target.reset()
+
+
 
     }
 
@@ -156,57 +169,10 @@ function ApplicationLists() {
 
     }
 
-    async function handleClickAriza() {
-        try {
-            if (dataCardModalImg || dataCardModalStatus || dataCardModalDes) {
-                const formData = new FormData();
-                if (dataCardModalImg) {
-                    formData.append("receipt", dataCardModalImg)
-                }
-                if (dataCardModalStatus) {
-                    formData.append("status", dataCardModalStatus)
-                }
-
-                formData.append("description", dataCardModalDes)
-
-
-                const response = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
-
-                if (response?.status === 201 || response?.status == 200) {
-                    const modal = Modal.success({
-                        centered: true,
-                        title: 'Muvaffaqqiyatli!',
-                        content: "Siz malumotlarni o'zgartirdingiz",
-                    });
-
-                    getItemsSellerAdmin(1, dataCat);
-                    setDataCardModalStatus(null);
-                    setDataCardModalDes(null);
-                    setDataCardModalImg(null);
-                } else {
-                    const modal = Modal.error({
-                        centered: true,
-                        title: "Xatolik",
-                        content: response?.data?.receipt,
-                    });
-                    throw new Error(response?.data?.receipt);
-                }
-            } else {
-                const modal = Modal.info({
-                    centered: true,
-                    title: "Qayta urinib ko'ring",
-                    content: "O'zgartirish uchun malumot kiritilmadi",
-                });
-            }
-        } catch (error) {
-            console.log(error);
-
-        }
-    }
 
     async function getItemsTextItmes(e) {
         e.preventDefault()
-        setLoading(false)
+        setLoading({ loadingButton: false })
         const Items = await PostsRepository.PostsMyProductsTextItmes({ offer: textItems }, user?.access);
         const modal = Modal.success({
             centered: true,
@@ -215,7 +181,7 @@ function ApplicationLists() {
         });
         modal.update
         ProfileUsersTextItems(currPage)
-        setLoading(true)
+        setLoading({ loadingButton: true })
         e.target.reset()
 
     }
@@ -223,6 +189,45 @@ function ApplicationLists() {
         setCurrPage(pageNum)
         getItemsSeller(pageNum, dataCat)
     }
+
+    async function postOrder(values) {
+        form.resetFields();
+        const formData = new FormData();
+        if (valuesImage) {
+            formData.append("receipt", valuesImage)
+        }
+        if (values?.description) {
+            formData.append("description", values?.description)
+        }
+        if (values?.status) {
+            formData.append("status", values?.status)
+        }
+
+        const ItemsData = await PatchRepository.getPatchProfileAriza(formData, dataCardModal?.id, user?.access);
+        if (ItemsData?.status == 200) {
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqiyatli!',
+                content: `${ItemsData?.data?.msg
+                    ? ItemsData?.data?.msg
+                    : "Siz  malumotlarni o'zgartirdingiz "
+                    }  `,
+            });
+            modal.update;
+            form.resetFields();
+            getItemsSellerAdmin(1, dataCat);
+
+        } else {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xato!',
+                content: ItemsData?.status + ' ' + ItemsData?.statusText,
+            });
+            modal.update;
+        }
+
+    }
+
 
     const columns = [
         {
@@ -282,6 +287,8 @@ function ApplicationLists() {
             ),
         },
     ];
+
+
     const columnsAdmin = [
         {
             title: 'Summa',
@@ -358,17 +365,22 @@ function ApplicationLists() {
         },
         {
             title: 'Harakatlar',
-            dataIndex: 'id',
+            dataIndex: 'answer_data',
             key: 'id',
-            render: (id) => (
-                dataAdmin.some(el => el.id == id && el.is_answer === true) ?
-                    <a data-bs-target="#exampleModalToggleEditAdminSeller" data-bs-toggle="modal"><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" onClick={() => setDataCardModal(dataAdmin.find(item => item.id === id))}></i></a>
+            render: (answer_data) => (
+                answer_data?.is_answer ?
+                    <a >
+                        <i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis"
+                            onClick={() => (setDataCardModal(dataAdmin.find(item => item.id === answer_data?.id)), setOpen(true))}>
+                        </i></a>
                     :
                     <a style={{ cursor: "not-allowed", opacity: "0.6" }}><i className="fa-solid fa-pen-to-square mx-5  text-success-emphasis" ></i></a>
 
             )
         },
     ];
+
+
     const columnsTextArea = [
         {
             title: 'Telefon raqam yoki email',
@@ -408,20 +420,18 @@ function ApplicationLists() {
         },
         {
             title: 'Taklif javobi',
-            dataIndex: 'id',
+            dataIndex: 'data',
             key: 'address',
             width: 150,
-            render: (id) => (
+            render: (data) => (
                 <span
                     style={{ cursor: "pointer" }}
-                    data-bs-target="#exampleModalToggleEditAdminSellerID"
-                    data-bs-toggle="modal" ><i className='fa-solid fa-edit mx-5'
-                        onClick={() => (setTextItemsId(id))
-
-                        }></i></span>
+                ><i className='fa-solid fa-edit mx-5'
+                    onClick={() => (setTextItemsId(data), setOpenAplication(true))}></i></span>
             )
         },
     ];
+
     const columnsTextAreaseller = [
 
         {
@@ -464,6 +474,12 @@ function ApplicationLists() {
         }
     ]
 
+    const statusText = {
+        moderation: "Moderatsiya",
+        cancelled: "Bekor qilingan",
+        approved: "Tasdiqlangan"
+    }
+
     useEffect(() => {
         if (user?.access) {
             ProfileUsersBLock()
@@ -489,6 +505,23 @@ function ApplicationLists() {
         ProfileUsersTextItems(currPage, dataFormat);
     }, [dataFormat])
 
+    useEffect(() => {
+        if (open && dataCardModal) {
+            form.setFieldsValue({
+                status: dataCardModal?.status,
+                description: dataCardModal?.description,
+            });
+        }
+    }, [open, dataCardModal, form]);
+
+
+    useEffect(() => {
+        if (openApplication && dataCardModal) {
+            form.setFieldsValue({
+                description: textItemsId?.description,
+            });
+        }
+    }, [open, textItemsId, form]);
 
     return (
         <section className="ps-my-account ps-page--account pb-5">
@@ -510,7 +543,7 @@ function ApplicationLists() {
                                                 <div className='border py-4 rounded'>
                                                     {dataBlock?.has_blocked ? <div className=' px-4'>
                                                         <span className='text-danger fw-bold '>
-                                                           <i className="fa-solid fa-lock"></i> Siz Bloklangansiz. Bu davr mobaynida Pul yechib olish uchun ariza yuborishni imkoni yo'q.</span>
+                                                            <i className="fa-solid fa-lock"></i> Siz Bloklangansiz. Bu davr mobaynida Pul yechib olish uchun ariza yuborishni imkoni yo'q.</span>
                                                     </div> :
                                                         <form className='row row-gap-3 px-4 gap-4 mx-auto'>
                                                             <label className='h4 p-0 ' style={{ color: "orange" }} >
@@ -560,7 +593,7 @@ function ApplicationLists() {
                                                     <div className='w-100 d-flex justify-content-end'>
                                                         <button className="btn-success btn mt-3" type='submit' style={{ height: "40px", width: "120px" }}><span className='fs-4'>
                                                             {
-                                                                loading ?
+                                                                loading?.loadingButton ?
                                                                     "Yuborish"
                                                                     :
                                                                     <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
@@ -646,70 +679,211 @@ function ApplicationLists() {
                         </div>
                         : <></>
                 }
-                <ModalDeletePostEdit dataBsTarget="exampleModalToggleEditAdminSeller" formID={"edit-phone-admin"} onSubmited={handleClickAriza}  >
-                    <label htmlFor="file" className='w-100 text-truncate' style={{ border: "1px solid #dddddd", boxShadow: "0 0 0 #000", borderRadius: "5px", padding: "13px 12px", cursor: "pointer" }}>
-                        {
-                            dataCardModal?.receipt ? dataCardModal?.receipt :
-                                <span>Rasm tanlash uchun bosing <i className="fa-regular fa-hand-pointer"></i></span>
-                        }
 
-                        <input accept='image/*' type="file" name='file' id='file' style={{ display: "none" }} className='form-control pt-4 rounded-3 fileUpload' onChange={(e) => setDataCardModalImg(e.target.files[0])} />
-                    </label>
-                    <select className='form-select fs-3 py-3' onChange={(e) => setDataCardModalStatus(e.target.value)}>
-                        {
-                            dataStatus?.map((item, i) => (
-                                dataCardModal?.status === item.status ?
-                                    <option key={i} selected value={item.status} >{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
-                                    :
-                                    <option key={i} value={item.status}>{item.status === "moderation" ? "Moderatsiya" : item.status === "cancelled" ? "Bekor qilingan" : item.status === "approved" ? "Tasdiqlangan" : ""}</option>
-                            ))
+                <Modal
+                    title="Arizani tasdiqlash"
+                    width={550}
+                    centered
+                    open={open}
+                    onOk={() => setOpen(false)}
+                    okText="Yopish"
+                    footer={null}
+                    cancelButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
+                    okButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
 
-                        }
-                    </select>
-                    <input type="text" defaultValue={dataCardModal?.description} className='form-control rounded-3' placeholder='Tavsif' onChange={(e) => (setDataCardModalDes(e.target.value))} />
-                </ModalDeletePostEdit>
-                <div
-                    className="modal fade modalPost"
-                    id="exampleModalToggleEditAdminSellerID"
-                    aria-hidden="true"
-                    aria-labelledby="staticBackdropLabel"
-                    data-bs-backdrop="static">
-                    <div className="modal-dialog modal-lg  modal-dialog-centered ">
-                        <div className="modal-content ">
-                            <div
-                                className="d-flex justify-content-end p-4"
-                                style={{ border: 'none !important' }}>
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <form
-                                onSubmit={ProfileUsersTextItem}
-                                className="w-100 px-4 py-4 d-flex row-gap-3 flex-column"
-                                id="edit-phone-adminID">
-                                <textarea
-                                    onChange={(e) => (setDataCardModalDesID(e.target.value))}
-                                    defaultValue={textItemsId}
-                                    className='w-100 p-3 border border-success rounded' rows={4}
-                                    placeholder="Bu qismga takliflarga  yuboring"></textarea>
+                    onCancel={() => setOpen(false)}>
 
-                                <input type="text" onChange={(e) => (setDataCardModalDesID(e.target.value))}
-                                    defaultValue={textItemsId} />
+                    <h5 className='mb-0 text-success'>{dataCardModal?.seller_info?.name}</h5>
+                    <h5 className='mb-0 text-success'>{addPeriodToThousands(dataCardModal?.amount)} so'm </h5>
 
-                                <div className="d-flex justify-content-end  py-3">
-                                    <button
-                                        type="submit"
-                                        data-bs-dismiss="modal"
-                                        className="btn btn-success d-block w-25 py-2">
-                                        <span className="fs-3">Saqlash</span>
-                                    </button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+                    <Form
+                        form={form}
+                        onFinish={postOrder}
+                        className="row  pt-4 "
+                        layout='vertical'
+                        initialValues={{
+                            status: dataCardModal?.status,
+                            description: dataCardModal?.description,
+
+
+                        }}
+                    >
+
+                        <Form.Item
+                            label="Chek rasmi"
+                            name={"receipt"}
+                            className='col-md-12 mb-3 '>
+
+                            <label
+                                style={{
+                                    display: 'inline-block',
+                                    width: '100%',
+                                    height: '45px',
+                                    border: '1px solid #ccc',
+                                    padding: '10px 15px',
+                                    boxSizing: 'border-box',
+                                    textAlign: 'center',
+                                    cursor: 'pointer',
+                                    backgroundColor: '#fff',
+                                    borderRadius: "5px"
+                                }}
+                            >
+
+                                {
+                                    (dataCardModal?.receipt || valuesImage) ?
+                                        <span>Chek rasmi yuklangan <i className="fa-solid fa-circle-check text-success"></i></span>
+                                        :
+                                        <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Chek rasmini yuklash uchun rasm tanlang</span>
+                                }
+                                <Input
+                                    accept='image/*'
+                                    onChange={(e) => setValuesImage(e.target.files[0])}
+                                    type='file'
+                                    style={{
+                                        position: 'absolute',
+                                        width: '1px',
+                                        height: '1px',
+                                        overflow: 'hidden',
+                                        clip: 'rect(0, 0, 0, 0)',
+                                        border: '0'
+                                    }}
+                                />
+                            </label>
+
+                        </Form.Item>
+
+                        <Form.Item label="Holat" name={"status"} className='col-md-12 mb-3'>
+
+
+                            <Select style={{ height: "45px" }} >
+                                {
+                                    dataStatus?.map((item) => (
+                                        <Option key={item?.id} value={item.status}>{statusText[item?.status]}</Option>
+                                    ))
+
+                                }
+
+                            </Select>
+
+
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Tavsif"
+                            name="description"
+                            className='col-md-12 mb-3'>
+                            <TextArea
+                                rows={4}
+                                placeholder="Tavsif"
+
+                            />
+                        </Form.Item>
+
+                        <Form.Item className="col-md-12 d-flex justify-content-end m-0  mt-3">
+                            <Button
+                                onClick={() => setOpen(false)}
+                                htmlType="submit"
+                                style={{
+                                    width: '100%',
+                                    height: '37px',
+                                    padding: "1px 30px"
+                                }}
+                                className="btn-success btn-send-email">
+                                <span
+                                    style={{
+                                        color: '#fff',
+                                        fontSize:
+                                            '16px',
+                                    }}>
+                                    Tasdiqlash
+                                </span>
+                            </Button>
+                        </Form.Item>
+
+                    </Form>
+
+
+                </Modal>
+
+
+                <Modal
+                    title="Kelib tushgan taklifga javob"
+                    width={550}
+                    centered
+                    open={openApplication}
+                    onOk={() => setOpenAplication(false)}
+                    okText="Yopish"
+                    footer={null}
+                    cancelButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
+                    okButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
+
+                    onCancel={() => setOpenAplication(false)}>
+
+                    <Form
+                        form={form}
+                        onFinish={ProfileUsersTextItem}
+                        className="row  pt-4 "
+                        layout='vertical'
+                        initialValues={{
+                            description: textItemsId?.description,
+                        }}
+                    >
+
+
+                        <Form.Item
+                            label="Tavsif"
+                            name="description"
+                            className='col-md-12 mb-3'>
+                            <TextArea
+                                rows={4}
+                                placeholder="Tavsif"
+
+                            />
+                        </Form.Item>
+
+                        <Form.Item className="col-md-12 d-flex justify-content-end m-0  mt-3">
+                            <Button
+                                onClick={() => setOpenAplication(false)}
+                                htmlType="submit"
+                                style={{
+                                    width: '100%',
+                                    height: '37px',
+                                    padding: "1px 30px"
+                                }}
+                                className="btn-success btn-send-email">
+                                <span
+                                    style={{
+                                        color: '#fff',
+                                        fontSize:
+                                            '16px',
+                                    }}>
+                                    Tasdiqlash
+                                </span>
+                            </Button>
+                        </Form.Item>
+
+                    </Form>
+
+
+                </Modal>
+
+
 
             </div>
         </section>
