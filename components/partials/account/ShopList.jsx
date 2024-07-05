@@ -287,11 +287,7 @@ function Notifications() {
             ),
         },
     ];
-
-
-
-
-    console.log(filterLock);
+                                                                     
 
 
     return (
