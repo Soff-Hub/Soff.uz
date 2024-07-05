@@ -87,7 +87,6 @@ const ModuleDetailShoppingActions = ({ product }) => {
     };
 
 
-    console.log(loading);
 
 
     if (true) {
@@ -114,9 +113,10 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <p>Mahsulotingizni savatga qo'shdingiz!</p>
                     <p></p>
                 </Modal>
+
                 <div className="ps-product__shopping">
-                    {contextHolder}
-                    <div>
+                    {contextHolder} 
+                    <div >
                         {product?.discount_price > 0 ? (
                             <>
                                 {product?.document?.file_url ? (
@@ -159,14 +159,14 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn ps-btn--black py-3 buystep-1"
+                                            className="ps-btn ps-btn--black py-3 buystep-1 mx-2"
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleAddItemToCart(e)}>
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn py-3 buystep-2"
+                                            className="ps-btn py-3 buystep-2 ml-2"
                                             href="#"
                                             style={{ fontSize: "14px" }}
                                             onClick={(e) => handleBuynow(e)}>
