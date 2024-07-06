@@ -242,6 +242,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                             isPlay={isPlay} setIsPlay={setIsPlay}
                                             product={product}
                                             views={views}
+                                            similar={similar}
                                         />
                                     </div>
                                 ) : product?.document?.content_type ===
@@ -268,7 +269,8 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 )}
                             </div>
 
-                            {similar?.length > 0 ? (
+                            {(similar?.length > 0 && product?.document?.content_type !==
+                                'video') ? (
                                 <RelatedProduct
                                     isPlay={isPlay} setIsPlay={setIsPlay}
                                     data={similar}

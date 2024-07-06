@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import Product from '~/components/elements/products/Product';
-import ProductVideo from '~/components/elements/products/ProductVideo';
 import AudioProductCart from '~/components/elements/products/AudioProductCart';
 
 const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data, isPlay, setIsPlay }) => {
@@ -26,12 +25,6 @@ const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data, isPlay, setI
                             className="col-md-12 my-2">
                             <AudioProductCart product={item} />{' '}
                         </div>
-                        : item?.document?.content_type === 'video' ?
-                            <div
-                                key={index}
-                                className="col-md-4 my-2">
-                                <ProductVideo product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
-                            </div>
                             :
                             <div
                                 key={index}

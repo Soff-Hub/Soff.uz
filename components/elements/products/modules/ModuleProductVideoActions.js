@@ -60,7 +60,7 @@ const ModuleProductVideoActions = ({ product }) => {
                 <p>Mahsulotingizni savatga qo'shdingiz!</p>
                 <p></p>
             </Modal>
-            <ul className="ps-product__actions d-flex gap-3 align-items-center" style={{listStyle:"none"}}>
+            <ul className="ps-product__actions d-flex gap-3 align-items-center m-0" style={{listStyle:"none"}}>
 
                 <li>
                     <a

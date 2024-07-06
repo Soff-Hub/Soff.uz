@@ -8,6 +8,7 @@ export default function DefaultVideo({
 }) {
 
 
+
     useEffect(() => {
         const player = document.getElementById(`videoPlayer-${product.id}`);
         if (player && isPlay === product.id) {

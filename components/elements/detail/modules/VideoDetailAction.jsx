@@ -101,8 +101,8 @@ const VideoDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
                 <div
-                    className={` ${product?.document?.images?.length > 0 ? '' : 'ps-product__shopping'} `}>
-                    <div className="w-100 d-flex justify-content-between m-0">
+                    className={` ${product?.document?.images?.length > 0 ? '' : 'ps-product__shopping p-0 m-0'} `}>
+                    <div className="w-100 d-flex justify-content-end gap-3 m-0">
                         {product?.discount_price > 0 ? (
                             <>
                                 {product?.document?.file_url  ? (
