@@ -356,9 +356,9 @@ export default function ApplicationsReceiveds() {
                                                                             cursor: "pointer"
                                                                         }}>
                                                                             <img
-                                                                             
+
                                                                                 width={50} height={50}
-                                                                                style={{objectFit:"contain"}}
+                                                                                style={{ objectFit: "contain" }}
                                                                                 src={item?.user?.image_url ? item?.user?.image_url : "/static/img/ozodbek.png"}
                                                                                 alt="sca"
                                                                             />

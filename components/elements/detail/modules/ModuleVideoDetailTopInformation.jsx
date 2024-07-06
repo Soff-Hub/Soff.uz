@@ -100,7 +100,6 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
 
     };
 
-    console.log(product);
 
     return (
         <header>
@@ -149,7 +148,7 @@ const ModuleVideoDetailTopInformation = ({ product, views, admin }) => {
                         </div>
 
                         {product?.seller?.first_name && (
-                            <div>
+                            <div className='d-flex gap-2'>
                                 <p>{product?.seller?.first_name}{' '}</p>
                                 <p> {product?.seller?.last_name}</p>
                             </div>
