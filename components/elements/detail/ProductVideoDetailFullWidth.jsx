@@ -21,8 +21,8 @@ const ProductVideoDetailFullWidth = ({
     return (
         <>
 
-            <div className="ps-product--detail ">
-                <div className="row mb-xl-5 mb-lg-5 mb-0">
+            <div className="ps-product--detail mt-5 ">
+                <div className="row mb-xl-5 mb-lg-5 mb-0 " style={{ alignItems: 'flex-start' }}>
                     <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
                         <DefaultVideo product={product} isPlay={isPlay} setIsPlay={setIsPlay} />
                         <ModuleVideoDetailTopInformation
@@ -41,10 +41,29 @@ const ProductVideoDetailFullWidth = ({
                             />
 
                         </div>
+                        {admin && ActiveTag}
+                        {product?.tag?.length > 0 && (
+                            <div className="mb-xl-5 mb-lg-5 ">
+                                <p>Tezkor teglar</p>
+                                <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                    {product?.tag?.length > 0 &&
+                                        product?.tag.map((item, i) => (
+                                            <div
+                                                key={i}
+                                                className="m-2 tag-product">
+                                                <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`} >
+                                                    <a>
+                                                        {' '}
+                                                        {item.name}{' '}
+                                                    </a>
+                                                </Link>
+                                            </div>
+                                        ))}
+                                </div>
+                            </div>
+                        )}
+                         <DefaultDescription product={product} />
                     </div>
-
-
-
 
                     <div className='col-md-4' style={{ overflowY: "auto", }}>
                         <div className="col-md-12 p-0 border rounded-3">
@@ -90,31 +109,11 @@ const ProductVideoDetailFullWidth = ({
                         }
                     </div>
 
+
                 </div>
 
-                {admin && ActiveTag}
-                {product?.tag?.length > 0 && (
-                    <div className="mb-xl-5 mb-lg-5 mb-0">
-                        <p>Tezkor teglar</p>
-                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                            {product?.tag?.length > 0 &&
-                                product?.tag.map((item, i) => (
-                                    <div
-                                        key={i}
-                                        className="m-2 tag-product">
-                                        <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`} >
-                                            <a>
-                                                {' '}
-                                                {item.name}{' '}
-                                            </a>
-                                        </Link>
-                                    </div>
-                                ))}
-                        </div>
-                    </div>
-                )}
 
-                <DefaultDescription product={product} />
+               
 
             </div>
         </>

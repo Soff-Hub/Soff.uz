@@ -21,18 +21,29 @@ function App({ Component, pageProps }) {
             e.preventDefault();
         });
 
-        // document.onkeydown = function (e) {
-        //     if (e.ctrlKey && (e.keyCode === 67 || e.keyCode === 86)) {
-        //         e.preventDefault();
-        //     }
-        // };
-
-        // document.onkeydown = function (e) {
-        //     if (e.keyCode == 123) {
-        //         e.preventDefault();
-        //         return false;
-        //     }
-        // };
+        // useEffect(() => {
+        //     const handleKeyDown = (e) => {
+        //         if (
+        //             (e.ctrlKey && e.shiftKey && e.key === 'I') || // Prevent Ctrl+Shift+I (Windows)
+        //             (e.metaKey && e.altKey && e.key === 'I') || // Prevent Command+Option+I (macOS)
+        //             (e.ctrlKey && e.shiftKey && e.key === 'J') || // Prevent Ctrl+Shift+J (Windows)
+        //             (e.metaKey && e.altKey && e.key === 'J') || // Prevent Command+Option+J (macOS)
+        //             (e.ctrlKey && e.key === 'U') || // Prevent Ctrl+U (Windows)
+        //             (e.metaKey && e.key === 'U') || // Prevent Command+U (macOS)
+        //             (e.ctrlKey && e.key === 'S') || // Prevent Ctrl+S (Windows)
+        //             (e.metaKey && e.key === 'S') || // Prevent Command+S (macOS)
+        //             (e.key === 'F12') 
+        //         ) {
+        //             e.preventDefault();
+        //         }
+        //     };
+    
+        //     document.addEventListener('keydown', handleKeyDown);
+    
+        //     return () => {
+        //         document.removeEventListener('keydown', handleKeyDown);
+        //     };
+        // }, []);
     });
 
 
