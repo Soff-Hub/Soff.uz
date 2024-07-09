@@ -44,7 +44,6 @@ export default function DefaultVideo({
     return (
         <div className="video-container">
             <video
-
                 id={`videoPlayer-${product.id}`}
                 className={'video_iframe'}
                 onPlay={() => setIsPlay?.(product?.id)}
@@ -54,7 +53,7 @@ export default function DefaultVideo({
                 controlsList="nodownload"
                 poster={product?.poster_url ? product?.poster_url : product?.poster}
             >
-                <source src={url}  />
+                <source src={url} />
             </video>
         </div>
     );
