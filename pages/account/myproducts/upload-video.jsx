@@ -9,25 +9,20 @@ import FooterDefault from '~/components/shared/footers/FooterDefault';
 import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../components/partials/account/CKeditor';
-import { Button, Checkbox, Modal, Select, Tabs, Tooltip } from 'antd';
+import { Button, Checkbox, Form, Modal, Select, Tabs, Tooltip, Input, InputNumber } from 'antd';
 var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import { ClipLoader } from 'react-spinners';
 import Meta from '~/components/shared/headers/Meta';
-import { InputNumber } from 'primereact/inputnumber';
 import Link from 'next/link';
-import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
-import { useForm } from 'react-hook-form';
-import Input from '~/components/form/Input';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+const { Option } = Select;
 
 const Posts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [fileImgFile, setFileImgFile] = useState(null);
-    const [extraFiles, setExtraFiles] = useState(null);
-    const [fileImgFileID, setFileImgFileID] = useState(null);
     const [tagSearchResult, setTagSearchResult] = useState([]);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
@@ -37,20 +32,16 @@ const Posts = () => {
     const [Fulldata, setFullData] = useState('');
     const [livePosterFile, setLivePosterFile] = useState('');
     const [categoryName, setCategoryName] = useState('');
-    const [narx, setNarx] = useState('');
     const [loading, setLoading] = useState(false);
     const [disabled, setDeisabled] = useState(false);
     const [free, setFree] = useState(false);
-    const [customePoster, setCustomePoster] = useState(false);
+    const [customePoster, setCustomePoster] = useState(null);
     const [profile, setProfile] = useState(null);
-    const [category_id, setCategoryId] = useState([]);
-    const {
-        register,
-        handleSubmit,
-        watch,
-        formState: { errors },
-    } = useForm();
+    const [liveProduct, setliveProduct] = useState(null);
+    const [open, setOpen] = useState(false);
+
     const [videosize, setVideoSize] = useState(null);
+    const [form] = Form.useForm();
 
     const breadCrumb = [
         {
@@ -68,53 +59,6 @@ const Posts = () => {
             setDataCategory(ItemsData);
         }
     }
-    const Option = Select.Option;
-
-    const onChange = async (e) => {
-        setCategoryId([]);
-        const customecategory = [];
-        setCategoryName(e);
-        for (let j = 0; j < dataCategory.length; j++) {
-            if (dataCategory[j].name === e) {
-                customecategory.push(dataCategory[j].id);
-            }
-        }
-
-        setCategoryId(customecategory);
-
-        let arr = [];
-        if (tagSearchResult?.length > 0) {
-            for (let i = 0; i < tagItems.length; i++) {
-                for (let j = 0; j < tagSearchResult.length; j++) {
-                    if (tagItems[i].name === tagSearchResult[j]) {
-                        arr.push(tagItems[i].id);
-                    }
-                }
-            }
-        }
-        const data = {
-            category_id: customecategory[0],
-            tag_id: arr,
-        };
-
-        if (tagSearchResult?.length > 0 && e !== null) {
-            const respons = await PostsRepository.TaxminiyNarxOlish(
-                data,
-                user?.access
-            );
-            if (
-                respons?.recommended_price !== undefined &&
-                respons?.recommended_price !== 0
-            ) {
-                setTaxminiyNarx(
-                    `Tavsiya etilgan narx: ${addPeriodToThousands(
-                        respons?.recommended_price
-                    )} `
-                );
-                setNarx(respons?.recommended_price);
-            }
-        }
-    };
 
     async function ProfileUsers(token) {
         const ItemsData = await GetRepository.getProfile(token);
@@ -148,140 +92,6 @@ const Posts = () => {
         );
     }
 
-    function removePrefix(text) {
-        const prefix = 'Tavsiya etilgan narx: ';
-        const prefixBoolen = text.toString()?.includes(prefix);
-        if (prefixBoolen) {
-            if (text?.startsWith(prefix)) {
-                return text?.slice(prefix.length);
-            }
-        }
-        return text ? text : '';
-    }
-
-    async function handleChange(value) {
-        setTagSearchResult(value);
-
-        let arr = [];
-        if (value?.length > 0) {
-            for (let i = 0; i < tagItems.length; i++) {
-                for (let j = 0; j < value.length; j++) {
-                    if (tagItems[i].name === value[j]) {
-                        arr.push(tagItems[i].id);
-                    }
-                }
-            }
-        }
-
-        const data = {
-            category_id: category_id[0],
-            tag_id: arr,
-        };
-
-        if (value?.length > 0 && category_id[0] !== undefined) {
-            const respons = await PostsRepository.TaxminiyNarxOlish(
-                data,
-                user?.access
-            );
-            if (
-                respons?.recommended_price !== undefined &&
-                respons?.recommended_price !== 0
-            ) {
-                setTaxminiyNarx(
-                    `Tavsiya etilgan narx: ${addPeriodToThousands(
-                        respons?.recommended_price
-                    )} `
-                );
-                setNarx(respons?.recommended_price);
-            }
-        }
-    }
-
-    const openClose = (id) => {
-        const btn = document.createElement('button');
-        btn.setAttribute('data-bs-target', id);
-        btn.setAttribute('data-bs-toggle', 'modal');
-        document.body.appendChild(btn);
-        btn.click();
-        document.body.removeChild(btn);
-    };
-
-    async function handleClickPosts() {
-        if (
-            customePoster.file ||
-            free ||
-            livePosterFile?.id ||
-            fileImgFile?.file ||
-            category_id[0] ||
-            watch('title')
-        ) {
-            const formData = new FormData();
-            formData.append('title', watch('title'));
-            if (free) {
-                formData.append('price', 0);
-            } else {
-                formData.append('price', narx);
-            }
-            formData.append('description', Fulldata);
-            formData.append('tags', JSON.stringify(tagSearchResult));
-            formData.append('poster', customePoster.file);
-
-            formData.append('category', category_id[0]);
-            formData.append('document', livePosterFile?.id);
-            if (!free) {
-                formData.append('short_content', fileImgFile?.file);
-            }
-
-            if (extraFiles) {
-                formData.append('extra_file', extraFiles);
-            }
-
-            try {
-                openClose('#staticBackdrop-2');
-
-                const response = await fetch(
-                    `${baseUrl}seller/video-product-create/`,
-                    {
-                        method: 'POST',
-                        headers: {
-                            Authorization: `Bearer ${user?.access}`,
-                        },
-                        body: formData,
-                    }
-                );
-
-                if (response.ok) {
-                    openClose('#staticBackdrop-2');
-                    Router.push('/account/myproducts');
-                    const modal = Modal.warning({
-                        centered: true,
-                        title: 'Muvaffaqqiyatli!',
-                        content:
-                            "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-                    });
-                } else {
-                    openClose('#staticBackdrop-2');
-                    const errorMessage = await response.json();
-                    const modal = Modal.error({
-                        centered: true,
-                        title: 'Xatolik!',
-                        content: errorMessage?.msg?.map((item) => item),
-                    });
-                    throw new Error(errorMessage?.msg);
-                }
-            } catch (err) {
-                console.log(err);
-            }
-
-            setDeisabled(false);
-        } else {
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Iltimos maydonlarni to'ldiring!",
-            });
-        }
-    }
 
     async function getVideoFunk() {
         const ItemsData = await GetRepository.getVideoSize(user?.access);
@@ -290,14 +100,16 @@ const Posts = () => {
         }
     }
 
-    async function PostFilePoster() {
+    const PostFilePoster = async (fileImgFileID) => {
+
         if (fileImgFileID && fileImgFileID?.size) {
+            setliveProduct(fileImgFileID)
+
             if (
                 Math.ceil(fileImgFileID?.size / 1024 / 1024) <
                 videosize?.empty_storage_size
             ) {
                 setLivePosterFile('');
-
                 const formData = new FormData();
                 setLoading(true);
                 formData.append('file', fileImgFileID);
@@ -308,13 +120,9 @@ const Posts = () => {
                     );
 
                 if (ItemsData?.status === 201) {
-                    if (!ItemsData?.data?.images) {
-                        setLivePosterFile({ ...ItemsData?.data, images: [] });
-                    } else {
-                        setLivePosterFile(ItemsData?.data);
-                    }
-
+                    setLivePosterFile(ItemsData?.data);
                     setLoading(false);
+
                 } else {
                     setLoading(false);
                     const modal = Modal.error({
@@ -323,6 +131,7 @@ const Posts = () => {
                         content: ItemsData?.msg?.map((item) => item),
                     });
                 }
+
             } else {
                 const modal = Modal.warning({
                     centered: true,
@@ -351,7 +160,8 @@ const Posts = () => {
                     ),
                 });
             }
-        } else {
+        } else if (fileImgFileID) {
+
             const modal = Modal.error({
                 centered: true,
                 title: 'Xatolik!',
@@ -361,7 +171,12 @@ const Posts = () => {
         }
     }
 
- 
+    const LivePoster = (images) => {
+        if (images) {
+            const img = window.URL.createObjectURL(images);
+            setCustomePoster({ poster: images, url: img });
+        }
+    }
 
     const handleFreeChange = (e) => {
         setFree(!free);
@@ -373,43 +188,6 @@ const Posts = () => {
         GetItemsCategoryLists();
     }, []);
 
-    useEffect(() => {
-        if (fileImgFileID && fileImgFileID?.size) {
-            PostFilePoster();
-        }
-    }, [fileImgFileID]);
-
-    useEffect(() => {
-        if (watch('file')) {
-            setFileImgFileID(watch('file[0]'));
-        }
-    }, [watch('file')]);
-
-    useEffect(() => {
-        if (Math.round((watch('file_video[0]')?.size / 1024) / 1024) < 50) {
-            const file = watch('file_video[0]');
-            if (file) {
-                const video = window.URL.createObjectURL(file);
-                setFileImgFile({ file: file, video: video });
-            }
-        } else if (Math.round((watch('file_video[0]')?.size / 1024) / 1024) > 50) {
-            const modal = Modal.warning({
-                centered: true,
-                title: 'Ogohlantirish!',
-                content:
-                    "Qisqa videoga 50 MB dan kichik bo'lishi kerak!",
-            });
-        }
-
-    }, [watch('file_video')]);
-
-    useEffect(() => {
-        const images = watch('image[0]');
-        if (images) {
-            const img = window.URL.createObjectURL(images);
-            setCustomePoster({ file: images, url: img });
-        }
-    }, [watch('image')]);
 
     useEffect(() => {
         if (user?.access) {
@@ -418,6 +196,76 @@ const Posts = () => {
         }
     }, [user?.access]);
 
+
+    async function postOrder(values) {
+        form.resetFields();
+        setDeisabled(true);
+        const formData = new FormData();
+        formData.append('title', values?.title);
+        if (free) {
+            formData.append('price', 0);
+        } else {
+            formData.append('price', Number(values?.price));
+        }
+        formData.append('description', Fulldata);
+        formData.append('poster', customePoster?.poster);
+
+        for (let j = 0; j < dataCategory.length; j++) {
+            if (dataCategory[j].name === values?.category) {
+                formData.append('category', dataCategory[j]?.id);
+            }
+        }
+        formData.append('document', livePosterFile?.id);
+        formData.append('tags', values?.tags);
+
+        if (values?.extra_file && values?.extra_file !== undefined) {
+            formData.append('extra_file', values?.extra_file);
+        }
+
+        try {
+            const response = await fetch(
+                `${baseUrl}seller/video-product-create/`,
+                {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${user?.access}`,
+                    },
+                    body: formData,
+                }
+            );
+
+            if (response.ok) {
+                Router.push('/account/myproducts');
+                const modal = Modal.warning({
+                    centered: true,
+                    title: 'Muvaffaqqiyatli!',
+                    content:
+                        "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan  mahsulotingiz 'Tasdiqlangan' dan so'ng  sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                });
+            } else {
+                const errorMessage = await response.json();
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: errorMessage?.msg?.map((item) => item),
+                });
+                throw new Error(errorMessage?.msg);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+        setDeisabled(false);
+    }
+
+    useEffect(() => {
+        if (liveProduct?.name) {
+            form.setFieldsValue({
+                title: liveProduct?.name
+            });
+        }
+    }, [liveProduct, form]);
+
+
     return user?.role === 'seller' ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -425,671 +273,563 @@ const Posts = () => {
             <div className="ps-page--my-account">
                 <Meta title={'Soff | Yangi mahsulot yaratish'} />
                 <BreadCrumb breacrumb={breadCrumb} />
-                <div className="d-flex container justify-content-center ">
-                    <div
-                        className="row  w-100 gap-3 pt-5"
-                        style={{ alignItems: 'flex-start' }}>
-                        <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
-                            {' '}
-                            <i className="fa-solid fa-triangle-exclamation"></i>{' '}
-                            Hurmatli Sotuvchi mahsulot yuklayotganingizda
-                            mahsulot o'zingizni shaxsiy mahsulotingiz ekanligiga
-                            ishonch hosil qiling. Aks holda o'sha
-                            mahsulotingizni sotuvda ko'rinmasligi va profilingiz
-                            bloklab qo'yilishi mumkin. E'tiborli bo'ling!
-                        </h5>
 
-                        <div
-                            className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                            style={{ maxWidth: '370px' }}>
-                            <h4> Sotuvdagi ko'rinishi : </h4>
-                            <Button
-                                className="btn-success "
-                                data-bs-target="#staticBackdrop"
-                                data-bs-toggle="modal">
-                                <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
-                            </Button>
-                        </div>
+                {liveProduct ?
 
-                        <form
-                            onSubmit={handleSubmit(handleClickPosts)}
-                            style={{ position: 'relative', width: '100%' }}
-                            id="FormPostsMyProducts"
-                            className=" col-md-7 pb-5"
-                            noValidate>
-                            <div className="col-md-12 p-0  mt-3">
-                                <div className="col-md-12  d-flex justify-content-between p-0 ">
-                                    <h4 className="p-0">Video Mahsulot </h4>
-                                    <p
-                                        className={
-                                            videosize?.empty_storage_size < 100
-                                                ? 'text-danger'
-                                                : 'text-success'
-                                        }>
-                                        <i className="fa-solid fa-circle-exclamation"></i>{' '}
-                                        Sizda Video yuklash uchun qolgan joy{' '}
-                                        {addPeriodToThousands(
-                                            videosize?.empty_storage_size
-                                        )}{' '}
-                                        MB
-                                    </p>
+                    <div className="container " >
+                        <div className='border rounded-5 bg-white my-5 pb-4' >
+                            <div className='p-4 border-bottom'>
+                                <div className='d-flex align-items-center gap-3'>
+                                    <h3 className='m-0'>Video yuklash</h3>
+                                    <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rishi mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: .mp4 , .mov , .avi">
+                                        <i
+                                            style={{
+                                                cursor: 'pointer',
+                                                fontSize: '20px'
+                                            }}
+                                            className="fa-regular fa-circle-question "></i>
+                                    </Tooltip>
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    <div className="row mt-2">
-                                        <div className="col-md-12  d-flex flex-column">
-                                            <div className=" d-flex justify-content-between p-0 ">
-                                                <p>Video nomi: *</p>
+
+                            <div
+                                className="d-flex align-items-center justify-content-between p-4"
+
+                            >
+                                <div
+                                    className='d-flex
+                                    flex-column
+                                     justify-content-center
+                                      align-items-center
+                                      w-100
+                                      pt-5
+                                        '
+                                >
+
+                                    <label
+                                        className='bg-body-secondary
+                                         border-0 d-flex align-items-center justify-content-center'
+                                        style={{
+                                            width: '140px',
+                                            height: '140px',
+                                            padding: '10px 15px',
+                                            boxSizing: 'border-box',
+                                            textAlign: 'center',
+                                            cursor: 'pointer',
+                                            borderRadius: "50%"
+                                        }}
+                                    >
+
+                                        {loading ? <span className="d-flex justify-content-center">
+                                            <ClipLoader
+                                                size={
+                                                    25
+                                                }
+                                                color="#36d7b7"
+                                            />
+                                        </span> :
+
+                                            (livePosterFile !== '') ?
+                                                <span>Video  yuklangan <i className="fa-solid fa-circle-check text-success"></i></span>
+                                                :
+                                                <span>
+                                                    <i class="fa-solid fa-upload fa-4x text-success"></i>
+                                                </span>
+                                        }
+
+                                        <Input
+                                            accept="video/*"
+                                            onChange={(e) => PostFilePoster(e.target.files[0])}
+                                            type='file'
+                                            style={{
+                                                position: 'absolute',
+                                                width: '1px',
+                                                height: '1px',
+                                                overflow: 'hidden',
+                                                clip: 'rect(0, 0, 0, 0)',
+                                                border: '0'
+                                            }}
+                                        />
+                                    </label>
+
+                                    <span className='mb-1 mt-4 fw-bold fs-3 text-center'>Yuklanadigan videolarni shu yerga tashlang</span>
+                                    <p className='text-center'>Videolaringiz chop etilguniga qadar yopiq sifatida turadi</p>
+                                    <label
+                                        className='btn btn-outline-success  fs-3 px-4 py-3 mt-4 rounded-5'
+                                    >
+                                        <span>Fayllarni tanlang </span>
+                                        <Input
+                                            accept="video/*"
+                                            onChange={(e) => PostFilePoster(e.target.files[0])}
+                                            type='file'
+                                            style={{
+                                                position: 'absolute',
+                                                width: '1px',
+                                                height: '1px',
+                                                overflow: 'hidden',
+                                                clip: 'rect(0, 0, 0, 0)',
+                                                border: '0'
+                                            }}
+                                        />
+                                    </label>
+                                    <p className='m-0 mt-4 text-center'>
+                                        Mijozlar to’lov qiglanidan so’ng, ko'rishi mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: .mp4 , .mov , .avi
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    :
+
+                    <div className="d-flex container justify-content-center ">
+
+
+                        <div
+                            className="row m-0  gap-3 pt-5"
+                            style={{ alignItems: 'flex-start' }}>
+
+                            <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
+                                {' '}
+                                <i className="fa-solid fa-triangle-exclamation"></i>{' '}
+                                Hurmatli Sotuvchi mahsulot yuklayotganingizda
+                                mahsulot o'zingizni shaxsiy mahsulotingiz ekanligiga
+                                ishonch hosil qiling. Aks holda o'sha
+                                mahsulotingizni sotuvda ko'rinmasligi va profilingiz
+                                bloklab qo'yilishi mumkin. E'tiborli bo'ling!
+                            </h5>
+
+                            <div
+                                className="col-md-4 m-0  d-flex justify-content-between p-0 "
+                                style={{ maxWidth: '370px' }}>
+                                <h4> Sotuvdagi ko'rinishi : </h4>
+                                <Button
+                                    className="btn-success "
+                                    data-bs-target="#staticBackdrop"
+                                    data-bs-toggle="modal">
+                                    <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
+                                </Button>
+                            </div>
+                            <div className='row m-0 p-0 mb-5' style={{ overflowY: "auto", height: "50vh" }}>
+
+                                <Form
+                                    form={form}
+                                    onFinish={postOrder}
+                                    className="col-md-7 pl-0 row  "
+                                    layout='vertical'
+
+                                >
+                                    <Form.Item
+                                        label={
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <span>Video nomi</span>
                                                 <Tooltip title="Mijozlarga ko’rsatiladigan mahsulotingiz nomini kiritishingiz kerak.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2 "></i>
+                                                        className="fa-regular fa-circle-question "></i>
                                                 </Tooltip>
                                             </div>
-                                            <Input
-                                                name="title"
-                                                type="text"
-                                                className={'col-md-12 mb-2 '}
-                                                InputClassName={
-                                                    'form-control  rounded-3 bg-white '
-                                                }
-                                                {...register('title', {
-                                                    required:
-                                                        "Video nomini to'ldirish majburiy",
-                                                    validate: (value) =>
-                                                        value.trim() !== '' ||
-                                                        "Video nomi bo'sh bo'lishi mumkin emas",
-                                                })}
-                                                error={errors.title?.message}
-                                            />
-                                        </div>
-
-                                        <div className=" col-md-12 d-flex flex-column mt-3">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Video sotish narxi: *</p>{' '}
-                                                <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
-                                            </div>
-                                            <div className="d-flex">
-                                                <Checkbox
-                                                    defaultChecked={free}
-                                                    className="col-md-4 d-flex align-items-center justify-content-start px-0 py-2"
-                                                    onChange={handleFreeChange}>
-                                                    Bepul
-                                                </Checkbox>
-
-                                                <InputNumber
-                                                    required
-                                                    disabled={free}
-                                                    value={taxminiyNarx}
-                                                    className="col-md-8 p-2 "
-                                                    onValueChange={(e) => (
-                                                        setTaxminiyNarx(
-                                                            e.value
-                                                        ),
-                                                        setNarx(e.value)
-                                                    )}
-                                                />
-                                            </div>
-                                        </div>
-
-                                        <div className=" col-md-12 d-flex flex-column mt-3">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Kategoriya: *</p>{' '}
-                                                <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
-                                            </div>
-                                            <div className="rounded-3  p-0 m-0 d-flex flex-column">
-                                                <Select
-                                                    mode="select"
-                                                    showSearch
-                                                    allowClear
-                                                    style={{
-                                                        width: '100%',
-                                                        height: '47px',
-                                                    }}
-                                                    onChange={onChange}
-                                                    onSearch={onSearch}>
-                                                    {options}
-                                                </Select>
-                                            </div>
-                                        </div>
-
-                                        <div className=" col-md-12 d-flex flex-column ">
-                                            <div className="m-0 pt-2 d-flex justify-content-between p-0">
-                                                <p>Teglar:</p>{' '}
-                                                <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
-                                            </div>
-                                            <div className="rounded-3  p-0 m-0 d-flex flex-column ">
-                                                <Select
-                                                    mode="tags"
-                                                    style={{ width: '100%' }}
-                                                    onChange={handleChange}>
-                                                    {children}
-                                                </Select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-md-6">
-                                    <div className="row">
-                                        <div className="col-md-12 d-flex flex-column ">
-                                            
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Video(asosiy): *</p>{' '}
-                                                <Tooltip title="Mijozlar to’lov qiglanidan so’ng, ko'rishi mumkin bo’lgan video. Mahsulotingiz quyidagi turdagi video bo’lishi mumkin: .mp4 , .mov , .avi">
-                                                    <i
-                                                        style={{
-                                                            cursor: 'pointer',
-                                                        }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                </Tooltip>
-                                            </div>
-                                            <div className="w-full">
-                                                <label
-                                                    className="add-product-user-image bg-white d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
-                                                    style={{
-                                                        backgroundColor: errors
-                                                            .file?.message
-                                                            ? ' #fff'
-                                                            : '#F1F1F1',
-                                                        border: errors.file
-                                                            ?.message
-                                                            ? '1px solid red'
-                                                            : '1px dashed green',
-                                                        width: '100%',
-                                                    }}>
-                                                    {!fileImgFileID ||
-                                                    livePosterFile === '' ? (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center"
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            {loading ? (
-                                                                <span className="d-flex justify-content-center">
-                                                                    <ClipLoader
-                                                                        size={
-                                                                            25
-                                                                        }
-                                                                        color="#36d7b7"
-                                                                    />
-                                                                </span>
-                                                            ) : (
-                                                                <span
-                                                                    className="d-flex flex-column align-items-center "
-                                                                    style={{
-                                                                        cursor: 'pointer',
-                                                                    }}>
-                                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                                    <span>
-                                                                        Asosiy
-                                                                        video
-                                                                    </span>
-                                                                </span>
-                                                            )}
-                                                        </span>
-                                                    ) : (
-                                                        <span
-                                                            className="d-flex flex-column align-items-center"
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}>
-                                                            <span>
-                                                                {' '}
-                                                                Siz mahsulot
-                                                                yukladingiz{' '}
-                                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                            </span>
-                                                        </span>
-                                                    )}
-                                                    <input
-                                                        name="file"
-                                                        type="file"
-                                                        {...register('file', {
-                                                            required:
-                                                                "Video qo'shish majburiy",
-                                                            validate: (value) =>
-                                                                !!value[0] ||
-                                                                'Video tanlanishi majburiy',
-                                                        })}
-                                                        accept="video/*"
-                                                    />
-                                                </label>
-
-                                                <p
-                                                    className={
-                                                        'my-2  text-danger'
-                                                    }>
-                                                    {errors?.file?.message}
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        {free ? <></> :
-                                            <div className="col-md-12 d-flex flex-column ">
-                                                <p className='text-warning p-0 m-0 mt-3'>Qisqa video 50 MB dan kichik bo'lishi kerak!</p>
-                                             
-                                                <div className="d-flex justify-content-between p-0">
-                                                    <p>
-                                                        Video(qisqa ko'rish uchun):
-                                                        *
-                                                    </p>{' '}
-                                                    <Tooltip title="Mijozlar mahsulotingizni sotib olishdan oldin ushbu qisa 50MB'dan oshmagan treylerni ko'rib ishonch hosil qilishadi va mahsulotingizni sotib olishadi. Mahsulotingiz ixtiyoriy turdagi video bo’lishi mumkin.">
-                                                        <i
-                                                            style={{
-                                                                cursor: 'pointer',
-                                                            }}
-                                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                                    </Tooltip>
-                                                </div>
-                                                <div className="w-full">
-                                                    <label
-                                                        className="add-product-user-image bg-white d-flex flex-column justify-content-center  align-content-center form-control py-5 rounded-3 text-truncate"
-                                                        style={{
-                                                            backgroundColor: errors
-                                                                .file_video?.message
-                                                                ? ' #fff'
-                                                                : '#F1F1F1',
-                                                            border: errors
-                                                                .file_video?.message
-                                                                ? '1px solid red'
-                                                                : '1px dashed green',
-                                                            width: '100%',
-                                                        }}>
-                                                        {!fileImgFile ? (
-                                                            <span
-                                                                className="d-flex flex-column align-items-center"
-                                                                style={{
-                                                                    cursor: 'pointer',
-                                                                }}>
-                                                                <span
-                                                                    className="d-flex flex-column align-items-center "
-                                                                    style={{
-                                                                        cursor: 'pointer',
-                                                                    }}>
-                                                                    <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                                    <span>
-                                                                        Qisqa
-                                                                        ko'rish
-                                                                        uchun video
-                                                                    </span>
-                                                                </span>
-                                                            </span>
-                                                        ) : (
-                                                            <span
-                                                                className="d-flex flex-column align-items-center"
-                                                                style={{
-                                                                    cursor: 'pointer',
-                                                                }}>
-                                                                <span>
-                                                                    {' '}
-                                                                    Siz mahsulot
-                                                                    yukladingiz{' '}
-                                                                    <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                                                </span>
-                                                            </span>
-                                                        )}
-                                                        <input
-                                                            name="file_video"
-                                                            type="file"
-                                                            {...register(
-                                                                'file_video',
-                                                                {
-                                                                    required:
-                                                                        "Qisqa video qo'shish majburiy",
-                                                                    validate: (
-                                                                        value
-                                                                    ) =>
-                                                                        !!value[0] ||
-                                                                        'Qisqa video tanlanishi majburiy',
-                                                                }
-                                                            )}
-                                                            accept="video/*"
-                                                        />
-                                                    </label>
-                                                    <p
-                                                        className={
-                                                            'my-2  text-danger'
-                                                        }>
-                                                        {
-                                                            errors?.file_video
-                                                                ?.message
-                                                        }
-                                                    </p>
-                                                </div>
-                                            </div>
-
                                         }
-
-                                        <div className="col-md-12  d-flex flex-column ">
-                                            <div className=" mt-2 d-flex justify-content-between p-0">
-                                                <p>Video poster rasmi: *</p>
-
+                                        name="title"
+                                        className='col-md-12 mb-2 '
+                                        rules={[
+                                            {
+                                                required: liveProduct?.name ? false : true,
+                                                message:
+                                                    'Video nomi majburiy',
+                                            },
+                                        ]}
+                                    >
+                                        <Input
+                                            name='title'
+                                            placeholder="Video nomi"
+                                            defaultValue={liveProduct?.name}
+                                        />
+                                    </Form.Item>
+                                    <Form.Item
+                                        label={
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <span>Video poster rasmi</span>
                                                 <Tooltip title="Mijozlarni mahsulotingizga e'tiborini tortib qiziqtirish uchun video poster yuklang. U posterni maxsus yasashingiz yoki videoingizni eng qiziq bo'lgan qismini screenshot qilib yuklashingiz mumkin bo'ladi.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
                                                         }}
-                                                        className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                        className="fa-regular fa-circle-question "></i>
                                                 </Tooltip>
                                             </div>
-                                            <div className="w-full">
-                                                <div
-                                                    className="add-product-user-image bg-white d-flex justify-content-between gap-3  form-control p-2 pt-2 rounded-3"
-                                                    style={{
-                                                        backgroundColor: errors
-                                                            .image?.message
-                                                            ? ' #fff'
-                                                            : '#F1F1F1',
-                                                        border: errors.image
-                                                            ?.message
-                                                            ? '1px solid red'
-                                                            : '1px dashed green',
-                                                        width: '100%',
-                                                        height: '100px',
-                                                    }}>
-                                                    <label
-                                                        className="m-0"
-                                                        style={{
-                                                            width: '45%',
-                                                            cursor: 'pointer',
-                                                            backgroundColor:
-                                                                errors.image
-                                                                    ?.message
-                                                                    ? ' #fff'
-                                                                    : '#F1F1F1',
-                                                            border: errors.image
-                                                                ?.message
-                                                                ? '1px solid red'
-                                                                : '1px dashed green',
-                                                            borderRadius: '5px',
-                                                            position:
-                                                                'relative',
-                                                        }}>
-                                                        <i className="fa-solid fa-plus fs-1 mt-5  mx-3 plus-icon-style "></i>
-                                                        <input
-                                                            name="image"
-                                                            type="file"
-                                                            {...register(
-                                                                'image',
-                                                                {
-                                                                    required:
-                                                                        "Video rasmini qo'shish majburiy",
-                                                                    validate: (
-                                                                        value
-                                                                    ) =>
-                                                                        !!value[0] ||
-                                                                        'Video rasmi tanlanishi majburiy',
-                                                                }
-                                                            )}
-                                                            accept="image/*"
-                                                            style={{
-                                                                width: '50px',
-                                                            }}
-                                                        />
-                                                    </label>
-                                                    <div
-                                                        className=""
-                                                        style={{
-                                                            width: '50%',
-                                                            cursor: 'pointer',
-                                                            backgroundColor:
-                                                                errors.image
-                                                                    ?.message
-                                                                    ? ' #fff'
-                                                                    : '#F1F1F1',
-                                                            border: errors.image
-                                                                ?.message
-                                                                ? '2px solid red'
-                                                                : '1px dashed green',
-                                                            borderRadius: '5px',
-                                                            position:
-                                                                'relative',
-                                                        }}>
-                                                        <img
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '100%',
-                                                                backgroundPosition:
-                                                                    'center',
-                                                                objectFit:
-                                                                    'contain',
-                                                            }}
-                                                            src={
-                                                                customePoster?.url ||
-                                                                '../../../static/img/videoposter.jpg'
-                                                            }
-                                                            alt="poster/video"
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <p
-                                                    className={
-                                                        'my-2  text-danger'
-                                                    }>
-                                                    {errors?.image?.message}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                        }
+                                        name={"poster"}
+                                        className='col-md-12 mb-2 '
+                                        rules={[
+                                            {
+                                                required: customePoster?.url ? false : true,
+                                                message:
+                                                    'Video poster rasmi majburiy',
+                                            },
+                                        ]}
+                                    >
 
-                                <div className="col-md-12 row pr-0 mt-4">
-                                    <div className="col-md-12  d-flex flex-column mt-3 p-0">
-                                        <div className=" d-flex justify-content-between p-0">
-                                            <p>Mahsulot to’liq tavsifi: </p>{' '}
+                                        <label
+                                            style={{
+                                                display: 'inline-block',
+                                                width: '100%',
+                                                height: '43px',
+                                                border: '1px solid #ccc',
+                                                padding: '10px 15px',
+                                                boxSizing: 'border-box',
+                                                textAlign: 'center',
+                                                cursor: 'pointer',
+                                                backgroundColor: '#fff',
+                                                borderRadius: "5px"
+                                            }}
+                                        >
+
+                                            {
+                                                (customePoster?.url) ?
+                                                    <span>Video poster rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
+                                                    :
+                                                    <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Video poster rasmini yuklash uchun rasm tanlang</span>
+                                            }
+                                            <Input
+                                                name='poster'
+                                                accept='image/*'
+                                                onChange={(e) => LivePoster(e.target.files[0])}
+                                                type='file'
+                                                style={{
+                                                    position: 'absolute',
+                                                    width: '1px',
+                                                    height: '1px',
+                                                    overflow: 'hidden',
+                                                    clip: 'rect(0, 0, 0, 0)',
+                                                    border: '0'
+                                                }}
+                                            />
+                                        </label
+                                        >
+
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label={
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <span>Video narxi</span>
+                                                <Tooltip title="Mahsulotingiz uchun narx kiriting. Narx kiritish oldi mahsulotingizga o’xshash bo’lgan mahsulotlar narxini ko’rishingiz tafsiya beriladi.">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question "></i>
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                        name="price"
+                                        className='col-md-12 mb-2'
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Video  narx majburiy',
+                                            },
+                                        ]}
+                                    >
+                                        <div className='d-flex align-items-center gap-3 '>
+
+                                            <InputNumber
+                                                name='price'
+                                                disabled={free}
+                                                placeholder="Video  narxi"
+                                                className='w-100 py-2'
+                                                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                                parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                                onKeyPress={(e) => {
+                                                    if (!/[0-9]/.test(e.key)) {
+                                                        e.preventDefault();
+                                                    }
+                                                }}
+                                            />
+                                            <Checkbox
+                                                defaultChecked={free}
+                                                className=" d-flex align-items-center justify-content-start px-0 py-2"
+                                                onChange={handleFreeChange}>
+                                                <strong className='text-success'>Bepul</strong>
+                                            </Checkbox>
+                                        </div>
+
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label={
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <span>Video kategoriyasi</span>
+                                                <Tooltip title="Mahsulotingiz uchun mos kategoriyani tanlang.">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question "></i>
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                        name="category"
+                                        className='col-md-12 mb-2'
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Video kategoriyasi majburiy',
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            name="category"
+                                            mode="select"
+                                            showSearch
+                                            allowClear
+                                            placeholder="Video kategoriyasi"
+                                            style={{
+                                                width: '100%',
+                                                height: '47px',
+                                            }}
+                                            onSearch={onSearch}>
+                                            {options}
+                                        </Select>
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label={
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <span>Video teglari</span>
+                                                <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question "></i>
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                        name="tags"
+                                        className='col-md-12 mb-2'
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Video teglari majburiy',
+                                            },
+                                        ]}
+                                    >
+                                        <Select
+                                            mode="tags"
+                                            placeholder="Video teglari "
+                                            style={{ width: '100%' }}
+                                        >
+                                            {children}
+                                        </Select>
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label={
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <span>Qo'shimcha fayllar (.zip)</span>
+                                                <Tooltip title="Mijozlar mahsulotingizni sotib olgandan so'ng, unga tegishli bo'lgan yana boshqa qo'shimcha faylar bo'lsa yuklang. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question "></i>
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                        name={"extra_file"}
+                                        className='col-md-12 mb-2 '>
+
+                                        <label
+                                            style={{
+                                                display: 'inline-block',
+                                                width: '100%',
+                                                height: '43px',
+                                                border: '1px solid #ccc',
+                                                padding: '10px 15px',
+                                                boxSizing: 'border-box',
+                                                textAlign: 'center',
+                                                cursor: 'pointer',
+                                                backgroundColor: '#fff',
+                                                borderRadius: "5px"
+                                            }}
+                                        >
+
+                                            {
+                                                // (true) ?
+                                                //     <span>Chek rasmi yuklangan <i className="fa-solid fa-circle-check text-success"></i></span>
+                                                //     :
+                                                <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Qo'shimcha fayllar</span>
+                                            }
+                                            <Input
+                                                name='extra_file'
+                                                accept='image/*'
+                                                onChange={(e) => setValuesImage(e.target.files[0])}
+                                                type='file'
+                                                style={{
+                                                    position: 'absolute',
+                                                    width: '1px',
+                                                    height: '1px',
+                                                    overflow: 'hidden',
+                                                    clip: 'rect(0, 0, 0, 0)',
+                                                    border: '0'
+                                                }}
+                                            />
+                                        </label>
+
+                                    </Form.Item>
+
+                                    <Form.Item
+                                        label={
+                                            <div className='d-flex align-items-center gap-3'>
+                                                <span>Play Listlar</span>
+                                                <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question "></i>
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                        name="tags"
+                                        className='col-md-12 mb-2'
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message:
+                                                    'Video teglari majburiy',
+                                            },
+                                        ]}
+                                    >
+                                        <div className='d-flex gap-3 '>
+                                            <Select
+                                                mode="select"
+                                                placeholder="Video teglari "
+                                                style={{
+                                                    width: '100%',
+                                                    height: '47px',
+                                                }}
+                                            >
+                                                {children}
+                                            </Select>
+                                            <span
+                                                onClick={() => setOpen(true)}
+                                                style={{
+                                                    width: '10%',
+                                                    height: '47px',
+
+                                                }}
+
+                                                className='btn
+                                                rounded-3
+                                                 btn-outline-primary
+                                                 d-flex align-items-center justify-content-center
+                                                 '><i className="fa-solid fa-plus fs-3"></i></span>
+                                        </div>
+                                    </Form.Item>
+
+                                    <div className="rounded-5 col-md-12 mt-2">
+                                        <div className=" d-flex align-items-center gap-3 mb-2">
+                                            <p className='m-0'>Mahsulot to’liq tavsifi: </p>{' '}
                                             <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
                                                 <i
                                                     style={{
                                                         cursor: 'pointer',
                                                     }}
-                                                    className="fa-regular fa-circle-question px-4 mt-2"></i>
+                                                    className="fa-regular fa-circle-question "></i>
                                             </Tooltip>
                                         </div>
-                                        <div className=" p-0 rounded-3 col-md-12">
-                                            <CKeditor
-                                                name="description"
-                                                onChange={(data) => {
-                                                    setFullData(data);
-                                                }}
-                                                editorLoaded={editorLoaded}
-                                            />
-                                        </div>
-                                    </div>
 
-                                    <div
-                                        className="d-flex justify-content-end mt-4 "
-                                        style={{
-                                            transform: 'translateX(16px)',
-                                        }}>
-                                        <button
-                                            type="submit"
-                                            disabled={loading}
-                                            className="btn btn-success py-3 ">
-                                            <span className="fs-4 px-5">
-                                                Mahsulot qo'shish{' '}
-                                                <i className="fa-solid fa-cloud-arrow-up mx-2"></i>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="mahsulotingiz">
-                                <span
-                                    className="fixed-btn"
-                                    type="button"
-                                    data-bs-toggle="offcanvas"
-                                    data-bs-target="#offcanvasRight"
-                                    aria-controls="offcanvasRight">
-                                    <i className="fa-solid fa-id-card fa-beat fs-1"></i>
-                                </span>
-                            </div>
-                        </form>
-
-                        <div
-                            className="col-md-5 rounded-3  p-3  card mt-5"
-                            style={{ maxWidth: '485px' }}>
-                            <video
-                                className=" border w-100"
-                                controls
-                                preload="none"
-                                src={fileImgFile?.video}
-                                poster={customePoster?.url}
-                                style={{ maxHeight: '250px' }}></video>
-                            <div className="col-md-12 d-flex flex-column ">
-                                <div className=" mt-2 d-flex justify-content-between p-0">
-                                    <p>Qo'shimcha fayllar uchun (.zip)</p>{' '}
-                                    <Tooltip title="Mijozlar mahsulotingizni sotib olgandan so'ng, unga tegishli bo'lgan yana boshqa qo'shimcha faylar bo'lsa yuklang. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
-                                        <i
-                                            style={{
-                                                cursor: 'pointer',
+                                        <CKeditor
+                                            name="description"
+                                            onChange={(data) => {
+                                                setFullData(data);
                                             }}
-                                            className="fa-regular fa-circle-question px-4 mt-2"></i>
-                                    </Tooltip>
-                                </div>
-                                {/* <div className="row"> */}
-                                <label
-                                    className="add-product-user-image d-flex flex-column justify-content-center align-content-center form-control py-5 rounded-3 text-truncate"
-                                    style={{
-                                        backgroundColor: '#F1F1F1',
-                                        border: '1px dashed green',
-                                        width: '100%',
-                                    }}>
-                                    {!extraFiles ? (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
+                                            editorLoaded={editorLoaded}
+                                        />
+                                    </div>
+
+                                    <Form.Item className="col-md-12 d-flex justify-content-end m-0  my-4">
+                                        <Button
+                                            loading={disabled || loading}
+                                            htmlType="submit"
                                             style={{
-                                                cursor: 'pointer',
-                                            }}>
+                                                width: '100%',
+                                                height: '37px',
+                                                padding: "1px 30px"
+                                            }}
+                                            className="btn-success btn-send-email">
                                             <span
-                                                className="d-flex flex-column align-items-center "
                                                 style={{
-                                                    cursor: 'pointer',
+                                                    color: '#fff',
+                                                    fontSize:
+                                                        '16px',
                                                 }}>
-                                                <i className="fa-solid fa-inbox text-primary mt-1"></i>
-                                                <span>Qo'shimcha fayllar</span>
+                                                Tasdiqlash
                                             </span>
-                                        </span>
-                                    ) : (
-                                        <span
-                                            className="d-flex flex-column align-items-center"
-                                            style={{
-                                                cursor: 'pointer',
-                                            }}>
-                                            <span>
-                                                {' '}
-                                                Tanlangan{' '}
-                                                <i className="fa-solid fa-circle-check text-success"></i>{' '}
-                                            </span>
-                                        </span>
-                                    )}
-                                    <input
-                                        required
-                                        type="file"
-                                        onChange={(e) =>
-                                            setExtraFiles(e.target.files[0])
-                                        }
-                                        accept=".zip"
-                                    />
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                                        </Button>
+                                    </Form.Item>
 
-                <div
-                    className="modal fade "
-                    id="staticBackdrop-2"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                    aria-labelledby="staticBackdropLabel"
-                    aria-hidden="true">
-                    <div className="modal-dialog">
-                        <div className="modal-content mahsulotingizElh3 ">
-                            <div className="ps-container">
-                                <div className="row">
-                                    <div className="col-12">
-                                        <div
-                                            className={`product__top-information ${'video_user_information'} `}
-                                            style={{ width: '100%' }}>
-                                            <div
-                                                className="py-5 d-flex gap-3"
-                                                style={{
-                                                    flexDirection: 'column',
-                                                }}>
-                                                <span className="d-flex justify-content-center gap-3">
-                                                    <span>Yuklanmoqda</span>
-                                                    <ClipLoader
-                                                        size={25}
-                                                        color="#36d7b7"
-                                                    />
-                                                </span>
-                                                <p
-                                                    style={{
-                                                        fontSize: '20px',
-                                                        textAlign: 'center',
-                                                    }}
-                                                    className="fw-semibold">
-                                                    Video yuklanmoqda bu sizning
-                                                    internet tezligingizga qarab
-                                                    turlicha vaqt olishi mumkin
-                                                </p>
+                                </Form>
 
-                                                <div className="d-flex gap-3 justify-content-center">
-                                                    <button
-                                                        className="btn btn-danger py-3 "
-                                                        onClick={() => {
-                                                            openClose(
-                                                                '#staticBackdrop-2'
-                                                            );
-                                                            window.location.reload();
-                                                        }}>
-                                                        <span className="fs-4 px-5">
-                                                            Bekor qilish{' '}
-                                                        </span>
-                                                    </button>
-                                                    <button
-                                                        className="btn btn-success py-3 "
-                                                        onClick={() => {
-                                                            window.open(
-                                                                'http://localhost:3000/account/myproducts/upload-video',
-                                                                '_blank'
-                                                            );
-                                                        }}>
-                                                        <span className="fs-4 px-5">
-                                                            Yana yuklash{' '}
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                <div className='col-md-5 m-0 p-0 bg-white ' style={{
+                                    position: "sticky",
+                                    alignSelf: "flex-start",
+                                    top: "30px"
+                                }}>
+
+                                    <video
+                                        className="shadow p-0 "
+                                        controls
+                                        preload="none"
+                                        src={fileImgFile?.video}
+                                        poster={customePoster?.url}
+                                        style={{
+                                            width: '100%', maxHeight:
+                                                '300px',
+                                        }}>
+
+                                    </video>
+
+                                    {loading && <p style={{
+                                        color: "#fff",
+                                        position: "absolute",
+                                        top: "35%",
+                                        left: "35%",
+                                        transform: "tranlate(-35%, -40%)"
+
+
+
+                                    }}><span className="d-flex mb-2 justify-content-center">
+                                            <ClipLoader
+                                                size={
+                                                    25
+                                                }
+                                                color="#36d7b7"
+                                            />
+                                        </span> Video yuklanmoqda</p>}
+
+                                    <div className='px-4 py-2'>
+                                        <p>{liveProduct?.name}</p>
                                     </div>
                                 </div>
+
+
                             </div>
+
                         </div>
+
                     </div>
-                </div>
+                }
+
 
                 <div
                     className="modal fade "
@@ -1111,7 +851,7 @@ const Posts = () => {
                                 <div className="row">
                                     <div className="col-xl-8 col-lg-8 col-12">
                                         <>
-                                            {!fileImgFileID ? (
+                                            {!liveProduct ? (
                                                 <div className="video_container">
                                                     <div className="video_content">
                                                         <video
@@ -1384,8 +1124,32 @@ const Posts = () => {
                         </div>
                     </div>
                 </div>
+
+                <Modal
+                    title="Kelib tushgan taklifga javob"
+                    width={550}
+                    centered
+                    open={open}
+                    onOk={() => setOpen(false)}
+                    okText="Yopish"
+                    footer={null}
+                    cancelButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
+                    okButtonProps={{
+                        style: {
+                            display: 'none',
+                        },
+                    }}
+
+                    onCancel={() => setOpen(false)}>
+                    <h3>Play lists qo'shish</h3>
+                </Modal>
+
             </div>
-        </PageContainer>
+        </PageContainer >
     ) : user?.access ? (
         <Page404 />
     ) : (
