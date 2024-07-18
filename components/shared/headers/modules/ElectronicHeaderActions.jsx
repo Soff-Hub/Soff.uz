@@ -97,11 +97,6 @@ const ElectronicHeaderActions = ({ auth }) => {
             }
 
 
-
-            ws.onerror = function (error) {
-                console.error('WebSocket xatosi:', error);
-            };
-
             // Clean up on unmount
             return () => {
                 ws.close();

@@ -16,30 +16,40 @@ import Meta from '~/components/shared/headers/Meta';
 import Link from 'next/link';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
-const Option = Select.Option;
+import PostsRepository from '~/reositoriy-admin/PostsRepository';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+const { Option } = Select;
+const { TextArea } = Input;
+
+export const formatPrice = (price) => {
+    if (typeof price === 'string') {
+        return parseFloat(price.replace(/,/g, ''));
+    }
+    return price;
+};
 
 const Posts = () => {
-    const { TabPane } = Tabs;
     const Router = useRouter();
-    const [tagSearchResult, setTagSearchResult] = useState(null);
 
-    const [fileImgFile, setFileImgFile] = useState(null);
-    const [extraFiles, setExtraFiles] = useState(null);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
-    const [taxminiyNarx, setTaxminiyNarx] = useState('');
     const [editorLoaded, setEditorLoaded] = useState(false);
-    const [Fulldata, setFullData] = useState('');
-    const [categoryName, setCategoryName] = useState('');
+    const [tegProductsLists, setTegProdcutsLists] = useState([]);
     const [loading, setLoading] = useState(false);
     const [loadingIs, setLoadingIs] = useState(false);
-    const [free, setFree] = useState(false);
+    const [free, setFree] = useState(false);  // Video narxini beppul qilish uchun 
+    const [freePlay, setFreePlay] = useState(false);  // PlayList narxini beppul qilish uchun 
     const [customePoster, setCustomePoster] = useState(false);
-    const [profile, setProfile] = useState(null);
     const [products, setProducts] = useState(null)
+    const [category, setCategory] = useState(null)
     const routerId = Router.query?.id;
+    const [loadingPlay, setLoadingPlay] = useState(false); // Modal ochilishi uchun
+    const [itemsPlayLists, setItemsPlayLists] = useState([]);   // tagslar listini saqlash uchun
+    const [open, setOpen] = useState(false); // Modal ochilishi uchun
+    const [customePosterPlay, setCustomePosterPlay] = useState(null); // PlayList posterini olsih uchun 
     const [form] = Form.useForm();
+    const [form2] = Form.useForm();
 
     const breadCrumb = [
         {
@@ -51,6 +61,8 @@ const Posts = () => {
         },
     ];
 
+    // Kategoriya listini olib kelish uchun funksiya
+
     async function GetItemsCategoryLists() {
         const ItemsData = await GetRepository.getAllCategoryListsVideo();
         if (ItemsData) {
@@ -58,11 +70,7 @@ const Posts = () => {
         }
     }
 
-
-    async function ProfileUsers(token) {
-        const ItemsData = await GetRepository.getProfile(token);
-        setProfile(ItemsData);
-    }
+    // Kategoriyani qidirish uchun funksiya
 
     const onSearch = async (value) => {
         const ItemsData = await GetRepository.getAllCategoryListsVideo(value);
@@ -71,6 +79,8 @@ const Posts = () => {
         }
     };
 
+    // Taglarni Listini olib kelish
+
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
         if (ItemsData) {
@@ -78,35 +88,213 @@ const Posts = () => {
         }
     }
 
-    const children = [];
-    for (let i = 0; i < tagItems?.length; i++) {
-        children.push(
-            <Option key={tagItems[i].name}>{tagItems[i].name}</Option>
-        );
+    // Video PlayListslarini olib kelish uchun getFunksiya
+
+    async function GetItemsPlayLists() {
+        const ItemsData = await GetRepository.getItemsPlayLists(user?.access)
+        if (ItemsData?.results) {
+            setItemsPlayLists(ItemsData?.results);
+        }
+    }
+
+    async function GetItemsTagAktivmas() {
+        const ItemsData = await GetRepository.getTagListsDeaktiv(user?.access);
+        if (ItemsData) {
+            setTegProdcutsLists(ItemsData);
+        }
     }
 
 
-    const options = [];
-    for (let i = 0; i < dataCategory?.length; i++) {
-        options.push(
-            <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
-        );
+
+    // Vidoega Play-List qo'shish uchun Post funksiyasi
+
+    const postPlayLists = async (values) => {
+        form.resetFields();
+        const formData = new FormData();
+        const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
+        formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice); // Video narxi
+        formData.append('title', values?.title),
+            formData.append('image', customePosterPlay?.poster),
+            formData.append('description', values?.description || '')
+
+        try {
+            setLoadingPlay(true)
+            await PostsRepository.PostsPLaylists(
+                formData,
+                user?.access
+            )
+            const modal = Modal.success({
+                centered: true,
+                title: 'Muvaffaqiyatli!',
+                content: 'Muvaffaqiyatli yaratildi',
+            });
+            GetItemsPlayLists()
+        } catch (error) {
+            const modal = Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: error?.response?.data?.msg[0] || error?.message,
+            });
+        }
+        finally {
+            setOpen(false)
+            setCustomePosterPlay(null)
+            setLoadingPlay(false)
+
+        }
+
     }
 
-
+    //  Mahsulot detailini olib kelish uchun funksiya
 
     async function getProducts() {
         if (routerId) {
             setLoadingIs(true)
-            const ItemsData = await GetRepository.getMyProductsView(
-                routerId,
-                user?.access
-            );
-            setProducts(ItemsData);
+            if (user?.role == "seller") {
+                const ItemsData = await GetRepository.getMyProductsView(
+                    routerId,
+                    user?.access
+                );
+                setProducts(ItemsData);
+            } else {
+                const ItemsData = await GetRepository.getShopsProductsAdmin(routerId, user?.access);
+                setProducts(ItemsData);
+            }
             setLoadingIs(false)
         }
 
     }
+
+
+    //   Videoga rasm yuklash uchun funksiya
+
+    const LivePoster = (images) => {
+        if (images) {
+            const img = window.URL.createObjectURL(images);
+            setCustomePoster({ poster: images, url: img });
+        }
+    }
+
+    //   PlayListga rasm yuklash uchun funksiya
+
+    const LivePosterPlayLists = (images) => {
+        if (images) {
+            const img = window.URL.createObjectURL(images);
+            setCustomePosterPlay({ poster: images, url: img });
+        }
+    }
+
+    // Videoni Update qilish uchun funksiya
+    async function postOrder(values) {
+
+        const resuslts1 = products?.active_tag?.map((item) => item.name);
+        const resuslts2 = products?.deactive_tag?.map((item) => item.name);
+        const results = values?.tags?.concat(values?.deactive_tag);
+        const results3 = resuslts1?.concat(resuslts2);
+
+        const formData = new FormData();
+        formData.append('title', values?.title); // Video nomi
+
+        if (results && user?.role === 'admin') {
+            formData.append('tags', JSON.stringify(results));
+        }
+        if (results3 && user?.role === 'admin') {
+            formData.append('tags', JSON.stringify(results3));
+        }
+        if (user?.role === 'seller') {
+            formData.append('tags', JSON.stringify(values?.tags)); // Video taglar listi
+        }
+
+        if (customePoster?.poster) {
+            formData.append('poster', customePoster?.poster); // Video posteri
+        }
+        const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
+
+        formData.append('price', (free || values.price == 0) ? 0 : newPrice); // Video narxi
+        formData.append('description', values?.description); // Video haqida to'liq izoh
+
+        // Video kategoriyasi
+        const selectedCategory = dataCategory.find(cat => cat.name === values?.category);
+        if (selectedCategory) {
+            formData.append('category', selectedCategory?.id);
+        }
+        if (user?.role === 'admin') {
+            formData.append('status', values?.status);
+        }
+        if (user?.role === 'admin' && values?.reason) {
+            formData.append('resaon', values?.reason);
+        }
+
+
+        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === values?.playlist);
+        if (selectedPlaylists && user?.role === 'seller') {
+            formData.append('playlist', selectedPlaylists?.id);
+        }
+
+
+        try {
+            const resp = await axios.patch(
+                `${baseUrl}seller/video-product-update/${products?.id}/`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${user?.access}`,
+                    },
+                }
+            );
+            Router.back();
+            const modal = Modal.warning({
+                centered: true,
+                title: 'Muvaffaqqiyatli!',
+                content: "Siz malumotlarni o'zgartirdingiz ",
+
+            });
+        } catch (err) {
+            console.log("Error edit", err);
+        }
+
+
+    }
+
+    //   Mahsulot malumotlarini inputni valuesiga tushirish
+
+    useEffect(() => {
+        if (products) {
+            form.setFieldsValue({
+                title: products?.title,
+                poster: products?.poster_url,
+                price: products?.price,
+                category: products?.category?.name,
+                description: products?.description || '',
+                tags: user?.role === 'admin' ? products?.active_tag?.map(item => item?.name) : products?.tag?.map((item) => item.name),
+                category: products?.category?.name,
+                deactive_tag: products?.deactive_tag?.map(
+                    (item) => item.name
+                ),
+                playlist: products?.playlist?.title,
+                status: products?.status,
+                reason: products?.reason,
+
+            });
+
+            if (products?.price === 0) {
+                setFree(true)
+            }
+        }
+    }, [products, form]);
+
+    //   Modal ichidagi valuelarni tozalash
+
+    useEffect(() => {
+        if (open) {
+            form2.setFieldsValue({
+                description: null,
+                image: null,
+                price: null,
+                title: null
+            });
+        }
+    }, [open, form2]);
 
     useEffect(() => {
         getProducts()
@@ -118,95 +306,35 @@ const Posts = () => {
             GetItemsTag();
             setEditorLoaded(true);
             GetItemsCategoryLists();
+            GetItemsPlayLists()
+            GetItemsTagAktivmas()
         }
     }, [user?.access]);
 
 
-    function LivePoster(file) {
+    const dataStatus = [
+        {
+            id: 1,
+            status: 'moderation',
+        },
+        {
+            status: 'approved',
+        },
+        {
+            status: 'cancelled',
+        },
+    ];
 
-        if (file) {
-            const img = window.URL.createObjectURL(file);
-            setCustomePoster({ file: file, url: img });
-        }
+    const status = {
+        'moderation': 'Moderatsiya',
+        'approved': 'Tasdiqlangan',
+        'cancelled': 'Bekor qilingan',
     }
 
-    useEffect(() => {
-        if (user?.access) {
-            ProfileUsers(user?.access);
-        }
-    }, [user?.access]);
+    console.log(products);
 
 
-    async function postOrder(values) {
-
-        const formData = new FormData();
-        formData.append('title', values?.title);
-
-        if (free) {
-            formData.append('price', 0);
-        } else {
-            formData.append('price', Number(values?.price));
-        }
-
-        formData.append('description', Fulldata);
-        formData.append('poster', customePoster?.file);
-
-        for (let j = 0; j < dataCategory.length; j++) {
-            if (dataCategory[j].name === values?.category) {
-                formData.append('category', dataCategory[j]?.id);
-            }
-        }
-        formData.append('tags', values?.tags);
-
-
-        if (values?.extra_file && values?.extra_file !== undefined) {
-            formData.append('extra_file', values?.extra_file);
-        }
-
-        // try {
-        //     const resp = await axios.patch(
-        //         `${baseUrl}seller/video-product-update/${products?.id}/`,
-        //         formData,
-        //         {
-        //             headers: {
-        //                 Authorization: `Bearer ${user?.access}`,
-        //             },
-        //         }
-        //     );
-        //     Router.back();
-        //     const modal = Modal.warning({
-        //         centered: true,
-        //         title: 'Muvaffaqqiyatli!',
-        //         content: "Siz malumotlarni o'zgartirdingiz ",
-
-        //     });
-        // } catch (err) {
-        //     console.log("Error edit", err);
-        // }
-
-    }
-
-    const handleFreeChange = (e) => {
-        setFree(!free);
-    };
-
-    useEffect(() => {
-        if (products) {
-            form.setFieldsValue({
-                title: products?.title,
-                poster: products?.poster_url,
-                price: products?.price,
-                category: products?.category?.name,
-                tags: products?.tag &&
-                    products?.tag?.map((item) => item.name),
-
-            });
-        }
-    }, [products, form]);
-
-
-
-    return user?.role === 'seller' ? (
+    return (user?.role === 'seller' || user?.role === 'admin') ? (
         <PageContainer
             footer={<FooterDefault />}
             title="Recent Viewed Products">
@@ -219,6 +347,7 @@ const Posts = () => {
                         <div
                             className="row  w-100 gap-3 pt-5"
                             style={{ alignItems: 'flex-start' }}>
+
                             <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
                                 {' '}
                                 <i className="fa-solid fa-triangle-exclamation"></i>{' '}
@@ -229,17 +358,7 @@ const Posts = () => {
                                 bloklab qo'yilishi mumkin. E'tiborli bo'ling!
                             </h5>
 
-                            <div
-                                className="col-md-4 m-0  d-flex justify-content-between p-0 "
-                                style={{ maxWidth: '370px' }}>
-                                <h4> Sotuvdagi ko'rinishi : </h4>
-                                <Button
-                                    className="btn-success "
-                                    data-bs-target="#staticBackdrop"
-                                    data-bs-toggle="modal">
-                                    <i className="fa-solid  fa-eye text-success-emphasis mx-3 "></i>
-                                </Button>
-                            </div>
+
 
                             <div className='row m-0 p-0 mb-5' style={{ overflowY: "auto", height: "50vh" }}>
 
@@ -250,6 +369,56 @@ const Posts = () => {
                                     layout='vertical'
 
                                 >
+
+                                    {user?.role === 'admin' &&
+                                        <>
+
+                                            <Form.Item
+                                                label={'Holati'}
+                                                name="status"
+                                                className='col-md-12 mb-2'
+                                            >
+                                                <Select
+                                                    name="tags"
+                                                    mode="select"
+                                                    style={{ width: '100%', height: "45.4px" }}
+                                                    onChange={(e) => setCategory(e)}
+                                                >
+                                                    {
+                                                        dataStatus?.map(item => (
+                                                            <Option key={item?.status}>{status[item?.status]}</Option>
+                                                        ))
+                                                    }
+                                                </Select>
+
+                                            </Form.Item>
+
+                                            {(products?.status === 'cancelled' || category === 'cancelled') &&
+
+                                                <Form.Item
+                                                    label={'Sabab'}
+                                                    name="reason"
+                                                    className='col-md-12 mb-2'
+                                                    rules={[
+                                                        {
+                                                            required: products?.reason ? false : true,
+                                                            message:
+                                                                'Sabab kiritsh majburiy',
+                                                        },
+                                                    ]}
+                                                >
+                                                    <TextArea
+                                                        rows={3}
+                                                        placeholder='Sabab'
+                                                    />
+
+                                                </Form.Item>
+                                            }
+                                        </>
+                                    }
+
+
+
                                     <Form.Item
                                         label={
                                             <div className='d-flex align-items-center gap-3'>
@@ -351,8 +520,8 @@ const Posts = () => {
                                         <div className='d-flex align-items-center gap-3 '>
 
                                             <InputNumber
-                                                name='price'
-                                                disabled={free || products?.price === 0}
+                                                defaultValue={products?.price}
+                                                disabled={free}
                                                 placeholder="Video  narxi"
                                                 className='w-100 py-2'
                                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -364,9 +533,9 @@ const Posts = () => {
                                                 }}
                                             />
                                             <Checkbox
-                                                defaultChecked={free || products?.price === 0}
+                                                defaultChecked={free}
                                                 className=" d-flex align-items-center justify-content-start px-0 py-2"
-                                                onChange={handleFreeChange}>
+                                                onChange={() => setFree(!free)}>
                                                 <strong className='text-success'>Bepul</strong>
                                             </Checkbox>
                                         </div>
@@ -398,17 +567,21 @@ const Posts = () => {
                                             placeholder="Video kategoriyasi"
                                             style={{
                                                 width: '100%',
-                                                height: '47px',
+                                                height: '45.4px',
                                             }}
                                             onSearch={onSearch}>
-                                            {options}
+                                            {
+                                                dataCategory?.length > 0 && dataCategory?.map(item => (
+                                                    <Option key={item?.name}  >{item?.name}</Option>
+                                                ))
+                                            }
                                         </Select>
                                     </Form.Item>
 
                                     <Form.Item
                                         label={
                                             <div className='d-flex align-items-center gap-3'>
-                                                <span>Video teglari</span>
+                                                <span>Video Aktiv teglari</span>
                                                 <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
                                                     <i
                                                         style={{
@@ -420,22 +593,27 @@ const Posts = () => {
                                         }
                                         name="tags"
                                         className='col-md-12 mb-2'
-
                                     >
                                         <Select
+                                            name="tags"
                                             mode="tags"
                                             placeholder="Video teglari "
-                                            style={{ width: '100%' }}
+                                            style={{ width: '100%', height: "45.4px" }}
+                                            defaultValue={products?.tag?.map((item) => item.name)}
                                         >
-                                            {children}
+                                            {
+                                                tagItems?.length > 0 && tagItems?.map(item => (
+                                                    <Option key={item?.name}>{item?.name}</Option>
+                                                ))
+                                            }
                                         </Select>
                                     </Form.Item>
 
-                                    <Form.Item
+                                    {user?.role === 'admin' && <Form.Item
                                         label={
                                             <div className='d-flex align-items-center gap-3'>
-                                                <span>Qo'shimcha fayllar (.zip)</span>
-                                                <Tooltip title="Mijozlar mahsulotingizni sotib olgandan so'ng, unga tegishli bo'lgan yana boshqa qo'shimcha faylar bo'lsa yuklang. Mahsulotingiz quyidagi turdagi fayl bo’lishi mumkin: .zip">
+                                                <span>Video Aktivmas teglari</span>
+                                                <Tooltip title="Mos teglarni tanlab qo’yishingiz, bu mahsulotingizni qidiruvlarida birinchilardan bo’lib chiqishiga sabab bo’ladi. Teg tanlang, agar mos teg bo’lmasa, maydoning o’ziga har bir mos teglaringizni kiritib qo’yishingiz mumkin.">
                                                     <i
                                                         style={{
                                                             cursor: 'pointer',
@@ -444,47 +622,29 @@ const Posts = () => {
                                                 </Tooltip>
                                             </div>
                                         }
-                                        name={"extra_file"}
-                                        className='col-md-12 mb-2 '>
-
-                                        <label
-                                            style={{
-                                                display: 'inline-block',
-                                                width: '100%',
-                                                height: '43px',
-                                                border: '1px solid #ccc',
-                                                padding: '10px 15px',
-                                                boxSizing: 'border-box',
-                                                textAlign: 'center',
-                                                cursor: 'pointer',
-                                                backgroundColor: '#fff',
-                                                borderRadius: "5px"
-                                            }}
-                                        >
-
-                                            {
-                                                // (true) ?
-                                                //     <span>Chek rasmi yuklangan <i className="fa-solid fa-circle-check text-success"></i></span>
-                                                //     :
-                                                <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Qo'shimcha fayllar</span>
+                                        name="deactive_tag"
+                                        className='col-md-12 mb-2'
+                                    >
+                                        <Select
+                                            name="deactive_tag"
+                                            mode="tags"
+                                            placeholder="Video teglari "
+                                            style={{ width: '100%', height: "45.4px" }}
+                                            defaultValue={
+                                                products?.deactive_tag &&
+                                                products?.deactive_tag?.map(
+                                                    (item) => item.name
+                                                )
                                             }
-                                            <Input
-                                                name='extra_file'
-                                                accept='image/*'
-                                                onChange={(e) => setValuesImage(e.target.files[0])}
-                                                type='file'
-                                                style={{
-                                                    position: 'absolute',
-                                                    width: '1px',
-                                                    height: '1px',
-                                                    overflow: 'hidden',
-                                                    clip: 'rect(0, 0, 0, 0)',
-                                                    border: '0'
-                                                }}
-                                            />
-                                        </label>
+                                        >
+                                            {
+                                                tegProductsLists?.length > 0 && tegProductsLists?.map(item => (
+                                                    <Option key={item?.name}>{item?.name}</Option>
+                                                ))
+                                            }
+                                        </Select>
+                                    </Form.Item>}
 
-                                    </Form.Item>
 
                                     <Form.Item
                                         label={
@@ -499,58 +659,94 @@ const Posts = () => {
                                                 </Tooltip>
                                             </div>
                                         }
-                                        name="tags"
+                                        name="playlist"
                                         className='col-md-12 mb-2'
-
                                     >
                                         <div className='d-flex gap-3 '>
                                             <Select
+                                                disabled={user?.role === 'admin'}
+                                                name="playlist"
                                                 mode="select"
                                                 placeholder="Video teglari "
                                                 style={{
                                                     width: '100%',
-                                                    height: '47px',
+                                                    height: '45.4px',
                                                 }}
+                                                defaultValue={products?.playlist?.title}
+
                                             >
-                                                {children}
+                                                {
+                                                    itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
+                                                        <Option key={item?.title}  >
+                                                            <div className='d-flex justify-content-between'>
+                                                                <div className='d-flex gap-2'>
+                                                                    <img
+                                                                        style={{
+                                                                            objectFit: "cover"
+                                                                        }}
+                                                                        height={30}
+                                                                        width={30}
+                                                                        src={item?.image}
+                                                                        alt="images"
+                                                                    />
+                                                                    <span>{item?.title}</span>
+                                                                </div>
+                                                                <span>
+                                                                    {item?.price > 0 ?
+                                                                        addPeriodToThousands(Number(item?.price)) + ' ' + "so'm" :
+                                                                        "Bepul"
+
+                                                                    }
+
+                                                                </span>
+                                                            </div>
+                                                        </Option>
+                                                    ))
+                                                }
                                             </Select>
-                                            <span
+
+                                            {user?.role === "seller" && <span
                                                 onClick={() => setOpen(true)}
                                                 style={{
-                                                    width: '10%',
-                                                    height: '47px',
+                                                    width: '20%',
+                                                    height: '44px',
 
                                                 }}
 
                                                 className='btn
-                rounded-3
-                 btn-outline-primary
-                 d-flex align-items-center justify-content-center
-                 '><i className="fa-solid fa-plus fs-3"></i></span>
+                                                rounded-3
+                                                 btn-outline-success
+                                                 d-flex align-items-center justify-content-center gap-2
+                                                 '>
+                                                <i className="fa-solid fa-plus fs-4"></i> <span className='fs-4'>Yaratish</span>
+                                            </span>}
+
                                         </div>
                                     </Form.Item>
 
-                                    <div className="rounded-5 col-md-12 mt-2">
-                                        <div className=" d-flex align-items-center gap-3 mb-2">
-                                            <p className='m-0'>Mahsulot to’liq tavsifi: </p>{' '}
-                                            <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
-                                                <i
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}
-                                                    className="fa-regular fa-circle-question "></i>
-                                            </Tooltip>
-                                        </div>
+                                    <Form.Item
+                                        className="rounded-5 col-md-12 mb-2"
+                                        name={"description"}
+                                        label={
+                                            <div className=" d-flex align-items-center gap-3 ">
+                                                <p className='m-0'>Mahsulot to’liq tavsifi: </p>{' '}
+                                                <Tooltip title="Mijozlarga mahsulotingiz haqidagi to’liq ma’lumotni bering. Bu mijozlaringiz mahsulotni sotib olishda ularning ishonchini yanada oshirish uchun xizmat qiladi.">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                        }}
+                                                        className="fa-regular fa-circle-question "></i>
+                                                </Tooltip>
+                                            </div>
+                                        }
+                                    >
+
 
                                         <CKeditor
-                                            name="description"
-                                            onChange={(data) => {
-                                                setFullData(data);
-                                            }}
+
                                             editorLoaded={editorLoaded}
-                                            value={products?.description}
                                         />
-                                    </div>
+                                    </Form.Item>
 
                                     <Form.Item className="col-md-12 d-flex justify-content-end m-0  my-4">
                                         <Button
@@ -575,18 +771,18 @@ const Posts = () => {
 
                                 </Form>
 
-                                <div className='col-md-5 m-0 p-0 bg-white ' style={{
+                                <div className='col-md-5 m-0 p-0 ' style={{
                                     position: "sticky",
                                     alignSelf: "flex-start",
                                     top: "30px"
                                 }}>
 
                                     <video
-                                        className="shadow p-0 "
+                                        className=" p-0 "
                                         controls
+                                        poster={customePoster?.url || products?.poster_url}
                                         preload="none"
-                                        src={fileImgFile?.video}
-                                        poster={customePoster?.url}
+                                        src={products?.file_url}
                                         style={{
                                             width: '100%', maxHeight:
                                                 '300px',
@@ -594,27 +790,9 @@ const Posts = () => {
 
                                     </video>
 
-                                    {loading && <p style={{
-                                        color: "#fff",
-                                        position: "absolute",
-                                        top: "35%",
-                                        left: "35%",
-                                        transform: "tranlate(-35%, -40%)"
-
-
-
-                                    }}><span className="d-flex mb-2 justify-content-center">
-                                            <ClipLoader
-                                                size={
-                                                    25
-                                                }
-                                                color="#36d7b7"
-                                            />
-                                        </span> Video yuklanmoqda</p>}
-
-                                    <div className='px-4 py-2'>
-                                        <p>{products?.name}</p>
-                                    </div>
+                                    {products?.title && <div className='px-4 py-2'>
+                                        <p>{products?.title}</p>
+                                    </div>}
                                 </div>
 
                             </div>
@@ -646,277 +824,158 @@ const Posts = () => {
                     </div>
                 }
 
-                <div
-                    className="modal fade "
-                    id="staticBackdrop"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                    aria-labelledby="staticBackdropLabel"
-                    aria-hidden="true">
-                    <div className="modal-dialog container ">
-                        <div className="modal-content mahsulotingizElh3 ">
-                            <div className="d-flex justify-content-end p-3">
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div className="ps-container">
-                                <div className="row">
-                                    <div className="col-xl-8 col-lg-8 col-12">
-
-                                        <>
-                                            {
-
-                                                products ? (
-                                                    <div className="video_container">
-                                                        <div className="video_content">
-                                                            <video
-                                                                className=" border w-100"
-                                                                controls
-                                                                preload="none"
-                                                                src={fileImgFile?.video ? fileImgFile?.video : products?.document?.short_content_url}
-                                                                poster={customePoster?.url ? customePoster?.url : products?.poster_url}
-                                                                style={{
-                                                                    maxHeight:
-                                                                        '250px',
-                                                                }}></video>
-                                                        </div>
-                                                    </div>
-                                                ) : (
-                                                    <img
-                                                        src={
-                                                            'https://kohantextilejournal.com/wp-content/uploads/2018/04/video-poster.jpg'
-                                                        }
-                                                        alt="docc"
-                                                        className="border mb-4 w-100"
-                                                        style={{
-                                                            objectFit:
-                                                                'cover',
-                                                        }}
-                                                        height={350}
-                                                    />
-                                                )
-                                            }
-                                        </>
-
-                                        <div
-                                            className={`product__top-information ${'video_user_information'} `}
-                                            style={{ width: '100%' }}>
-                                            <div>
-                                                <div
-                                                    className="product__top-information-account"
-                                                    style={{
-                                                        cursor: 'pointer',
-                                                    }}>
-                                                    <div>
-                                                        {profile?.image ? (
-                                                            <img
-                                                                alt="soff"
-                                                                src={
-                                                                    profile?.image
-                                                                }
-                                                                className="profile__image-client"
-                                                            />
-                                                        ) : (
-                                                            <i
-                                                                className=" fa-2x text-info fa-solid fa-circle-user"
-                                                                style={{
-                                                                    fontSize:
-                                                                        '30px',
-                                                                }}></i>
-                                                        )}
-                                                    </div>
-                                                    {profile?.first_name && (
-                                                        <p>
-                                                            {
-                                                                profile?.first_name
-                                                            }{' '}
-                                                            {profile?.last_name}
-                                                        </p>
-                                                    )}
-                                                </div>
-                                            </div>
-                                            <div
-                                                className={`${'video_send_container'}`}>
-                                                <div
-                                                    className={`ps-product__actions heart_video `}>
-                                                    <a
-                                                        href="#"
-                                                        style={{
-                                                            cursor: `${'not-allowed'}`,
-                                                        }}>
-                                                        <i
-                                                            className={`${'icon-heart'} `}></i>
-                                                    </a>
-                                                </div>
-                                                <div className="views_video mt-1">
-                                                    {' '}
-                                                    <i class="fa-solid fa-eye"></i>{' '}
-                                                    <span>{1}</span>
-                                                </div>
-                                                <div className="video_send">
-                                                    <i class="fa-solid fa-share-nodes"></i>
-                                                    ulashish
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-xl-4 col-lg-4 col-12 d-flex flex-column gap-4 ">
-                                        <div className="ps-product--detail mb-0">
-                                            <div className="ps-product__desc">
-                                                <strong className="fs-4">
-                                                    {' '}
-                                                    Qisqa tavsif{' '}
-                                                </strong>
-                                                {
-                                                    <ul
-                                                        style={{
-                                                            listStyleType:
-                                                                'revert',
-                                                        }}>
-
-
-                                                        {
-                                                            <li>
-                                                                <strong>
-                                                                    {' '}
-                                                                    Kategoriyasi
-                                                                </strong>{' '}
-                                                                : <div></div>{' '}
-                                                                <span className='text-truncate'>
-                                                                    {' '}
-                                                                    {categoryName || products?.category?.name}
-                                                                </span>
-                                                            </li>
-                                                        }
-                                                        {
-                                                            <li>
-                                                                <strong>
-                                                                    Xarid
-                                                                    qilishlar
-                                                                    soni :{' '}
-                                                                </strong>{' '}
-                                                                <div></div>{' '}
-                                                                <span>{0}</span>
-                                                            </li>
-                                                        }
-                                                    </ul>
-                                                }
-                                            </div>
-                                        </div>
-
-
-                                        <div className="ps-product__shopping video_action quek_video_button">
-                                            <div className={`btn--container  `}>
-                                                {taxminiyNarx ? (
-                                                    <>
-                                                        <a
-                                                            style={{
-                                                                cursor: `${'not-allowed'}`,
-                                                                textAlign:
-                                                                    'center',
-                                                            }}
-                                                            className="ps-btn ps-btn--black max-class"
-                                                            href="#">
-                                                            Savatga qo'shish
-                                                        </a>
-                                                        <a
-                                                            style={{
-                                                                cursor: `${'not-allowed'}`,
-                                                                textAlign:
-                                                                    'center',
-                                                            }}
-                                                            className="ps-btn max-class"
-                                                            href="#">
-                                                            1 klikda sotib oling
-                                                        </a>
-                                                    </>
-                                                ) : free ? (
-                                                    <a
-                                                        style={{
-                                                            cursor: `${'not-allowed'}`,
-                                                            textAlign: 'center',
-                                                        }}
-                                                        className="ps-btn ps-btn--black max-class"
-                                                        href="#">
-                                                        Bepul yuklab olish
-                                                    </a>
-                                                ) : (
-                                                    <>
-                                                        <a
-                                                            style={{
-                                                                cursor: `${'not-allowed'}`,
-                                                                textAlign:
-                                                                    'center',
-                                                            }}
-                                                            className="ps-btn ps-btn--black max-class"
-                                                            href="#">
-                                                            Savatga qo'shish
-                                                        </a>
-                                                        <a
-                                                            style={{
-                                                                cursor: `${'not-allowed'}`,
-                                                                textAlign:
-                                                                    'center',
-                                                            }}
-                                                            className="ps-btn max-class"
-                                                            href="#">
-                                                            1 klikda sotib oling
-                                                        </a>
-                                                    </>
-                                                )}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <p className="mb-0">
-                                                Tezkor teglar
-                                            </p>
-                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                {tagSearchResult?.length > 0 &&
-                                                    tagSearchResult?.map(
-                                                        (item, i) => (
-                                                            <div
-                                                                key={i}
-                                                                className="m-2 tag-product">
-                                                                <Link
-                                                                    href="#"
-                                                                    as="#">
-                                                                    <a>
-                                                                        {' '}
-                                                                        #{
-                                                                            item
-                                                                        }{' '}
-                                                                    </a>
-                                                                </Link>
-                                                            </div>
-                                                        )
-                                                    )}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-12">
-                                        <div className="ps-product__content ps-tab-root mb-5">
-                                            <Tabs defaultActiveKey="1">
-                                                <TabPane
-                                                    tab="Mahsulot to’liq tavsifi"
-                                                    key="1">
-                                                    <div className="ps-document">
-                                                        {Fulldata
-                                                            ? parse(Fulldata)
-                                                            : "To'ldirilmadi"}
-                                                    </div>
-                                                </TabPane>
-                                            </Tabs>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
+
+            {/* Play List yaratish uchun playLists modali */}
+
+            <Modal
+                title="Yangi pleylist yaratish"
+                width={550}
+                centered
+                open={open}
+                onOk={() => setOpen(false)}
+                okText="Yopish"
+                footer={null}
+
+
+                onCancel={() => setOpen(false)}>
+                <Form
+                    form={form2}
+                    onFinish={postPlayLists}
+                    className="w-100 mt-5"
+                    layout='vertical'
+                >
+                    <Form.Item
+                        label={'Rasm'}
+                        name={"poster"}
+                        className='col-md-12 mb-2 p-0'
+                        rules={[
+                            {
+                                required: customePosterPlay?.url ? false : true,
+                                message:
+                                    'Rasm kiritish majburiy',
+                            },
+                        ]}
+                    >
+
+                        <label
+                            style={{
+                                display: 'inline-block',
+                                width: '100%',
+                                height: '45.4px',
+                                border: '1px solid #ccc',
+                                padding: '10px 15px',
+                                boxSizing: 'border-box',
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                backgroundColor: '#fff',
+                                borderRadius: "5px"
+                            }}
+                        >
+
+                            {
+                                (customePosterPlay?.url) ?
+                                    <span>Video poster rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
+                                    :
+                                    <span><i className="fa-solid fa-cloud-arrow-up text-success mx-2 fs-3"></i> Video poster rasmini yuklash uchun rasm tanlang</span>
+                            }
+                            <Input
+
+                                name='poster'
+                                accept='image/*'
+                                onChange={(e) => LivePosterPlayLists(e.target.files[0])}
+                                type='file'
+                                style={{
+                                    position: 'absolute',
+                                    width: '1px',
+                                    height: '1px',
+                                    overflow: 'hidden',
+                                    clip: 'rect(0, 0, 0, 0)',
+                                    border: '0'
+                                }}
+                            />
+                        </label
+                        >
+
+                    </Form.Item>
+                    <Form.Item
+                        label='Nomi (majburiy)'
+                        name="title"
+                        className=' mb-3 '
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    'Nomi kiritish majburiy',
+                            },
+                        ]}
+                    >
+                        <Input
+                            name='title'
+                            placeholder="Nomlang"
+
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label={'Narxi'}
+                        name="price"
+                        className='col-md-12 mb-2 p-0'
+                        rules={[
+                            {
+                                required: true,
+                                message:
+                                    'Video  narx majburiy',
+                            },
+                        ]}
+                    >
+                        <div className='d-flex align-items-center gap-3 '>
+
+                            <InputNumber
+                                style={{ height: "45.4px" }}
+
+                                disabled={freePlay}
+                                placeholder="Narxi"
+                                className='w-100 py-2'
+                                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                onKeyPress={(e) => {
+                                    if (!/[0-9]/.test(e.key)) {
+                                        e.preventDefault();
+                                    }
+                                }}
+                            />
+                            <Checkbox
+                                defaultChecked={free}
+                                className=" d-flex align-items-center justify-content-start px-0 py-2"
+                                onChange={() => setFreePlay(!freePlay)}>
+                                <strong className='text-success'>Bepul</strong>
+                            </Checkbox>
+                        </div>
+
+                    </Form.Item>
+
+                    <Form.Item
+                        label='Tavsif'
+                        name='description'
+                        className='mb-3'
+                    >
+                        <TextArea placeholder='Tavsif kiriting' rows={4}></TextArea>
+                    </Form.Item>
+
+                    <Form.Item
+                        className='m-0 mt-3 d-flex justify-content-end w-100'
+                    >
+                        <Button
+                            loading={loadingPlay}
+                            className='px-5'
+                            type='primary'
+                            htmlType='submit'
+                        >Yaratish</Button>
+                    </Form.Item>
+                </Form>
+
+            </Modal>
         </PageContainer>
     ) : user?.access ? (
         <Page404 />

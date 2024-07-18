@@ -15,6 +15,7 @@ import { baseUrl } from '~/repositories/Repository';
 import VideoFirstPosts from './video-first';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { formatPrice } from './edit-video/[id]';
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -33,6 +34,9 @@ const Posts = () => {
     const [customePosterPlay, setCustomePosterPlay] = useState(null); // PlayList posterini olsih uchun 
     const [liveProduct, setliveProduct] = useState(null); // Asosiy Video yuklanganda Input qiymatlarini olish
     const [open, setOpen] = useState(false); // Modal ochilishi uchun
+    const [openFile, setOpenFile] = useState(false); // Ogohlantirish modali video yuklanmaguncha
+    const [loading, setLoading] = useState(false); // Modal ochilishi uchun
+    const [loadingPlay, setLoadingPlay] = useState(false); // Modal ochilishi uchun
 
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
@@ -88,14 +92,18 @@ const Posts = () => {
 
 
     const postPlayLists = async (values) => {
+        form.resetFields();
         const formData = new FormData();
-        const newPrice = parseInt(values.price.replace(/,/g, ''), 10);
+        const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
+        formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice); // Video narxi
+
+
         formData.append('title', values?.title),
             formData.append('image', customePosterPlay?.poster),
-            formData.append('description', values?.description || ''),
-            formData.append('price', freePlay ? 0 : newPrice); // Video narxi
+            formData.append('description', values?.description || '')
 
         try {
+            setLoadingPlay(true)
             await PostsRepository.PostsPLaylists(
                 formData,
                 user?.access
@@ -113,8 +121,12 @@ const Posts = () => {
                 content: error?.response?.data?.msg[0] || error?.message,
             });
         }
-        setOpen(false)
-        setCustomePosterPlay(null)
+        finally {
+            setOpen(false)
+            setCustomePosterPlay(null)
+            setLoadingPlay(false)
+
+        }
 
     }
 
@@ -130,9 +142,9 @@ const Posts = () => {
         if (customePoster?.poster) {
             formData.append('poster', customePoster?.poster); // Video posteri
         }
-        const newPrice = parseInt(values.price.replace(/,/g, ''), 10);
+        const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
 
-        formData.append('price', free ? 0 : newPrice); // Video narxi
+        formData.append('price', (free || values.price == 0) ? 0 : newPrice); // Video narxi
         formData.append('description', values?.description); // Video haqida to'liq izoh
 
         // Video kategoriyasi
@@ -141,14 +153,14 @@ const Posts = () => {
             formData.append('category', selectedCategory?.id);
         }
 
-        // Video kategoriyasi
-        const selectedPlaylists = itemsPlayLists.find(cat => cat.name === values?.playlist);
+        // playlist
+        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === values?.playlist);
         if (selectedPlaylists) {
             formData.append('playlist', selectedPlaylists?.id);
         }
 
 
-        formData.append('tags', values?.tags); // Video taglar listi
+        formData.append('tags', JSON.stringify(values?.tags)); // Video taglar listi
 
         try {
             const response = await fetch(`${baseUrl}seller/video-product-create/`, {
@@ -191,7 +203,7 @@ const Posts = () => {
         }
     }
 
-    //   Videoga rasm yuklash uchun funksiya
+    //   PlayListga rasm yuklash uchun funksiya
 
     const LivePosterPlayLists = (images) => {
         if (images) {
@@ -224,6 +236,17 @@ const Posts = () => {
             });
         }
     }, [liveProduct, form]);
+
+    useEffect(() => {
+        if (open) {
+            form2.setFieldsValue({
+                description: null,
+                image: null,
+                price: null,
+                title: null
+            });
+        }
+    }, [open, form2]);
 
 
 
@@ -578,24 +601,51 @@ const Posts = () => {
                                         </Form.Item>
 
                                         <Form.Item className="col-md-12 d-flex justify-content-end m-0  my-4">
-                                            <Button
-                                                loading={disabled}
-                                                htmlType="submit"
-                                                style={{
-                                                    width: '100%',
-                                                    height: '37px',
-                                                    padding: "1px 30px"
-                                                }}
-                                                className="btn-success btn-send-email">
-                                                <span
-                                                    style={{
-                                                        color: '#fff',
-                                                        fontSize:
-                                                            '16px',
-                                                    }}>
-                                                    Yaratish
-                                                </span>
-                                            </Button>
+
+                                            {
+                                                loading ?
+                                                    <Button
+                                                        onClick={() => setOpenFile(true)}
+
+                                                        htmlType="button"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: '37px',
+                                                            padding: "1px 30px"
+                                                        }}
+                                                        className="btn-success btn-send-email">
+                                                        <span
+                                                            style={{
+                                                                color: '#fff',
+                                                                fontSize:
+                                                                    '16px',
+                                                            }}>
+                                                            Yaratish
+                                                        </span>
+                                                    </Button> :
+                                                    <Button
+                                                        loading={disabled}
+                                                        htmlType="submit"
+                                                        style={{
+                                                            width: '100%',
+                                                            height: '37px',
+                                                            padding: "1px 30px"
+                                                        }}
+                                                        className="btn-success btn-send-email">
+                                                        <span
+                                                            style={{
+                                                                color: '#fff',
+                                                                fontSize:
+                                                                    '16px',
+                                                            }}>
+                                                            Yaratish
+                                                        </span>
+                                                    </Button>
+
+
+
+                                            }
+
                                         </Form.Item>
 
                                     </Form>
@@ -634,9 +684,12 @@ const Posts = () => {
                         <VideoFirstPosts
                             setliveProduct={setliveProduct}
                             setLivePosterFile={setLivePosterFile}
+                            setLoading={setLoading}
+                            setOpenFile={setOpenFile}
                         />
                 }
 
+                {/* Play List yaratish uchun playLists modali */}
 
                 <Modal
                     title="Yangi pleylist yaratish"
@@ -646,16 +699,7 @@ const Posts = () => {
                     onOk={() => setOpen(false)}
                     okText="Yopish"
                     footer={null}
-                    cancelButtonProps={{
-                        style: {
-                            display: 'none',
-                        },
-                    }}
-                    okButtonProps={{
-                        style: {
-                            display: 'none',
-                        },
-                    }}
+
 
                     onCancel={() => setOpen(false)}>
                     <Form
@@ -786,6 +830,7 @@ const Posts = () => {
                             className='m-0 mt-3 d-flex justify-content-end w-100'
                         >
                             <Button
+                                loading={loadingPlay}
                                 className='px-5'
                                 type='primary'
                                 htmlType='submit'
@@ -794,6 +839,48 @@ const Posts = () => {
                     </Form>
 
                 </Modal>
+
+                {/* Vidoe yuklangunga qadar ogohlantirish modali */}
+
+                <Modal
+                    title={null}
+                    width={550}
+                    centered
+                    open={openFile}
+                    onOk={() => setOpenFile(false)}
+                    okText="Yopish"
+                    footer={null}
+
+
+                    onCancel={() => setOpenFile(false)}>
+
+                    <div>
+
+                        <div
+                            className=" "
+                            style={{
+                                height: '30vh',
+                                display: 'grid',
+                                placeContent: 'center',
+                            }}>
+                            <div
+                                className="spinner-border text-danger "
+                                role="status"
+                                style={{ width: '110px', height: '110px' }}>
+                                <span className="visually-hidden">
+                                    Loading...
+                                </span>
+                            </div>
+                        </div>
+                        <p className='text-danger fw-medium mb-1 text-center fs-3'>Asosiy video yuklanmoqda...</p>
+                        <h5 className='fw-medium text-center text-danger '>
+                            Iltimos Asosiy Video yuklanmaguncha
+                            Sahifani yangilamang va yopmang!
+                        </h5>
+                    </div>
+
+                </Modal>
+
             </div>
         </PageContainer >
     ) : user?.access ? (
