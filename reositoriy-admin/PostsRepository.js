@@ -165,6 +165,27 @@ class PostRepository {
             .catch((error) => error?.response?.data);
         return response;
     }
+    
+    async PostsPLaylists(data, token) {
+        const endPoint = `playlist/`;
+        const response = await Repository({
+            url: baseUrl + endPoint,
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error?.response?.data);
+        return response;
+    }
 
     async PostsMyProductsAriza(data, token) {
         const endPoint = `application/`;

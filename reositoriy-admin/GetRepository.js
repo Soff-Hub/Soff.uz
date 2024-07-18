@@ -102,13 +102,11 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    async getShops(page, search,lock, token) {
-        const endPoint = `admin/seller-list/?page=${page}&search=${
-            search || ''
-        }&lock=${
-            lock || ''
-        }`;
-        
+    async getShops(page, search, lock, token) {
+        const endPoint = `admin/seller-list/?page=${page}&search=${search || ''
+            }&lock=${lock || ''
+            }`;
+
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -138,15 +136,11 @@ class GetRepository {
         document__content_type,
         token
     ) {
-        const endPoint = `admin/product-list/${
-            id ? id + '/' : ''
-        }?page=${page}&category=${category || ''}&date_range_after=${
-            date || ''
-        }&status=${dataValStatus || ''}&search=${
-            search || ''
-        }&document__content_type=${
-            document__content_type || ''
-        }&offset=${offset}&limit=${limit}`;
+        const endPoint = `admin/product-list/${id ? id + '/' : ''
+            }?page=${page}&category=${category || ''}&date_range_after=${date || ''
+            }&status=${dataValStatus || ''}&search=${search || ''
+            }&document__content_type=${document__content_type || ''
+            }&offset=${offset}&limit=${limit}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -219,13 +213,10 @@ class GetRepository {
         viewsAll,
         token
     ) {
-        const endPoint = `product-list/?page=${page}&category=${
-            category || ''
-        }${tagItems ? `&tag=${tagItems}` : ``}&date_range_after=${
-            date || ''
-        }&status=${status || ''}&search=${search}&document__content_type=${
-            document__content_type || ''
-        }&sort=${viewsAll || ''}`;
+        const endPoint = `product-list/?page=${page}&category=${category || ''
+            }${tagItems ? `&tag=${tagItems}` : ``}&date_range_after=${date || ''
+            }&status=${status || ''}&search=${search}&document__content_type=${document__content_type || ''
+            }&sort=${viewsAll || ''}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -245,9 +236,8 @@ class GetRepository {
         return reponse;
     }
     async getMyProductsSeller(page, category, date, search, token) {
-        const endPoint = `approved-product/?page=${page}&category=${
-            category || ''
-        }&start_date=${date || ''}&search=${search}`;
+        const endPoint = `approved-product/?page=${page}&category=${category || ''
+            }&start_date=${date || ''}&search=${search}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -344,9 +334,8 @@ class GetRepository {
     }
 
     async getCategory(page, search, id, token) {
-        const endPoint = `admin/category-list/${
-            id ? id + '/' : ''
-        }?page=${page}&search=${search || ''}`;
+        const endPoint = `admin/category-list/${id ? id + '/' : ''
+            }?page=${page}&search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -366,9 +355,8 @@ class GetRepository {
         return reponse;
     }
     async getCategoryParentList(search, id, token) {
-        const endPoint = `admin/parent-category-list/${
-            id ? id + '/' : ''
-        }?search=${search || ''}`;
+        const endPoint = `admin/parent-category-list/${id ? id + '/' : ''
+            }?search=${search || ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -388,9 +376,8 @@ class GetRepository {
         return reponse;
     }
     async getCategoryChaildItem(id, token, search) {
-        const endPoint = `admin/childen-list/${
-            id ? id + '/' : ''
-        }?search=${search}`;
+        const endPoint = `admin/childen-list/${id ? id + '/' : ''
+            }?search=${search}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -463,10 +450,30 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    async getItemsPlayLists(token) {
+        const endPoint = `playlist/`;
+
+        const reponse = await Repository.get(`${baseUrl}${endPoint}`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.data) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => {
+                return null;
+            });
+        return reponse;
+    }
+
     async getAllCategoryListsAudio(search) {
-        const endPoint = `admin/category-children/audio/?search=${
-            search || ''
-        }`;
+        const endPoint = `admin/category-children/audio/?search=${search || ''
+            }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -482,9 +489,8 @@ class GetRepository {
         return reponse;
     }
     async getAllCategoryListsDesign(search) {
-        const endPoint = `admin/category-children/template/?search=${
-            search || ''
-        }`;
+        const endPoint = `admin/category-children/template/?search=${search || ''
+            }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -501,9 +507,8 @@ class GetRepository {
     }
 
     async getAllCategoryListsVideo(search) {
-        const endPoint = `admin/category-children/video/?search=${
-            search || ''
-        }`;
+        const endPoint = `admin/category-children/video/?search=${search || ''
+            }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -540,9 +545,8 @@ class GetRepository {
     }
 
     async getOrdersLists(page, status, date, search, token, userRole) {
-        const endPoint = `admin/order/?page=${page}&status=${
-            status || ''
-        }&start_date=${date || ''}&search=${search}&user__role=${userRole}`;
+        const endPoint = `admin/order/?page=${page}&status=${status || ''
+            }&start_date=${date || ''}&search=${search}&user__role=${userRole}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -591,11 +595,9 @@ class GetRepository {
         id,
         token
     ) {
-        const endPoint = `deals/${id ? id + '/' : ''}?page=${page}&search=${
-            search || ''
-        }&start_date=${start_date || ''}&end_date=${end_date || ''}&type=${
-            type || ''
-        }&min_price=${min_price || ''}&max_price=${max_price || ''}`;
+        const endPoint = `deals/${id ? id + '/' : ''}?page=${page}&search=${search || ''
+            }&start_date=${start_date || ''}&end_date=${end_date || ''}&type=${type || ''
+            }&min_price=${min_price || ''}&max_price=${max_price || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -615,9 +617,8 @@ class GetRepository {
     }
 
     async getOrdersApplicationsLists(page, search, id, status, token) {
-        const endPoint = `deals/deal-applications/${
-            id ? id + '/' : ''
-        }?page=${page}&search=${search || ''}&status=${status || ''}`;
+        const endPoint = `deals/deal-applications/${id ? id + '/' : ''
+            }?page=${page}&search=${search || ''}&status=${status || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -657,9 +658,8 @@ class GetRepository {
     }
 
     async getOrdersMYDealLists(page, search, id, status, token) {
-        const endPoint = `deals/my-deals/${
-            id ? id + '/' : ''
-        }?page=${page}&search=${search || ''}&status=${status || ''}`;
+        const endPoint = `deals/my-deals/${id ? id + '/' : ''
+            }?page=${page}&search=${search || ''}&status=${status || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -733,9 +733,8 @@ class GetRepository {
     }
 
     async getApplicationsReceived(page, status, deal, token) {
-        const endPoint = `deals/my-deals-applications/?page=${page}&status=${
-            status || ''
-        }&deal=${deal || ''}`;
+        const endPoint = `deals/my-deals-applications/?page=${page}&status=${status || ''
+            }&deal=${deal || ''}`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -795,9 +794,8 @@ class GetRepository {
     }
 
     async getSellerCommitListsFilter(id, page, count) {
-        const endPoint = `seller/document-reviews/${id}?offset=0&limit=${page}&replied_to=${
-            count || ''
-        }`;
+        const endPoint = `seller/document-reviews/${id}?offset=0&limit=${page}&replied_to=${count || ''
+            }`;
         const reponse = await Repository({
             url: baseUrlCustomer + endPoint,
             method: 'GET',
@@ -814,9 +812,8 @@ class GetRepository {
     }
 
     async getUsersLists(page, status, search, token) {
-        const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}&search=${
-            search || ''
-        }`;
+        const endPoint = `admin/customer-list/?page=${page}&auth_status=${status}&search=${search || ''
+            }`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -933,9 +930,8 @@ class GetRepository {
     }
 
     async getTagLists(page, search, active, token) {
-        const endPoint = `admin/tag-list/?page=${page}&search=${
-            search || ''
-        }&active=${active}`;
+        const endPoint = `admin/tag-list/?page=${page}&search=${search || ''
+            }&active=${active}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
@@ -1181,9 +1177,8 @@ class GetRepository {
     }
     async getProfileArizaAdmin(page, status, token, isAdmin, search) {
         const endPoint = isAdmin
-            ? `admin/application/?page=${page}&status=${
-                  status ? status : ''
-              }&search=${search ? search : ''}`
+            ? `admin/application/?page=${page}&status=${status ? status : ''
+            }&search=${search ? search : ''}`
             : `application-list/?page=${page}&status=${status ? status : ''}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -1223,9 +1218,8 @@ class GetRepository {
     }
 
     async getPMSellers(page, search, token) {
-        const endPoint = `admin/premium-user/?page=${page}&search=${
-            search || ''
-        } `;
+        const endPoint = `admin/premium-user/?page=${page}&search=${search || ''
+            } `;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',
