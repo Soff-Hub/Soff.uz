@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Modal, Tooltip, Input } from 'antd';
 import Axios from 'axios'
+import { baseUrl } from '~/reositoriy-admin/Repository';
 
 const VideoFirstPosts = ({
     setliveProduct,
     setLivePosterFile,
+    setLoading,
+    setOpenFile
 
 }) => {
     const { user } = useSelector((state) => state.auth);
     const [videosize, setVideoSize] = useState(null);
-    const [uploadProgress, setUploadProgress] = useState(0);
+
 
     // Video Ta'riflarini olib kelish uchun getFunksiya
 
@@ -34,7 +36,7 @@ const VideoFirstPosts = ({
             const videoURL = window.URL.createObjectURL(selectedFile);
             setliveProduct({ name: selectedFile.name, video: videoURL });
             setLivePosterFile('');
-            await handleUpload(selectedFile);
+            await uploadVideoFirst(selectedFile);
         } else {
             showWarningModal();
         }
@@ -64,68 +66,48 @@ const VideoFirstPosts = ({
 
     // Asosiy vidoeni post qilish
 
-    const uploadChunk = async (chunk, totalChunks, uploadId) => {
+    const uploadVideoFirst = async (file) => {
         const formData = new FormData();
-        formData.append('chunk', chunk); // Chunkni formData ga qo'shish
-
-        // Agar upload_id mavjud bo'lsa, qo'shib yuborish
-        if (uploadId) {
-            formData.append('upload_id', uploadId);
-        }
+        formData.append('file', file); // Faylni formData ga qo'shish
+        const endPoint = 'video-file-create/'
 
         try {
-            const response = await Axios.post('http://192.168.1.26:8000/api/v1/seller/video-file-create/', formData, {
+            setLoading(true)
+            const response = await Axios.post(baseUrl + endPoint, formData, {
                 headers: {
                     Authorization: `Bearer ${user?.access}`,
                 },
-                onUploadProgress: (progressEvent) => {
-                    const progress = (progressEvent.loaded / progressEvent.total) * 100; // Yuklash progressini hisoblash
-                    setUploadProgress((prev) => prev + progress / totalChunks); // Umumiy progressni yangilash
-                },
             });
 
-            // Agar birinchi chunk yuborilgan bo'lsa, upload_id ni saqlash
-            if (!uploadId) {
-                uploadId = response.data.upload_id; // upload_id ni birinchi chunkdan olish
-            }
+            setLivePosterFile(response.data);
 
-            return uploadId; // upload_id ni qaytarish
         } catch (error) {
-            console.error('Error uploading chunk:', error);
-            throw error; // Xatoni tashlash
+            Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                footer: null,
+                content: <div>
+                    <p> {
+                        `Xatolik yuz berdi: ${error.message}`
+                    }</p>
+                    <div className='d-flex justify-content-end'>
+                        <button
+                            onClick={() =>
+                            (setliveProduct(null),
+                                Modal.destroyAll())
+                            }
+                            className='btn btn-success fs-5 rounded-5 px-4'>
+                            <i className="fa-solid fa-rotate fa-spin  mr-1"></i> Qayta yuklash</button>
+                    </div>
+                </div>,
+            });
+        }
+        finally {
+            setLoading(false)
+            setOpenFile(false)
         }
     };
 
-    // Inputdan qaytgan videoni bo'laklarga bo'lish
-
-    const handleUpload = async (file) => {
-        const chunkSize =  1024; // 
-        const totalChunks = Math.ceil(file.size / chunkSize);
-        let uploadId = null; // upload_id ni saqlash uchun
-
-        
-        // Har bir chunkni yuklash
-        for (let i = 0; i < totalChunks; i++) {
-            const start = i * chunkSize;
-            const end = Math.min(start + chunkSize, file.size);
-            const chunk = file.slice(start, end); // Faylni chunkga bo'lish
-
-            try {
-                uploadId = await uploadChunk(chunk, totalChunks, uploadId); // Chunkni yuborish va upload_id ni olish
-            } catch (error) {
-                console.error('Error during upload:', error);
-                break; // Agar xato yuz bersa, siklni to'xtatish
-            }
-
-            // Agar upload_id yo'q bo'lsa, davom ettirmaslik
-            if (!uploadId) {
-                console.error('Upload ID is missing, stopping upload.');
-                break;
-            }
-        }
-
-        setUploadProgress(100); // Yuklash tugagach progressni 100% qilish
-    };
 
 
     // getVideoFunk 
@@ -136,8 +118,6 @@ const VideoFirstPosts = ({
         }
     }, [user?.access]);
 
-
-    console.log(uploadProgress);
 
     return (
         <div className="container " >
@@ -154,6 +134,7 @@ const VideoFirstPosts = ({
                                 className="fa-regular fa-circle-question "></i>
                         </Tooltip>
                     </div>
+
                 </div>
 
                 <div

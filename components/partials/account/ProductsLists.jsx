@@ -161,7 +161,7 @@ function ProductsLists() {
 
     async function handleClickIdEditProducts(productsItems) {
         if (productsItems?.content_type === 'video') {
-            Router.push(`/account/products/edit-video/${productsItems?.id}`);
+            Router.push(`/account/myproducts/edit-video/${productsItems?.id}`);
         } else {
             Router.push(`/account/products/${productsItems?.id}`);
         }
