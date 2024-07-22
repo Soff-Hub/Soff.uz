@@ -5,7 +5,9 @@ export default function DefaultVideoLists({
     isPlay,
     setIsPlay,
     minWidth,
-    height
+    height,
+    style = {},
+    bgStyle = {}
 }) {
 
 
@@ -27,25 +29,28 @@ export default function DefaultVideoLists({
 
 
     return (
-        <video
-            id={`videoPlayer-${product.id}`}
-            className={'video_iframe'}
-            width="100%"
-            height="100%"
-            style={{
-                display: 'flex',
-                justifyContent: 'center',
-                height: height,
-                minWidth: minWidth,
-                objectFit: 'cover',
-                borderRadius: "10px"
-            }}
-            onPlay={() => setIsPlay?.(product?.id)}
-            controls={false}
-            controlsList="nodownload"
-            poster={product?.poster_url ? product?.poster_url : product?.poster}
-            src={url}>
-            Your browser does not support the video tag.
-        </video>
+        <div style={{ backgroundSize: 'cover', borderRadius: '4px', backgroundImage: `url("${product?.poster_url}")`, }}>
+            <video
+                id={`videoPlayer-${product.id}`}
+                className={'video_iframe'}
+                width={'100%'}
+                height="100%"
+                style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    height: height,
+                    minWidth: minWidth,
+                    objectFit: 'cover',
+                    borderRadius: "10px",
+                    ...style
+                }}
+                onPlay={() => setIsPlay?.(product?.id)}
+                controls={false}
+                controlsList="nodownload"
+                poster={product?.poster_url ? product?.poster_url : product?.poster}
+                src={url}>
+                Your browser does not support the video tag.
+            </video>
+        </div>
     );
 }

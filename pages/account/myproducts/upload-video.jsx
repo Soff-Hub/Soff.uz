@@ -37,6 +37,7 @@ const Posts = () => {
     const [openFile, setOpenFile] = useState(false); // Ogohlantirish modali video yuklanmaguncha
     const [loading, setLoading] = useState(false); // Modal ochilishi uchun
     const [loadingPlay, setLoadingPlay] = useState(false); // Modal ochilishi uchun
+    const [playlist, setPlaylist] = useState(null); // Modal ochilishi uchun
 
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
@@ -153,10 +154,9 @@ const Posts = () => {
             formData.append('category', selectedCategory?.id);
         }
 
-        // playlist
-        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === values?.playlist);
-        if (selectedPlaylists) {
-            formData.append('playlist', selectedPlaylists?.id);
+        
+        if (playlist) {
+            formData.append('playlist', playlist);
         }
 
 
@@ -517,21 +517,21 @@ const Posts = () => {
                                                     </Tooltip>
                                                 </div>
                                             }
-                                            name="playlist"
                                             className='col-md-12 mb-2'
                                         >
                                             <div className='d-flex gap-3 '>
                                                 <Select
                                                     mode="select"
-                                                    placeholder="Video teglari "
+                                                    placeholder="Mavjud playlistlar"
                                                     style={{
                                                         width: '100%',
                                                         height: '45.4px',
                                                     }}
+                                                    onChange={e => setPlaylist(e)}
                                                 >
                                                     {
                                                         itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
-                                                            <Option key={item?.title}  >
+                                                            <Option key={item?.title} value={item.id}  >
                                                                 <div className='d-flex justify-content-between'>
                                                                     <div className='d-flex gap-2'>
                                                                         <img

@@ -2462,6 +2462,10 @@
     border-radius: 10px;
 }
 
+.borderVideeo-2 {
+    background-color: #fff;
+}
+
 .borderVideeo:hover {
     border-radius: 0px !important;
     transition: all 0.2s linear;
@@ -2491,4 +2495,19 @@
         }
     }
 
+}
+
+
+.video_iframe::before {
+    content: '';
+    filter: blur(10px);
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-image: inherit;
+    background-size: inherit;
+    background-position: inherit;
 }
