@@ -6,7 +6,7 @@ import { BeatLoader } from 'react-spinners';
 import Router from 'next/router';
 import useCart from '~/hooks/useCart';
 
-const CreditCard2 = ({ document }) => {
+const CreditCard2 = ({ document, type }) => {
     const { user } = useSelector((state) => state.auth);
     const [numberCardVal, SetNumberCardVal] = useState(null);
     const [message, setMessage] = useState(true);
@@ -44,7 +44,8 @@ const CreditCard2 = ({ document }) => {
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
             'click',
-            user?.access
+            user?.access,
+            `purchase_type=${type || 'document'}`
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
@@ -66,7 +67,8 @@ const CreditCard2 = ({ document }) => {
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
             'payme',
-            user?.access
+            user?.access,
+            `purchase_type=${type || 'document'}`
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
@@ -91,7 +93,8 @@ const CreditCard2 = ({ document }) => {
             document,
             numberCardVal,
             cardDate,
-            user?.access
+            user?.access,
+            `purchase_type=${type || 'document'}`
         );
         if (ItemsData?.status === 201) {
             setMessage(true);

@@ -48,6 +48,7 @@ const Posts = () => {
     const [itemsPlayLists, setItemsPlayLists] = useState([]);   // tagslar listini saqlash uchun
     const [open, setOpen] = useState(false); // Modal ochilishi uchun
     const [customePosterPlay, setCustomePosterPlay] = useState(null); // PlayList posterini olsih uchun 
+    const [playlist, setPlaylist] = useState(null)
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
 
@@ -186,6 +187,7 @@ const Posts = () => {
 
     // Videoni Update qilish uchun funksiya
     async function postOrder(values) {
+        console.log('values =>', values);
 
         const resuslts1 = products?.active_tag?.map((item) => item.name);
         const resuslts2 = products?.deactive_tag?.map((item) => item.name);
@@ -225,11 +227,14 @@ const Posts = () => {
             formData.append('resaon', values?.reason);
         }
 
-
-        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === values?.playlist);
-        if (selectedPlaylists && user?.role === 'seller') {
-            formData.append('playlist', selectedPlaylists?.id);
+        if (playlist) {
+            formData.append('playlist', itemsPlayLists.find(el => el.title === playlist)?.id);
         }
+
+        // const selectedPlaylists = itemsPlayLists.find(cat => cat.title === values?.playlist);
+        // if (selectedPlaylists && user?.role === 'seller') {
+        //     formData.append('playlist', selectedPlaylists?.id);
+        // }
 
 
         try {
@@ -255,6 +260,8 @@ const Posts = () => {
 
 
     }
+
+    console.log('form =>', form.getFieldValue('playlist'));
 
     //   Mahsulot malumotlarini inputni valuesiga tushirish
 
@@ -659,25 +666,23 @@ const Posts = () => {
                                                 </Tooltip>
                                             </div>
                                         }
-                                        name="playlist"
                                         className='col-md-12 mb-2'
                                     >
                                         <div className='d-flex gap-3 '>
                                             <Select
                                                 disabled={user?.role === 'admin'}
-                                                name="playlist"
                                                 mode="select"
-                                                placeholder="Video teglari "
+                                                placeholder="Mavjud playlistlar"
                                                 style={{
                                                     width: '100%',
                                                     height: '45.4px',
                                                 }}
+                                                onChange={e => setPlaylist(e)}
                                                 defaultValue={products?.playlist?.title}
-
                                             >
                                                 {
                                                     itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
-                                                        <Option key={item?.title}  >
+                                                        <Option key={item?.title} >
                                                             <div className='d-flex justify-content-between'>
                                                                 <div className='d-flex gap-2'>
                                                                     <img

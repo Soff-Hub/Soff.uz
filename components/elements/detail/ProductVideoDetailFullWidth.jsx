@@ -10,6 +10,7 @@ import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
+import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 
 const ProductVideoDetailFullWidth = ({
     product,
@@ -31,26 +32,24 @@ const ProductVideoDetailFullWidth = ({
         try {
             const response = await Axios.get(baseUrl + endPoint, {
                 headers: {
-                    Authorization: `Bearer ${user?.access}`,
+                    // Authorization: `Bearer ${user?.access}`,
                 }
             });
-            setData(response)
+            setData(response.data)
         } catch (error) {
             setError(`Xatolik yuz berdi: ${error.message}`)
         }
 
     }
 
+    const clickPlaylist = (slug, id) => {
+        router.push(`/account/checkout-one?type=playlist&slug=${slug}&id=${id}`)
+    }
+
     useEffect(() => {
-        if (user?.access && pid) {
-            getPlayLists()
-        }
+        getPlayLists()
 
     }, [user?.access, pid]);
-
-    console.log('data=>', data);
-    console.log('product=>', product);
-
 
     return (
         <>
@@ -101,50 +100,71 @@ const ProductVideoDetailFullWidth = ({
                     </div>
 
                     <div className='col-md-4' style={{ overflowY: "auto", }}>
-                        {data?.length > 0 && <div className="col-md-12 p-0 border rounded-3">
+                        {data?.playlist_document?.length > 0 && <div className="col-md-12 p-0 border rounded-3">
 
 
-                            <div className='p-3 pt-4 bg-white rounded-3'>
-                                <h4>
-                                    Meta Back-End Developer Professional Certificate
-                                    Self Taught Courses
-                                    1 / 8
-                                </h4>
+                            <div className='p-3 pt-4 bg-white rounded-3' style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                <div>
+                                    <h4>
+                                        {data?.title}
+                                    </h4>
+                                    <p className='m-0'>
+                                        {data?.description}
+                                    </p>
+                                </div>
+                                <p className='m-0'>
+                                    {`${data?.playlist_document?.findIndex(el => el.id === product.id) + 1} / ${data?.playlist_document?.length}`}
+                                </p>
                             </div>
 
-                            <div className=' p-0' style={{ overflowY: "auto", height: "60vh" }}>
+                            <div className='p-0' style={{ overflowY: "auto", margin: '10px 0', maxHeight: '450px' }}>
 
                                 {
-                                    error !== null ? data.map(item => (
+                                    data?.playlist_document?.map((item, ind) => (
                                         <div
                                             key={item?.id}
-                                            className={`col-md-12  py-2 `}
+                                            className={`col-md-12  py-2`}
 
                                             style={{
-                                                backgroundColor: item?.id === 10009 ? "rgba(221,226,235,0.949)" : ''
+                                                backgroundColor: item?.id === product.id ? "rgba(221,226,235,0.949)" : '',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px'
                                             }}
                                         >
+                                            {item?.id === product.id ? <i class="fa-solid fa-play fs-5"></i> : ind + 1}
                                             <ProductVideoCards type="playlists" product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
                                         </div>
-                                    )) :
-                                        <div className='d-flex border border-danger rounded-3 justify-content-center align-items-center ' style={{
-                                            height: "100%",
-                                            width: "100%"
-                                        }}>
-                                            <p className='text-center fw-medium fs-3 text-danger'>{error}</p>
-                                        </div>
+                                    ))
                                 }
+                            </div>
+
+                            <div
+                                onClick={() => clickPlaylist(data?.playlist_document?.[0]?.slug, data?.id)}
+                                className='fw-medium fs-4 p-2 bg-body-primary text-center m-0 mt-4 ps-btn text-white'
+                                style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px' }}
+                            >
+                                <i className=''></i>
+                                <div className='pr'>
+                                    To'plam ni sotib olish <br />
+                                    {addPeriodToThousands(data?.price)} so'm
+                                </div>
+                                <i className='fa-solid fa-angles-right fa-beat-fade'></i>
                             </div>
 
                         </div>}
 
-                        <h4 className='fw-medium fs-3 p-3 bg-body-secondary my-4 rounded-3 text-center'>O'xshash mahsulotlar</h4>
+                        <h4
+                            className='fw-medium fs-3 p-3 bg-body-secondary my-4 rounded-3 text-center'
+                        >
+                            O'xshash mahsulotlar
+                        </h4>
 
                         {
                             similar?.length > 0 ? similar.map(item => (
                                 <div
                                     key={item?.id}
-                                    className="col-md-12 my-2">
+                                    className="col-md-12 my-4">
                                     <ProductVideoCards type={"similler"} product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
                                 </div>
                             )) :

@@ -42,15 +42,19 @@ export default function DefaultVideo({
 
 
     return (
-        <div className="video-container">
+        <div className='video_iframe' style={{ backgroundSize: 'cover', borderRadius: '14px', backgroundImage: `url("${product?.poster_url}")`, padding: '0', maxHeight: '450px', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}>
+            {/* <div style={{ filter: 'blur(30px)', height: '100%', width: '100%', position: 'absolute', top: '0', left: '0', zIndex: 1 }} ></div> */}
             <video
                 id={`videoPlayer-${product.id}`}
-                className={'video_iframe'}
                 onPlay={() => setIsPlay?.(product?.id)}
                 onContextMenu={(e) => e.preventDefault()}
                 controls
                 disablePictureInPicture
                 controlsList="nodownload"
+                style={{
+                    maxHeight: '450px', height: '100%', width: '100%', position: 'relative',
+                    zIndex: 2
+                }}
                 poster={product?.poster_url ? product?.poster_url : product?.poster}
             >
                 <source src={url} />

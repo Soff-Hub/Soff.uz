@@ -19,9 +19,9 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
                         setIsPlay={setIsPlay}
                         product={product}
 
-                        minWidth={type === "playlists" ? "100px" : "168px"}
-                        height={type === "playlists" ? "56px" : "94px"}
-
+                        minWidth={type === "playlists" ? "100px" : "120px"}
+                        height={type === "playlists" ? "56px" : "70px"}
+                        style={{ maxWidth: type === "playlists" ? '100px' : '120px', objectFit: 'contain', borderRadius: '5px' }}
                     />
                 </a>
             </Link>
