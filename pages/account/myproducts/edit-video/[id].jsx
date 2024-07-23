@@ -229,6 +229,7 @@ const Posts = () => {
             if (selectedPlaylists) {
                 formData.append('playlist', selectedPlaylists?.id);
             }
+        }
 
         try {
             const resp = await axios.patch(
@@ -252,7 +253,7 @@ const Posts = () => {
         }
 
 
-    }
+    
 }
 
 
