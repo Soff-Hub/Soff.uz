@@ -8,6 +8,7 @@ import DefaultVideoLists from '../detail/thumbnail/DefaultVideoLists';
 
 const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
 
+
     return (
         <div className="d-flex gap-3 "
         >
@@ -18,8 +19,8 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
                         isPlay={isPlay}
                         setIsPlay={setIsPlay}
                         product={product}
-
                         minWidth={type === "playlists" ? "100px" : "168px"}
+                        maxWidth={type === "playlists" ? "100px" : "168px"}
                         height={type === "playlists" ? "56px" : "94px"}
 
                     />

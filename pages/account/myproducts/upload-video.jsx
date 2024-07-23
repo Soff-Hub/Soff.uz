@@ -37,6 +37,7 @@ const Posts = () => {
     const [openFile, setOpenFile] = useState(false); // Ogohlantirish modali video yuklanmaguncha
     const [loading, setLoading] = useState(false); // Modal ochilishi uchun
     const [loadingPlay, setLoadingPlay] = useState(false); // Modal ochilishi uchun
+    const [valuesPlayLists, setvaluesPlayLists] = useState(null); // Modal ochilishi uchun
 
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
@@ -92,7 +93,6 @@ const Posts = () => {
 
 
     const postPlayLists = async (values) => {
-        form.resetFields();
         const formData = new FormData();
         const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
         formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice); // Video narxi
@@ -145,7 +145,10 @@ const Posts = () => {
         const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
 
         formData.append('price', (free || values.price == 0) ? 0 : newPrice); // Video narxi
-        formData.append('description', values?.description); // Video haqida to'liq izoh
+        if (values?.description) {
+
+            formData.append('description', values?.description); // Video haqida to'liq izoh
+        }
 
         // Video kategoriyasi
         const selectedCategory = dataCategory.find(cat => cat.name === values?.category);
@@ -154,11 +157,10 @@ const Posts = () => {
         }
 
         // playlist
-        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === values?.playlist);
+        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === valuesPlayLists);
         if (selectedPlaylists) {
             formData.append('playlist', selectedPlaylists?.id);
         }
-
 
         formData.append('tags', JSON.stringify(values?.tags)); // Video taglar listi
 
@@ -191,6 +193,7 @@ const Posts = () => {
             console.log(err);
         }
         setDeisabled(false);
+
 
     }
 
@@ -505,6 +508,7 @@ const Posts = () => {
                                         </Form.Item>
 
                                         <Form.Item
+
                                             label={
                                                 <div className='d-flex align-items-center gap-3'>
                                                     <span>Play Listlar</span>
@@ -528,6 +532,7 @@ const Posts = () => {
                                                         width: '100%',
                                                         height: '45.4px',
                                                     }}
+                                                    onChange={(e) => setvaluesPlayLists(e)}
                                                 >
                                                     {
                                                         itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (

@@ -22,7 +22,6 @@ const ProductVideoDetailFullWidth = ({
 }) => {
     const { user } = useSelector((state) => state.auth);   // user malumotlarini olish uchun reduxdan
     const [data, setData] = useState([]);
-    const [error, setError] = useState(null);
     const router = useRouter();
     const { pid } = router.query
 
@@ -34,9 +33,9 @@ const ProductVideoDetailFullWidth = ({
                     Authorization: `Bearer ${user?.access}`,
                 }
             });
-            setData(response)
+            setData(response?.data)
         } catch (error) {
-            setError(`Xatolik yuz berdi: ${error.message}`)
+            console.log(`Xatolik yuz berdi: ${error.message}`)
         }
 
     }
@@ -48,8 +47,7 @@ const ProductVideoDetailFullWidth = ({
 
     }, [user?.access, pid]);
 
-    console.log('data=>', data);
-    console.log('product=>', product);
+
 
 
     return (
@@ -101,21 +99,20 @@ const ProductVideoDetailFullWidth = ({
                     </div>
 
                     <div className='col-md-4' style={{ overflowY: "auto", }}>
-                        {data?.length > 0 && <div className="col-md-12 p-0 border rounded-3">
+                        {data?.playlist_document?.length > 0 && <div className="col-md-12 p-0 border rounded-3">
 
 
                             <div className='p-3 pt-4 bg-white rounded-3'>
-                                <h4>
-                                    Meta Back-End Developer Professional Certificate
-                                    Self Taught Courses
-                                    1 / 8
+                                <h4 className='mb-2'>
+                                    {data?.title}
                                 </h4>
+                                <span> {data?.description}</span>
                             </div>
 
                             <div className=' p-0' style={{ overflowY: "auto", height: "60vh" }}>
 
                                 {
-                                    error !== null ? data.map(item => (
+                                    data?.playlist_document.map(item => (
                                         <div
                                             key={item?.id}
                                             className={`col-md-12  py-2 `}
@@ -126,13 +123,7 @@ const ProductVideoDetailFullWidth = ({
                                         >
                                             <ProductVideoCards type="playlists" product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
                                         </div>
-                                    )) :
-                                        <div className='d-flex border border-danger rounded-3 justify-content-center align-items-center ' style={{
-                                            height: "100%",
-                                            width: "100%"
-                                        }}>
-                                            <p className='text-center fw-medium fs-3 text-danger'>{error}</p>
-                                        </div>
+                                    ))
                                 }
                             </div>
 

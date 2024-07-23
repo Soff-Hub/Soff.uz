@@ -50,6 +50,7 @@ const Posts = () => {
     const [customePosterPlay, setCustomePosterPlay] = useState(null); // PlayList posterini olsih uchun 
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
+    const [valuesPlayLists, setvaluesPlayLists] = useState(null); // Modal ochilishi uchun
 
     const breadCrumb = [
         {
@@ -109,7 +110,7 @@ const Posts = () => {
     // Vidoega Play-List qo'shish uchun Post funksiyasi
 
     const postPlayLists = async (values) => {
-        form.resetFields();
+
         const formData = new FormData();
         const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
         formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice); // Video narxi
@@ -211,7 +212,9 @@ const Posts = () => {
         const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
 
         formData.append('price', (free || values.price == 0) ? 0 : newPrice); // Video narxi
-        formData.append('description', values?.description); // Video haqida to'liq izoh
+        if (values?.description) {
+            formData.append('description', values?.description); // Video haqida to'liq izoh
+        }
 
         // Video kategoriyasi
         const selectedCategory = dataCategory.find(cat => cat.name === values?.category);
@@ -224,11 +227,12 @@ const Posts = () => {
         if (user?.role === 'admin' && values?.reason) {
             formData.append('resaon', values?.reason);
         }
+        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === valuesPlayLists);
 
-
-        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === values?.playlist);
         if (selectedPlaylists && user?.role === 'seller') {
-            formData.append('playlist', selectedPlaylists?.id);
+            if (selectedPlaylists) {
+                formData.append('playlist', selectedPlaylists?.id);
+            }
         }
 
 
@@ -331,7 +335,6 @@ const Posts = () => {
         'cancelled': 'Bekor qilingan',
     }
 
-    console.log(products);
 
 
     return (user?.role === 'seller' || user?.role === 'admin') ? (
@@ -672,6 +675,7 @@ const Posts = () => {
                                                     width: '100%',
                                                     height: '45.4px',
                                                 }}
+                                                onChange={(e) => setvaluesPlayLists(e)}
                                                 defaultValue={products?.playlist?.title}
 
                                             >
