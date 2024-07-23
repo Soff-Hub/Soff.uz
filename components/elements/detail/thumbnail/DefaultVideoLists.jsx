@@ -5,7 +5,8 @@ export default function DefaultVideoLists({
     isPlay,
     setIsPlay,
     minWidth,
-    height
+    height,
+    maxWidth
 }) {
 
 
@@ -20,10 +21,12 @@ export default function DefaultVideoLists({
     }, [product, isPlay]);
 
 
+    console.log(product);
 
     const url = product?.document?.file_url
         ? product?.document?.file_url
         : product?.document?.short_content_url
+
 
 
     return (
@@ -38,7 +41,8 @@ export default function DefaultVideoLists({
                 height: height,
                 minWidth: minWidth,
                 objectFit: 'cover',
-                borderRadius: "10px"
+                borderRadius: "10px",
+                maxWidth: maxWidth,
             }}
             onPlay={() => setIsPlay?.(product?.id)}
             controls={false}
