@@ -160,7 +160,7 @@ const Posts = () => {
         const selectedPlaylists = itemsPlayLists.find(cat => cat.title === valuesPlayLists);
         if (selectedPlaylists) {
             formData.append('playlist', selectedPlaylists?.id);
-
+        }
 
         formData.append('tags', JSON.stringify(values?.tags)); // Video taglar listi
 
@@ -195,8 +195,8 @@ const Posts = () => {
         setDeisabled(false);
 
 
+
     }
-}
 
     //   Videoga rasm yuklash uchun funksiya
 
