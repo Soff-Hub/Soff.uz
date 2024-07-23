@@ -16,7 +16,7 @@ class PostRepository {
         return reponse;
     }
 
-    async postSearchFilter(payload, file,full_data) {
+    async postSearchFilter(payload, file, full_data) {
         const reponse = await Repository.get(
             `${baseUrl}customer/search-documents/?search=${payload ? payload : ''}&type=${file ? file : ''}&full_data=${full_data ? full_data : ''}`
         )
@@ -118,8 +118,8 @@ class PostRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return response;
     }
-    async postClickCardNumber(documents, provider, token) {
-        const endPoint = `seller/payment/create/`;
+    async postClickCardNumber(documents, provider, token, params) {
+        const endPoint = `seller/payment/create/?${params}`;
         const response = await Repository({
             url: baseUrl + endPoint,
             method: 'POST',
@@ -136,11 +136,11 @@ class PostRepository {
             })
             .catch((error) => {
                 return error.response
-            } );
+            });
         return response;
     }
-    async postClickCard(documents, card_number , expire_date, token) {
-        const endPoint = `seller/payment/create/`;
+    async postClickCard(documents, card_number, expire_date, token, params) {
+        const endPoint = `seller/payment/create/?${params}`;
         const response = await Repository({
             url: baseUrl + endPoint,
             method: 'POST',
@@ -148,7 +148,7 @@ class PostRepository {
                 documents: documents,
                 expire_date: expire_date,
                 card_number: card_number,
-                provider:'card_data'
+                provider: 'card_data'
             },
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -159,10 +159,10 @@ class PostRepository {
             })
             .catch((error) => {
                 return error.response
-            } );
+            });
         return response;
     }
-    async postClickCode(cart, code , token) {
+    async postClickCode(cart, code, token) {
         const endPoint = `seller/payment/verify/`;
         const response = await Repository({
             url: baseUrl + endPoint,

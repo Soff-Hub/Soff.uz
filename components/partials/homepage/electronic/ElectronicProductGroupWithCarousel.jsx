@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Product from '~/components/elements/products/Product';
 import AudioProductCart from '~/components/elements/products/AudioProductCart';
 import ProductVideo from '~/components/elements/products/ProductVideo';
+import PlaylistCard from '~/components/elements/products/PlaylistCard';
 
 
 
@@ -25,16 +26,19 @@ const ElectronicProductGroupWithCarousel = ({ title, data, id, slug }) => {
                         item?.document?.content_type === 'video' ?
                             <div
                                 key={index}
-                                className="col-md-4 my-2">
+                                className="col-md-4 my-2 mb-4">
                                 <ProductVideo product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
                             </div>
-                            :
-
-                            <div
-                                key={index}
-                                className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 px-2">
-                                <Product product={item} />
-                            </div>
+                            : item?.type === 'playlist' ?
+                                <div
+                                    key={index}
+                                    className="col-md-4 my-2 mb-4">
+                                    <PlaylistCard product={item} />{' '}
+                                </div> : <div
+                                    key={index}
+                                    className="home-card col-xl-2 col-lg-2 col-md-3 col-sm-4 col-xs-3 col-6 px-2">
+                                    <Product product={item} />
+                                </div>
                 ))}
             </div>
         );

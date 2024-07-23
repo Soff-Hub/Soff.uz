@@ -9,11 +9,8 @@ import MediaRepository from '~/repositories/MediaRepository';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import CKeditor from '../../../../components/partials/account/CKeditor';
 import { Button, Form, Modal, Select, Tabs, Tooltip, InputNumber, Checkbox, Input } from 'antd';
-var parse = require('html-react-parser');
 import { useRouter } from 'next/router';
 import Meta from '~/components/shared/headers/Meta';
-
-import Link from 'next/link';
 import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
@@ -187,7 +184,6 @@ const Posts = () => {
 
     // Videoni Update qilish uchun funksiya
     async function postOrder(values) {
-
         const resuslts1 = products?.active_tag?.map((item) => item.name);
         const resuslts2 = products?.deactive_tag?.map((item) => item.name);
         const results = values?.tags?.concat(values?.deactive_tag);
@@ -233,8 +229,6 @@ const Posts = () => {
             if (selectedPlaylists) {
                 formData.append('playlist', selectedPlaylists?.id);
             }
-        }
-
 
         try {
             const resp = await axios.patch(
@@ -259,6 +253,8 @@ const Posts = () => {
 
 
     }
+}
+
 
     //   Mahsulot malumotlarini inputni valuesiga tushirish
 
@@ -662,26 +658,24 @@ const Posts = () => {
                                                 </Tooltip>
                                             </div>
                                         }
-                                        name="playlist"
                                         className='col-md-12 mb-2'
                                     >
                                         <div className='d-flex gap-3 '>
                                             <Select
                                                 disabled={user?.role === 'admin'}
-                                                name="playlist"
                                                 mode="select"
-                                                placeholder="Video teglari "
+                                                placeholder="Mavjud playlistlar"
                                                 style={{
                                                     width: '100%',
                                                     height: '45.4px',
                                                 }}
                                                 onChange={(e) => setvaluesPlayLists(e)}
-                                                defaultValue={products?.playlist?.title}
 
+                                                defaultValue={products?.playlist?.title}
                                             >
                                                 {
                                                     itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
-                                                        <Option key={item?.title}  >
+                                                        <Option key={item?.title} >
                                                             <div className='d-flex justify-content-between'>
                                                                 <div className='d-flex gap-2'>
                                                                     <img
