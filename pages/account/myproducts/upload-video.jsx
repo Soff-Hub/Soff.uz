@@ -160,7 +160,7 @@ const Posts = () => {
         const selectedPlaylists = itemsPlayLists.find(cat => cat.title === valuesPlayLists);
         if (selectedPlaylists) {
             formData.append('playlist', selectedPlaylists?.id);
-        }
+
 
         formData.append('tags', JSON.stringify(values?.tags)); // Video taglar listi
 
@@ -196,6 +196,7 @@ const Posts = () => {
 
 
     }
+}
 
     //   Videoga rasm yuklash uchun funksiya
 
@@ -521,22 +522,22 @@ const Posts = () => {
                                                     </Tooltip>
                                                 </div>
                                             }
-                                            name="playlist"
                                             className='col-md-12 mb-2'
                                         >
                                             <div className='d-flex gap-3 '>
                                                 <Select
                                                     mode="select"
-                                                    placeholder="Video teglari "
+                                                    placeholder="Mavjud playlistlar"
                                                     style={{
                                                         width: '100%',
                                                         height: '45.4px',
                                                     }}
                                                     onChange={(e) => setvaluesPlayLists(e)}
+
                                                 >
                                                     {
                                                         itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
-                                                            <Option key={item?.title}  >
+                                                            <Option key={item?.title} value={item.id}  >
                                                                 <div className='d-flex justify-content-between'>
                                                                     <div className='d-flex gap-2'>
                                                                         <img

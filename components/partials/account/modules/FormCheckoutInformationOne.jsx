@@ -4,7 +4,7 @@ import CreditCard2 from '../CreditCard2';
 
 function FormCheckoutInformationOne() {
     const Router = useRouter();
-    const { id } = Router.query;
+    const { id, type } = Router.query;
 
     let arr = [];
     arr.push(id);
@@ -16,7 +16,7 @@ function FormCheckoutInformationOne() {
                 <p>Mahsulotni sotib olganingizdan so'ng, shaxsiy kabinetingizdagi <br /> <a href="/account/sellerproducts" ><strong className='text-success'>Sotib olingan</strong></a> lar sahifasidan yoki mahsulot to'liq sahifasiga <br /> qayta kirib yuklab olishingiz mumkin bo'ladi   !</p>
             </div>
             <div className="d-flex aligin-content-center  rounded-5 px-3">
-                <CreditCard2 document={arr} />
+                <CreditCard2 document={arr} type={type} />
             </div>
         </div>
     );

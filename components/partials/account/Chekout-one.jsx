@@ -39,9 +39,9 @@ const CheckoutOne = () => {
         const doc = document.querySelector('.headerSticky')
         doc.id = ""
 
-        setTimeout(() => {
-            setRun(true)
-        }, 500);
+        // setTimeout(() => {
+        //     setRun(true)
+        // }, 500);
     }, []);
 
 

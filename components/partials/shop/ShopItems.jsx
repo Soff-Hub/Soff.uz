@@ -324,8 +324,8 @@ const ShopItems = ({
     useEffect(() => {
         detailSearch(search);
     }, [searchDebounce]);
- 
-    
+
+
     // Views
     let productItemsView;
     if (success) {
@@ -348,22 +348,28 @@ const ShopItems = ({
                         ) :
 
                             item?.document?.content_type === 'video' ? (
-                                <div  className="col-md-4 px-2  my-2 ">
-                                    <ProductVideo isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
+                                <div className="col-md-4 px-2  my-2">
+                                    <ProductVideo iscategroy
+                                        isPlay={isPlay} setIsPlay={setIsPlay} product={item} />
                                 </div>
-                            ) : (
-
-                                <div
-                                    className={classes + ' home-card-category mb-3'}
-                                    key={item.id}
-                                    style={{
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignContent: 'center',
-                                    }}>
-                                    <Product product={item} />
-                                </div>
-                            )}
+                            ) :
+                                item?.type === 'playlist' ?
+                                    <div
+                                        key={index}
+                                        className="col-md-4 my-2 mb-4">
+                                        <PlaylistCard product={item} />{' '}
+                                    </div> : (
+                                        <div
+                                            className={classes + ' home-card-category mb-3'}
+                                            key={item.id}
+                                            style={{
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignContent: 'center',
+                                            }}>
+                                            <Product product={item} />
+                                        </div>
+                                    )}
                     </>
                 ));
             productItemsView = (
@@ -417,7 +423,7 @@ const ShopItems = ({
                             onChange={(e) => setSearch(e.target.value)}
                         />
                     </label>
-              
+
                     {slug !== 'bepul-mahsulotlar' && (
                         <select
                             className="ps-select form-control"
