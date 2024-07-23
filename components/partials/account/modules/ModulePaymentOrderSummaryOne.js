@@ -66,10 +66,10 @@ const ModulePaymentOrderSummaryOne = () => {
     const hisobb = addPeriodToThousands(data?.discount_price * percentage);
 
     return (
-        <div className="ps-block--checkout-order">
+        <div className="ps-block--checkout-order" >
             <h3>Buyurtma mahsulotlari</h3>
             <div className="shot">
-                <div className="ps-block__content checkoutstep-0">
+                <div className="ps-block__content checkoutstep-0" style={{backgroundColor:"#f1f1f1"}}>
                     {data && type !== 'playlist' ? (
                         <figure>
                             <p>Mahsulot</p>

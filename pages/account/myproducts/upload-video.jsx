@@ -252,7 +252,7 @@ const Posts = () => {
         }
     }, [open, form2]);
 
-
+    console.log(valuesPlayLists);
 
 
     return user?.role === 'seller' ? (
@@ -537,7 +537,7 @@ const Posts = () => {
                                                 >
                                                     {
                                                         itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
-                                                            <Option key={item?.title} value={item.id}  >
+                                                            <Option key={item?.title} >
                                                                 <div className='d-flex justify-content-between'>
                                                                     <div className='d-flex gap-2'>
                                                                         <img

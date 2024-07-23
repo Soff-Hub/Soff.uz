@@ -23,7 +23,6 @@ const CreditCard2 = ({ document, type }) => {
 
 
 
-
     const numberTyper = (value) => {
         SetNumberCardVal(value);
         if (!value == 0) {
@@ -38,14 +37,15 @@ const CreditCard2 = ({ document, type }) => {
 
     };
 
+
     async function handleClickCardPostsclick(e) {
         e.preventDefault();
         setMessage(false);
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
             'click',
+            `${type || 'document'}`,
             user?.access,
-            `purchase_type=${type || 'document'}`
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
@@ -61,14 +61,15 @@ const CreditCard2 = ({ document, type }) => {
         }
 
     }
+
     async function handleClickCardPostsPayme(e) {
         e.preventDefault();
         setMessage(false);
         const ItemsData = await PostRepository.postClickCardNumber(
             document,
             'payme',
+            `${type || 'document'}`,
             user?.access,
-            `purchase_type=${type || 'document'}`
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
@@ -93,8 +94,8 @@ const CreditCard2 = ({ document, type }) => {
             document,
             numberCardVal,
             cardDate,
+            `${type || 'document'}`,
             user?.access,
-            `purchase_type=${type || 'document'}`
         );
         if (ItemsData?.status === 201) {
             setMessage(true);
