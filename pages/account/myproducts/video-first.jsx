@@ -5,11 +5,13 @@ import { Modal, Tooltip, Input } from 'antd';
 import Axios from 'axios'
 import { baseUrl } from '~/reositoriy-admin/Repository';
 
+
 const VideoFirstPosts = ({
     setliveProduct,
     setLivePosterFile,
     setLoading,
-    setOpenFile
+    setOpenFile,
+    
 
 }) => {
     const { user } = useSelector((state) => state.auth);
@@ -104,10 +106,9 @@ const VideoFirstPosts = ({
         }
         finally {
             setLoading(false)
-            setOpenFile(false)
+            setOpenFile(false);
         }
     };
-
 
 
     // getVideoFunk 

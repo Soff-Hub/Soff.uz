@@ -15,6 +15,7 @@ import axios from 'axios';
 import { baseUrl } from '~/repositories/Repository';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -44,10 +45,13 @@ const Posts = () => {
     const [loadingPlay, setLoadingPlay] = useState(false); // Modal ochilishi uchun
     const [itemsPlayLists, setItemsPlayLists] = useState([]);   // tagslar listini saqlash uchun
     const [open, setOpen] = useState(false); // Modal ochilishi uchun
+    const [openUpdate, setOpenUpdate] = useState(false); // Modal ochilishi uchun
     const [customePosterPlay, setCustomePosterPlay] = useState(null); // PlayList posterini olsih uchun 
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
+    const [form3] = Form.useForm();
     const [valuesPlayLists, setvaluesPlayLists] = useState(null); // Modal ochilishi uchun
+    const [valuesPlayUpdate, setvaluesPlayUpdate] = useState(null); // Modal ochilishi uchun
 
     const breadCrumb = [
         {
@@ -102,15 +106,13 @@ const Posts = () => {
         }
     }
 
-
-
     // Vidoega Play-List qo'shish uchun Post funksiyasi
 
     const postPlayLists = async (values) => {
 
         const formData = new FormData();
         const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
-        formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice); // Video narxi
+        formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice || products?.price); // Video narxi
         formData.append('title', values?.title),
             formData.append('image', customePosterPlay?.poster),
             formData.append('description', values?.description || '')
@@ -231,6 +233,7 @@ const Posts = () => {
             }
         }
 
+        setLoading(true)
         try {
             const resp = await axios.patch(
                 `${baseUrl}seller/video-product-update/${products?.id}/`,
@@ -252,9 +255,66 @@ const Posts = () => {
             console.log("Error edit", err);
         }
 
+        setLoading(false)
 
-    
-}
+    }
+
+
+    // PlayListni Itemlarni olish
+    const handlePlayListUpdate = (item) => {
+        if (item?.id) {
+            setOpenUpdate(true);
+            setvaluesPlayUpdate(item)
+        }
+    }
+
+    // Vidoega Play-List tahrirlash uchun Patch funksiyasi
+
+    const postPlayListsUpdate = async (values) => {
+        form3.resetFields()
+        const formData = new FormData();
+        const newPrice = parseInt((values.price !== 0 && values?.price !== undefined) && formatPrice(values?.price));
+        formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice || valuesPlayUpdate?.price); // Video narxi
+        formData.append('title', values?.title);
+        if (customePosterPlay?.poster) {
+            formData.append('image', customePosterPlay?.poster)
+        }
+        formData.append('description', values?.description || '')
+
+        try {
+            setLoadingPlay(true)
+            const response = await PatchRepository.PatchPlayLists(
+                formData,
+                valuesPlayUpdate?.id,
+                user?.access
+            )
+            if (response?.status === 200) {
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqiyatli!',
+                    content: 'Muvaffaqiyatli yangilandi',
+                });
+                GetItemsPlayLists()
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: response?.status + ' ' + response?.statusText || "Xatolik iltimos qaytadan urinib ko'ring",
+                });
+            }
+
+
+        } catch (error) {
+            console.log(error);
+        }
+        finally {
+            setOpenUpdate(false)
+            setCustomePosterPlay(null)
+            setLoadingPlay(false)
+
+        }
+
+    }
 
 
     //   Mahsulot malumotlarini inputni valuesiga tushirish
@@ -290,12 +350,25 @@ const Posts = () => {
         if (open) {
             form2.setFieldsValue({
                 description: null,
-                image: null,
+                poster: null,
                 price: null,
                 title: null
             });
         }
     }, [open, form2]);
+
+    // PlayList modaldagi inputlarga qiymatni tushirish
+    useEffect(() => {
+        if (openUpdate && valuesPlayUpdate?.id) {
+            form3.setFieldsValue({
+                description: valuesPlayUpdate?.description,
+                poster: valuesPlayUpdate?.image,
+                price: valuesPlayLists?.price,
+                title: valuesPlayUpdate?.title
+            });
+        }
+    }, [openUpdate, valuesPlayUpdate, form3]);
+
 
     useEffect(() => {
         getProducts()
@@ -331,7 +404,6 @@ const Posts = () => {
         'approved': 'Tasdiqlangan',
         'cancelled': 'Bekor qilingan',
     }
-
 
 
     return (user?.role === 'seller' || user?.role === 'admin') ? (
@@ -477,9 +549,9 @@ const Posts = () => {
 
                                             {
                                                 (customePoster?.url || products?.poster_url) ?
-                                                    <span>Video poster rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
+                                                    <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
                                                     :
-                                                    <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Video poster rasmini yuklash uchun rasm tanlang</span>
+                                                    <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Rasm yuklash uchun rasm tanlang</span>
                                             }
                                             <Input
                                                 name='poster'
@@ -521,7 +593,7 @@ const Posts = () => {
 
                                             <InputNumber
                                                 defaultValue={products?.price}
-                                                disabled={free}
+                                                disabled={free || products?.price == 0}
                                                 placeholder="Video  narxi"
                                                 className='w-100 py-2'
                                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -533,7 +605,7 @@ const Posts = () => {
                                                 }}
                                             />
                                             <Checkbox
-                                                defaultChecked={free}
+                                                defaultChecked={free || products?.price == 0}
                                                 className=" d-flex align-items-center justify-content-start px-0 py-2"
                                                 onChange={() => setFree(!free)}>
                                                 <strong className='text-success'>Bepul</strong>
@@ -677,27 +749,36 @@ const Posts = () => {
                                                 {
                                                     itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
                                                         <Option key={item?.title} >
-                                                            <div className='d-flex justify-content-between'>
-                                                                <div className='d-flex gap-2'>
+                                                            <div className='d-flex justify-content-between align-items-center'>
+                                                                <div className='d-flex gap-2 align-items-center'>
                                                                     <img
                                                                         style={{
                                                                             objectFit: "cover"
                                                                         }}
-                                                                        height={30}
-                                                                        width={30}
+                                                                        height={25}
+                                                                        width={25}
                                                                         src={item?.image}
                                                                         alt="images"
                                                                     />
                                                                     <span>{item?.title}</span>
                                                                 </div>
-                                                                <span>
-                                                                    {item?.price > 0 ?
-                                                                        addPeriodToThousands(Number(item?.price)) + ' ' + "so'm" :
-                                                                        "Bepul"
+                                                                <div className='d-flex  align-items-center gap-3'>
+                                                                    <span>
+                                                                        {item?.price > 0 ?
+                                                                            addPeriodToThousands(Number(item?.price)) + ' ' + "so'm" :
+                                                                            "Bepul"
 
-                                                                    }
+                                                                        }
 
-                                                                </span>
+                                                                    </span>
+                                                                    <span
+                                                                     style={{ cursor: "pointer"
+                                                                      }}
+                                                                      onClick={() => handlePlayListUpdate(item)}>
+                                                                        <i className="fa-solid fa-edit fs-5 text-secondary"></i>
+
+                                                                    </span>
+                                                                </div>
                                                             </div>
                                                         </Option>
                                                     ))
@@ -945,7 +1026,7 @@ const Posts = () => {
                                 }}
                             />
                             <Checkbox
-                                defaultChecked={free}
+                                defaultChecked={freePlay}
                                 className=" d-flex align-items-center justify-content-start px-0 py-2"
                                 onChange={() => setFreePlay(!freePlay)}>
                                 <strong className='text-success'>Bepul</strong>
@@ -975,6 +1056,137 @@ const Posts = () => {
                 </Form>
 
             </Modal>
+            {/* Play List tahrirlash uchun playLists modali */}
+            <Modal
+                title="PlayListni tahrirlash"
+                width={550}
+                centered
+                open={openUpdate}
+                onOk={() => setOpenUpdate(false)}
+                okText="Yopish"
+                footer={null}
+
+
+
+                onCancel={() => setOpenUpdate(false)}>
+                <Form
+                    form={form3}
+                    onFinish={postPlayListsUpdate}
+                    className="w-100 mt-5"
+                    layout='vertical'
+                >
+                    <Form.Item
+                        label={'Rasm'}
+                        name={"poster"}
+                        className='col-md-12 mb-2 p-0'
+                    >
+
+                        <label
+                            style={{
+                                display: 'inline-block',
+                                width: '100%',
+                                height: '45.4px',
+                                border: '1px solid #ccc',
+                                padding: '10px 15px',
+                                boxSizing: 'border-box',
+                                textAlign: 'center',
+                                cursor: 'pointer',
+                                backgroundColor: '#fff',
+                                borderRadius: "5px"
+                            }}
+                        >
+
+                            {
+                                (customePosterPlay?.url || valuesPlayUpdate?.image) ?
+                                    <span>Video poster rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
+                                    :
+                                    <span><i className="fa-solid fa-cloud-arrow-up text-success mx-2 fs-3"></i> Video poster rasmini yuklash uchun rasm tanlang</span>
+                            }
+                            <Input
+
+                                name='poster'
+                                accept='image/*'
+                                onChange={(e) => LivePosterPlayLists(e.target.files[0])}
+                                type='file'
+                                style={{
+                                    position: 'absolute',
+                                    width: '1px',
+                                    height: '1px',
+                                    overflow: 'hidden',
+                                    clip: 'rect(0, 0, 0, 0)',
+                                    border: '0'
+                                }}
+                            />
+                        </label
+                        >
+
+                    </Form.Item>
+
+                    <Form.Item
+                        label='Nomi '
+                        name="title"
+                        className=' mb-3 '
+                    >
+                        <Input
+                            name='title'
+                            placeholder="Nomlang"
+
+                        />
+                    </Form.Item>
+
+                    <Form.Item
+                        label={'Narxi'}
+                        name="price"
+                        className='col-md-12 mb-2 p-0'
+                    >
+                        <div className='d-flex align-items-center gap-3 '>
+
+                            <InputNumber
+                                defaultValue={valuesPlayUpdate?.price}
+                                style={{ height: "45.4px" }}
+                                disabled={freePlay || valuesPlayUpdate?.price == 0}
+                                placeholder="Narxi"
+                                className='w-100 py-2'
+                                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                onKeyPress={(e) => {
+                                    if (!/[0-9]/.test(e.key)) {
+                                        e.preventDefault();
+                                    }
+                                }}
+                            />
+                            <Checkbox
+                                defaultChecked={freePlay || valuesPlayUpdate?.price == 0}
+                                className=" d-flex align-items-center justify-content-start px-0 py-2"
+                                onChange={() => setFreePlay(!freePlay)}>
+                                <strong className='text-success'>Bepul</strong>
+                            </Checkbox>
+                        </div>
+
+                    </Form.Item>
+
+                    <Form.Item
+                        label='Tavsif'
+                        name='description'
+                        className='mb-3'
+                    >
+                        <TextArea placeholder='Tavsif kiriting' rows={4}></TextArea>
+                    </Form.Item>
+
+                    <Form.Item
+                        className='m-0 mt-3 d-flex justify-content-end w-100'
+                    >
+                        <Button
+                            loading={loadingPlay}
+                            className='px-5'
+                            type='primary'
+                            htmlType='submit'
+                        >Saqlash</Button>
+                    </Form.Item>
+                </Form>
+
+            </Modal>
+
         </PageContainer>
     ) : user?.access ? (
         <Page404 />
