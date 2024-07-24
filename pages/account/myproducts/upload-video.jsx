@@ -645,7 +645,7 @@ const Posts = () => {
                                             style={{
                                                 backgroundSize: 'cover',
                                                 borderRadius: '10px',
-                                                backgroundImage: `url("${customePoster?.url || '/static/img/soff/lll.png'}")`,
+                                                backgroundImage: `url("${customePoster?.url || '/static/img/soff/video.jpg'}")`,
                                                 padding: '0',
                                                 maxHeight: '300px',
                                                 overflow: 'hidden',

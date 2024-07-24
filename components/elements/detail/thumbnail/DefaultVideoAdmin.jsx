@@ -32,7 +32,7 @@ export default function DefaultVideoAdmin({
             style={{
                 backgroundSize: 'cover',
                 borderRadius: '10px',
-                backgroundImage: `url("${product?.poster_url ? product?.poster_url : product?.poster || '/static/img/soff/lll.png'}")`,
+                backgroundImage: `url("${product?.poster_url ? product?.poster_url : product?.poster || '/static/img/soff/video.jpg'}")`,
                 padding: '0',
                 maxHeight: '300px',
                 overflow: 'hidden',
