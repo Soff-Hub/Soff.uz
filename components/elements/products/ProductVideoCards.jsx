@@ -6,7 +6,7 @@ import Router from 'next/router';
 import DefaultVideoLists from '../detail/thumbnail/DefaultVideoLists';
 
 
-const ProductVideoCards = ({ product,  type }) => {
+const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
 
 
     return (
@@ -16,7 +16,10 @@ const ProductVideoCards = ({ product,  type }) => {
                 <a
                 >
                     <DefaultVideoLists
+                        isPlay={isPlay}
+                        setIsPlay={setIsPlay}
                         product={product}
+
 
                         minWidth={type === "playlists" ? "100px" : "120px"}
                         height={type === "playlists" ? "56px" : "70px"}

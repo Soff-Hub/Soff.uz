@@ -7,7 +7,7 @@ export default function DefaultVideo({
     setIsPlay,
 }) {
 
-console.log(product);
+
 
     useEffect(() => {
         const player = document.getElementById(`videoPlayer-${product.id}`);
