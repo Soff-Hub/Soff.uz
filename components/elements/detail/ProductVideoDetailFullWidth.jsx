@@ -1,16 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import DefaultDescription from '~/components/elements/detail/description/DefaultDescription';
-import Link from 'next/link';
-import DefaultVideo from './thumbnail/DefaultVideo';
-import ModuleVideoDetailTopInformation from './modules/ModuleVideoDetailTopInformation';
-import VideoDetailsDescription from './modules/VideoDetails';
-import VideoDetailAction from './modules/VideoDetailAction';
 import ProductVideoCards from '../products/ProductVideoCards';
 import Axios from 'axios';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import VideoPlayDetails from './VideoPlayDetails';
 
 const ProductVideoDetailFullWidth = ({
     product,
@@ -57,49 +52,16 @@ const ProductVideoDetailFullWidth = ({
 
             <div className="ps-product--detail mt-5 ">
                 <div className="row mb-xl-5 mb-lg-5 mb-0 " style={{ alignItems: 'flex-start' }}>
-                    
+
                     <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
-                        
-                        <DefaultVideo product={product} isPlay={isPlay} setIsPlay={setIsPlay} />
-                        <ModuleVideoDetailTopInformation
+                        <VideoPlayDetails
                             product={product}
                             views={views}
                             admin={admin}
+                            ActiveTag={ActiveTag}
+                            isPlay={isPlay}
+                            setIsPlay={setIsPlay}
                         />
-                        <div className="col-md-12 mt-5 p-0">
-                            <VideoDetailsDescription
-                                product={product}
-                                views={views}
-                            />
-                            <VideoDetailAction
-                                product={product}
-                                admin={admin}
-                            />
-
-                        </div>
-
-                        {admin && ActiveTag}
-                        {product?.tag?.length > 0 && (
-                            <div className="mb-xl-5 mb-lg-5 ">
-                                <p>Tezkor teglar</p>
-                                <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                    {product?.tag?.length > 0 &&
-                                        product?.tag.map((item, i) => (
-                                            <div
-                                                key={i}
-                                                className="m-2 tag-product">
-                                                <Link href={`/search?keyword=${item?.name?.replace(/^#/, '')}`} >
-                                                    <a>
-                                                        {' '}
-                                                        {item.name}{' '}
-                                                    </a>
-                                                </Link>
-                                            </div>
-                                        ))}
-                                </div>
-                            </div>
-                        )}
-                        <DefaultDescription product={product} />
                     </div>
 
                     <div className='col-md-4' style={{ overflowY: "auto", }}>

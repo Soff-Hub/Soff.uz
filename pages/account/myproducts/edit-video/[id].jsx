@@ -406,6 +406,7 @@ const Posts = () => {
     }
 
 
+
     return (user?.role === 'seller' || user?.role === 'admin') ? (
         <PageContainer
             footer={<FooterDefault />}
@@ -772,9 +773,10 @@ const Posts = () => {
 
                                                                     </span>
                                                                     <span
-                                                                     style={{ cursor: "pointer"
-                                                                      }}
-                                                                      onClick={() => handlePlayListUpdate(item)}>
+                                                                        style={{
+                                                                            cursor: "pointer"
+                                                                        }}
+                                                                        onClick={() => handlePlayListUpdate(item)}>
                                                                         <i className="fa-solid fa-edit fs-5 text-secondary"></i>
 
                                                                     </span>
@@ -857,18 +859,42 @@ const Posts = () => {
                                     top: "30px"
                                 }}>
 
-                                    <video
-                                        className=" p-0 "
-                                        controls
-                                        poster={customePoster?.url || products?.poster_url}
-                                        preload="none"
-                                        src={products?.file_url}
-                                        style={{
-                                            width: '100%', maxHeight:
-                                                '300px',
-                                        }}>
 
-                                    </video>
+                                    <div
+                                        className='video_iframe'
+
+                                        style={{
+                                            backgroundSize: 'cover',
+                                            borderRadius: '10px',
+                                            backgroundImage: `url("${customePoster?.url || products?.poster_url || '/static/img/soff/lll.png'}")`,
+                                            padding: '0',
+                                            maxHeight: '300px',
+                                            overflow: 'hidden',
+                                            position: 'relative',
+                                            width: '100%',
+                                            height: '100%'
+                                        }}
+
+
+                                    >
+
+                                        <video
+                                            className=" p-0 "
+                                            controls
+                                            poster={customePoster?.url || products?.poster_url}
+                                            preload="none"
+                                            src={products?.document?.file_url}
+                                            style={{
+                                                width: "100%",
+                                                maxHeight: '300px',
+                                                height: "100%",
+                                                position: 'relative',
+                                                zIndex: 2
+                                            }}
+                                        >
+
+                                        </video>
+                                    </div>
 
                                     {products?.title && <div className='px-4 py-2'>
                                         <p>{products?.title}</p>
