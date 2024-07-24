@@ -133,67 +133,72 @@ const Posts = () => {
     // Videoni yuklash uchun ikkinchi  Post funksiyasi
 
     async function postOrder(values) {
-        setDeisabled(true);
+        if (loading) {
+            setOpenFile(true)
+        } else {
+            setDeisabled(true);
+            const formData = new FormData();
+            formData.append('document', livePosterFile?.id); // Asosiy video IDsi
+            formData.append('title', values?.title); // Video nomi
 
-        const formData = new FormData();
-        formData.append('document', livePosterFile?.id); // Asosiy video IDsi
-        formData.append('title', values?.title); // Video nomi
-
-        if (customePoster?.poster) {
-            formData.append('poster', customePoster?.poster); // Video posteri
-        }
-        const newPrice = parseInt(values.price !== 0 && formatPrice(values?.price));
-
-        formData.append('price', (free || values.price == 0) ? 0 : newPrice); // Video narxi
-        if (values?.description) {
-
-            formData.append('description', values?.description); // Video haqida to'liq izoh
-        }
-
-        // Video kategoriyasi
-        const selectedCategory = dataCategory.find(cat => cat.name === values?.category);
-        if (selectedCategory) {
-            formData.append('category', selectedCategory?.id);
-        }
-
-        // playlist
-        const selectedPlaylists = itemsPlayLists.find(cat => cat.title === valuesPlayLists);
-        if (selectedPlaylists) {
-            formData.append('playlist', selectedPlaylists?.id);
-        }
-
-        formData.append('tags', JSON.stringify(values?.tags)); // Video taglar listi
-
-        try {
-            const response = await fetch(`${baseUrl}seller/video-product-create/`, {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${user?.access}`,
-                },
-                body: formData,
-            });
-
-            if (response.ok) {
-                Router.push('/account/myproducts');
-                Modal.warning({
-                    centered: true,
-                    title: 'Muvaffaqqiyatli!',
-                    content: "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan mahsulotingiz 'Tasdiqlangan' dan so'ng sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
-                });
-            } else {
-                const errorMessage = await response.json();
-                Modal.error({
-                    centered: true,
-                    title: 'Xatolik!',
-                    content: errorMessage?.msg?.map((item, index) => <div key={index}>{item}</div>),
-                });
-                throw new Error(errorMessage?.msg);
+            if (customePoster?.poster) {
+                formData.append('poster', customePoster?.poster); // Video posteri
             }
-        } catch (err) {
-            console.log(err);
-        }
-        setDeisabled(false);
+            const newPrice = parseInt(values?.price !== 0 && formatPrice(values?.price));
 
+            formData.append('price', (free || values?.price == 0) ? 0 : newPrice); // Video narxi
+            if (values?.description) {
+
+                formData.append('description', values?.description); // Video haqida to'liq izoh
+            }
+
+            // Video kategoriyasi
+            const selectedCategory = dataCategory.find(cat => cat.name === values?.category);
+            if (selectedCategory) {
+                formData.append('category', selectedCategory?.id);
+            }
+
+            // playlist
+            const selectedPlaylists = itemsPlayLists.find(cat => cat.title === valuesPlayLists);
+            if (selectedPlaylists) {
+                formData.append('playlist', selectedPlaylists?.id);
+            }
+
+            formData.append('tags', JSON.stringify(values?.tags)); // Video taglar listi
+
+            try {
+                const response = await fetch(`${baseUrl}seller/video-product-create/`, {
+                    method: 'POST',
+                    headers: {
+                        Authorization: `Bearer ${user?.access}`,
+                    },
+                    body: formData,
+                });
+
+                if (response.ok) {
+                    Router.push('/account/myproducts');
+                    Modal.warning({
+                        centered: true,
+                        title: 'Muvaffaqqiyatli!',
+                        content: "Sizning mahsulotingiz muvaffaqqiyatli yuborildi! 24 soat ichida adminlar tomonidan mahsulotingiz 'Tasdiqlangan' dan so'ng sotuvda ko'rishingiz mumkin yoki 'Bekor' qilishinishi ham mumkin",
+                    });
+                } else {
+                    const errorMessage = await response.json();
+                    Modal.error({
+                        centered: true,
+                        title: 'Xatolik!',
+                        content: errorMessage?.msg?.map((item, index) => <div key={index}>{item}</div>),
+                    });
+                    throw new Error(errorMessage?.msg);
+                }
+                setDeisabled(false);
+            } catch (err) {
+                console.log(err);
+                setDeisabled(false);
+            }
+            setDeisabled(false);
+
+        }
 
 
     }
@@ -252,7 +257,6 @@ const Posts = () => {
         }
     }, [open, form2]);
 
-    console.log(valuesPlayLists);
 
 
     return user?.role === 'seller' ? (
@@ -538,14 +542,14 @@ const Posts = () => {
                                                     {
                                                         itemsPlayLists?.length > 0 && itemsPlayLists?.map(item => (
                                                             <Option key={item?.title} >
-                                                                <div className='d-flex justify-content-between'>
-                                                                    <div className='d-flex gap-2'>
+                                                                <div className='d-flex justify-content-between align-items-center'>
+                                                                    <div className='d-flex gap-2 align-items-center'>
                                                                         <img
                                                                             style={{
                                                                                 objectFit: "cover"
                                                                             }}
-                                                                            height={30}
-                                                                            width={30}
+                                                                            height={25}
+                                                                            width={25}
                                                                             src={item?.image}
                                                                             alt="images"
                                                                         />
@@ -608,50 +612,24 @@ const Posts = () => {
 
                                         <Form.Item className="col-md-12 d-flex justify-content-end m-0  my-4">
 
-                                            {
-                                                loading ?
-                                                    <Button
-                                                        onClick={() => setOpenFile(true)}
-
-                                                        htmlType="button"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: '37px',
-                                                            padding: "1px 30px"
-                                                        }}
-                                                        className="btn-success btn-send-email">
-                                                        <span
-                                                            style={{
-                                                                color: '#fff',
-                                                                fontSize:
-                                                                    '16px',
-                                                            }}>
-                                                            Yaratish
-                                                        </span>
-                                                    </Button> :
-                                                    <Button
-                                                        loading={disabled}
-                                                        htmlType="submit"
-                                                        style={{
-                                                            width: '100%',
-                                                            height: '37px',
-                                                            padding: "1px 30px"
-                                                        }}
-                                                        className="btn-success btn-send-email">
-                                                        <span
-                                                            style={{
-                                                                color: '#fff',
-                                                                fontSize:
-                                                                    '16px',
-                                                            }}>
-                                                            Yaratish
-                                                        </span>
-                                                    </Button>
-
-
-
-                                            }
-
+                                            <Button
+                                                loading={disabled}
+                                                htmlType="submit"
+                                                style={{
+                                                    width: '100%',
+                                                    height: '37px',
+                                                    padding: "1px 30px"
+                                                }}
+                                                className="btn-success btn-send-email">
+                                                <span
+                                                    style={{
+                                                        color: '#fff',
+                                                        fontSize:
+                                                            '16px',
+                                                    }}>
+                                                    Yaratish
+                                                </span>
+                                            </Button>
                                         </Form.Item>
 
                                     </Form>
@@ -661,19 +639,32 @@ const Posts = () => {
                                         alignSelf: "flex-start",
                                         top: "30px"
                                     }}>
-
-                                        <video
-                                            className=" p-0 "
-                                            controls
-                                            poster={customePoster?.url}
-                                            preload="none"
-                                            src={liveProduct?.video}
+                                        <div
                                             style={{
-                                                width: '100%', maxHeight:
-                                                    '300px',
+                                                background: `url("${customePoster?.url || '/static/img/soff/lll.png'}")`,
+                                                backgroundColor: "green",
+                                                backgroundSize: "cover",
+                                                width: '100%',
+                                                height: "300px",
                                             }}>
 
-                                        </video>
+                                            <video
+                                                className=" p-0 "
+                                                controls
+                                                poster={customePoster?.url}
+
+                                                preload="none"
+                                                src={liveProduct?.video}
+                                                style={{
+                                                    width: "100%",
+                                                    maxHeight: '300px',
+                                                    height: "300px"
+                                                }}
+                                            >
+
+                                            </video>
+                                        </div>
+
 
                                         {liveProduct?.name && <div className='px-4 py-2'>
                                             <p>{liveProduct?.name}</p>
@@ -815,7 +806,7 @@ const Posts = () => {
                                     }}
                                 />
                                 <Checkbox
-                                    defaultChecked={free}
+                                    defaultChecked={freePlay}
                                     className=" d-flex align-items-center justify-content-start px-0 py-2"
                                     onChange={() => setFreePlay(!freePlay)}>
                                     <strong className='text-success'>Bepul</strong>

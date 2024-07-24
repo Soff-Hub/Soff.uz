@@ -27,6 +27,27 @@ class PatchRepository {
         return reponse;
     }
 
+    async PatchPlayLists(data, id, token) {
+        const endPoint = `playlist/${id}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error?.response);
+        return reponse;
+    }
+
     async PatchCategorySeller(id, data, token) {
         const endPoint = `seller/admin/blocked-users/${id}`;
         const reponse = await Repository({
@@ -68,6 +89,7 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
+
     async PatchTegs(data, id, token) {
         const endPoint = `admin/tag-list/${id}/`;
         const reponse = await Repository({
@@ -108,6 +130,7 @@ class PatchRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
     async getProductsPatch(data, id, token) {
         const endPoint = `admin/product-list/${id}/`;
         const reponse = await Repository({
@@ -128,6 +151,7 @@ class PatchRepository {
             .catch((error) => error.response);
         return reponse;
     }
+
     async getMyProductsPatch(data, id, token) {
         const endPoint = `product-update/${id}`;
         const reponse = await Repository({
@@ -148,6 +172,7 @@ class PatchRepository {
             .catch((error) => error?.response);
         return reponse;
     }
+    
     async getTextItemsUpdate(data, id, token) {
         const endPoint = `admin/offer-update/${id}`;
         const reponse = await Repository({

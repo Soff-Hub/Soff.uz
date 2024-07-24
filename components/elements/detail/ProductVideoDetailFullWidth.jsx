@@ -132,7 +132,7 @@ const ProductVideoDetailFullWidth = ({
                                             }}
                                         >
                                             {item?.id === product.id ? <i class="fa-solid fa-play fs-5"></i> : ind + 1}
-                                            <ProductVideoCards type="playlists" product={item} isPlay={isPlay} setIsPlay={setIsPlay} />{' '}
+                                            <ProductVideoCards type="playlists" product={item} />{' '}
                                         </div>
                                     ))
                                 }

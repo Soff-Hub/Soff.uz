@@ -2,27 +2,12 @@ import React, { useEffect } from 'react';
 
 export default function DefaultVideoLists({
     product,
-    isPlay,
-    setIsPlay,
     minWidth,
     height,
     style = {},
-    bgStyle = {}
 }) {
 
 
-
-    useEffect(() => {
-        const player = document.getElementById(`videoPlayer-${product.id}`);
-        if (player && isPlay === product.id) {
-            player.play();
-        } else {
-            player.pause();
-        }
-    }, [product, isPlay]);
-
-
-    console.log(product);
 
     const url = product?.document?.file_url
         ? product?.document?.file_url
@@ -46,12 +31,13 @@ export default function DefaultVideoLists({
                     borderRadius: "10px",
                     ...style
                 }}
-                onPlay={() => setIsPlay?.(product?.id)}
                 controls={false}
+                onContextMenu={(e) => e.preventDefault()}
+                disablePictureInPicture
                 controlsList="nodownload"
                 poster={product?.poster_url ? product?.poster_url : product?.poster}
-                src={url}>
-                Your browser does not support the video tag.
+            >
+                <source src={url} />
             </video>
         </div>
     );
