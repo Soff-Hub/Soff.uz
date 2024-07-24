@@ -51,6 +51,7 @@ const ProductVideoDetailFullWidth = ({
 
     }, [user?.access, pid]);
 
+
     return (
         <>
 
@@ -132,13 +133,13 @@ const ProductVideoDetailFullWidth = ({
                                             }}
                                         >
                                             {item?.id === product.id ? <i class="fa-solid fa-play fs-5"></i> : ind + 1}
-                                            <ProductVideoCards type="playlists" product={item} />{' '}
+                                            <ProductVideoCards type="playlists" product={item} setIsPlay={setIsPlay} isPlay={isPlay} />{' '}
                                         </div>
                                     ))
                                 }
                             </div>
 
-                            <div
+                            {data?.price !== 0 && <div
                                 onClick={() => clickPlaylist(data?.playlist_document?.[0]?.slug, data?.id)}
                                 className='fw-medium fs-4 p-2 bg-body-primary text-center m-0 mt-4 ps-btn text-white'
                                 style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px' }}
@@ -149,7 +150,7 @@ const ProductVideoDetailFullWidth = ({
                                     {addPeriodToThousands(data?.price)} so'm
                                 </div>
                                 <i className='fa-solid fa-angles-right fa-beat-fade'></i>
-                            </div>
+                            </div>}
 
                         </div>}
 

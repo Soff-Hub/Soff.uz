@@ -24,7 +24,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
     const [views, setViews] = useState('');
     const [product, setProduct] = useState([]);
     const [similar, setSimilar] = useState([]);
-    const [isPlay, setIsPlay] = useState(null)
+    const [isPlay, setIsPlay] = useState(null);
     const [run, setRun] = useState(false)
 
     const { user } = useSelector((state) => state.auth);
@@ -155,6 +155,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
             setRun(true)
         }, 500);
     }
+
 
 
     return (

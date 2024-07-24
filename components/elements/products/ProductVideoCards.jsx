@@ -3,7 +3,7 @@ import Link from 'next/link';
 import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import Router from 'next/router';
-import DefaultVideoLists from '../detail/thumbnail/DefaultVideoLists';
+import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 
 
 const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
@@ -15,16 +15,7 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
             <Link href="/product/[pid]" as={`/product/${product.slug}`} >
                 <a
                 >
-                    <DefaultVideoLists
-                        isPlay={isPlay}
-                        setIsPlay={setIsPlay}
-                        product={product}
-
-
-                        minWidth={type === "playlists" ? "100px" : "120px"}
-                        height={type === "playlists" ? "56px" : "70px"}
-                        style={{ maxWidth: type === "playlists" ? '100px' : '120px', objectFit: 'contain', borderRadius: '5px' }}
-                    />
+                    <DefaultVideo product={product} isPlay={isPlay} setIsPlay={setIsPlay} type={type} />
                 </a>
             </Link>
 
