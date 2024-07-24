@@ -6,7 +6,7 @@ export default function PlaylistVideo({
 
 
     return (
-        <div className='video_iframe-2' style={{ backgroundSize: 'cover', borderRadius: '14px', backgroundImage: `url("${product?.image}")`, padding: '0', maxHeight: '450px', position: 'relative' }}>
+        <div className='video_iframe-2' style={{ backgroundSize: 'cover', borderRadius: '14px', backgroundImage: `url("${product?.poster_url}")`, padding: '0', maxHeight: '450px', position: 'relative' }}>
             <div style={{
                 display: 'flex',
                 alignItems: 'center',

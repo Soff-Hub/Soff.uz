@@ -57,7 +57,9 @@ const ProductVideoDetailFullWidth = ({
 
             <div className="ps-product--detail mt-5 ">
                 <div className="row mb-xl-5 mb-lg-5 mb-0 " style={{ alignItems: 'flex-start' }}>
+                    
                     <div className="col-xl-8 col-lg-8 col-md-12 col-sm-12 col-12">
+                        
                         <DefaultVideo product={product} isPlay={isPlay} setIsPlay={setIsPlay} />
                         <ModuleVideoDetailTopInformation
                             product={product}

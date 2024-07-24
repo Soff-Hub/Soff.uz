@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
-import ModuleProductVideoActions from './modules/ModuleProductVideoActions';
-import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import PlaylistVideo from '../detail/thumbnail/PlaylistVideo';
 

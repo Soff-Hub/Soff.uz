@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 export default function DefaultVideo({
     product,
-    class_products,
     isPlay,
     setIsPlay,
     type,
@@ -25,7 +24,7 @@ export default function DefaultVideo({
         ? product?.document?.file_url
         : product?.document?.short_content_url
 
-    console.log(type);
+
 
     return (
         <div className='video_iframe' style={{ backgroundSize: 'cover', borderRadius: '10px', backgroundImage: `url("${product?.poster_url}")`, padding: '0', maxHeight: '450px', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}>
