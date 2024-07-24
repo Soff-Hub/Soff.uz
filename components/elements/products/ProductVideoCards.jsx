@@ -12,12 +12,12 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
     return (
         <div className="d-flex gap-3 "
         >
-            {/* <Link href="/product/[pid]" as={`/product/${product.slug}`} >
+            <Link href="/product/[pid]" as={`/product/${product.slug}`} >
                 <a
                 >
                     <DefaultVideo product={product} isPlay={isPlay} setIsPlay={setIsPlay} type={type} />
                 </a>
-            </Link> */}
+            </Link>
 
             <div className="  d-flex flex-column  justify-content-between w-100 ">
                 <h5 onClick={() => (Router.push(`/product/${product.slug}`))}

@@ -270,6 +270,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                                 )}
                             </div>
 
+
                             {(similar?.length > 0 && product?.document?.content_type !==
                                 'video') ? (
                                 <RelatedProduct

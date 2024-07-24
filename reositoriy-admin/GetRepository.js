@@ -134,13 +134,14 @@ class GetRepository {
         id,
         search,
         document__content_type,
+        playlist,
         token
     ) {
         const endPoint = `admin/product-list/${id ? id + '/' : ''
             }?page=${page}&category=${category || ''}&date_range_after=${date || ''
             }&status=${dataValStatus || ''}&search=${search || ''
             }&document__content_type=${document__content_type || ''
-            }&offset=${offset}&limit=${limit}`;
+            }&playlist=${playlist || ''}&offset=${offset}&limit=${limit}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -211,12 +212,13 @@ class GetRepository {
         search,
         document__content_type,
         viewsAll,
+        playlist,
         token
     ) {
         const endPoint = `product-list/?page=${page}&category=${category || ''
             }${tagItems ? `&tag=${tagItems}` : ``}&date_range_after=${date || ''
             }&status=${status || ''}&search=${search}&document__content_type=${document__content_type || ''
-            }&sort=${viewsAll || ''}`;
+            }&sort=${viewsAll || ''}&playlist=${playlist || ''}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,

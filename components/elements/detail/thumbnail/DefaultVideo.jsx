@@ -16,7 +16,7 @@ export default function DefaultVideo({
         } else {
             player.pause();
         }
-    }, [product, isPlay]);
+    }, [product?.id, isPlay]);
 
 
 
@@ -25,9 +25,19 @@ export default function DefaultVideo({
         : product?.document?.short_content_url
 
 
-
     return (
-        <div className='video_iframe' style={{ backgroundSize: 'cover', borderRadius: '10px', backgroundImage: `url("${product?.poster_url}")`, padding: '0', maxHeight: '450px', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}>
+        <div className='video_iframe'
+            style={{
+                backgroundSize: 'cover',
+                borderRadius: '10px',
+                backgroundImage: `url("${product?.poster_url}")`,
+                padding: '0', maxHeight: '450px',
+                overflow: 'hidden',
+                position: 'relative',
+                width: '100%',
+                height: '100%'
+            }}
+        >
             <video
                 id={`videoPlayer-${product.id}`}
                 onPlay={() => setIsPlay?.(product?.id)}
@@ -42,8 +52,10 @@ export default function DefaultVideo({
                     zIndex: 2
                 }}
                 poster={product?.poster_url ? product?.poster_url : product?.poster}
+                src={url}
             >
-                <source src={url} />
+
+
             </video>
         </div >
     );

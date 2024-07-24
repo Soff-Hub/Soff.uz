@@ -640,25 +640,35 @@ const Posts = () => {
                                         top: "30px"
                                     }}>
                                         <div
+                                            className='video_iframe'
+
                                             style={{
-                                                background: `url("${customePoster?.url || '/static/img/soff/lll.png'}")`,
-                                                backgroundColor: "green",
-                                                backgroundSize: "cover",
+                                                backgroundSize: 'cover',
+                                                borderRadius: '10px',
+                                                backgroundImage: `url("${customePoster?.url || '/static/img/soff/lll.png'}")`,
+                                                padding: '0',
+                                                maxHeight: '300px',
+                                                overflow: 'hidden',
+                                                position: 'relative',
                                                 width: '100%',
-                                                height: "300px",
-                                            }}>
+                                                height: '100%'
+                                            }}
+
+
+                                        >
 
                                             <video
                                                 className=" p-0 "
                                                 controls
                                                 poster={customePoster?.url}
-
                                                 preload="none"
                                                 src={liveProduct?.video}
                                                 style={{
                                                     width: "100%",
                                                     maxHeight: '300px',
-                                                    height: "300px"
+                                                    height: "100%",
+                                                    position: 'relative',
+                                                    zIndex: 2
                                                 }}
                                             >
 

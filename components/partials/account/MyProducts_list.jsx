@@ -35,6 +35,8 @@ function MyProductsLists() {
     const [data, setData] = useState([]);
     const [products2, setProducts2] = useState({});
     const [dataCategory, setDataCategory] = useState([]);
+    const [dataPlayLists, setDataPlayLists] = useState([]);
+    const [dataPlayListsID, setDataPlayListsID] = useState('');
     const [search, setSerach] = useState([]);
     const [tagName, setTagName] = useState(null);
     const [tagItems, setTagItems] = useState([]);
@@ -58,8 +60,6 @@ function MyProductsLists() {
     const [viewsAll, setViewsAll] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [dataBlock, setdataBlock] = useState(null);
-
-
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
     const dateFormat0 = date
@@ -83,6 +83,8 @@ function MyProductsLists() {
     const searchDebounce = useDebounce(search, 1000);
     const [short, setShort] = useState(true)
 
+
+
     async function GetItemsProducts(
         page,
         category,
@@ -91,7 +93,8 @@ function MyProductsLists() {
         status,
         search,
         filterType,
-        viewsAll
+        viewsAll,
+        dataPlayListsID
     ) {
         const ItemsData = await GetRepository.getMyProducts(
             page,
@@ -102,6 +105,7 @@ function MyProductsLists() {
             search,
             filterType,
             viewsAll,
+            dataPlayListsID,
             user?.access
         );
         if (ItemsData?.results) {
@@ -111,10 +115,19 @@ function MyProductsLists() {
             setCurrPage(page);
         }
     }
+
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryListsGlobal();
         setDataCategory(ItemsData);
     }
+
+    async function GetItemsPlayLists() {
+        const ItemsData = await GetRepository.getItemsPlayLists(user?.access)
+        if (ItemsData?.results) {
+            setDataPlayLists(ItemsData?.results);
+        }
+    }
+
 
     async function ProfileUsersBLock() {
         const token = user?.access
@@ -135,6 +148,19 @@ function MyProductsLists() {
         }
     };
 
+    const onChangePlay = async (name) => {
+        if (name !== 'all') {
+            for (let j = 0; j < dataPlayLists.length; j++) {
+                if (dataPlayLists[j].title === name) {
+                    setDataPlayListsID(dataPlayLists[j].id);
+                }
+            }
+        } else {
+            setDataPlayListsID('');
+        }
+    };
+
+
     const finalPrice =
         ViewPriceDiscount?.price -
         (ViewPriceDiscount?.discount * ViewPriceDiscount?.price) / 100;
@@ -146,6 +172,15 @@ function MyProductsLists() {
             <Option key={dataCategory[i].name}>{dataCategory[i].name}</Option>
         );
     }
+
+    const optionsPlayLists = [];
+
+    for (let i = 0; i < dataPlayLists?.length; i++) {
+        optionsPlayLists.push(
+            <Option key={dataPlayLists[i].title}>{dataPlayLists[i].title}</Option>
+        );
+    }
+
 
     async function GetItemsTag() {
         const ItemsData = await MediaRepository.getTagItmesAktive();
@@ -384,7 +419,8 @@ function MyProductsLists() {
             selectValStatus,
             search,
             filterType,
-            viewsAll
+            viewsAll,
+            dataPlayListsID
         );
     }, [
         dataValCat,
@@ -393,12 +429,14 @@ function MyProductsLists() {
         selectValStatus,
         searchDebounce,
         filterType,
-        viewsAll
+        viewsAll,
+        dataPlayListsID
     ]);
 
     useEffect(() => {
         if (user?.access) {
             ProfileUsersBLock()
+            GetItemsPlayLists()
         }
     }, [user?.access]);
 
@@ -863,7 +901,7 @@ function MyProductsLists() {
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
 
                                                         <Select
-                                                            className="col-md-4 p-0"
+                                                            className="col-md-6 p-0"
                                                             mode="select"
                                                             showSearch
                                                             allowClear
@@ -885,7 +923,7 @@ function MyProductsLists() {
                                                         {user?.role ===
                                                             'seller' ? (
                                                             <Select
-                                                                className="col-md-4 p-0"
+                                                                className="col-md-5 p-0"
                                                                 mode="select"
                                                                 showSearch
                                                                 allowClear
@@ -908,11 +946,12 @@ function MyProductsLists() {
                                                         ) : (
                                                             <></>
                                                         )}
-                                                        <button onClick={() => setViewsAll("view_count")} className='btn btn-success col-md-3 fs-4'>Eng ko'p ko'rilganlar</button>
+
+
                                                         {user?.role ===
                                                             'seller' ? (
                                                             <select
-                                                                className="form-select col-md-4 fs-3 py-3 rounded-3"
+                                                                className="form-select col-md-6 fs-3 py-3 rounded-3"
                                                                 onChange={(e) =>
                                                                     setSelectValStatus(
                                                                         e.target
@@ -949,13 +988,14 @@ function MyProductsLists() {
 
 
                                                         <RangePicker
-                                                            className="col-md-4 py-3   rounded-3"
+                                                            className="col-md-5 py-3   rounded-3"
                                                             onChange={(e) =>
                                                                 setDate(e)
                                                             }
                                                         />
+
                                                         <select
-                                                            className="form-select col-md-3 fs-3 py-3 rounded-3"
+                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
                                                                 setFiltertype(
                                                                     e.target
@@ -984,6 +1024,26 @@ function MyProductsLists() {
                                                                 Shablon
                                                             </option>
                                                         </select>
+                                                        <Select
+                                                            className="col-md-4 p-0"
+                                                            mode="select"
+                                                            showSearch
+                                                            allowClear
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '47px',
+                                                            }}
+                                                            onChange={onChangePlay}
+                                                            placeholder="Barcha playlistlar">
+                                                            <Option value="all">
+                                                                Barcha
+                                                                PlayListslar
+                                                            </Option>
+
+                                                            {optionsPlayLists}
+                                                        </Select>
+                                                        <button onClick={() => setViewsAll("view_count")} className='btn btn-success col-md-3 fs-4'>Eng ko'p ko'rilganlar</button>
+
                                                     </div>
                                                 </div>
                                             </div>

@@ -51,6 +51,8 @@ function ProductsLists() {
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
     const [deleteIdView, setDeleteIdView] = useState({});
+    const [dataPlayLists, setDataPlayLists] = useState([]);
+    const [dataPlayListsID, setDataPlayListsID] = useState('');
     const [dataVal, setDataVal] = useState([]);
     const [dataValStatus, setDataCatStatus] = useState('');
     const [filterType, setFiltertype] = useState('');
@@ -93,7 +95,8 @@ function ProductsLists() {
         dataFormat,
         id,
         search,
-        filterType
+        filterType,
+        dataPlayListsID
     ) {
         const ItemsData = await GetRepository.getShopsProducts(
             null,
@@ -105,6 +108,7 @@ function ProductsLists() {
             id,
             search,
             filterType,
+            dataPlayListsID,
             user?.access
         );
         setPageCount(ItemsData?.count);
@@ -119,6 +123,14 @@ function ProductsLists() {
         }
     }
 
+    async function GetItemsPlayLists() {
+        const ItemsData = await GetRepository.getItemsPlayLists(user?.access)
+        if (ItemsData?.results) {
+            setDataPlayLists(ItemsData?.results);
+        }
+    }
+
+
     const onChange = async (name) => {
         if (name !== 'all') {
             for (let j = 0; j < dataVal.length; j++) {
@@ -130,6 +142,19 @@ function ProductsLists() {
             setCategoryID('');
         }
     };
+
+    const onChangePlay = async (name) => {
+        if (name !== 'all') {
+            for (let j = 0; j < dataPlayLists.length; j++) {
+                if (dataPlayLists[j].title === name) {
+                    setDataPlayListsID(dataPlayLists[j].id);
+                }
+            }
+        } else {
+            setDataPlayListsID('');
+        }
+    };
+
 
 
     const onSearchCategory = async (value) => {
@@ -143,6 +168,15 @@ function ProductsLists() {
     for (let i = 0; i < dataVal?.length; i++) {
         options.push(<Option key={dataVal[i].name}>{dataVal[i].name}</Option>);
     }
+
+    const optionsPlayLists = [];
+
+    for (let i = 0; i < dataPlayLists?.length; i++) {
+        optionsPlayLists.push(
+            <Option key={dataPlayLists[i].title}>{dataPlayLists[i].title}</Option>
+        );
+    }
+
 
     async function handleClickView(item) {
         if (item.id) {
@@ -228,7 +262,8 @@ function ProductsLists() {
                 dataFormat,
                 null,
                 search,
-                filterType
+                filterType,
+                dataPlayListsID
             );
         } else {
             const modal = Modal.info({
@@ -244,6 +279,12 @@ function ProductsLists() {
     useEffect(() => {
         GetItemsCategory();
     }, []);
+
+    useEffect(() => {
+        if (user?.access) {
+            GetItemsPlayLists()
+        }
+    }, [user?.access]);
 
     useEffect(() => {
         setCurrPage(router.query.page);
@@ -274,7 +315,8 @@ function ProductsLists() {
                 dataFormat,
                 null,
                 search,
-                filterType
+                filterType,
+                dataPlayListsID
             );
         }
     }, [
@@ -284,6 +326,7 @@ function ProductsLists() {
         searchDebounce,
         router.query.page,
         filterType,
+        dataPlayListsID
     ]);
 
     useEffect(() => {
@@ -557,7 +600,7 @@ function ProductsLists() {
                                                     data-bs-parent="#accordionFlushExample">
                                                     <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
                                                         <Select
-                                                            className="col-md-5 p-0"
+                                                            className="col-md-6 p-0"
                                                             mode="select"
                                                             showSearch
                                                             style={{
@@ -578,7 +621,7 @@ function ProductsLists() {
                                                         </Select>
 
                                                         <select
-                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
+                                                            className="form-select col-md-5 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
                                                                 handleFilterStatus(
                                                                     e.target
@@ -612,30 +655,16 @@ function ProductsLists() {
                                                                 Arxivlangan
                                                             </option>
                                                         </select>
-                                                        <button
-                                                            onClick={
-                                                                handleClickProductsAll
-                                                            }
-                                                            className="btn btn-success col-md-2">
-                                                            <span
-                                                                className="fs-5"
-                                                                style={{
-                                                                    lineHeight:
-                                                                        '12px',
-                                                                }}>
-                                                                Bracha
-                                                                mahsulotlar
-                                                            </span>
-                                                        </button>
+
                                                         <RangePicker
-                                                            className="w-100 py-3 col-md-5 rounded-3"
+                                                            className="w-100 py-3 col-md-6 rounded-3"
                                                             onChange={(e) =>
                                                                 setDate(e)
                                                             }
                                                         />
 
                                                         <select
-                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
+                                                            className="form-select col-md-5 fs-3 py-3 rounded-3"
                                                             onChange={(e) =>
                                                                 setFiltertype(
                                                                     e.target
@@ -664,6 +693,44 @@ function ProductsLists() {
                                                                 Shablon
                                                             </option>
                                                         </select>
+                                                        <Select
+                                                            className="col-md-6 p-0"
+                                                            mode="select"
+                                                            showSearch
+                                                            allowClear
+                                                            style={{
+                                                                width: '100%',
+                                                                height: '47px',
+                                                            }}
+                                                            onChange={onChangePlay}
+                                                            placeholder="Barcha playlistlar">
+                                                            <Option value="all">
+                                                                Barcha
+                                                                PlayListslar
+                                                            </Option>
+
+                                                            {optionsPlayLists}
+                                                        </Select>
+
+                                                        <button
+                                                            style={{
+                                                                height: "45px"
+                                                            }}
+                                                            onClick={
+                                                                handleClickProductsAll
+                                                            }
+                                                            className="btn btn-success col-md-5">
+                                                            <span
+                                                                className="fs-4"
+                                                                style={{
+                                                                    lineHeight:
+                                                                        '12px',
+                                                                }}>
+                                                                Bracha
+                                                                mahsulotlar
+                                                            </span>
+                                                        </button>
+
                                                     </div>
                                                 </div>
                                             </div>
