@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Product from '~/components/elements/products/Product';
 import AudioProductCart from '~/components/elements/products/AudioProductCart';
 
-const RelatedProduct = ({ collectionSlug, boxed, layout, pid, data, isPlay, setIsPlay }) => {
+const RelatedProduct = ({ collectionSlug, boxed, pid, data }) => {
     const [relatedProduct, setRelatedProduct] = useState(null);
 
     useEffect(() => {

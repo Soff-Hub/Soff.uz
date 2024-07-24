@@ -5,6 +5,7 @@ export default function DefaultVideo({
     class_products,
     isPlay,
     setIsPlay,
+    type,
 }) {
 
 
@@ -18,47 +19,33 @@ export default function DefaultVideo({
         }
     }, [product, isPlay]);
 
-    // const handleMouseLeave = (id) => {
-    //     const player = document.getElementById(`videoPlayer-${id}`);
-    //     if (id) {
-    //         setIsPlay?.(id);
-    //         player.muted = true;
-    //         setShowControls(true);
-    //     }
-    // };
-    // const handleMousePaused = (id) => {
-    //     const player = document.getElementById(`videoPlayer-${id}`);
-    //     if (player) {
-    //         setShowControls(false);
-    //         player.pause(); // Video to'xtatiladi
-    //         player.currentTime = 0; // Video vaqtini boshiga qaytaradi
-    //         player.load();
-    //     }
-    // };
+
 
     const url = product?.document?.file_url
         ? product?.document?.file_url
         : product?.document?.short_content_url
 
+    console.log(type);
 
     return (
-        <div className='video_iframe' style={{ backgroundSize: 'cover', borderRadius: '14px', backgroundImage: `url("${product?.poster_url}")`, padding: '0', maxHeight: '450px', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}>
-            {/* <div style={{ filter: 'blur(30px)', height: '100%', width: '100%', position: 'absolute', top: '0', left: '0', zIndex: 1 }} ></div> */}
+        <div className='video_iframe' style={{ backgroundSize: 'cover', borderRadius: '10px', backgroundImage: `url("${product?.poster_url}")`, padding: '0', maxHeight: '450px', overflow: 'hidden', position: 'relative', width: '100%', height: '100%' }}>
             <video
                 id={`videoPlayer-${product.id}`}
                 onPlay={() => setIsPlay?.(product?.id)}
                 onContextMenu={(e) => e.preventDefault()}
-                controls
-                disablePictureInPicture
+                controls={(type === 'playlists' || type === 'similler') ? false : true}
                 controlsList="nodownload"
                 style={{
-                    maxHeight: '450px', height: '100%', width: '100%', position: 'relative',
+                    maxHeight: type === 'playlists' ? '100px' : type === 'similler' ? '120px' : '450px',
+                    height: type === 'playlists' ? '56px' : type === 'similler' ? '56px' : '100%',
+                    width: type === 'playlists' ? '100px' : type === 'similler' ? '120px' : '100%',
+                    position: 'relative',
                     zIndex: 2
                 }}
                 poster={product?.poster_url ? product?.poster_url : product?.poster}
             >
                 <source src={url} />
             </video>
-        </div>
+        </div >
     );
 }

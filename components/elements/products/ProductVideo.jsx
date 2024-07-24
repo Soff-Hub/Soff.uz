@@ -30,7 +30,9 @@ const ProductVideo = ({ product, isPlay, setIsPlay, iscategroy = false }) => {
                             height: iscategroy ? '160px' : '210px',
                             objectFit: 'cover'
                         }}>
-                        <DefaultVideo isPlay={isPlay} setIsPlay={setIsPlay} product={product} class_products={true} />
+                        <DefaultVideo isPlay={isPlay} setIsPlay={setIsPlay} product={product} class_products={true}
+                        
+                        />
                     </a>
                 </Link>
 
