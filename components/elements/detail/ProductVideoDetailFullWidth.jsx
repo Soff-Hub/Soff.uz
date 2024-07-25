@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { baseUrl } from '~/repositories/Repository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import VideoPlayDetails from './VideoPlayDetails';
+import { Modal } from 'antd';
 
 const ProductVideoDetailFullWidth = ({
     product,
@@ -26,13 +27,17 @@ const ProductVideoDetailFullWidth = ({
         try {
             const response = await Axios.get(baseUrl + endPoint, {
                 headers: {
-                    // Authorization: `Bearer ${user?.access}`,
+                    Authorization: `Bearer ${user?.access}`,
                 }
             });
             setData(response?.data)
 
         } catch (error) {
-            console.log(`Xatolik yuz berdi: ${error.message}`)
+            Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: `Xatolik yuz berdi: ${error.message}`,
+            });
         }
 
     }
@@ -45,6 +50,7 @@ const ProductVideoDetailFullWidth = ({
         getPlayLists()
 
     }, [user?.access, pid]);
+
 
 
     return (
@@ -103,7 +109,7 @@ const ProductVideoDetailFullWidth = ({
                                 }
                             </div>
 
-                            {data?.price !== 0 && <div
+                            {(data?.price !== 0 && !data?.is_purchased_playlist) && <div
                                 onClick={() => clickPlaylist(data?.playlist_document?.[0]?.slug, data?.id)}
                                 className='fw-medium fs-4 p-2 bg-body-primary text-center m-0 mt-4 ps-btn text-white'
                                 style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '30px' }}

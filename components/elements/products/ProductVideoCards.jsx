@@ -21,11 +21,12 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
             </Link>
 
             <div className="  d-flex flex-column  justify-content-between w-100 ">
-                <h5 onClick={() => (Router.push(`/product/${product.slug}`))}
+                <h5  onClick={() => (Router.push(`/product/${product.slug}`))}
                     style={{
                         display: '-webkit-box',
                         WebkitBoxOrient: 'vertical',
                         overflow: 'hidden',
+                        width:"200px",
                         WebkitLineClamp: type === "playlists" ? 2 : 3,
                         fontFamily: "Roboto, Arial, sans-serif",
                         lineHeight: "2rem",
@@ -35,13 +36,19 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
                         cursor: "pointer"
                     }}>{product?.title}</h5>
 
-                {type === "playlists" ? <></> :
+                {type === "playlists" ? <div className="d-flex justify-content-between align-items-end">
+                    <p className='m-0 fw-bold fs-5'>
+                        {product.document?.content_duration}
+                    </p>
+                </div>
+                    :
                     <div className="d-flex justify-content-between align-items-end">
                         {+product.discount_price === 0 ? (
                             <p className="px-3 m-0 text-warning rounded" style={{ border: "1.5px solid #FFC107", fontSize: "10px" }}>Bepul</p>
                         ) : (
                             <p className='m-0 fw-bold fs-5'>
                                 {addPeriodToThousands(product.discount_price)} so'm
+
                             </p>
                         )}
 
