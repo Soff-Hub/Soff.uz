@@ -176,7 +176,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
     }, [renderProfile]);
 
     useEffect(() => {
-        if (user?.access) {
+        if (user?.access && user?.role==="seller") {
             ProfileUsersToken(user?.access);
             ProfileUsersBLock()
         }

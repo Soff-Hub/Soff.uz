@@ -34,7 +34,7 @@ export default function DefaultVideoAdmin({
                 borderRadius: '10px',
                 backgroundImage: `url("${product?.poster_url ? product?.poster_url : product?.poster || '/static/img/soff/video.jpg'}")`,
                 padding: '0',
-                maxHeight: '300px',
+                maxHeight: '600px',
                 overflow: 'hidden',
                 position: 'relative',
                 width: '100%',
@@ -49,7 +49,7 @@ export default function DefaultVideoAdmin({
                 height="auto"
                 style={{
                     background: class_products ? 'unset' : '',
-                    maxHeight: class_products ? '' : '380px',
+                    maxHeight: class_products ? '' : '600px',
                     objectFit: 'contain',
                     position:"relative",
                     zIndex:"2"

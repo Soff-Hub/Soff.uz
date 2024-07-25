@@ -9,14 +9,17 @@ export default function DefaultVideo({
 
 
 
+
     useEffect(() => {
         const player = document.getElementById(`videoPlayer-${product.id}`);
-        if (player && isPlay === product.id) {
-            player.play();
-        } else {
-            player.pause();
+        if (player) {
+            if (isPlay === product.id) {
+                player.play();
+            } else {
+                player.pause();
+            }
         }
-    }, [product?.id, isPlay]);
+    }, [isPlay, product.id]);
 
 
 
@@ -40,10 +43,19 @@ export default function DefaultVideo({
         >
             <video
                 id={`videoPlayer-${product.id}`}
-                onPlay={() => setIsPlay?.(product?.id)}
+                onPlay={(e) => {
+                    if (type === 'playlists' || type === 'similler') {
+                        e.target.pause()
+                    } else {
+                        setIsPlay?.(product?.id)
+                    }
+                }
+                }
+
                 onContextMenu={(e) => e.preventDefault()}
-                controls={(type === 'playlists' || type === 'similler') ? false : true}
+                controls={!(type === 'playlists' || type === 'similler')}
                 controlsList="nodownload"
+
                 style={{
                     maxHeight: type === 'playlists' ? '100px' : type === 'similler' ? '120px' : '450px',
                     height: type === 'playlists' ? '56px' : type === 'similler' ? '56px' : '100%',

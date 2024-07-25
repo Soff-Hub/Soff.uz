@@ -434,7 +434,7 @@ function MyProductsLists() {
     ]);
 
     useEffect(() => {
-        if (user?.access) {
+        if (user?.access && user?.role==="seller") {
             ProfileUsersBLock()
             GetItemsPlayLists()
         }

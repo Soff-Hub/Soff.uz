@@ -17,9 +17,8 @@ function DashbordList({ setOpen }) {
     const [data, setData] = useState([]);
     const [dataOrders, setDataOrders] = useState([]);
     const [dataProducts, setDataProducts] = useState([]);
+    const [dataPlayLists, setDataPlayLists] = useState([]);
     const [View, setView] = useState({});
-    const [pageCount2, setPageCount2] = useState(0);
-    const [currPage, setCurrPage] = useState(null);
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
     const [yearGet, setYearGet] = useState([]);
@@ -27,6 +26,14 @@ function DashbordList({ setOpen }) {
     const [month, setMonth] = useState(null);
 
     const { accountLinks, user } = useSelector((state) => state.auth);
+
+
+    async function GetItemsProductsPlayLists() {
+        const ItemsData = await GetRepository.getPopularPlayLists(user?.access);
+        if (ItemsData?.results) {
+            setDataPlayLists(ItemsData?.results);
+        }
+    }
 
 
 
@@ -44,13 +51,11 @@ function DashbordList({ setOpen }) {
     }
 
     async function GetItemsProductsOrders(page) {
-        setCurrPage(page);
         const ItemsData = await GetRepository.getOrdersListsDashbord(
             page,
             user?.access
         );
         if (ItemsData?.results) {
-            setPageCount2(ItemsData.count);
             setDataOrders([...ItemsData.results]);
         }
     }
@@ -71,6 +76,7 @@ function DashbordList({ setOpen }) {
         setMonth(value);
     };
 
+
     async function GetItemsSeller_Yearch() {
         const ItemsData = await GetRepository.getSellerDashbordYearch(
             user?.access
@@ -90,12 +96,22 @@ function DashbordList({ setOpen }) {
     }
 
     useEffect(() => {
+
+        if (user?.access) {
+            GetItemsProductsPlayLists()
+        }
+    }, [user?.access]);
+
+    useEffect(() => {
         GetItemsProducts();
         GetItemsProductsOrders(1);
         GetItemsProductsPopular();
         GetItemsSeller_Yearch();
         getSellerDashbordDonatSS();
     }, []);
+
+
+    // Columnlar ro'yxati
 
     const columns = [
         {
@@ -192,7 +208,7 @@ function DashbordList({ setOpen }) {
                 </span>
             ),
         },
-     
+
     ];
 
     const columnsDonat = [
@@ -365,7 +381,7 @@ function DashbordList({ setOpen }) {
                     ) : (
                         <span>
                             <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                            tasdiqlanganmagan
+                            tasdiqlanmagan
                         </span>
                     )}
                 </span>
@@ -422,6 +438,7 @@ function DashbordList({ setOpen }) {
         },
 
     ];
+
 
     const items = [
         {
@@ -509,6 +526,66 @@ function DashbordList({ setOpen }) {
     ];
 
 
+
+    const itemsOrder = [
+        {
+            key: '1',
+            label: (
+                <span
+                    style={{
+                        marginRight: '20px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}
+                >
+                    So'ngi buyurtmalar
+                </span>
+            ),
+            children: (
+                user?.role === "admin" ?
+                    <Table
+                        scroll={{ x: 1600 }}
+                        dataSource={dataOrders}
+                        columns={columnsOrders}
+                        pagination={false}
+                    /> :
+                    <Table
+                        scroll={{ x: 1000 }}
+                        dataSource={dataOrders}
+                        columns={columnsOrdersSeller}
+                        pagination={false}
+                    />
+            ),
+        },
+        ...(dataPlayLists?.length > 0 ? [{
+            key: '2',
+            label: (
+                <span
+                    style={{
+                        marginLeft: '30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}
+                >
+                    PlayList buyurtmalar
+                </span>
+            ),
+            children: (
+                <div>
+                    <Table
+                        scroll={{ x: user?.role == 'admin' ? 1450 : 1000 }}
+                        dataSource={dataPlayLists}
+                        columns={user?.role == 'admin' ? columnsOrders : columnsOrdersSeller}
+                        className="pb-5"
+                        pagination={false}
+                    />
+                </div>
+            ),
+        }] : []),
+    ];
+
+
+
     return (
         <section className="ps-my-account ps-page--account ">
             <p className="step-0 m-0"></p>
@@ -524,6 +601,7 @@ function DashbordList({ setOpen }) {
                         </p>
                     </div>
                 )}
+
                 {user?.role === 'admin' ? (
                     <div className="pb-4  d-flex gap-3 overflow-x-scroll">
                         <div>
@@ -947,37 +1025,25 @@ function DashbordList({ setOpen }) {
                                     <Example year={year} month={month} />
                                 </div>
                             )}
-                        <div className="pb-5">
-                            <h4 className="bg-white m-0 text-center py-4">
-                                So'nggi buyurtmalar
-                            </h4>
-                            {user?.role == 'admin' ? (
-                                <>
-                                    <Table
-                                        scroll={{ x: 1600 }}
-                                        dataSource={dataOrders}
-                                        columns={columnsOrders}
-                                        pagination={false}
-                                    />
-                                </>
-                            ) : (
-                                <>
-                                    <Table
-                                        scroll={{ x: 1000 }}
-                                        dataSource={dataOrders}
-                                        columns={columnsOrdersSeller}
-                                        pagination={false}
-                                    />
-                                    {/* <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2}
-                                            onChange={GetItemsProductsOrders} /> */}
-                                </>
-                            )}
+
+                        <div className="pb-5 mt-4">
+                            <Tabs
+                                type='card'
+                                centered
+                                defaultActiveKey="1"
+                                items={itemsOrder}
+                                className="bg-white "
+                            />
+
                         </div>
                     </div>
                 </div>
+
+
                 {(user?.role === 'admin') ? (
                     <div className="tabs_select">
                         <Tabs
+                            centered
                             defaultActiveKey="1"
                             items={items}
                             className="bg-white "
@@ -986,6 +1052,7 @@ function DashbordList({ setOpen }) {
                 ) : (user?.role === 'seller') ? (
                     <div className="tabs_select">
                         <Tabs
+                            centered
                             defaultActiveKey="1"
                             items={itemsSeller}
                             className="bg-white "

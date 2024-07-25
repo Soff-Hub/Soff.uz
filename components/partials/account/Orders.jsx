@@ -1,7 +1,7 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
 
-import { DatePicker, Pagination, Select, Table } from 'antd';
+import { DatePicker, Pagination, Select, Table, Tabs } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -13,30 +13,33 @@ import { addPeriodToThousands } from './ProductsLists';
 
 function OrdersLists() {
     const { accountLinks, user } = useSelector((state) => state.auth);
+    const { RangePicker } = DatePicker;
 
     const [data, setData] = useState([]);
     const [search, setSerach] = useState('');
     const [userRole, setUserRole] = useState('');
-    const [date, setDate] = useState(null);
     const [selector, setSelector] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const searchDebounce = useDebounce(search, 1000);
+    const [dataPlayLists, setDataPlayLists] = useState([]);
+    const [lifeTime, setLifetime] = useState('');
+    const [lifeTime1, setLifetime2] = useState('');
 
-    const { RangePicker } = DatePicker;
-    const dateFormat0 = date
-        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
-            ? `0${date[0].$M + 1}`
-            : date[0].$M + 1
-        }-${date[0].$D}`
-        : '';
-    const dateFormat1 = date
-        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
-            ? `0${date[1].$M + 1}`
-            : date[1].$M + 1
-        }-${date[1].$D}`
-        : '';
-    const dataFormat = date ? `${dateFormat0}&end_date=${dateFormat1}` : '';
+
+    const handleChange = (date) => {
+
+        if (date?.[0]) {
+            setLifetime(date[0].format('YYYY-MM-DD'));
+            setLifetime2(date[1].format('YYYY-MM-DD'));
+        } else {
+            setLifetime('');
+            setLifetime2('');
+        }
+    };
+    const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
+
+
 
     async function GetItemsProducts(page, status, date, searchVal, userRole) {
         const ItemsData = await GetRepository.getOrdersLists(
@@ -53,7 +56,6 @@ function OrdersLists() {
         }
     }
 
-  
 
     const handlePagination = (pageNum) => {
         setCurrPage(pageNum);
@@ -63,6 +65,23 @@ function OrdersLists() {
     useEffect(() => {
         GetItemsProducts(currPage, selector, dataFormat, search, userRole);
     }, [currPage, selector, dataFormat, searchDebounce, userRole]);
+
+
+    async function GetItemsProductsPlayLists() {
+        const ItemsData = await GetRepository.getPopularPlayLists(user?.access);
+        if (ItemsData?.results) {
+            setDataPlayLists(ItemsData?.results);
+        }
+    }
+
+    useEffect(() => {
+
+        if (user?.access) {
+            GetItemsProductsPlayLists()
+        }
+    }, [user?.access]);
+
+
 
     const columns = [
         {
@@ -75,74 +94,95 @@ function OrdersLists() {
                         {' '}
                         {customer_info.name}
                     </span>
-                    <span>{customer_info.email_or_phone}</span>
-                </div>
-            ),
-        },
-        {
-            title: 'Sotuvchi ',
-            dataIndex: 'seller_info',
-            key: 'age',
-            width: 300,
-            render: (seller_info) => (
-                <a href={`/sellerAccount/${seller_info?.id}`} className="d-flex flex-column">
                     <span className="truncate whitespace-nowrap">
                         {' '}
-                        {seller_info.name}
+                        {customer_info.email_or_phone}
                     </span>
-                    <span>{seller_info.email_or_phone}</span>
-                </a>
-            ),
-        },
-        {
-            title: 'Buyurtma nomi',
-            dataIndex: 'info',
-            key: 'address',
-            width: 350,
-            render: (data) => (
-                <div className="d-flex flex-column">
-                    <Link
-                        href={`/product/${data[0].slug}`}
-                        className="truncate whitespace-nowrap">
-                        {data[0].title}
-                    </Link>
                 </div>
             ),
         },
+        user?.role === 'admin' ? (
+            {
+                title: 'Sotuvchi',
+                dataIndex: 'seller_info',
+                key: 'age',
+                render: (seller_info) => (
+                    <a
+                        href={`/sellerAccount/${seller_info?.id}`}
+                        className="d-flex flex-column">
+                        <span className="truncate whitespace-nowrap">
+                            {' '}
+                            {seller_info.name}
+                        </span>
+                        <span className="truncate whitespace-nowrap">
+                            {' '}
+                            {seller_info.email_or_phone}
+                        </span>
+                    </a>
+                ),
+            }
+        ) : (
+            <></>
+        ),
         {
-            title: 'Narx',
-            dataIndex: 'price',
-            key: 'address',
-            render: (price) => (
-                <span>
-                    <i className="fa-solid fa-coins text-warning"></i>{' '}
-                    {addPeriodToThousands(price)} so'm
-                </span>
+            title: 'Buyurtma nomi',
+            dataIndex: 'document',
+            key: 'age',
+            width: 300,
+            render: (document) => (
+                <Link href={`/product/${document.slug}`}>
+                    <a>{document.title}</a>
+                </Link>
             ),
         },
-        {
-            title: "To\'lov turi ",
-            dataIndex: 'provider',
-            key: 'address',
-            render: (provider) => (
-                <span>
-                    {provider === 'card_data' ? (
-                        <span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            karta orqali
-                        </span>
-                    ) : provider === 'click' ? (<span>
-                        <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                        click orqali
-                    </span>) : provider === 'payme' ? (
-                        <span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            payme orqali
-                        </span>
-                    ) : " "}
-                </span>
-            ),
-        },
+        user.role === 'admin' ? (
+            {
+                title: 'Narx',
+                dataIndex: 'price',
+                key: 'address',
+                width: '150px',
+                render: (price) => (
+                    <span>
+                        <i className="fa-solid fa-coins text-warning"></i>{' '}
+                        {addPeriodToThousands(price)}
+                    </span>
+                ),
+            }
+        ) : (
+            <></>
+        ),
+        user.role === 'admin' ? (
+            {
+                title: "To'lov turi ",
+                dataIndex: 'provider',
+                key: 'address',
+                render: (provider) => (
+                    <span>
+                        {provider === 'card_data' ? (
+                            <span>
+                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                karta orqali
+                            </span>
+                        ) : provider === 'click' ? (
+                            <span>
+                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                click orqali
+                            </span>
+                        ) : provider === 'payme' ? (
+                            <span>
+                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                payme orqali
+                            </span>
+                        ) : (
+                            ' '
+                        )}
+                    </span>
+                ),
+            }
+        ) : (
+            <></>
+        ),
+
         {
             title: 'Buyurtma sanasi',
             dataIndex: 'created_at',
@@ -154,7 +194,8 @@ function OrdersLists() {
                     <CalculateTimeDifference targetDate={created_at} />
                 </span>
             ),
-        }, {
+        },
+        {
             title: 'Holat',
             dataIndex: 'status',
             key: 'address',
@@ -168,39 +209,48 @@ function OrdersLists() {
                     ) : (
                         <span>
                             <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                            tasdiqlanganmagan
+                            tasdiqlanmagan
                         </span>
                     )}
                 </span>
             ),
         },
-
     ];
+
     const columnSellers = [
         {
             title: 'ID',
             dataIndex: 'id',
-            key: 'user',
+            key: 'age',
             render: (customer_info) => (
                 <div className="d-flex flex-column">
                     <span className="truncate whitespace-nowrap">
                         #{customer_info}
                     </span>
-                </div>)
+                </div>
+            ),
         },
         {
-            title: 'Mahsulot nomi',
-            dataIndex: 'info',
-            key: 'title',
-            width: 350,
-            render: (data) => (
-                <div className="d-flex flex-column">
-                    <Link
-                        href={`/product/${data[0].slug}`}
-                        className="truncate whitespace-nowrap">
-                        {data[0].title}
-                    </Link>
-                </div>
+            title: 'Buyurtma nomi',
+            dataIndex: 'document',
+            key: 'age',
+            width: 400,
+            render: (document) => (
+                <Link href={`/product/${document.slug}`}>
+                    <a>{document.title}</a>
+                </Link>
+            ),
+        },
+        {
+            title: 'Buyurtma sanasi',
+            dataIndex: 'created_at',
+            key: 'address',
+            render: (created_at) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    <CalculateTimeDifference targetDate={created_at} />
+                </span>
             ),
         },
         {
@@ -214,44 +264,82 @@ function OrdersLists() {
                 </span>
             ),
         },
+
+    ];
+
+
+    const itemsOrder = [
         {
-            title: 'Buyurtma sanasi',
-            dataIndex: 'created_at',
-            key: 'created_at',
-            render: (created_at) => (
-                <span>
-                    {' '}
-                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
-                    <CalculateTimeDifference targetDate={created_at} />
+            key: '1',
+            label: (
+                dataPlayLists?.length > 0 &&
+                <span
+                    style={{
+                        marginRight: '20px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Sotilgan mahsulotlar
                 </span>
             ),
+            children: (
+                user?.role === "admin" ?
+                    <>
+                        <Table
+                            scroll={{ x: 1600 }}
+                            dataSource={data}
+                            columns={columns}
+                            pagination={false}
+                        />
+                        <Pagination
+                            className="mt-3"
+                            defaultCurrent={currPage || 1}
+                            total={pageCount}
+                            onChange={handlePagination}
+                        />
+                    </> :
+                    <>
+                        <Table
+                            scroll={{ x: 900 }}
+                            dataSource={data}
+                            columns={columnSellers}
+                            pagination={false}
+                        />
+                        <Pagination
+                            className="mt-3"
+                            defaultCurrent={currPage || 1}
+                            total={pageCount}
+                            onChange={handlePagination}
+                        />
+                    </>
+            ),
         },
-
-        // {
-        //     title: 'Holat',
-        //     dataIndex: 'status',
-        //     key: 'status',
-        //     render: (status) =>
-        //         status === 'approved' ? (
-        //             <span>
-        //                 <i className="fa-solid text-success fa-circle-check"></i>{' '}
-        //                 tasdiqlangan
-        //             </span>
-        //         ) : status === 'cancelled' ? (
-        //             <span>
-        //                 <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-        //                 Bekor qilingan
-        //             </span>
-        //         ) : status === 'pending' ? (
-        //             <span>
-        //                 <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-        //                 Moderatsiya
-        //             </span>
-        //         ) : (
-        //             <></>
-        //         ),
-        // },
+        ...(dataPlayLists?.length > 0 ? [{
+            key: '2',
+            label: (
+                <span
+                    style={{
+                        marginLeft: '30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Sotilgan playlistlar
+                </span>
+            ),
+            children: (
+                <div>
+                    <Table
+                        scroll={{ x: user?.role === "seller" ? 900 : 1450 }}
+                        dataSource={dataPlayLists}
+                        columns={user?.role === "seller" ? columnSellers : columns}
+                        className="pb-5"
+                        pagination={false}
+                    />
+                </div>
+            ),
+        }] : []),
     ];
+
 
 
     return (
@@ -267,34 +355,11 @@ function OrdersLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    {/* <div className="d-flex flex-column gap-2">
-                                        <span className="fs-4">
-                                            <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                            <strong>Moderatsiya</strong>{' '}
-                                            <em>
-                                                malumotlar ko'rib chiqilmoqda...
-                                            </em>
-                                        </span>
-                                        <span className="fs-4">
-                                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                            <strong>Tasdiqlangan </strong>{' '}
-                                            <em>
-                                                malumotlaringiz muvaffaqqiyatli
-                                                tasdiqlandi!
-                                            </em>
-                                        </span>
-                                        <span className="fs-4">
-                                            <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                                            <strong>Bekor qilingan</strong>{' '}
-                                            <em>
-                                                malumotlaringiz bekor qilindi
-                                            </em>
-                                        </span>
-                                    </div> */}
-                                    <div className="py-4 row gap-5 mx-auto row-gap-3 pb-5">
+
+                                    <div className="pt-4 row gap-5 mx-auto row-gap-3 ">
                                         <RangePicker
                                             className="col-md-12 rounded-3 py-3"
-                                            onChange={(e) => setDate(e)}
+                                            onChange={handleChange}
                                         />
                                         <div className="d-flex gap-2">
                                             <label
@@ -352,37 +417,14 @@ function OrdersLists() {
                                             )}
                                         </div>
                                     </div>
-                                    {user?.role === 'admin' ? (
-                                        <>
-                                            <Table
-                                                scroll={{ x: 1600 }}
-                                                dataSource={data}
-                                                columns={columns}
-                                                pagination={false}
-                                            />
-                                            <Pagination
-                                                className="mt-3"
-                                                defaultCurrent={currPage || 1}
-                                                total={pageCount}
-                                                onChange={handlePagination}
-                                            />
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Table
-                                                scroll={{ x: 900 }}
-                                                dataSource={data}
-                                                columns={columnSellers}
-                                                pagination={false}
-                                            />
-                                            <Pagination
-                                                className="mt-3"
-                                                defaultCurrent={currPage || 1}
-                                                total={pageCount}
-                                                onChange={handlePagination}
-                                            />
-                                        </>
-                                    )}
+
+                                    <Tabs
+                                        centered
+                                        defaultActiveKey="1"
+                                        items={itemsOrder}
+                                        className="bg-white"
+                                    />
+
                                 </div>
                             </div>
                         </div>
