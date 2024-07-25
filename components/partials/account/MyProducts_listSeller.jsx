@@ -269,13 +269,13 @@ function MyProductsListsSeller() {
             title: 'Rasm',
             dataIndex: 'image',
             key: 'image',
-            render: (image) => (
+            render: (text, record) => (
                 <div>
-                    {image?.poster_url ? (
-                        <Link href={image?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${image?.slug}`} className='cursor-pointer'>
+                    {record?.image ? (
+                        <Link href={record?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${record?.slug}`} className='cursor-pointer'>
                             <a>
                                 <NextImageCard
-                                    url={image?.poster_url}
+                                    url={record?.image}
                                     clasS="rounded-3 mb-2"
                                     width="54px"
                                     height="54px"
@@ -318,7 +318,7 @@ function MyProductsListsSeller() {
         },
         {
             title: 'Narxi',
-            dataIndex: 'discount_price',
+            dataIndex: 'price',
             key: 'address',
             render: (price) => (
                 <span>

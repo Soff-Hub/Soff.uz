@@ -16,6 +16,7 @@ import VideoFirstPosts from './video-first';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import { formatPrice } from './edit-video/[id]';
+import PatchRepository from '~/reositoriy-admin/PatchRepository';
 const { Option } = Select;
 const { TextArea } = Input;
 
@@ -38,9 +39,14 @@ const Posts = () => {
     const [loading, setLoading] = useState(false); // Modal ochilishi uchun
     const [loadingPlay, setLoadingPlay] = useState(false); // Modal ochilishi uchun
     const [valuesPlayLists, setvaluesPlayLists] = useState(null); // Modal ochilishi uchun
+    const [valuesPlayUpdate, setvaluesPlayUpdate] = useState(null); // Modal ochilishi uchun
+    const [openUpdate, setOpenUpdate] = useState(false); // Modal ochilishi uchun
+    const [iputName, setIputName] = useState(''); // Modal ochilishi uchun
+
 
     const [form] = Form.useForm();
     const [form2] = Form.useForm();
+    const [form3] = Form.useForm();
 
     const breadCrumb = [
         {
@@ -221,6 +227,63 @@ const Posts = () => {
         }
     }
 
+    // PlayListni Itemlarni olish
+    const handlePlayListUpdate = (item) => {
+        if (item?.id) {
+            setOpenUpdate(true);
+            setvaluesPlayUpdate(item)
+        }
+    }
+
+    // Vidoega Play-List tahrirlash uchun Patch funksiyasi
+
+    const postPlayListsUpdate = async (values) => {
+        form3.resetFields()
+        const formData = new FormData();
+        const newPrice = parseInt((values.price !== 0 && values?.price !== undefined) && formatPrice(values?.price));
+        formData.append('price', (freePlay || values.price == 0) ? 0 : newPrice || valuesPlayUpdate?.price); // Video narxi
+        formData.append('title', values?.title);
+        if (customePosterPlay?.poster) {
+            formData.append('image', customePosterPlay?.poster)
+        }
+        formData.append('description', values?.description || '')
+
+        try {
+            setLoadingPlay(true)
+            const response = await PatchRepository.PatchPlayLists(
+                formData,
+                valuesPlayUpdate?.id,
+                user?.access
+            )
+            if (response?.status === 200) {
+                const modal = Modal.success({
+                    centered: true,
+                    title: 'Muvaffaqiyatli!',
+                    content: 'Muvaffaqiyatli yangilandi',
+                });
+                GetItemsPlayLists()
+            } else {
+                const modal = Modal.error({
+                    centered: true,
+                    title: 'Xatolik!',
+                    content: response?.status + ' ' + response?.statusText || "Xatolik iltimos qaytadan urinib ko'ring",
+                });
+            }
+
+
+        } catch (error) {
+            console.log(error);
+        }
+        finally {
+            setOpenUpdate(false)
+            setCustomePosterPlay(null)
+            setLoadingPlay(false)
+
+        }
+
+    }
+
+
     //  GetItemsTag, setEditorLoaded, GetItemsCategoryLists
 
     useEffect(() => {
@@ -243,6 +306,7 @@ const Posts = () => {
             form.setFieldsValue({
                 title: liveProduct?.name
             });
+            setIputName(liveProduct?.name)
         }
     }, [liveProduct, form]);
 
@@ -256,6 +320,18 @@ const Posts = () => {
             });
         }
     }, [open, form2]);
+
+    // PlayList modaldagi inputlarga qiymatni tushirish
+    useEffect(() => {
+        if (openUpdate && valuesPlayUpdate?.id) {
+            form3.setFieldsValue({
+                description: valuesPlayUpdate?.description,
+                poster: valuesPlayUpdate?.image,
+                price: valuesPlayLists?.price,
+                title: valuesPlayUpdate?.title
+            });
+        }
+    }, [openUpdate, valuesPlayUpdate, form3]);
 
 
 
@@ -323,6 +399,7 @@ const Posts = () => {
                                                 name='title'
                                                 placeholder="Video nomi"
                                                 defaultValue={liveProduct?.name}
+                                                onChange={(e) => setIputName(e.target.value)}
                                             />
                                         </Form.Item>
 
@@ -363,7 +440,7 @@ const Posts = () => {
                                                     (customePoster?.url) ?
                                                         <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
                                                         :
-                                                        <span className='d-flex align-items-center justify-content-center gap-1'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Rasm yuklash uchun rasm tanlang</span></span>
+                                                        <span className='d-flex align-items-center justify-content-center gap-1'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Poster yuklash uchun rasm tanlang</span></span>
                                                 }
                                                 <Input
 
@@ -523,7 +600,7 @@ const Posts = () => {
                                         >
                                             <div className='d-flex gap-3 '>
                                                 <Select
-                                                    mode="select"
+                                                    // mode="select"
                                                     placeholder="Mavjud playlistlar"
                                                     style={{
                                                         width: '100%',
@@ -548,14 +625,24 @@ const Posts = () => {
                                                                         />
                                                                         <span>{item?.title}</span>
                                                                     </div>
-                                                                    <span>
-                                                                        {item?.price > 0 ?
-                                                                            addPeriodToThousands(Number(item?.price)) + ' ' + "so'm" :
-                                                                            ""
+                                                                    <div className='d-flex  align-items-center gap-3'>
+                                                                        <span>
+                                                                            {item?.price > 0 ?
+                                                                                addPeriodToThousands(Number(item?.price)) + ' ' + "so'm" :
+                                                                                ""
 
-                                                                        }
+                                                                            }
 
-                                                                    </span>
+                                                                        </span>
+                                                                        <span
+                                                                            style={{
+                                                                                cursor: "pointer"
+                                                                            }}
+                                                                            onClick={() => handlePlayListUpdate(item)}>
+                                                                            <i className="fa-solid fa-edit fs-5 text-secondary"></i>
+
+                                                                        </span>
+                                                                    </div>
                                                                 </div>
                                                             </Option>
                                                         ))
@@ -669,8 +756,8 @@ const Posts = () => {
                                         </div>
 
 
-                                        {liveProduct?.name && <div className='px-4 py-2'>
-                                            <p>{liveProduct?.name}</p>
+                                        {iputName && <div className='px-4 py-2'>
+                                            <p>{iputName}</p>
                                         </div>}
                                     </div>
 
@@ -812,7 +899,7 @@ const Posts = () => {
                                     defaultChecked={freePlay}
                                     className=" d-flex align-items-center justify-content-start px-0 py-2"
                                     onChange={() => setFreePlay(!freePlay)}>
-                                    <strong className='text-success ' style={{whiteSpace:"nowrap"}} >To'plam uchun</strong>
+                                    <strong className='text-success ' style={{ whiteSpace: "nowrap" }} >To'plam uchun</strong>
                                 </Checkbox>
                             </div>
 
@@ -878,6 +965,136 @@ const Posts = () => {
                             Sahifani yangilamang va yopmang!
                         </h5>
                     </div>
+
+                </Modal>
+
+                <Modal
+                    title="PlayListni tahrirlash"
+                    width={550}
+                    centered
+                    open={openUpdate}
+                    onOk={() => setOpenUpdate(false)}
+                    okText="Yopish"
+                    footer={null}
+
+
+
+                    onCancel={() => setOpenUpdate(false)}>
+                    <Form
+                        form={form3}
+                        onFinish={postPlayListsUpdate}
+                        className="w-100 mt-5"
+                        layout='vertical'
+                    >
+                        <Form.Item
+                            label={'Rasm'}
+                            name={"poster"}
+                            className='col-md-12 mb-2 p-0'
+                        >
+
+                            <label
+                                style={{
+                                    display: 'inline-block',
+                                    width: '100%',
+                                    height: '45.4px',
+                                    border: '1px solid #ccc',
+                                    padding: '10px 15px',
+                                    boxSizing: 'border-box',
+                                    textAlign: 'center',
+                                    cursor: 'pointer',
+                                    backgroundColor: '#fff',
+                                    borderRadius: "5px"
+                                }}
+                            >
+
+                                {
+                                    (customePosterPlay?.url || valuesPlayUpdate?.image) ?
+                                        <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
+                                        :
+                                        <span><i className="fa-solid fa-cloud-arrow-up text-success mx-2 fs-3"></i> Rasm yuklash uchun rasm tanlang</span>
+                                }
+                                <Input
+
+                                    name='poster'
+                                    accept='image/*'
+                                    onChange={(e) => LivePosterPlayLists(e.target.files[0])}
+                                    type='file'
+                                    style={{
+                                        position: 'absolute',
+                                        width: '1px',
+                                        height: '1px',
+                                        overflow: 'hidden',
+                                        clip: 'rect(0, 0, 0, 0)',
+                                        border: '0'
+                                    }}
+                                />
+                            </label
+                            >
+
+                        </Form.Item>
+
+                        <Form.Item
+                            label='Nomi '
+                            name="title"
+                            className=' mb-3 '
+                        >
+                            <Input
+                                name='title'
+                                placeholder="Nomlang"
+
+                            />
+                        </Form.Item>
+
+                        <Form.Item
+                            label={'Narxi'}
+                            name="price"
+                            className='col-md-12 mb-2 p-0'
+                        >
+                            <div className='d-flex align-items-center gap-3 '>
+
+                                <InputNumber
+                                    defaultValue={valuesPlayUpdate?.price}
+                                    style={{ height: "45.4px" }}
+                                    disabled={freePlay}
+                                    placeholder="Narxi"
+                                    className='w-100 py-2'
+                                    formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                    parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                    onKeyPress={(e) => {
+                                        if (!/[0-9]/.test(e.key)) {
+                                            e.preventDefault();
+                                        }
+                                    }}
+                                />
+                                <Checkbox
+                                    defaultChecked={freePlay || valuesPlayUpdate?.price == 0}
+                                    className=" d-flex align-items-center justify-content-start px-0 py-2"
+                                    onChange={() => setFreePlay(!freePlay)}>
+                                    <strong className='text-success'>Bepul</strong>
+                                </Checkbox>
+                            </div>
+
+                        </Form.Item>
+
+                        <Form.Item
+                            label='Tavsif'
+                            name='description'
+                            className='mb-3'
+                        >
+                            <TextArea placeholder='Tavsif kiriting' rows={4}></TextArea>
+                        </Form.Item>
+
+                        <Form.Item
+                            className='m-0 mt-3 d-flex justify-content-end w-100'
+                        >
+                            <Button
+                                loading={loadingPlay}
+                                className='px-5'
+                                type='primary'
+                                htmlType='submit'
+                            >Saqlash</Button>
+                        </Form.Item>
+                    </Form>
 
                 </Modal>
 
