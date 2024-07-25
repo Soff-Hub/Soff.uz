@@ -52,6 +52,7 @@ const Posts = () => {
     const [form3] = Form.useForm();
     const [valuesPlayLists, setvaluesPlayLists] = useState(null); // Modal ochilishi uchun
     const [valuesPlayUpdate, setvaluesPlayUpdate] = useState(null); // Modal ochilishi uchun
+    const [iputName, setIputName] = useState(''); // Modal ochilishi uchun
 
     const breadCrumb = [
         {
@@ -321,6 +322,7 @@ const Posts = () => {
 
     useEffect(() => {
         if (products) {
+            setIputName(products?.title)
             form.setFieldsValue({
                 title: products?.title,
                 poster: products?.poster_url,
@@ -366,6 +368,7 @@ const Posts = () => {
                 price: valuesPlayLists?.price,
                 title: valuesPlayUpdate?.title
             });
+
         }
     }, [openUpdate, valuesPlayUpdate, form3]);
 
@@ -512,6 +515,7 @@ const Posts = () => {
                                         <Input
                                             name='title'
                                             placeholder="Video nomi"
+                                            onChange={(e) => setIputName(e.target.value)}
                                         />
                                     </Form.Item>
 
@@ -552,7 +556,7 @@ const Posts = () => {
                                                 (customePoster?.url || products?.poster_url) ?
                                                     <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
                                                     :
-                                                    <span className='d-flex align-items-center justify-content-center gap-1'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Rasm yuklash uchun rasm tanlang</span></span>
+                                                    <span className='d-flex align-items-center justify-content-center gap-1'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Poster yuklash uchun rasm tanlang</span></span>
                                             }
                                             <Input
                                                 name='poster'
@@ -896,8 +900,8 @@ const Posts = () => {
                                         </video>
                                     </div>
 
-                                    {products?.title && <div className='px-4 py-2'>
-                                        <p>{products?.title}</p>
+                                    {iputName && <div className='px-4 py-2'>
+                                        <p>{iputName}</p>
                                     </div>}
                                 </div>
 
@@ -1055,7 +1059,7 @@ const Posts = () => {
                                 defaultChecked={freePlay}
                                 className=" d-flex align-items-center justify-content-start px-0 py-2"
                                 onChange={() => setFreePlay(!freePlay)}>
-                                 <strong className='text-success ' style={{whiteSpace:"nowrap"}} >To'plam uchun</strong>
+                                <strong className='text-success ' style={{ whiteSpace: "nowrap" }} >To'plam uchun</strong>
                             </Checkbox>
                         </div>
 
@@ -1170,7 +1174,7 @@ const Posts = () => {
                             <InputNumber
                                 defaultValue={valuesPlayUpdate?.price}
                                 style={{ height: "45.4px" }}
-                                disabled={freePlay || valuesPlayUpdate?.price == 0}
+                                disabled={freePlay}
                                 placeholder="Narxi"
                                 className='w-100 py-2'
                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
