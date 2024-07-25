@@ -482,7 +482,7 @@ function ApplicationLists() {
     }
 
     useEffect(() => {
-        if (user?.access) {
+        if (user?.access && user?.role==="seller") {
             ProfileUsersBLock()
         }
     }, [user?.access]);

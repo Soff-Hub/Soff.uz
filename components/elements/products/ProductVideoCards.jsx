@@ -9,6 +9,7 @@ import DefaultVideo from '../detail/thumbnail/DefaultVideo';
 const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
 
 
+
     return (
         <div className="d-flex gap-3 "
         >
@@ -43,6 +44,7 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
                                 {addPeriodToThousands(product.discount_price)} so'm
                             </p>
                         )}
+
                         <ModuleProductVideoActions product={product} />
                     </div>}
 

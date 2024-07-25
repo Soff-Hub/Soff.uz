@@ -552,7 +552,7 @@ const Posts = () => {
                                                 (customePoster?.url || products?.poster_url) ?
                                                     <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
                                                     :
-                                                    <span><i className="fa-solid fa-cloud-arrow-up text-primary mx-2 fs-3"></i> Rasm yuklash uchun rasm tanlang</span>
+                                                    <span className='d-flex align-items-center justify-content-center gap-1'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Rasm yuklash uchun rasm tanlang</span></span>
                                             }
                                             <Input
                                                 name='poster'
@@ -767,7 +767,7 @@ const Posts = () => {
                                                                     <span>
                                                                         {item?.price > 0 ?
                                                                             addPeriodToThousands(Number(item?.price)) + ' ' + "so'm" :
-                                                                            "Bepul"
+                                                                            ""
 
                                                                         }
 
@@ -1042,7 +1042,7 @@ const Posts = () => {
 
                                 disabled={freePlay}
                                 placeholder="Narxi"
-                                className='w-100 py-2'
+                                className='w-75 py-2'
                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                                 parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
                                 onKeyPress={(e) => {
@@ -1055,7 +1055,7 @@ const Posts = () => {
                                 defaultChecked={freePlay}
                                 className=" d-flex align-items-center justify-content-start px-0 py-2"
                                 onChange={() => setFreePlay(!freePlay)}>
-                                <strong className='text-success'>Bepul</strong>
+                                 <strong className='text-success ' style={{whiteSpace:"nowrap"}} >To'plam uchun</strong>
                             </Checkbox>
                         </div>
 
@@ -1124,9 +1124,9 @@ const Posts = () => {
 
                             {
                                 (customePosterPlay?.url || valuesPlayUpdate?.image) ?
-                                    <span>Video poster rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
+                                    <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
                                     :
-                                    <span><i className="fa-solid fa-cloud-arrow-up text-success mx-2 fs-3"></i> Video poster rasmini yuklash uchun rasm tanlang</span>
+                                    <span><i className="fa-solid fa-cloud-arrow-up text-success mx-2 fs-3"></i> Rasm yuklash uchun rasm tanlang</span>
                             }
                             <Input
 
