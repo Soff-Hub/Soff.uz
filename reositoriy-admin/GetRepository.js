@@ -84,8 +84,28 @@ class GetRepository {
         return reponse;
     }
 
-    async getPopularPlayLists(token) {
-        const endPoint = `purchased-plyalists/`;
+    async getPopularPlayLists(page, token) {
+        const endPoint = `sold-plyalists/?page=${page}`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getPopularPlayListsApproved(page, token) {
+        const endPoint = `purchased-plyalists/?page=${page}`;
         const reponse = await Repository({
             url: baseUrl + endPoint,
             method: 'GET',

@@ -48,7 +48,6 @@ function MyProductsLists() {
     const [dataValCat, setDataCat] = useState(null);
     const [filterType, setFiltertype] = useState('');
     const [deleteId, setDeleteId] = useState(null);
-    const [date, setDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [loading3, setLoading3] = useState(false);
@@ -62,26 +61,27 @@ function MyProductsLists() {
     const [dataBlock, setdataBlock] = useState(null);
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
-    const dateFormat0 = date
-        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
-            ? `0${date[0].$M + 1}`
-            : date[0].$M + 1
-        }-${date[0].$D}`
-        : '';
-    const dateFormat1 = date
-        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
-            ? `0${date[1].$M + 1}`
-            : date[1].$M + 1
-        }-${date[1].$D}`
-        : '';
-    const dataFormat = date
-        ? `${dateFormat0}&date_range_before=${dateFormat1}`
-        : '';
     const { accountLinks, user } = useSelector((state) => state.auth);
-
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
-    const [short, setShort] = useState(true)
+    const [short, setShort] = useState(true);
+
+    const [lifeTime, setLifetime] = useState('');
+    const [lifeTime1, setLifetime2] = useState('');
+
+
+    const handleChangeDate = (date) => {
+
+        if (date?.[0]) {
+            setLifetime(date[0].format('YYYY-MM-DD'));
+            setLifetime2(date[1].format('YYYY-MM-DD'));
+        } else {
+            setLifetime('');
+            setLifetime2('');
+        }
+    };
+    const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
+
 
 
 
@@ -434,7 +434,7 @@ function MyProductsLists() {
     ]);
 
     useEffect(() => {
-        if (user?.access && user?.role==="seller") {
+        if (user?.access && user?.role === "seller") {
             ProfileUsersBLock()
             GetItemsPlayLists()
         }
@@ -989,9 +989,7 @@ function MyProductsLists() {
 
                                                         <RangePicker
                                                             className="col-md-5 py-3   rounded-3"
-                                                            onChange={(e) =>
-                                                                setDate(e)
-                                                            }
+                                                            onChange={handleChangeDate}
                                                         />
 
                                                         <select
