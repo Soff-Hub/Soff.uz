@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Pagination, Select, Table } from 'antd';
+import { DatePicker, Pagination, Select, Table, Tabs } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -18,27 +18,33 @@ function MyProductsListsSeller() {
     const [dataCategory, setDataCategory] = useState([]);
     const [search, setSerach] = useState('');
     const [dataValCat, setDataCat] = useState(null);
-    const [date, setDate] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const [loading2, setLoading2] = useState(null);
     const { RangePicker } = DatePicker;
-    const dateFormat0 = date
-        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
-            ? `0${date[0].$M + 1}`
-            : date[0].$M + 1
-        }-${date[0].$D}`
-        : '';
-    const dateFormat1 = date
-        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
-            ? `0${date[1].$M + 1}`
-            : date[1].$M + 1
-        }-${date[1].$D}`
-        : '';
-    const dataFormat = date ? `${dateFormat0}&end_date=${dateFormat1}` : '';
     const { accountLinks, user } = useSelector((state) => state.auth);
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
+    const [pageCountPlay, setPageCountPlay] = useState(0);
+    const [currPagePlay, setCurrPagePlay] = useState(1);
+    const [dataPlayLists, setDataPlayLists] = useState([]);
+
+    const [lifeTime, setLifetime] = useState('');
+    const [lifeTime1, setLifetime2] = useState('');
+
+
+    const handleChangeDate = (date) => {
+
+        if (date?.[0]) {
+            setLifetime(date[0].format('YYYY-MM-DD'));
+            setLifetime2(date[1].format('YYYY-MM-DD'));
+        } else {
+            setLifetime('');
+            setLifetime2('');
+        }
+    };
+    const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
+
 
     async function GetItemsProducts(page, category, dataFormat) {
         const ItemsData = await GetRepository.getMyProductsSeller(
@@ -54,6 +60,7 @@ function MyProductsListsSeller() {
             setData([...ItemsData.results]);
         }
     }
+
     async function GetItemsCategory() {
         const ItemsData = await GetRepository.getAllCategoryListsGlobal();
         if (ItemsData) {
@@ -78,6 +85,11 @@ function MyProductsListsSeller() {
         }
     };
 
+
+    const handlePaginationPlayLists = (page) => {
+        setCurrPagePlay(page)
+    }
+
     const options = [];
 
     for (let i = 0; i < dataCategory?.length; i++) {
@@ -86,7 +98,7 @@ function MyProductsListsSeller() {
         );
     }
 
-  
+
 
     const handleButtonClick = async (ID) => {
         try {
@@ -122,18 +134,30 @@ function MyProductsListsSeller() {
         }
     };
 
+    async function GetItemsProductsPlayLists() {
+        const ItemsData = await GetRepository.getPopularPlayListsApproved(currPagePlay, user?.access);
+        if (ItemsData?.results) {
+            setDataPlayLists(ItemsData?.results);
+            setPageCountPlay(ItemsData.count);
+        }
+    }
+
+    useEffect(() => {
+        if (user?.access) {
+            GetItemsProductsPlayLists()
+        }
+    }, [currPagePlay, user?.access]);
+
 
 
     useEffect(() => {
         GetItemsCategory();
     }, []);
+
+
     useEffect(() => {
         GetItemsProducts(currPage, dataValCat, dataFormat);
     }, [dataValCat, dataFormat, searchDebounce]);
-
-
-
-
 
     const columns = [
         {
@@ -240,6 +264,161 @@ function MyProductsListsSeller() {
         },
     ];
 
+    const columnsApproved = [
+        {
+            title: 'Rasm',
+            dataIndex: 'image',
+            key: 'image',
+            render: (image) => (
+                <div>
+                    {image?.poster_url ? (
+                        <Link href={image?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${image?.slug}`} className='cursor-pointer'>
+                            <a>
+                                <NextImageCard
+                                    url={image?.poster_url}
+                                    clasS="rounded-3 mb-2"
+                                    width="54px"
+                                    height="54px"
+                                />
+                            </a>
+                        </Link>
+                    ) : (
+                        <i className="fa-solid fa-image fa-2x"></i>
+                    )}
+                </div>
+            ),
+        },
+        {
+            title: 'Nomi',
+            dataIndex: 'id',
+            key: 'age',
+            width: 300,
+            render: (text, record) => (
+
+                <Link href={record?.slug === "/account/sellerproducts" ? "/account/sellerproducts" : `/product/${record?.slug}`} >
+
+                    <a>
+                        <span className="truncate whitespace-nowrap"> {record?.name}</span>
+                    </a>
+                </Link>
+            ),
+        },
+        {
+            title: 'Tavsif',
+            dataIndex: 'description',
+            key: 'description',
+            width: 300,
+            render: (description) => (
+                <span>
+                    {' '}
+                    <i className=" text-primary-emphasis fa-solid fa-layer-group"></i>{' '}
+                    {description}
+                </span>
+            ),
+        },
+        {
+            title: 'Narxi',
+            dataIndex: 'discount_price',
+            key: 'address',
+            render: (price) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-coins text-warning"></i>{' '}
+                    {addPeriodToThousands(price)}
+                </span>
+            ),
+        },
+        {
+            title: 'Xarid sanasi',
+            dataIndex: 'created_at',
+            key: 'created_at',
+            render: (created_at) => (
+                <span>
+                    {' '}
+                    <i className="fa-solid fa-clock text-info-emphasis"></i>{' '}
+                    <CalculateTimeDifference targetDate={created_at} />
+                </span>
+            ),
+        },
+    ];
+
+
+    const itemsOrder = [
+        {
+            key: '1',
+            label: (
+                dataPlayLists?.length > 0 &&
+                <span
+                    style={{
+                        marginRight: '20px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Sotib olingan mahsulotlar
+                </span>
+            ),
+            children: (
+                <>
+
+                    <Table
+                        dataSource={data}
+                        scroll={{ x: 1200 }}
+                        columns={columns}
+                        pagination={false}
+                    />
+
+                    <Pagination
+                        className="mt-3"
+                        defaultCurrent={currPage || 1}
+                        total={pageCount}
+                        onChange={(page) =>
+                            GetItemsProducts(
+                                page,
+                                dataValCat,
+                                dataFormat
+                            )
+                        }
+                    />
+                </>
+            ),
+        },
+        ...(dataPlayLists?.length > 0 ? [{
+            key: '2',
+            label: (
+                <span
+                    style={{
+                        marginLeft: '30px',
+                        fontSize: '16px',
+                        fontWeight: '600',
+                    }}>
+                    Sotib olingan  playlistlar
+                </span>
+            ),
+            children: (
+                <>
+
+                    <Table
+                        dataSource={dataPlayLists}
+                        scroll={{ x: 1100 }}
+                        columns={columnsApproved}
+                        pagination={false}
+                    />
+                    <Pagination
+                        className="mt-3"
+                        defaultCurrent={currPagePlay}
+                        total={pageCountPlay}
+                        onChange={handlePaginationPlayLists}
+                    />
+                </>
+            ),
+        }] : []),
+    ];
+
+    console.log(dataPlayLists);
+
+
+
+
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -254,7 +433,7 @@ function MyProductsListsSeller() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    <div className="row mx-auto gap-4  pb-4 pt-5">
+                                    <div className="row mx-auto gap-4  pt-5">
                                         <label
                                             className="form-label border col-md-9 m-0 p-0 d-flex justify-content-between align-items-center"
                                             style={{
@@ -319,32 +498,19 @@ function MyProductsListsSeller() {
                                                         </Select>
                                                         <RangePicker
                                                             className="col-md-5 py-3   rounded-3"
-                                                            onChange={(e) =>
-                                                                setDate(e)
-                                                            }
+                                                            onChange={handleChangeDate}
                                                         />
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <Table
-                                        dataSource={data}
-                                        scroll={{ x: 1200 }}
-                                        columns={columns}
-                                        pagination={false}
-                                    />
-                                    <Pagination
-                                        className="mt-3"
-                                        defaultCurrent={currPage || 1}
-                                        total={pageCount}
-                                        onChange={(page) =>
-                                            GetItemsProducts(
-                                                page,
-                                                dataValCat,
-                                                dataFormat
-                                            )
-                                        }
+
+                                    <Tabs
+                                        centered
+                                        defaultActiveKey="1"
+                                        items={itemsOrder}
+                                        className="bg-white"
                                     />
                                 </div>
                             </div>

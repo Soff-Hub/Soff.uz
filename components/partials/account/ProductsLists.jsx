@@ -46,6 +46,7 @@ export function addPeriodToThousands(number) {
 
 
 function ProductsLists() {
+    const { RangePicker } = DatePicker;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
@@ -56,7 +57,6 @@ function ProductsLists() {
     const [dataVal, setDataVal] = useState([]);
     const [dataValStatus, setDataCatStatus] = useState('');
     const [filterType, setFiltertype] = useState('');
-    const [date, setDate] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [pageCount, setPageCount] = useState(0);
@@ -69,23 +69,24 @@ function ProductsLists() {
     const router = useRouter();
     const pid = router.asPath;
     const [imageID, setImageID] = useState(null)
+    const [lifeTime, setLifetime] = useState('');
+    const [lifeTime1, setLifetime2] = useState('');
 
-    const { RangePicker } = DatePicker;
-    const dateFormat0 = date
-        ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1
-            ? `0${date[0].$M + 1}`
-            : date[0].$M + 1
-        }-${date[0].$D}`
-        : '';
-    const dateFormat1 = date
-        ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1
-            ? `0${date[1].$M + 1}`
-            : date[1].$M + 1
-        }-${date[1].$D}`
-        : '';
-    const dataFormat = date
-        ? `${dateFormat0}&date_range_before=${dateFormat1}`
-        : '';
+
+    const handleChange = (date) => {
+
+        if (date?.[0]) {
+            setLifetime(date[0].format('YYYY-MM-DD'));
+            setLifetime2(date[1].format('YYYY-MM-DD'));
+        } else {
+            setLifetime('');
+            setLifetime2('');
+        }
+    };
+    const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
+
+
+
     const [short, setShort] = useState(true)
 
     async function GetItemsProductsLists(
@@ -245,7 +246,8 @@ function ProductsLists() {
         setFiltertype('');
         setDateArxiv(null);
         setCategoryID(null);
-        setDate(null);
+        setLifetime('');
+        setLifetime2('');
         Router.push(`/account/products?page=${router.query.page}`);
     }
 
@@ -658,9 +660,7 @@ function ProductsLists() {
 
                                                         <RangePicker
                                                             className="w-100 py-3 col-md-6 rounded-3"
-                                                            onChange={(e) =>
-                                                                setDate(e)
-                                                            }
+                                                            onChange={handleChange}
                                                         />
 
                                                         <select

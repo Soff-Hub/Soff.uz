@@ -35,18 +35,32 @@ function ApplicationLists() {
     const [textItemsId, setTextItemsId] = useState(null)
     const [sellerSearch, setSellerSearch] = useState('')
     const [loading, setLoading] = useState({ loadingButton: true })
-    const [date, setDate] = useState(null);
+
     const [allPrice, setAllPrice] = useState(null);
     const { RangePicker } = DatePicker;
-    const dateFormat0 = date ? `${date[0]?.$y}-${`${date[0].$M + 1}`.length === 1 ? `0${date[0].$M + 1}` : date[0].$M + 1}-${date[0].$D}` : ''
-    const dateFormat1 = date ? `${date[1]?.$y}-${`${date[1].$M + 1}`.length === 1 ? `0${date[1].$M + 1}` : date[1].$M + 1}-${date[1].$D}` : ''
-    const dataFormat = (date ? `${dateFormat0}&end_date=${dateFormat1}` : '');
     const [alertMess, setAlertMess] = useState("");
     const [dataBlock, setdataBlock] = useState(null);
     const [open, setOpen] = useState(false);
     const [openApplication, setOpenAplication] = useState(false);
     const [form] = Form.useForm();
-    const [valuesImage, setValuesImage] = useState(null)
+    const [valuesImage, setValuesImage] = useState(null);
+
+    const [lifeTime, setLifetime] = useState('');
+    const [lifeTime1, setLifetime2] = useState('');
+
+
+    const handleChangeDate = (date) => {
+
+        if (date?.[0]) {
+            setLifetime(date[0].format('YYYY-MM-DD'));
+            setLifetime2(date[1].format('YYYY-MM-DD'));
+        } else {
+            setLifetime('');
+            setLifetime2('');
+        }
+    };
+    const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
+
 
 
     async function ProfileUsers(token) {
@@ -432,7 +446,7 @@ function ApplicationLists() {
         },
     ];
 
-    
+
     const columnsTextAreaseller = [
 
         {
@@ -482,7 +496,7 @@ function ApplicationLists() {
     }
 
     useEffect(() => {
-        if (user?.access && user?.role==="seller") {
+        if (user?.access && user?.role === "seller") {
             ProfileUsersBLock()
         }
     }, [user?.access]);
@@ -657,7 +671,7 @@ function ApplicationLists() {
                             <div className='px-4'>
                                 <div className='my-5 bg-white mx-auto p-4 container'>
                                     <h4 className='text-center mb-4'>Kelib tushgan takliflar   </h4>
-                                    <RangePicker className='py-3 col-md-4 mb-4 shadow-sm rounded-3' onChange={(e) => setDate(e)} />
+                                    <RangePicker className='py-3 col-md-4 mb-4 shadow-sm rounded-3' onChange={handleChangeDate} />
                                     <Table scroll={{ x: 1500 }} dataSource={data1} columns={columnsTextArea}
                                         pagination={false} />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount1}

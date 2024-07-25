@@ -25,6 +25,8 @@ function OrdersLists() {
     const [dataPlayLists, setDataPlayLists] = useState([]);
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
+    const [pageCountPlay, setPageCountPlay] = useState(0);
+    const [currPagePlay, setCurrPagePlay] = useState(1);
 
 
     const handleChange = (date) => {
@@ -62,15 +64,20 @@ function OrdersLists() {
         GetItemsProducts(pageNum, selector, dataFormat, search, userRole);
     };
 
+    const handlePaginationPlayLists = (page) => {
+        setCurrPagePlay(page)
+    }
+
     useEffect(() => {
         GetItemsProducts(currPage, selector, dataFormat, search, userRole);
     }, [currPage, selector, dataFormat, searchDebounce, userRole]);
 
 
     async function GetItemsProductsPlayLists() {
-        const ItemsData = await GetRepository.getPopularPlayLists(user?.access);
+        const ItemsData = await GetRepository.getPopularPlayLists(currPagePlay, user?.access);
         if (ItemsData?.results) {
             setDataPlayLists(ItemsData?.results);
+            setPageCountPlay(ItemsData.count);
         }
     }
 
@@ -79,7 +86,7 @@ function OrdersLists() {
         if (user?.access) {
             GetItemsProductsPlayLists()
         }
-    }, [user?.access]);
+    }, [currPagePlay, user?.access]);
 
 
 
@@ -307,7 +314,7 @@ function OrdersLists() {
                         />
                         <Pagination
                             className="mt-3"
-                            defaultCurrent={currPage || 1}
+                            defaultCurrent={currPage}
                             total={pageCount}
                             onChange={handlePagination}
                         />
@@ -334,6 +341,12 @@ function OrdersLists() {
                         columns={user?.role === "seller" ? columnSellers : columns}
                         className="pb-5"
                         pagination={false}
+                    />
+                    <Pagination
+                        className="mt-3"
+                        defaultCurrent={currPagePlay}
+                        total={pageCountPlay}
+                        onChange={handlePaginationPlayLists}
                     />
                 </div>
             ),
