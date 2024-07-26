@@ -19,9 +19,28 @@ function Notifications() {
     const [loading1, setLoading1] = useState(false);
     const [profile, setProfile] = useState(null);
     const [image, setImage] = useState('');
-    const [imageBag, setImageBag] = useState('');
+    const [imageBag, setImageBag] = useState({ url: null, img: null });
+    const [imageBagMobile, setImageBagMobile] = useState({ url: null, img: null });
     const [profilePassword, setProfilePassword] = useState(null);
     const [profilePassword1, setProfilePassword2] = useState(null);
+    const [open, setOpen] = useState(false);
+    const [openViewImage, setOpenViewImage] = useState(false);
+    const [openViewTitle, setOpenViewTitle] = useState('mobile');
+
+
+    const LivePosterDesktop = (images) => {
+        if (images) {
+            const img = window.URL.createObjectURL(images);
+            setImageBag({ img: img, url: images });
+        }
+    }
+
+    const LivePosterMobile = (images) => {
+        if (images) {
+            const img = window.URL.createObjectURL(images);
+            setImageBagMobile({ img: img, url: images });
+        }
+    }
 
 
     async function handleClickEditChangePassword(e) {
@@ -51,8 +70,6 @@ function Notifications() {
         }
     }
 
-
-
     async function ProfileUsers() {
         setLoading(false)
         const ItemsData = await GetRepository.getProfile(user?.access);
@@ -61,6 +78,7 @@ function Notifications() {
         }
         setLoading(true)
     }
+
 
     useEffect(() => {
         ProfileUsers();
@@ -102,8 +120,11 @@ function Notifications() {
                 formData.append('image', image);
             }
 
-            if (imageBag) {
-                formData.append('background_image', imageBag);
+            if (imageBag?.url) {
+                formData.append('background_image', imageBag?.url);
+            }
+            if (imageBagMobile?.url) {
+                formData.append('mobile_background_image', imageBagMobile?.url);
             }
 
             await PatchRepository.getPatchProfile(
@@ -111,7 +132,8 @@ function Notifications() {
                 user?.access
             );
             setRenderProfile(!renderProfile);
-            setImageBag(null)
+            setImageBag({ img: null, url: null })
+            setImageBagMobile({ img: null, url: null })
             setImage(null)
 
 
@@ -128,10 +150,11 @@ function Notifications() {
             });
         }
         setLoading2(false)
+        setOpen(false)
 
     }
 
-    console.log(profile?.background_image);
+
 
 
     return (
@@ -160,8 +183,7 @@ function Notifications() {
                                     </Image.PreviewGroup>
                                 </div>
                                 <div className="image_icon" >
-                                    <a data-bs-target="#exampleModalMyProductsUserProfile"
-                                        data-bs-toggle="modal">
+                                    <a onClick={() => setOpen(true)}>
                                         <i className="fa-solid fa-camera-retro"></i>
                                     </a>
                                 </div>
@@ -199,7 +221,7 @@ function Notifications() {
                                     user?.role === 'seller' ?
                                         <>
                                             <CreditCard />
-                                            <div className="border p-4 rounded mt-4 " style={{transform:"translateX(-7px)"}}>
+                                            <div className="border p-4 rounded mt-4 " style={{ transform: "translateX(-7px)" }}>
                                                 <h4>Parolni o'zgartirish</h4>
                                                 <form
                                                     className="row gap-4 row-gap-3 mx-auto "
@@ -256,21 +278,67 @@ function Notifications() {
                     </div>
                 </div>
 
-
-                <ModalDeletePostEdit formID={"user-modal-profile"}
-                    dataBsTarget="exampleModalMyProductsUserProfile"
-                    onSubmited={handleClickEditUserProfile}
+                <Modal
+                    title="Rasm yuklash (Profil, Mobile, Desktop)"
+                    open={open}
+                    onCancel={() => setOpen(false)}
+                    footer={null}
                 >
-                    <label htmlFor="file">
-                        Orqa fon rasmi
-                        <input type="file" className='form-control py-4 rounded' id='file' name='file' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImageBag(e.target.files[0])} />
+                    <label htmlFor="files" className='w-100 mt-4'>
+                        Profil rasmi
                     </label>
-                    <label htmlFor="files">
-                        Profle rasmi
-                        <input type="file" className='form-control py-4 rounded' id='files' name='files' accept='.png, .jpeg, .jpg, .heic' onChange={(e) => setImage(e.target.files[0])} />
-                    </label>
+                    <input type="file"
+                        className='form-control py-4 rounded'
+                        id='files' name='files' accept='.png, .jpeg, .jpg, .heic'
+                        onChange={(e) => setImage(e.target.files[0])} />
 
-                </ModalDeletePostEdit>
+                    <label className='w-100 mt-4 d-flex justify-content-between'>
+                        <span>Orqa fon rasmi (Mobile)
+                        </span>
+                        <span style={{ cursor: "pointer" }} onClick={() => (setOpenViewImage(true), setOpenViewTitle("mobile"))}>
+                            Ko'rish <i className='fa-solid fa-eye'></i>
+                        </span>
+                    </label>
+                    <input type="file" className='form-control py-4 rounded'
+                        id='file' name='file' accept='.png, .jpeg, .jpg, .heic'
+                        onChange={(e) => LivePosterMobile(e.target.files[0])} />
+
+                    <label className='w-100 mt-4 d-flex justify-content-between'>
+                        <span>Orqa fon rasmi (Desktop)
+                        </span>
+                        <span style={{ cursor: "pointer" }} onClick={() => (setOpenViewImage(true), setOpenViewTitle("desktop"))}>
+                            Ko'rish <i className='fa-solid fa-eye'></i>
+                        </span>
+                    </label>
+                    <input type="file" className='form-control py-4 rounded'
+                        id='file' name='file' accept='.png, .jpeg, .jpg, .heic'
+                        onChange={(e) => LivePosterDesktop(e.target.files[0])} />
+
+                    <div className='d-flex justify-content-end gap-3 mt-3'>
+                        <button className='btn btn-secondary fs-4 px-4' onClick={() => setOpen(false)}>Yopish</button>
+                        <button className='btn btn-success fs-4 px-4' onClick={handleClickEditUserProfile}>Saqlash</button>
+                    </div>
+
+                </Modal>
+
+                <Modal
+                    title={openViewTitle === "mobile" ? "Mobile ko'rinish" : "Desktop ko'rinish"}
+                    open={openViewImage}
+                    onCancel={() => setOpenViewImage(false)}
+                    footer={null}
+                    className={openViewTitle === "mobile" ? "" : "container"}
+                >
+                    <img
+                        style={{
+                            objectFit: "cover",
+                            height: "200px",
+                            objectPosition: "center center",
+                            width: "100%"
+                        }}
+                        src={(openViewTitle === "desktop" ? (imageBag?.img || profile?.background_image) : (imageBagMobile?.img || profile?.mobile_background_image)) || "/static/img/orqafon1.avif"} alt="desktop" />
+
+                </Modal>
+
 
                 <ModalDeletePostEdit formID={"user-modal-profile-name"}
                     dataBsTarget="exampleModalMyProductsUserProfileName"

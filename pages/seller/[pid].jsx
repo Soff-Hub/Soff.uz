@@ -12,8 +12,10 @@ import SellerProducts from '~/components/partials/seller/SellerProducts';
 import SellerDonateForm from '~/components/partials/seller/SellerDonateForm';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
+import { useMediaQuery } from 'react-responsive';
 
 const SellerPage = ({ seller, sellerr }) => {
+    const isBigScreen = useMediaQuery({ query: '(max-width: 430px)' });
     const [data, setData] = useState(seller);
     const [page, setPage] = useState(1);
     const router = useRouter();
@@ -171,9 +173,9 @@ const SellerPage = ({ seller, sellerr }) => {
                             <div
                                 className="user_profile_card"
                                 style={{
-                                    backgroundImage: `url(${sellerr?.seller?.background_image
-                                        ? sellerr?.seller?.background_image
-                                        : '/static/img/orqafon1.avif'
+                                    backgroundImage: `url(${(isBigScreen ?
+                                        sellerr?.seller?.mobile_background_image :
+                                        sellerr?.seller?.background_image) || '/static/img/orqafon1.avif'
                                         })`,
                                 }}>
                                 <div className="profile_images_card">
@@ -367,7 +369,7 @@ const SellerPage = ({ seller, sellerr }) => {
                     <SellerDonateForm />
                 )}
             </div>
-        </PageContainer>
+        </PageContainer >
     );
 };
 
