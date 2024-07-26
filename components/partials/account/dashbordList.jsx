@@ -29,7 +29,7 @@ function DashbordList({ setOpen }) {
 
 
     async function GetItemsProductsPlayLists() {
-        const ItemsData = await GetRepository.getPopularPlayLists(user?.access);
+        const ItemsData = await GetRepository.getPopularPlayLists(1, user?.access);
         if (ItemsData?.results) {
             setDataPlayLists(ItemsData?.results);
         }

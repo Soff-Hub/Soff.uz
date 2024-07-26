@@ -348,10 +348,10 @@ const Posts = () => {
                         <div className="d-flex container justify-content-center ">
 
                             <div
-                                className="row m-0  gap-3 pt-5"
+                                className="row mx-auto  gap-3 pt-5"
                                 style={{ alignItems: 'flex-start' }}>
 
-                                <h5 className="p-0  col-md-12 fs-4  text-warning fw-semibold lh-base">
+                                <h5 className="w-100 fs-4  text-warning fw-semibold lh-base">
                                     {' '}
                                     <i className="fa-solid fa-triangle-exclamation"></i>{' '}
                                     Hurmatli Sotuvchi mahsulot yuklayotganingizda
@@ -361,12 +361,14 @@ const Posts = () => {
                                     bloklab qo'yilishi mumkin. E'tiborli bo'ling!
                                 </h5>
 
-                                <div className='row  p-0 pr-3 mb-5 ' style={{ overflowY: "auto", height: "60vh" }}>
+                                <div className='antd_form_container '
+
+                                    style={{ overflowY: "auto", height: "60vh" }}>
 
                                     <Form
                                         form={form}
                                         onFinish={postOrder}
-                                        className="col-md-7 pl-0 "
+                                        className="w-100"
                                         layout='vertical'
 
 
@@ -385,7 +387,7 @@ const Posts = () => {
                                                 </div>
                                             }
                                             name="title"
-                                            className='col-md-12 mb-2 '
+                                            className='mb-2  '
                                             rules={[
                                                 {
                                                     required: true,
@@ -417,7 +419,7 @@ const Posts = () => {
                                                 </div>
                                             }
                                             name={"poster"}
-                                            className='col-md-12 mb-2 '
+                                            className='mb-2 '
 
                                         >
 
@@ -440,7 +442,7 @@ const Posts = () => {
                                                     (customePoster?.url) ?
                                                         <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
                                                         :
-                                                        <span className='d-flex align-items-center justify-content-center gap-1'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Poster yuklash uchun rasm tanlang</span></span>
+                                                        <span className='d-flex align-items-center justify-content-center gap-1 mt-2'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Poster yuklash uchun rasm tanlang</span></span>
                                                 }
                                                 <Input
 
@@ -476,7 +478,7 @@ const Posts = () => {
                                                 </div>
                                             }
                                             name="price"
-                                            className='col-md-12 mb-2'
+                                            className=' mb-2 '
                                             rules={[
                                                 {
                                                     required: true,
@@ -525,7 +527,7 @@ const Posts = () => {
                                                 </div>
                                             }
                                             name="category"
-                                            className='col-md-12 mb-2'
+                                            className=' mb-2 '
                                             rules={[
                                                 {
                                                     required: true,
@@ -567,7 +569,7 @@ const Posts = () => {
                                                 </div>
                                             }
                                             name="tags"
-                                            className='col-md-12 mb-2'
+                                            className=' mb-2 '
                                         >
                                             <Select
                                                 mode="tags"
@@ -596,11 +598,11 @@ const Posts = () => {
                                                     </Tooltip>
                                                 </div>
                                             }
-                                            className='col-md-12 mb-2'
+                                            className='mb-2 '
                                         >
-                                            <div className='d-flex gap-3 '>
+                                            <div className='d-flex gap-3 antd_search_input_none '>
                                                 <Select
-                                                    // mode="select"
+                                                    mode="select"
                                                     placeholder="Mavjud playlistlar"
                                                     style={{
                                                         width: '100%',
@@ -651,7 +653,7 @@ const Posts = () => {
                                                 <span
                                                     onClick={() => setOpen(true)}
                                                     style={{
-                                                        width: '20%',
+                                                        width: '25%',
                                                         height: '44px',
 
                                                     }}
@@ -667,7 +669,7 @@ const Posts = () => {
                                         </Form.Item>
 
                                         <Form.Item
-                                            className="rounded-5 col-md-12 mb-2"
+                                            className="rounded-5  mb-2 "
                                             name={"description"}
                                             label={
                                                 <div className=" d-flex align-items-center gap-3 ">
@@ -684,13 +686,17 @@ const Posts = () => {
                                         >
 
 
-                                            <CKeditor
+                                            <div style={{
+                                                width: "99.5%",
+                                            }}>
+                                                <CKeditor
 
-                                                editorLoaded={editorLoaded}
-                                            />
+                                                    editorLoaded={editorLoaded}
+                                                />
+                                            </div>
                                         </Form.Item>
 
-                                        <Form.Item className="col-md-12 d-flex justify-content-end m-0  my-4">
+                                        <Form.Item className="w-100 d-flex justify-content-end m-0  my-4">
 
                                             <Button
                                                 loading={disabled}
@@ -714,11 +720,7 @@ const Posts = () => {
 
                                     </Form>
 
-                                    <div className='col-md-5 m-0 p-0 ' style={{
-                                        position: "sticky",
-                                        alignSelf: "flex-start",
-                                        top: "30px"
-                                    }}>
+                                    <div className='video_container_antd' >
                                         <div
                                             className='video_iframe'
 
@@ -738,7 +740,7 @@ const Posts = () => {
                                         >
 
                                             <video
-                                                className=" p-0 "
+
                                                 controls
                                                 poster={customePoster?.url}
                                                 preload="none"
@@ -756,7 +758,7 @@ const Posts = () => {
                                         </div>
 
 
-                                        {iputName && <div className='px-4 py-2'>
+                                        {iputName && <div className='px-2 py-2'>
                                             <p>{iputName}</p>
                                         </div>}
                                     </div>

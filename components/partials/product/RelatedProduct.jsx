@@ -46,7 +46,7 @@ const RelatedProduct = ({ collectionSlug, boxed, pid, data }) => {
                     className={`ps-section--default ps-related-products ${boxed === true ? 'boxed' : ''
                         }`}>
                     <div className="ps-section__header">
-                        <h3>O'xshash mahsulotlar</h3>
+                        <h3>O'xshash mahsulotlar</h3> 
                     </div>
                     <div className="ps-section__content">{productItemsView}</div>
                 </div>

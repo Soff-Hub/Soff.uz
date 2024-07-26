@@ -424,7 +424,7 @@ const Posts = () => {
                             className="row  w-100 gap-3 pt-5"
                             style={{ alignItems: 'flex-start' }}>
 
-                            <h5 className="p-0  col-md-8 fs-4  text-warning fw-semibold lh-base">
+                            <h5 className=" fs-4  text-warning fw-semibold lh-base">
                                 {' '}
                                 <i className="fa-solid fa-triangle-exclamation"></i>{' '}
                                 Hurmatli Sotuvchi mahsulot yuklayotganingizda
@@ -436,12 +436,12 @@ const Posts = () => {
 
 
 
-                            <div className='row m-0 p-0 mb-5' style={{ overflowY: "auto", height: "50vh" }}>
+                            <div className='antd_form_container' style={{ overflowY: "auto", height: "50vh" }}>
 
                                 <Form
                                     form={form}
                                     onFinish={postOrder}
-                                    className="col-md-7 pl-0 row  "
+                                    className="w-100"
                                     layout='vertical'
 
                                 >
@@ -452,7 +452,7 @@ const Posts = () => {
                                             <Form.Item
                                                 label={'Holati'}
                                                 name="status"
-                                                className='col-md-12 mb-2'
+                                                className='mb-2'
                                             >
                                                 <Select
                                                     name="tags"
@@ -474,7 +474,7 @@ const Posts = () => {
                                                 <Form.Item
                                                     label={'Sabab'}
                                                     name="reason"
-                                                    className='col-md-12 mb-2'
+                                                    className='mb-2'
                                                     rules={[
                                                         {
                                                             required: products?.reason ? false : true,
@@ -509,7 +509,7 @@ const Posts = () => {
                                             </div>
                                         }
                                         name="title"
-                                        className='col-md-12 mb-2 '
+                                        className=' mb-2 '
 
                                     >
                                         <Input
@@ -533,7 +533,7 @@ const Posts = () => {
                                             </div>
                                         }
                                         name={"poster"}
-                                        className='col-md-12 mb-2 '
+                                        className=' mb-2 '
 
                                     >
 
@@ -556,7 +556,7 @@ const Posts = () => {
                                                 (customePoster?.url || products?.poster_url) ?
                                                     <span>Rasm yuklangan <i className="fa-solid fa-circle-check text-success mt-2"></i></span>
                                                     :
-                                                    <span className='d-flex align-items-center justify-content-center gap-1'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Poster yuklash uchun rasm tanlang</span></span>
+                                                    <span className='d-flex align-items-center justify-content-center gap-1 mt-2'><i className="fa-solid fa-image text-success mx-2 fs-3"></i> <span>Poster yuklash uchun rasm tanlang</span></span>
                                             }
                                             <Input
                                                 name='poster'
@@ -591,7 +591,7 @@ const Posts = () => {
                                             </div>
                                         }
                                         name="price"
-                                        className='col-md-12 mb-2'
+                                        className=' mb-2'
 
                                     >
                                         <div className='d-flex align-items-center gap-3 '>
@@ -633,7 +633,7 @@ const Posts = () => {
                                             </div>
                                         }
                                         name="category"
-                                        className='col-md-12 mb-2'
+                                        className='mb-2'
 
                                     >
                                         <Select
@@ -669,7 +669,7 @@ const Posts = () => {
                                             </div>
                                         }
                                         name="tags"
-                                        className='col-md-12 mb-2'
+                                        className='mb-2'
                                     >
                                         <Select
                                             name="tags"
@@ -700,7 +700,7 @@ const Posts = () => {
                                             </div>
                                         }
                                         name="deactive_tag"
-                                        className='col-md-12 mb-2'
+                                        className=' mb-2'
                                     >
                                         <Select
                                             name="deactive_tag"
@@ -736,9 +736,9 @@ const Posts = () => {
                                                 </Tooltip>
                                             </div>
                                         }
-                                        className='col-md-12 mb-2'
+                                        className='mb-2'
                                     >
-                                        <div className='d-flex gap-3 '>
+                                        <div className='d-flex gap-3 antd_search_input_none '>
                                             <Select
                                                 disabled={user?.role === 'admin'}
                                                 mode="select"
@@ -811,7 +811,7 @@ const Posts = () => {
                                     </Form.Item>
 
                                     <Form.Item
-                                        className="rounded-5 col-md-12 mb-2"
+                                        className="rounded-5  mb-2"
                                         name={"description"}
                                         label={
                                             <div className=" d-flex align-items-center gap-3 ">
@@ -834,7 +834,7 @@ const Posts = () => {
                                         />
                                     </Form.Item>
 
-                                    <Form.Item className="col-md-12 d-flex justify-content-end m-0  my-4">
+                                    <Form.Item className="w-100 d-flex justify-content-end m-0  my-4">
                                         <Button
                                             loading={loading}
                                             htmlType="submit"
@@ -857,11 +857,7 @@ const Posts = () => {
 
                                 </Form>
 
-                                <div className='col-md-5 m-0 p-0 ' style={{
-                                    position: "sticky",
-                                    alignSelf: "flex-start",
-                                    top: "30px"
-                                }}>
+                                <div className='video_container_antd '>
 
 
                                     <div
@@ -883,7 +879,6 @@ const Posts = () => {
                                     >
 
                                         <video
-                                            className=" p-0 "
                                             controls
                                             poster={customePoster?.url || products?.poster_url}
                                             preload="none"
@@ -900,7 +895,7 @@ const Posts = () => {
                                         </video>
                                     </div>
 
-                                    {iputName && <div className='px-4 py-2'>
+                                    {iputName && <div className='px-2 py-2'>
                                         <p>{iputName}</p>
                                     </div>}
                                 </div>

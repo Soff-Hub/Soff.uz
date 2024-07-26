@@ -127,7 +127,7 @@ const ProductVideoDetailFullWidth = ({
                         <h4
                             className='fw-medium fs-3 p-3 bg-body-secondary my-4 rounded-3 text-center'
                         >
-                            O'xshash mahsulotlar
+                            O'xshash videolar 
                         </h4>
 
                         {
