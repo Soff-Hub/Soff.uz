@@ -408,6 +408,7 @@ const Posts = () => {
         'cancelled': 'Bekor qilingan',
     }
 
+    console.log(valuesPlayUpdate);
 
 
     return (user?.role === 'seller' || user?.role === 'admin') ? (
@@ -598,7 +599,7 @@ const Posts = () => {
 
                                             <InputNumber
                                                 defaultValue={products?.price}
-                                                disabled={free || products?.price == 0}
+                                                disabled={free && products?.price == 0}
                                                 placeholder="Video  narxi"
                                                 className='w-100 py-2'
                                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
@@ -1169,7 +1170,7 @@ const Posts = () => {
                             <InputNumber
                                 defaultValue={valuesPlayUpdate?.price}
                                 style={{ height: "45.4px" }}
-                                disabled={freePlay}
+                                disabled={!freePlay && valuesPlayUpdate?.price === 0}
                                 placeholder="Narxi"
                                 className='w-100 py-2'
                                 formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
