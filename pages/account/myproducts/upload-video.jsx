@@ -606,7 +606,7 @@ const Posts = () => {
                                         >
                                             <div className='d-flex gap-3 antd_search_input_none '>
                                                 <Select
-                                                    mode="select"
+                                                    mode="single"
                                                     placeholder="Mavjud playlistlar"
                                                     style={{
                                                         width: '100%',
