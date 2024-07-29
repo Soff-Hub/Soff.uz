@@ -149,7 +149,11 @@ const Posts = () => {
 
             if (customePoster?.poster) {
                 formData.append('poster', customePoster?.poster); // Video posteri
+            } else {
+                formData.append('poster', posterVideo); // Video posteri
             }
+
+
             const newPrice = parseInt(values?.price !== 0 && formatPrice(values?.price));
 
             formData.append('price', (free || values?.price == 0) ? 0 : newPrice); // Video narxi
@@ -686,14 +690,10 @@ const Posts = () => {
                                         >
 
 
-                                            <div style={{
-                                                width: "99.5%",
-                                            }}>
-                                                <CKeditor
+                                            <CKeditor
 
-                                                    editorLoaded={editorLoaded}
-                                                />
-                                            </div>
+                                                editorLoaded={editorLoaded}
+                                            />
                                         </Form.Item>
 
                                         <Form.Item className="w-100 d-flex justify-content-end m-0  my-4">
