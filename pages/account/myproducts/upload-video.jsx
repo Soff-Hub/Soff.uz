@@ -1057,7 +1057,7 @@ const Posts = () => {
                                 <InputNumber
                                     defaultValue={valuesPlayUpdate?.price}
                                     style={{ height: "45.4px" }}
-                                    disabled={freePlay}
+                                    disabled={!freePlay && valuesPlayUpdate?.price}
                                     placeholder="Narxi"
                                     className='w-100 py-2'
                                     formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
