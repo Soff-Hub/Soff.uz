@@ -2530,6 +2530,11 @@
     }
 
     .antd_search_input_none {
+        .ant-select-selection-item{
+            display: flex !important;
+            
+           
+        }
         .ant-select-selection-search-input {
             display: none !important;
         }
