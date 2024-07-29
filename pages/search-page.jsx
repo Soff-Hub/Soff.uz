@@ -53,9 +53,9 @@ const Products_Search_Results = () => {
             } else {
                 setKeyword('');
             }
-        } else {
-            setLoading(false);
         }
+        setLoading(false);
+
     }, [debouncedSearchTerm, keyword, typeSelect]);
 
     useEffect(() => (
@@ -68,7 +68,6 @@ const Products_Search_Results = () => {
             inputEl.current.focus();
         }
     }, [keyword, inputEl]);
-
 
 
     // Views
@@ -118,8 +117,14 @@ const Products_Search_Results = () => {
             icon: "fa-solid fa-file-lines",
             value: "template"
         },
+        {
+            id: 5,
+            name: "Playlistlar",
+            icon: "fa-solid fa-play",
+            value: "playlist"
+        },
     ]
-    
+
 
 
     return (
@@ -166,6 +171,7 @@ const Products_Search_Results = () => {
 
                 </div>
             </nav>
+
             <nav className='global_navbar_bottom'>
                 <div className="container ">
                     <div className='navbar-container'>
@@ -184,30 +190,40 @@ const Products_Search_Results = () => {
                     </div>
                 </div>
             </nav>
+
             <div className="results mt-3">
                 <div className="container">
-                    {(resultItems?.results?.length > 0) ?
+                    {
 
-                       (loading ?
+                        !loading ? (
+
+                            resultItems?.results?.length > 0 ? (
+                                <>
+                                    <p style={{ fontWeight: "600", color: "#00a44f" }}>
+                                        Qidiruv natijasida topilgan ma'lumotlar soni {resultItems.count} ta
+                                    </p>
+                                    {resultItems?.results?.map((product) => (
+                                        <ProductSearchGoogle product={product} key={product.id} />
+                                    ))}
+                                </>
+                            ) : (
+                                <div className='d-flex align-items-center justify-content-center pt-5'>
+                                    <p>Ma'lumot topilmadi</p>
+                                </div>
+                            )
+                        ) : (
                             <div className='d-flex align-items-center justify-content-center pt-5'>
                                 <span className="ps-form__action">
                                     <Spin size="large" />
                                 </span>
                             </div>
-                            :
-                            <>
-                                <p style={{ fontWeight: "600", color: "#00a44f" }} >Qidiruv natijasida topilgan ma'lumotlar soni  {resultItems?.count} ta</p>
-                                {resultItems?.results?.map((product) => (
-                                    <ProductSearchGoogle product={product} key={product.id} />
-                                ))}
-                            </>)
+                        )
 
-                        :
-                        (<div className='d-flex align-items-center justify-content-center pt-5'>
-                            <p> Ma'lumot topilmadi </p>
-                        </div>)
                     }
+
                 </div>
+
+
             </div>
         </div >
     )

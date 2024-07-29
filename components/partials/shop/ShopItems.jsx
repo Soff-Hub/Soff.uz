@@ -5,13 +5,14 @@ import { useRouter } from 'next/router';
 import { generateTempArray } from '~/utilities/common-helpers';
 import SkeletonProduct from '~/components/elements/skeletons/SkeletonProduct';
 import ProductRepository from '~/repositories/ProductRepository';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { CategorySlug } from '~/store/auth/action';
 import useDebounce from '~/hooks/useDebounce';
 import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import AudioWaveform from '~/components/elements/products/AudioProductCart';
 import ProductVideo from '~/components/elements/products/ProductVideo';
+import PlaylistCard from '~/components/elements/products/PlaylistCard';
 
 const ShopItems = ({
     columns = 4,
@@ -50,9 +51,10 @@ const ShopItems = ({
     }
 
     async function getCategry() {
-        const responseData = await ProductRepository.getCategoryParent().then(
-            () => setLoad(true)
-        );
+        const responseData = await ProductRepository.getCategoryParent()
+            .then(
+                () => setLoad(true)
+            );
         if (responseData?.length > 0) {
             dispatch(CategorySlug(responseData?.data?.results));
             // categorySlug
@@ -87,8 +89,6 @@ const ShopItems = ({
         setNewData(data);
         if (true) {
             setNewData(data);
-        } else {
-            setLoad(true);
         }
     }, [query, data]);
 
@@ -97,7 +97,7 @@ const ShopItems = ({
             getCategry();
         }
 
-        if (slug !== 'bepul-mahsulotlar') {
+        if (slug !== 'free') {
             if (categoryData?.every((cat) => cat.slug !== slug)) {
                 setchaildId(slug);
                 setParentId(null);
@@ -147,7 +147,7 @@ const ShopItems = ({
                 setLoad(true);
             }
         }
-        if (slug === 'bepul-mahsulotlar') {
+        if (slug === 'free') {
             getFreeDocuments(e, search);
         }
     };
@@ -276,7 +276,7 @@ const ShopItems = ({
     }
 
     async function detailSearch(e) {
-        if (slug === 'bepul-mahsulotlar') {
+        if (slug === 'free') {
             getFreeDocuments(1, e);
         } else {
             if (chaildId) {
@@ -339,7 +339,7 @@ const ShopItems = ({
         if (data?.length > 0) {
             const items =
                 newData?.length > 0 &&
-                newData?.map((item) => (
+                newData?.map((item, index) => (
                     <>
                         {item?.document?.content_type === 'audio' ? (
                             <div className="col-12 my-2">
@@ -356,8 +356,8 @@ const ShopItems = ({
                                 item?.type === 'playlist' ?
                                     <div
                                         key={index}
-                                        className="col-md-4 my-2 mb-4">
-                                        <PlaylistCard product={item} />{' '}
+                                        className="col-md-4 my-4 mb-4">
+                                        <PlaylistCard product={item}  />{' '}
                                     </div> : (
                                         <div
                                             className={classes + ' home-card-category mb-3'}
@@ -406,6 +406,7 @@ const ShopItems = ({
         }
     }
 
+
     return (
         <div className="ps-shopping">
             <div className="ps-shopping__header">
@@ -424,7 +425,7 @@ const ShopItems = ({
                         />
                     </label>
 
-                    {slug !== 'bepul-mahsulotlar' && (
+                    {slug !== 'free' && (
                         <select
                             className="ps-select form-control"
                             data-placeholder="Sort Items"

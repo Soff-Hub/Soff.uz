@@ -176,13 +176,14 @@ class GetRepository {
         search,
         document__content_type,
         playlist,
+        viewsAll,
         token
     ) {
         const endPoint = `admin/product-list/${id ? id + '/' : ''
             }?page=${page}&category=${category || ''}&date_range_after=${date || ''
             }&status=${dataValStatus || ''}&search=${search || ''
             }&document__content_type=${document__content_type || ''
-            }&playlist=${playlist || ''}&offset=${offset}&limit=${limit}`;
+            }&playlist=${playlist || ''}&sort=${viewsAll || ''}&offset=${offset}&limit=${limit}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,

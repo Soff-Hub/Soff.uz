@@ -69,7 +69,9 @@ const ProductVideoCards = ({ product, isPlay, setIsPlay, type }) => {
                         )}
 
                         <ModuleProductVideoActions product={product} />
-                    </div>}
+                    </div>
+                    
+                    }
 
             </div>
         </div>

@@ -58,6 +58,7 @@ function MyProductsLists() {
     const [videosize, setVideoSize] = useState(null);
     const [viewsAll, setViewsAll] = useState('');
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [openFilter, setOpenFilter] = useState(false);
     const [dataBlock, setdataBlock] = useState(null);
     const [copy, setCopy] = useState(null);
     const { RangePicker } = DatePicker;
@@ -346,7 +347,6 @@ function MyProductsLists() {
     };
 
 
-
     const copyVideoUrl = (item) => {
         const videoUrl = `https://soff.uz/product/${item?.name?.slug}`;
         navigator.clipboard
@@ -409,6 +409,22 @@ function MyProductsLists() {
         GetItemsTag();
         getVideoFunk();
     }, []);
+
+    const handeClearFilter = () => {
+        setViewsAll('');
+        setDataCat('');
+        setTagName('');
+        setLifetime('');
+        setLifetime2('');
+        setSelectValStatus('');
+        setFiltertype('');
+        setView('');
+        setDataPlayListsID('')
+        setOpenFilter(false);
+
+    }
+
+
 
     useEffect(() => {
         GetItemsProducts(
@@ -826,6 +842,8 @@ function MyProductsLists() {
                                         <></>
                                     )}
                                     <div className="row mx-auto gap-4  pb-4 pt-5">
+
+
                                         <label
                                             className={
                                                 user?.role === 'seller'
@@ -874,179 +892,13 @@ function MyProductsLists() {
                                         ) : (
                                             <></>
                                         )}
-                                        <div
-                                            className="accordion accordion-flush p-0"
-                                            id="accordionFlushExample">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header m-0">
-                                                    <button
-                                                        style={{
-                                                            padding: '17px',
-                                                            backgroundColor:
-                                                                '#F1F1F2',
-                                                        }}
-                                                        className="accordion-button collapsed  responsiveCardButton   text-success "
-                                                        type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#flush-collapseOne"
-                                                        aria-expanded="false"
-                                                        aria-controls="flush-collapseOne">
-                                                        <strong> Filter</strong>
-                                                    </button>
-                                                </h2>
-                                                <div
-                                                    id="flush-collapseOne"
-                                                    className="accordion-collapse collapse"
-                                                    data-bs-parent="#accordionFlushExample">
-                                                    <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
 
-                                                        <Select
-                                                            className="col-md-6 p-0"
-                                                            mode="select"
-                                                            showSearch
-                                                            allowClear
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '47px',
-                                                            }}
-                                                            onChange={onChange}
-                                                            onSearch={onSearchCategory}
-                                                            placeholder="Barcha kategoriyalar">
-                                                            <Option value="all">
-                                                                Barcha
-                                                                kategoriyalar
-                                                            </Option>
-
-                                                            {options}
-                                                        </Select>
-
-                                                        {user?.role ===
-                                                            'seller' ? (
-                                                            <Select
-                                                                className="col-md-5 p-0"
-                                                                mode="select"
-                                                                showSearch
-                                                                allowClear
-                                                                style={{
-                                                                    width: '100%',
-                                                                    height: '47px',
-                                                                }}
-                                                                onChange={
-                                                                    handleChange
-                                                                }
-                                                                onSearch={onSearchTegs}
-                                                                placeholder="Barcha teglar">
-                                                                <Option value="tags">
-                                                                    Barcha
-                                                                    teglar
-                                                                </Option>
-
-                                                                {childiren}
-                                                            </Select>
-                                                        ) : (
-                                                            <></>
-                                                        )}
-
-
-                                                        {user?.role ===
-                                                            'seller' ? (
-                                                            <select
-                                                                className="form-select col-md-6 fs-3 py-3 rounded-3"
-                                                                onChange={(e) =>
-                                                                    setSelectValStatus(
-                                                                        e.target
-                                                                            .value
-                                                                    )
-                                                                }>
-                                                                <option
-                                                                    className="fs-3"
-                                                                    selected
-                                                                    value="">
-                                                                    Barcha
-                                                                    holatlar
-                                                                </option>
-                                                                <option
-                                                                    className="fs-3"
-                                                                    value="moderation">
-                                                                    Moderatsiya
-                                                                </option>
-                                                                <option
-                                                                    className="fs-3"
-                                                                    value="approved">
-                                                                    Tasdiqlangan
-                                                                </option>
-                                                                <option
-                                                                    className="fs-3"
-                                                                    value="cancelled">
-                                                                    Bekor
-                                                                    qilingan
-                                                                </option>
-                                                            </select>
-                                                        ) : (
-                                                            <></>
-                                                        )}
-
-
-                                                        <RangePicker
-                                                            className="col-md-5 py-3   rounded-3"
-                                                            onChange={handleChangeDate}
-                                                        />
-
-                                                        <select
-                                                            className="form-select col-md-4 fs-3 py-3 rounded-3"
-                                                            onChange={(e) =>
-                                                                setFiltertype(
-                                                                    e.target
-                                                                        .value
-                                                                )
-                                                            }>
-                                                            <option
-                                                                className="fs-3"
-                                                                selected
-                                                                value="">
-                                                                Barcha turlar
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="file">
-                                                                File
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="audio">
-                                                                Audio
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="template">
-                                                                Shablon
-                                                            </option>
-                                                        </select>
-                                                        <Select
-                                                            className="col-md-4 p-0"
-                                                            mode="select"
-                                                            showSearch
-                                                            allowClear
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '47px',
-                                                            }}
-                                                            onChange={onChangePlay}
-                                                            placeholder="Barcha playlistlar">
-                                                            <Option value="all">
-                                                                Barcha
-                                                                PlayListslar
-                                                            </Option>
-
-                                                            {optionsPlayLists}
-                                                        </Select>
-                                                        <button onClick={() => setViewsAll("view_count")} className='btn btn-success col-md-3 fs-4'>Eng ko'p ko'rilganlar</button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button className='btn btn-outline-success fs-4 col-md-2 py-3'
+                                            onClick={() => setOpenFilter(true)}>
+                                            <i className="fa-solid fa-sliders"></i> Filter
+                                        </button>
                                     </div>
+
                                     {user?.role === 'seller' ? (
                                         <>
                                             <h4 className="ms-2 mb-4">
@@ -1566,6 +1418,177 @@ function MyProductsLists() {
                     )}
                 </ModalDeletePostEdit>
             </div>
+
+
+            <Modal
+                title={"Mahsulotlarni filterlash"}
+                open={openFilter}
+                onOk={() => setOpenFilter(true)}
+                onCancel={() => setOpenFilter(false)}
+                footer={null}
+                width={500}
+            >
+                <div className="p-0 mt-5 mb-3 w-100 d-flex gap-4 flex-column ">
+                    <div className='d-flex justify-content-between gap-3'>
+                        <button onClick={handeClearFilter}
+
+                            className='btn btn-outline-secondary rounded-3 fs-4 py-3 w-100'>
+                            Barcha mahsulotlar
+                        </button>
+                        <button onClick={() => setViewsAll("view_count")}
+
+                            className='btn btn-outline-success rounded-3 fs-4 py-3 w-100'>
+                            <i className="fa-solid fa-eye mx-2"></i>
+                            Eng ko'p ko'rilganlar
+                        </button>
+                    </div>
+
+                    <Select
+                        className=" p-0"
+                        mode="select"
+                        showSearch
+                        allowClear
+                        style={{
+                            width: '100%',
+                            height: '47px',
+                        }}
+                        onChange={onChange}
+                        onSearch={onSearchCategory}
+                        placeholder="Barcha kategoriyalar">
+                        <Option value="all">
+                            Barcha
+                            kategoriyalar
+                        </Option>
+
+                        {options}
+                    </Select>
+
+                    {user?.role ===
+                        'seller' ? (
+                        <Select
+                            className=" p-0"
+                            mode="select"
+                            showSearch
+                            allowClear
+                            style={{
+                                width: '100%',
+                                height: '47px',
+                            }}
+                            onChange={
+                                handleChange
+                            }
+                            onSearch={onSearchTegs}
+                            placeholder="Barcha teglar">
+                            <Option value="tags">
+                                Barcha
+                                teglar
+                            </Option>
+
+                            {childiren}
+                        </Select>
+                    ) : (
+                        <></>
+                    )}
+
+
+                    {user?.role ===
+                        'seller' ? (
+                        <select
+                            className="form-select fs-3 py-3 rounded-3"
+                            onChange={(e) =>
+                                setSelectValStatus(
+                                    e.target
+                                        .value
+                                )
+                            }>
+                            <option
+                                className="fs-3"
+                                selected
+                                value="">
+                                Barcha
+                                holatlar
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="moderation">
+                                Moderatsiya
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="approved">
+                                Tasdiqlangan
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="cancelled">
+                                Bekor
+                                qilingan
+                            </option>
+                        </select>
+                    ) : (
+                        <></>
+                    )}
+
+
+                    <RangePicker
+                        className=" py-3   rounded-3"
+                        onChange={handleChangeDate}
+                    />
+
+                    <select
+                        className="form-select  fs-3 py-3 rounded-3"
+                        onChange={(e) =>
+                            setFiltertype(
+                                e.target
+                                    .value
+                            )
+                        }>
+                        <option
+                            className="fs-3"
+                            selected
+                            value="">
+                            Barcha turlar
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="file">
+                            File
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="audio">
+                            Audio
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="template">
+                            Shablon
+                        </option>
+                    </select>
+                    <Select
+                        className="p-0"
+                        mode="select"
+                        showSearch
+                        allowClear
+                        style={{
+                            width: '100%',
+                            height: '47px',
+                        }}
+                        onChange={onChangePlay}
+                        placeholder="Barcha playlistlar">
+                        <Option value="all">
+                            Barcha
+                            PlayListslar
+                        </Option>
+
+                        {optionsPlayLists}
+                    </Select>
+
+
+                </div>
+
+
+            </Modal>
 
             <Modal
                 footer={null}

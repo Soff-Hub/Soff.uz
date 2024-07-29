@@ -367,26 +367,6 @@ function DashbordList({ setOpen }) {
                 </span>
             ),
         },
-        {
-            title: 'Holat',
-            dataIndex: 'status',
-            key: 'address',
-            render: (status) => (
-                <span>
-                    {status === 'approved' ? (
-                        <span>
-                            <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                            tasdiqlangan
-                        </span>
-                    ) : (
-                        <span>
-                            <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                            tasdiqlanmagan
-                        </span>
-                    )}
-                </span>
-            ),
-        },
     ];
 
     const columnsOrdersSeller = [

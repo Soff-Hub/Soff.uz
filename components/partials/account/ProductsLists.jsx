@@ -47,7 +47,6 @@ export function addPeriodToThousands(number) {
 
 function ProductsLists() {
     const { RangePicker } = DatePicker;
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const { accountLinks, user } = useSelector((state) => state.auth);
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
@@ -62,10 +61,11 @@ function ProductsLists() {
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const [category_id, setCategoryID] = useState(null);
+    const [viewsAll, setViewsAll] = useState('');
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 800);
-    const [adminModal, setAdminModal] = useState(false);
     const [allProducts, setAllProducts] = useState(false);
+    const [openFilter, setOpenFilter] = useState(false);
     const router = useRouter();
     const pid = router.asPath;
     const [imageID, setImageID] = useState(null)
@@ -97,7 +97,9 @@ function ProductsLists() {
         id,
         search,
         filterType,
-        dataPlayListsID
+        dataPlayListsID,
+        viewsAll
+
     ) {
         const ItemsData = await GetRepository.getShopsProducts(
             null,
@@ -110,6 +112,7 @@ function ProductsLists() {
             search,
             filterType,
             dataPlayListsID,
+            viewsAll,
             user?.access
         );
         setPageCount(ItemsData?.count);
@@ -188,7 +191,6 @@ function ProductsLists() {
             );
             if (ItemsData?.title) {
                 setDeleteIdView(ItemsData);
-                setIsModalOpen(true);
                 setLoading(false);
             }
         }
@@ -241,14 +243,16 @@ function ProductsLists() {
         Router.push(`/account/products?page=${currPage}&status=${status}`);
     };
 
+
     function handleClickProductsAll() {
         setAllProducts(!allProducts);
         setFiltertype('');
-        setDateArxiv(null);
         setCategoryID(null);
         setLifetime('');
         setLifetime2('');
+        setViewsAll('');
         Router.push(`/account/products?page=${router.query.page}`);
+        setOpenFilter(false);
     }
 
     async function getImageGeneration(id) {
@@ -265,7 +269,8 @@ function ProductsLists() {
                 null,
                 search,
                 filterType,
-                dataPlayListsID
+                dataPlayListsID,
+                viewsAll
             );
         } else {
             const modal = Modal.info({
@@ -318,7 +323,8 @@ function ProductsLists() {
                 null,
                 search,
                 filterType,
-                dataPlayListsID
+                dataPlayListsID,
+                viewsAll
             );
         }
     }, [
@@ -328,7 +334,8 @@ function ProductsLists() {
         searchDebounce,
         router.query.page,
         filterType,
-        dataPlayListsID
+        dataPlayListsID,
+        viewsAll
     ]);
 
     useEffect(() => {
@@ -354,6 +361,7 @@ function ProductsLists() {
                             height="54px"
                         />
                     ) : (
+                        
                         <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(poster_data?.id)}>
                             {
                                 poster_data?.id == imageID ?
@@ -404,6 +412,18 @@ function ProductsLists() {
                     </span>
                     <span> {seller?.phone}</span>
                 </div>
+            ),
+        },
+        {
+            title: 'Ko\'rilganlar soni',
+            dataIndex: 'view_count',
+            key: 'address',
+
+            render: (view_count) => (
+                <span key={view_count} className='text-center'>
+                    <i className="fa-solid fa-eye"></i>{' '}
+                    {view_count} ta
+                </span>
             ),
         },
         {
@@ -551,7 +571,7 @@ function ProductsLists() {
                                     <span className="m-0 py-3 border d-flex justify-content-center h4">
                                         Mahsulotlar soni: {pageCount} ta
                                     </span>
-                                    <div className="row border mt-3 gap-4 mx-auto w-100   px-4 pt-4">
+                                    <div className="row border mt-3 gap-4 mx-auto w-100  p-4">
                                         <label
                                             className="form-label border col-md-9 m-0 p-0 d-flex justify-content-between align-items-center"
                                             style={{
@@ -570,171 +590,15 @@ function ProductsLists() {
                                                 <i className="fa-solid fa-search "></i>
                                             </span>
                                         </label>
+                                        <button className='btn btn-outline-success fs-4 col-md-2 py-3'
+                                            onClick={() => (setOpenFilter(true), Router.push(
+                                                `/account/products?page=${1}&status=${dataValStatus}`
+                                            ))}>
+                                            <i className="fa-solid fa-sliders"></i> Filter
+                                        </button>
 
-                                        <div
-                                            className="accordion accordion-flush p-0"
-                                            id="accordionFlushExample">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header m-0 ">
-                                                    <button
-                                                        onClick={() =>
-                                                            Router.push(
-                                                                `/account/products?page=${1}&status=${dataValStatus}`
-                                                            )
-                                                        }
-                                                        style={{
-                                                            backgroundColor:
-                                                                '#F1F1F1',
-                                                            padding: '17px',
-                                                        }}
-                                                        className="accordion-button collapsed  responsiveCardButton   text-success"
-                                                        type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#flush-collapseOne"
-                                                        aria-expanded="false"
-                                                        aria-controls="flush-collapseOne">
-                                                        <strong> Filter</strong>
-                                                    </button>
-                                                </h2>
-                                                <div
-                                                    id="flush-collapseOne"
-                                                    className="accordion-collapse collapse"
-                                                    data-bs-parent="#accordionFlushExample">
-                                                    <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
-                                                        <Select
-                                                            className="col-md-6 p-0"
-                                                            mode="select"
-                                                            showSearch
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '47px',
-                                                            }}
-                                                            onChange={onChange}
-                                                            onSearch={onSearchCategory}
-                                                            placeholder="Barcha kategoriyalar">
-                                                            <Option
-                                                                value="all"
-                                                                selected>
-                                                                Barcha
-                                                                kategoriyalar
-                                                            </Option>
 
-                                                            {options}
-                                                        </Select>
 
-                                                        <select
-                                                            className="form-select col-md-5 fs-3 py-3 rounded-3"
-                                                            onChange={(e) =>
-                                                                handleFilterStatus(
-                                                                    e.target
-                                                                        .value
-                                                                )
-                                                            }>
-                                                            <option
-                                                                className="fs-3"
-                                                                selected
-                                                                value="">
-                                                                Barcha holatlar
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="moderation">
-                                                                Moderatsiya
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="approved">
-                                                                Tasdiqlangan
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="cancelled">
-                                                                Bekor qilingan
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="deleted">
-                                                                Arxivlangan
-                                                            </option>
-                                                        </select>
-
-                                                        <RangePicker
-                                                            className="w-100 py-3 col-md-6 rounded-3"
-                                                            onChange={handleChange}
-                                                        />
-
-                                                        <select
-                                                            className="form-select col-md-5 fs-3 py-3 rounded-3"
-                                                            onChange={(e) =>
-                                                                setFiltertype(
-                                                                    e.target
-                                                                        .value
-                                                                )
-                                                            }>
-                                                            <option
-                                                                className="fs-3"
-                                                                selected
-                                                                value="">
-                                                                Barcha turlar
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="file">
-                                                                File
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="audio">
-                                                                Audio
-                                                            </option>
-                                                            <option
-                                                                className="fs-3"
-                                                                value="template">
-                                                                Shablon
-                                                            </option>
-                                                        </select>
-                                                        <Select
-                                                            className="col-md-6 p-0"
-                                                            mode="select"
-                                                            showSearch
-                                                            allowClear
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '47px',
-                                                            }}
-                                                            onChange={onChangePlay}
-                                                            placeholder="Barcha playlistlar">
-                                                            <Option value="all">
-                                                                Barcha
-                                                                PlayListslar
-                                                            </Option>
-
-                                                            {optionsPlayLists}
-                                                        </Select>
-
-                                                        <button
-                                                            style={{
-                                                                height: "45px"
-                                                            }}
-                                                            onClick={
-                                                                handleClickProductsAll
-                                                            }
-                                                            className="btn btn-success col-md-5">
-                                                            <span
-                                                                className="fs-4"
-                                                                style={{
-                                                                    lineHeight:
-                                                                        '12px',
-                                                                }}>
-                                                                Bracha
-                                                                mahsulotlar
-                                                            </span>
-                                                        </button>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                     <div className="d-flex flex-column gap-2 bg-white px-3 py-4 rounded">
                                         <span className="fs-4">
@@ -760,8 +624,9 @@ function ProductsLists() {
                                             </em>
                                         </span>
                                     </div>
+
                                     <Table
-                                        scroll={{ x: 1800 }}
+                                        scroll={{ x: 1850 }}
                                         dataSource={data}
                                         columns={columns}
                                         pagination={false}
@@ -1072,9 +937,7 @@ function ProductsLists() {
                                                             </strong>
                                                         </div>
                                                         <ModuleDetailTopInformation
-                                                            setAdminModal={
-                                                                setAdminModal
-                                                            }
+                                                            
                                                             product={
                                                                 deleteIdView
                                                                     ? deleteIdView
@@ -1248,6 +1111,150 @@ function ProductsLists() {
                         </div>
                     </div>
                 </div>
+
+                <Modal
+                    title={"Mahsulotlarni filterlash"}
+                    open={openFilter}
+                    onOk={() => setOpenFilter(true)}
+                    onCancel={() => setOpenFilter(false)}
+                    footer={null}
+                    width={500}
+                >
+
+                    <div className="p-0 mt-5 mb-3 w-100 d-flex gap-4 flex-column">
+
+                        <div className='d-flex justify-content-between gap-3'>
+                            <button onClick={handleClickProductsAll}
+
+                                className='btn btn-outline-secondary rounded-3 fs-4 py-3 w-100'>
+                                Barcha mahsulotlar
+                            </button>
+                            <button onClick={() => setViewsAll("view_count")}
+
+                                className='btn btn-outline-success rounded-3 fs-4 py-3 w-100'>
+                                <i className="fa-solid fa-eye mx-2"></i>
+                                Eng ko'p ko'rilganlar
+                            </button>
+                        </div>
+
+
+                        <Select
+                            className=" p-0"
+                            mode="select"
+                            showSearch
+                            style={{
+                                width: '100%',
+                                height: '47px',
+                            }}
+                            onChange={onChange}
+                            onSearch={onSearchCategory}
+                            placeholder="Barcha kategoriyalar">
+                            <Option
+                                value="all"
+                                selected>
+                                Barcha
+                                kategoriyalar
+                            </Option>
+
+                            {options}
+                        </Select>
+
+                        <select
+                            className="form-select  fs-3 py-3 rounded-3"
+                            onChange={(e) =>
+                                handleFilterStatus(
+                                    e.target
+                                        .value
+                                )
+                            }>
+                            <option
+                                className="fs-3"
+                                selected
+                                value="">
+                                Barcha holatlar
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="moderation">
+                                Moderatsiya
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="approved">
+                                Tasdiqlangan
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="cancelled">
+                                Bekor qilingan
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="deleted">
+                                Arxivlangan
+                            </option>
+                        </select>
+
+                        <RangePicker
+                            className="w-100 py-3  rounded-3"
+                            onChange={handleChange}
+                        />
+
+                        <select
+                            className="form-select  fs-3 py-3 rounded-3"
+                            onChange={(e) =>
+                                setFiltertype(
+                                    e.target
+                                        .value
+                                )
+                            }>
+                            <option
+                                className="fs-3"
+                                selected
+                                value="">
+                                Barcha turlar
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="file">
+                                File
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="audio">
+                                Audio
+                            </option>
+                            <option
+                                className="fs-3"
+                                value="template">
+                                Shablon
+                            </option>
+                        </select>
+                        <Select
+                            className=" p-0"
+                            mode="select"
+                            showSearch
+                            allowClear
+                            style={{
+                                width: '100%',
+                                height: '47px',
+                            }}
+                            onChange={onChangePlay}
+                            placeholder="Barcha playlistlar">
+                            <Option value="all">
+                                Barcha
+                                PlayListslar
+                            </Option>
+
+                            {optionsPlayLists}
+                        </Select>
+
+
+                    </div>
+
+
+                </Modal>
+
             </div>
         </section>
     );

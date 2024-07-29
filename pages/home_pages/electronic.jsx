@@ -43,7 +43,7 @@ const HomeElectronicsPage = () => {
             name: 'Bepul mahsulotlar',
             icon: null,
             image: null,
-            slug: 'bepul-mahsulotlar',
+            slug: 'free',
             promotional_sliders: [...responseData.data],
         });
     }

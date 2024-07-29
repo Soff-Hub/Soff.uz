@@ -1,6 +1,6 @@
 import React from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { DatePicker, Pagination, Select, Table, Tabs } from 'antd';
+import { DatePicker, Modal, Pagination, Select, Table, Tabs } from 'antd';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import GetRepository from '~/reositoriy-admin/GetRepository';
@@ -28,7 +28,7 @@ function MyProductsListsSeller() {
     const [pageCountPlay, setPageCountPlay] = useState(0);
     const [currPagePlay, setCurrPagePlay] = useState(1);
     const [dataPlayLists, setDataPlayLists] = useState([]);
-
+    const [openFilter, setOpenFilter] = useState(false);
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
 
@@ -141,6 +141,14 @@ function MyProductsListsSeller() {
             setPageCountPlay(ItemsData.count);
         }
     }
+
+    const handeClearFilter = () => {
+        setDataCat('');
+        setLifetime('');
+        setLifetime2('');
+        setOpenFilter(false);
+    }
+
 
     useEffect(() => {
         if (user?.access) {
@@ -452,58 +460,12 @@ function MyProductsListsSeller() {
                                                 <i className="fa-solid fa-search "></i>
                                             </span>
                                         </label>
-                                        <div
-                                            className="accordion accordion-flush p-0"
-                                            id="accordionFlushExample">
-                                            <div className="accordion-item">
-                                                <h2 className="accordion-header m-0">
-                                                    <button
-                                                        style={{
-                                                            padding: '17px',
-                                                            backgroundColor:
-                                                                '#F1F1F2',
-                                                        }}
-                                                        className="accordion-button collapsed  responsiveCardButton   text-success "
-                                                        type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#flush-collapseOne"
-                                                        aria-expanded="false"
-                                                        aria-controls="flush-collapseOne">
-                                                        <strong> Filter</strong>
-                                                    </button>
-                                                </h2>
-                                                <div
-                                                    id="flush-collapseOne"
-                                                    className="accordion-collapse collapse"
-                                                    data-bs-parent="#accordionFlushExample">
-                                                    <div className="accordion-body row mx-auto gap-4  pb-4 pt-5">
-                                                        <Select
-                                                            className="col-md-6 p-0"
-                                                            mode="select"
-                                                            showSearch
-                                                            allowClear
-                                                            style={{
-                                                                width: '100%',
-                                                                height: '47px',
-                                                            }}
-                                                            onChange={onChange}
-                                                            onSearch={onSearchCategory}
-                                                            placeholder="Barcha kategoriyalar">
-                                                            <Option value="all">
-                                                                Barcha
-                                                                kategoriyalar
-                                                            </Option>
 
-                                                            {options}
-                                                        </Select>
-                                                        <RangePicker
-                                                            className="col-md-5 py-3   rounded-3"
-                                                            onChange={handleChangeDate}
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <button className='btn btn-outline-success fs-4 col-md-2 py-3'
+                                            onClick={() => (setOpenFilter(true))}>
+                                            <i className="fa-solid fa-sliders"></i> Filter
+                                        </button>
+
                                     </div>
 
                                     <Tabs
@@ -517,6 +479,52 @@ function MyProductsListsSeller() {
                         </div>
                     </div>
                 </div>
+
+                <Modal
+                    title={"Mahsulotlarni filterlash"}
+                    open={openFilter}
+                    onOk={() => setOpenFilter(true)}
+                    onCancel={() => setOpenFilter(false)}
+                    footer={null}
+                    width={500}
+                >
+
+                    <div className="p-0 mt-5 mb-3 w-100 d-flex gap-4 flex-column">
+                        <button
+                            onClick={handeClearFilter}
+                            className='btn btn-outline-secondary rounded-3 fs-4 py-3 w-100'>
+                            Barcha mahsulotlar
+                        </button>
+
+                        <Select
+                            className=" p-0"
+                            mode="select"
+                            showSearch
+                            allowClear
+                            style={{
+                                width: '100%',
+                                height: '47px',
+                            }}
+                            onChange={onChange}
+                            onSearch={onSearchCategory}
+                            placeholder="Barcha kategoriyalar">
+                            <Option value="all">
+                                Barcha
+                                kategoriyalar
+                            </Option>
+
+                            {options}
+                        </Select>
+                        <RangePicker
+                            className="py-3   rounded-3"
+                            onChange={handleChangeDate}
+                        />
+
+
+                    </div>
+
+
+                </Modal>
             </div>
         </section>
     );

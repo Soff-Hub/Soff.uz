@@ -1,12 +1,15 @@
-import React  from 'react';
+import React from 'react';
 import Link from 'next/link';
 import useProduct from '~/hooks/useProduct';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import PlaylistVideo from '../detail/thumbnail/PlaylistVideo';
+import { useRouter } from 'next/router';
 
 
-const PlaylistCard = ({ product, iscategroy = false }) => {
+const PlaylistCard = ({ product }) => {
     const { title } = useProduct();
+    const Router = useRouter();
+
 
     return (
         <div
@@ -23,7 +26,7 @@ const PlaylistCard = ({ product, iscategroy = false }) => {
                         style={{
                             display: 'flex',
                             justifyContent: 'center',
-                            height: iscategroy ? '160px' : '210px',
+                            height: Router.pathname !== "/" ? '150px' : '210px',
                             objectFit: 'cover',
                         }}>
                         <PlaylistVideo product={product} class_products={true} />
