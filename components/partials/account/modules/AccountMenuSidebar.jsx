@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { BeatLoader } from 'react-spinners';
 import useAuth from '~/hooks/useAuth';
 import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
@@ -11,21 +10,18 @@ import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '../ProductsLists';
 import CalculateTimeDifference from '../DateFormatter';
 
-const AccountMenuSidebar = ({ data, renderProfile }) => {
+const AccountMenuSidebar = ({ data }) => {
     const dispatch = useDispatch();
-
     const refresh = useSelector((state) => state.auth?.user?.refresh);
-
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
-    const [profile, setProfile] = useState(null);
+    const { profile } = useSelector((state) => state.ecomerce);
     const [webdata, setWebData] = useState(null);
     const [socket, setSocket] = useState(null);
     const [webdata1, setWebData1] = useState(null);
     const [socket1, setSocket1] = useState(null);
     const [webdata2, setWebData2] = useState(null);
     const [socket2, setSocket2] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [dataBlock, setdataBlock] = useState(null);
     const [copy, setCopy] = useState(false);
     const [socketApplication, setSocketApplication] = useState(null);
@@ -51,38 +47,13 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         setIsModalOpen(false);
     };
 
-    const handleLogoutToken = () => {
-        const data = {
-            refresh: refresh,
-        };
-        const { logOutAuth } = useAuth();
-        const res = logOutAuth(data);
-
-        if (res) {
-            Router.push('/account/dashbord');
-            dispatch(logOut());
-        }
-    };
-
-    async function ProfileUsersToken(token) {
-        const ItemsData = await GetRepository.getProfileToken(token);
-        if (Number(ItemsData?.status) == 403) {
-            handleLogoutToken();
-        }
-    }
-
-    async function ProfileUsers(token) {
-        setLoading(true);
-        const ItemsData = await GetRepository.getProfile(token);
-        setProfile(ItemsData);
-        setLoading(false);
-    }
 
     async function ProfileUsersBLock() {
         const token = user?.access
         const ItemsData = await GetRepository.getProfileBlock(token);
         setdataBlock(ItemsData);
     }
+
 
     useEffect(() => {
         if (socket) {
@@ -171,13 +142,10 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     }, []);
 
-    useEffect(() => {
-        ProfileUsers(user?.access);
-    }, [renderProfile]);
+
 
     useEffect(() => {
-        if (user?.access && user?.role==="seller") {
-            ProfileUsersToken(user?.access);
+        if (user?.access && user?.role === "seller") {
             ProfileUsersBLock()
         }
     }, [user?.access]);
@@ -198,9 +166,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     }
 
-
-
-
     return (
         <aside className="ps-widget--account-dashboard">
             <div className="ps-widget__header  p-2 pb-4 step-2">
@@ -210,48 +175,42 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                     <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
                 )}
                 <figure>
-                    {!loading ? (
-                        <>
-                            <h4 className="m-0 " style={{ maxWidth: '280px' }}>
-                                {' '}
-                                {profile?.first_name && profile?.last_name ? (
-                                    <>
-                                        <span>{profile?.first_name}</span>{' '}
-                                        <span> {profile?.last_name}</span>
-                                    </>
-                                ) : user?.role === 'seller' ? (
-                                    <span>
-                                        {profile?.role
-                                            ? 'Sotuvchi'
-                                            : "ma'lumot yo'q"}
-                                    </span>
-                                ) : user?.role === 'admin' ? (
-                                    <span>
-                                        {profile?.role
-                                            ? 'Admin'
-                                            : "malumot yo'q"}
-                                    </span>
-                                ) : user?.role === 'customer' ? (
-                                    <span>
-                                        {profile?.role
-                                            ? 'Foydalanuvchi'
-                                            : "malumot yo'q"}
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}{' '}
-                            </h4>
-                            <p
-                                className="text-truncate"
-                                style={{ maxWidth: '280px' }}>
-                                {profile?.phone || profile?.email}
-                            </p>
-                        </>
-                    ) : (
-                        <div className="mx-5 mt-3">
-                            <BeatLoader size={10} color="#333" />
-                        </div>
-                    )}
+                    <>
+                        <h4 className="m-0 " style={{ maxWidth: '280px' }}>
+                            {' '}
+                            {profile?.first_name && profile?.last_name ? (
+                                <>
+                                    <span>{profile?.first_name}</span>{' '}
+                                    <span> {profile?.last_name}</span>
+                                </>
+                            ) : user?.role === 'seller' ? (
+                                <span>
+                                    {profile?.role
+                                        ? 'Sotuvchi'
+                                        : "ma'lumot yo'q"}
+                                </span>
+                            ) : user?.role === 'admin' ? (
+                                <span>
+                                    {profile?.role
+                                        ? 'Admin'
+                                        : "malumot yo'q"}
+                                </span>
+                            ) : user?.role === 'customer' ? (
+                                <span>
+                                    {profile?.role
+                                        ? 'Foydalanuvchi'
+                                        : "malumot yo'q"}
+                                </span>
+                            ) : (
+                                <></>
+                            )}{' '}
+                        </h4>
+                        <p
+                            className="text-truncate"
+                            style={{ maxWidth: '280px' }}>
+                            {profile?.phone || profile?.email}
+                        </p>
+                    </>
                 </figure>
             </div>
             {user?.role === 'seller' ? (

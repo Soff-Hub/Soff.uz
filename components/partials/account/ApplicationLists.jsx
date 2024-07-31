@@ -17,15 +17,19 @@ const { Option } = Select;
 
 function ApplicationLists() {
     const { accountLinks, user } = useSelector(state => state.auth)
+    const { profile } = useSelector((state) => state.ecomerce);
     const [data, setData] = useState([]);
     const [data1, setData2] = useState([]);
+    const [loadingData, setloadingData] = useState(false);
+    const [loadingSeller, setloadingSeller] = useState(false);
+    const [loadingOffer, setloadingOffer] = useState(false);
+    const [loadingOfferSeller, setloadingOfferSeller] = useState(false);
     const [dataCat, setDataCat] = useState(null);
     const [dataAdmin, setDataAdmin] = useState([]);
     const [dataAdmintaklif, setDataAdminTaklif] = useState([]);
     const [dataPrice, setDataPrice] = useState(null);
     const [dataCard, setDataCard] = useState(null);
     const [dataCardModal, setDataCardModal] = useState(null);
-    const [profile, setProfile] = useState(null);
     const [profileCard, setProfileCard] = useState([]);
     const [pageCount, setPageCount] = useState(0)
     const [pageCount1, setPageCount1] = useState(0)
@@ -63,12 +67,7 @@ function ApplicationLists() {
 
 
 
-    async function ProfileUsers(token) {
-        const ItemsData = await GetRepository.getProfile(token);
-        if (ItemsData) {
-            setProfile(ItemsData)
-        }
-    }
+
 
     async function ProfileUsersBLock() {
         const token = user?.access
@@ -78,12 +77,14 @@ function ApplicationLists() {
 
 
     async function ProfileUsersTextItems(page, dataFormat) {
+        setloadingOffer(true)
         const ItemsData = await GetRepository.getTagTaklifLists(page, dataFormat, user?.access, user?.role === "admin");
         if (ItemsData?.results) {
             setData2([...ItemsData.results]);
             setPageCount1(ItemsData?.count);
         }
         getItemsSellerTaklif(currPage)
+        setloadingOffer(false)
     }
 
     async function ProfileUsersTextItem(values) {
@@ -124,12 +125,14 @@ function ApplicationLists() {
 
 
     async function getItemsSeller(page) {
+        setloadingSeller(true)
         const Items = await GetRepository.getProfileAriza(page, user?.access, user?.role === "admin");
         if (Items?.results) {
             setData([...Items.results]);
             setPageCount(Items?.count);
             setAlertMess(Items.additional_data)
         }
+        setloadingSeller(false)
     }
 
 
@@ -142,22 +145,27 @@ function ApplicationLists() {
 
 
     async function getItemsSellerAdmin(page) {
+        setloadingData(true)
         const Items = await GetRepository.getProfileArizaAdmin(page, dataCat, user?.access, user?.role === "admin", sellerSearch);
         if (Items && user?.role === "admin") {
             setAllPrice(Items?.total_amount?.amount__sum)
+            setloadingData(false)
             return setDataAdmin([...Items.results]);
         }
         if (Items.results) {
             setDataAdmin([...Items.results]);
+            setloadingData(false)
         }
     }
 
     async function getItemsSellerTaklif(page) {
+        setloadingOfferSeller(true)
         const Items = await GetRepository.getProfileArizaTaklif(page, user?.access);
         if (Items?.results) {
             setDataAdminTaklif([...Items.results]);
             setPageCount2(Items?.count);
         }
+        setloadingOfferSeller(false)
     }
 
     async function getItemsSellerPost() {
@@ -507,14 +515,19 @@ function ApplicationLists() {
     }, [dataCat, sellerSearch])
 
     useEffect(() => {
-        if (user?.access) {
-            ProfileUsers(user?.access);
-
-        }
         getItemsSeller(currPage);
-        getItemsSellerCardList()
-        getItemsSellerTaklif(currPage)
-    }, [])
+        if (user?.access && user?.role == "seller") {
+
+            getItemsSellerTaklif(currPage)
+            getItemsSellerCardList()
+        }
+        if (user?.access && user?.role == "seller") {
+           
+            getItemsSellerTaklif(currPage)
+            getItemsSellerCardList()
+        }
+
+    }, [user?.access])
 
     useEffect(() => {
         ProfileUsersTextItems(currPage, dataFormat);
@@ -537,6 +550,7 @@ function ApplicationLists() {
             });
         }
     }, [open, textItemsId, form]);
+
 
     return (
         <section className="ps-my-account ps-page--account pb-5">
@@ -595,7 +609,7 @@ function ApplicationLists() {
                                                         </form>}
 
                                                     <h4 className='py-4 px-4'>Yuborilgan Arizalar</h4>
-                                                    <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} />
+                                                    <Table scroll={{ x: 1250 }} dataSource={data} columns={columns} pagination={false} loading={loadingSeller} />
                                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                         onChange={handlePagination} />
                                                 </div>
@@ -655,6 +669,7 @@ function ApplicationLists() {
                                                     </label>
                                                 </div>
                                                 <Table scroll={{ x: 1700 }} dataSource={dataAdmin} columns={columnsAdmin}
+                                                    loading={loadingData}
                                                     pagination={false} />
                                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount}
                                                     onChange={getItemsSellerAdmin} />
@@ -673,6 +688,7 @@ function ApplicationLists() {
                                     <h4 className='text-center mb-4'>Kelib tushgan takliflar   </h4>
                                     <RangePicker className='py-3 col-md-4 mb-4 shadow-sm rounded-3' onChange={handleChangeDate} />
                                     <Table scroll={{ x: 1500 }} dataSource={data1} columns={columnsTextArea}
+                                        loading={loadingOffer}
                                         pagination={false} />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount1}
                                         onChange={ProfileUsersTextItems} />
@@ -687,6 +703,7 @@ function ApplicationLists() {
                             <div className='my-5 bg-white  p-4 '>
                                 <h4 className='text-center mb-4'>Yuborilgan takliflar </h4>
                                 <Table scroll={{ x: 800 }} dataSource={dataAdmintaklif} columns={columnsTextAreaseller}
+                                    loading={loadingOfferSeller}
                                     pagination={false} />
                                 <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount2}
                                     onChange={getItemsSellerTaklif} />

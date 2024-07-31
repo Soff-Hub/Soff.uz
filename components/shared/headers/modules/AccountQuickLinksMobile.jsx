@@ -5,15 +5,16 @@ import { Badge, Card, Dropdown, Menu, Modal } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import Router from 'next/router';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import GetRepository from '~/reositoriy-admin/GetRepository';
+import { setSavedPrfileData } from '~/store/ecomerce/action';
+
+
 
 function AccountQuickLinks() {
-    const { accountLinks, user } = useSelector((state) => state.auth);
+    const { accountLinks } = useSelector((state) => state.auth);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
+    const { profile } = useSelector((state) => state.ecomerce);
     const dispatch = useDispatch();
-    const [profile, setProfile] = useState(null);
+
 
     const handleLogout = () => {
         const data = {
@@ -30,6 +31,7 @@ function AccountQuickLinks() {
             });
             Router.push('/account/selection');
             dispatch(logOut());
+            dispatch(setSavedPrfileData(null))
         }
     };
 
@@ -46,7 +48,7 @@ function AccountQuickLinks() {
                                         <a>
                                             {' '}
                                             <span>
-                                                <i  className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
+                                                <i className={` text-dark fs-4 me-2  ${link.icon}`}></i>{' '}
                                             </span>{' '}
                                             Mening bitimlarim
                                         </a>
@@ -95,18 +97,7 @@ function AccountQuickLinks() {
         </Menu>
     );
 
-    async function ProfileUsers(token) {
-        const ItemsData = await GetRepository.getProfile(token);
-        if (ItemsData) {
-            setProfile(ItemsData);
-        }
-    }
 
-    useEffect(() => {
-        if (user?.access) {
-            ProfileUsers(user?.access);
-        }
-    }, [user?.access]);
 
     return (
         <Dropdown overlay={menu} placement="bottomLeft">

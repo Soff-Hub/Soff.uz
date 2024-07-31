@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CreditCard from './CreditCard';
 import { Modal } from 'antd';
-import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Image } from 'antd';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
 import { BeatLoader } from 'react-spinners';
+import { setSavedPrfileData } from '~/store/ecomerce/action';
+import GetRepository from '~/reositoriy-admin/GetRepository';
 
 function Notifications() {
     const { accountLinks, user } = useSelector((state) => state.auth);
+    const { profile } = useSelector((state) => state.ecomerce);
+    const dispatch = useDispatch();
     const [profileData, setProfileData] = useState({});
-    const [renderProfile, setRenderProfile] = useState(false);
-    const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [loading1, setLoading1] = useState(false);
-    const [profile, setProfile] = useState(null);
     const [image, setImage] = useState('');
     const [imageBag, setImageBag] = useState({ url: null, img: null });
     const [imageBagMobile, setImageBagMobile] = useState({ url: null, img: null });
@@ -50,8 +50,12 @@ function Notifications() {
             { old_password: profilePassword, new_password: profilePassword1 },
             user?.access
         );
-        setRenderProfile(!renderProfile);
         e.target.reset();
+        if (user?.access) {
+            const ItemsDataProfile = await GetRepository.getProfile(user?.access);
+            dispatch(setSavedPrfileData(ItemsDataProfile))
+        }
+
         setLoading1(false);
         if (ItemsData.status === 200) {
             const modal = Modal.success({
@@ -70,19 +74,6 @@ function Notifications() {
         }
     }
 
-    async function ProfileUsers() {
-        setLoading(false)
-        const ItemsData = await GetRepository.getProfile(user?.access);
-        if (ItemsData.id) {
-            setProfile(ItemsData);
-        }
-        setLoading(true)
-    }
-
-
-    useEffect(() => {
-        ProfileUsers();
-    }, [renderProfile]);
 
     async function handleClickEdit() {
         const formData = new FormData();
@@ -100,7 +91,10 @@ function Notifications() {
             formData,
             user?.access
         );
-        setRenderProfile(!renderProfile);
+        if (user?.access) {
+            const ItemsDataProfile = await GetRepository.getProfile(user?.access);
+            dispatch(setSavedPrfileData(ItemsDataProfile))
+        }
         if (ItemsData) {
             const modal = Modal.success({
                 centered: true,
@@ -131,7 +125,10 @@ function Notifications() {
                 formData,
                 user?.access
             );
-            setRenderProfile(!renderProfile);
+            if (user?.access) {
+                const ItemsDataProfile = await GetRepository.getProfile(user?.access);
+                dispatch(setSavedPrfileData(ItemsDataProfile))
+            }
             setImageBag({ img: null, url: null })
             setImageBagMobile({ img: null, url: null })
             setImage(null)
@@ -155,8 +152,6 @@ function Notifications() {
     }
 
 
-
-
     return (
         <section className="ps-my-account ps-page--account ">
             <div className="container">
@@ -165,7 +160,7 @@ function Notifications() {
                         <div className="ps-page__left">
                             <AccountMenuSidebar
                                 data={accountLinks}
-                                renderProfile={renderProfile}
+
                             />
                         </div>
                     </div>
@@ -191,30 +186,19 @@ function Notifications() {
                             </div>
                             <div className='user_profile_body'>
                                 <>
-                                    {
-                                        loading ?
-                                            <>
-                                                <h1>{profile?.first_name}  {profile?.last_name}
-                                                    <a style={{ cursor: "pointer" }} data-bs-target="#exampleModalMyProductsUserProfileName"
-                                                        data-bs-toggle="modal">
-                                                        <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
-                                                    </a></h1>
-                                                {
-                                                    profile?.email &&
-                                                    <p>{profile?.email}</p>
-                                                }
-                                            </>
-                                            :
-                                            <>
-                                                <h1 style={{ opacity: "0" }}> Ozodbek Abdisamato
-                                                    <a style={{ cursor: "pointer" }}
-                                                        data-bs-toggle="modal">
-                                                        <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
-                                                    </a></h1>
 
-                                                <p style={{ opacity: "0" }} >abdisamatovozodbek003@gmail.com</p>
-                                            </>
-                                    }
+                                    <>
+                                        <h1>{profile?.first_name}  {profile?.last_name}
+                                            <a style={{ cursor: "pointer" }} data-bs-target="#exampleModalMyProductsUserProfileName"
+                                                data-bs-toggle="modal">
+                                                <i class="fa-solid fa-pen fs-4 mx-3 text-primary"></i>
+                                            </a></h1>
+                                        {
+                                            profile?.email &&
+                                            <p>{profile?.email}</p>
+                                        }
+                                    </>
+
 
                                 </>
                                 {

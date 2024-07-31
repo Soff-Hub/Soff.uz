@@ -13,6 +13,7 @@ const EmailLists = () => {
 
     const [email, setEmail] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [loadingData, setLoadingData] = useState(false);
     const [text, setText] = useState(null);
     const [editorLoaded, setEditorLoaded] = useState(false);
     const [data, setData] = useState(null);
@@ -20,6 +21,7 @@ const EmailLists = () => {
     const [userRole, setUserRole] = useState(null);
     const [title, setSubject] = useState(null);
     const [notification, setNotification] = useState(null);
+
     const OnChangeSelect = (event) => {
         setEmail(event);
     };
@@ -93,11 +95,10 @@ const EmailLists = () => {
                     const modal = Modal.success({
                         centered: true,
                         title: 'Muvaffaqqiyatli!',
-                        content: ` ${
-                            ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : 'Sizning xabaringiz yuborildi'
-                        } `,
+                        content: ` ${ItemsData?.data?.msg
+                            ? ItemsData?.data?.msg
+                            : 'Sizning xabaringiz yuborildi'
+                            } `,
                     });
                     modal.update;
                 } else {
@@ -140,7 +141,7 @@ const EmailLists = () => {
                         <p style="margin-left: auto; color: #ffffff">Barcha huquqlar himoyalangan</p>
                     </div>
                 </div>`,
-                body_text: text,
+                    body_text: text,
                 };
                 const ItemsData = await PostsRepository.EmailSend(
                     data,
@@ -151,11 +152,10 @@ const EmailLists = () => {
                     const modal = Modal.success({
                         centered: true,
                         title: 'Muvaffaqqiyatli!',
-                        content: ` ${
-                            ItemsData?.data?.msg
-                                ? ItemsData?.data?.msg
-                                : 'Sizning xabaringiz yuborildi'
-                        } `,
+                        content: ` ${ItemsData?.data?.msg
+                            ? ItemsData?.data?.msg
+                            : 'Sizning xabaringiz yuborildi'
+                            } `,
                     });
                     modal.update;
                 } else {
@@ -177,6 +177,7 @@ const EmailLists = () => {
         }
         setLoading(false);
     }
+
     const validateEmail = (rule, value) => {
         if (!userRole) {
             if (!email || !value) {
@@ -208,10 +209,12 @@ const EmailLists = () => {
     }
 
     const getNotifications = async () => {
+        setLoadingData(true)
         const ItemsData = await GetRepository.getNotificationList();
         if (ItemsData) {
             setNotification(ItemsData.results);
         }
+        setLoadingData(false)
     };
 
     useEffect(() => {
@@ -243,6 +246,7 @@ const EmailLists = () => {
             title: 'Nomi',
             dataIndex: 'title',
             key: 'title',
+            width: 250,
             render: (title) => (
                 <span className="truncate whitespace-nowrap "> {title}</span>
             ),
@@ -251,6 +255,7 @@ const EmailLists = () => {
             title: 'Qabul qiluvchi',
             dataIndex: 'receivers',
             key: 'user',
+            width: 250,
             render: (receivers) => (
                 <span className="truncate whitespace-nowrap ">
                     {' '}
@@ -262,6 +267,7 @@ const EmailLists = () => {
             title: 'Yuborilgan sana',
             dataIndex: 'created_at',
             key: 'address',
+            width: 180,
             render: (created_at) => (
                 <span>
                     {' '}
@@ -274,9 +280,13 @@ const EmailLists = () => {
             title: 'Xabar',
             dataIndex: 'body_text',
             key: 'body_text',
+            width: 300,
             render: (body_text) => (
                 <div className="d-flex flex-column">
-                    <span> {body_text ? parse(body_text) : body_text}</span>
+                    <details className='text-success'>
+                        <summary>Batafsil ko'rish</summary>
+                        <p > {body_text ? parse(body_text) : body_text}</p>
+                    </details>
                 </div>
             ),
         },
@@ -380,10 +390,11 @@ const EmailLists = () => {
                         </Form>
                         <Table
                             className="my-5"
-                            scroll={{ x: 950 }}
+                            scroll={{ x: 1100 }}
                             dataSource={notification}
                             columns={columns}
                             pagination={false}
+                            loading={loadingData}
                         />
                     </div>
                 </div>

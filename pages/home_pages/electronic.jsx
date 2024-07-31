@@ -14,7 +14,7 @@ import { baseUrl } from '~/repositories/Repository';
 import axios from 'axios';
 import ElectronicTopSellersGroupWithCarousel from '~/components/partials/homepage/electronic/ElectronicTopSellersGroupWithCarousel';
 import HeaderMobileBottom from '~/components/shared/headers/HeaderMobilebottom';
-import Router from 'next/router';
+
 
 const HomeElectronicsPage = () => {
     // debuger();

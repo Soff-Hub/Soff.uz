@@ -24,6 +24,7 @@ function Notifications() {
     const searchDebounce = useDebounce(search, 1000);
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [loadingSeller, setLoadingSeller] = useState(false);
     const [sellerID, setSellerID] = useState(null);
     const [filterLock, setFilterLock] = useState('')
     const date = new Date();
@@ -31,6 +32,7 @@ function Notifications() {
 
 
     async function GetItems(page) {
+        setLoadingSeller(true)
         const ItemsData = await GetRepository.getShops(
             page,
             search,
@@ -41,6 +43,7 @@ function Notifications() {
             setData([...ItemsData?.results]);
             setPageCount(ItemsData.count);
         }
+        setLoadingSeller(false)
     }
 
     const handlePagination = (pageNum) => {
@@ -287,7 +290,7 @@ function Notifications() {
             ),
         },
     ];
-                                                                     
+
 
 
     return (
@@ -346,6 +349,7 @@ function Notifications() {
                                         dataSource={data}
                                         columns={columns}
                                         pagination={false}
+                                        loading={loadingSeller}
                                     />
                                     <Pagination
                                         className="mt-3"

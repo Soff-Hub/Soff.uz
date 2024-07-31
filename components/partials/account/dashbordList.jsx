@@ -16,26 +16,30 @@ import { addPeriodToThousands } from './ProductsLists';
 function DashbordList({ setOpen }) {
     const [data, setData] = useState([]);
     const [dataOrders, setDataOrders] = useState([]);
+    const [orderLoading, setOrderLoading] = useState(false);
     const [dataProducts, setDataProducts] = useState([]);
+    const [dataLoading, setDataLoading] = useState(false);
     const [dataPlayLists, setDataPlayLists] = useState([]);
+    const [dataLoadingPlay, setDataLoadingPlay] = useState(false);
     const [View, setView] = useState({});
     const [loading, setLoading] = useState(false);
     const [year, setYear] = useState(new Date().getFullYear());
     const [yearGet, setYearGet] = useState([]);
     const [donats, setDonats] = useState([]);
+    const [dataLoadingDonat, setDataLoadingDonat] = useState(false);
     const [month, setMonth] = useState(null);
 
     const { accountLinks, user } = useSelector((state) => state.auth);
 
 
     async function GetItemsProductsPlayLists() {
+        setDataLoadingPlay(true)
         const ItemsData = await GetRepository.getPopularPlayLists(1, user?.access);
         if (ItemsData?.results) {
             setDataPlayLists(ItemsData?.results);
         }
+        setDataLoadingPlay(false)
     }
-
-
 
     async function GetItemsProducts() {
         const ItemsData = await GetRepository.getSellerDashbord(user?.access);
@@ -43,14 +47,18 @@ function DashbordList({ setOpen }) {
             setData(ItemsData);
         }
     }
+
     async function GetItemsProductsPopular() {
+        setDataLoading(true)
         const ItemsData = await GetRepository.getPopularProducts(user?.access);
         if (ItemsData) {
             setDataProducts(ItemsData);
         }
+        setDataLoading(false)
     }
 
     async function GetItemsProductsOrders(page) {
+        setOrderLoading(true)
         const ItemsData = await GetRepository.getOrdersListsDashbord(
             page,
             user?.access
@@ -58,7 +66,9 @@ function DashbordList({ setOpen }) {
         if (ItemsData?.results) {
             setDataOrders([...ItemsData.results]);
         }
+        setOrderLoading(false)
     }
+    
     async function handleClickView(item) {
         setLoading(true);
         const ItemsData = await GetRepository.getPopularProductsView(
@@ -87,12 +97,14 @@ function DashbordList({ setOpen }) {
     }
 
     async function getSellerDashbordDonatSS() {
+        setDataLoadingDonat(true)
         const ItemsData = await GetRepository.getSellerDashbordDonat(
             user?.access
         );
         if (ItemsData?.results) {
             setDonats(ItemsData);
         }
+        setDataLoadingDonat(false)
     }
 
     useEffect(() => {
@@ -292,6 +304,7 @@ function DashbordList({ setOpen }) {
                         </span>
                     </a>
                 ),
+
             }
         ) : (
             <></>
@@ -441,6 +454,7 @@ function DashbordList({ setOpen }) {
                         columns={columns}
                         className="pb-5"
                         pagination={false}
+                        loading={dataLoading}
                     />
                 </div>
             ),
@@ -472,6 +486,7 @@ function DashbordList({ setOpen }) {
                         columns={columnsDonat}
                         className="pb-5"
                         pagination={false}
+                        loading={dataLoadingDonat}
                     />
                 </div>
             ),
@@ -499,13 +514,12 @@ function DashbordList({ setOpen }) {
                         columns={columnsSeller}
                         className="pb-5"
                         pagination={false}
+                        loading={dataLoading}
                     />
                 </div>
             ),
         },
     ];
-
-
 
     const itemsOrder = [
         {
@@ -528,12 +542,14 @@ function DashbordList({ setOpen }) {
                         dataSource={dataOrders}
                         columns={columnsOrders}
                         pagination={false}
+                        loading={orderLoading}
                     /> :
                     <Table
                         scroll={{ x: 1000 }}
                         dataSource={dataOrders}
                         columns={columnsOrdersSeller}
                         pagination={false}
+                        loading={orderLoading}
                     />
             ),
         },
@@ -558,6 +574,7 @@ function DashbordList({ setOpen }) {
                         columns={user?.role == 'admin' ? columnsOrders : columnsOrdersSeller}
                         className="pb-5"
                         pagination={false}
+                        loading={dataLoadingPlay}
                     />
                 </div>
             ),

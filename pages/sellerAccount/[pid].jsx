@@ -239,8 +239,6 @@ const SellerAccount = ({ seller }) => {
     ]
 
 
-    console.log(tableDataOffer);
-
     return (
         <PageContainer>
             <BreadCrumb breacrumb={breadCrumb} layout="fullwidth" />

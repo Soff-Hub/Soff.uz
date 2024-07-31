@@ -1,8 +1,5 @@
 import { actionTypes } from './action';
 
-// const loacl = localStorage.getItem('cart')
-
-// const userData = JSON.parse( cookies);
 export const initalState = {
     wishlistItems: [],
     compareItems: [],
@@ -10,6 +7,7 @@ export const initalState = {
     cartDataItems: [],
     wishlist: [],
     replied_count: 0,
+    profile: null,
 };
 
 function reducer(state = initalState, action) {
@@ -71,6 +69,11 @@ function reducer(state = initalState, action) {
             return {
                 ...state,
                 wishlist: [...state.wishlist, ...action.payload],
+            };
+        case actionTypes.PROFILE_DATA:
+            return {
+                ...state,
+                profile: action.payload,
             };
     }
 }

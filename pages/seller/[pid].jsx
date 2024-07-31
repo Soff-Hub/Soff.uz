@@ -20,7 +20,6 @@ const SellerPage = ({ seller, sellerr }) => {
     const [page, setPage] = useState(1);
     const router = useRouter();
     const { pid } = router.query;
-
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenDonate, setIsModalOpenDonate] = useState(false);
     const [tab, setTab] = useState('tab-1');

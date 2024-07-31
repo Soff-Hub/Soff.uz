@@ -23,16 +23,19 @@ function TegLists() {
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
     const [dataVal, setDataVal] = useState("")
+    const [loading, setLoading] = useState(false)
     const searchDebounce = useDebounce(search, 1000)
 
 
     async function GetItemsUsers(page) {
+        setLoading(true)
         setCurrPage(page)
         const ItemsData = await GetRepository.getTagLists(page, search, dataVal, user?.access);
         setPageCount(ItemsData.count)
         if (ItemsData?.results) {
             setData([...ItemsData.results]);
         }
+        setLoading(false)
     }
 
 
@@ -131,6 +134,7 @@ function TegLists() {
                                     </div>
 
                                     <Table dataSource={data} scroll={{ x: 740 }} columns={columns} pagination={false}
+                                        loading={loading}
                                     />
                                     <Pagination className="mt-3" defaultCurrent={currPage || 1} total={pageCount} onChange={GetItemsUsers} />
                                 </div>

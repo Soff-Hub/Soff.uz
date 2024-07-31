@@ -1115,7 +1115,7 @@ class GetRepository {
                     return null;
                 }
             })
-            .catch((error) => ({ error: JSON.stringify(error) }));
+            .catch((error) => (error?.response));
         return reponse;
     }
 
@@ -1219,6 +1219,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+    
     async getProfileArizaAdmin(page, status, token, isAdmin, search) {
         const endPoint = isAdmin
             ? `admin/application/?page=${page}&status=${status ? status : ''
@@ -1241,6 +1242,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
     async getProfileArizaTaklif(page, token) {
         const endPoint = `seller/offer-list/?page=${page} `;
         const reponse = await Repository({
