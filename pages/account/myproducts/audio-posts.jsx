@@ -32,6 +32,7 @@ const AudioPosts = () => {
     const { TabPane } = Tabs;
     const Router = useRouter();
     const [tagSearchResult, setTagSearchResult] = useState([]);
+    const { profile } = useSelector((state) => state.ecomerce);
     const [dataCategory, setDataCategory] = useState([]);
     const [tagItems, setTagItems] = useState([]);
     const { user } = useSelector((state) => state.auth);
@@ -45,7 +46,6 @@ const AudioPosts = () => {
     const [narx, setNarx] = useState('');
     const [free, setFree] = useState(false);
     const [audioPost, setAudioPost] = useState(null);
-    const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
 
@@ -62,10 +62,7 @@ const AudioPosts = () => {
         },
     ];
 
-    async function ProfileUsers() {
-        const ItemsData = await GetRepository.getProfile(user?.access);
-        setProfile(ItemsData);
-    }
+ 
 
     async function GetItemsCategoryLists() {
         const ItemsData = await GetRepository.getAllCategoryListsAudio();
@@ -270,12 +267,6 @@ const AudioPosts = () => {
     }, []);
 
 
-
-    useEffect(() => {
-        if (user?.access) {
-            ProfileUsers();
-        }
-    }, [user?.access]);
 
 
     return user?.role === 'seller' || user?.role === 'customer' ? (

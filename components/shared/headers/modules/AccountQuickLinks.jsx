@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
-import { logOut, profileImage } from '~/store/auth/action';
+import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal } from 'antd';
 import useAuth from '~/hooks/useAuth';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import Router, { useRouter } from 'next/router';
+import { setSavedPrfileData } from '~/store/ecomerce/action';
 
 const AccountQuickLinks = (props) => {
-    const { accountLinks, user } = useSelector((state) => state.auth);
     const dispatch = useDispatch();
+    const { accountLinks, user } = useSelector((state) => state.auth);
+    const { profile } = useSelector((state) => state.ecomerce);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
-    const [profile, setProfile] = useState(null);
     const { asPath } = useRouter();
     const router = useRouter();
     const { id, deal } = router?.query
@@ -45,6 +46,7 @@ const AccountQuickLinks = (props) => {
                 Router.push('/account/selection')
             }
             dispatch(logOut());
+            dispatch(setSavedPrfileData(null))
         }
     };
 
@@ -53,30 +55,20 @@ const AccountQuickLinks = (props) => {
     async function ProfileUsers(token) {
         const ItemsData = await GetRepository.getProfile(token);
         if (ItemsData) {
-            setProfile(ItemsData);
+            dispatch(setSavedPrfileData(ItemsData))
             if (Number(ItemsData?.status) == 403) {
-                handleLogoutToken();
+                handleLogout();
             }
         }
     }
 
-    const handleLogoutToken = () => {
-        const data = {
-            refresh: refresh,
-        };
-        const { logOutAuth } = useAuth();
-        const res = logOutAuth(data);
-
-        if (res) {
-            dispatch(logOut());
-        }
-    };
 
     useEffect(() => {
-        if (user?.access) {
+        if (!profile && user?.access) {
             ProfileUsers(user?.access);
         }
-    }, [user?.access]);
+    }, [user?.access, profile]);
+
 
 
     // View

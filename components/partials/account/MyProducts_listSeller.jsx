@@ -21,6 +21,8 @@ function MyProductsListsSeller() {
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
     const [loading2, setLoading2] = useState(null);
+    const [loadingData, setLoadingData] = useState(false);
+    const [loadingPlay, setLoadingPlay] = useState(false);
     const { RangePicker } = DatePicker;
     const { accountLinks, user } = useSelector((state) => state.auth);
     const Option = Select.Option;
@@ -47,6 +49,7 @@ function MyProductsListsSeller() {
 
 
     async function GetItemsProducts(page, category, dataFormat) {
+        setLoadingData(true)
         const ItemsData = await GetRepository.getMyProductsSeller(
             page,
             category,
@@ -59,6 +62,7 @@ function MyProductsListsSeller() {
             setPageCount(ItemsData.count);
             setData([...ItemsData.results]);
         }
+        setLoadingData(false)
     }
 
     async function GetItemsCategory() {
@@ -135,11 +139,13 @@ function MyProductsListsSeller() {
     };
 
     async function GetItemsProductsPlayLists() {
+        setLoadingPlay(true)
         const ItemsData = await GetRepository.getPopularPlayListsApproved(currPagePlay, user?.access);
         if (ItemsData?.results) {
             setDataPlayLists(ItemsData?.results);
             setPageCountPlay(ItemsData.count);
         }
+        setLoadingPlay(false)
     }
 
     const handeClearFilter = () => {
@@ -373,6 +379,7 @@ function MyProductsListsSeller() {
                         scroll={{ x: 1200 }}
                         columns={columns}
                         pagination={false}
+                        loading={loadingData}
                     />
 
                     <Pagination
@@ -410,6 +417,7 @@ function MyProductsListsSeller() {
                         scroll={{ x: 1100 }}
                         columns={columnsApproved}
                         pagination={false}
+                        loading={loadingPlay}
                     />
                     <Pagination
                         className="mt-3"
@@ -421,10 +429,6 @@ function MyProductsListsSeller() {
             ),
         }] : []),
     ];
-
-    console.log(dataPlayLists);
-
-
 
 
 

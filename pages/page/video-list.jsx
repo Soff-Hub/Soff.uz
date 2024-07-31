@@ -4,7 +4,6 @@ import PageContainer from '~/components/layouts/PageContainer';
 import VedioCart from '~/components/partials/faqs/Vedio-cart';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import Head from 'next/head';
 import { VideoLinks } from '~/utilities/vedio_link_api';
 import Meta from '~/components/shared/headers/Meta';
 
@@ -15,7 +14,6 @@ const VedioList = () => {
         setData(VideoLinks);
     }, []);
 
-    // console.log('=>', data);
 
     return (
         <div>

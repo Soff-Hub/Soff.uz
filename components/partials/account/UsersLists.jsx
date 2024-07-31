@@ -17,10 +17,10 @@ function AccountUserPages() {
 
     const [data, setData] = useState([]);
     const [search, setSerach] = useState([]);
-    const [deleteIdEdit, setDeleteIdEdit] = useState(null);
     const [selectVal, setSelectVal] = useState(null);
     const [selectValStatus, setSelectValStatus] = useState("");
-    const [customers_count, setCustomers_Count] = useState('')
+    const [customers_count, setCustomers_Count] = useState('');
+    const [loading, setLoading] = useState(false)
 
     const [pageCount, setPageCount] = useState(0)
     const [currPage, setCurrPage] = useState(1)
@@ -29,10 +29,12 @@ function AccountUserPages() {
 
     async function GetItemsUsers(page, status, search) {
         setCurrPage(page)
+        setLoading(true)
         const ItemsData = await GetRepository.getUsersLists(page, status, search, user?.access);
         setPageCount(ItemsData.count)
         setData([...ItemsData.results]);
         setCustomers_Count(ItemsData.count)
+        setLoading(false)
     }
 
     async function handleItemsPost() {
@@ -52,26 +54,8 @@ function AccountUserPages() {
         }
         GetItemsUsers(currPage, selectValStatus, search)
     }
-    async function handleItemsEdit() {
-        if (selectVal) {
-            const patchItems = await PatchRepository.PatchUsers(selectVal, deleteIdEdit?.id, user?.access)
-            const modal = Modal.success({
-                centered: true,
-                title: 'Muvaffaqqiyatli!',
-                content: "Siz  malumotlarni o'zgartirdingiz ",
-            });
 
-            GetItemsUsers(currPage, selectValStatus, search)
-            setSelectVal(null)
-        }
-        else {
-            const modal = Modal.info({
-                centered: true,
-                title: "Qayta urinib ko'ring",
-                content: "O'zgartirish uchun malumot kiritilmadi ",
-            });
-        }
-    }
+
 
     useEffect(() => {
         GetItemsUsers(currPage, selectValStatus, search)
@@ -85,7 +69,7 @@ function AccountUserPages() {
             render: (id) => (
                 <Link href={`/customerAccount/${id}`}>
                     <a className="truncate whitespace-nowrap">
-                    <i className="fa-solid fa-eye"></i>
+                        <i className="fa-solid fa-eye"></i>
                     </a>
                 </Link>
             ),
@@ -131,7 +115,7 @@ function AccountUserPages() {
             dataIndex: 'purchased_count',
             key: 'purchased_count',
             render: (purchased_count) => (
-                <span className="truncate whitespace-nowrap"> {purchased_count === 0 ? 0 : purchased_count + ' ta' }</span>
+                <span className="truncate whitespace-nowrap"> {purchased_count === 0 ? 0 : purchased_count + ' ta'}</span>
 
             ),
         },
@@ -144,18 +128,6 @@ function AccountUserPages() {
             )
 
         },
-        // {
-        //     title: 'Harakatlar',
-        //     dataIndex: 'id',
-        //     key: 'address',
-        //     render: (id) => <div >
-        //         {
-        //             data.some(el => el.id == id && el.auth_status === 'new') ?
-        //                 <a data-bs-target="#exampleModalTogglEdit" data-bs-toggle="modal"><i className="fa-solid fa-user-pen mx-4 text-success-emphasis" onClick={() => setDeleteIdEdit(data.find(item => item.id === id))}></i></a>
-        //                 : <></>
-        //         }
-        //     </div>
-        // },
     ];
     return (
         <section className="ps-my-account ps-page--account p-0">
@@ -183,14 +155,9 @@ function AccountUserPages() {
                                         </select>
                                         <button className="btn btn-success col-md-2 py-3 " data-bs-target="#addUsersPosts" data-bs-toggle="modal" ><span className='fs-4'><i className="fa-solid fa-plus"></i> Xaridor</span></button>
                                     </div>
-                                    {
-                                        user.role === 'admin' ?
-                                        <h4 className='ps-2' >Barcha xaridorlar soni {customers_count} ta </h4>
-                                        : ''
-                                    }
+                                    <h4 className='ps-2' >Barcha xaridorlar soni {customers_count} ta </h4>
 
-
-                                    <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} pagination={false} />
+                                    <Table dataSource={data} scroll={{ x: 1100 }} columns={columns} pagination={false} loading={loading} />
                                     <Pagination total={pageCount} defaultCurrent={currPage}
                                         onChange={(val) => GetItemsUsers(val, selectValStatus)} />
                                 </div>
@@ -198,12 +165,7 @@ function AccountUserPages() {
                         </div>
                     </div>
                 </div>
-                <ModalDeletePostEdit dataBsTarget="exampleModalTogglEdit" onSubmited={handleItemsEdit} formID={'edit-form-users'}>
-                    <select className='form-select fs-3 py-3' onChange={(e) => setSelectVal((prev) => ({ ...prev, auth_status: e.target.value }))}>
-                        <option className='fs-3' selected value="new">Faol emas</option>
-                        <option className='fs-3' value="code_verified">Faol</option>
-                    </select>
-                </ModalDeletePostEdit >
+
                 <ModalDeletePostEdit dataBsTarget="addUsersPosts" onSubmited={handleItemsPost} formID={'post-form'}>
                     <input
                         type='text'
@@ -228,7 +190,6 @@ function AccountUserPages() {
                         placeholder="Elektron pochta"
                         className="form-control rounded-3"
                         name='email'
-                        defaultValue={deleteIdEdit?.data?.email}
                         onChange={(e) => setSelectVal((prev) => ({ ...prev, email: e.target.value }))}
                     />
                 </ModalDeletePostEdit>

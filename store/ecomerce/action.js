@@ -22,6 +22,7 @@ export const actionTypes = {
     SET_CARTDATA_ITEM: 'SET_CARTDATA_ITEM',
     SET_CARTDATA_SUCCESS_ITEM: 'SET_CARTDATA_SUCCESS_ITEM',
     REPLIED_COUNT: 'REPLIED_COUNT',
+    PROFILE_DATA: 'PROFILE_DATA',
 };
 
 // new
@@ -106,4 +107,8 @@ export function setSavedItem(payload) {
 
 export function setSavedItemSuccess(payload) {
     return { type: actionTypes.SET_SAVED_ITEM_SUCCESS, payload };
+}
+
+export function setSavedPrfileData(payload) {
+    return { type: actionTypes.PROFILE_DATA, payload };
 }

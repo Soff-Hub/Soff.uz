@@ -51,6 +51,7 @@ function MyProductsLists() {
     const [loading, setLoading] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [loading3, setLoading3] = useState(false);
+    const [loadingData, setLoadingData] = useState(false);
     const [selectValStatus, setSelectValStatus] = useState('');
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
@@ -66,7 +67,7 @@ function MyProductsLists() {
     const Option = Select.Option;
     const searchDebounce = useDebounce(search, 1000);
     const [short, setShort] = useState(true);
-
+    const [openDetails, setOpenDetails] = useState(false);
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
 
@@ -97,6 +98,7 @@ function MyProductsLists() {
         viewsAll,
         dataPlayListsID
     ) {
+        setLoadingData(true)
         const ItemsData = await GetRepository.getMyProducts(
             page,
             category,
@@ -115,6 +117,7 @@ function MyProductsLists() {
             setPageCount(ItemsData?.count);
             setCurrPage(page);
         }
+        setLoadingData(false)
     }
 
     async function GetItemsCategory() {
@@ -227,10 +230,11 @@ function MyProductsLists() {
     };
 
     async function handleClickView(item) {
-        if (item?.id) {
+        if (item) {
+            setOpenDetails(true)
             setLoading(true);
             const ItemsData = await GetRepository.getMyProductsView(
-                item.id,
+                item,
                 user?.access
             );
             if (ItemsData?.title) {
@@ -632,18 +636,11 @@ function MyProductsLists() {
                         </a>
                     )}
 
-                    <a
-                        data-bs-target="#staticBackdropView"
-                        data-bs-toggle="modal">
+                    <a>
                         <i
                             className="fa-solid fa-eye text-success-emphasis mx-2"
                             onClick={() =>
-                                handleClickView(
-                                    data.find(
-                                        (item) =>
-                                            item.id === content_type_id?.id
-                                    )
-                                )
+                                handleClickView(content_type_id?.id)
                             }></i>
                     </a>
                     {data.some(
@@ -899,41 +896,27 @@ function MyProductsLists() {
                                         </button>
                                     </div>
 
-                                    {user?.role === 'seller' ? (
-                                        <>
-                                            <h4 className="ms-2 mb-4">
-                                                Jami mahsulotlar soni {count} ta{' '}
-                                            </h4>
-                                            <Table
-                                                dataSource={data}
-                                                scroll={{ x: 1700 }}
-                                                columns={columns}
-                                                pagination={false}
-                                            />
-                                            <Pagination
-                                                className="mt-3"
-                                                total={pageCount}
-                                                defaultCurrent={currPage}
-                                                onChange={handlePagination}
-                                            />
 
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Table
-                                                dataSource={data}
-                                                scroll={{ x: 1500 }}
-                                                columns={columns}
-                                                pagination={false}
-                                            />
-                                            <Pagination
-                                                className="mt-3"
-                                                total={pageCount}
-                                                defaultCurrent={currPage}
-                                                onChange={handlePagination}
-                                            />
-                                        </>
-                                    )}
+                                    <>
+                                        {user?.role === 'seller' && <h4 className="ms-2 mb-4">
+                                            Jami mahsulotlar soni {count} ta{' '}
+                                        </h4>}
+                                        <Table
+                                            dataSource={data}
+                                            scroll={{ x: user?.role === 'seller' ? 1700 : 1500 }}
+                                            columns={columns}
+                                            pagination={false}
+                                            loading={loadingData}
+                                        />
+                                        <Pagination
+                                            className="mt-3"
+                                            total={pageCount}
+                                            defaultCurrent={currPage}
+                                            onChange={handlePagination}
+                                        />
+
+                                    </>
+
                                 </div>
                             </div>
                         </div>
@@ -941,229 +924,230 @@ function MyProductsLists() {
                 </div>
 
                 <ModalDelete onSuccess={DeleteItemsProducts} />
-                <div
-                    className="modal fade "
-                    id="staticBackdropView"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                    aria-labelledby="staticBackdropLabel"
-                    aria-hidden="true">
-                    <div className="modal-dialog container ">
-                        <div className="modal-content">
-                            <div className="d-flex justify-content-end p-3">
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                    onClick={() => setView(null)}></button>
-                            </div>
-                            <div className="ps-container">
-                                {!loading ? (
-                                    <>
-                                        {View?.document?.content_type ===
-                                            'audio' ? (
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <DefaultAudioLive
-                                                        product={
-                                                            View ? View : ''
-                                                        }
-                                                        liveFile={View?.poster_url}
-                                                        title={View?.title}
-                                                        categoryName={
-                                                            View?.category?.name
-                                                        }
-                                                    />
-                                                    <ModuleAudioDetailTopInformationLive
 
-                                                        product={View ? View : ''}
-                                                        views={View?.view_count}
+            </div>
 
-                                                        admin={true}
-                                                        taxminiyNarx={
-                                                            View?.price
-                                                        }
-                                                    />
-                                                    <div className="price_and_tag">
-                                                        <ModuleAudioDetailShoppingActionsLive
-                                                            admin={true}
-                                                        />
+            <Modal
+                title={
+                    View?.document?.content_type === 'video' ? "Video haqida to’liq ma'lumot" :
+                        View?.document?.content_type === 'audio' ? "Audio haqida to’liq ma'lumot" :
+                            View?.document?.content_type === 'template' ? "Shablon haqida to’liq ma'lumot" :
+                                "Fayl haqida to’liq ma'lumot"
 
-                                                        <>
-                                                            {
-                                                                <div className="">
-                                                                    <p>
-                                                                        Tezkor
-                                                                        teglar
-                                                                    </p>
-                                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                                        {View
-                                                                            ?.tag
-                                                                            ?.length >
-                                                                            0 &&
-                                                                            View?.tag?.map(
-                                                                                (
-                                                                                    item,
-                                                                                    i
-                                                                                ) => (
-                                                                                    <div
-                                                                                        key={
-                                                                                            i
-                                                                                        }
-                                                                                        className="m-2 tag-product">
-                                                                                        <Link
-                                                                                            href="#"
-                                                                                            as="#">
-                                                                                            <a>
-                                                                                                {' '}
-                                                                                                #
-                                                                                                {
-                                                                                                    item?.name
-                                                                                                }{' '}
-                                                                                            </a>
-                                                                                        </Link>
-                                                                                    </div>
-                                                                                )
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        </>
-                                                    </div>
-                                                </div>
+                }
+                open={openDetails}
+                onOk={() => setOpenDetails(true)}
+                onCancel={() => setOpenDetails(false)}
+                width={1200}
+                footer={null}
 
-                                                <div className="ps-product__content ps-tab-root mb-5">
-                                                    <Tabs defaultActiveKey="1">
-                                                        <TabPane
-                                                            tab="Mahsulot to’liq tavsifi"
-                                                            key="1">
-                                                            <div className="ps-document">
-                                                                {View?.description
-                                                                    ? parse(
-                                                                        View?.description
+            >
+                <div className="ps-container p-0">
+                    {!loading ? (
+                        <>
+                            {View?.document?.content_type ===
+                                'audio' ? (
+                                <div className="row">
+                                    <div className="col-12">
+                                        <DefaultAudioLive
+                                            product={
+                                                View ? View : ''
+                                            }
+                                            liveFile={View?.poster_url}
+                                            title={View?.title}
+                                            categoryName={
+                                                View?.category?.name
+                                            }
+                                        />
+                                        <ModuleAudioDetailTopInformationLive
+
+                                            product={View ? View : ''}
+                                            views={View?.view_count}
+
+                                            admin={true}
+                                            taxminiyNarx={
+                                                View?.price
+                                            }
+                                        />
+                                        <div className="price_and_tag">
+                                            <ModuleAudioDetailShoppingActionsLive
+                                                admin={true}
+                                            />
+
+                                            <>
+                                                {
+                                                    <div className="">
+                                                        <p>
+                                                            Tezkor
+                                                            teglar
+                                                        </p>
+                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                            {View
+                                                                ?.tag
+                                                                ?.length >
+                                                                0 &&
+                                                                View?.tag?.map(
+                                                                    (
+                                                                        item,
+                                                                        i
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                            className="m-2 tag-product">
+                                                                            <Link
+                                                                                href="#"
+                                                                                as="#">
+                                                                                <a>
+                                                                                    {' '}
+                                                                                    #
+                                                                                    {
+                                                                                        item?.name
+                                                                                    }{' '}
+                                                                                </a>
+                                                                            </Link>
+                                                                        </div>
                                                                     )
-                                                                    : "To'ldirilmadi"}
-                                                            </div>
-                                                        </TabPane>
-                                                    </Tabs>
-                                                </div>
-
-                                                <div className="d-flex justify-content-end p-5 ">
-                                                    {loading2 ? (
-                                                        <button
-                                                            className="btn btn-success  p-2 px-5 fs-4 "
-                                                            style={{
-                                                                width: '179px',
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            <div
-                                                                className="spinner-border "
-                                                                role="status">
-                                                                <span className="visually-hidden">
-                                                                    Loading...
-                                                                </span>
-                                                            </div>
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            onClick={
-                                                                handleButtonClickViewProducts
-                                                            }
-                                                            className="btn btn-success p-2 px-5 fs-4 ">
-                                                            <i className="fa-solid fa-download mx-1"></i>{' '}
-                                                            <span className="fs-3">
-                                                                File ochish
-                                                            </span>
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ) : View?.document?.content_type ===
-                                            'video' ? (
-                                            <div className="row">
-                                                <div className="col-12">
-
-                                                    <Tabs
-                                                        defaultActiveKey="1"
-                                                        items={items}
-                                                        className="bg-white "
-                                                        onChange={(e) => setShort(e == 1 ? true : false)}
-                                                    />
-                                                    <ModuleAudioDetailTopInformationLive
-                                                        product={View}
-                                                        views={View?.view_count}
-
-                                                        admin={true}
-                                                        taxminiyNarx={
-                                                            View?.price
-                                                        }
-                                                    />
-                                                    <div className="price_and_tag">
-                                                        <ModuleAudioDetailShoppingActionsLive
-                                                            admin={true}
-                                                        />
-
-                                                        <>
-                                                            {
-                                                                <div className="">
-                                                                    <p>
-                                                                        Tezkor
-                                                                        teglar
-                                                                    </p>
-                                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                                        {View
-                                                                            ?.tag
-                                                                            ?.length >
-                                                                            0 &&
-                                                                            View?.tag?.map(
-                                                                                (
-                                                                                    item,
-                                                                                    i
-                                                                                ) => (
-                                                                                    <div
-                                                                                        key={
-                                                                                            i
-                                                                                        }
-                                                                                        className="m-2 tag-product">
-                                                                                        <Link
-                                                                                            href="#"
-                                                                                            as="#">
-                                                                                            <a>
-                                                                                                {' '}
-                                                                                                #
-                                                                                                {
-                                                                                                    item?.name
-                                                                                                }{' '}
-                                                                                            </a>
-                                                                                        </Link>
-                                                                                    </div>
-                                                                                )
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        </>
+                                                                )}
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                }
+                                            </>
+                                        </div>
+                                    </div>
 
-                                                <div className="ps-product__content ps-tab-root mb-5">
-                                                    <Tabs defaultActiveKey="1">
-                                                        <TabPane
-                                                            tab="Mahsulot to’liq tavsifi"
-                                                            key="1">
-                                                            <div className="ps-document">
-                                                                {View?.description
-                                                                    ? parse(
-                                                                        View?.description
+                                    <div className="ps-product__content ps-tab-root mb-5">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
+                                                <div className="ps-document">
+                                                    {View?.description
+                                                        ? parse(
+                                                            View?.description
+                                                        )
+                                                        : "To'ldirilmadi"}
+                                                </div>
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+
+                                    <div className="d-flex justify-content-end p-5 ">
+                                        {loading2 ? (
+                                            <button
+                                                className="btn btn-success  p-2 px-5 fs-4 "
+                                                style={{
+                                                    width: '179px',
+                                                    cursor: 'not-allowed',
+                                                }}>
+                                                <div
+                                                    className="spinner-border "
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={
+                                                    handleButtonClickViewProducts
+                                                }
+                                                className="btn btn-success p-2 px-5 fs-4 ">
+                                                <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                <span className="fs-3">
+                                                    File ochish
+                                                </span>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            ) : View?.document?.content_type ===
+                                'video' ? (
+                                <div className="row">
+                                    <div className="col-12">
+
+                                        <Tabs
+                                            defaultActiveKey="1"
+                                            items={items}
+                                            className="bg-white "
+                                            onChange={(e) => setShort(e == 1 ? true : false)}
+                                        />
+                                        <ModuleAudioDetailTopInformationLive
+                                            product={View}
+                                            views={View?.view_count}
+
+                                            admin={true}
+                                            taxminiyNarx={
+                                                View?.price
+                                            }
+                                        />
+                                        <div className="price_and_tag">
+                                            <ModuleAudioDetailShoppingActionsLive
+                                                admin={true}
+                                            />
+
+                                            <>
+                                                {
+                                                    <div className="">
+                                                        <p>
+                                                            Tezkor
+                                                            teglar
+                                                        </p>
+                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                            {View
+                                                                ?.tag
+                                                                ?.length >
+                                                                0 &&
+                                                                View?.tag?.map(
+                                                                    (
+                                                                        item,
+                                                                        i
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                            className="m-2 tag-product">
+                                                                            <Link
+                                                                                href="#"
+                                                                                as="#">
+                                                                                <a>
+                                                                                    {' '}
+                                                                                    #
+                                                                                    {
+                                                                                        item?.name
+                                                                                    }{' '}
+                                                                                </a>
+                                                                            </Link>
+                                                                        </div>
                                                                     )
-                                                                    : "To'ldirilmadi"}
-                                                            </div>
-                                                        </TabPane>
-                                                    </Tabs>
-                                                </div>
+                                                                )}
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </>
+                                        </div>
+                                    </div>
 
-                                                {/* <div className="d-flex justify-content-end p-5 ">
+                                    <div className="ps-product__content ps-tab-root mb-5">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
+                                                <div className="ps-document">
+                                                    {View?.description
+                                                        ? parse(
+                                                            View?.description
+                                                        )
+                                                        : "To'ldirilmadi"}
+                                                </div>
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+
+                                    {/* <div className="d-flex justify-content-end p-5 ">
                                                     {loading2 ? (
                                                         <button
                                                             className="btn btn-success  p-2 px-5 fs-4 "
@@ -1192,232 +1176,165 @@ function MyProductsLists() {
                                                         </button>
                                                     )}
                                                 </div> */}
+                                </div>
+                            ) : (
+                                <div className="ps-product--detail ps-product--fullwidth m-0">
+                                    <div className="ps-product__header ">
+                                        <ThumbnailDefault
+                                            product={View}
+                                            views={View?.view_count}
+                                        />
+                                        <div className="ps-product__info">
+                                            {View?.status ===
+                                                'cancelled' ? (
+                                                <div className="mb-4">
+                                                    <strong className="text-danger pb-5">
+                                                        {
+                                                            View?.reason
+                                                        }
+                                                    </strong>
+                                                </div>
+                                            ) : (
+                                                ''
+                                            )}
+                                            <ModuleDetailTopInformation
+                                                product={
+                                                    View ? View : ''
+                                                }
+                                            />
+                                            <ModuleProductDetailDescription
+                                                product={View}
+                                            />
+                                            <div className="ps-product__shopping row-gap-3">
+                                                <div>
+                                                    <button
+                                                        className="ps-btn ps-btn--black"
+                                                        style={{
+                                                            cursor: 'not-allowed',
+                                                        }}>
+                                                        Savatga
+                                                        qo'shish
+                                                    </button>
+                                                    <button
+                                                        className="ps-btn"
+                                                        style={{
+                                                            cursor: 'not-allowed',
+                                                        }}>
+                                                        Sotib olish
+                                                    </button>
+                                                </div>
+                                                <div className="ps-product__actions">
+                                                    <a
+                                                        style={{
+                                                            cursor: 'not-allowed',
+                                                        }}>
+                                                        <i
+                                                            className={`icon-heart`}></i>
+                                                    </a>
+                                                </div>
                                             </div>
-                                        ) : (
-                                            <div className="ps-product--detail ps-product--fullwidth">
-                                                <div className="ps-product__header ">
-                                                    <ThumbnailDefault
-                                                        product={View}
-                                                        views={View?.view_count}
-                                                    />
-                                                    <div className="ps-product__info">
-                                                        {View?.status ===
-                                                            'cancelled' ? (
-                                                            <div className="mb-4">
-                                                                <strong className="text-danger pb-5">
-                                                                    {
-                                                                        View?.reason
-                                                                    }
-                                                                </strong>
-                                                            </div>
-                                                        ) : (
-                                                            ''
-                                                        )}
-                                                        <ModuleDetailTopInformation
-                                                            product={
-                                                                View ? View : ''
-                                                            }
-                                                        />
-                                                        <ModuleProductDetailDescription
-                                                            product={View}
-                                                        />
-                                                        <div className="ps-product__shopping row-gap-3">
-                                                            <div>
-                                                                <button
-                                                                    className="ps-btn ps-btn--black"
-                                                                    style={{
-                                                                        cursor: 'not-allowed',
-                                                                    }}>
-                                                                    Savatga
-                                                                    qo'shish
-                                                                </button>
-                                                                <button
-                                                                    className="ps-btn"
-                                                                    style={{
-                                                                        cursor: 'not-allowed',
-                                                                    }}>
-                                                                    Sotib olish
-                                                                </button>
-                                                            </div>
-                                                            <div className="ps-product__actions">
-                                                                <a
-                                                                    style={{
-                                                                        cursor: 'not-allowed',
-                                                                    }}>
-                                                                    <i
-                                                                        className={`icon-heart`}></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <p>Tezkor teglar</p>
-                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                            {View?.tag?.length >
-                                                                0 &&
-                                                                View?.tag.map(
-                                                                    (
-                                                                        item,
-                                                                        i
-                                                                    ) => (
-                                                                        <div
-                                                                            key={
-                                                                                i
-                                                                            }
-                                                                            className="m-2 tag-product">
-                                                                            <Link
-                                                                                href="#"
-                                                                                as="#">
-                                                                                <a>
-                                                                                    {
-                                                                                        item.name
-                                                                                    }{' '}
-                                                                                </a>
-                                                                            </Link>
-                                                                        </div>
-                                                                    )
-                                                                )}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="ps-product__content ps-tab-root">
-                                                    <Tabs defaultActiveKey="1">
-                                                        <TabPane
-                                                            tab="Mahsulot to’liq tavsifi"
-                                                            key="1">
-                                                            <PartialDescription
-                                                                product={View}
-                                                            />
-                                                        </TabPane>
-                                                    </Tabs>
-                                                </div>
-                                                <div className="d-flex justify-content-end ">
-                                                    {loading2 ? (
-                                                        <button
-                                                            className="btn btn-success  p-2 px-5 fs-4 "
-                                                            style={{
-                                                                width: '179px',
-                                                                cursor: 'not-allowed',
-                                                            }}>
+                                            <p>Tezkor teglar</p>
+                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                {View?.tag?.length >
+                                                    0 &&
+                                                    View?.tag.map(
+                                                        (
+                                                            item,
+                                                            i
+                                                        ) => (
                                                             <div
-                                                                className="spinner-border "
-                                                                role="status">
-                                                                <span className="visually-hidden">
-                                                                    Loading...
-                                                                </span>
+                                                                key={
+                                                                    i
+                                                                }
+                                                                className="m-2 tag-product">
+                                                                <Link
+                                                                    href="#"
+                                                                    as="#">
+                                                                    <a>
+                                                                        {
+                                                                            item.name
+                                                                        }{' '}
+                                                                    </a>
+                                                                </Link>
                                                             </div>
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            onClick={
-                                                                handleButtonClickViewProducts
-                                                            }
-                                                            className="btn btn-success p-2 px-5 fs-4 ">
-                                                            <i className="fa-solid fa-download mx-1"></i>{' '}
-                                                            <span className="fs-3">
-                                                                File ochish
-                                                            </span>
-                                                        </button>
+                                                        )
                                                     )}
-                                                </div>
                                             </div>
-                                        )}
-                                    </>
-                                ) : (
-                                    <div
-                                        className="ps-product--detail ps-product--fullwidth"
-                                        style={{
-                                            height: '690px',
-                                            display: 'grid',
-                                            placeContent: 'center',
-                                        }}>
-                                        <div
-                                            className="spinner-border "
-                                            role="status"
-                                            style={{
-                                                width: '150px',
-                                                height: '150px',
-                                            }}>
-                                            <span className="visually-hidden">
-                                                Loading...
-                                            </span>
                                         </div>
                                     </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <ModalDeletePostEdit
-                    dataBsTarget="exampleModalMyProductsPrice"
-                    onSubmited={handleItemsEditProductsPosts}
-                    formID="products-edit_price">
-                    {loading3 ? (
+                                    <div className="ps-product__content ps-tab-root">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab={
+                                                    View?.document?.content_type === 'video' ? "Video to’liq tavsifi" :
+                                                        View?.document?.content_type === 'audio' ? "Audio to’liq tavsifi" :
+                                                            View?.document?.content_type === 'template' ? "Shablon to’liq tavsifi" :
+                                                                "Fayl to’liq tavsifi"
+
+                                                }
+                                                key="1">
+                                                <PartialDescription
+                                                    product={View}
+                                                />
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                    <div className="d-flex justify-content-end ">
+                                        {loading2 ? (
+                                            <button
+                                                className="btn btn-success  p-2 px-5 fs-4 "
+                                                style={{
+                                                    width: '179px',
+                                                    cursor: 'not-allowed',
+                                                }}>
+                                                <div
+                                                    className="spinner-border "
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={
+                                                    handleButtonClickViewProducts
+                                                }
+                                                className="btn btn-success p-2 px-5 fs-4 ">
+                                                <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                <span className="fs-3">
+                                                    File ochish
+                                                </span>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    ) : (
                         <div
-                            className=" "
+                            className="ps-product--detail ps-product--fullwidth"
                             style={{
-                                height: '200px',
+                                height: '690px',
                                 display: 'grid',
                                 placeContent: 'center',
                             }}>
                             <div
                                 className="spinner-border "
                                 role="status"
-                                style={{ width: '150px', height: '150px' }}>
+                                style={{
+                                    width: '150px',
+                                    height: '150px',
+                                }}>
                                 <span className="visually-hidden">
                                     Loading...
                                 </span>
                             </div>
                         </div>
-                    ) : (
-                        <>
-                            <label htmlFor="priceCount" className="form-label">
-                                Hujjatingizni chegirmasi
-                                <input
-                                    id="priceCount"
-                                    onChange={(e) =>
-                                        setViewPriceDiscount((prev) => ({
-                                            ...prev,
-                                            discount: e.target.value,
-                                        }))
-                                    }
-                                    defaultValue={products2?.discount}
-                                    type="number"
-                                    className="form-control rounded-3"
-                                    placeholder="Hujjatingizni chegirmasi"
-                                />
-                            </label>
-                            <label htmlFor="discount" className="form-label">
-                                Hujjatingizni narxi
-                                <input
-                                    id="discount"
-                                    onChange={(e) =>
-                                        setViewPriceDiscount((prev) => ({
-                                            ...prev,
-                                            price: e.target.value,
-                                        }))
-                                    }
-                                    defaultValue={products2?.price}
-                                    type="number"
-                                    className="form-control rounded-3"
-                                    placeholder="Hujjatingizni narxi"
-                                />
-                            </label>
-                            <label htmlFor="discount" className="form-label">
-                                Sotuvdagi narxi:{' '}
-                                <span
-                                    className={
-                                        finalPrice < 1000 ||
-                                            products2?.discount_pric < 1000
-                                            ? 'text-danger'
-                                            : 'text-primary'
-                                    }>
-                                    {' '}
-                                    {JSON.stringify(finalPrice)}
-                                </span>
-                            </label>
-                        </>
                     )}
-                </ModalDeletePostEdit>
-            </div>
+                </div>
+
+            </Modal>
 
 
             <Modal
@@ -1607,7 +1524,78 @@ function MyProductsLists() {
                 </div>
             </Modal>
 
-        </section>
+            <ModalDeletePostEdit
+                dataBsTarget="exampleModalMyProductsPrice"
+                onSubmited={handleItemsEditProductsPosts}
+                formID="products-edit_price">
+                {loading3 ? (
+                    <div
+                        className=" "
+                        style={{
+                            height: '200px',
+                            display: 'grid',
+                            placeContent: 'center',
+                        }}>
+                        <div
+                            className="spinner-border "
+                            role="status"
+                            style={{ width: '150px', height: '150px' }}>
+                            <span className="visually-hidden">
+                                Loading...
+                            </span>
+                        </div>
+                    </div>
+                ) : (
+                    <>
+                        <label htmlFor="priceCount" className="form-label">
+                            Hujjatingizni chegirmasi
+                            <input
+                                id="priceCount"
+                                onChange={(e) =>
+                                    setViewPriceDiscount((prev) => ({
+                                        ...prev,
+                                        discount: e.target.value,
+                                    }))
+                                }
+                                defaultValue={products2?.discount}
+                                type="number"
+                                className="form-control rounded-3"
+                                placeholder="Hujjatingizni chegirmasi"
+                            />
+                        </label>
+                        <label htmlFor="discount" className="form-label">
+                            Hujjatingizni narxi
+                            <input
+                                id="discount"
+                                onChange={(e) =>
+                                    setViewPriceDiscount((prev) => ({
+                                        ...prev,
+                                        price: e.target.value,
+                                    }))
+                                }
+                                defaultValue={products2?.price}
+                                type="number"
+                                className="form-control rounded-3"
+                                placeholder="Hujjatingizni narxi"
+                            />
+                        </label>
+                        <label htmlFor="discount" className="form-label">
+                            Sotuvdagi narxi:{' '}
+                            <span
+                                className={
+                                    finalPrice < 1000 ||
+                                        products2?.discount_pric < 1000
+                                        ? 'text-danger'
+                                        : 'text-primary'
+                                }>
+                                {' '}
+                                {JSON.stringify(finalPrice)}
+                            </span>
+                        </label>
+                    </>
+                )}
+            </ModalDeletePostEdit>
+        </section >
     );
 }
 

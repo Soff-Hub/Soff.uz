@@ -11,21 +11,20 @@ import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
-const AccountMenuSidebar = ({ data, renderProfile }) => {
+const AccountMenuSidebar = () => {
     const dispatch = useDispatch();
     const { accountLinks } = useSelector((state) => state.auth);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
 
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
-    const [profile, setProfile] = useState(null);
+    const { profile } = useSelector((state) => state.ecomerce);
     const [webdata, setWebData] = useState(null);
     const [socket, setSocket] = useState(null);
     const [webdata1, setWebData1] = useState(null);
     const [socket1, setSocket1] = useState(null);
     const [webdata2, setWebData2] = useState(null);
     const [socket2, setSocket2] = useState(null);
-    const [loading, setLoading] = useState(false);
     const [dataBlock, setdataBlock] = useState(null);
     const [copy, setCopy] = useState(false);
     const [socketApplication, setSocketApplication] = useState(null);
@@ -71,12 +70,6 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     }
 
-    async function ProfileUsers(token) {
-        setLoading(true);
-        const ItemsData = await GetRepository.getProfile(token);
-        setProfile(ItemsData);
-        setLoading(false);
-    }
 
     async function ProfileUsersBLock() {
         const token = user?.access
@@ -171,12 +164,9 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
         }
     }, []);
 
-    useEffect(() => {
-        ProfileUsers(user?.access);
-    }, [renderProfile]);
 
     useEffect(() => {
-        if (user?.access && user?.role==="seller") {
+        if (user?.access && user?.role === "seller") {
             ProfileUsersToken(user?.access);
             ProfileUsersBLock()
         }
@@ -210,48 +200,42 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                     <i className=" fa-3x text-info fa-solid fa-circle-user"></i>
                 )}
                 <figure>
-                    {!loading ? (
-                        <>
-                            <h4 className="m-0 " style={{ maxWidth: '280px' }}>
-                                {' '}
-                                {profile?.first_name && profile?.last_name ? (
-                                    <>
-                                        <span>{profile?.first_name}</span>{' '}
-                                        <span> {profile?.last_name}</span>
-                                    </>
-                                ) : user?.role === 'seller' ? (
-                                    <span>
-                                        {profile?.role
-                                            ? 'Sotuvchi'
-                                            : "ma'lumot yo'q"}
-                                    </span>
-                                ) : user?.role === 'admin' ? (
-                                    <span>
-                                        {profile?.role
-                                            ? 'Admin'
-                                            : "malumot yo'q"}
-                                    </span>
-                                ) : user?.role === 'customer' ? (
-                                    <span>
-                                        {profile?.role
-                                            ? 'Foydalanuvchi'
-                                            : "malumot yo'q"}
-                                    </span>
-                                ) : (
-                                    <></>
-                                )}{' '}
-                            </h4>
-                            <p
-                                className="text-truncate"
-                                style={{ maxWidth: '280px' }}>
-                                {profile?.phone || profile?.email}
-                            </p>
-                        </>
-                    ) : (
-                        <div className="mx-5 mt-3">
-                            <BeatLoader size={10} color="#333" />
-                        </div>
-                    )}
+                    <>
+                        <h4 className="m-0 " style={{ maxWidth: '280px' }}>
+                            {' '}
+                            {profile?.first_name && profile?.last_name ? (
+                                <>
+                                    <span>{profile?.first_name}</span>{' '}
+                                    <span> {profile?.last_name}</span>
+                                </>
+                            ) : user?.role === 'seller' ? (
+                                <span>
+                                    {profile?.role
+                                        ? 'Sotuvchi'
+                                        : "ma'lumot yo'q"}
+                                </span>
+                            ) : user?.role === 'admin' ? (
+                                <span>
+                                    {profile?.role
+                                        ? 'Admin'
+                                        : "malumot yo'q"}
+                                </span>
+                            ) : user?.role === 'customer' ? (
+                                <span>
+                                    {profile?.role
+                                        ? 'Foydalanuvchi'
+                                        : "malumot yo'q"}
+                                </span>
+                            ) : (
+                                <></>
+                            )}{' '}
+                        </h4>
+                        <p
+                            className="text-truncate"
+                            style={{ maxWidth: '280px' }}>
+                            {profile?.phone || profile?.email}
+                        </p>
+                    </>
                 </figure>
             </div>
             {user?.role === 'seller' ? (
@@ -393,7 +377,7 @@ const AccountMenuSidebar = ({ data, renderProfile }) => {
                     cancelButtonProps={{ style: { display: 'none' } }}
                     okButtonProps={{ style: { backgroundColor: '#00A44F' } }}>
                     <h4 className='text-danger '>Siz Bloklangansiz </h4>
-  
+
                     <p className='m-0 fw-medium '>Blok qilingan sana : <CalculateTimeDifference targetDate={dataBlock?.created_at} /></p>
                     <p className=' fw-medium'>Blokadan chiqish sanasi : <CalculateTimeDifference targetDate={dataBlock?.to_date} /></p>
                     <div>

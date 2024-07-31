@@ -308,9 +308,9 @@ const Posts = () => {
     useEffect(() => {
         if (liveProduct?.name) {
             form.setFieldsValue({
-                title: liveProduct?.name
+                title: liveProduct?.name?.replace('.mp4', '')
             });
-            setIputName(liveProduct?.name)
+            setIputName(liveProduct?.name?.replace('.mp4', ''))
         }
     }, [liveProduct, form]);
 
@@ -336,7 +336,6 @@ const Posts = () => {
             });
         }
     }, [openUpdate, valuesPlayUpdate, form3]);
-
 
 
     return user?.role === 'seller' ? (
@@ -404,7 +403,7 @@ const Posts = () => {
                                                 style={{ height: "45.4px" }}
                                                 name='title'
                                                 placeholder="Video nomi"
-                                                defaultValue={liveProduct?.name}
+                                                defaultValue={liveProduct?.name?.replace('.mp4', '')}
                                                 onChange={(e) => setIputName(e.target.value)}
                                             />
                                         </Form.Item>

@@ -14,6 +14,7 @@ export default function DealOrderList() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isModalOpenUpdate, setIsModalOpenUpdate] = useState(false);
     const [loadingDetails, setLoadingDetails] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [dealItem, setDealItem] = useState(null);
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
@@ -38,11 +39,13 @@ export default function DealOrderList() {
 
 
     async function getDealList(token) {
+        setLoading(true)
         const data = await GetRepository.getDealList(currPage, token);
         if (data?.results) {
             setPageCount(data.count);
             setDealList(data?.results);
         }
+        setLoading(false)
 
     }
 
@@ -195,6 +198,7 @@ export default function DealOrderList() {
                                         dataSource={dealList}
                                         columns={columns}
                                         pagination={false}
+                                        loading={loading}
                                     />
                                     <div className='d-flex justify-content-center my-4 '>
                                         <Pagination
@@ -260,7 +264,7 @@ export default function DealOrderList() {
 
                                                     <div className="d-md-flex justify-content-between gap-4  ">
                                                         <div className="d-flex gap-3 align-items-center my-2">
-                                                            <Link href={dealItem?.user_info?.role==="seller" ? `/seller/${dealItem?.user_info?.id}` : "#"}
+                                                            <Link href={dealItem?.user_info?.role === "seller" ? `/seller/${dealItem?.user_info?.id}` : "#"}
 
                                                             >
                                                                 <a style={{
@@ -277,7 +281,7 @@ export default function DealOrderList() {
                                                             </Link>
                                                             <div>
 
-                                                                <Link href={dealItem?.user_info?.role==="seller" ? `/seller/${dealItem?.user_info?.id}` : "#"}style={{ cursor: "pointer" }} className="text-start">
+                                                                <Link href={dealItem?.user_info?.role === "seller" ? `/seller/${dealItem?.user_info?.id}` : "#"} style={{ cursor: "pointer" }} className="text-start">
                                                                     <a className="fw-medium fs-5">
                                                                         {dealItem?.user_info?.full_name}
                                                                     </a>

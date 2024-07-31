@@ -57,6 +57,7 @@ function ProductsLists() {
     const [dataValStatus, setDataCatStatus] = useState('');
     const [filterType, setFiltertype] = useState('');
     const [loading, setLoading] = useState(false);
+    const [loadingData, setLoadingData] = useState(false);
     const [loading2, setLoading2] = useState(false);
     const [pageCount, setPageCount] = useState(0);
     const [currPage, setCurrPage] = useState(1);
@@ -66,6 +67,8 @@ function ProductsLists() {
     const searchDebounce = useDebounce(search, 800);
     const [allProducts, setAllProducts] = useState(false);
     const [openFilter, setOpenFilter] = useState(false);
+    const [openDetails, setOpenDetails] = useState(false);
+
     const router = useRouter();
     const pid = router.asPath;
     const [imageID, setImageID] = useState(null)
@@ -101,6 +104,7 @@ function ProductsLists() {
         viewsAll
 
     ) {
+        setLoadingData(true)
         const ItemsData = await GetRepository.getShopsProducts(
             null,
             null,
@@ -117,6 +121,7 @@ function ProductsLists() {
         );
         setPageCount(ItemsData?.count);
         setData([...ItemsData?.results]);
+        setLoadingData(false)
     }
 
 
@@ -183,10 +188,11 @@ function ProductsLists() {
 
 
     async function handleClickView(item) {
-        if (item.id) {
+        if (item) {
+            setOpenDetails(true)
             setLoading(true);
             const ItemsData = await GetRepository.getShopsProductsAdminDetails(
-                item?.id,
+                item,
                 user?.access
             );
             if (ItemsData?.title) {
@@ -361,7 +367,7 @@ function ProductsLists() {
                             height="54px"
                         />
                     ) : (
-                        
+
                         <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(poster_data?.id)}>
                             {
                                 poster_data?.id == imageID ?
@@ -487,18 +493,11 @@ function ProductsLists() {
             key: 'address',
             render: (content_type_id) => (
                 <div>
-                    <a
-                        data-bs-target="#staticBackdropView"
-                        data-bs-toggle="modal">
+                    <a>
                         <i
                             className="fa-solid fa-eye text-success-emphasis mx-2"
                             onClick={() =>
-                                handleClickView(
-                                    data.find(
-                                        (item) =>
-                                            item.id === content_type_id?.id
-                                    )
-                                )
+                                handleClickView(content_type_id?.id)
                             }></i>
                     </a>
 
@@ -630,6 +629,7 @@ function ProductsLists() {
                                         dataSource={data}
                                         columns={columns}
                                         pagination={false}
+                                        loading={loadingData}
                                     />
                                     <Pagination
                                         className="mt-3"
@@ -644,618 +644,587 @@ function ProductsLists() {
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div
-                    className="modal fade "
-                    id="staticBackdropView"
-                    data-bs-backdrop="static"
-                    data-bs-keyboard="false"
-                    aria-labelledby="staticBackdropLabel"
-                    aria-hidden="true">
-                    <div className="modal-dialog container ">
-                        <div className="modal-content">
-                            <div className="d-flex justify-content-end p-3">
-                                <button
-                                    type="button"
-                                    className="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                    onClick={() =>
-                                        setDeleteIdView(null)
-                                    }></button>
-                            </div>
+            <Modal
+                title={
+                    deleteIdView?.document?.content_type === 'video' ? "Video haqida to’liq ma'lumot" :
+                        deleteIdView?.document?.content_type === 'audio' ? "Audio haqida to’liq ma'lumot" :
+                            deleteIdView?.document?.content_type === 'template' ? "Shablon haqida to’liq ma'lumot" :
+                                "Fayl haqida to’liq ma'lumot"
+                }
+                open={openDetails}
+                onOk={() => setOpenDetails(true)}
+                onCancel={() => setOpenDetails(false)}
+                width={1200}
+                footer={null}
 
-                            <div className="ps-container">
-                                {!loading ? (
-                                    <div className="ps-container">
-                                        {deleteIdView?.document
-                                            ?.content_type === 'audio' ? (
-                                            <div className="row">
-                                                <div className="col-12">
-                                                    <DefaultAudioLive
-                                                        product={
-                                                            deleteIdView
-                                                                ? deleteIdView
-                                                                : ''
-                                                        }
-                                                        liveFile={
-                                                            deleteIdView?.poster_url
-                                                        }
-                                                        title={
-                                                            deleteIdView?.title
-                                                        }
-                                                        categoryName={
-                                                            deleteIdView
-                                                                ?.category?.name
-                                                        }
-                                                    />
-                                                    <ModuleAudioDetailTopInformationLive
-                                                        product={
-                                                            deleteIdView
-                                                                ? deleteIdView
-                                                                : ''
-                                                        }
-                                                        views={
-                                                            deleteIdView?.view_count
-                                                        }
-                                                        admin={true}
-                                                        taxminiyNarx={
-                                                            deleteIdView?.price
-                                                        }
-                                                    />
-                                                    <div className="price_and_tag">
-                                                        <ModuleAudioDetailShoppingActionsLive
-                                                            admin={true}
-                                                        // free={free}
-                                                        />
+            >
+                <div className="ps-container p-0">
+                    {!loading ? (
+                        <div className="ps-container p-0">
+                            {deleteIdView?.document
+                                ?.content_type === 'audio' ? (
+                                <div className="row">
+                                    <div className="col-12">
+                                        <DefaultAudioLive
+                                            product={
+                                                deleteIdView
+                                                    ? deleteIdView
+                                                    : ''
+                                            }
+                                            liveFile={
+                                                deleteIdView?.poster_url
+                                            }
+                                            title={
+                                                deleteIdView?.title
+                                            }
+                                            categoryName={
+                                                deleteIdView
+                                                    ?.category?.name
+                                            }
+                                        />
+                                        <ModuleAudioDetailTopInformationLive
+                                            product={
+                                                deleteIdView
+                                                    ? deleteIdView
+                                                    : ''
+                                            }
+                                            views={
+                                                deleteIdView?.view_count
+                                            }
+                                            admin={true}
+                                            taxminiyNarx={
+                                                deleteIdView?.price
+                                            }
+                                        />
+                                        <div className="price_and_tag">
+                                            <ModuleAudioDetailShoppingActionsLive
+                                                admin={true}
+                                            // free={free}
+                                            />
 
-                                                        <>
-                                                            {
-                                                                <div className="">
-                                                                    <p>
-                                                                        Tezkor
-                                                                        teglar
-                                                                    </p>
-                                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                                        {deleteIdView
-                                                                            ?.tag
-                                                                            ?.length >
-                                                                            0 &&
-                                                                            deleteIdView?.tag?.map(
-                                                                                (
-                                                                                    item,
-                                                                                    i
-                                                                                ) => (
-                                                                                    <div
-                                                                                        key={
-                                                                                            i
-                                                                                        }
-                                                                                        className="m-2 tag-product">
-                                                                                        <Link
-                                                                                            href="#"
-                                                                                            as="#">
-                                                                                            <a>
-                                                                                                {
-                                                                                                    item?.name
-                                                                                                }{' '}
-                                                                                            </a>
-                                                                                        </Link>
-                                                                                    </div>
-                                                                                )
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        </>
-                                                    </div>
-                                                </div>
-
-                                                <div className="ps-product__content ps-tab-root mb-5">
-                                                    <Tabs defaultActiveKey="1">
-                                                        <TabPane
-                                                            tab="Mahsulot to’liq tavsifi"
-                                                            key="1">
-                                                            <div className="ps-document">
-                                                                {deleteIdView?.description
-                                                                    ? parse(
-                                                                        deleteIdView?.description
+                                            <>
+                                                {
+                                                    <div className="">
+                                                        <p>
+                                                            Tezkor
+                                                            teglar
+                                                        </p>
+                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                            {deleteIdView
+                                                                ?.tag
+                                                                ?.length >
+                                                                0 &&
+                                                                deleteIdView?.tag?.map(
+                                                                    (
+                                                                        item,
+                                                                        i
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                            className="m-2 tag-product">
+                                                                            <Link
+                                                                                href="#"
+                                                                                as="#">
+                                                                                <a>
+                                                                                    {
+                                                                                        item?.name
+                                                                                    }{' '}
+                                                                                </a>
+                                                                            </Link>
+                                                                        </div>
                                                                     )
-                                                                    : "To'ldirilmadi"}
-                                                            </div>
-                                                        </TabPane>
-                                                    </Tabs>
-                                                </div>
-
-                                                <div className="d-flex justify-content-end p-5 ">
-                                                    {loading2 ? (
-                                                        <button
-                                                            className="btn btn-success  p-2 px-5 fs-4 "
-                                                            style={{
-                                                                width: '179px',
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            <div
-                                                                className="spinner-border "
-                                                                role="status">
-                                                                <span className="visually-hidden">
-                                                                    Loading...
-                                                                </span>
-                                                            </div>
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            onClick={
-                                                                handleButtonClickViewProducts
-                                                            }
-                                                            className="btn btn-success p-2 px-5 fs-4 ">
-                                                            <i className="fa-solid fa-download mx-1"></i>{' '}
-                                                            <span className="fs-3">
-                                                                File ochish
-                                                            </span>
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        ) : deleteIdView?.document?.content_type === 'video' ? (
-                                            <div className="row">
-                                                <div className="col-md-12">
-
-                                                    <Tabs
-
-                                                        defaultActiveKey="1"
-                                                        items={items}
-                                                        className="bg-white"
-                                                        onChange={(e) => setShort(e == 1 ? true : false)}
-                                                    />
-                                                    <ModuleAudioDetailTopInformationLive
-                                                        product={
-                                                            deleteIdView
-                                                                ? deleteIdView
-                                                                : ''
-                                                        }
-                                                        views={
-                                                            deleteIdView?.view_count
-                                                        }
-                                                        admin={true}
-                                                        taxminiyNarx={
-                                                            deleteIdView?.price
-                                                        }
-                                                    />
-                                                    <div className="price_and_tag">
-                                                        <ModuleAudioDetailShoppingActionsLive
-                                                            admin={true}
-                                                        />
-
-                                                        <>
-                                                            {
-                                                                <div className="">
-                                                                    <p>
-                                                                        Tezkor
-                                                                        teglar
-                                                                    </p>
-                                                                    <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                                        {deleteIdView
-                                                                            ?.tag
-                                                                            ?.length >
-                                                                            0 &&
-                                                                            deleteIdView?.tag?.map(
-                                                                                (
-                                                                                    item,
-                                                                                    i
-                                                                                ) => (
-                                                                                    <div
-                                                                                        key={
-                                                                                            i
-                                                                                        }
-                                                                                        className="m-2 tag-product">
-                                                                                        <Link
-                                                                                            href="#"
-                                                                                            as="#">
-                                                                                            <a>
-                                                                                                {' '}
-                                                                                                #
-                                                                                                {
-                                                                                                    item?.name
-                                                                                                }{' '}
-                                                                                            </a>
-                                                                                        </Link>
-                                                                                    </div>
-                                                                                )
-                                                                            )}
-                                                                    </div>
-                                                                </div>
-                                                            }
-                                                        </>
+                                                                )}
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                }
+                                            </>
+                                        </div>
+                                    </div>
 
-                                                <div className="ps-product__content ps-tab-root mb-5">
-                                                    <Tabs defaultActiveKey="1">
-                                                        <TabPane
-                                                            tab="Mahsulot to’liq tavsifi"
-                                                            key="1">
-                                                            <div className="ps-document">
-                                                                {deleteIdView?.description
-                                                                    ? parse(
-                                                                        deleteIdView?.description
-                                                                    )
-                                                                    : "To'ldirilmadi"}
-                                                            </div>
-                                                        </TabPane>
-                                                    </Tabs>
+                                    <div className="ps-product__content ps-tab-root mb-5">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
+                                                <div className="ps-document">
+                                                    {deleteIdView?.description
+                                                        ? parse(
+                                                            deleteIdView?.description
+                                                        )
+                                                        : "To'ldirilmadi"}
                                                 </div>
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
 
-                                                {/* <div className="d-flex justify-content-end p-5 ">
-                                                    {loading2 ? (
-                                                        <button
-                                                            className="btn btn-success  p-2 px-5 fs-4 "
-                                                            style={{
-                                                                width: '179px',
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            <div
-                                                                className="spinner-border "
-                                                                role="status">
-                                                                <span className="visually-hidden">
-                                                                    Loading...
-                                                                </span>
-                                                            </div>
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            onClick={
-                                                                handleButtonClickViewProducts
-                                                            }
-                                                            className="btn btn-success p-2 px-5 fs-4 ">
-                                                            <i className="fa-solid fa-download mx-1"></i>{' '}
-                                                            <span className="fs-3">
-                                                                File ochish
-                                                            </span>
-                                                        </button>
-                                                    )}
-                                                </div> */}
-                                            </div>
+                                    <div className="d-flex justify-content-end p-5 ">
+                                        {loading2 ? (
+                                            <button
+                                                className="btn btn-success  p-2 px-5 fs-4 "
+                                                style={{
+                                                    width: '179px',
+                                                    cursor: 'not-allowed',
+                                                }}>
+                                                <div
+                                                    className="spinner-border "
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            </button>
                                         ) : (
-                                            <div className="ps-product--detail ps-product--fullwidth">
-                                                <div className="ps-product__header ">
-                                                    <ThumbnailDefault
-                                                        product={
-                                                            deleteIdView
-                                                                ? deleteIdView
-                                                                : ''
-                                                        }
-                                                        views={
-                                                            deleteIdView?.view_count
-                                                        }
-                                                    />
-                                                    <div className="ps-product__info">
-                                                        <div className="mb-4">
-                                                            <strong className="text-danger pb-5">
-                                                                {
-                                                                    deleteIdView?.reason
-                                                                }
-                                                            </strong>
-                                                        </div>
-                                                        <ModuleDetailTopInformation
-                                                            
-                                                            product={
-                                                                deleteIdView
-                                                                    ? deleteIdView
-                                                                    : ''
-                                                            }
-                                                        />
-                                                        <ModuleProductDetailDescription
-                                                            product={
-                                                                deleteIdView
-                                                                    ? deleteIdView
-                                                                    : ''
-                                                            }
-                                                        />
-                                                        <div className="ps-product__shoppin row-gap-3 d-xl-flex d-lg-flex gap-3 align-items-center ">
-                                                            <button
-                                                                className="ps-btn text-white w-100"
-                                                                style={{
-                                                                    cursor: 'not-allowed',
-                                                                }}>
-                                                                Savatga qo'shish
-                                                            </button>
-                                                            <button
-                                                                className="ps-btn w-100 text-white mt-3 mt-xl-0 mt-lg-0"
-                                                                style={{
-                                                                    cursor: 'not-allowed',
-                                                                }}>
-                                                                Sotib olish
-                                                            </button>
-                                                            <div className="ps-product__actions">
-                                                                <a
-                                                                    style={{
-                                                                        cursor: 'not-allowed',
-                                                                    }}>
-                                                                    <i
-                                                                        className={`icon-heart fs-2`}></i>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                            {deleteIdView
-                                                                ?.active_tag
-                                                                ?.length > 0 ? (
-                                                                <p>
-                                                                    {' '}
-                                                                    <strong>
-                                                                        Aktiv
-                                                                        teglar:{' '}
-                                                                    </strong>{' '}
-                                                                    {deleteIdView?.active_tag?.map(
-                                                                        (
-                                                                            item
-                                                                        ) => (
-                                                                            <span
-                                                                                key={
-                                                                                    item.id
-                                                                                }>
-                                                                                #
-                                                                                {
-                                                                                    item.name
-                                                                                }{' '}
-                                                                            </span>
-                                                                        )
-                                                                    )}{' '}
-                                                                </p>
-                                                            ) : (
-                                                                <></>
-                                                            )}
-                                                        </div>
-                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
-                                                            {deleteIdView
-                                                                ?.deactive_tag
-                                                                ?.length > 0 ? (
-                                                                <p>
-                                                                    {' '}
-                                                                    <strong>
-                                                                        Aktiv
-                                                                        emas
-                                                                        teglar:{' '}
-                                                                    </strong>{' '}
-                                                                    {deleteIdView?.deactive_tag?.map(
-                                                                        (
-                                                                            item
-                                                                        ) => (
-                                                                            <span
-                                                                                key={
-                                                                                    item.id
-                                                                                }>
-                                                                                #
-                                                                                {
-                                                                                    item.name
-                                                                                }{' '}
-                                                                            </span>
-                                                                        )
-                                                                    )}{' '}
-                                                                </p>
-                                                            ) : (
-                                                                <></>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div className="ps-product__content ps-tab-root">
-                                                    <Tabs defaultActiveKey="1">
-                                                        <TabPane
-                                                            tab="Mahsulot to’liq tavsifi"
-                                                            key="1">
-                                                            <PartialDescription
-                                                                product={
-                                                                    deleteIdView
-                                                                }
-                                                            />
-                                                        </TabPane>
-                                                    </Tabs>
-                                                </div>
-                                                <div className="d-flex justify-content-end ">
-                                                    {loading2 ? (
-                                                        <button
-                                                            className="btn btn-success  p-2 px-5 fs-4 "
-                                                            style={{
-                                                                width: '179px',
-                                                                cursor: 'not-allowed',
-                                                            }}>
-                                                            <div
-                                                                className="spinner-border "
-                                                                role="status">
-                                                                <span className="visually-hidden">
-                                                                    Loading...
-                                                                </span>
-                                                            </div>
-                                                        </button>
-                                                    ) : (
-                                                        <button
-                                                            onClick={
-                                                                handleButtonClickViewProducts
-                                                            }
-                                                            className="btn btn-success p-2 px-5 fs-4 ">
-                                                            <i className="fa-solid fa-download mx-1"></i>{' '}
-                                                            <span className="fs-3">
-                                                                File ochish
-                                                            </span>
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            </div>
+                                            <button
+                                                onClick={
+                                                    handleButtonClickViewProducts
+                                                }
+                                                className="btn btn-success p-2 px-5 fs-4 ">
+                                                <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                <span className="fs-3">
+                                                    File ochish
+                                                </span>
+                                            </button>
                                         )}
                                     </div>
-                                ) : (
-                                    <div className="ps-container">
-                                        <div
-                                            className="ps-product--detail ps-product--fullwidth"
-                                            style={{
-                                                height: '690px',
-                                                display: 'grid',
-                                                placeContent: 'center',
-                                            }}>
-                                            <div
-                                                className="spinner-border "
-                                                role="status"
-                                                style={{
-                                                    width: '150px',
-                                                    height: '150px',
-                                                }}>
-                                                <span className="visually-hidden">
-                                                    Loading...
-                                                </span>
+                                </div>
+                            ) : deleteIdView?.document?.content_type === 'video' ? (
+                                <div className="row">
+                                    <div className="col-md-12">
+
+                                        <Tabs
+
+                                            defaultActiveKey="1"
+                                            items={items}
+                                            className="bg-white"
+                                            onChange={(e) => setShort(e == 1 ? true : false)}
+                                        />
+                                        <ModuleAudioDetailTopInformationLive
+                                            product={
+                                                deleteIdView
+                                                    ? deleteIdView
+                                                    : ''
+                                            }
+                                            views={
+                                                deleteIdView?.view_count
+                                            }
+                                            admin={true}
+                                            taxminiyNarx={
+                                                deleteIdView?.price
+                                            }
+                                        />
+                                        <div className="price_and_tag">
+                                            <ModuleAudioDetailShoppingActionsLive
+                                                admin={true}
+                                            />
+
+                                            <>
+                                                {
+                                                    <div className="">
+                                                        <p>
+                                                            Tezkor
+                                                            teglar
+                                                        </p>
+                                                        <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                            {deleteIdView
+                                                                ?.tag
+                                                                ?.length >
+                                                                0 &&
+                                                                deleteIdView?.tag?.map(
+                                                                    (
+                                                                        item,
+                                                                        i
+                                                                    ) => (
+                                                                        <div
+                                                                            key={
+                                                                                i
+                                                                            }
+                                                                            className="m-2 tag-product">
+                                                                            <Link
+                                                                                href="#"
+                                                                                as="#">
+                                                                                <a>
+                                                                                    {' '}
+                                                                                    #
+                                                                                    {
+                                                                                        item?.name
+                                                                                    }{' '}
+                                                                                </a>
+                                                                            </Link>
+                                                                        </div>
+                                                                    )
+                                                                )}
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </>
+                                        </div>
+                                    </div>
+
+                                    <div className="ps-product__content ps-tab-root mb-5">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab="Mahsulot to’liq tavsifi"
+                                                key="1">
+                                                <div className="ps-document">
+                                                    {deleteIdView?.description
+                                                        ? parse(
+                                                            deleteIdView?.description
+                                                        )
+                                                        : "To'ldirilmadi"}
+                                                </div>
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="ps-product--detail ps-product--fullwidth m-0">
+                                    <div className="ps-product__header ">
+                                        <ThumbnailDefault
+                                            product={
+                                                deleteIdView
+                                                    ? deleteIdView
+                                                    : ''
+                                            }
+                                            views={
+                                                deleteIdView?.view_count
+                                            }
+                                        />
+                                        <div className="ps-product__info">
+                                            <div className="mb-4">
+                                                <strong className="text-danger pb-5">
+                                                    {
+                                                        deleteIdView?.reason
+                                                    }
+                                                </strong>
+                                            </div>
+                                            <ModuleDetailTopInformation
+
+                                                product={
+                                                    deleteIdView
+                                                        ? deleteIdView
+                                                        : ''
+                                                }
+                                            />
+                                            <ModuleProductDetailDescription
+                                                product={
+                                                    deleteIdView
+                                                        ? deleteIdView
+                                                        : ''
+                                                }
+                                            />
+                                            <div className="ps-product__shoppin row-gap-3 d-xl-flex d-lg-flex gap-3 align-items-center ">
+                                                <button
+                                                    className="ps-btn text-white w-100"
+                                                    style={{
+                                                        cursor: 'not-allowed',
+                                                    }}>
+                                                    Savatga qo'shish
+                                                </button>
+                                                <button
+                                                    className="ps-btn w-100 text-white mt-3 mt-xl-0 mt-lg-0"
+                                                    style={{
+                                                        cursor: 'not-allowed',
+                                                    }}>
+                                                    Sotib olish
+                                                </button>
+                                                <div className="ps-product__actions">
+                                                    <a
+                                                        style={{
+                                                            cursor: 'not-allowed',
+                                                        }}>
+                                                        <i
+                                                            className={`icon-heart fs-2`}></i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div className=" mt-5 d-flex justify-content-start align-content-center flex-wrap">
+                                                {deleteIdView
+                                                    ?.active_tag
+                                                    ?.length > 0 ? (
+                                                    <p>
+                                                        {' '}
+                                                        <strong>
+                                                            Aktiv
+                                                            teglar:{' '}
+                                                        </strong>{' '}
+                                                        {deleteIdView?.active_tag?.map(
+                                                            (
+                                                                item
+                                                            ) => (
+                                                                <span
+                                                                    key={
+                                                                        item.id
+                                                                    }>
+                                                                    #
+                                                                    {
+                                                                        item.name
+                                                                    }{' '}
+                                                                </span>
+                                                            )
+                                                        )}{' '}
+                                                    </p>
+                                                ) : (
+                                                    <></>
+                                                )}
+                                            </div>
+                                            <div className=" d-flex justify-content-start align-content-center flex-wrap">
+                                                {deleteIdView
+                                                    ?.deactive_tag
+                                                    ?.length > 0 ? (
+                                                    <p>
+                                                        {' '}
+                                                        <strong>
+                                                            Aktiv
+                                                            emas
+                                                            teglar:{' '}
+                                                        </strong>{' '}
+                                                        {deleteIdView?.deactive_tag?.map(
+                                                            (
+                                                                item
+                                                            ) => (
+                                                                <span
+                                                                    key={
+                                                                        item.id
+                                                                    }>
+                                                                    #
+                                                                    {
+                                                                        item.name
+                                                                    }{' '}
+                                                                </span>
+                                                            )
+                                                        )}{' '}
+                                                    </p>
+                                                ) : (
+                                                    <></>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
-                                )}
+                                    <div className="ps-product__content ps-tab-root">
+                                        <Tabs defaultActiveKey="1">
+                                            <TabPane
+                                                tab={
+                                                    deleteIdView?.document?.content_type === 'audio' ? "Audio to’liq tavsifi" :
+                                                        deleteIdView?.document?.content_type === 'video' ? "Video to’liq tavsifi" :
+                                                            deleteIdView?.document?.content_type === 'template' ? "Shablon to’liq tavsifi" : "Fayl to’liq tavsifi"
+
+
+                                                }
+                                                key="1">
+                                                <PartialDescription
+                                                    product={
+                                                        deleteIdView
+                                                    }
+                                                />
+                                            </TabPane>
+                                        </Tabs>
+                                    </div>
+                                    <div className="d-flex justify-content-end ">
+                                        {loading2 ? (
+                                            <button
+                                                className="btn btn-success  p-2 px-5 fs-4 "
+                                                style={{
+                                                    width: '179px',
+                                                    cursor: 'not-allowed',
+                                                }}>
+                                                <div
+                                                    className="spinner-border "
+                                                    role="status">
+                                                    <span className="visually-hidden">
+                                                        Loading...
+                                                    </span>
+                                                </div>
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={
+                                                    handleButtonClickViewProducts
+                                                }
+                                                className="btn btn-success p-2 px-5 fs-4 ">
+                                                <i className="fa-solid fa-download mx-1"></i>{' '}
+                                                <span className="fs-3">
+                                                    File ochish
+                                                </span>
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    ) : (
+                        <div className="ps-container p-0">
+                            <div
+                                className="ps-product--detail ps-product--fullwidth"
+                                style={{
+                                    height: '690px',
+                                    display: 'grid',
+                                    placeContent: 'center',
+                                }}>
+                                <div
+                                    className="spinner-border "
+                                    role="status"
+                                    style={{
+                                        width: '150px',
+                                        height: '150px',
+                                    }}>
+                                    <span className="visually-hidden">
+                                        Loading...
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
-                <Modal
-                    title={"Mahsulotlarni filterlash"}
-                    open={openFilter}
-                    onOk={() => setOpenFilter(true)}
-                    onCancel={() => setOpenFilter(false)}
-                    footer={null}
-                    width={500}
-                >
 
-                    <div className="p-0 mt-5 mb-3 w-100 d-flex gap-4 flex-column">
+            </Modal>
 
-                        <div className='d-flex justify-content-between gap-3'>
-                            <button onClick={handleClickProductsAll}
+            <Modal
+                title={"Mahsulotlarni filterlash"}
+                open={openFilter}
+                onOk={() => setOpenFilter(true)}
+                onCancel={() => setOpenFilter(false)}
+                footer={null}
+                width={500}
+            >
 
-                                className='btn btn-outline-secondary rounded-3 fs-4 py-3 w-100'>
-                                Barcha mahsulotlar
-                            </button>
-                            <button onClick={() => setViewsAll("view_count")}
+                <div className="p-0 mt-5 mb-3 w-100 d-flex gap-4 flex-column">
 
-                                className='btn btn-outline-success rounded-3 fs-4 py-3 w-100'>
-                                <i className="fa-solid fa-eye mx-2"></i>
-                                Eng ko'p ko'rilganlar
-                            </button>
-                        </div>
+                    <div className='d-flex justify-content-between gap-3'>
+                        <button onClick={handleClickProductsAll}
 
+                            className='btn btn-outline-secondary rounded-3 fs-4 py-3 w-100'>
+                            Barcha mahsulotlar
+                        </button>
+                        <button onClick={() => setViewsAll("view_count")}
 
-                        <Select
-                            className=" p-0"
-                            mode="select"
-                            showSearch
-                            style={{
-                                width: '100%',
-                                height: '47px',
-                            }}
-                            onChange={onChange}
-                            onSearch={onSearchCategory}
-                            placeholder="Barcha kategoriyalar">
-                            <Option
-                                value="all"
-                                selected>
-                                Barcha
-                                kategoriyalar
-                            </Option>
-
-                            {options}
-                        </Select>
-
-                        <select
-                            className="form-select  fs-3 py-3 rounded-3"
-                            onChange={(e) =>
-                                handleFilterStatus(
-                                    e.target
-                                        .value
-                                )
-                            }>
-                            <option
-                                className="fs-3"
-                                selected
-                                value="">
-                                Barcha holatlar
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="moderation">
-                                Moderatsiya
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="approved">
-                                Tasdiqlangan
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="cancelled">
-                                Bekor qilingan
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="deleted">
-                                Arxivlangan
-                            </option>
-                        </select>
-
-                        <RangePicker
-                            className="w-100 py-3  rounded-3"
-                            onChange={handleChange}
-                        />
-
-                        <select
-                            className="form-select  fs-3 py-3 rounded-3"
-                            onChange={(e) =>
-                                setFiltertype(
-                                    e.target
-                                        .value
-                                )
-                            }>
-                            <option
-                                className="fs-3"
-                                selected
-                                value="">
-                                Barcha turlar
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="file">
-                                File
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="audio">
-                                Audio
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="template">
-                                Shablon
-                            </option>
-                        </select>
-                        <Select
-                            className=" p-0"
-                            mode="select"
-                            showSearch
-                            allowClear
-                            style={{
-                                width: '100%',
-                                height: '47px',
-                            }}
-                            onChange={onChangePlay}
-                            placeholder="Barcha playlistlar">
-                            <Option value="all">
-                                Barcha
-                                PlayListslar
-                            </Option>
-
-                            {optionsPlayLists}
-                        </Select>
-
-
+                            className='btn btn-outline-success rounded-3 fs-4 py-3 w-100'>
+                            <i className="fa-solid fa-eye mx-2"></i>
+                            Eng ko'p ko'rilganlar
+                        </button>
                     </div>
 
 
-                </Modal>
+                    <Select
+                        className=" p-0"
+                        mode="select"
+                        showSearch
+                        style={{
+                            width: '100%',
+                            height: '47px',
+                        }}
+                        onChange={onChange}
+                        onSearch={onSearchCategory}
+                        placeholder="Barcha kategoriyalar">
+                        <Option
+                            value="all"
+                            selected>
+                            Barcha
+                            kategoriyalar
+                        </Option>
 
-            </div>
+                        {options}
+                    </Select>
+
+                    <select
+                        className="form-select  fs-3 py-3 rounded-3"
+                        onChange={(e) =>
+                            handleFilterStatus(
+                                e.target
+                                    .value
+                            )
+                        }>
+                        <option
+                            className="fs-3"
+                            selected
+                            value="">
+                            Barcha holatlar
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="moderation">
+                            Moderatsiya
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="approved">
+                            Tasdiqlangan
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="cancelled">
+                            Bekor qilingan
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="deleted">
+                            Arxivlangan
+                        </option>
+                    </select>
+
+                    <RangePicker
+                        className="w-100 py-3  rounded-3"
+                        onChange={handleChange}
+                    />
+
+                    <select
+                        className="form-select  fs-3 py-3 rounded-3"
+                        onChange={(e) =>
+                            setFiltertype(
+                                e.target
+                                    .value
+                            )
+                        }>
+                        <option
+                            className="fs-3"
+                            selected
+                            value="">
+                            Barcha turlar
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="file">
+                            File
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="audio">
+                            Audio
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="template">
+                            Shablon
+                        </option>
+                    </select>
+                    <Select
+                        className=" p-0"
+                        mode="select"
+                        showSearch
+                        allowClear
+                        style={{
+                            width: '100%',
+                            height: '47px',
+                        }}
+                        onChange={onChangePlay}
+                        placeholder="Barcha playlistlar">
+                        <Option value="all">
+                            Barcha
+                            PlayListslar
+                        </Option>
+
+                        {optionsPlayLists}
+                    </Select>
+
+
+                </div>
+
+
+            </Modal>
         </section>
     );
 }

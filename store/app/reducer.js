@@ -11,8 +11,7 @@ function reducer(state = initState, action) {
                 ...state,
                 ...{ isShowDemoPanel: action.payload },
             };
-        default:
-            return state;
+        default:return state;
     }
 }
 

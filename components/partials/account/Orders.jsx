@@ -16,6 +16,7 @@ function OrdersLists() {
     const { RangePicker } = DatePicker;
 
     const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(false)
     const [search, setSerach] = useState('');
     const [userRole, setUserRole] = useState('');
     const [selector, setSelector] = useState(null);
@@ -23,6 +24,7 @@ function OrdersLists() {
     const [currPage, setCurrPage] = useState(1);
     const searchDebounce = useDebounce(search, 1000);
     const [dataPlayLists, setDataPlayLists] = useState([]);
+    const [loadingPlay, setLoadingPlay] = useState(false)
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
     const [pageCountPlay, setPageCountPlay] = useState(0);
@@ -44,6 +46,8 @@ function OrdersLists() {
 
 
     async function GetItemsProducts(page, status, date, searchVal, userRole) {
+        -
+        setLoading(true)
         const ItemsData = await GetRepository.getOrdersLists(
             page,
             status,
@@ -56,6 +60,7 @@ function OrdersLists() {
             setPageCount(ItemsData.count);
             setData([...ItemsData.results]);
         }
+        setLoading(false)
     }
 
 
@@ -74,11 +79,13 @@ function OrdersLists() {
 
 
     async function GetItemsProductsPlayLists() {
+        setLoadingPlay(true)
         const ItemsData = await GetRepository.getPopularPlayLists(currPagePlay, user?.access);
         if (ItemsData?.results) {
             setDataPlayLists(ItemsData?.results);
             setPageCountPlay(ItemsData.count);
         }
+        setLoadingPlay(false)
     }
 
     useEffect(() => {
@@ -277,6 +284,7 @@ function OrdersLists() {
                             dataSource={data}
                             columns={columns}
                             pagination={false}
+                            loading={loading}
                         />
                         <Pagination
                             className="mt-3"
@@ -291,6 +299,7 @@ function OrdersLists() {
                             dataSource={data}
                             columns={columnSellers}
                             pagination={false}
+                            loading={loading}
                         />
                         <Pagination
                             className="mt-3"
@@ -321,6 +330,7 @@ function OrdersLists() {
                         columns={user?.role === "seller" ? columnSellers : columns}
                         className="pb-5"
                         pagination={false}
+                        loading={loadingPlay}
                     />
                     <Pagination
                         className="mt-3"
