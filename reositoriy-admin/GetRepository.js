@@ -165,6 +165,72 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getShopsListsEval(page, search, token) {
+        const endPoint = `doc-sale-applications/?page=${page}&search=${search || ''}`;
+
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getSellingLists(search, token) {
+        const endPoint = `assesment-docs/?search=${search || ''
+            }`;
+
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getEvaluation(slug, token) {
+        const endPoint = `assesment/${slug}`;
+
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+
     async getShopsProducts(
         offset,
         limit,
@@ -1219,7 +1285,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    
+
     async getProfileArizaAdmin(page, status, token, isAdmin, search) {
         const endPoint = isAdmin
             ? `admin/application/?page=${page}&status=${status ? status : ''
