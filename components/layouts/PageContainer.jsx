@@ -38,6 +38,11 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-cube',
     },
     {
+        text: 'Joyida sotish',
+        url: '/account/selling',
+        icon: 'fa-brands fa-shopify',
+    },
+    {
         text: 'Kategoriyalar',
         url: '/account/category',
         icon: 'fa-solid fa-layer-group',
@@ -77,11 +82,6 @@ export let accountAdminLinks = [
         url: '/account/pemium-sellers',
         icon: 'fa-solid fa-star',
     },
-    // {
-    //     text: 'Context',
-    //     url: '/account/context',
-    //     icon: 'fa-solid fa-sliders',
-    // },
 
 ];
 export let accountSellerLink = [
@@ -94,6 +94,11 @@ export let accountSellerLink = [
         text: 'Mening mahsulotlarim',
         url: '/account/myproducts',
         icon: 'fa-solid fa-shop-lock',
+    },
+    {
+        text: 'Joyida sotish',
+        url: '/account/selling',
+        icon: 'fa-brands fa-shopify',
     },
     {
         text: 'Sotib olinganlar',
@@ -166,7 +171,7 @@ const PageContainer = ({
             dispatch(accountLinksReducers(cutomerAccountLink));
         }
     }, [user?.role]);
-    
+
 
     const defaultRoutePage = () => {
         dispatch(isLoginning());
