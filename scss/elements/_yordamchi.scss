@@ -2530,14 +2530,36 @@
     }
 
     .antd_search_input_none {
-        .ant-select-selection-item{
+        .ant-select-selection-item {
             display: flex !important;
-            
-           
+
+
         }
+
         .ant-select-selection-search-input {
             display: none !important;
         }
+    }
+}
+
+.header_table_content {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+
+    label {
+        width: 75%;
+    }
+
+    button {
+        span {
+            font-size: 14px;
+            padding: 0 20px;
+        }
+    }
+
+    .contnet_select {
+        width: 25%;
     }
 }
 
@@ -2561,5 +2583,30 @@
                 width: 100%;
             }
         }
+    }
+
+    .header_table_content {
+        flex-direction: column;
+        gap: 10px;
+
+        label {
+            width: 100%;
+        }
+
+        button {
+            width: 100%;
+        }
+
+        .contnet_select {
+            width: 100%;
+        }
+    }
+
+
+}
+
+.selling_contnet {
+    .ant-tabs-nav-list {
+        gap: 50px !important;
     }
 }

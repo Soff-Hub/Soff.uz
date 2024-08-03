@@ -172,7 +172,7 @@ class PatchRepository {
             .catch((error) => error?.response);
         return reponse;
     }
-    
+
     async getTextItemsUpdate(data, id, token) {
         const endPoint = `admin/offer-update/${id}`;
         const reponse = await Repository({
@@ -193,6 +193,28 @@ class PatchRepository {
             .catch((error) => error?.response);
         return reponse;
     }
+
+    async getSellingsUpdate(data, id, token) {
+        const endPoint = `doc-sale-applications/update/${id}/`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'PATCH',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: data,
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => error?.response);
+        return reponse;
+    }
+
     async getBannersPatch(data, id, token) {
         const endPoint = `admin/banner-update/${id}`;
         const reponse = await Repository({
@@ -270,6 +292,26 @@ class PatchRepository {
                 }
             })
             .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getSellingsDelete(id, token) {
+        const endPoint = `doc-sale-applications/delete/${id}/`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'DELETE',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 204) {
+                    return response;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => (error.response));
         return reponse;
     }
 

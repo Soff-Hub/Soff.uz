@@ -1130,77 +1130,42 @@ function ProductsLists() {
                         {options}
                     </Select>
 
-                    <select
-                        className="form-select  fs-3 py-3 rounded-3"
-                        onChange={(e) =>
-                            handleFilterStatus(
-                                e.target
-                                    .value
-                            )
-                        }>
-                        <option
-                            className="fs-3"
-                            selected
-                            value="">
-                            Barcha holatlar
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="moderation">
-                            Moderatsiya
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="approved">
-                            Tasdiqlangan
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="cancelled">
-                            Bekor qilingan
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="deleted">
-                            Arxivlangan
-                        </option>
-                    </select>
+                    <Select
+                        onChange={(e) => handleFilterStatus(e)}
+                        defaultValue={router.query.status}
+                        style={{ height: "45px" }}
+                    >
+                        <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi holatlar</Option>
+                        <Option key={"approved"}><i className='fa-solid text-success fa-circle-check mr-2'></i> Tasdiqlangan</Option>
+                        <Option key={"moderation"}><i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>  Moderatsiya</Option>
+                        <Option key={"cancelled"}> <i className='mr-2 fa-solid fa-circle-question text-danger'></i> Bekor qilingan</Option>
+                        <Option key={"deleted"}> <i className='mr-2 fa-solid fa-trash text-danger'></i> Arxivlangan</Option>
+                    </Select>
+
+
+
 
                     <RangePicker
                         className="w-100 py-3  rounded-3"
                         onChange={handleChange}
                     />
 
-                    <select
-                        className="form-select  fs-3 py-3 rounded-3"
-                        onChange={(e) =>
-                            setFiltertype(
-                                e.target
-                                    .value
-                            )
-                        }>
-                        <option
-                            className="fs-3"
-                            selected
-                            value="">
-                            Barcha turlar
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="file">
-                            File
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="audio">
-                            Audio
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="template">
-                            Shablon
-                        </option>
-                    </select>
+
+
+                    <Select
+                        onChange={(e) => setFiltertype(e)}
+                        defaultValue={filterType}
+                        style={{ height: "45px" }}
+                    >
+                        <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi turlar</Option>
+                        <Option key={"file"}><i className='text-success fa-solid fa-file mr-2 '></i> Fayl</Option>
+                        <Option key={"audio"}> <i className='mr-2 fa-solid fa-music text-success'></i>
+                            Audio</Option>
+                        <Option key={"template"}><i className='fa-solid text-success fa-file-lines mr-2'></i> Shablon</Option>
+                        <Option key={"video"}><i className='fa-solid text-success fa-video mr-2'></i> Video</Option>
+                    </Select>
+
+
                     <Select
                         className=" p-0"
                         mode="select"
