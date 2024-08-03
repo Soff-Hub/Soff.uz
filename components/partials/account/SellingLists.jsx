@@ -527,7 +527,7 @@ function SellingsLists() {
             </>
             ),
         },
-        {
+        ...((dataStatic && user?.role === "admin") ? [{
             key: '2',
             label: "Statistika",
             children: (
@@ -547,7 +547,9 @@ function SellingsLists() {
                                 </div>
 
                                 <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                    <span className='fw-medium  text-secondary fs-4'>Kategoriya bo'yicha baholash :</span>
+                                    <span className='fw-medium  text-secondary fs-4'>
+                                        Kategoriya oid sotilgan mahsulotlari bo'yicha baholash :
+                                    </span>
                                     <span className='fw-medium  text-secondary fs-4'>{addPeriodToThousands(dataStatic?.amount_by_category)} so'm</span>
                                 </div>
 
@@ -581,7 +583,7 @@ function SellingsLists() {
                         }
                     </div>
 
-                    {user?.role === "admin" && <div style={{ height: "100%", overflowY: "auto", width: "100%" }}>
+                    <div style={{ height: "100%", overflowY: "auto", width: "100%" }}>
                         {
                             <div className='d-flex  flex-column gap-3 mx-auto' style={{ height: "100%" }} >
 
@@ -591,50 +593,67 @@ function SellingsLists() {
                                 </div>
 
                                 <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                    <span className='fw-bold text-secondary  fs-4'>Taklif summasi:</span>
-                                    <span className='fw-bold text-secondary  fs-4'>{addPeriodToThousands(dataStatic?.total_amount)} so'm</span>
+                                    <span className='fw-bold text-secondary text-truncate w-75 fs-4'>{deleteIdView?.document_data?.title}:</span>
+                                    <span className='fw-bold text-secondary w-25 text-end  fs-4'>
+                                        {addPeriodToThousands(deleteIdView?.document_data?.price)} so'm</span>
                                 </div>
 
                                 <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                    <span className='fw-medium  text-secondary fs-4'>Kategoriya bo'yicha baholash :</span>
-                                    <span className='fw-medium  text-secondary fs-4'>{addPeriodToThousands(dataStatic?.amount_by_category)} so'm</span>
+                                    <span className='fw-medium  text-secondary fs-4'>
+                                        Mahsulot kategoriyasi :</span>
+                                    <span className='fw-medium  text-secondary fs-4'>
+                                        {deleteIdView?.document_data?.category?.name}</span>
                                 </div>
 
                                 <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                    <span className='fw-medium  text-secondary fs-4 '>Kategoriya bo'yicha baholash :</span>
-                                    <span className='fw-medium  text-secondary fs-4 '> {addPeriodToThousands(dataStatic?.amount_by_purchased_docs_in_category)} so'm</span>
-
-                                </div>
-
-                                <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                    <span className='fw-medium  text-secondary fs-4 '>Tavsifi bo'yicha baholash :</span>
-                                    <span className='fw-medium  text-secondary fs-4 '>{addPeriodToThousands(dataStatic?.description_amount)} so'm</span>
-
-                                </div>
-
-                                <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                    <span className='fw-medium  text-secondary fs-4'> Sotilganlar soni bo'yicha baholash:</span>
-                                    <span className='fw-medium  text-secondary fs-4'>{addPeriodToThousands(dataStatic?.price_purchase_count)} so'm</span>
+                                    <span className='fw-medium  text-secondary fs-4 '>Ko'rishlar soni :</span>
+                                    <span className='fw-medium  text-secondary fs-4 '>
+                                        <i className="fa-solid fa-eye mr-1"></i> {
+                                            deleteIdView?.document_data?.view_count} ta</span>
 
                                 </div>
 
                                 <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                    <span className='fw-medium  text-secondary fs-4'>Ko'rishlar soni bo'yicha baholash:</span>
-                                    <span className='fw-medium  text-secondary fs-4'> {addPeriodToThousands(dataStatic?.price_view_count)} so'm</span>
+                                    <span className='fw-medium  text-secondary fs-4 '>Betlar soni :</span>
+                                    <span className='fw-medium  text-secondary fs-4 '>
+                                        {deleteIdView?.document_data?.document?.page_count} ta </span>
 
                                 </div>
+
+                                <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
+                                    <span className='fw-medium  text-secondary fs-4 d-flex gap-4'>
+                                        <span>Hajmi:</span>
+                                        <span className='fw-medium  text-secondary fs-4'>{
+                                            deleteIdView?.document_data?.document?.file_size} </span>
+
+                                    </span>
+                                    <span className='fw-medium  text-secondary fs-4 d-flex gap-4'>
+                                        <span>Turi:</span>
+                                        <span className='fw-medium '> {
+                                            deleteIdView?.document_data?.document?.file_type}</span>
+
+                                    </span>
+
+                                </div>
+
+                                <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
+                                    <span className='fw-medium  text-secondary fs-4'>Yuklanishlari soni:</span>
+                                    <span className='fw-medium  text-secondary fs-4'> {
+                                        deleteIdView?.document_data?.upload_count} ta </span>
+
+                                </div>
+
                             </div>
 
 
                         }
-                    </div>}
+                    </div>
 
                 </div>
             ),
-        },
+        }] : [])
+        ,
     ];
-
-    console.log(dataStatic);
 
 
 
@@ -677,10 +696,12 @@ function SellingsLists() {
                                             className='contnet_select'
                                         >
                                             <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi holatlar</Option>
+                                            <Option key={"approved"}><i className='fa-solid text-success fa-circle-check mr-2'></i> Tasdiqlangan</Option>
+
                                             <Option key={"moderation"}><i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>  Moderatsiya</Option>
+
                                             <Option key={"cancelled"}> <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
                                                 Bekor qilingan</Option>
-                                            <Option key={"approved"}><i className='fa-solid text-success fa-circle-check mr-2'></i> Tasdiqlangan</Option>
                                         </Select>
                                         {user?.role === "seller" && <button className='btn btn-success py-2  rounded-3'
                                             style={{ height: "43px" }}
@@ -900,7 +921,8 @@ function SellingsLists() {
                                         </div>
 
                                         <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                            <span className='fw-medium  text-secondary fs-4'>Kategoriya bo'yicha baholash :</span>
+                                            <span className='fw-medium  text-secondary fs-4'>
+                                                Kategoriya oid sotilgan mahsulotlari bo'yicha baholash:</span>
                                             <span className='fw-medium  text-secondary fs-4'>{addPeriodToThousands(evaluation?.amount_by_category)} so'm</span>
                                         </div>
 
