@@ -299,6 +299,7 @@ function SellingsLists() {
                 </div>
             ),
         },
+
         {
             title: 'Nomi',
             dataIndex: 'document_data',
@@ -409,10 +410,11 @@ function SellingsLists() {
 
     ];
 
+
     const items = [
         {
             key: '1',
-            label: "Mahsulot haqida",
+            label: "Fayl haqida batafsil ma'lumot",
             children: (<>
                 <div className="ps-product__header ">
                     <ThumbnailDefault
@@ -537,7 +539,7 @@ function SellingsLists() {
                             <div className='d-flex  flex-column gap-3 mx-auto' style={{ height: "100%" }} >
 
                                 <div className='d-flex rounded-3 align-items-center justify-content-center border p-3 w-100 my-4'>
-                                    <span className='fw-bold text-secondary  fs-4 text-truncate'>Baholash haqida ma'lumot</span>
+                                    <span className='fw-bold text-secondary  fs-4 text-truncate'>Tizim taklif qilgan baholash</span>
 
                                 </div>
 
@@ -588,7 +590,9 @@ function SellingsLists() {
                             <div className='d-flex  flex-column gap-3 mx-auto' style={{ height: "100%" }} >
 
                                 <div className='d-flex rounded-3 align-items-center justify-content-center border p-3 w-100 my-4'>
-                                    <span className='fw-bold text-secondary  fs-4  text-truncate'>O'rtacha baholash tartibi haqida ma'lumot</span>
+                                    <span className='fw-bold text-secondary  fs-4  text-truncate'>
+                                        O'rtacha baholash statistikasi
+                                    </span>
 
                                 </div>
 
@@ -655,6 +659,22 @@ function SellingsLists() {
         ,
     ];
 
+    if (user?.role === 'admin') {
+        columns.splice(1, 0, {
+            title: 'Sotuvchi',
+            dataIndex: 'user_data',
+            key: 'address',
+            width: 350,
+            render: (user_data) => (
+                <div className="d-flex flex-column">
+                    <span>
+                        {user_data?.first_name} {user_data?.last_name}
+                    </span>
+                    <span>{user_data?.phone}</span>
+                </div>
+            ),
+        });
+    }
 
 
     return (
@@ -715,7 +735,7 @@ function SellingsLists() {
 
                                     <Table
 
-                                        scroll={{ x: 1400 }}
+                                        scroll={{ x: user?.role === "admin" ? 1700 : 1400 }}
                                         dataSource={data}
                                         columns={columns}
                                         pagination={false}
@@ -818,7 +838,7 @@ function SellingsLists() {
 
                             <div className="ps-product--detail ps-product--fullwidth m-0">
                                 <Tabs
-                                    centered
+                                    centered={user?.role === "admin"}
                                     defaultActiveKey="1"
                                     items={items}
                                     className="bg-white selling_contnet"
@@ -949,8 +969,14 @@ function SellingsLists() {
                                             <span className='fw-medium  text-secondary fs-4'> {addPeriodToThousands(evaluation?.price_view_count)} so'm</span>
 
                                         </div>
+                                        <div className='header_table_content'>
+                                            <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100' onClick={() => setEvaluation(null)}>
+                                                Qayta tanlash
+                                            </button>
 
-                                        <button onClick={() => seelingApplication(evaluation?.document_id)} className="btn btn-success fs-4 px-4">Ariza yuborish</button>
+                                            <button style={{ height: "40px" }} onClick={() => seelingApplication(evaluation?.document_id)}
+                                                className="btn btn-success fs-4 px-4 w-100">Ariza yuborish</button>
+                                        </div>
                                     </div>
 
 
@@ -974,7 +1000,7 @@ function SellingsLists() {
                                     
                                    ' style={{ cursor: "pointer" }}>
 
-                                            <span className='d-flex gap-3 align-items-center'>
+                                            <span className='d-flex gap-3 align-items-center text-truncate w-75'>
                                                 <i className="fa-solid fa-file text-success"></i>
                                                 <span>{item.title}</span>
                                             </span>
