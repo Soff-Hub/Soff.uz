@@ -166,8 +166,8 @@ class GetRepository {
         return reponse;
     }
 
-    async getShopsListsEval(page, search, token) {
-        const endPoint = `doc-sale-applications/?page=${page}&search=${search || ''}`;
+    async getShopsListsEval(id, page, search, status, token) {
+        const endPoint = `doc-sale-applications/${id ? id + '/' : ''}?page=${page}&search=${search || ''}&status=${status}`;
 
         const reponse = await Repository({
             url: baseUrl + endPoint,
@@ -464,6 +464,28 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getCategoryStatic(id, token) {
+        const endPoint = `doc-sale-applications/stat/${id}/`;
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getCategoryParentList(search, id, token) {
         const endPoint = `admin/parent-category-list/${id ? id + '/' : ''
             }?search=${search || ''}`;
