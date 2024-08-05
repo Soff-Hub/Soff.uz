@@ -873,7 +873,7 @@ function SellingsLists() {
 
 
                         {(status === "cancelled" || status === "offer") && <Form.Item
-                            label='Sabab'
+                            label='Izoh'
                             name={"description"}
                             className='mb-2'
                         >
