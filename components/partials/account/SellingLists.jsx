@@ -723,7 +723,7 @@ function SellingsLists() {
                                                 <strong>Bekor qilingan</strong>{' '}
                                                 <em>
                                                     Arizangiz bekor
-                                                    qilindi. (Bekor qilingan mahsulotga 1 oydan so'ng qayta ariza yuborishingiz mumkin)
+                                                    qilindi. <br /> (Bekor qilingan mahsulotga 1 oydan so'ng qayta ariza yuborishingiz mumkin)
                                                 </em>
                                             </span>
                                             <span className="fs-4">
