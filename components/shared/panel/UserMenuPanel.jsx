@@ -321,6 +321,16 @@ const AccountMenuSidebar = () => {
                             so'm
                         </p>
                         <p
+                            className="m-0"
+                            style={{ fontWeight: 600, color: 'black' }}>
+                            Sotilgan mahsulotlar daromadi:{' '}
+                            <span className="text-success">
+                                {formatCurrency(profile?.total_doc_selling_price)}
+                            </span>{' '}
+                            so'm
+                        </p>
+
+                        <p
                             className="m-0 mt-3"
                             style={{
                                 display: 'flex',

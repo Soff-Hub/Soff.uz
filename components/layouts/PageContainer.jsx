@@ -38,7 +38,7 @@ export let accountAdminLinks = [
         icon: 'fa-solid fa-cube',
     },
     {
-        text: 'Joyida sotish',
+        text: 'Sotib olingan mahsulotlar',
         url: '/account/selling',
         icon: 'fa-brands fa-shopify',
     },
@@ -96,7 +96,7 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-shop-lock',
     },
     {
-        text: 'Joyida sotish',
+        text: 'Mahsulotlarni joyida sotish',
         url: '/account/selling',
         icon: 'fa-brands fa-shopify',
     },

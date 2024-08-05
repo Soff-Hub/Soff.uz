@@ -45,6 +45,8 @@ function SellingsLists() {
     const [deleteIdView, setDeleteIdView] = useState(null);
     const [openDetails, setOpenDetails] = useState(false);
     const [openUpdates, setOpenUpdates] = useState(false);
+    const [openApplication, setOpenApplication] = useState(false);
+    const [openApplicationID, setOpenApplicationID] = useState(null);
     const [updatesView, setUpdatesView] = useState(null);
     const [status, setStatus] = useState(null);
     const [statusFilter, setStatusFilter] = useState('');
@@ -164,11 +166,11 @@ function SellingsLists() {
 
     // Mahsulotni sotishga ariza yuborish uchun post funksiya
 
-    const seelingApplication = async (id) => {
-        if (id) {
+    const seelingApplication = async () => {
+        if (openApplicationID) {
             try {
                 const endPoint = "seller/doc-sale-applications/create/";
-                await Repository.post(baseUrl + endPoint, { 'document': id }, {
+                await Repository.post(baseUrl + endPoint, { 'document': openApplicationID }, {
                     headers: {
                         'Authorization': `Bearer ${user?.access}`,
                         'Content-Type': 'application/json'
@@ -181,7 +183,8 @@ function SellingsLists() {
                 });
                 GetItems();
                 setIsModalOpen(false),
-                    setEvaluation(null)
+                    setOpenApplication(false)
+                setEvaluation(null)
 
             } catch (error) {
                 throw Modal.error({
@@ -252,7 +255,6 @@ function SellingsLists() {
     }
 
 
-
     useEffect(() => {
         setStatus(updatesView?.status)
         form.setFieldsValue({
@@ -276,7 +278,13 @@ function SellingsLists() {
             iconClass: "fa-solid fa-circle-question text-danger",
             text: "Bekor qilingan",
             tooltip: true
-        }
+        },
+        offer: {
+            iconClass: "fa-solid fa-envelope-open-text text-warning",
+            text: "Taklif qilingan",
+            tooltip: true
+        },
+
     };
 
     const columns = [
@@ -299,7 +307,6 @@ function SellingsLists() {
                 </div>
             ),
         },
-
         {
             title: 'Nomi',
             dataIndex: 'document_data',
@@ -383,7 +390,7 @@ function SellingsLists() {
                         ></i>
                     </span>
 
-                    {user?.role === "admin" && <span style={{ cursor: "pointer" }}
+                    {(user?.role === "admin" || record?.status === 'offer') && <span style={{ cursor: "pointer" }}
                     >
                         <i
                             onClick={() => handleClickViewUpdates(record)}
@@ -670,7 +677,7 @@ function SellingsLists() {
                     <span>
                         {user_data?.first_name} {user_data?.last_name}
                     </span>
-                    <span>{user_data?.phone}</span>
+                    <span>{user_data?.phone_or_email}</span>
                 </div>
             ),
         });
@@ -692,7 +699,48 @@ function SellingsLists() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
 
-                                    <div className='header_table_content'>
+
+                                    {user?.role === 'seller' ? (
+                                        <div className="d-flex flex-column gap-2 mb-5">
+                                            <span className="fs-4">
+                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
+                                                <strong>Moderatsiya</strong>{' '}
+                                                <em>
+                                                    Arizangiz ko'rib
+                                                    chiqilmoqda...
+                                                </em>
+                                            </span>
+                                            <span className="fs-4">
+                                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
+                                                <strong>Tasdiqlangan </strong>{' '}
+                                                <em>
+                                                    Arizangiz
+                                                    muvaffaqqiyatli tasdiqlandi!
+                                                </em>
+                                            </span>
+                                            <span className="fs-4">
+                                                <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
+                                                <strong>Bekor qilingan</strong>{' '}
+                                                <em>
+                                                    Arizangiz bekor
+                                                    qilindi. (Bekor qilingan mahsulotga 1 oydan so'ng qayta ariza yuborishingiz mumkin)
+                                                </em>
+                                            </span>
+                                            <span className="fs-4">
+                                                <i className="fa-solid fa-envelope-open-text text-warning"></i>{' '}
+                                                <strong>Taklif</strong>{' '}
+                                                <em>
+                                                    Soff.uz tomonidan yangi taklif
+                                                </em>
+                                            </span>
+
+                                        </div>
+                                    ) : (
+                                        <></>
+                                    )}
+
+
+                                    <div className='header_table_content m-0'>
                                         <label
                                             className={`rounded-3  form-label border p-0 d-flex justify-content-between align-items-center`}
                                             style={{
@@ -722,6 +770,9 @@ function SellingsLists() {
 
                                             <Option key={"cancelled"}> <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
                                                 Bekor qilingan</Option>
+                                            <Option key={"offer"}> <i className='mr-2 fa-solid fa-circle-question text-warning'></i>
+                                                Taklif qilingan</Option>
+
                                         </Select>
                                         {user?.role === "seller" && <button className='btn btn-success py-2  rounded-3'
                                             style={{ height: "43px" }}
@@ -731,7 +782,9 @@ function SellingsLists() {
                                         }
                                     </div>
 
-
+                                    <span className="m-0 py-3 border  my-4 rounded-3 d-flex justify-content-center h4">
+                                        {user?.role === "seller" ? `Sotilgan mahsulotlar soni: ${pageCount} ta` : `Sotib olingan mahsulotlar soni: ${pageCount} ta`}
+                                    </span>
 
                                     <Table
 
@@ -748,8 +801,6 @@ function SellingsLists() {
                                         onChange={handlePagination}
                                     />
 
-
-
                                 </div>
                             </div>
                         </div>
@@ -759,65 +810,81 @@ function SellingsLists() {
             </div>
 
             <Modal
-                title={"Mahsulotni rasmiylashtirish"}
+                title={(user?.role === "seller" && updatesView?.status === "offer") ? "Taklifni tasdiqlash" : "Mahsulotni rasmiylashtirish"}
                 open={openUpdates}
                 onOk={() => setOpenUpdates(true)}
                 onCancel={() => setOpenUpdates(false)}
                 footer={null}
+                centered
             >
-                <Form
-                    form={form}
-                    onFinish={updatesFunction}
-                    className="w-100 mt-4"
-                    layout='vertical'
-                >
-                    <Form.Item
-                        label="Holat"
-                        name={"status"}
-                        className='mb-2'
+                {(user?.role === "seller" && updatesView?.status === "offer") ?
 
+                    <div>
+                        <p>{updatesView?.description}</p>
+                        <div className='mt-4 d-flex justify-content-end align-items-center gap-4'>
+                            <button onClick={() => updatesFunction({ status: "cancelled" })} className='btn btn-danger fs-4 px-4 rounded-3'>Bekor qilish</button>
+                            <button onClick={() => updatesFunction({ status: "approved" })} className='btn btn-success fs-4 npx-4 rounded-3'>Tasdiqlash</button>
+                        </div>
+                    </div>
+                    :
+                    <Form
+                        form={form}
+                        onFinish={updatesFunction}
+                        className="w-100 mt-4"
+                        layout='vertical'
                     >
-                        <Select onChange={(e) => setStatus(e)} defaultValue={updatesView?.status} style={{ height: "45px" }}>
-                            <Option key={"moderation"}><i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>  Moderatsiya</Option>
-                            <Option key={"cancelled"}> <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
-                                Bekor qilingan</Option>
-                            <Option key={"approved"}><i className='fa-solid text-success fa-circle-check mr-2'></i> Tasdiqlangan</Option>
-                        </Select>
-                    </Form.Item>
+                        <Form.Item
+                            label="Holat"
+                            name={"status"}
+                            className='mb-2'
 
-                    {status === "cancelled" && <Form.Item
-                        label='Sabab'
-                        name={"description"}
-                        className='mb-2'
-                    >
-                        <TextArea rows={3} placeholder='Sabab' defaultValue={updatesView?.description} />
-                    </Form.Item>
-                    }
-                    <Form.Item
-                        label={"Narx"}
-                        name={"price"}
-                        className='mb-2'
+                        >
+                            <Select onChange={(e) => setStatus(e)} defaultValue={updatesView?.status} style={{ height: "45px" }}>
+                                <Option key={"approved"}><i className='fa-solid text-success fa-circle-check mr-2'></i> Tasdiqlangan</Option>
+                                <Option key={"moderation"}><i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>  Moderatsiya</Option>
+                                <Option key={"cancelled"}> <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
+                                    Bekor qilingan</Option>
+                                <Option key={"offer"}> <i className='mr-2 fa-solid fa-envelope-open-text text-warning'></i>
 
-                    >
-                        <InputNumber
-                            style={{ height: "45px" }}
-                            name='price'
-                            placeholder="Narxi"
-                            className='w-100 py-2'
-                            formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                            parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
-                            onKeyPress={(e) => {
-                                if (!/[0-9]/.test(e.key)) {
-                                    e.preventDefault();
-                                }
-                            }}
-                        />
-                    </Form.Item>
+                                    Taklif qilish</Option>
+                            </Select>
+                        </Form.Item>
 
-                    <Form.Item className='mt-4 mb-0'>
-                        <Button htmlType='submit' style={{ height: "40px" }} type='default' className='bg-success text-white w-100'>Saqlash</Button>
-                    </Form.Item>
-                </Form>
+                        {status === "offer" && <Form.Item
+                            label={"Narx"}
+                            name={"price"}
+                            className='mb-2'
+
+                        >
+                            <InputNumber
+                                style={{ height: "45px" }}
+                                name='price'
+                                placeholder="Narxi"
+                                className='w-100 py-2'
+                                formatter={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                                parser={(value) => value?.replace(/\$\s?|(,*)/g, '')}
+                                onKeyPress={(e) => {
+                                    if (!/[0-9]/.test(e.key)) {
+                                        e.preventDefault();
+                                    }
+                                }}
+                            />
+                        </Form.Item>}
+
+
+                        {(status === "cancelled" || status === "offer") && <Form.Item
+                            label='Sabab'
+                            name={"description"}
+                            className='mb-2'
+                        >
+                            <TextArea rows={3} placeholder='Sabab' defaultValue={updatesView?.description} />
+                        </Form.Item>
+                        }
+
+                        <Form.Item className='mt-4 mb-0'>
+                            <Button htmlType='submit' style={{ height: "40px" }} type='default' className='bg-success text-white w-100'>Saqlash</Button>
+                        </Form.Item>
+                    </Form>}
 
 
             </Modal>
@@ -942,7 +1009,7 @@ function SellingsLists() {
 
                                         <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
                                             <span className='fw-medium  text-secondary fs-4'>
-                                                Kategoriya oid sotilgan mahsulotlari bo'yicha baholash:</span>
+                                                Kategoriyaga oid sotilgan mahsulotlar bo'yicha baholash:</span>
                                             <span className='fw-medium  text-secondary fs-4'>{addPeriodToThousands(evaluation?.amount_by_category)} so'm</span>
                                         </div>
 
@@ -974,7 +1041,9 @@ function SellingsLists() {
                                                 Qayta tanlash
                                             </button>
 
-                                            <button style={{ height: "40px" }} onClick={() => seelingApplication(evaluation?.document_id)}
+                                            <button style={{ height: "40px" }}
+                                                onClick={() => (setOpenApplicationID(evaluation?.document_id), setOpenApplication(true))}
+
                                                 className="btn btn-success fs-4 px-4 w-100">Ariza yuborish</button>
                                         </div>
                                     </div>
@@ -1021,10 +1090,59 @@ function SellingsLists() {
                     }
                 </div>
             </Modal>
+
             <ModalDelete onSuccess={DeleteItemsProducts} />
+
+            <Modal
+                title={"Arizani tasdiqlash"}
+                open={openApplication}
+                onOk={() => (setOpenApplication(true))}
+                onCancel={() => (setOpenApplication(false))}
+                footer={null}
+                width={500}
+                centered
+            >
+                <div className="d-flex justify-content-center align-items-center">
+                    <span
+                        className="d-flex justify-content-center align-items-center"
+                        style={{
+                            width: '90px',
+                            height: '90px',
+                            borderRadius: '50px',
+                            border: '6px solid #28a745',
+                            color: '#28a745',
+                        }}>
+                        <i className="fa-solid fa-check fa-4x"></i>
+                    </span>
+                </div>
+                <h2 className="fs-1 text-center pt-4">
+                    Ishonchingiz komilmi?
+                </h2>
+                <div>
+                    <p
+                        className="text-center   fs-4"
+                    >
+                        Haqiqatan ham  tasdiqlamoqchimisiz?
+                        Bu jarayonni ortga qaytarib bo‘lmaydi.
+                    </p>
+                </div>
+                <div className="d-flex justify-content-center gap-5  pt-3">
+                    <button
+                        onClick={() => (setOpenApplication(false))}
+                        className=" btn btn-secondary d-block w-25 py-2 ">
+                        <span className="fs-3">Yopish</span>
+                    </button>
+                    <button
+                        onClick={seelingApplication}
+                        className="btn btn-success d-block px-4 py-2">
+                        <span className="fs-3">Tasdiqlash</span>
+                    </button>
+                </div>
+            </Modal>
 
         </section >
     );
+
 }
 
 export default SellingsLists;
