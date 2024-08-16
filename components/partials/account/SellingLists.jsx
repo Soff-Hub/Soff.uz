@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Form, Modal, Pagination, Select, Table, Tabs, Input, Button, Tooltip, InputNumber } from 'antd';
+import { Form, Modal, Pagination, Select, Table, Tabs, Input, Button, Tooltip, InputNumber, Radio } from 'antd';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
@@ -52,6 +52,8 @@ function SellingsLists() {
     const [statusFilter, setStatusFilter] = useState('');
     const [form] = Form.useForm();
     const [price, setPrice] = useState('')
+    const [sellMethod, setSellMethod] = useState('simple')
+    const [auctionDate, setAuctionDate] = useState('')
 
 
     // Sotilgan mahsulotlar listi
@@ -151,10 +153,10 @@ function SellingsLists() {
     // Mahsulotni sotishga ariza yuborish uchun post funksiya
 
     const seelingApplication = async () => {
-        if (openApplicationID) {
+        if (openApplicationID && price) {
             try {
                 const endPoint = "auctions/doc_sale_applications/create/";
-                await orginalApi.post(orginalUrl + endPoint, { 'document': openApplicationID, price }, {
+                await orginalApi.post(orginalUrl + endPoint, { 'document': openApplicationID, price, type: sellMethod }, {
                     headers: {
                         'Authorization': `Bearer ${user?.access}`,
                         'Content-Type': 'application/json'
@@ -174,10 +176,17 @@ function SellingsLists() {
                 throw Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: error?.response?.data?.document[0] || error.message,
+                    content: error?.response?.data?.document?.[0] || error.message,
                 });
 
             }
+        } else {
+            throw Modal.error({
+                centered: true,
+                title: 'Xatolik!',
+                content: 'Sotish narxini kirting',
+            });
+
         }
     };
 
@@ -917,7 +926,7 @@ function SellingsLists() {
 
 
             <Modal
-                title={"Baholash uchun qidiruv"}
+                title={"Mahsulotni sotish"}
                 open={isModalOpen}
                 onOk={() => (setIsModalOpen(true), setEvaluation(null))}
                 onCancel={() => (setIsModalOpen(false), setEvaluation(null))}
@@ -942,7 +951,7 @@ function SellingsLists() {
 
                 </label>}
 
-                <div style={{ height: "200px" }} className='d-flex align-items-start justify-content-center '>
+                <div style={{ height: "300px" }} className='d-flex align-items-start justify-content-center '>
                     {loadingEval ?
 
                         <div
@@ -970,18 +979,56 @@ function SellingsLists() {
                                 {
                                     <div className='d-flex  flex-column gap-3 mx-auto' style={{ height: "100%" }} >
 
+                                        <Radio.Group
+                                            onChange={e => setSellMethod(e.target.value)}
+                                            className='d-flex flex-column mt-3 gap-3'
+                                            value={sellMethod}
+                                        >
+                                            <div className='d-flex align-items-center'>
+                                                <Radio value={'simple'} style={{ maxWidth: '150px', width: '100%' }}>
+                                                    Bittada sotish
+                                                </Radio>
+                                                <Tooltip
+                                                    className="toltip"
+                                                    title={"Agar siz mahsulotingizni bittada sotmoqchi bo'lsangiz \n mahsulotingizni siz belgilagan narxda boshqa foydalanuvchi sotib olishi mumkin"}
+                                                    color="rgb(31 41 55)">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                            fontSize: '18px',
+                                                        }}
+                                                        className="fa-regular fa-circle-question px-4"></i>
+                                                </Tooltip>
+                                            </div>
+                                            <div className='d-flex align-items-center'>
+                                                <Radio value={'auction'} style={{ maxWidth: '150px', width: '100%' }}>Auksionda sotish</Radio>
+                                                <Tooltip
+                                                    className="toltip"
+                                                    title={"Agar siz mahsulotingizni auksionda sotmoqchi bo'lsangiz \n mahsulotingizga 10 kun ichida berilgan narxlardan istalgan biriga sotishingiz mumkin"}
+                                                    color="rgb(31 41 55)">
+                                                    <i
+                                                        style={{
+                                                            cursor: 'pointer',
+                                                            fontSize: '18px',
+                                                        }}
+                                                        className="fa-regular fa-circle-question px-4"></i>
+                                                </Tooltip>
+                                            </div>
+                                        </Radio.Group>
+
                                         <div className=''>
                                             <input value={price} onChange={e => setPrice(e.target.value)} className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100 my-4' placeholder='Sotuv narxini kiriting' />
                                         </div>
                                         <div className='header_table_content'>
-                                            <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100' onClick={() => (setEvaluation(null), setPrice(''))}>
-                                                Qayta tanlash
+                                            <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100 d-flex align-items-center justify-content-center' onClick={() => (setEvaluation(null), setPrice(''))}>
+                                                <i class="fa-solid fa-arrow-left mr-2"></i>
+                                                Boshqa mahsulot tanlash
                                             </button>
 
                                             <button style={{ height: "40px" }}
                                                 onClick={() => (setOpenApplicationID(evaluation?.id), setOpenApplication(true))}
 
-                                                className="btn btn-success fs-4 px-4 w-100">Ariza yuborish</button>
+                                                className="btn btn-success fs-4 px-4 w-100">Davom etish</button>
                                         </div>
                                     </div>
 
