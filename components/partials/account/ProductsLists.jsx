@@ -307,16 +307,16 @@ function ProductsLists() {
             setDataCatStatus(router.query.status);
         }
 
-        if (router.query.page || router.query.status) {
-            GetItemsProductsLists(
-                router.query.page,
-                category_id,
-                router.query.status,
-                dataFormat,
-                null,
-                search
-            );
-        }
+        // if (router.query.page || router.query.status) {
+        //     GetItemsProductsLists(
+        //         router.query.page,
+        //         category_id,
+        //         router.query.status,
+        //         dataFormat,
+        //         null,
+        //         search
+        //     );
+        // }
     }, [router.query.page, router.query.status]);
 
     useEffect(() => {
