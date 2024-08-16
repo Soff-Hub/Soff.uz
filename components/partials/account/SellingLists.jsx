@@ -7,7 +7,7 @@ import useDebounce from '~/hooks/useDebounce';
 import CalculateTimeDifference from './DateFormatter';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { addPeriodToThousands } from './ProductsLists';
-import Repository from '~/reositoriy-admin/Repository';
+import Repository, { orginalApi, orginalUrl } from '~/reositoriy-admin/Repository';
 import { baseUrl } from '~/repositories/Repository';
 import ModalDelete from './Modal';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
@@ -51,6 +51,7 @@ function SellingsLists() {
     const [status, setStatus] = useState(null);
     const [statusFilter, setStatusFilter] = useState('');
     const [form] = Form.useForm();
+    const [price, setPrice] = useState('')
 
 
     // Sotilgan mahsulotlar listi
@@ -93,23 +94,6 @@ function SellingsLists() {
             GetProductsSearch()
         }
     }, [debunce, isModalOpen, user?.access])
-
-    // Sotmoqchi bo'lgan mahsulotni baholash uchun 
-
-    const Evaluation = async (slug) => {
-        if (slug) {
-            setTimeout(() => {
-                setSearch('')
-            }, 600);
-            setLoadingEval(true)
-            const ItemsData = await GetRepository.getEvaluation(slug, user?.access);
-            if (ItemsData) {
-                setEvaluation(ItemsData)
-            }
-            setLoadingEval(false)
-        }
-
-    }
 
     //    Yuborgan arizani o'chirish uchun delete funksiya
 
@@ -169,8 +153,8 @@ function SellingsLists() {
     const seelingApplication = async () => {
         if (openApplicationID) {
             try {
-                const endPoint = "seller/doc-sale-applications/create/";
-                await Repository.post(baseUrl + endPoint, { 'document': openApplicationID }, {
+                const endPoint = "auctions/doc_sale_applications/create/";
+                await orginalApi.post(orginalUrl + endPoint, { 'document': openApplicationID, price }, {
                     headers: {
                         'Authorization': `Bearer ${user?.access}`,
                         'Content-Type': 'application/json'
@@ -358,24 +342,13 @@ function SellingsLists() {
         },
         {
             title: 'Holat',
-            dataIndex: 'status',
+            dataIndex: 'active',
             key: 'address',
-            render: (status, record) => {
-                if (!status || !statusMap[status]) return null;
+            render: (status) => {
+                return <span>
+                    {status ? 'Faol' : "No faol"}
+                </span>
 
-                const statusText = statusMap[status];
-
-                return statusText.tooltip ? (
-                    <Tooltip title={record?.description}>
-                        <span style={{ cursor: 'pointer' }}>
-                            <i className={statusText.iconClass}></i> {statusText.text}{' '}
-                        </span>
-                    </Tooltip>
-                ) : (
-                    <span>
-                        <i className={statusText.iconClass}></i> {statusText.text}
-                    </span>
-                );
             }
         },
         {
@@ -952,7 +925,7 @@ function SellingsLists() {
                 width={800}
             >
 
-                <label
+                {!evaluation && <label
                     className={'rounded-3 mt-3  form-label border p-0 d-flex justify-content-between align-items-center'}
                     style={{
                         backgroundColor: '#F1F1F1',
@@ -967,9 +940,9 @@ function SellingsLists() {
                     />
                     <i className="fa-solid fa-search px-4 "></i>
 
-                </label>
+                </label>}
 
-                <div style={{ height: "70vh" }} className='d-flex align-items-start justify-content-center '>
+                <div style={{ height: "200px" }} className='d-flex align-items-start justify-content-center '>
                     {loadingEval ?
 
                         <div
@@ -997,52 +970,16 @@ function SellingsLists() {
                                 {
                                     <div className='d-flex  flex-column gap-3 mx-auto' style={{ height: "100%" }} >
 
-                                        <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100 my-4'>
-                                            <span className='fw-bold text-secondary  fs-4 w-75 text-truncate'>{evaluation.document}:</span>
-                                            <span className='fw-bold text-secondary  fs-4 w-25 text-end'>{(addPeriodToThousands(evaluation?.document_price))} so'm</span>
-                                        </div>
-
-                                        <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                            <span className='fw-bold text-secondary  fs-4'>Taklif summasi:</span>
-                                            <span className='fw-bold text-secondary  fs-4'>{addPeriodToThousands(evaluation?.total_amount)} so'm</span>
-                                        </div>
-
-                                        <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                            <span className='fw-medium  text-secondary fs-4'>
-                                                Kategoriyaga oid sotilgan mahsulotlar bo'yicha baholash:</span>
-                                            <span className='fw-medium  text-secondary fs-4'>{addPeriodToThousands(evaluation?.amount_by_category)} so'm</span>
-                                        </div>
-
-                                        <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                            <span className='fw-medium  text-secondary fs-4 '>Kategoriya bo'yicha baholash :</span>
-                                            <span className='fw-medium  text-secondary fs-4 '> {addPeriodToThousands(evaluation?.amount_by_purchased_docs_in_category)} so'm</span>
-
-                                        </div>
-
-                                        <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                            <span className='fw-medium  text-secondary fs-4 '>Tavsifi bo'yicha baholash :</span>
-                                            <span className='fw-medium  text-secondary fs-4 '>{addPeriodToThousands(evaluation?.description_amount)} so'm</span>
-
-                                        </div>
-
-                                        <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                            <span className='fw-medium  text-secondary fs-4'> Sotilganlar soni bo'yicha baholash:</span>
-                                            <span className='fw-medium  text-secondary fs-4'>{addPeriodToThousands(evaluation?.price_purchase_count)} so'm</span>
-
-                                        </div>
-
-                                        <div className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100'>
-                                            <span className='fw-medium  text-secondary fs-4'>Ko'rishlar soni bo'yicha baholash:</span>
-                                            <span className='fw-medium  text-secondary fs-4'> {addPeriodToThousands(evaluation?.price_view_count)} so'm</span>
-
+                                        <div className=''>
+                                            <input value={price} onChange={e => setPrice(e.target.value)} className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100 my-4' placeholder='Sotuv narxini kiriting' />
                                         </div>
                                         <div className='header_table_content'>
-                                            <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100' onClick={() => setEvaluation(null)}>
+                                            <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100' onClick={() => (setEvaluation(null), setPrice(''))}>
                                                 Qayta tanlash
                                             </button>
 
                                             <button style={{ height: "40px" }}
-                                                onClick={() => (setOpenApplicationID(evaluation?.document_id), setOpenApplication(true))}
+                                                onClick={() => (setOpenApplicationID(evaluation?.id), setOpenApplication(true))}
 
                                                 className="btn btn-success fs-4 px-4 w-100">Ariza yuborish</button>
                                         </div>
@@ -1061,7 +998,7 @@ function SellingsLists() {
                             }}>
                                 {
                                     searchdata?.length > 0 ? searchdata?.map((item) => (
-                                        <div onClick={() => Evaluation(item?.slug)} className='d-flex
+                                        <div onClick={() => (setEvaluation(item), setOpenApplicationID(item.id))} className='d-flex
                                  justify-content-between
                                   align-items-center
                                   flex-wrap

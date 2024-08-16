@@ -2,6 +2,8 @@ import Repository, {
     baseUrl,
     baseUrlCustomer,
     baseUrlProfie,
+    orginalApi,
+    orginalUrl,
 } from './Repository';
 
 class GetRepository {
@@ -167,10 +169,10 @@ class GetRepository {
     }
 
     async getShopsListsEval(id, page, search, status, token) {
-        const endPoint = `doc-sale-applications/${id ? id + '/' : ''}?page=${page}&search=${search || ''}&status=${status}`;
+        const endPoint = `auctions/doc_sale_applications/${id ? id + '/' : ''}?page=${page}&search=${search || ''}&status=${status}`;
 
-        const reponse = await Repository({
-            url: baseUrl + endPoint,
+        const reponse = await orginalApi({
+            url: orginalUrl + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -188,11 +190,11 @@ class GetRepository {
     }
 
     async getSellingLists(search, token) {
-        const endPoint = `assesment-docs/?search=${search || ''
+        const endPoint = `auctions/assesment-docs/?search=${search || ''
             }`;
 
-        const reponse = await Repository({
-            url: baseUrl + endPoint,
+        const reponse = await orginalApi({
+            url: orginalUrl + endPoint,
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -466,9 +468,9 @@ class GetRepository {
     }
 
     async getCategoryStatic(id, token) {
-        const endPoint = `doc-sale-applications/stat/${id}/`;
+        const endPoint = `auctions/doc_sale_applications/stat/${id}/`;
         const reponse = await Repository({
-            url: baseUrl + endPoint,
+            url: orginalUrl + endPoint,
             method: 'GET',
 
             headers: {

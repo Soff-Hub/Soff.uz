@@ -3,6 +3,7 @@ import Repository, {
     baseUrl,
     baseUrlCustomer,
     baseUrlProfie,
+    orginalUrl,
 } from './Repository';
 
 class PatchRepository {
@@ -195,9 +196,9 @@ class PatchRepository {
     }
 
     async getSellingsUpdate(data, id, token) {
-        const endPoint = `doc-sale-applications/update/${id}/`;
+        const endPoint = `auctions/doc_sale_applications/update/${id}/`;
         const reponse = await Repository({
-            url: baseUrl + endPoint,
+            url: orginalUrl + endPoint,
             method: 'PATCH',
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -296,9 +297,9 @@ class PatchRepository {
     }
 
     async getSellingsDelete(id, token) {
-        const endPoint = `doc-sale-applications/delete/${id}/`;
+        const endPoint = `auctions/doc_sale_applications/delete/${id}/`;
         const reponse = await Repository({
-            url: baseUrl + endPoint,
+            url: orginalUrl + endPoint,
             method: 'DELETE',
             headers: {
                 Authorization: `Bearer ${token}`,
