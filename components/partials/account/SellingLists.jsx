@@ -17,6 +17,7 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 import NextImageCard from '~/components/nextImagecard';
 import Axios from 'axios';
+import Link from 'next/link';
 const { TabPane } = Tabs;
 const { Option } = Select;
 const { TextArea } = Input;
@@ -53,7 +54,7 @@ function SellingsLists() {
     const [form] = Form.useForm();
     const [price, setPrice] = useState('')
     const [sellMethod, setSellMethod] = useState('simple')
-    const [auctionDate, setAuctionDate] = useState('')
+    const [auctionDate, setAuctionDate] = useState(2)
 
 
     // Sotilgan mahsulotlar listi
@@ -156,7 +157,12 @@ function SellingsLists() {
         if (openApplicationID && price) {
             try {
                 const endPoint = "auctions/doc_sale_applications/create/";
-                await orginalApi.post(orginalUrl + endPoint, { 'document': openApplicationID, price, type: sellMethod }, {
+                await orginalApi.post(orginalUrl + endPoint, {
+                    'document': openApplicationID.id,
+                    price,
+                    type: sellMethod,
+                    period_days: sellMethod === 'simple' ? 100 : auctionDate
+                }, {
                     headers: {
                         'Authorization': `Bearer ${user?.access}`,
                         'Content-Type': 'application/json'
@@ -165,18 +171,26 @@ function SellingsLists() {
                 Modal.success({
                     centered: true,
                     title: 'Muvaffaqiyatli!',
-                    content: 'Arizangiz muvaffaqiyatli  yuborildi',
+                    content: <div>
+                        <p>
+                            Mahsulotingiz birja savdosiga chiqarildi
+                        </p>
+
+                        <a className='text-success' style={{ textDecoration: 'underline' }} href={`http://localhost:3000/product/${openApplicationID?.id}`}>
+                            Mahsulotingizni ko'rish uchun bosing.
+                        </a>
+                    </div>,
                 });
                 GetItems();
-                setIsModalOpen(false),
-                    setOpenApplication(false)
+                setIsModalOpen(false)
+                setOpenApplication(false)
                 setEvaluation(null)
 
             } catch (error) {
                 throw Modal.error({
                     centered: true,
                     title: 'Xatolik!',
-                    content: error?.response?.data?.document?.[0] || error.message,
+                    content: error?.response?.data?.document?.[0] || error?.response?.data?.msg || error.message,
                 });
 
             }
@@ -246,7 +260,6 @@ function SellingsLists() {
         }
 
     }
-
 
     useEffect(() => {
         setStatus(updatesView?.status)
@@ -681,47 +694,6 @@ function SellingsLists() {
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
 
-
-                                    {user?.role === 'seller' ? (
-                                        <div className="d-flex flex-column gap-2 mb-5">
-                                            <span className="fs-4">
-                                                <i className="text-primary-emphasis fa-solid fa-circle-info"></i>{' '}
-                                                <strong>Moderatsiya</strong>{' '}
-                                                <em>
-                                                    Arizangiz ko'rib
-                                                    chiqilmoqda...
-                                                </em>
-                                            </span>
-                                            <span className="fs-4">
-                                                <i className="fa-solid text-success fa-circle-check"></i>{' '}
-                                                <strong>Tasdiqlangan </strong>{' '}
-                                                <em>
-                                                    Arizangiz
-                                                    muvaffaqqiyatli tasdiqlandi!
-                                                </em>
-                                            </span>
-                                            <span className="fs-4">
-                                                <i className="fa-solid fa-circle-xmark text-danger"></i>{' '}
-                                                <strong>Bekor qilingan</strong>{' '}
-                                                <em>
-                                                    Arizangiz bekor
-                                                    qilindi. <br /> (Bekor qilingan mahsulotga 1 oydan so'ng qayta ariza yuborishingiz mumkin)
-                                                </em>
-                                            </span>
-                                            <span className="fs-4">
-                                                <i className="fa-solid fa-envelope-open-text text-warning"></i>{' '}
-                                                <strong>Taklif</strong>{' '}
-                                                <em>
-                                                    Soff.uz tomonidan yangi taklif
-                                                </em>
-                                            </span>
-
-                                        </div>
-                                    ) : (
-                                        <></>
-                                    )}
-
-
                                     <div className='header_table_content m-0'>
                                         <label
                                             className={`rounded-3  form-label border p-0 d-flex justify-content-between align-items-center`}
@@ -739,27 +711,10 @@ function SellingsLists() {
                                             <i className="fa-solid fa-search px-4 "></i>
 
                                         </label>
-                                        <Select
-                                            onChange={(e) => setStatusFilter(e)}
-                                            defaultValue={statusFilter}
-                                            style={{ height: "45px" }}
-                                            className='contnet_select'
-                                        >
-                                            <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi holatlar</Option>
-                                            <Option key={"approved"}><i className='fa-solid text-success fa-circle-check mr-2'></i> Tasdiqlangan</Option>
-
-                                            <Option key={"moderation"}><i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>  Moderatsiya</Option>
-
-                                            <Option key={"cancelled"}> <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
-                                                Bekor qilingan</Option>
-                                            <Option key={"offer"}> <i className='mr-2 fa-solid fa-circle-question text-warning'></i>
-                                                Taklif qilingan</Option>
-
-                                        </Select>
                                         {user?.role === "seller" && <button className='btn btn-success py-2  rounded-3'
                                             style={{ height: "43px" }}
                                             onClick={() => setIsModalOpen(true)} >
-                                            <span >Baholash</span>
+                                            <span>Yangi mahsulot</span>
                                         </button>
                                         }
                                     </div>
@@ -926,12 +881,17 @@ function SellingsLists() {
 
 
             <Modal
-                title={"Mahsulotni sotish"}
+                title={<div className='d-flex align-items-center gap-2'>
+                    <div onClick={() => (setEvaluation(null), setPrice(''))} style={{ cursor: 'pointer' }}>
+                        <i class="fa-solid fa-arrow-left mr-2"></i>
+                    </div>
+                    Mahsulotni birja ga sotuvga chiqarish
+                </div>}
                 open={isModalOpen}
                 onOk={() => (setIsModalOpen(true), setEvaluation(null))}
                 onCancel={() => (setIsModalOpen(false), setEvaluation(null))}
                 footer={null}
-                width={800}
+                width={600}
             >
 
                 {!evaluation && <label
@@ -951,7 +911,7 @@ function SellingsLists() {
 
                 </label>}
 
-                <div style={{ height: "300px" }} className='d-flex align-items-start justify-content-center '>
+                <div style={{ height: "auto" }} className='d-flex align-items-start justify-content-center'>
                     {loadingEval ?
 
                         <div
@@ -969,13 +929,13 @@ function SellingsLists() {
                                     height: '150px',
                                 }}>
                                 <span className="visually-hidden">
-                                    Loading...
+                                    Yuklanmoqda...
                                 </span>
                             </div>
                         </div>
                         :
                         (evaluation ?
-                            <div style={{ height: "100%", overflowY: "auto", width: "90%" }}>
+                            <div style={{ height: "100%", overflowY: "auto", width: "100%" }}>
                                 {
                                     <div className='d-flex  flex-column gap-3 mx-auto' style={{ height: "100%" }} >
 
@@ -984,6 +944,7 @@ function SellingsLists() {
                                             className='d-flex flex-column mt-3 gap-3'
                                             value={sellMethod}
                                         >
+                                            <p className='m-0 fs-4'>Sotish turini tanlang</p>
                                             <div className='d-flex align-items-center'>
                                                 <Radio value={'simple'} style={{ maxWidth: '150px', width: '100%' }}>
                                                     Bittada sotish
@@ -1004,7 +965,7 @@ function SellingsLists() {
                                                 <Radio value={'auction'} style={{ maxWidth: '150px', width: '100%' }}>Auksionda sotish</Radio>
                                                 <Tooltip
                                                     className="toltip"
-                                                    title={"Agar siz mahsulotingizni auksionda sotmoqchi bo'lsangiz \n mahsulotingizga 10 kun ichida berilgan narxlardan istalgan biriga sotishingiz mumkin"}
+                                                    title={"Agar siz mahsulotingizni auksionda sotmoqchi bo'lsangiz \n mahsulotingizga belgilangan vaqt ichida, taklif berilgan narxlardan istalgan biriga sotishingiz mumkin"}
                                                     color="rgb(31 41 55)">
                                                     <i
                                                         style={{
@@ -1014,19 +975,44 @@ function SellingsLists() {
                                                         className="fa-regular fa-circle-question px-4"></i>
                                                 </Tooltip>
                                             </div>
+
+                                            {sellMethod === 'auction' && <div className='mt-3'>
+                                                <div className='d-flex align-items-center'>
+                                                    <p className='m-0 fs-4'>Auksion davom etish vaqtini kiriting</p>
+                                                    <Tooltip
+                                                        className="toltip"
+                                                        title={"Agar mahsulotingiz belgilangan vaqt davomida sotilmasa birjadan o'chiriladi va mahsulotlaringiz ro'yxatiga qaytariladi"}
+                                                        color="rgb(31 41 55)">
+                                                        <i
+                                                            style={{
+                                                                cursor: 'pointer',
+                                                                fontSize: '18px',
+                                                            }}
+                                                            className="fa-regular fa-circle-question px-4"></i>
+                                                    </Tooltip>
+                                                </div>
+                                                <Select value={`${auctionDate} kun`} onChange={(e) => setAuctionDate(Number(e.split(' ')[0]))} style={{ height: "40px" }} className='mt-3 w-100'>
+                                                    {
+                                                        [2, 3, 4, 5, 6, 7, 8, 9, 10].map(el => (
+                                                            // <Option key={el} >{el} kun</Option>
+                                                            <Option key={el} value={`${el} kun`} label={`${el} kun`} />
+                                                        ))
+                                                    }
+                                                </Select>
+                                            </div>}
                                         </Radio.Group>
 
                                         <div className=''>
                                             <input value={price} onChange={e => setPrice(e.target.value)} className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100 my-4' placeholder='Sotuv narxini kiriting' />
                                         </div>
                                         <div className='header_table_content'>
-                                            <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100 d-flex align-items-center justify-content-center' onClick={() => (setEvaluation(null), setPrice(''))}>
+                                            {/* <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100 d-flex align-items-center justify-content-center'>
                                                 <i class="fa-solid fa-arrow-left mr-2"></i>
                                                 Boshqa mahsulot tanlash
-                                            </button>
+                                            </button> */}
 
                                             <button style={{ height: "40px" }}
-                                                onClick={() => (setOpenApplicationID(evaluation?.id), setOpenApplication(true))}
+                                                onClick={() => (setOpenApplicationID(evaluation), setOpenApplication(true))}
 
                                                 className="btn btn-success fs-4 px-4 w-100">Davom etish</button>
                                         </div>
@@ -1045,7 +1031,7 @@ function SellingsLists() {
                             }}>
                                 {
                                     searchdata?.length > 0 ? searchdata?.map((item) => (
-                                        <div onClick={() => (setEvaluation(item), setOpenApplicationID(item.id))} className='d-flex
+                                        <div onClick={() => (setEvaluation(item), setOpenApplicationID(item))} className='d-flex
                                  justify-content-between
                                   align-items-center
                                   flex-wrap
