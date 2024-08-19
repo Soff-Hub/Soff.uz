@@ -522,7 +522,7 @@ function ApplicationLists() {
             getItemsSellerCardList()
         }
         if (user?.access && user?.role == "seller") {
-           
+
             getItemsSellerTaklif(currPage)
             getItemsSellerCardList()
         }
@@ -537,7 +537,8 @@ function ApplicationLists() {
         if (open && dataCardModal) {
             form.setFieldsValue({
                 status: dataCardModal?.status,
-                description: dataCardModal?.description,
+                description: `Arizangiz muvaffaqiyatli tasdiqlandi! Kartangizga ${addPeriodToThousands(dataCardModal?.amount)} so'm miqdoridagi summa o'tkazildi`
+                ,
             });
         }
     }, [open, dataCardModal, form]);
