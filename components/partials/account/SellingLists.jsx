@@ -176,8 +176,8 @@ function SellingsLists() {
                             Mahsulotingiz birja savdosiga chiqarildi
                         </p>
 
-                        <a className='text-success' style={{ textDecoration: 'underline' }} href={`http://localhost:3000/product/${openApplicationID?.id}`}>
-                            Mahsulotingizni ko'rish uchun bosing.
+                        <a className='text-success' style={{ textDecoration: 'underline' }} href={`http://localhost:3000/product/${openApplicationID?.id}`} target='_blank'>
+                            Mahsulotingizni birjada ko'rish uchun bosing.
                         </a>
                     </div>,
                 });
@@ -714,7 +714,7 @@ function SellingsLists() {
                                         {user?.role === "seller" && <button className='btn btn-success py-2  rounded-3'
                                             style={{ height: "43px" }}
                                             onClick={() => setIsModalOpen(true)} >
-                                            <span>Yangi mahsulot</span>
+                                            <span>Mahsulot tanlash</span>
                                         </button>
                                         }
                                     </div>
@@ -885,7 +885,7 @@ function SellingsLists() {
                     <div onClick={() => (setEvaluation(null), setPrice(''))} style={{ cursor: 'pointer' }}>
                         <i class="fa-solid fa-arrow-left mr-2"></i>
                     </div>
-                    Mahsulotni birja ga sotuvga chiqarish
+                    Mahsulotni birjaga sotuvga chiqarish
                 </div>}
                 open={isModalOpen}
                 onOk={() => (setIsModalOpen(true), setEvaluation(null))}
@@ -976,7 +976,7 @@ function SellingsLists() {
                                                 </Tooltip>
                                             </div>
 
-                                            {sellMethod === 'auction' && <div className='mt-3'>
+                                            <div className='mt-3'>
                                                 <div className='d-flex align-items-center'>
                                                     <p className='m-0 fs-4'>Auksion davom etish vaqtini kiriting</p>
                                                     <Tooltip
@@ -999,11 +999,11 @@ function SellingsLists() {
                                                         ))
                                                     }
                                                 </Select>
-                                            </div>}
+                                            </div>
                                         </Radio.Group>
 
                                         <div className=''>
-                                            <input value={price} onChange={e => setPrice(e.target.value)} className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100 my-4' placeholder='Sotuv narxini kiriting' />
+                                            <input value={price} onChange={e => setPrice(e.target.value)} className='d-flex rounded-3 align-items-center justify-content-between border p-3 w-100 my-4' placeholder={`${sellMethod === 'simple' ? 'Sotuv' : 'Auksion'} narxini kiriting`} />
                                         </div>
                                         <div className='header_table_content'>
                                             {/* <button style={{ height: "40px" }} className='btn btn-warning px-4 fs-4 w-100 d-flex align-items-center justify-content-center'>
@@ -1064,7 +1064,7 @@ function SellingsLists() {
             <ModalDelete onSuccess={DeleteItemsProducts} />
 
             <Modal
-                title={"Arizani tasdiqlash"}
+                title={""}
                 open={openApplication}
                 onOk={() => (setOpenApplication(true))}
                 onCancel={() => (setOpenApplication(false))}
