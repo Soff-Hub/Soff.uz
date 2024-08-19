@@ -76,6 +76,7 @@ function ProductsLists() {
     const [lifeTime1, setLifetime2] = useState('');
 
 
+
     const handleChange = (date) => {
 
         if (date?.[0]) {
@@ -307,16 +308,6 @@ function ProductsLists() {
             setDataCatStatus(router.query.status);
         }
 
-        // if (router.query.page || router.query.status) {
-        //     GetItemsProductsLists(
-        //         router.query.page,
-        //         category_id,
-        //         router.query.status,
-        //         dataFormat,
-        //         null,
-        //         search
-        //     );
-        // }
     }, [router.query.page, router.query.status]);
 
     useEffect(() => {
@@ -553,6 +544,9 @@ function ProductsLists() {
             ),
         },
     ];
+
+
+    console.log(deleteIdView);
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -883,16 +877,34 @@ function ProductsLists() {
                             ) : (
                                 <div className="ps-product--detail ps-product--fullwidth m-0">
                                     <div className="ps-product__header ">
-                                        <ThumbnailDefault
-                                            product={
-                                                deleteIdView
-                                                    ? deleteIdView
-                                                    : ''
-                                            }
-                                            views={
-                                                deleteIdView?.view_count
-                                            }
-                                        />
+
+                                        {(user.role === "admin" && deleteIdView?.document?.images?.length > 0) ?
+
+                                            <ThumbnailDefault
+                                                product={
+                                                    deleteIdView
+                                                        ? deleteIdView
+                                                        : ''
+                                                }
+                                                views={
+                                                    deleteIdView?.view_count
+                                                }
+                                            /> :
+                                            <div className='d-flex w-100 h-full justify-content-center align-items-center bg-body-secondary rounded-3'>
+
+                                                <span style={{ cursor: "pointer" }} onClick={() => getImageGeneration(deleteIdView?.id)}>
+                                                    {
+                                                        deleteIdView?.id == imageID ?
+                                                            <i class="fa-solid fa-arrows-rotate fa-spin-pulse fa-4x text-secondary"></i>
+                                                            :
+                                                            <i class="fa-solid fa-arrows-rotate fa-4x text-secondary"></i>
+                                                    }
+
+
+                                                </span>
+                                            </div>
+                                        }
+
                                         <div className="ps-product__info">
                                             <div className="mb-4">
                                                 <strong className="text-danger pb-5">
@@ -1199,6 +1211,11 @@ function ProductsLists() {
                             className="fs-3"
                             value="template">
                             Shablon
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="video">
+                            Video
                         </option>
                     </select>
                     <Select

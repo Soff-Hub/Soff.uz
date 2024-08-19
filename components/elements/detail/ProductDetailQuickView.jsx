@@ -32,7 +32,7 @@ const ProductDetailQuickView = ({ product }) => {
             product?.slug
         );
         if (responsImage) {
-            // console.log(responsImage);
+        
             setImage(responsImage.images);
             const { page_count, file_type, file_size } = responsImage;
             setDocument({ page_count, file_type, file_size });
@@ -101,7 +101,7 @@ const ProductDetailQuickView = ({ product }) => {
                                     <span>
                                         {document?.views
                                             ? document?.views
-                                            : views?.count}
+                                            : views?.view_count}
                                     </span>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@ const ProductDetailQuickView = ({ product }) => {
                                     <span>
                                         {document?.views
                                             ? document?.views
-                                            : views?.count}
+                                            : views?.view_count}
                                     </span>
                                 </div>
                             </figure>
@@ -165,7 +165,7 @@ const ProductDetailQuickView = ({ product }) => {
                                         <span>
                                             {document?.views
                                                 ? document?.views
-                                                : views?.count}
+                                                : views?.view_count}
                                         </span>
                                     </div>
                                 </div>
@@ -195,7 +195,7 @@ const ProductDetailQuickView = ({ product }) => {
                                     <span>
                                         {document?.views
                                             ? document?.views
-                                            : views?.count}
+                                            : views?.view_count}
                                     </span>
                                 </div>
                             </figure>
