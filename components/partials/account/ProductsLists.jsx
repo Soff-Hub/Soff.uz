@@ -74,11 +74,11 @@ function ProductsLists() {
     const [imageID, setImageID] = useState(null)
     const [lifeTime, setLifetime] = useState('');
     const [lifeTime1, setLifetime2] = useState('');
+    const [short, setShort] = useState(true)
 
 
-
+ 
     const handleChange = (date) => {
-
         if (date?.[0]) {
             setLifetime(date[0].format('YYYY-MM-DD'));
             setLifetime2(date[1].format('YYYY-MM-DD'));
@@ -87,11 +87,9 @@ function ProductsLists() {
             setLifetime2('');
         }
     };
+
     const dataFormat = `${lifeTime}&end_date=${lifeTime1}`;
 
-
-
-    const [short, setShort] = useState(true)
 
     async function GetItemsProductsLists(
         page,
