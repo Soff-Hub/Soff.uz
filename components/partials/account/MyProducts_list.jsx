@@ -924,8 +924,8 @@ function MyProductsLists() {
                 </div>
 
                 <ModalDelete onSuccess={DeleteItemsProducts} />
-
             </div>
+            
 
             <Modal
                 title={
@@ -1480,6 +1480,11 @@ function MyProductsLists() {
                             className="fs-3"
                             value="template">
                             Shablon
+                        </option>
+                        <option
+                            className="fs-3"
+                            value="video">
+                            Video
                         </option>
                     </select>
                     <Select
