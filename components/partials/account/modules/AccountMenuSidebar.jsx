@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import Router, { useRouter } from 'next/router';
+import  { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import useAuth from '~/hooks/useAuth';
-import { logOut } from '~/store/auth/action';
+
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '../ProductsLists';
@@ -165,9 +164,6 @@ const AccountMenuSidebar = ({ data }) => {
             }, 2000);
         }
     }
-
-    console.log(webdata1);
-
 
 
     return (
