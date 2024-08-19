@@ -25,10 +25,12 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 const dateFormat = 'DD-MM-YYYY';
 
-export const startDate = `${(new Date().getDate() + 2) > 9 ? (new Date().getDate() + 2) : `0${(new Date().getDate() + 2)}`}-${(new Date().getMonth() + 1) > 9 ? new Date().getMonth() + 1 : `0${new Date().getMonth() + 1}`}-${new Date().getFullYear()}`
-export const endDate = `${(new Date().getDate() + 10) > 9 ? (new Date().getDate() + 10) : `0${(new Date().getDate() + 10)}`}-${(new Date().getMonth() + 1) > 9 ? new Date().getMonth() + 1 : `0${new Date().getMonth() + 1}`}-${new Date().getFullYear()}`
+export const startDate = dayjs().add(2, 'day').format(dateFormat);
+export const endDate = dayjs().add(10, 'day').format(dateFormat);
 
-
+const disabledDate = (current) => {
+    return current && (current < dayjs(startDate, dateFormat) || current > dayjs(endDate, dateFormat));
+};
 
 
 function SellingsLists() {
@@ -1017,12 +1019,11 @@ function SellingsLists() {
                                                     placeholder={`${sellMethod === 'simple' ? 'Sotuv' : 'Auksion'} tugash sanasini kiriting`}
                                                     size='large'
                                                     className='w-100'
-                                                    minDate={dayjs(startDate, dateFormat)}
                                                     defaultValue={dayjs(startDate, dateFormat)}
-                                                    maxDate={dayjs(endDate, dateFormat)}
                                                     showSecond={false}
                                                     minuteStep={60}
                                                     onChange={(e, v) => setAuctionDate(v)}
+                                                    disabledDate={disabledDate}
                                                 />
 
                                                 {/* <Select value={`${auctionDate} kun`} onChange={(e) => setAuctionDate(Number(e.split(' ')[0]))} style={{ height: "40px" }} className='mt-3 w-100'>
