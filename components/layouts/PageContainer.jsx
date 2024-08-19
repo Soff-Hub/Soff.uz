@@ -96,7 +96,7 @@ export let accountSellerLink = [
         icon: 'fa-solid fa-shop-lock',
     },
     {
-        text: 'Mahsulotlarni joyida sotish',
+        text: 'Mahsulotlarni birjaga chiqarish',
         url: '/account/selling',
         icon: 'fa-brands fa-shopify',
     },
