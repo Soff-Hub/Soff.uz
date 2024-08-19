@@ -1,14 +1,13 @@
 import React, { useEffect } from 'react';
 import AccountMenuSidebar from './modules/AccountMenuSidebar';
-import { Form, Modal, Pagination, Select, Table, Tabs, Input, Button, Tooltip, InputNumber, Radio } from 'antd';
+import { Form, Modal, Pagination, Select, Table, Tabs, Input, Button, Tooltip, InputNumber, Radio, DatePicker } from 'antd';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import useDebounce from '~/hooks/useDebounce';
 import CalculateTimeDifference from './DateFormatter';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { addPeriodToThousands } from './ProductsLists';
-import Repository, { orginalApi, orginalUrl } from '~/reositoriy-admin/Repository';
-import { baseUrl } from '~/repositories/Repository';
+import { orginalApi, orginalUrl } from '~/reositoriy-admin/Repository';
 import ModalDelete from './Modal';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import ThumbnailDefault from '~/components/elements/detail/thumbnail/ThumbnailDefault';
@@ -17,10 +16,17 @@ import ModuleProductDetailDescription from '~/components/elements/detail/modules
 import PartialDescription from '~/components/elements/detail/description/PartialDescription';
 import NextImageCard from '~/components/nextImagecard';
 import Axios from 'axios';
-import Link from 'next/link';
 const { TabPane } = Tabs;
 const { Option } = Select;
 const { TextArea } = Input;
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+const dateFormat = 'DD-MM-YYYY';
+
+export const startDate = `${(new Date().getDate() + 2) > 9 ? (new Date().getDate() + 2) : `0${(new Date().getDate() + 2)}`}-${(new Date().getMonth() + 1) > 9 ? new Date().getMonth() + 1 : `0${new Date().getMonth() + 1}`}-${new Date().getFullYear()}`
+export const endDate = `${(new Date().getDate() + 10) > 9 ? (new Date().getDate() + 10) : `0${(new Date().getDate() + 10)}`}-${(new Date().getMonth() + 1) > 9 ? new Date().getMonth() + 1 : `0${new Date().getMonth() + 1}`}-${new Date().getFullYear()}`
 
 
 
@@ -54,7 +60,7 @@ function SellingsLists() {
     const [form] = Form.useForm();
     const [price, setPrice] = useState('')
     const [sellMethod, setSellMethod] = useState('simple')
-    const [auctionDate, setAuctionDate] = useState(2)
+    const [auctionDate, setAuctionDate] = useState('')
 
 
     // Sotilgan mahsulotlar listi
@@ -161,7 +167,7 @@ function SellingsLists() {
                     'document': openApplicationID.id,
                     price,
                     type: sellMethod,
-                    period_days: sellMethod === 'simple' ? 100 : auctionDate
+                    deadline: auctionDate
                 }, {
                     headers: {
                         'Authorization': `Bearer ${user?.access}`,
@@ -678,6 +684,14 @@ function SellingsLists() {
         });
     }
 
+    useEffect(() => {
+        if (!evaluation) {
+            setAuctionDate('')
+            setPrice('')
+            setSellMethod('simple')
+        }
+    }, [evaluation])
+
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -894,11 +908,17 @@ function SellingsLists() {
                 width={600}
             >
 
+                {!evaluation && <p className='fs-4 mt-4 text-primary-emphasis'>
+                    <i className='fa-solid fa-circle-info me-2 mb-3'></i>
+                    Buyerda description bo'lishi kerak
+                </p>}
+
                 {!evaluation && <label
                     className={'rounded-3 mt-3  form-label border p-0 d-flex justify-content-between align-items-center'}
                     style={{
                         backgroundColor: '#F1F1F1',
                     }}>
+
                     <input
                         type="search"
                         value={search}
@@ -978,7 +998,7 @@ function SellingsLists() {
 
                                             <div className='mt-3'>
                                                 <div className='d-flex align-items-center'>
-                                                    <p className='m-0 fs-4'>Auksion davom etish vaqtini kiriting</p>
+                                                    <p className='m-0 fs-4'>{`${sellMethod === 'simple' ? 'Sotuv' : 'Auksion'} tugash sanasini kiriting`}</p>
                                                     <Tooltip
                                                         className="toltip"
                                                         title={"Agar mahsulotingiz belgilangan vaqt davomida sotilmasa birjadan o'chiriladi va mahsulotlaringiz ro'yxatiga qaytariladi"}
@@ -991,14 +1011,27 @@ function SellingsLists() {
                                                             className="fa-regular fa-circle-question px-4"></i>
                                                     </Tooltip>
                                                 </div>
-                                                <Select value={`${auctionDate} kun`} onChange={(e) => setAuctionDate(Number(e.split(' ')[0]))} style={{ height: "40px" }} className='mt-3 w-100'>
+                                                <DatePicker
+                                                    showNow={false}
+                                                    showTime
+                                                    placeholder={`${sellMethod === 'simple' ? 'Sotuv' : 'Auksion'} tugash sanasini kiriting`}
+                                                    size='large'
+                                                    className='w-100'
+                                                    minDate={dayjs(startDate, dateFormat)}
+                                                    defaultValue={dayjs(startDate, dateFormat)}
+                                                    maxDate={dayjs(endDate, dateFormat)}
+                                                    showSecond={false}
+                                                    minuteStep={60}
+                                                    onChange={(e, v) => setAuctionDate(v)}
+                                                />
+
+                                                {/* <Select value={`${auctionDate} kun`} onChange={(e) => setAuctionDate(Number(e.split(' ')[0]))} style={{ height: "40px" }} className='mt-3 w-100'>
                                                     {
                                                         [2, 3, 4, 5, 6, 7, 8, 9, 10].map(el => (
-                                                            // <Option key={el} >{el} kun</Option>
                                                             <Option key={el} value={`${el} kun`} label={`${el} kun`} />
                                                         ))
                                                     }
-                                                </Select>
+                                                </Select> */}
                                             </div>
                                         </Radio.Group>
 
