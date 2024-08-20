@@ -3,7 +3,6 @@ import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-import { BeatLoader } from 'react-spinners';
 import useAuth from '~/hooks/useAuth';
 import { logOut } from '~/store/auth/action';
 import { Badge, Card, Modal, Tooltip } from 'antd';
@@ -11,7 +10,7 @@ import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import CalculateTimeDifference from '~/components/partials/account/DateFormatter';
 
-const AccountMenuSidebar = () => {
+const AccountMenuSidebar = ({ setMenuDrawer, setCategoriesDrawer }) => {
     const dispatch = useDispatch();
     const { accountLinks } = useSelector((state) => state.auth);
     const refresh = useSelector((state) => state.auth?.user?.refresh);
@@ -36,12 +35,15 @@ const AccountMenuSidebar = () => {
     const showModalCustomer = () => {
         setIsModalOpenCustomer(true);
     };
+
     const handleOkCustomer = () => {
         setIsModalOpenCustomer(false);
     };
+
     const handleCancelCustomer = () => {
         setIsModalOpenCustomer(false);
     };
+
     const handleOk = () => {
         setIsModalOpen(true);
     };
@@ -188,6 +190,12 @@ const AccountMenuSidebar = () => {
         }
     }
 
+    const handleDrawerClose = () => {
+        setTimeout(() => {
+            setMenuDrawer(false);
+            setCategoriesDrawer(false);
+        }, 700);
+    };
 
 
 
@@ -444,6 +452,7 @@ const AccountMenuSidebar = () => {
                                     (
 
                                         <li
+                                            onClick={handleDrawerClose}
                                             key={link.text}
                                             className={`${link.url === asPath ? 'active' : ''
                                                 } step-${index + 4}`}>

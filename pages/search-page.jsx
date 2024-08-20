@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Router, { useRouter } from 'next/router';
-import { Spin } from 'antd';
+import { Pagination, Spin } from 'antd';
 import PostRepository from '~/repositories/PostRepository';
 import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
@@ -31,6 +31,8 @@ const Products_Search_Results = () => {
     const [loading, setLoading] = useState(false);
     const [typeSelect, setTypeSelect] = useState('all');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
+    const [pageCountPlay, setPageCountPlay] = useState(0);
+    const [currPagePlay, setCurrPagePlay] = useState(1);
     const { query } = useRouter()
 
 
@@ -45,10 +47,11 @@ const Products_Search_Results = () => {
         if (debouncedSearchTerm) {
             setLoading(true);
             if (keyword || typeSelect) {
-                const products = PostRepository.postSearchFilterNews(keyword, typeSelect);
+                const products = PostRepository.postSearchFilterNews(currPagePlay, keyword, typeSelect);
                 products.then((result) => {
                     setLoading(false);
                     setResultItems(result);
+                    setPageCountPlay(result?.count)
                 });
             } else {
                 setKeyword('');
@@ -56,8 +59,9 @@ const Products_Search_Results = () => {
         }
         setLoading(false);
 
-    }, [debouncedSearchTerm, keyword, typeSelect]);
+    }, [currPagePlay, debouncedSearchTerm, keyword, typeSelect]);
 
+    
     useEffect(() => (
         setKeyword(query.keyword)
     ), [query?.keyword])
@@ -204,7 +208,14 @@ const Products_Search_Results = () => {
                                     </p>
                                     {resultItems?.results?.map((product) => (
                                         <ProductSearchGoogle product={product} key={product.id} />
+
                                     ))}
+                                    <Pagination
+                                        className="mt-3"
+                                        defaultCurrent={currPagePlay}
+                                        total={pageCountPlay}
+                                        onChange={(e) => setCurrPagePlay(e)}
+                                    />
                                 </>
                             ) : (
                                 <div className='d-flex align-items-center justify-content-center pt-5'>

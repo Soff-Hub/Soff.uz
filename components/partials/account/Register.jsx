@@ -352,7 +352,9 @@ class Register extends Component {
                                                         disabled={true}
                                                         style={{
                                                             cursor: 'not-allowed',
-                                                            color: '#fff'
+                                                            color: '#fff',
+                                                            backgroundColor:"#00a44f",
+                                                            border:"none"
                                                         }}
                                                         className="ps-btn ps-btn--fullwidth"
 

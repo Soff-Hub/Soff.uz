@@ -57,7 +57,7 @@ const ShopItems = ({
             );
         if (responseData?.length > 0) {
             dispatch(CategorySlug(responseData?.data?.results));
-            // categorySlug
+          
         }
     }
 
