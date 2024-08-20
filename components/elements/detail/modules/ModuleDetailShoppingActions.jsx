@@ -116,8 +116,8 @@ const ModuleDetailShoppingActions = ({ product }) => {
 
                 <div className="ps-product__shopping ">
                     {contextHolder}
-                    <div className='d-flex  align-items-center gap-4  p-3 w-100 flex-wrap ' >
-                        <div >
+                    <div className='d-flex  align-items-center gap-4  m-0 w-100 flex-wrap ' >
+
                             {product?.discount_price > 0 ? (
                                 <>
                                     {product?.document?.file_url ? (
@@ -128,7 +128,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                                 fontSize: "14px"
 
                                             }}
-                                            className="ps-btn ps-btn--black py-3"
+                                            className="ps-btn ps-btn--black py-3 "
                                             href="#"
                                             onClick={async (e) => {
                                                 e.preventDefault();
@@ -160,14 +160,14 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                     ) : (
                                         <>
                                             <a
-                                                className="ps-btn ps-btn--black py-3 buystep-1 mx-2"
+                                                className="ps-btn ps-btn--black py-3 buystep-1 m-0"
                                                 href="#"
                                                 style={{ fontSize: "14px" }}
                                                 onClick={(e) => handleAddItemToCart(e)}>
                                                 Savatga qo'shish
                                             </a>
                                             <a
-                                                className="ps-btn py-3 buystep-2 ml-2"
+                                                className="ps-btn py-3 buystep-2 m-0"
                                                 href="#"
                                                 style={{ fontSize: "14px" }}
                                                 onClick={(e) => handleBuynow(e)}>
@@ -178,8 +178,8 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                 </>
                             ) : (
                                 <a
-                                    style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px" }}
-                                    className="ps-btn ps-btn--black max-class"
+                                    style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px", height: "40px", fontSize:"14px" }}
+                                    className="ps-btn py-3 buystep-2 ml-2 ps-btn--black "
                                     href="#"
                                     onClick={async (e) => {
                                         e.preventDefault();
@@ -187,7 +187,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                         await audioDownloaderSale(product, product);
                                         setLoading(false)
                                     }}>
-                                    {!loading ? "Bepul yuklab olish" :
+                                    {!loading ? 'Bepul yuklab olish' :
                                         <div>
                                             <div
                                                 className="spinner-border"
@@ -199,16 +199,16 @@ const ModuleDetailShoppingActions = ({ product }) => {
                                         </div>
                                     }
                                 </a>
-                            )}
-                        </div>
 
-                        <div className="p-4 px-5 rounded-3 " style={{ backgroundColor: "#fff", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
+                            )}
+                       
+                        <div className="p-3 px-5 rounded-3 col-md-3 " style={{ backgroundColor: "#fff", width:"100%" }} onClick={() => copyVideoUrl()}>
                             {copy ? (
                                 <div className='text-center'>
                                     <i className="fa-solid fa-check mr-3"></i> nusxalandi
                                 </div>
                             ) : (
-                                <div style={{ cursor: "pointer" }} className='w-full d-flex justify-content-center align-items-center'>
+                                <div style={{ cursor: "pointer" }} className='w-100 d-flex justify-content-center align-items-center'>
                                     <i className="fa-solid fa-share-nodes mr-3" style={{ marginRight: "5px" }}></i>
                                     ulashish
                                 </div>

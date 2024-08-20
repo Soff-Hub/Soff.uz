@@ -9,7 +9,6 @@ import ProductSearchGoogle from '~/components/elements/products/ProductSearchGoo
 function useDebounce(value, delay) {
     const [debouncedValue, setDebouncedValue] = useState(value);
 
-
     useEffect(() => {
         const handler = setTimeout(() => {
             setDebouncedValue(value);
@@ -24,17 +23,15 @@ function useDebounce(value, delay) {
 }
 
 const Products_Search_Results = () => {
-
     const inputEl = useRef(null);
     const [keyword, setKeyword] = useState('');
     const [resultItems, setResultItems] = useState([]);
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true); // Initially true
     const [typeSelect, setTypeSelect] = useState('all');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
     const [pageCountPlay, setPageCountPlay] = useState(0);
     const [currPagePlay, setCurrPagePlay] = useState(1);
-    const { query } = useRouter()
-
+    const { query } = useRouter();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -45,26 +42,29 @@ const Products_Search_Results = () => {
 
     useEffect(() => {
         if (debouncedSearchTerm) {
-            setLoading(true);
+            setLoading(true); // Set loading true when making a new request
             if (keyword || typeSelect) {
                 const products = PostRepository.postSearchFilterNews(currPagePlay, keyword, typeSelect);
                 products.then((result) => {
-                    setLoading(false);
                     setResultItems(result);
-                    setPageCountPlay(result?.count)
+                    setPageCountPlay(result?.count);
+                    setLoading(false); // Set loading false after data is fetched
+                }).catch(() => {
+                    setLoading(false); // In case of error, stop loading
                 });
             } else {
                 setKeyword('');
+                setLoading(false); // Stop loading if no keyword
             }
         }
-        setLoading(false);
-
     }, [currPagePlay, debouncedSearchTerm, keyword, typeSelect]);
 
-    
-    useEffect(() => (
-        setKeyword(query.keyword)
-    ), [query?.keyword])
+    useEffect(() => {
+        if (query.keyword) {
+            setKeyword(query.keyword);
+            setLoading(true); // Set loading true when keyword is set from query
+        }
+    }, [query?.keyword]);
 
     useEffect(() => {
         if (inputEl?.current && keyword !== '') {
@@ -73,15 +73,12 @@ const Products_Search_Results = () => {
         }
     }, [keyword, inputEl]);
 
-
     // Views
-    let clearTextView,
-        loadingView
+    let clearTextView, loadingView;
     if (!loading) {
-
         clearTextView = <span className="ps-form__action">
             <i className='fa-solid fa-search button_search_icon text-success' ></i>
-        </span>
+        </span>;
     } else {
         loadingView = (
             <span className="ps-form__action">
@@ -91,45 +88,13 @@ const Products_Search_Results = () => {
     }
 
     const itemsType = [
-        {
-            id: 1,
-            name: "Barchasi",
-            icon: "fa-solid fa-search",
-            value: "all"
-        },
-        {
-            id: 2,
-            name: "Hujjatlar",
-            icon: "fa-solid fa-file",
-            value: "file"
-        },
-        {
-            id: 3,
-            name: "Videolar",
-            icon: "fa-solid fa-video",
-            value: "video"
-        },
-        {
-            id: 4,
-            name: "Audiolar",
-            icon: "fa-solid fa-music",
-            value: "audio"
-        },
-        {
-            id: 5,
-            name: "Shablonlar",
-            icon: "fa-solid fa-file-lines",
-            value: "template"
-        },
-        {
-            id: 5,
-            name: "Playlistlar",
-            icon: "fa-solid fa-play",
-            value: "playlist"
-        },
-    ]
-
-
+        { id: 1, name: "Barchasi", icon: "fa-solid fa-search", value: "all" },
+        { id: 2, name: "Hujjatlar", icon: "fa-solid fa-file", value: "file" },
+        { id: 3, name: "Videolar", icon: "fa-solid fa-video", value: "video" },
+        { id: 4, name: "Audiolar", icon: "fa-solid fa-music", value: "audio" },
+        { id: 5, name: "Shablonlar", icon: "fa-solid fa-file-lines", value: "template" },
+        { id: 6, name: "Playlistlar", icon: "fa-solid fa-play", value: "playlist" }
+    ];
 
     return (
         <div className='global_search_results'>
@@ -171,8 +136,6 @@ const Products_Search_Results = () => {
 
                         </form>
                     </div>
-
-
                 </div>
             </nav>
 
@@ -180,17 +143,13 @@ const Products_Search_Results = () => {
                 <div className="container ">
                     <div className='navbar-container'>
                         <ul className='d-flex align-items-end p-0 gap-5'>
-                            {
-                                itemsType?.map(item => (
-                                    <li onClick={() => setTypeSelect(item?.value)} key={item.id} className={`d-flex align-items-center gap-3 ${typeSelect === item.value && "active_type"}`}>
-                                        <i style={{ fontSize: "18px" }} className={item.icon}></i>
-                                        {item.name}
-                                    </li>
-
-                                ))
-                            }
+                            {itemsType.map(item => (
+                                <li onClick={() => setTypeSelect(item?.value)} key={item.id} className={`d-flex align-items-center gap-3 ${typeSelect === item.value && "active_type"}`}>
+                                    <i style={{ fontSize: "18px" }} className={item.icon}></i>
+                                    {item.name}
+                                </li>
+                            ))}
                         </ul>
-
                     </div>
                 </div>
             </nav>
@@ -198,9 +157,7 @@ const Products_Search_Results = () => {
             <div className="results mt-3">
                 <div className="container">
                     {
-
                         !loading ? (
-
                             resultItems?.results?.length > 0 ? (
                                 <>
                                     <p style={{ fontWeight: "600", color: "#00a44f" }}>
@@ -208,7 +165,6 @@ const Products_Search_Results = () => {
                                     </p>
                                     {resultItems?.results?.map((product) => (
                                         <ProductSearchGoogle product={product} key={product.id} />
-
                                     ))}
                                     <Pagination
                                         className="mt-3"
@@ -229,16 +185,11 @@ const Products_Search_Results = () => {
                                 </span>
                             </div>
                         )
-
                     }
-
                 </div>
-
-
             </div>
-        </div >
-    )
+        </div>
+    );
 }
 
-export default Products_Search_Results
-
+export default Products_Search_Results;
