@@ -14,7 +14,6 @@ import Meta from '~/components/shared/headers/Meta';
 export default function ProductCategoryScreen({ category2 }) {
     const Router = useRouter();
     const { slug } = Router.query;
-    const [category, setCategory] = useState(category2);
     const [filteredData, setFilteredData] = useState(null);
 
     const [chaildId, setchaildId] = useState(null);
@@ -22,7 +21,9 @@ export default function ProductCategoryScreen({ category2 }) {
 
     const [count, setCount] = useState(null);
     const [nom, setNom] = useState('Kategoriyalar');
-    // const [breadCrumbName, setBreadCrumb] = useState(null)
+    const [defVal, setDefVal] = useState(null);
+    const [min, setMin] = useState(null);
+    const [max, setMax] = useState(null);
 
     async function getCategry() {
         const responseData = await ProductRepository.getCategoryParent();
@@ -53,6 +54,9 @@ export default function ProductCategoryScreen({ category2 }) {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
+            setDefVal([responseData?.min_price, responseData?.max_price]);
+            setMax(responseData?.max_price);
+            setMin(responseData?.min_price);
         }
         setCount(responseData?.count || 0);
         setchaildId(null);
@@ -75,6 +79,10 @@ export default function ProductCategoryScreen({ category2 }) {
         );
         if (responseData) {
             setFilteredData(responseData?.results);
+            setDefVal([responseData?.min_price, responseData?.max_price]);
+            setMax(responseData?.max_price);
+            setMin(responseData?.min_price);
+        
         }
         setCount(responseData?.count || 0);
     }
@@ -92,20 +100,27 @@ export default function ProductCategoryScreen({ category2 }) {
             getParentData(slug);
         }
 
-        if (category?.length > 0) {
-            for (let i = 0; i < category.length; i++) {
-                if (category[i].slug === slug) {
-                    setNom(category[i].name);
+        if (category2?.length > 0) {
+            for (let i = 0; i < category2.length; i++) {
+                if (category2[i].slug === slug) {
+                    setNom(category2[i].name);
                 } else {
-                    for (let j = 0; j < category[i]?.children?.length; j++) {
-                        if (category[i]?.children[j].id === Number(slug)) {
-                            setNom(category[i]?.children[j].name);
+                    for (let j = 0; j < category2[i]?.children?.length; j++) {
+                        if (category2[i]?.children[j].id === Number(slug)) {
+                            setNom(category2[i]?.children[j].name);
                         }
                     }
                 }
             }
         }
     }, [slug, parentId, chaildId]);
+
+    useEffect(() => {
+        if (min !== null && max !== null) {
+            setDefVal([min, max]);
+        }
+    }, [min, max]);
+
 
     const breadCrumb = [
         {
@@ -119,10 +134,11 @@ export default function ProductCategoryScreen({ category2 }) {
     ];
 
 
+
     return (
         <PageContainer
             footer={<FooterDefault />}
-            title={category ? nom : 'Kategoriya'}
+            title={category2 ? nom : 'Kategoriya'}
             boxed={true}>
             <Meta
                 title={`${nom}`}
@@ -133,13 +149,19 @@ export default function ProductCategoryScreen({ category2 }) {
                 <div className="container">
                     <div className="ps-layout--shop ps-shop--category">
                         <div className="ps-layout__left">
-                            <WidgetShopCategories data={category} /> 
+                            <WidgetShopCategories data={category2} />
                             <WidgetShopFilterByPriceRange
                                 setFilteredData={setFilteredData}
                                 chaildId={chaildId}
                                 parentId={parentId}
                                 categoryData={category2 || []}
                                 setCount={setCount}
+                                defVal={defVal}
+                                min={min}
+                                max={max}
+                                setDefVal={setDefVal}
+                                setMax={setMax}
+                                setMin={setMin}
                             />
                         </div>
                         <div className="ps-layout__right">
