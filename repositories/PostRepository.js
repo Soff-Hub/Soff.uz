@@ -27,9 +27,9 @@ class PostRepository {
         return reponse;
     }
 
-    async postSearchFilterNews(page, payload, file) {
+    async postSearchFilterNews(payload, file) {
         const reponse = await Repository.get(
-            `${baseUrl}customer/same-google-search/?page=${page}&search=${payload ? payload : ''}&type=${file ? file : 'all'}`
+            `${baseUrl}customer/same-google-search/?search=${payload ? payload : ''}&type=${file ? file : 'all'}`
         )
             .then((response) => {
                 return response.data;
