@@ -47,6 +47,7 @@ const HomeElectronicsPage = () => {
             promotional_sliders: [...responseData.data],
         });
     }
+
     async function getTopSellers() {
         const responseData = await axios.get(
             baseUrl + 'customer/free-document/'
