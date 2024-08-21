@@ -5,30 +5,20 @@ import PostRepository from '~/repositories/PostRepository';
 import Link from 'next/link';
 import NextImageCard from '~/components/nextImagecard';
 import ProductSearchGoogle from '~/components/elements/products/ProductSearchGoogle';
+import useDebounce from '~/hooks/useDebounce';
 
-function useDebounce(value, delay) {
-    const [debouncedValue, setDebouncedValue] = useState(value);
 
-    useEffect(() => {
-        const handler = setTimeout(() => {
-            setDebouncedValue(value);
-        }, delay);
-
-        return () => {
-            clearTimeout(handler);
-        };
-    }, [value, delay]);
-
-    return debouncedValue;
-}
 
 const Products_Search_Results = () => {
+
     const inputEl = useRef(null);
     const [keyword, setKeyword] = useState('');
     const [resultItems, setResultItems] = useState([]);
     const [loading, setLoading] = useState(true); // Initially true
     const [typeSelect, setTypeSelect] = useState('all');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
+    const [pageCountPlay, setPageCountPlay] = useState(0);
+    const [currPagePlay, setCurrPagePlay] = useState(1);
     const { query } = useRouter();
 
     function handleSubmit(e) {
@@ -42,9 +32,10 @@ const Products_Search_Results = () => {
         if (debouncedSearchTerm) {
             setLoading(true); // Set loading true when making a new request
             if (keyword || typeSelect) {
-                const products = PostRepository.postSearchFilterNews(keyword, typeSelect);
+                const products = PostRepository.postSearchFilterNews(currPagePlay, keyword, typeSelect);
                 products.then((result) => {
                     setResultItems(result);
+                    setPageCountPlay(result?.count);
                     setLoading(false); // Set loading false after data is fetched
                 }).catch(() => {
                     setLoading(false); // In case of error, stop loading
@@ -54,7 +45,8 @@ const Products_Search_Results = () => {
                 setLoading(false); // Stop loading if no keyword
             }
         }
-    }, [debouncedSearchTerm, keyword, typeSelect]);
+    }, [currPagePlay, debouncedSearchTerm, keyword, typeSelect]);
+
 
     useEffect(() => {
         if (query.keyword) {
@@ -63,12 +55,14 @@ const Products_Search_Results = () => {
         }
     }, [query?.keyword]);
 
+
     useEffect(() => {
         if (inputEl?.current && keyword !== '') {
             inputEl.current.setSelectionRange(keyword?.length, keyword?.length);
             inputEl.current.focus();
         }
     }, [keyword, inputEl]);
+
 
     // Views
     let clearTextView, loadingView;
@@ -163,12 +157,12 @@ const Products_Search_Results = () => {
                                     {resultItems?.results?.map((product) => (
                                         <ProductSearchGoogle product={product} key={product.id} />
                                     ))}
-                                    {/* <Pagination
+                                    <Pagination
                                         className="mt-3"
                                         defaultCurrent={currPagePlay}
                                         total={pageCountPlay}
                                         onChange={(e) => setCurrPagePlay(e)}
-                                    /> */}
+                                    />
                                 </>
                             ) : (
                                 <div className='d-flex align-items-center justify-content-center pt-5'>
@@ -185,6 +179,7 @@ const Products_Search_Results = () => {
                     }
                 </div>
             </div>
+            
         </div>
     );
 }
