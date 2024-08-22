@@ -235,7 +235,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
                                         />
                                     </div>
-                                ) : product?.document?.content_type ==='templatfile' ? (
+                                ) : product?.document?.content_type ==='template' ? (
                                         <div className="">
                                             <TemplateDetailFullwidth
                                                 product={product}
