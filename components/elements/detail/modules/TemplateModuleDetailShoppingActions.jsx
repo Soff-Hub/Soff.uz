@@ -114,9 +114,10 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
 
-                <div className="ps-product__shopping">
-                    {contextHolder} 
-                    <div >
+                <div className="ps-product__shopping m-0 p-0 ">
+                    {contextHolder}
+                    <div className='d-flex flex-column gap-4 w-100 m-0' >
+
                         {product?.discount_price > 0 ? (
                             <>
                                 {product?.document?.file_url ? (
@@ -127,19 +128,19 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                                             fontSize: "14px"
 
                                         }}
-                                        className="ps-btn ps-btn--black py-3"
+                                        className="ps-btn ps-btn--black py-3 "
                                         href="#"
                                         onClick={async (e) => {
                                             e.preventDefault();
                                             setLoading(true);
-                                            console.log('Loading state set to true');
+
                                             try {
                                                 await audioDownloaderSale(product, product);
                                             } catch (error) {
                                                 console.error('Error in audioDownloaderSale:', error);
                                             } finally {
                                                 setLoading(false);
-                                                console.log('Loading state set to false');
+
                                             }
                                         }}
                                     >
@@ -159,16 +160,16 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                                 ) : (
                                     <>
                                         <a
-                                            className="ps-btn ps-btn--black py-3 buystep-1 mx-2"
+                                            className="ps-btn ps-btn--black  buystep-1 m-0 w-100"
                                             href="#"
-                                            style={{ fontSize: "14px" }}
+                                            style={{ fontSize: "16px" }}
                                             onClick={(e) => handleAddItemToCart(e)}>
                                             Savatga qo'shish
                                         </a>
                                         <a
-                                            className="ps-btn py-3 buystep-2 ml-2"
+                                            className="ps-btn  buystep-2 m-0 w-100"
                                             href="#"
-                                            style={{ fontSize: "14px" }}
+                                            style={{ fontSize: "16px" }}
                                             onClick={(e) => handleBuynow(e)}>
                                             Hoziroq xarid qilish
                                         </a>
@@ -177,8 +178,8 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                             </>
                         ) : (
                             <a
-                                style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px" }}
-                                className="ps-btn ps-btn--black max-class"
+                                style={{ cursor: loading ? 'not-allowed' : 'pointer', minWidth: "212px", height: "40px", fontSize: "16px" }}
+                                className="ps-btn py-3 buystep-2  ps-btn--black w-100 "
                                 href="#"
                                 onClick={async (e) => {
                                     e.preventDefault();
@@ -186,7 +187,7 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                                     await audioDownloaderSale(product, product);
                                     setLoading(false)
                                 }}>
-                                {!loading ? "Bepul yuklab olish" :
+                                {!loading ? 'Bepul yuklab olish' :
                                     <div>
                                         <div
                                             className="spinner-border"
@@ -198,35 +199,48 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                                     </div>
                                 }
                             </a>
+
                         )}
+                        <div className='d-flex gap-4 '>
+
+
+                            <div className="p-3 px-5 rounded-3 " style={{
+                                backgroundColor: "#fff", width: "100%", borderRadius: "20px",
+                                border: "1px solid #00A44F",
+                            }} onClick={() => copyVideoUrl()}>
+                                {copy ? (
+                                    <div className='text-center'>
+                                        <i className="fa-solid fa-check mr-3"></i> nusxalandi
+                                    </div>
+                                ) : (
+                                    <div style={{ cursor: "pointer" }} className='w-100 d-flex justify-content-center align-items-center'>
+                                        <i className="fa-solid fa-share-nodes mr-3" style={{ marginRight: "5px" }}></i>
+                                        ulashish
+                                    </div>
+                                )}
+                            </div>
+
+                            <div style={{
+                                borderRadius: "20px",
+                                border: "1px solid #00A44F",
+                            }} className="ps-product__actions  w-100 rounded-3 bg-white d-flex align-items-center justify-content-center ">
+                                <a
+                                    className='d-flex align-items-center'
+                                    href="#" onClick={(e) => handleAddItemToWishlist(e)}>
+                                    <i
+                                        className={`${wishlist?.some(
+                                            (item) =>
+                                                Number(item.id) ===
+                                                Number(product.id)
+                                        )
+                                            ? 'fa-solid fa-heart text-danger'
+                                            : 'icon-heart text-black'
+                                            } `}></i>
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="p-3 rounded-3 " style={{ backgroundColor: "#fff", minWidth: "80px" }} onClick={() => copyVideoUrl()}>
-                        {copy ? (
-                            <div className='text-center'>
-                                <i className="fa-solid fa-check "></i> nusxalandi
-                            </div>
-                        ) : (
-                            <div style={{ cursor: "pointer" }} className='w-full d-flex justify-content-center align-items-center'>
-                                <i className="fa-solid fa-share-nodes " style={{ marginRight: "5px" }}></i>
-                                ulashish
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="ps-product__actions">
-                        <a href="#" onClick={(e) => handleAddItemToWishlist(e)}>
-                            <i
-                                className={`${wishlist?.some(
-                                    (item) =>
-                                        Number(item.id) ===
-                                        Number(product.id)
-                                )
-                                    ? 'fa-solid fa-heart text-danger'
-                                    : 'icon-heart'
-                                    } `}></i>
-                        </a>
-                    </div>
                 </div>
             </>
         );

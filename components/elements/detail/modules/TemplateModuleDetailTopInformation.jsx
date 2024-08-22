@@ -13,22 +13,22 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
         }
     };
 
- 
 
- 
+
+
     // Views
     let priceView;
     if (product?.is_sale) {
         priceView = (
             <div className="ps-product__price sale">
                 {+product?.discount_price === 0 ? (
-                    <p>Bepul</p>
+                    <p className='fs-4'>Bepul</p>
                 ) : product?.discount === 0 ? (
-                    <p>{addPeriodToThousands(product?.discount_price)} so'm</p>
+                    <p className='fs-4'>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
                     <>
                         <del>{addPeriodToThousands(product?.price)} so'm</del>
-                        <p>
+                        <p className='fs-4'>
                             {addPeriodToThousands(product?.discount_price)}
                             so'm
                         </p>
@@ -38,15 +38,15 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
         );
     } else {
         priceView = (
-            <h4 className="ps-product__price">
+            <h4 className="ps-product__price ">
                 {+product?.discount_price === 0 ? (
-                    <p>Bepul</p>
+                    <p className='fs-4'>Bepul</p>
                 ) : product?.discount === 0 ? (
-                    <p>{addPeriodToThousands(product?.discount_price)} so'm</p>
+                    <p className='fs-4'>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
                     <>
                         <del>{addPeriodToThousands(product?.price)} so'm</del>
-                        <p>
+                        <p className='fs-4'>
                             {addPeriodToThousands(product?.discount_price)}
                             so'm
                         </p>
@@ -58,15 +58,21 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
 
     return (
         <header>
-            <h1 className="product__name">
+            <h4 style={{
+                fontFamily: " PolySans, 'Inter', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Fira Sans', 'Helvetica Neue', 'Arial', sans-serif ",
+                fontSize: "24px"
+            }}>
                 {product?.title !== undefined ? product?.title : ''}
-            </h1>
-            <div className="product__top-information">
-                <div className='w_fulls'>
-                    <span className="input--label">Muallif</span>
+            </h4>
+
+            <div className="product__top-information p-0">
+                <div className='w-100 d-flex flex-column gap-3'>
                     <div
                         className="product__top-information-account"
-                        style={{ cursor: 'pointer' }}
+                        style={{
+                            cursor: 'pointer', borderRadius: "8px",
+                            border: "1px solid #d6d6d6",
+                        }}
                         onClick={() => SellerPage(product?.seller?.id)}>
 
                         <div style={{ position: "relative" }}>
@@ -91,13 +97,17 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
                             </div>
                         )}
                     </div>
-                </div>
-                <div className='w_fulls2 d-flex gap-3 align-items-center'  >
-                    <span className="input--label">Narxi:</span>
-                    <div className="product__top-information--price buystep-0 p-0">
-                        {priceView}
+
+                    <div style={{
+                      borderRadius: "8px",
+                         border: "1px solid #d6d6d6",
+                    }} className="product__top-information--price buystep-0 d-flex  justify-content-center gap-3 align-items-center ">
+                        <strong className='fs-4'> Narxi:</strong>  {priceView}
                     </div>
+
                 </div>
+
+
             </div>
         </header>
     );

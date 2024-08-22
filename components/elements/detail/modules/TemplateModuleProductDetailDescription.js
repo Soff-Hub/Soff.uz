@@ -2,7 +2,10 @@ import React from 'react';
 
 const TemplateModuleProductDetailDescription = ({ product, views }) => {
     return (
-        <div className="ps-product__desc">
+        <div className="ps-product__desc m-0" style={{
+           borderRadius: "8px",
+            border: "1px solid #d6d6d6",
+        }} >
             <strong className="fs-4"> Qisqa tavsif </strong>
             <ul style={{ listStyleType: 'revert' }}>
                 {
@@ -51,8 +54,8 @@ const TemplateModuleProductDetailDescription = ({ product, views }) => {
                     </span>
                 </li>
                 {product?.category?.name && (
-                    <li style={{ fontSize: "12px", paddingBottom: "5px" }} >
-                        <strong> Kategoriyasi</strong> : <div></div>{' '}
+                    <li className='d-flex align-items-start' style={{ fontSize: "12px", paddingBottom: "5px" }} >
+                        <strong> Kategoriyasi</strong> : 
                         <span> {product?.category?.name}</span>
                     </li>
                 )}
