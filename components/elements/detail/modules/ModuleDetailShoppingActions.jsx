@@ -114,7 +114,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
 
-                <div className="ps-product__shopping ">
+                <div className="ps-product__shopping  ">
                     {contextHolder}
                     <div className='d-flex  align-items-center gap-4  m-0 w-100 flex-wrap ' >
 
