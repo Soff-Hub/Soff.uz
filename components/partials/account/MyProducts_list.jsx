@@ -759,7 +759,7 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
-                                    
+
                                     {user?.role === 'seller' ? (
                                         <div className="d-flex flex-column gap-2">
                                             <span className="fs-4">
@@ -926,7 +926,7 @@ function MyProductsLists() {
 
                 <ModalDelete onSuccess={DeleteItemsProducts} />
             </div>
-            
+
 
             <Modal
                 title={
@@ -996,8 +996,17 @@ function MyProductsLists() {
                                                                             key={
                                                                                 i
                                                                             }
+                                                                            style={{
+                                                                                borderRadius: "20px",
+                                                                                padding: "5px 16px",
+                                                                                border: "1px solid #999",
+                                                                                fontSize: "15px"
+                                                                            }}
+
                                                                             className="m-2 tag-product">
                                                                             <Link
+
+
                                                                                 href="#"
                                                                                 as="#">
                                                                                 <a>
@@ -1107,6 +1116,13 @@ function MyProductsLists() {
                                                                         i
                                                                     ) => (
                                                                         <div
+                                                                        style={{
+                                                                            borderRadius: "20px",
+                                                                            padding: "5px 16px",
+                                                                            border: "1px solid #999",
+                                                                            fontSize: "15px"
+                                                                        }}
+
                                                                             key={
                                                                                 i
                                                                             }
@@ -1244,6 +1260,13 @@ function MyProductsLists() {
                                                             i
                                                         ) => (
                                                             <div
+                                                                style={{
+                                                                    borderRadius: "20px",
+                                                                    padding: "5px 16px",
+                                                                    border: "1px solid #999",
+                                                                    fontSize: "15px"
+                                                                }}
+
                                                                 key={
                                                                     i
                                                                 }

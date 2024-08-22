@@ -77,7 +77,7 @@ function ProductsLists() {
     const [short, setShort] = useState(true)
 
 
- 
+
     const handleChange = (date) => {
         if (date?.[0]) {
             setLifetime(date[0].format('YYYY-MM-DD'));
@@ -714,6 +714,12 @@ function ProductsLists() {
                                                                         i
                                                                     ) => (
                                                                         <div
+                                                                            style={{
+                                                                                borderRadius: "20px",
+                                                                                padding: "5px 16px",
+                                                                                border: "1px solid #999",
+                                                                                fontSize: "15px"
+                                                                            }}
                                                                             key={
                                                                                 i
                                                                             }
@@ -831,6 +837,13 @@ function ProductsLists() {
                                                                         i
                                                                     ) => (
                                                                         <div
+                                                                            style={{
+                                                                                borderRadius: "20px",
+                                                                                padding: "5px 16px",
+                                                                                border: "1px solid #999",
+                                                                                fontSize: "15px"
+                                                                            }}
+
                                                                             key={
                                                                                 i
                                                                             }
@@ -961,11 +974,19 @@ function ProductsLists() {
                                                             Aktiv
                                                             teglar:{' '}
                                                         </strong>{' '}
+
                                                         {deleteIdView?.active_tag?.map(
                                                             (
                                                                 item
                                                             ) => (
                                                                 <span
+                                                                    style={{
+                                                                        borderRadius: "20px",
+                                                                        padding: "5px 16px",
+                                                                        border: "1px solid #999",
+                                                                        fontSize: "15px"
+                                                                    }}
+
                                                                     key={
                                                                         item.id
                                                                     }>
@@ -997,6 +1018,13 @@ function ProductsLists() {
                                                                 item
                                                             ) => (
                                                                 <span
+                                                                    style={{
+                                                                        borderRadius: "20px",
+                                                                        padding: "5px 16px",
+                                                                        border: "1px solid #999",
+                                                                        fontSize: "15px"
+                                                                    }}
+
                                                                     key={
                                                                         item.id
                                                                     }>

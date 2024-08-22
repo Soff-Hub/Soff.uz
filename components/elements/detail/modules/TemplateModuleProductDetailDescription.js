@@ -55,7 +55,7 @@ const TemplateModuleProductDetailDescription = ({ product, views }) => {
                 </li>
                 {product?.category?.name && (
                     <li className='d-flex align-items-start' style={{ fontSize: "12px", paddingBottom: "5px" }} >
-                        <strong> Kategoriyasi</strong> : 
+                        <strong> Kategoriyasi: </strong> 
                         <span> {product?.category?.name}</span>
                     </li>
                 )}

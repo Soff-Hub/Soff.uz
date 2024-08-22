@@ -6,7 +6,8 @@ import useCart from '~/hooks/useCart';
 import useWishlist from '~/hooks/useWishlist';
 import { Modal } from 'antd';
 import { audioDownloaderSale } from '~/utilities/common-helpers';
-import { message } from 'antd';
+import { EyeFilled } from '@ant-design/icons';
+
 
 const TemplateModuleDetailShoppingActions = ({ product }) => {
 
@@ -16,7 +17,6 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
     const Router = useRouter();
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [copy, setCopy] = useState(false);
 
     const showModal = () => {
         setOpen(true);
@@ -55,37 +55,6 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
         }
     };
 
-    const [messageApi, contextHolder] = message.useMessage();
-    const infoSuccess = (url) => {
-        messageApi.success(
-            `Soff | Audio mahsulot dan nusxa ko\'chirildi (${url})`
-        );
-    };
-    const infoError = (url) => {
-        messageApi.error(
-            `Soff | Audio mahsulot dan nusxa ko\'chirilmadi (${url})`
-        );
-    };
-
-    const copyVideoUrl = () => {
-        const videoUrl = `https://soff.uz${Router?.asPath}`;
-        navigator.clipboard
-            .writeText(videoUrl)
-            .then(() => {
-                setCopy(true);
-                setTimeout(() => {
-                    setCopy(false);
-                }, 2500);
-                infoSuccess(videoUrl);
-                //   alert(`Video URL copied to clipboard! ${}`);
-            })
-            .catch((error) => {
-                infoError(error);
-                console.error('Error copying video URL: ', error);
-                // alert('Error copying video URL!');
-            });
-    };
-
 
 
 
@@ -115,7 +84,7 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                 </Modal>
 
                 <div className="ps-product__shopping m-0 p-0 ">
-                    {contextHolder}
+
                     <div className='d-flex flex-column gap-4 w-100 m-0' >
 
                         {product?.discount_price > 0 ? (
@@ -201,28 +170,29 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                             </a>
 
                         )}
+                        <button
+                            className='w-100'
+                            onClick={() => Router.push("https://soff.uz/")}
+                            style={{
+                                backgroundColor: "#00A3FF",
+                                padding: "10px 60px",
+                                border: "none",
+                                color: "#fff",
+                                borderRadius: "5px",
+                                flexShrink: "0"
+
+                            }}>
+                            <strong
+                                className='d-flex align-items-center justify-content-center gap-1'>
+                                <EyeFilled style={{ fontSize: "17px" }} />Demoni ko'rish</strong>
+                        </button>
+
                         <div className='d-flex gap-4 '>
-
-
-                            <div className="p-3 px-5 rounded-3 " style={{
-                                backgroundColor: "#fff", width: "100%", borderRadius: "20px",
-                                border: "1px solid #00A44F",
-                            }} onClick={() => copyVideoUrl()}>
-                                {copy ? (
-                                    <div className='text-center'>
-                                        <i className="fa-solid fa-check mr-3"></i> nusxalandi
-                                    </div>
-                                ) : (
-                                    <div style={{ cursor: "pointer" }} className='w-100 d-flex justify-content-center align-items-center'>
-                                        <i className="fa-solid fa-share-nodes mr-3" style={{ marginRight: "5px" }}></i>
-                                        ulashish
-                                    </div>
-                                )}
-                            </div>
 
                             <div style={{
                                 borderRadius: "20px",
                                 border: "1px solid #00A44F",
+                                height: "45px"
                             }} className="ps-product__actions  w-100 rounded-3 bg-white d-flex align-items-center justify-content-center ">
                                 <a
                                     className='d-flex align-items-center'
@@ -235,7 +205,11 @@ const TemplateModuleDetailShoppingActions = ({ product }) => {
                                         )
                                             ? 'fa-solid fa-heart text-danger'
                                             : 'icon-heart text-black'
-                                            } `}></i>
+                                            } `}></i> <strong className={`fs-4 text-secondary ml-2 ${wishlist?.some(
+                                                (item) =>
+                                                    Number(item.id) ===
+                                                    Number(product.id)
+                                            ) && "text-danger"}`}>Sevimlilarga qo'shish</strong>
                                 </a>
                             </div>
                         </div>
