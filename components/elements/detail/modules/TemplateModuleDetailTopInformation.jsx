@@ -1,5 +1,6 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
+
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
 
@@ -20,21 +21,21 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
     let priceView;
     if (product?.is_sale) {
         priceView = (
-            <div className="ps-product__price sale">
+            <h4 className="ps-product__price ">
                 {+product?.discount_price === 0 ? (
                     <p className='fs-4'>Bepul</p>
                 ) : product?.discount === 0 ? (
                     <p className='fs-4'>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
-                    <>
-                        <del>{addPeriodToThousands(product?.price)} so'm</del>
+                    <div className='d-flex gap-3 align-items-center'>
                         <p className='fs-4'>
                             {addPeriodToThousands(product?.discount_price)}
                             so'm
                         </p>
-                    </>
+                        <del>{addPeriodToThousands(product?.price)} so'm</del>
+                    </div>
                 )}
-            </div>
+            </h4>
         );
     } else {
         priceView = (
@@ -44,13 +45,13 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
                 ) : product?.discount === 0 ? (
                     <p className='fs-4'>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
-                    <>
-                        <del>{addPeriodToThousands(product?.price)} so'm</del>
+                    <div className='d-flex gap-3 align-items-center'>
                         <p className='fs-4'>
                             {addPeriodToThousands(product?.discount_price)}
                             so'm
                         </p>
-                    </>
+                        <del>{addPeriodToThousands(product?.price)} so'm</del>
+                    </div>
                 )}
             </h4>
         );
@@ -58,15 +59,17 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
 
     return (
         <header>
-            <h4 style={{
-                fontFamily: " PolySans, 'Inter', -apple-system, 'BlinkMacSystemFont', 'Segoe UI', 'Fira Sans', 'Helvetica Neue', 'Arial', sans-serif ",
-                fontSize: "24px"
-            }}>
-                {product?.title !== undefined ? product?.title : ''}
-            </h4>
 
             <div className="product__top-information p-0">
                 <div className='w-100 d-flex flex-column gap-3'>
+
+                    <div style={{
+                        borderRadius: "8px",
+                        border: "1px solid #d6d6d6",
+                    }} className="product__top-information--price buystep-0 d-flex  justify-content-center gap-3 align-items-center ">
+                        <strong className='fs-4 '> Narxi:</strong>  {priceView}
+                    </div>
+
                     <div
                         className="product__top-information-account"
                         style={{
@@ -98,12 +101,6 @@ const TemplateModuleDetailTopInformation = ({ product }) => {
                         )}
                     </div>
 
-                    <div style={{
-                      borderRadius: "8px",
-                         border: "1px solid #d6d6d6",
-                    }} className="product__top-information--price buystep-0 d-flex  justify-content-center gap-3 align-items-center ">
-                        <strong className='fs-4'> Narxi:</strong>  {priceView}
-                    </div>
 
                 </div>
 
