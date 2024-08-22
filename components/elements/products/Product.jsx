@@ -10,7 +10,6 @@ const Product = ({ product }) => {
     const [countShow, setCountShow] = useState(false);
 
 
-
     return (
         <div className="ps-product"
             onMouseEnter={() => setCountShow(true)}
@@ -33,7 +32,8 @@ const Product = ({ product }) => {
                     ><i className='fa-solid fa-eye '
                         style={{
                             fontSize: "10px",
-                        }}></i> {product?.views_count}</p>
+                        }}></i> {product?.views_count}
+                    </p>
 
                 }
 

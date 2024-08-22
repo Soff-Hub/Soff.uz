@@ -6,13 +6,11 @@ import { addPeriodToThousands } from '~/components/partials/account/ProductsList
 
 const AudioWaveform = ({ product, inCategory }) => {
     const wavesurferRef = useRef(null);
-
     const [wavesurferObj, setWavesurferObj] = useState(null);
-
     const [playing, setPlaying] = useState(false);
-    const [volume, setVolume] = useState(1);
 
-    // create the waveform inside the correct component
+
+
     useEffect(() => {
         if (wavesurferRef.current && !wavesurferObj) {
             setWavesurferObj(
@@ -32,14 +30,15 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     useEffect(() => {
-        if (wavesurferObj) {
+        if (wavesurferObj && product?.document?.short_content_url) {
             wavesurferObj?.load(product?.document?.short_content_url);
         }
     }, [product?.document?.short_content_url, wavesurferObj]);
 
+
     useEffect(() => {
-        if (wavesurferObj) wavesurferObj.setVolume(volume);
-    }, [volume, wavesurferObj]);
+        if (wavesurferObj) wavesurferObj.setVolume(1);
+    }, [wavesurferObj]);
 
     const handlePlayPause = () => {
         document
@@ -49,7 +48,7 @@ const AudioWaveform = ({ product, inCategory }) => {
             });
 
 
-        
+
         setPlaying(!playing);
         if (!playing) {
             wavesurferObj.play();
@@ -65,10 +64,8 @@ const AudioWaveform = ({ product, inCategory }) => {
     }, [wavesurferObj]);
 
     const handleAudioFinish = () => {
-        // console.log('Audio tugab ketdi');
         setPlaying(false);
     };
-
 
 
 
@@ -78,9 +75,8 @@ const AudioWaveform = ({ product, inCategory }) => {
                 <div className="audio-cart-content">
                     <div className="row">
                         <div
-                            className={`${
-                                !inCategory ? 'col-3' : 'col-4'
-                            } align-content-center`}>
+                            className={`${!inCategory ? 'col-3' : 'col-4'
+                                } align-content-center`}>
                             <div className="d-flex gap-5 audio-list-left">
                                 <div
                                     className="col-xl-1 col-lg-1 col-md-1  audio-play-list"

@@ -13,6 +13,7 @@ import Head from 'next/head';
 import NextProgress from 'next-progress';
 
 function App({ Component, pageProps }) {
+
     useEffect(() => {
         setTimeout(function () {
             document.getElementById('__next').classList.add('loaded');
@@ -21,30 +22,31 @@ function App({ Component, pageProps }) {
             e.preventDefault();
         });
 
-        // useEffect(() => {
-        //     const handleKeyDown = (e) => {
-        //         if (
-        //             (e.ctrlKey && e.shiftKey && e.key === 'I') || // Prevent Ctrl+Shift+I (Windows)
-        //             (e.metaKey && e.altKey && e.key === 'I') || // Prevent Command+Option+I (macOS)
-        //             (e.ctrlKey && e.shiftKey && e.key === 'J') || // Prevent Ctrl+Shift+J (Windows)
-        //             (e.metaKey && e.altKey && e.key === 'J') || // Prevent Command+Option+J (macOS)
-        //             (e.ctrlKey && e.key === 'U') || // Prevent Ctrl+U (Windows)
-        //             (e.metaKey && e.key === 'U') || // Prevent Command+U (macOS)
-        //             (e.ctrlKey && e.key === 'S') || // Prevent Ctrl+S (Windows)
-        //             (e.metaKey && e.key === 'S') || // Prevent Command+S (macOS)
-        //             (e.key === 'F12') 
-        //         ) {
-        //             e.preventDefault();
-        //         }
-        //     };
-    
-        //     document.addEventListener('keydown', handleKeyDown);
-    
-        //     return () => {
-        //         document.removeEventListener('keydown', handleKeyDown);
-        //     };
-        // }, []);
-    });
+    },[]);
+
+    useEffect(() => {
+        const handleKeyDown = (e) => {
+            if (
+                (e.ctrlKey && e.shiftKey && e.key === 'I') || // Prevent Ctrl+Shift+I (Windows)
+                (e.metaKey && e.altKey && e.key === 'I') || // Prevent Command+Option+I (macOS)
+                (e.ctrlKey && e.shiftKey && e.key === 'J') || // Prevent Ctrl+Shift+J (Windows)
+                (e.metaKey && e.altKey && e.key === 'J') || // Prevent Command+Option+J (macOS)
+                (e.ctrlKey && e.key === 'U') || // Prevent Ctrl+U (Windows)
+                (e.metaKey && e.key === 'U') || // Prevent Command+U (macOS)
+                (e.ctrlKey && e.key === 'S') || // Prevent Ctrl+S (Windows)
+                (e.metaKey && e.key === 'S') || // Prevent Command+S (macOS)
+                (e.key === 'F12') 
+            ) {
+                e.preventDefault();
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
 
 
     return (

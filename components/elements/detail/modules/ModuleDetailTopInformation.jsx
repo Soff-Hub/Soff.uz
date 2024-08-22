@@ -9,13 +9,11 @@ const ModuleDetailTopInformation = ({ product }) => {
     const SellerPage = (e) => {
         if (pid !== '/account/myproducts') {
             Router.push(`/seller/${e}`);
-            // setAdminModal(true)
         }
     };
 
  
 
- 
     // Views
     let priceView;
     if (product?.is_sale) {
@@ -92,9 +90,10 @@ const ModuleDetailTopInformation = ({ product }) => {
                         )}
                     </div>
                 </div>
-                <div className='w_fulls2 d-flex gap-3 align-items-center'  >
-                    <span className="input--label">Narxi:</span>
-                    <div className="product__top-information--price buystep-0 p-0">
+
+                <div className='w_fulls2 '  >
+                    <span className="input--label">Narxi</span>
+                    <div className="product__top-information--price buystep-0 ">
                         {priceView}
                     </div>
                 </div>

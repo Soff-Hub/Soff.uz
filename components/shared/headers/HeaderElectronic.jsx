@@ -23,7 +23,7 @@ const HeaderElectronic = () => {
 
     return (
         <header
-            className="header header--standard header--electronic headerSticky"
+            className="header header--standard header--electronic "
             id={run ? "" : "headerSticky"}>
             <div className="header__content">
                 <div className="container">

@@ -333,6 +333,8 @@ class RegisterCustomer extends Component {
                                                         style={{
                                                             cursor: 'not-allowed',
                                                             color: '#fff',
+                                                            backgroundColor: "#00a44f",
+                                                            border: "none"
                                                         }}
                                                         className="ps-btn ps-btn--fullwidth">
                                                         Ro'yxatdan o'tish

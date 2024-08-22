@@ -114,9 +114,7 @@
         }
 
         .header__left {
-            .ps-logo {
-                display: none;
-            }
+
 
             .menu--product-categories {
                 display: block;
@@ -349,9 +347,7 @@
             }
         }
 
-        .ps-logo {
-            display: none;
-        }
+   
     }
 
     @include media('<lg') {
