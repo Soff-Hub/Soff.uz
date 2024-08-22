@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import  { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
 import { Badge, Card, Modal, Tooltip } from 'antd';
@@ -162,6 +162,7 @@ const AccountMenuSidebar = ({ data }) => {
             }, 2000);
         }
     }
+
 
     return (
         <aside className="ps-widget--account-dashboard">
@@ -450,41 +451,25 @@ const AccountMenuSidebar = ({ data }) => {
                                                         ''
                                                     )}
 
-                                                    {user?.role === 'admin' ? (
-                                                        link?.url ===
-                                                            '/account/products' &&
-                                                            webdata1?.count > 0 ? (
-                                                            <strong
-                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                                style={{
-                                                                    marginLeft: '12rem',
-                                                                }}>
-                                                                {webdata1?.count}
-                                                            </strong>
-                                                        ) : (
-                                                            ''
-                                                        )
-                                                    ) : (
-                                                        ''
+                                                    {user?.role === 'admin' && link?.url === '/account/products?page=1' && webdata1?.count > 0 && (
+                                                        <strong
+                                                            className="text-white bg-warning border px-3 py-2 fs-5 rounded-circle"
+                                                            style={{ marginLeft: '12rem' }}
+                                                        >
+                                                            {webdata1?.count}
+                                                        </strong>
                                                     )}
 
-                                                    {user?.role === 'seller' ? (
-                                                        link?.url ===
-                                                            '/account/myproducts' &&
-                                                            webdata2?.count > 0 ? (
-                                                            <strong
-                                                                className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
-                                                                style={{
-                                                                    marginLeft: '4rem',
-                                                                }}>
-                                                                {webdata2?.count}
-                                                            </strong>
-                                                        ) : (
-                                                            ''
-                                                        )
-                                                    ) : (
-                                                        ''
-                                                    )}
+
+                                                    {user?.role === 'seller' && link?.url === '/account/myproducts' && webdata2?.count > 0 && (
+                                                        <strong
+                                                            className="text-white bg-warning  border px-3 py-2  fs-5 rounded-circle"
+                                                            style={{
+                                                                marginLeft: '4rem',
+                                                            }}>
+                                                            {webdata2?.count}
+                                                        </strong>)
+                                                    }
 
                                                     {user?.role === 'seller' ? (
                                                         link?.url ===

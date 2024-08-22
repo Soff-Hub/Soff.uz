@@ -925,8 +925,8 @@ function MyProductsLists() {
                 </div>
 
                 <ModalDelete onSuccess={DeleteItemsProducts} />
-
             </div>
+            
 
             <Modal
                 title={
@@ -1424,7 +1424,6 @@ function MyProductsLists() {
                     />
 
 
-
                     <Select
                         onChange={(e) => setFiltertype(e)}
                         defaultValue={filterType}
@@ -1437,6 +1436,7 @@ function MyProductsLists() {
                         <Option key={"template"}><i className='fa-solid text-success fa-file-lines mr-2'></i> Shablon</Option>
                         <Option key={"video"}><i className='fa-solid text-success fa-video mr-2'></i> Video</Option>
                     </Select>
+
 
                     <Select
                         className="p-0"

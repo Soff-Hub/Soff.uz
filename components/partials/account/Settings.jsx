@@ -3,7 +3,7 @@ import AccountMenuSidebar from './modules/AccountMenuSidebar';
 import { useDispatch, useSelector } from 'react-redux';
 import PatchRepository from '~/reositoriy-admin/PatchRepository';
 import CreditCard from './CreditCard';
-import { Modal } from 'antd';
+import { Button, Modal } from 'antd';
 import { Image } from 'antd';
 import ModalDeletePostEdit from './ModalPostEdit';
 import PostsRepository from '~/reositoriy-admin/PostsRepository';
@@ -300,7 +300,10 @@ function Notifications() {
 
                     <div className='d-flex justify-content-end gap-3 mt-3'>
                         <button className='btn btn-secondary fs-4 px-4' onClick={() => setOpen(false)}>Yopish</button>
-                        <button className='btn btn-success fs-4 px-4' onClick={handleClickEditUserProfile}>Saqlash</button>
+                        <Button className='btn btn-success fs-4 px-4' onClick={handleClickEditUserProfile}
+                            disabled={loading2} loading={loading2} >
+                            <span className='ml-2'> Saqlash</span>
+                        </Button>
                     </div>
 
                 </Modal>

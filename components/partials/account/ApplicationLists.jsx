@@ -522,7 +522,7 @@ function ApplicationLists() {
             getItemsSellerCardList()
         }
         if (user?.access && user?.role == "seller") {
-           
+
             getItemsSellerTaklif(currPage)
             getItemsSellerCardList()
         }
@@ -537,7 +537,8 @@ function ApplicationLists() {
         if (open && dataCardModal) {
             form.setFieldsValue({
                 status: dataCardModal?.status,
-                description: dataCardModal?.description,
+                description: `Arizangiz muvaffaqiyatli tasdiqlandi! Kartangizga ${addPeriodToThousands(dataCardModal?.amount)} so'm miqdoridagi summa o'tkazildi`
+                ,
             });
         }
     }, [open, dataCardModal, form]);
@@ -562,14 +563,14 @@ function ApplicationLists() {
                         </div>
                     </div>
                     <div className="col-lg-8">
-                        <div className="ps-page__content">
-                            <div className="ps-section--account-setting">
-                                <div className="ps-section__content">
+                        <div className="ps-page__content ">
+                            <div className="ps-section--account-setting ">
+                                <div className="ps-section__content ">
                                     {
                                         user?.role === "seller" ?
                                             (<>
 
-                                                <div className='border py-4 rounded'>
+                                                <div className='border py-4 rounded '>
                                                     {dataBlock?.has_blocked ? <div className=' px-4'>
                                                         <span className='text-danger fw-bold '>
                                                             <i className="fa-solid fa-lock"></i> Siz Bloklangansiz. Bu davr mobaynida Pul yechib olish uchun ariza yuborishni imkoni yo'q.</span>
@@ -615,23 +616,6 @@ function ApplicationLists() {
                                                 </div>
 
 
-
-                                                <form className='border mt-5 rounded p-3' onSubmit={getItemsTextItmes} >
-                                                    <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
-                                                    <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflaringizni yuboring"></textarea>
-                                                    <div className='w-100 d-flex justify-content-end'>
-                                                        <button className="btn-success btn mt-3" type='submit' style={{ height: "40px", width: "120px" }}><span className='fs-4'>
-                                                            {
-                                                                loading?.loadingButton ?
-                                                                    "Yuborish"
-                                                                    :
-                                                                    <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
-                                                                        <span className="visually-hidden">Loading...</span>
-                                                                    </div>
-                                                            }
-                                                        </span></button>
-                                                    </div>
-                                                </form>
                                             </>
                                             ) :
                                             <></>
@@ -700,7 +684,24 @@ function ApplicationLists() {
                 {
                     user?.role === "seller" ?
                         <div className='p-0'>
-                            <div className='my-5 bg-white  p-4 '>
+                            <form className='border mt-5 rounded bg-white p-4' onSubmit={getItemsTextItmes} >
+                                <h4>Taklif berish <i className="fa-solid fa-file-signature"></i></h4>
+                                <textarea onChange={(e) => setTextItems(e.target.value)} required className='w-100 p-3 border border-success rounded' rows={4} placeholder="Bu qismga takliflaringizni yuboring"></textarea>
+                                <div className='w-100 d-flex justify-content-end'>
+                                    <button className="btn-success btn mt-3" type='submit' style={{ height: "40px", width: "120px" }}><span className='fs-4'>
+                                        {
+                                            loading?.loadingButton ?
+                                                "Yuborish"
+                                                :
+                                                <div className="spinner-border mx-2 " role="status" style={{ cursor: "not-allowed" }}>
+                                                    <span className="visually-hidden">Loading...</span>
+                                                </div>
+                                        }
+                                    </span></button>
+                                </div>
+                            </form>
+
+                            <div className='mb-5 mt-3 bg-white  p-4 '>
                                 <h4 className='text-center mb-4'>Yuborilgan takliflar </h4>
                                 <Table scroll={{ x: 800 }} dataSource={dataAdmintaklif} columns={columnsTextAreaseller}
                                     loading={loadingOfferSeller}

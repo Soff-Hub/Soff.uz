@@ -27,17 +27,18 @@ export default function NotificationList() {
     return (
         <div className="ps-section--shopping ps-whishlist">
             <div className="container">
-                <div className="ps-section__header">
+                <div className="ps-section__header pb-4">
                     <h1>Yangiliklar</h1>
                 </div>
                 <div className="ps-section__content">
                     {notification?.length ? (
                         <div className="text-start">{
-                            notification?.map((el, i) => <div key={el?.notification?.title} >
-                                <h3>{i + 1}. {" "} {el?.notification?.title}  <span style={{ fontSize: '16px', color: '#999' }} > | {el?.notification?.created_at} |  {el?.link && <Link href={`${el?.link}`} ><a className='text-success'>Batafsil <i className="fa-solid fa-hand-point-right mx-2"></i></a></Link>}
+                            notification?.map((el, i) =>
+                             <div key={el?.notification?.title} className='border  mb-3 bg-success-subtle rounded-3 p-4'>
+                                <h3 className='fs-2'>{i + 1}. {" "} {el?.notification?.title}  <span style={{ fontSize: '16px', }} > | {el?.notification?.created_at} |  {el?.link && <Link href={`${el?.link}`} ><a className='text-success'>Batafsil <i className="fa-solid fa-hand-point-right mx-2"></i></a></Link>}
 
                                 </span>   </h3>
-                                <p>{el?.notification?.body && parse(el?.notification?.body)}</p>
+                                <p className='m-0 text-dark-emphasis'>{el?.notification?.body && parse(el?.notification?.body)}</p>
 
                                 <hr />
                             </div>)
