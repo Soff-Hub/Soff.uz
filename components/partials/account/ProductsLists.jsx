@@ -544,7 +544,6 @@ function ProductsLists() {
     ];
 
 
-    console.log(deleteIdView);
 
     return (
         <section className="ps-my-account ps-page--account ">
@@ -582,9 +581,7 @@ function ProductsLists() {
                                             </span>
                                         </label>
                                         <button className='btn btn-outline-success fs-4 col-md-2 py-3'
-                                            onClick={() => (setOpenFilter(true), Router.push(
-                                                `/account/products?page=${1}&status=${dataValStatus}`
-                                            ))}>
+                                            onClick={() => (setOpenFilter(true))}>
                                             <i className="fa-solid fa-sliders"></i> Filter
                                         </button>
 
