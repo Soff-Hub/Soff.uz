@@ -43,7 +43,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
             dispatch(OneShopDoc(product));
             Router.push(`/account/checkout-one?id=${product?.id}`);
         } else {
-            Router.push(`/account/register-user?id=${product?.id}`);
+            Router.push(`/account/register?id=${product?.id}`);
         }
     }
 
@@ -114,7 +114,7 @@ const ModuleDetailShoppingActions = ({ product }) => {
                     <p></p>
                 </Modal>
 
-                <div className="ps-product__shopping ">
+                <div className="ps-product__shopping  ">
                     {contextHolder}
                     <div className='d-flex  align-items-center gap-4  m-0 w-100 flex-wrap ' >
 

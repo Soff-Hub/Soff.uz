@@ -14,3 +14,10 @@ export default axios.create({
     baseDomainProfile,
 });
 
+export const orginalUrl = baseUrlCustomer
+
+export const orginalApi = axios.create({
+    baseUrl: orginalUrl
+});
+
+

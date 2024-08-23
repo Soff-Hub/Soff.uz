@@ -35,14 +35,14 @@ const CheckoutOne = () => {
     };
 
 
-    useEffect(() => {
-        const doc = document.querySelector('.headerSticky')
-        doc.id = ""
+    // useEffect(() => {
+    //     const doc = document.querySelector('.headerSticky')
+    //     doc.id = ""
 
-        // setTimeout(() => {
-        //     setRun(true)
-        // }, 500);
-    }, []);
+    //     // setTimeout(() => {
+    //     //     setRun(true)
+    //     // }, 500);
+    // }, []);
 
 
 

@@ -5,36 +5,36 @@ import PageContainer from '~/components/layouts/PageContainer';
 import FooterDefault from '~/components/shared/footers/FooterDefault';
 import { useSelector } from 'react-redux';
 import Page404 from '../page/page-404';
+import Selection from './selection';
 import Meta from '~/components/shared/headers/Meta';
-import RegisterCustomer from '~/components/partials/account/RegisterCustomer';
+import SellingsLists from '~/components/partials/account/SellingLists';
 
-const RegisterPage = () => {
+const Sellings = () => {
     const breadCrumb = [
         {
             text: 'Asosiy sahifa',
             url: '/',
         },
         {
-            text: "Ro'yxatdan o'tish",
+            text: 'Joyida sotish',
         },
     ];
     const { user } = useSelector(state => state.auth)
-
-    const userEndPoint = 'auth/register/';
     return (
-        user?.access ?
-            <Page404 /> :
-            <PageContainer footer={<FooterDefault />} title="Register">
+        user?.role === 'admin' || user?.role === 'seller' ?
+            <PageContainer
+                footer={<FooterDefault />}
+                title="Recent Viewed Products">
                 <div className="ps-page--my-account">
                     <Meta
-                        title={"Ro'yxatdan o'tish"}
-                        description="Soff.uz - Saytidan hoziroq ro'yxatdan o'ting va o'z mahsulatlaringizni soting"
+                        title={"Joyida sotish"}
                     />
                     <BreadCrumb breacrumb={breadCrumb} />
-                    <RegisterCustomer url={userEndPoint} />
+                    <SellingsLists />
                 </div>
-            </PageContainer>
+            </PageContainer> : user?.access ? <Page404 /> : <Selection />
+
     );
 };
 
-export default RegisterPage;
+export default Sellings;

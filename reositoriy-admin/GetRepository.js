@@ -2,6 +2,8 @@ import Repository, {
     baseUrl,
     baseUrlCustomer,
     baseUrlProfie,
+    orginalApi,
+    orginalUrl,
 } from './Repository';
 
 class GetRepository {
@@ -165,6 +167,72 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getShopsListsEval(id, page, search, status, token) {
+        const endPoint = `auctions/doc_sale_applications/${id ? id + '/' : ''}?page=${page}&search=${search || ''}&status=${status}`;
+
+        const reponse = await orginalApi({
+            url: orginalUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getSellingLists(search, token) {
+        const endPoint = `auctions/assesment-docs/?search=${search || ''
+            }`;
+
+        const reponse = await orginalApi({
+            url: orginalUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+    async getEvaluation(slug, token) {
+        const endPoint = `assesment/${slug}`;
+
+        const reponse = await Repository({
+            url: baseUrl + endPoint,
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
+
     async getShopsProducts(
         offset,
         limit,
@@ -398,6 +466,28 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
+
+    async getCategoryStatic(id, token) {
+        const endPoint = `auctions/doc_sale_applications/stat/${id}/`;
+        const reponse = await Repository({
+            url: orginalUrl + endPoint,
+            method: 'GET',
+
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+            .then((response) => {
+                if (response.status === 200) {
+                    return response.data;
+                } else {
+                    return null;
+                }
+            })
+            .catch((error) => ({ error: JSON.stringify(error) }));
+        return reponse;
+    }
+
     async getCategoryParentList(search, id, token) {
         const endPoint = `admin/parent-category-list/${id ? id + '/' : ''
             }?search=${search || ''}`;
@@ -1219,7 +1309,7 @@ class GetRepository {
             .catch((error) => ({ error: JSON.stringify(error) }));
         return reponse;
     }
-    
+
     async getProfileArizaAdmin(page, status, token, isAdmin, search) {
         const endPoint = isAdmin
             ? `admin/application/?page=${page}&status=${status ? status : ''

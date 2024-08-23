@@ -2,11 +2,28 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import { begin, isLoginning, login } from '../../../store/auth/action';
-import { Form, Input, Modal, notification } from 'antd';
+import { Form, Input, Modal, notification, Segmented } from 'antd';
 import { connect } from 'react-redux';
 import useAuth from '~/hooks/useAuth';
 import { BeatLoader } from 'react-spinners';
 import { withRouter } from 'next/router';
+import { LockOutlined, MailOutlined, PhoneOutlined } from '@ant-design/icons';
+
+export const formatPhoneNumber = (value) => {
+    // Telefon raqamidan bo'sh joy va boshqa belgilarni olib tashlash
+    const cleanedValue = value.replace(/\D+/g, '');
+
+    // Telefon raqamining formatini to'g'ri qilish uchun mos keladigan qism
+    const match = cleanedValue.match(/^(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})$/);
+
+    if (match) {
+        // Formatlangan telefon raqamining chiqarilishi
+        const formattedNumber = `+998 ${match[1]} ${match[2]} ${match[3]} ${match[4]}`.trim();
+        return formattedNumber;
+    }
+
+    return value;
+};
 
 class Login extends Component {
     constructor(props) {
@@ -15,8 +32,19 @@ class Login extends Component {
             report: true,
             reportGoogle: true,
             value: '',
+            segmentValue: 'phone',
+            phone: ''
         };
     }
+
+    handleChange = (e) => {
+        const value = e.target.value;
+        // Telefon raqamini formatlash
+        const formattedValue = formatPhoneNumber(value);
+        this.setState({ phone: formattedValue });
+    };
+
+
     modalSuccess = () => {
         notification.open({
             message: 'Xush kelibsiz saytimizga!',
@@ -46,9 +74,14 @@ class Login extends Component {
 
 
     handleLoginSubmit = async (e) => {
+        const data = {
+            phone_or_email: e.phone || e.email,
+            password: e.password
+        }
+
         this.setState({ report: false });
         const { loginUser } = useAuth();
-        const user = await loginUser(e);
+        const user = await loginUser(data);
         if (user) {
             if (user.status >= 400) {
                 this.setState({ report: true });
@@ -58,7 +91,7 @@ class Login extends Component {
                     type: 'error',
                 });
             } else {
-                this.props.dispatch(login({ user: user.data, data: e }));
+                this.props.dispatch(login({ user: user.data, data: data }));
                 this.props.dispatch(begin({ id: user.data.first }));
                 this.setState({ report: true });
                 notification.open({
@@ -127,104 +160,161 @@ class Login extends Component {
         }
     };
 
+
     render() {
+
         const { deal, id } = this.props?.router?.query;
 
 
         return (
-            <div className=" pb-5 " style={{ backgroundColor: '#f1f1f1' }}>
-                <div className="container">
+            <div style={{ backgroundColor: '#f1f1f1', padding: "50px 20px" }}>
+
+                <div className="container p-0">
                     <div className="ps-form--account">
+
                         <Form onFinish={this.handleLoginSubmit.bind(this)}>
-                            <ul className="ps-tab-list">
-                                <li className="active">
-                                    <Link href={
-                                        (id) ? `/account/login?id=${id}` :
-                                            (deal) ? `/account/login?deal=${deal}` :
-                                                "/account/login"
-                                    }>
-                                        <a>Kirish</a>
-                                    </Link>
-                                </li>
-                                <li>
-                                    <Link href={
+
+                            <div className="d-flex justify-content-center align-items-center flex-column mb-4">
+                                <Link href={
+                                    (id) ? `/account/login?id=${id}` :
+                                        (deal) ? `/account/login?deal=${deal}` :
+                                            "/account/login"
+                                }>
+                                    <a  style={{ fontSize: "28px", fontWeight: 700 }}>Kirish</a>
+                                </Link>
+                                <div className='d-flex gap-3 align-items-center'>
+                                    <span className='register_title' style={{ fontSize: "16px", fontWeight: 500 }}>Hisobingiz yo'qmi?</span>
+
+                                    <Link style={{ fontSize: "12px" }} href={
                                         (id) ? `/account/register?id=${id}` :
                                             (deal) ? `/account/register?deal=${deal}` :
                                                 "/account/register"
                                     }
                                     >
 
-                                        <a>Ro'yxatdan o'tish</a>
-                                    </Link>
-                                </li>
-                            </ul>
-                            <div className="ps-tab active" id="sign-in">
-                                <div className="ps-form__content">
-                                    <h5>Profilga kirish</h5>
-                                    <div className="form-group">
-                                        <Form.Item
-                                            name="phone_or_email"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message:
-                                                        'Telefon raqam yoki email',
-                                                },
-                                            ]}>
-                                            <Input
-                                                className="form-control"
-                                                type="text"
-                                                placeholder="Telefon raqam yoki email"
-                                                onKeyDown={
-                                                    this.handleEnterKeyPress
-                                                }
-                                            />
-                                        </Form.Item>
-                                    </div>
-                                    <div className="form-group form-forgot">
-                                        <Form.Item
-                                            name="password"
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Parolni kiriting',
-                                                },
-                                            ]}>
-                                            <Input
-                                                className="form-control"
-                                                type="password"
-                                                placeholder="Parol"
-                                                ref={(input) =>
-                                                    (this.passwordInput = input)
-                                                }
-                                            />
-                                        </Form.Item>
-                                    </div>
 
-                                    <div className="form-group submit">
-                                        {this.state.report ? (
-                                            <button
-                                                type="submit"
-                                                style={{ color: '#fff' }}
-                                                className="ps-btn ps-btn--fullwidth">
-                                                Kirish
-                                            </button>
-                                        ) : (
-                                            <button
-                                                disabled={true}
-                                                type="submit"
-                                                className="ps-btn ps-btn--fullwidth mb-5">
-                                                <BeatLoader color="#fff" />
-                                            </button>
-                                        )}
-                                    </div>
+                                        <a className='register_title' style={{ fontSize: "16px", fontWeight: 500, color: "#00A44F" }}>Ro'yxatdan o'tish</a>
+                                    </Link>
                                 </div>
-                                <div className="or_google">
-                                    <span></span>
-                                    <span>yoki </span>
-                                    <span></span>
-                                </div>
+
+
                             </div>
+
+                            <Segmented
+                                onChange={(value) => this.setState({ segmentValue: value })}
+
+                                options={[{
+                                    label: 'Telefon raqam',
+                                    value: 'phone',
+                                    icon: <PhoneOutlined />,
+                                },
+                                {
+                                    label: 'Elektron pochta',
+                                    value: 'email',
+                                    icon: <MailOutlined />,
+                                },]}
+                                block className='mb-5 ' style={{ height: "50px" }} />
+
+
+                            {this.state.segmentValue === "email" ?
+                                <Form.Item
+                                    name="email"
+                                    className='mb-4'
+
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                'Elektron pochta kiritish majburiy',
+                                        },
+                                    ]}>
+                                    <Input
+                                        style={{ height: "50px", fontSize: "16px" }}
+                                        autoComplete='off'
+                                        prefix={<MailOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                        type="email"
+                                        placeholder="Elektron pochta"
+                                        onKeyDown={
+                                            this.handleEnterKeyPress
+                                        }
+                                    />
+                                </Form.Item> :
+                                <Form.Item
+                                    name="phone"
+                                    className='mb-4'
+
+                                    rules={[
+                                        {
+                                            required: true,
+                                            message:
+                                                'Telefon raqam kiritish majburiy',
+                                        },
+                                    ]}>
+                                    <Input
+                                        style={{ height: "50px", fontSize: "16px" }}
+                                        type='text'
+                                        prefix={<PhoneOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                        value={this.state.phone}
+                                        onChange={this.handleChange}
+                                        placeholder="Telefon raqam"
+                                        maxLength={13} // 13 belgidan ortiq kiritishni cheklash
+                                        onKeyDown={(e) => {
+                                            // Har qanday notog'ri belgilarni bloklash
+                                            if (!/[0-9+\s]/.test(e.key) && e.key !== 'Backspace' && e.key !== 'Delete') {
+                                                e.preventDefault();
+                                            }
+                                        }}
+                                    />
+                                </Form.Item>
+
+                            }
+
+
+                            <Form.Item
+                                name="password"
+                                className='mb-4'
+
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Parolni kiriting',
+                                    },
+                                ]}>
+                                <Input.Password
+                                    style={{ height: "50px", fontSize: "16px" }}
+                                    prefix={<LockOutlined style={{ fontSize: "20px", padding: "0 10px" }} />}
+                                    type="password"
+                                    placeholder="Parol"
+                                    ref={(input) =>
+                                        (this.passwordInput = input)
+                                    }
+                                />
+                            </Form.Item>
+
+
+                            <div className="form-group submit">
+                                {this.state.report ? (
+                                    <button
+                                        type="submit"
+                                        style={{ color: '#fff' }}
+                                        className="ps-btn ps-btn--fullwidth">
+                                        Kirish
+                                    </button>
+                                ) : (
+                                    <button
+                                        disabled={true}
+                                        type="submit"
+                                        className="ps-btn ps-btn--fullwidth mb-5">
+                                        <BeatLoader color="#fff" />
+                                    </button>
+                                )}
+                            </div>
+                            <div className="or_google">
+                                <span></span>
+                                <span>yoki </span>
+                                <span></span>
+                            </div>
+
                         </Form>
 
                         <div className="google_account">
@@ -264,10 +354,11 @@ class Login extends Component {
                             )}
                             <p className="mb-3 mt-4">
                                 <Link href="/account/re-enter-number">
-                                    <a>Parolni unutdingizmi?</a>
+                                    <a style={{ fontSize: "16px", fontWeight: 500, color: "#00A44F" }}>Parolni unutdingizmi?</a>
                                 </Link>
                             </p>
                         </div>
+
                     </div>
                 </div>
             </div>
