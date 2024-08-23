@@ -74,7 +74,7 @@ const ShoppingCartScreen = () => {
                                     </Link>
 
                                 ) : (
-                                    <Link href="/account/register-user">
+                                    <Link href="/account/register">
                                         <a className="ps-btn ps-btn--fullwidth btn_color ">
                                             Sotib olish
                                         </a>
