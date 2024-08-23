@@ -17,8 +17,6 @@ const Products_Search_Results = () => {
     const [loading, setLoading] = useState(true); // Initially true
     const [typeSelect, setTypeSelect] = useState('all');
     const debouncedSearchTerm = useDebounce(keyword, 1000);
-    const [pageCountPlay, setPageCountPlay] = useState(0);
-    const [currPagePlay, setCurrPagePlay] = useState(1);
     const { query } = useRouter();
 
     function handleSubmit(e) {
@@ -32,10 +30,9 @@ const Products_Search_Results = () => {
         if (debouncedSearchTerm) {
             setLoading(true); // Set loading true when making a new request
             if (keyword || typeSelect) {
-                const products = PostRepository.postSearchFilterNews(currPagePlay, keyword, typeSelect);
+                const products = PostRepository.postSearchFilterNews(keyword, typeSelect);
                 products.then((result) => {
                     setResultItems(result);
-                    setPageCountPlay(result?.count);
                     setLoading(false); // Set loading false after data is fetched
                 }).catch(() => {
                     setLoading(false); // In case of error, stop loading
@@ -45,7 +42,7 @@ const Products_Search_Results = () => {
                 setLoading(false); // Stop loading if no keyword
             }
         }
-    }, [currPagePlay, debouncedSearchTerm, keyword, typeSelect]);
+    }, [debouncedSearchTerm, keyword, typeSelect]);
 
 
     useEffect(() => {
@@ -157,12 +154,6 @@ const Products_Search_Results = () => {
                                     {resultItems?.results?.map((product) => (
                                         <ProductSearchGoogle product={product} key={product.id} />
                                     ))}
-                                    <Pagination
-                                        className="mt-3"
-                                        defaultCurrent={currPagePlay}
-                                        total={pageCountPlay}
-                                        onChange={(e) => setCurrPagePlay(e)}
-                                    />
                                 </>
                             ) : (
                                 <div className='d-flex align-items-center justify-content-center pt-5'>
