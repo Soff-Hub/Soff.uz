@@ -1,54 +1,57 @@
 import Router, { useRouter } from 'next/router';
 import React from 'react';
+
 import { addPeriodToThousands } from '~/components/partials/account/ProductsLists';
 import { checkIfUserIsOnline } from '~/components/partials/homepage/electronic/TopSellersTable';
 
-const ModuleDetailTopInformation = ({ product }) => {
+const TemplateModuleDetailTopInformation = ({ product }) => {
     const router = useRouter();
     const pid = router.asPath;
     const SellerPage = (e) => {
         if (pid !== '/account/myproducts') {
             Router.push(`/seller/${e}`);
+            // setAdminModal(true)
         }
     };
 
- 
+
+
 
     // Views
     let priceView;
     if (product?.is_sale) {
         priceView = (
-            <div className="ps-product__price sale">
+            <h4 className="ps-product__price ">
                 {+product?.discount_price === 0 ? (
-                    <p>Bepul</p>
+                    <p className='fs-4'>Bepul</p>
                 ) : product?.discount === 0 ? (
-                    <p>{addPeriodToThousands(product?.discount_price)} so'm</p>
+                    <p className='fs-4'>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
-                    <>
-                        <del>{addPeriodToThousands(product?.price)} so'm</del>
-                        <p>
+                    <div className='d-flex gap-3 align-items-center'>
+                        <p className='fs-4'>
                             {addPeriodToThousands(product?.discount_price)}
                             so'm
                         </p>
-                    </>
+                        <del>{addPeriodToThousands(product?.price)} so'm</del>
+                    </div>
                 )}
-            </div>
+            </h4>
         );
     } else {
         priceView = (
-            <h4 className="ps-product__price">
+            <h4 className="ps-product__price ">
                 {+product?.discount_price === 0 ? (
-                    <p>Bepul</p>
+                    <p className='fs-4'>Bepul</p>
                 ) : product?.discount === 0 ? (
-                    <p>{addPeriodToThousands(product?.discount_price)} so'm</p>
+                    <p className='fs-4'>{addPeriodToThousands(product?.discount_price)} so'm</p>
                 ) : (
-                    <>
-                        <del>{addPeriodToThousands(product?.price)} so'm</del>
-                        <p>
+                    <div className='d-flex gap-3 align-items-center'>
+                        <p className='fs-4'>
                             {addPeriodToThousands(product?.discount_price)}
                             so'm
                         </p>
-                    </>
+                        <del>{addPeriodToThousands(product?.price)} so'm</del>
+                    </div>
                 )}
             </h4>
         );
@@ -56,15 +59,23 @@ const ModuleDetailTopInformation = ({ product }) => {
 
     return (
         <header>
-            <h1 className="product__name">
-                {product?.title !== undefined ? product?.title : ''}
-            </h1>
-            <div className="product__top-information">
-                <div className='w_fulls'>
-                    <span className="input--label">Muallif</span>
+
+            <div className="product__top-information p-0">
+                <div className='w-100 d-flex flex-column gap-3'>
+
+                    <div style={{
+                        borderRadius: "8px",
+                        border: "1px solid #d6d6d6",
+                    }} className="product__top-information--price buystep-0 d-flex  justify-content-center gap-3 align-items-center ">
+                        <strong className='fs-4 '> Narxi:</strong>  {priceView}
+                    </div>
+
                     <div
                         className="product__top-information-account"
-                        style={{ cursor: 'pointer' }}
+                        style={{
+                            cursor: 'pointer', borderRadius: "8px",
+                            border: "1px solid #d6d6d6",
+                        }}
                         onClick={() => SellerPage(product?.seller?.id)}>
 
                         <div style={{ position: "relative" }}>
@@ -89,17 +100,14 @@ const ModuleDetailTopInformation = ({ product }) => {
                             </div>
                         )}
                     </div>
+
+
                 </div>
 
-                <div className='w_fulls2 '  >
-                    <span className="input--label">Narxi</span>
-                    <div className="product__top-information--price buystep-0 ">
-                        {priceView}
-                    </div>
-                </div>
+
             </div>
         </header>
     );
 };
 
-export default ModuleDetailTopInformation;
+export default TemplateModuleDetailTopInformation;

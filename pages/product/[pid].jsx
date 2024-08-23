@@ -17,6 +17,7 @@ import axios from 'axios';
 import Head from 'next/head';
 import Joyride from 'react-joyride';
 import { OneShopDoc } from '~/store/auth/action';
+import TemplateDetailFullwidth from '~/components/elements/detail/TemplateDetailFullwidth';
 
 const ProductDefaultPage = ({ defaultProducts }) => {
     const router = useRouter();
@@ -226,9 +227,7 @@ const ProductDefaultPage = ({ defaultProducts }) => {
                     <div className={`ps-page--product ${defaultProducts?.price === 0 ? "" : "pt-2"}`}>
                         <div className="ps-container p-0">
                             <div className="ps-page__container">
-                                {product?.document?.content_type === 'file' ||
-                                    product?.document?.content_type ===
-                                    'template' ? (
+                                {product?.document?.content_type === 'file' ? (
                                     <div className="">
                                         <ProductDetailFullwidth
                                             product={product}
@@ -236,38 +235,48 @@ const ProductDefaultPage = ({ defaultProducts }) => {
 
                                         />
                                     </div>
-                                ) : product?.document?.content_type ===
-                                    'video' ? (
-                                    <div className="">
-                                        <ProductVideoDetailFullWidth
-                                            isPlay={isPlay} setIsPlay={setIsPlay}
-                                            product={product}
-                                            views={views}
-                                            similar={similar}
-                                        />
-                                    </div>
-                                ) : product?.document?.content_type ===
-                                    'audio' ? (
-                                    <div className="">
-                                        <ProductAudioDetailFullWidth
-                                            product={product}
-                                            views={views}
-                                        />
-                                    </div>
-                                ) : product?.document?.content_type ===
-                                    'article' ? (
-                                    <div>
-                                        <ProductAudioDetailFullWidth
-                                            product={product}
-                                            document={document}
-                                            views={views}
-                                        />
-                                    </div>
-                                ) : (
-                                    <div className="ps-page__left">
-                                        <SkeletonProductDetail />
-                                    </div>
-                                )}
+                                ) : product?.document?.content_type ==='template' ? (
+                                        <div className="">
+                                            <TemplateDetailFullwidth
+                                                product={product}
+                                                views={views}
+
+                                            />
+                                        </div>
+                                    ) :
+
+                                        product?.document?.content_type ===
+                                            'video' ? (
+                                            <div className="">
+                                                <ProductVideoDetailFullWidth
+                                                    isPlay={isPlay} setIsPlay={setIsPlay}
+                                                    product={product}
+                                                    views={views}
+                                                    similar={similar}
+                                                />
+                                            </div>
+                                        ) : product?.document?.content_type ===
+                                            'audio' ? (
+                                            <div className="">
+                                                <ProductAudioDetailFullWidth
+                                                    product={product}
+                                                    views={views}
+                                                />
+                                            </div>
+                                        ) : product?.document?.content_type ===
+                                            'article' ? (
+                                            <div>
+                                                <ProductAudioDetailFullWidth
+                                                    product={product}
+                                                    document={document}
+                                                    views={views}
+                                                />
+                                            </div>
+                                        ) : (
+                                            <div className="ps-page__left">
+                                                <SkeletonProductDetail />
+                                            </div>
+                                        )}
                             </div>
 
 

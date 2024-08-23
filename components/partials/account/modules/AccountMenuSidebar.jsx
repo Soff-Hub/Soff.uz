@@ -1,17 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import  { useRouter } from 'next/router';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import GetRepository from '~/reositoriy-admin/GetRepository';
-
 import { Badge, Card, Modal, Tooltip } from 'antd';
 import { formatCurrency } from '~/utilities/product-helper';
 import { addPeriodToThousands } from '../ProductsLists';
 import CalculateTimeDifference from '../DateFormatter';
 
 const AccountMenuSidebar = ({ data }) => {
-    const dispatch = useDispatch();
-    const refresh = useSelector((state) => state.auth?.user?.refresh);
+
     const { asPath } = useRouter();
     const { user } = useSelector((state) => state.auth);
     const { profile } = useSelector((state) => state.ecomerce);
@@ -284,6 +282,15 @@ const AccountMenuSidebar = ({ data }) => {
                             Taklif orqali daromadingiz:{' '}
                             <span className="text-success">
                                 {formatCurrency(profile?.inviter_wallet)}
+                            </span>{' '}
+                            so'm
+                        </p>
+                        <p
+                            className="m-0"
+                            style={{ fontWeight: 600, color: 'black' }}>
+                            Sotilgan mahsulotlar daromadi:{' '}
+                            <span className="text-success">
+                                {formatCurrency(profile?.total_doc_selling_price)}
                             </span>{' '}
                             so'm
                         </p>

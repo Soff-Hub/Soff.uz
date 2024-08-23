@@ -759,6 +759,7 @@ function MyProductsLists() {
                         <div className="ps-page__content">
                             <div className="ps-section--account-setting">
                                 <div className="ps-section__content">
+
                                     {user?.role === 'seller' ? (
                                         <div className="d-flex flex-column gap-2">
                                             <span className="fs-4">
@@ -925,7 +926,7 @@ function MyProductsLists() {
 
                 <ModalDelete onSuccess={DeleteItemsProducts} />
             </div>
-            
+
 
             <Modal
                 title={
@@ -995,8 +996,17 @@ function MyProductsLists() {
                                                                             key={
                                                                                 i
                                                                             }
+                                                                            style={{
+                                                                                borderRadius: "20px",
+                                                                                padding: "5px 16px",
+                                                                                border: "1px solid #999",
+                                                                                fontSize: "15px"
+                                                                            }}
+
                                                                             className="m-2 tag-product">
                                                                             <Link
+
+
                                                                                 href="#"
                                                                                 as="#">
                                                                                 <a>
@@ -1106,6 +1116,13 @@ function MyProductsLists() {
                                                                         i
                                                                     ) => (
                                                                         <div
+                                                                        style={{
+                                                                            borderRadius: "20px",
+                                                                            padding: "5px 16px",
+                                                                            border: "1px solid #999",
+                                                                            fontSize: "15px"
+                                                                        }}
+
                                                                             key={
                                                                                 i
                                                                             }
@@ -1243,6 +1260,13 @@ function MyProductsLists() {
                                                             i
                                                         ) => (
                                                             <div
+                                                                style={{
+                                                                    borderRadius: "20px",
+                                                                    padding: "5px 16px",
+                                                                    border: "1px solid #999",
+                                                                    fontSize: "15px"
+                                                                }}
+
                                                                 key={
                                                                     i
                                                                 }
@@ -1379,72 +1403,42 @@ function MyProductsLists() {
 
                         {options}
                     </Select>
+                    <Select
+                        className=" p-0"
+                        mode="select"
+                        showSearch
+                        allowClear
+                        style={{
+                            width: '100%',
+                            height: '47px',
+                        }}
+                        onChange={
+                            handleChange
+                        }
+                        onSearch={onSearchTegs}
+                        placeholder="Barcha teglar">
+                        <Option value="tags">
+                            Barcha
+                            teglar
+                        </Option>
 
-                    {user?.role ===
-                        'seller' ? (
-                        <Select
-                            className=" p-0"
-                            mode="select"
-                            showSearch
-                            allowClear
-                            style={{
-                                width: '100%',
-                                height: '47px',
-                            }}
-                            onChange={
-                                handleChange
-                            }
-                            onSearch={onSearchTegs}
-                            placeholder="Barcha teglar">
-                            <Option value="tags">
-                                Barcha
-                                teglar
-                            </Option>
-
-                            {childiren}
-                        </Select>
-                    ) : (
-                        <></>
-                    )}
+                        {childiren}
+                    </Select>
 
 
-                    {user?.role ===
-                        'seller' ? (
-                        <select
-                            className="form-select fs-3 py-3 rounded-3"
-                            onChange={(e) =>
-                                setSelectValStatus(
-                                    e.target
-                                        .value
-                                )
-                            }>
-                            <option
-                                className="fs-3"
-                                selected
-                                value="">
-                                Barcha
-                                holatlar
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="moderation">
-                                Moderatsiya
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="approved">
-                                Tasdiqlangan
-                            </option>
-                            <option
-                                className="fs-3"
-                                value="cancelled">
-                                Bekor
-                                qilingan
-                            </option>
-                        </select>
-                    ) : (
-                        <></>
-                    )}
+
+                    <Select
+                        onChange={(e) => setSelectValStatus(e)}
+                        defaultValue={selectValStatus}
+                        style={{ height: "45px" }}
+                    >
+                        <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi holatlar</Option>
+                        <Option key={"moderation"}><i className='text-primary-emphasis fa-solid fa-circle-info mr-2'></i>  Moderatsiya</Option>
+                        <Option key={"cancelled"}> <i className='mr-2 fa-solid fa-circle-question text-danger'></i>
+                            Bekor qilingan</Option>
+                        <Option key={"approved"}><i className='fa-solid text-success fa-circle-check mr-2'></i> Tasdiqlangan</Option>
+                    </Select>
+
 
 
                     <RangePicker
@@ -1452,41 +1446,21 @@ function MyProductsLists() {
                         onChange={handleChangeDate}
                     />
 
-                    <select
-                        className="form-select  fs-3 py-3 rounded-3"
-                        onChange={(e) =>
-                            setFiltertype(
-                                e.target
-                                    .value
-                            )
-                        }>
-                        <option
-                            className="fs-3"
-                            selected
-                            value="">
-                            Barcha turlar
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="file">
-                            File
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="audio">
-                            Audio
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="template">
-                            Shablon
-                        </option>
-                        <option
-                            className="fs-3"
-                            value="video">
-                            Video
-                        </option>
-                    </select>
+
+                    <Select
+                        onChange={(e) => setFiltertype(e)}
+                        defaultValue={filterType}
+                        style={{ height: "45px" }}
+                    >
+                        <Option key={''}><i className="fa-solid fa-list mr-2"></i> Barchasi turlar</Option>
+                        <Option key={"file"}><i className='text-success fa-solid fa-file mr-2 '></i> Fayl</Option>
+                        <Option key={"audio"}> <i className='mr-2 fa-solid fa-music text-success'></i>
+                            Audio</Option>
+                        <Option key={"template"}><i className='fa-solid text-success fa-file-lines mr-2'></i> Shablon</Option>
+                        <Option key={"video"}><i className='fa-solid text-success fa-video mr-2'></i> Video</Option>
+                    </Select>
+
+
                     <Select
                         className="p-0"
                         mode="select"
